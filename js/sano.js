@@ -14,6 +14,7 @@ let mode = '';
 let soloTopic = '';
 let currentQuizItem = null;
 let lesson = null;
+let matchState = null;
 
 document.addEventListener('DOMContentLoaded', () => {
 	state = loadState();
@@ -42,6 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const exerciseChoiceEls = document.getElementById('exercise-choices').getElementsByTagName('button');
 	for (const choiceEl of exerciseChoiceEls) choiceEl.addEventListener('click', answerExercise);
+
+	document.getElementById('exercise-check').addEventListener('click', checkExercise);
+	const typeInput = document.getElementById('type-answer');
+	typeInput.addEventListener('input', () => {
+		document.getElementById('exercise-check').disabled = typeInput.value.trim() === '';
+	});
+	typeInput.addEventListener('keydown', (e) => {
+		if (e.key !== 'Enter' || !lesson) return;
+		if (lesson.answered) continueLesson();
+		else if (typeInput.value.trim() !== '') checkExercise();
+	});
 
 	refreshHeader();
 	renderHome();
@@ -312,30 +324,49 @@ function startLesson(queue) {
 		index: 0,
 		answered: false,
 		firstTryCorrect: 0,
-		baseCount: queue.length,
+		// A matching exercise covers several items, so stats count items rather than exercises.
+		statTotal: queue.reduce((n, ex) => n + (ex.items ? ex.items.length : 1), 0),
 		levelAdjusted: {},
 	};
 	showScreen('lesson');
 	renderExercise();
 }
 
-// New items are drilled in both directions; review items get one random direction.
+// New items are drilled with multiple choice in both directions. Review items get
+// harder types as they level up: multiple choice at low levels, then word bank
+// (multi-word phrases) or typing (single words). Low-level vocab reviews are
+// bundled into a single matching exercise when there are enough of them.
 function buildExercises(newItems, reviewItems) {
 	const exercises = [];
 	for (const item of newItems) {
-		exercises.push({ item: item, dir: 'np-en' });
-		exercises.push({ item: item, dir: 'en-np' });
+		exercises.push({ item: item, type: 'choice', dir: 'np-en' });
+		exercises.push({ item: item, type: 'choice', dir: 'en-np' });
 	}
-	for (const item of reviewItems) exercises.push({ item: item, dir: Math.random() < 0.5 ? 'np-en' : 'en-np' });
+
+	const matchable = reviewItems.filter((item) => item.emoji && itemRecord(item.id).level <= 1);
+	const matchItems = matchable.length >= 4 ? matchable.slice(0, 5) : [];
+
+	for (const item of reviewItems) {
+		if (matchItems.includes(item)) continue;
+		if (itemRecord(item.id).level >= 2) {
+			if (item.np.split(/\s+/).length >= 2) exercises.push({ item: item, type: 'wordbank' });
+			else exercises.push({ item: item, type: 'type' });
+		} else {
+			exercises.push({ item: item, type: 'choice', dir: Math.random() < 0.5 ? 'np-en' : 'en-np' });
+		}
+	}
 	shuffleArray(exercises);
 
 	// Best effort: avoid showing the same item twice in a row.
 	for (let i = 1; i < exercises.length; i++) {
-		if (exercises[i].item.id === exercises[i - 1].item.id) {
+		if (exercises[i].item && exercises[i - 1].item && exercises[i].item.id === exercises[i - 1].item.id) {
 			const j = (i + 1) % exercises.length;
 			[exercises[i], exercises[j]] = [exercises[j], exercises[i]];
 		}
 	}
+
+	if (matchItems.length > 0)
+		exercises.splice(Math.floor(Math.random() * (exercises.length + 1)), 0, { type: 'match', items: matchItems });
 	return exercises;
 }
 
@@ -351,19 +382,27 @@ function renderExercise() {
 		Math.round((lesson.index / lesson.queue.length) * 100) + '%';
 	document.getElementById('lesson-feedback').classList.add('hide');
 
-	const labelEl = document.getElementById('exercise-label');
-	const wordEl = document.getElementById('exercise-word');
-	const pronEl = document.getElementById('exercise-pronounce');
+	document.getElementById('exercise-choices').classList.toggle('hide', ex.type !== 'choice');
+	document.getElementById('exercise-wordbank').classList.toggle('hide', ex.type !== 'wordbank');
+	document.getElementById('exercise-type').classList.toggle('hide', ex.type !== 'type');
+	document.getElementById('exercise-match').classList.toggle('hide', ex.type !== 'match');
+	document.getElementById('exercise-check').classList.toggle('hide', ex.type !== 'wordbank' && ex.type !== 'type');
 
-	if (ex.dir === 'np-en') {
-		labelEl.textContent = 'Select the correct meaning';
-		wordEl.textContent = ex.item.np;
-		pronEl.textContent = ex.item.pron;
-	} else {
-		labelEl.textContent = 'Select the Nepali';
-		wordEl.textContent = promptText(ex.item);
-		pronEl.textContent = '';
-	}
+	if (ex.type === 'choice') renderChoice(ex);
+	else if (ex.type === 'wordbank') renderWordbank(ex);
+	else if (ex.type === 'type') renderType(ex);
+	else renderMatch(ex);
+}
+
+function setPrompt(label, word, pron) {
+	document.getElementById('exercise-label').textContent = label;
+	document.getElementById('exercise-word').textContent = word;
+	document.getElementById('exercise-pronounce').textContent = pron;
+}
+
+function renderChoice(ex) {
+	if (ex.dir === 'np-en') setPrompt('Select the correct meaning', ex.item.np, ex.item.pron);
+	else setPrompt('Select the Nepali', promptText(ex.item), '');
 
 	const choiceText = ex.dir === 'np-en' ? (item) => item.en : (item) => item.np;
 	const choices = shuffleArray([ex.item].concat(getDistractors(ex.item, choiceText)));
@@ -376,6 +415,147 @@ function renderExercise() {
 		choiceEl.className = '';
 		index++;
 	}
+}
+
+function renderWordbank(ex) {
+	setPrompt('Build the Nepali from the tiles', promptText(ex.item), '');
+
+	const answerEl = document.getElementById('wordbank-answer');
+	const poolEl = document.getElementById('wordbank-pool');
+	answerEl.textContent = '';
+	poolEl.textContent = '';
+
+	const tiles = shuffleArray(ex.item.np.split(/\s+/).concat(wordbankDistractors(ex.item)));
+	for (const word of tiles) {
+		const tile = document.createElement('button');
+		tile.type = 'button';
+		tile.className = 'wordbank-tile';
+		tile.textContent = word;
+		tile.addEventListener('click', () => {
+			(tile.parentNode === poolEl ? answerEl : poolEl).appendChild(tile);
+			document.getElementById('exercise-check').disabled = answerEl.children.length === 0;
+		});
+		poolEl.appendChild(tile);
+	}
+	document.getElementById('exercise-check').disabled = true;
+}
+
+// A few extra Nepali words from other phrases, so the answer isn't just "use every tile".
+function wordbankDistractors(item) {
+	const targetWords = item.np.toLowerCase().split(/\s+/);
+	const pool = shuffleArray(COURSE.filter((u) => u.kind === 'phrases').flatMap((u) => u.items));
+
+	const distractors = [];
+	for (const candidate of pool) {
+		if (distractors.length === 3) break;
+		for (const word of candidate.np.split(/\s+/)) {
+			if (distractors.length === 3) break;
+			const cleaned = word.replace(/[?,.!]/g, '');
+			if (cleaned === '' || cleaned === '___' || cleaned === '...') continue;
+			const lower = cleaned.toLowerCase();
+			if (targetWords.includes(lower) || distractors.some((w) => w.toLowerCase() === lower)) continue;
+			distractors.push(cleaned);
+		}
+	}
+	return distractors;
+}
+
+function renderType(ex) {
+	setPrompt('Type the Nepali', promptText(ex.item), '');
+	const input = document.getElementById('type-answer');
+	input.value = '';
+	document.getElementById('exercise-check').disabled = true;
+	input.focus();
+}
+
+function renderMatch(ex) {
+	setPrompt('Match the pairs', '', '');
+	matchState = { remaining: ex.items.length, missed: {}, selected: { left: null, right: null } };
+
+	const leftEl = document.getElementById('match-left');
+	const rightEl = document.getElementById('match-right');
+	leftEl.textContent = '';
+	rightEl.textContent = '';
+	for (const item of shuffleArray(ex.items.slice())) leftEl.appendChild(matchTile(item, 'left', item.np));
+	for (const item of shuffleArray(ex.items.slice())) rightEl.appendChild(matchTile(item, 'right', item.en));
+}
+
+function matchTile(item, side, text) {
+	const tile = document.createElement('button');
+	tile.type = 'button';
+	tile.className = 'match-tile';
+	tile.textContent = text;
+	tile.dataset.id = item.id;
+	tile.addEventListener('click', () => selectMatchTile(tile, side));
+	return tile;
+}
+
+function selectMatchTile(tile, side) {
+	if (lesson.answered || tile.classList.contains('matched')) return;
+
+	const selected = matchState.selected;
+	if (selected[side] === tile) {
+		tile.classList.remove('selected');
+		selected[side] = null;
+		return;
+	}
+	if (selected[side]) selected[side].classList.remove('selected');
+	selected[side] = tile;
+	tile.classList.add('selected');
+	if (!selected.left || !selected.right) return;
+
+	const left = selected.left;
+	const right = selected.right;
+	selected.left = selected.right = null;
+	left.classList.remove('selected');
+	right.classList.remove('selected');
+
+	if (left.dataset.id === right.dataset.id) {
+		left.classList.add('matched');
+		right.classList.add('matched');
+		matchState.remaining--;
+		if (matchState.remaining === 0) finishMatch();
+	} else {
+		matchState.missed[left.dataset.id] = true;
+		matchState.missed[right.dataset.id] = true;
+		left.classList.add('miss');
+		right.classList.add('miss');
+		setTimeout(() => {
+			left.classList.remove('miss');
+			right.classList.remove('miss');
+		}, 600);
+	}
+}
+
+function finishMatch() {
+	const ex = lesson.queue[lesson.index];
+	lesson.answered = true;
+	registerActivity();
+
+	let clean = 0;
+	for (const item of ex.items) {
+		state.itemsToday++;
+		state.itemsTotal++;
+		const record = itemRecord(item.id);
+		record.seen++;
+		record.intro = true;
+		record.lastSeen = dayString(new Date());
+		const correct = !matchState.missed[item.id];
+		if (correct) {
+			record.correct++;
+			clean++;
+			lesson.firstTryCorrect++;
+		}
+		if (!lesson.levelAdjusted[item.id]) {
+			lesson.levelAdjusted[item.id] = true;
+			record.level = correct ? Math.min(record.level + 1, MAX_LEVEL) : Math.max(record.level - 1, 0);
+		}
+	}
+
+	const allClean = clean === ex.items.length;
+	showFeedback(allClean, allClean ? 'Correct!' : clean + ' of ' + ex.items.length + ' matched without a miss', '');
+	saveState();
+	refreshHeader();
 }
 
 // Three wrong answers: same unit preferred, never with display text matching the
@@ -400,7 +580,6 @@ function getDistractors(item, choiceText) {
 
 function answerExercise(e) {
 	if (lesson.answered) return;
-	lesson.answered = true;
 
 	const ex = lesson.queue[lesson.index];
 	const correct = e.target.dataset.status === 'correct';
@@ -411,6 +590,27 @@ function answerExercise(e) {
 		else if (choiceEl === e.target) choiceEl.classList.add('incorrect');
 		else choiceEl.classList.add('unselected');
 	}
+
+	applyAnswer(ex, correct);
+}
+
+function checkExercise() {
+	if (lesson.answered) return;
+
+	const ex = lesson.queue[lesson.index];
+	let given;
+	if (ex.type === 'wordbank') {
+		given = Array.from(document.getElementById('wordbank-answer').children)
+			.map((tile) => tile.textContent)
+			.join(' ');
+	} else {
+		given = document.getElementById('type-answer').value;
+	}
+	applyAnswer(ex, lenientEquals(given, ex.item.np, ex.type === 'type'));
+}
+
+function applyAnswer(ex, correct) {
+	lesson.answered = true;
 
 	// Re-queued exercises were already counted on their first attempt.
 	if (!ex.requeued) {
@@ -433,17 +633,48 @@ function answerExercise(e) {
 	}
 	if (!correct && !ex.requeued) lesson.queue.push(Object.assign({}, ex, { requeued: true }));
 
+	// Always show the full answer for recall exercises; for multiple choice only on a miss.
+	const showAnswer = !correct || ex.type === 'wordbank' || ex.type === 'type';
+	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? ex.item.np + ' = ' + promptText(ex.item) : '');
+
+	saveState();
+	refreshHeader();
+}
+
+function showFeedback(correct, title, answerText) {
 	const feedbackEl = document.getElementById('lesson-feedback');
 	feedbackEl.classList.remove('hide');
 	feedbackEl.classList.toggle('correct', correct);
 	feedbackEl.classList.toggle('incorrect', !correct);
-	document.getElementById('feedback-title').textContent = correct ? 'Correct!' : 'Not quite.';
-	document.getElementById('feedback-answer').textContent = correct
-		? ''
-		: ex.item.np + ' = ' + promptText(ex.item);
+	document.getElementById('feedback-title').textContent = title;
+	document.getElementById('feedback-answer').textContent = answerText;
+}
 
-	saveState();
-	refreshHeader();
+function normalize(s) {
+	return s
+		.toLowerCase()
+		.replace(/[^a-z0-9\s]/g, '')
+		.replace(/\s+/g, ' ')
+		.trim();
+}
+
+// Romanized Nepali spelling varies, so typed answers tolerate small differences.
+function lenientEquals(given, expected, allowTypos) {
+	const a = normalize(given);
+	const b = normalize(expected);
+	if (a === b) return true;
+	if (!allowTypos) return false;
+	const tolerance = b.length > 10 ? 2 : b.length > 4 ? 1 : 0;
+	return editDistance(a, b) <= tolerance;
+}
+
+function editDistance(a, b) {
+	const dp = Array.from({ length: a.length + 1 }, (_, i) => [i].concat(new Array(b.length).fill(0)));
+	for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+	for (let i = 1; i <= a.length; i++)
+		for (let j = 1; j <= b.length; j++)
+			dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+	return dp[a.length][b.length];
 }
 
 function continueLesson() {
@@ -455,7 +686,7 @@ function continueLesson() {
 function finishLesson() {
 	saveState();
 	document.getElementById('complete-stats').textContent =
-		lesson.firstTryCorrect + ' of ' + lesson.baseCount + ' correct on the first try';
+		lesson.firstTryCorrect + ' of ' + lesson.statTotal + ' correct on the first try';
 	showScreen('complete');
 }
 

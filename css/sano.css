@@ -796,6 +796,100 @@ table#vocab tbody td:nth-child(3) {
 	color: var(--text-color-softer);
 }
 
+/* Word bank exercise */
+
+#wordbank-answer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-content: flex-start;
+	min-height: 70px;
+	margin-top: 3rem;
+	padding-bottom: 12px;
+	border-bottom: 2px solid var(--border-color);
+}
+#wordbank-pool {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-content: flex-start;
+	min-height: 70px;
+	padding-top: 16px;
+}
+.wordbank-tile {
+	height: auto;
+	padding: 0.9rem 1.5rem;
+	font-size: 1.8rem;
+	font-weight: 500;
+	line-height: 1.3;
+	text-transform: none;
+	letter-spacing: normal;
+	color: var(--text-color-normal);
+	border-radius: 1rem;
+}
+.wordbank-tile:hover {
+	color: var(--text-color-richer);
+}
+
+/* Typing exercise */
+
+#type-answer {
+	width: 100%;
+	max-width: 560px;
+	height: auto;
+	margin-top: 3rem;
+	padding: 1.2rem 1.4rem;
+	font-size: 2rem;
+}
+
+/* Matching exercise */
+
+#exercise-match {
+	display: flex;
+	gap: 16px;
+	margin-top: 3rem;
+}
+#match-left,
+#match-right {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+.match-tile {
+	width: 100%;
+	height: auto;
+	min-height: 56px;
+	padding: 0.9rem 1.2rem;
+	font-size: 1.7rem;
+	font-weight: 500;
+	line-height: 1.3;
+	text-transform: none;
+	letter-spacing: normal;
+	text-align: center;
+	color: var(--text-color-normal);
+	text-wrap: wrap;
+	overflow: visible;
+	border-radius: 1rem;
+}
+.match-tile.selected {
+	color: var(--text-color-richer);
+	border-color: hsl(var(--accent-hue), 65%, 45%);
+}
+.match-tile.miss {
+	color: var(--text-color-richer);
+	border-color: var(--text-incomplete-color);
+}
+.match-tile.matched {
+	color: var(--text-color-softer);
+	border-color: var(--text-complete-color);
+	cursor: default;
+}
+
+#exercise-check {
+	margin-top: 2.5rem;
+}
+
 #lesson-feedback {
 	position: fixed;
 	bottom: 0;
