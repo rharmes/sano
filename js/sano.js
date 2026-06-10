@@ -1,7 +1,11 @@
 // App logic for the Nepali study guide. Course content lives in js/data.js (COURSE).
 
 const STATE_KEY = 'sano.state.v1';
-const LESSON_NEW_ITEMS = 5; // items per lesson; each item yields two exercises
+const LESSON_NEW_ITEMS = 5; // items per unit lesson; each new item yields two exercises
+const DAILY_NEW_ITEMS = 4;
+const DAILY_REVIEW_ITEMS = 6;
+const MAX_LEVEL = 4;
+const REVIEW_INTERVALS = [1, 1, 3, 7, 14]; // days until an item at this level is due for review
 
 let state;
 let words = []; // Flat list of phrase items (the #words table) used by flashcards and the quiz.
@@ -47,27 +51,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function defaultState() {
 	return {
-		version: 1,
+		version: 2,
 		name: null,
 		streak: 0,
 		lastActivityDay: null,
 		itemsToday: 0,
 		itemsTotal: 0,
-		items: {}, // item id -> { seen, correct }
-		units: {}, // unit id -> { lessonsDone }
+		items: {}, // item id -> { seen, correct, level, lastSeen, intro }
 	};
 }
 
 function loadState() {
+	let parsed = null;
 	const raw = localStorage.getItem(STATE_KEY);
 	if (raw) {
 		try {
-			return Object.assign(defaultState(), JSON.parse(raw));
+			parsed = JSON.parse(raw);
 		} catch (e) {
 			console.error('Could not parse saved state, starting fresh', e);
 		}
 	}
-	return migrateLegacyState() || defaultState();
+	if (!parsed) parsed = migrateLegacyState();
+	if (!parsed) return defaultState();
+
+	if (parsed.version === 1) parsed = migrateV1State(parsed);
+	const loaded = Object.assign(defaultState(), parsed);
+	for (const id in loaded.items)
+		loaded.items[id] = Object.assign({ seen: 0, correct: 0, level: 0, lastSeen: null, intro: false }, loaded.items[id]);
+	return loaded;
+}
+
+// v1 tracked unit progress as a count of completed 5-item lessons; v2 marks each
+// introduced item directly on its record instead.
+function migrateV1State(old) {
+	old.version = 2;
+	old.items = old.items || {};
+	for (const unitId in old.units || {}) {
+		const unit = COURSE.find((u) => u.id === unitId);
+		if (!unit) continue;
+		const introduced = unit.items.slice(0, (old.units[unitId].lessonsDone || 0) * LESSON_NEW_ITEMS);
+		for (const item of introduced) {
+			const record = Object.assign({ seen: 0, correct: 0, level: 0, lastSeen: null }, old.items[item.id]);
+			record.intro = true;
+			record.level = Math.max(record.level, 1);
+			record.lastSeen = record.lastSeen || old.lastActivityDay;
+			old.items[item.id] = record;
+		}
+	}
+	delete old.units;
+	localStorage.setItem(STATE_KEY, JSON.stringify(old));
+	console.log('Migrated state to version 2');
+	return old;
 }
 
 function saveState() {
@@ -128,8 +162,47 @@ function registerActivity() {
 }
 
 function itemRecord(id) {
-	if (!Object.hasOwn(state.items, id)) state.items[id] = { seen: 0, correct: 0 };
+	if (!Object.hasOwn(state.items, id))
+		state.items[id] = { seen: 0, correct: 0, level: 0, lastSeen: null, intro: false };
 	return state.items[id];
+}
+
+// Spaced repetition (Leitner). Items climb a level when answered correctly in a
+// lesson and drop a level when missed; each level has a longer review interval.
+
+function daysSince(day) {
+	if (!day) return Infinity;
+	const now = new Date();
+	const [y, m, d] = day.split('-').map(Number);
+	return Math.round((new Date(now.getFullYear(), now.getMonth(), now.getDate()) - new Date(y, m - 1, d)) / 86400000);
+}
+
+function isDue(record) {
+	return record.intro && daysSince(record.lastSeen) >= REVIEW_INTERVALS[record.level];
+}
+
+function overdueDays(item) {
+	const record = state.items[item.id];
+	return daysSince(record.lastSeen) - REVIEW_INTERVALS[record.level];
+}
+
+function dueItems() {
+	const due = [];
+	for (const unit of COURSE) {
+		for (const item of unit.items) {
+			const record = state.items[item.id];
+			if (record && isDue(record)) due.push(item);
+		}
+	}
+	return due.sort((a, b) => overdueDays(b) - overdueDays(a));
+}
+
+function unitNewItems(unit) {
+	return unit.items.filter((item) => !(state.items[item.id] && state.items[item.id].intro));
+}
+
+function unitDueCount(unit) {
+	return unit.items.filter((item) => state.items[item.id] && isDue(state.items[item.id])).length;
 }
 
 // Screens.
@@ -147,16 +220,8 @@ function goHome() {
 
 // Home screen: a Duolingo-style path of units.
 
-function unitLessonCount(unit) {
-	return Math.ceil(unit.items.length / LESSON_NEW_ITEMS);
-}
-
-function unitLessonsDone(unitId) {
-	return state.units[unitId] ? state.units[unitId].lessonsDone : 0;
-}
-
 function unitIsComplete(unit) {
-	return unitLessonsDone(unit.id) >= unitLessonCount(unit);
+	return unitNewItems(unit).length === 0;
 }
 
 // Units unlock in course order, as each previous unit is finished.
@@ -192,11 +257,12 @@ function renderHome() {
 		const title = document.createElement('div');
 		title.className = 'unit-title';
 		title.textContent = unit.title;
+		const due = unitDueCount(unit);
 		const meta = document.createElement('div');
 		meta.className = 'unit-meta';
 		meta.textContent = complete
-			? unit.items.length + ' words · tap to review'
-			: unitLessonsDone(unit.id) + ' / ' + unitLessonCount(unit) + ' lessons · ' + unit.items.length + ' words';
+			? unit.items.length + ' words · ' + (due > 0 ? due + ' due for review' : 'tap to review')
+			: unit.items.length - unitNewItems(unit).length + ' / ' + unit.items.length + ' words';
 		info.appendChild(title);
 		info.appendChild(meta);
 		card.appendChild(info);
@@ -207,52 +273,60 @@ function renderHome() {
 
 	const dailyButton = document.getElementById('daily-lesson');
 	const unit = currentUnit();
-	if (unit) {
-		dailyButton.textContent = "Start today's lesson · " + unit.title;
+	const newCount = unit ? Math.min(unitNewItems(unit).length, DAILY_NEW_ITEMS) : 0;
+	const reviewCount = Math.min(dueItems().length, DAILY_REVIEW_ITEMS);
+	if (newCount + reviewCount > 0) {
+		const parts = [];
+		if (newCount > 0) parts.push(newCount + ' new');
+		if (reviewCount > 0) parts.push(reviewCount + ' review');
+		dailyButton.textContent = "Start today's lesson · " + parts.join(' + ');
 		dailyButton.disabled = false;
 	} else {
-		dailyButton.textContent = 'Course complete! Tap any unit to review';
+		dailyButton.textContent = 'All caught up! Come back tomorrow';
 		dailyButton.disabled = true;
 	}
 }
 
 // Lesson engine. A lesson is a queue of exercises; missed ones are re-queued at the end.
 
+// The daily lesson mixes a few new items from the current unit with the most
+// overdue review items from anywhere in the course.
 function startDailyLesson() {
 	const unit = currentUnit();
-	if (unit) startUnitLesson(unit, false);
+	const newItems = unit ? unitNewItems(unit).slice(0, DAILY_NEW_ITEMS) : [];
+	const reviewItems = dueItems().slice(0, DAILY_REVIEW_ITEMS);
+	if (newItems.length + reviewItems.length === 0) return;
+	startLesson(buildExercises(newItems, reviewItems));
 }
 
 function startUnitLesson(unit, review) {
-	let items;
-	if (review) {
-		items = shuffleArray(unit.items.slice()).slice(0, LESSON_NEW_ITEMS);
-	} else {
-		const done = unitLessonsDone(unit.id);
-		items = unit.items.slice(done * LESSON_NEW_ITEMS, (done + 1) * LESSON_NEW_ITEMS);
-	}
+	const items = review
+		? shuffleArray(unit.items.slice()).slice(0, LESSON_NEW_ITEMS)
+		: unitNewItems(unit).slice(0, LESSON_NEW_ITEMS);
+	startLesson(buildExercises(items, []));
+}
 
+function startLesson(queue) {
 	lesson = {
-		unitId: unit.id,
-		review: !!review,
-		queue: buildExercises(items),
+		queue: queue,
 		index: 0,
 		answered: false,
 		firstTryCorrect: 0,
-		baseCount: 0,
+		baseCount: queue.length,
+		levelAdjusted: {},
 	};
-	lesson.baseCount = lesson.queue.length;
-
 	showScreen('lesson');
 	renderExercise();
 }
 
-function buildExercises(items) {
+// New items are drilled in both directions; review items get one random direction.
+function buildExercises(newItems, reviewItems) {
 	const exercises = [];
-	for (const item of items) {
+	for (const item of newItems) {
 		exercises.push({ item: item, dir: 'np-en' });
 		exercises.push({ item: item, dir: 'en-np' });
 	}
+	for (const item of reviewItems) exercises.push({ item: item, dir: Math.random() < 0.5 ? 'np-en' : 'en-np' });
 	shuffleArray(exercises);
 
 	// Best effort: avoid showing the same item twice in a row.
@@ -345,9 +419,16 @@ function answerExercise(e) {
 		state.itemsTotal++;
 		const record = itemRecord(ex.item.id);
 		record.seen++;
+		record.intro = true;
+		record.lastSeen = dayString(new Date());
 		if (correct) {
 			record.correct++;
 			lesson.firstTryCorrect++;
+		}
+		// Move the item one Leitner level per lesson, based on its first exercise.
+		if (!lesson.levelAdjusted[ex.item.id]) {
+			lesson.levelAdjusted[ex.item.id] = true;
+			record.level = correct ? Math.min(record.level + 1, MAX_LEVEL) : Math.max(record.level - 1, 0);
 		}
 	}
 	if (!correct && !ex.requeued) lesson.queue.push(Object.assign({}, ex, { requeued: true }));
@@ -372,14 +453,7 @@ function continueLesson() {
 }
 
 function finishLesson() {
-	if (!lesson.review) {
-		const unit = COURSE.find((u) => u.id === lesson.unitId);
-		const done = unitLessonsDone(lesson.unitId);
-		state.units[lesson.unitId] = { lessonsDone: Math.min(done + 1, unitLessonCount(unit)) };
-		saveState();
-	}
-
-	document.getElementById('complete-title').textContent = lesson.review ? 'Review complete!' : 'Lesson complete!';
+	saveState();
 	document.getElementById('complete-stats').textContent =
 		lesson.firstTryCorrect + ' of ' + lesson.baseCount + ' correct on the first try';
 	showScreen('complete');
