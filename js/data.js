@@ -918,6 +918,342 @@ const COURSE = [
 		]
 	},
 	{
+		"id": "kitchen-items",
+		"title": "Kitchen Items",
+		"kind": "vocab",
+		"items": [
+			{
+				"id": "bhanda-dishes-utensils",
+				"np": "Bhanda",
+				"pron": "bhaan-daa",
+				"emoji": "🍽️",
+				"en": "Dishes / Utensils"
+			},
+			{
+				"id": "thaal-plate",
+				"np": "Thaal",
+				"pron": "thaal",
+				"emoji": "🍽️",
+				"en": "Plate"
+			},
+			{
+				"id": "kacho-bowl",
+				"np": "Kacho",
+				"pron": "kaa-cho",
+				"emoji": "🥣",
+				"en": "Bowl"
+			},
+			{
+				"id": "chamcha-spoon",
+				"np": "Chamcha",
+				"pron": "chum-chaa",
+				"emoji": "🥄",
+				"en": "Spoon"
+			},
+			{
+				"id": "kaanta-fork",
+				"np": "Kaanta",
+				"pron": "kaan-taa",
+				"emoji": "🍴",
+				"en": "Fork"
+			},
+			{
+				"id": "churaa-knife",
+				"np": "Churaa",
+				"pron": "choo-raa",
+				"emoji": "🔪",
+				"en": "Knife"
+			},
+			{
+				"id": "glass-glass-cup",
+				"np": "Glass",
+				"pron": "glass",
+				"emoji": "🥤",
+				"en": "Glass / Cup"
+			},
+			{
+				"id": "kap-cup",
+				"np": "Kap",
+				"pron": "cup",
+				"emoji": "☕",
+				"en": "Cup"
+			},
+			{
+				"id": "dekchi-pot-cooking-pot",
+				"np": "Dekchi",
+				"pron": "dek-chi",
+				"emoji": "🍲",
+				"en": "Pot / Cooking pot"
+			},
+			{
+				"id": "taawaa-pan-frying-pan",
+				"np": "Taawaa",
+				"pron": "taa-waa",
+				"emoji": "🍳",
+				"en": "Pan / Frying pan"
+			},
+			{
+				"id": "chulho-stove",
+				"np": "Chulho",
+				"pron": "chool-ho",
+				"emoji": "🔥",
+				"en": "Stove"
+			},
+			{
+				"id": "fridge-refrigerator",
+				"np": "Fridge",
+				"pron": "frij",
+				"emoji": "🧊",
+				"en": "Refrigerator"
+			},
+			{
+				"id": "chyaatee-kettle",
+				"np": "Chyaatee",
+				"pron": "chyaa-tee",
+				"emoji": "🫖",
+				"en": "Kettle"
+			},
+			{
+				"id": "bhatta-rice-cooker",
+				"np": "Bhatta",
+				"pron": "bhut-taa",
+				"emoji": "🍚",
+				"en": "Rice cooker"
+			},
+			{
+				"id": "masala-daani-spice-container",
+				"np": "Masala daani",
+				"pron": "muh-saa-laa daa-ni",
+				"emoji": "🧂",
+				"en": "Spice container"
+			}
+		]
+	},
+	{
+		"id": "food-grocery-items",
+		"title": "Food & Grocery Items",
+		"kind": "vocab",
+		"items": [
+			{
+				"id": "khana-food",
+				"np": "Khana",
+				"pron": "kha-na",
+				"emoji": "🍽️",
+				"en": "Food"
+			},
+			{
+				"id": "bhaat-rice-cooked",
+				"np": "Bhaat",
+				"pron": "bhaat",
+				"emoji": "🍚",
+				"en": "Rice (cooked)"
+			},
+			{
+				"id": "daal-lentils",
+				"np": "Daal",
+				"pron": "daal",
+				"emoji": "🫘",
+				"en": "Lentils"
+			},
+			{
+				"id": "tarkari-vegetables-curry",
+				"np": "Tarkari",
+				"pron": "tur-kaa-ri",
+				"emoji": "🥗",
+				"en": "Vegetables / Curry"
+			},
+			{
+				"id": "roti-bread-flatbread",
+				"np": "Roti",
+				"pron": "ro-ti",
+				"emoji": "🫓",
+				"en": "Bread / Flatbread"
+			},
+			{
+				"id": "maasu-meat",
+				"np": "Maasu",
+				"pron": "maa-soo",
+				"emoji": "🍖",
+				"en": "Meat"
+			},
+			{
+				"id": "machha-fish",
+				"np": "Machha",
+				"pron": "much-haa",
+				"emoji": "🐟",
+				"en": "Fish"
+			},
+			{
+				"id": "phul-egg",
+				"np": "Phul",
+				"pron": "fool",
+				"emoji": "🥚",
+				"en": "Egg"
+			},
+			{
+				"id": "dudh-milk",
+				"np": "Dudh",
+				"pron": "doodh",
+				"emoji": "🥛",
+				"en": "Milk"
+			},
+			{
+				"id": "dahi-yogurt",
+				"np": "Dahi",
+				"pron": "duh-hi",
+				"emoji": "🥛",
+				"en": "Yogurt"
+			},
+			{
+				"id": "chiya-tea",
+				"np": "Chiya",
+				"pron": "chi-yaa",
+				"emoji": "🍵",
+				"en": "Tea"
+			},
+			{
+				"id": "paani-water",
+				"np": "Paani",
+				"pron": "paa-ni",
+				"emoji": "💧",
+				"en": "Water"
+			},
+			{
+				"id": "nun-salt",
+				"np": "Nun",
+				"pron": "noon",
+				"emoji": "🧂",
+				"en": "Salt"
+			},
+			{
+				"id": "chini-sugar",
+				"np": "Chini",
+				"pron": "chi-ni",
+				"emoji": "🍬",
+				"en": "Sugar"
+			},
+			{
+				"id": "tel-oil",
+				"np": "Tel",
+				"pron": "tail",
+				"emoji": "🛢️",
+				"en": "Oil"
+			},
+			{
+				"id": "masala-spices",
+				"np": "Masala",
+				"pron": "muh-saa-laa",
+				"emoji": "🌶️",
+				"en": "Spices"
+			},
+			{
+				"id": "phal-fruit",
+				"np": "Phal",
+				"pron": "ful",
+				"emoji": "🍎",
+				"en": "Fruit"
+			},
+			{
+				"id": "achar-pickle-chutney",
+				"np": "Achar",
+				"pron": "uh-chaar",
+				"emoji": "🫙",
+				"en": "Pickle / Chutney"
+			}
+		]
+	},
+	{
+		"id": "patterns-requests",
+		"title": "Patterns: Needs & Requests",
+		"kind": "phrases",
+		"items": [
+			{
+				"id": "malai-chaahiyo-i-need",
+				"np": "Malai ___ chaahiyo",
+				"pron": "muh-lie ___ chaa-hi-yo",
+				"en": "I need ___",
+				"usage": "The general \"I need\" pattern — you have already seen \"Pani chaahiyo\" and \"Doctor chaahiyo.\" \"Malai\" means \"to me,\" so this is literally \"to me, ___ is needed.\" Insert any noun: \"Malai chamcha chaahiyo\" (I need a spoon)."
+			},
+			{
+				"id": "malai-chiya-chaahiyo-i-need-tea",
+				"np": "Malai chiya chaahiyo",
+				"pron": "muh-lie chi-yaa chaa-hi-yo",
+				"en": "I need tea",
+				"usage": "A worked example of the pattern — and a sentence you may use daily. Swap \"chiya\" for anything: paani, thaal, sabun."
+			},
+			{
+				"id": "dinus-please-give-me",
+				"np": "___ dinus",
+				"pron": "___ di-noos",
+				"en": "Please give me ___",
+				"usage": "The polite request pattern behind \"Paani dinus.\" \"Dinus\" is the respectful command form of \"dinu\" (to give). \"Thaal dinus\" (please give me a plate), \"kap dinus\" (please give me a cup)."
+			},
+			{
+				"id": "nun-dinus-please-pass-the-salt",
+				"np": "Nun dinus",
+				"pron": "noon di-noos",
+				"en": "Please pass the salt",
+				"usage": "The pattern at the dinner table. Any item within reach works the same way: \"achar dinus\" (please pass the pickle)."
+			},
+			{
+				"id": "kaha-cha-where-is",
+				"np": "___ kaha cha?",
+				"pron": "___ kuh-haa chuh",
+				"en": "Where is ___?",
+				"usage": "The general \"where is\" pattern from \"Charpi kaha cha?\" Works for any object: \"sabun kaha cha?\" (where is the soap?). For people, use the polite verb instead: \"Aamaa kaha hunuhunchha?\" (where is mother?)."
+			},
+			{
+				"id": "mero-kap-kaha-cha-where-is-my-cup",
+				"np": "Mero kap kaha cha?",
+				"pron": "meh-ro cup kuh-haa chuh",
+				"en": "Where is my cup?",
+				"usage": "Combines \"mero\" (my) with the where-is pattern. The everyday mystery of the missing cup, in Nepali."
+			},
+			{
+				"id": "ma-khojdai-chu-i-am-looking-for",
+				"np": "Ma ___ khojdai chu",
+				"pron": "muh ___ khoj-dye choo",
+				"en": "I am looking for ___",
+				"usage": "\"Khojnu\" means to search. The \"-dai chu\" ending means \"am currently doing\" — you will see it again in other patterns. \"Ma mero kap khojdai chu\" (I am looking for my cup)."
+			},
+			{
+				"id": "malai-man-parcha-i-like",
+				"np": "Malai ___ man parcha",
+				"pron": "muh-lie ___ mun pur-chuh",
+				"en": "I like ___",
+				"usage": "Literally \"to me, ___ falls on the mind.\" The standard way to express liking things: \"Malai chiya man parcha\" (I like tea). Great for complimenting food and making conversation."
+			},
+			{
+				"id": "malai-dahi-man-parcha-i-like-yogurt",
+				"np": "Malai dahi man parcha",
+				"pron": "muh-lie duh-hi mun pur-chuh",
+				"en": "I like yogurt",
+				"usage": "Worked example of \"man parcha.\" Nepali dahi is often homemade and a point of pride — this sentence will land well."
+			},
+			{
+				"id": "malai-man-pardaina-i-don-t-like",
+				"np": "Malai ___ man pardaina",
+				"pron": "muh-lie ___ mun pur-dye-nuh",
+				"en": "I don't like ___",
+				"usage": "The negative of \"man parcha.\" Note it is gentler than refusing outright — pair it with \"tara\" (but) to stay polite: \"Malai khursaani man pardaina, tara khana mitho cha\" (I don't like chili, but the food is delicious)."
+			},
+			{
+				"id": "tapai-sanga-cha-do-you-have",
+				"np": "Tapai sanga ___ cha?",
+				"pron": "tuh-pie sung-guh ___ chuh",
+				"en": "Do you have ___?",
+				"usage": "\"Sanga\" means \"with,\" so this asks \"is ___ with you?\" — the standard \"do you have\" for things someone carries: \"Tapai sanga paisa cha?\" (do you have money?). \"Paisa\" is the everyday word for money."
+			},
+			{
+				"id": "arko-dinus-please-give-me-another",
+				"np": "Arko ___ dinus",
+				"pron": "ur-ko ___ di-noos",
+				"en": "Please give me another ___",
+				"usage": "\"Arko\" means \"another\" or \"the next one.\" \"Arko roti dinus\" (one more roti, please) — guaranteed to make a Nepali host happy."
+			}
+		]
+	},
+	{
 		"id": "household-living",
 		"title": "Household Living",
 		"kind": "phrases",
@@ -949,6 +1285,146 @@ const COURSE = [
 				"pron": "muh bhaan-daa maaj-choo",
 				"en": "I'll wash the dishes",
 				"usage": "Offers to do the dishes. \"Bhada\" (or \"bhanda\") means dishes/utensils, and \"maajhchu\" means \"I will wash/clean.\" This is a helpful phrase for contributing to household chores. In many Nepali homes, guests are not expected to wash dishes, but offering shows good manners and appreciation. Your host may decline the offer, but it's polite to make it."
+			}
+		]
+	},
+	{
+		"id": "cleaning-items",
+		"title": "Cleaning Items",
+		"kind": "vocab",
+		"items": [
+			{
+				"id": "kucho-broom",
+				"np": "Kucho",
+				"pron": "koo-cho",
+				"emoji": "🧹",
+				"en": "Broom"
+			},
+			{
+				"id": "pochaa-mop",
+				"np": "Pochaa",
+				"pron": "po-chaa",
+				"emoji": "🧽",
+				"en": "Mop"
+			},
+			{
+				"id": "fohormailaa-garbage-trash",
+				"np": "Fohormailaa",
+				"pron": "fo-hor-my-laa",
+				"emoji": "🗑️",
+				"en": "Garbage / Trash"
+			},
+			{
+				"id": "fohormailaa-ko-thungaa-trash-can",
+				"np": "Fohormailaa ko thungaa",
+				"pron": "fo-hor-my-laa ko thoon-gaa",
+				"emoji": "🗑️",
+				"en": "Trash can"
+			},
+			{
+				"id": "sutkinaasak-disinfectant-cleaner",
+				"np": "Sutkinaasak",
+				"pron": "soot-ki-naa-suk",
+				"emoji": "🧴",
+				"en": "Disinfectant / Cleaner"
+			},
+			{
+				"id": "jhaaru-duster-cleaning-cloth",
+				"np": "Jhaaru",
+				"pron": "jhaa-roo",
+				"emoji": "🧽",
+				"en": "Duster / Cleaning cloth"
+			}
+		]
+	},
+	{
+		"id": "patterns-doing",
+		"title": "Patterns: Doing & Going",
+		"kind": "phrases",
+		"items": [
+			{
+				"id": "ma-jaanchu-i-am-going-to",
+				"np": "Ma ___ jaanchu",
+				"pron": "muh ___ jaan-choo",
+				"en": "I am going to ___",
+				"usage": "The \"I go / I am going\" pattern from \"jaanu\" (to go). \"Ma bajaar jaanchu\" (I am going to the market — \"bajaar\" is the market/shops). Announce where you are headed before leaving the house."
+			},
+			{
+				"id": "ma-ghar-jaanchu-i-am-going-home",
+				"np": "Ma ghar jaanchu",
+				"pron": "muh ghur jaan-choo",
+				"en": "I am going home",
+				"usage": "\"Ghar\" means house or home — one of the most useful words in Nepali, and the natural end to many conversations."
+			},
+			{
+				"id": "ma-garchu-i-will-do",
+				"np": "Ma ___ garchu",
+				"pron": "muh ___ gur-choo",
+				"en": "I will do ___",
+				"usage": "From \"garnu\" (to do), the most versatile verb in Nepali. \"Ma kaam garchu\" (I will do the work). Offer to take on a task: \"ma garchu!\" (I'll do it!)."
+			},
+			{
+				"id": "ma-kaam-garchu-i-am-working-i-will-do-the-work",
+				"np": "Ma kaam garchu",
+				"pron": "muh kaam gur-choo",
+				"en": "I am working / I will do the work",
+				"usage": "\"Kaam\" means work or task — both a job and household chores. \"Kaam cha\" (there is work / I'm busy) is a phrase you will hear constantly."
+			},
+			{
+				"id": "tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite",
+				"np": "Tapai ke gardai hunuhunchha?",
+				"pron": "tuh-pie kay gur-dye hoo-noo-hoon-chuh",
+				"en": "What are you doing? (polite)",
+				"usage": "An everyday question around the house. \"-dai\" marks an action in progress, like English \"-ing.\" The casual version with \"timi\" is \"timi ke gardai chhau?\""
+			},
+			{
+				"id": "ma-khana-pakaudai-chu-i-am-cooking-food",
+				"np": "Ma khana pakaudai chu",
+				"pron": "muh kha-na puh-kow-dye choo",
+				"en": "I am cooking food",
+				"usage": "\"Pakaunu\" means to cook. Use it to announce you are at the stove — or \"ma pakauchu\" (I will cook) to volunteer for dinner duty."
+			},
+			{
+				"id": "ma-kinchhu-i-will-buy",
+				"np": "Ma ___ kinchhu",
+				"pron": "muh ___ kin-choo",
+				"en": "I will buy ___",
+				"usage": "From \"kinnu\" (to buy). \"Ma tarkari kinchhu\" (I'll buy vegetables) — useful before a market run, and it pairs with the bargaining phrases you already know."
+			},
+			{
+				"id": "tapai-khanu-huncha-will-you-have-polite-offer",
+				"np": "Tapai ___ khanu huncha?",
+				"pron": "tuh-pie ___ khaa-noo hoon-chuh",
+				"en": "Will you have ___? (polite offer)",
+				"usage": "The polite version of \"Chiya khaane?\" for offering food or drink. \"Tapai bhaat khanu huncha?\" (will you have rice?). Expect to be asked this often — hospitality is serious business."
+			},
+			{
+				"id": "ma-khanchu-i-will-have",
+				"np": "Ma ___ khanchu",
+				"pron": "muh ___ khaan-choo",
+				"en": "I will have ___",
+				"usage": "Accepting an offer: \"Ma chiya khanchu\" (I'll have tea). Remember Nepali \"eats\" tea rather than drinking it. To decline politely, \"pardaina, dhanyabad.\""
+			},
+			{
+				"id": "ma-sutna-jaane-i-am-going-to-bed",
+				"np": "Ma sutna jaane",
+				"pron": "muh soot-nuh jaa-nay",
+				"en": "I am going to bed",
+				"usage": "\"Sutnu\" means to sleep. The same shape as \"Ma nuhaauna jane\" (I'm going to bathe) — verb + \"jaane\" announces what you are off to do."
+			},
+			{
+				"id": "ma-ahile-aaunchu-i-will-be-right-back",
+				"np": "Ma ahile aaunchu",
+				"pron": "muh uh-hi-lay aaun-choo",
+				"en": "I will be right back",
+				"usage": "Literally \"I come now,\" from \"aaunu\" (to come) plus \"ahile\" (now). The standard way to excuse yourself briefly."
+			},
+			{
+				"id": "ek-chhin-parkhanus-wait-a-moment-please",
+				"np": "Ek chhin parkhanus",
+				"pron": "ek chhin purkh-uh-noos",
+				"en": "Wait a moment, please",
+				"usage": "\"Ek chhin\" is \"one moment\" — your number \"ek\" at work. \"Parkhanus\" is the polite form of \"parkhanu\" (to wait). Buy yourself time mid-conversation while you find a word!"
 			}
 		]
 	},
@@ -1401,118 +1877,6 @@ const COURSE = [
 		]
 	},
 	{
-		"id": "kitchen-items",
-		"title": "Kitchen Items",
-		"kind": "vocab",
-		"items": [
-			{
-				"id": "bhanda-dishes-utensils",
-				"np": "Bhanda",
-				"pron": "bhaan-daa",
-				"emoji": "🍽️",
-				"en": "Dishes / Utensils"
-			},
-			{
-				"id": "thaal-plate",
-				"np": "Thaal",
-				"pron": "thaal",
-				"emoji": "🍽️",
-				"en": "Plate"
-			},
-			{
-				"id": "kacho-bowl",
-				"np": "Kacho",
-				"pron": "kaa-cho",
-				"emoji": "🥣",
-				"en": "Bowl"
-			},
-			{
-				"id": "chamcha-spoon",
-				"np": "Chamcha",
-				"pron": "chum-chaa",
-				"emoji": "🥄",
-				"en": "Spoon"
-			},
-			{
-				"id": "kaanta-fork",
-				"np": "Kaanta",
-				"pron": "kaan-taa",
-				"emoji": "🍴",
-				"en": "Fork"
-			},
-			{
-				"id": "churaa-knife",
-				"np": "Churaa",
-				"pron": "choo-raa",
-				"emoji": "🔪",
-				"en": "Knife"
-			},
-			{
-				"id": "glass-glass-cup",
-				"np": "Glass",
-				"pron": "glass",
-				"emoji": "🥤",
-				"en": "Glass / Cup"
-			},
-			{
-				"id": "kap-cup",
-				"np": "Kap",
-				"pron": "cup",
-				"emoji": "☕",
-				"en": "Cup"
-			},
-			{
-				"id": "dekchi-pot-cooking-pot",
-				"np": "Dekchi",
-				"pron": "dek-chi",
-				"emoji": "🍲",
-				"en": "Pot / Cooking pot"
-			},
-			{
-				"id": "taawaa-pan-frying-pan",
-				"np": "Taawaa",
-				"pron": "taa-waa",
-				"emoji": "🍳",
-				"en": "Pan / Frying pan"
-			},
-			{
-				"id": "chulho-stove",
-				"np": "Chulho",
-				"pron": "chool-ho",
-				"emoji": "🔥",
-				"en": "Stove"
-			},
-			{
-				"id": "fridge-refrigerator",
-				"np": "Fridge",
-				"pron": "frij",
-				"emoji": "🧊",
-				"en": "Refrigerator"
-			},
-			{
-				"id": "chyaatee-kettle",
-				"np": "Chyaatee",
-				"pron": "chyaa-tee",
-				"emoji": "🫖",
-				"en": "Kettle"
-			},
-			{
-				"id": "bhatta-rice-cooker",
-				"np": "Bhatta",
-				"pron": "bhut-taa",
-				"emoji": "🍚",
-				"en": "Rice cooker"
-			},
-			{
-				"id": "masala-daani-spice-container",
-				"np": "Masala daani",
-				"pron": "muh-saa-laa daa-ni",
-				"emoji": "🧂",
-				"en": "Spice container"
-			}
-		]
-	},
-	{
 		"id": "bedroom-items",
 		"title": "Bedroom Items",
 		"kind": "vocab",
@@ -1758,55 +2122,6 @@ const COURSE = [
 		]
 	},
 	{
-		"id": "cleaning-items",
-		"title": "Cleaning Items",
-		"kind": "vocab",
-		"items": [
-			{
-				"id": "kucho-broom",
-				"np": "Kucho",
-				"pron": "koo-cho",
-				"emoji": "🧹",
-				"en": "Broom"
-			},
-			{
-				"id": "pochaa-mop",
-				"np": "Pochaa",
-				"pron": "po-chaa",
-				"emoji": "🧽",
-				"en": "Mop"
-			},
-			{
-				"id": "fohormailaa-garbage-trash",
-				"np": "Fohormailaa",
-				"pron": "fo-hor-my-laa",
-				"emoji": "🗑️",
-				"en": "Garbage / Trash"
-			},
-			{
-				"id": "fohormailaa-ko-thungaa-trash-can",
-				"np": "Fohormailaa ko thungaa",
-				"pron": "fo-hor-my-laa ko thoon-gaa",
-				"emoji": "🗑️",
-				"en": "Trash can"
-			},
-			{
-				"id": "sutkinaasak-disinfectant-cleaner",
-				"np": "Sutkinaasak",
-				"pron": "soot-ki-naa-suk",
-				"emoji": "🧴",
-				"en": "Disinfectant / Cleaner"
-			},
-			{
-				"id": "jhaaru-duster-cleaning-cloth",
-				"np": "Jhaaru",
-				"pron": "jhaa-roo",
-				"emoji": "🧽",
-				"en": "Duster / Cleaning cloth"
-			}
-		]
-	},
-	{
 		"id": "laundry-clothing-items",
 		"title": "Laundry & Clothing Items",
 		"kind": "vocab",
@@ -1852,139 +2167,6 @@ const COURSE = [
 				"pron": "is-tree",
 				"emoji": "🔌",
 				"en": "Iron (for clothes)"
-			}
-		]
-	},
-	{
-		"id": "food-grocery-items",
-		"title": "Food & Grocery Items",
-		"kind": "vocab",
-		"items": [
-			{
-				"id": "khana-food",
-				"np": "Khana",
-				"pron": "kha-na",
-				"emoji": "🍽️",
-				"en": "Food"
-			},
-			{
-				"id": "bhaat-rice-cooked",
-				"np": "Bhaat",
-				"pron": "bhaat",
-				"emoji": "🍚",
-				"en": "Rice (cooked)"
-			},
-			{
-				"id": "daal-lentils",
-				"np": "Daal",
-				"pron": "daal",
-				"emoji": "🫘",
-				"en": "Lentils"
-			},
-			{
-				"id": "tarkari-vegetables-curry",
-				"np": "Tarkari",
-				"pron": "tur-kaa-ri",
-				"emoji": "🥗",
-				"en": "Vegetables / Curry"
-			},
-			{
-				"id": "roti-bread-flatbread",
-				"np": "Roti",
-				"pron": "ro-ti",
-				"emoji": "🫓",
-				"en": "Bread / Flatbread"
-			},
-			{
-				"id": "maasu-meat",
-				"np": "Maasu",
-				"pron": "maa-soo",
-				"emoji": "🍖",
-				"en": "Meat"
-			},
-			{
-				"id": "machha-fish",
-				"np": "Machha",
-				"pron": "much-haa",
-				"emoji": "🐟",
-				"en": "Fish"
-			},
-			{
-				"id": "phul-egg",
-				"np": "Phul",
-				"pron": "fool",
-				"emoji": "🥚",
-				"en": "Egg"
-			},
-			{
-				"id": "dudh-milk",
-				"np": "Dudh",
-				"pron": "doodh",
-				"emoji": "🥛",
-				"en": "Milk"
-			},
-			{
-				"id": "dahi-yogurt",
-				"np": "Dahi",
-				"pron": "duh-hi",
-				"emoji": "🥛",
-				"en": "Yogurt"
-			},
-			{
-				"id": "chiya-tea",
-				"np": "Chiya",
-				"pron": "chi-yaa",
-				"emoji": "🍵",
-				"en": "Tea"
-			},
-			{
-				"id": "paani-water",
-				"np": "Paani",
-				"pron": "paa-ni",
-				"emoji": "💧",
-				"en": "Water"
-			},
-			{
-				"id": "nun-salt",
-				"np": "Nun",
-				"pron": "noon",
-				"emoji": "🧂",
-				"en": "Salt"
-			},
-			{
-				"id": "chini-sugar",
-				"np": "Chini",
-				"pron": "chi-ni",
-				"emoji": "🍬",
-				"en": "Sugar"
-			},
-			{
-				"id": "tel-oil",
-				"np": "Tel",
-				"pron": "tail",
-				"emoji": "🛢️",
-				"en": "Oil"
-			},
-			{
-				"id": "masala-spices",
-				"np": "Masala",
-				"pron": "muh-saa-laa",
-				"emoji": "🌶️",
-				"en": "Spices"
-			},
-			{
-				"id": "phal-fruit",
-				"np": "Phal",
-				"pron": "ful",
-				"emoji": "🍎",
-				"en": "Fruit"
-			},
-			{
-				"id": "achar-pickle-chutney",
-				"np": "Achar",
-				"pron": "uh-chaar",
-				"emoji": "🫙",
-				"en": "Pickle / Chutney"
 			}
 		]
 	},
