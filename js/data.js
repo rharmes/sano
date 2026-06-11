@@ -253,7 +253,7 @@ const COURSE = [
 			{
 				"id": "saya-hundred",
 				"np": "Saya",
-				"pron": "suh-yuh",
+				"pron": "suh-yay",
 				"emoji": "💯",
 				"en": "Hundred"
 			},
@@ -447,16 +447,16 @@ const COURSE = [
 				"en": "Grandmother"
 			},
 			{
-				"id": "shrimaan-husband",
-				"np": "Shrimaan",
-				"pron": "shree-maan",
+				"id": "budha-husband",
+				"np": "Budha",
+				"pron": "boo-dhaa",
 				"emoji": "🤵",
 				"en": "Husband"
 			},
 			{
-				"id": "shrimati-wife",
-				"np": "Shrimati",
-				"pron": "shree-muh-ti",
+				"id": "budhi-wife",
+				"np": "Budhi",
+				"pron": "boo-dhi",
 				"emoji": "👰",
 				"en": "Wife"
 			},
@@ -937,9 +937,9 @@ const COURSE = [
 				"en": "Plate"
 			},
 			{
-				"id": "kacho-bowl",
-				"np": "Kacho",
-				"pron": "kaa-cho",
+				"id": "kachaura-bowl",
+				"np": "Kachaura",
+				"pron": "kuh-chow-raa",
 				"emoji": "🥣",
 				"en": "Bowl"
 			},
@@ -1007,18 +1007,11 @@ const COURSE = [
 				"en": "Refrigerator"
 			},
 			{
-				"id": "chyaatee-kettle",
-				"np": "Chyaatee",
-				"pron": "chyaa-tee",
+				"id": "kitli-kettle",
+				"np": "Kitli",
+				"pron": "kit-li",
 				"emoji": "🫖",
 				"en": "Kettle"
-			},
-			{
-				"id": "bhatta-rice-cooker",
-				"np": "Bhatta",
-				"pron": "bhut-taa",
-				"emoji": "🍚",
-				"en": "Rice cooker"
 			},
 			{
 				"id": "masala-daani-spice-container",
@@ -1084,9 +1077,9 @@ const COURSE = [
 				"en": "Fish"
 			},
 			{
-				"id": "phul-egg",
-				"np": "Phul",
-				"pron": "fool",
+				"id": "kukhura-ko-phul-egg",
+				"np": "Kukhura ko phul",
+				"pron": "koo-khu-raa ko fool",
 				"emoji": "🥚",
 				"en": "Egg"
 			},
@@ -1159,6 +1152,20 @@ const COURSE = [
 				"pron": "uh-chaar",
 				"emoji": "🫙",
 				"en": "Pickle / Chutney"
+			},
+			{
+				"id": "bhatta-soybean",
+				"np": "Bhatta",
+				"pron": "bhut-taa",
+				"emoji": "🫘",
+				"en": "Soybean"
+			},
+			{
+				"id": "maha-honey",
+				"np": "Maha",
+				"pron": "muh-haa",
+				"emoji": "🍯",
+				"en": "Honey"
 			}
 		]
 	},
@@ -1404,13 +1411,6 @@ const COURSE = [
 				"pron": "fo-hor-my-laa ko thoon-gaa",
 				"emoji": "🗑️",
 				"en": "Trash can"
-			},
-			{
-				"id": "sutkinaasak-disinfectant-cleaner",
-				"np": "Sutkinaasak",
-				"pron": "soot-ki-naa-suk",
-				"emoji": "🧴",
-				"en": "Disinfectant / Cleaner"
 			},
 			{
 				"id": "jhaaru-duster-cleaning-cloth",
@@ -2155,6 +2155,13 @@ const COURSE = [
 				"en": "Mouth / Face"
 			},
 			{
+				"id": "oth-lips",
+				"np": "Oth",
+				"pron": "oth",
+				"emoji": "💋",
+				"en": "Lips"
+			},
+			{
 				"id": "daat-teeth",
 				"np": "Daat",
 				"pron": "daat",
@@ -2526,13 +2533,6 @@ const COURSE = [
 				"en": "Pen"
 			},
 			{
-				"id": "simsaar-cushion",
-				"np": "Simsaar",
-				"pron": "sim-saar",
-				"emoji": "🛋️",
-				"en": "Cushion"
-			},
-			{
 				"id": "galaicha-carpet-rug",
 				"np": "Galaicha",
 				"pron": "guh-lye-chaa",
@@ -2694,9 +2694,9 @@ const COURSE = [
 				"en": "Glasses / Spectacles"
 			},
 			{
-				"id": "kagdi-notebook",
-				"np": "Kagdi",
-				"pron": "kug-di",
+				"id": "kapi-notebook",
+				"np": "Kapi",
+				"pron": "kaa-pi",
 				"emoji": "📓",
 				"en": "Notebook"
 			},
@@ -2757,9 +2757,9 @@ const COURSE = [
 				"en": "Candle"
 			},
 			{
-				"id": "sallai-match-matchstick",
-				"np": "Sallai",
-				"pron": "sul-lye",
+				"id": "salai-match-matchstick",
+				"np": "Salai",
+				"pron": "suh-lye",
 				"emoji": "🔥",
 				"en": "Match / Matchstick"
 			},
@@ -2769,13 +2769,6 @@ const COURSE = [
 				"pron": "ow-shuh-dhi",
 				"emoji": "💊",
 				"en": "Medicine"
-			},
-			{
-				"id": "thapaa-stamp",
-				"np": "Thapaa",
-				"pron": "thuh-paa",
-				"emoji": "📮",
-				"en": "Stamp"
 			},
 			{
 				"id": "chitthi-letter",
@@ -3044,9 +3037,9 @@ const COURSE = [
 				"en": "Crow"
 			},
 			{
-				"id": "mahaa-bee",
-				"np": "Mahaa",
-				"pron": "muh-haa",
+				"id": "mauri-bee",
+				"np": "Mauri",
+				"pron": "mau-ri",
 				"emoji": "🐝",
 				"en": "Bee"
 			},
@@ -3058,18 +3051,11 @@ const COURSE = [
 				"en": "Butterfly"
 			},
 			{
-				"id": "jhingaa-cricket-grasshopper",
-				"np": "Jhingaa",
-				"pron": "jhin-gaa",
+				"id": "phatyangro-cricket-grasshopper",
+				"np": "Phatyangro",
+				"pron": "fuh-tyang-ro",
 				"emoji": "🦗",
 				"en": "Cricket / Grasshopper"
-			},
-			{
-				"id": "lamaagri-caterpillar-worm",
-				"np": "Lamaagri",
-				"pron": "luh-maag-ri",
-				"emoji": "🐛",
-				"en": "Caterpillar / Worm"
 			},
 			{
 				"id": "saanp-snake",
@@ -3079,9 +3065,9 @@ const COURSE = [
 				"en": "Snake"
 			},
 			{
-				"id": "kaagati-turtle-tortoise",
-				"np": "Kaagati",
-				"pron": "kaa-guh-ti",
+				"id": "kachuwa-turtle-tortoise",
+				"np": "Kachuwa",
+				"pron": "kuh-chu-waa",
 				"emoji": "🐢",
 				"en": "Turtle / Tortoise"
 			},
@@ -3100,9 +3086,9 @@ const COURSE = [
 				"en": "Tiger"
 			},
 			{
-				"id": "baadal-lion",
-				"np": "Baadal",
-				"pron": "baa-dul",
+				"id": "singha-lion",
+				"np": "Singha",
+				"pron": "sing-huh",
 				"emoji": "🦁",
 				"en": "Lion"
 			},
@@ -3513,6 +3499,13 @@ const COURSE = [
 				"en": "Earth / Ground"
 			},
 			{
+				"id": "sansar-world",
+				"np": "Sansar",
+				"pron": "sun-saar",
+				"emoji": "🌍",
+				"en": "World"
+			},
+			{
 				"id": "pahaad-mountain-hill",
 				"np": "Pahaad",
 				"pron": "puh-haad",
@@ -3569,9 +3562,9 @@ const COURSE = [
 				"en": "Stream / Creek"
 			},
 			{
-				"id": "jharaa-waterfall",
-				"np": "Jharaa",
-				"pron": "jhaa-raa",
+				"id": "jharna-waterfall",
+				"np": "Jharna",
+				"pron": "jhar-naa",
 				"emoji": "💧",
 				"en": "Waterfall"
 			},
