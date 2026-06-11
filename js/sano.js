@@ -282,12 +282,22 @@ function renderPath() {
 	wrap.textContent = '';
 
 	const width = wrap.clientWidth || 560;
-	const compact = width < 520;
+	// Match the CSS breakpoint exactly so geometry and styling switch together.
+	const compact = window.matchMedia('(max-width: 520px)').matches;
 	const nodeSize = compact ? 64 : 76;
 	const step = compact ? 108 : 124;
-	const amplitude = Math.min(130, width * 0.27);
 	const labelGap = 22;
-	const labelWidth = compact ? Math.max(86, width / 2 - amplitude - nodeSize / 2 - labelGap - 2) : 150;
+	// Labels may spill outside the path column into page margins, but must stay
+	// inside the viewport: shrink the curve, then the labels, when space is tight.
+	const halfSpan = window.innerWidth / 2 - 12;
+	let amplitude, labelWidth;
+	if (compact) {
+		amplitude = Math.min(130, width * 0.27);
+		labelWidth = Math.max(86, width / 2 - amplitude - nodeSize / 2 - labelGap - 2);
+	} else {
+		amplitude = Math.min(130, width * 0.27, Math.max(72, halfSpan - nodeSize / 2 - labelGap - 150));
+		labelWidth = Math.min(150, Math.max(86, halfSpan - amplitude - nodeSize / 2 - labelGap));
+	}
 	const center = width / 2;
 	const current = currentUnit();
 
