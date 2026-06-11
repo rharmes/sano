@@ -1,11 +1,11 @@
 // App logic for the Nepali study guide. Course content lives in js/data.js (COURSE).
 
 const STATE_KEY = 'sano.state.v1';
-const LESSON_NEW_ITEMS = 5; // items per unit lesson; each new item yields two exercises
+const LESSON_NEW_ITEMS = 5; // Items per unit lesson; each new item yields two exercises
 const DAILY_NEW_ITEMS = 4;
 const DAILY_REVIEW_ITEMS = 6;
 const MAX_LEVEL = 4;
-const REVIEW_INTERVALS = [1, 1, 3, 7, 14]; // days until an item at this level is due for review
+const REVIEW_INTERVALS = [1, 1, 3, 7, 14]; // Days until an item at this level is due for review
 
 let state;
 let words = []; // Flat list of phrase items (the #words table) used by flashcards and the quiz.
@@ -88,8 +88,7 @@ function loadState() {
 
 	if (parsed.version === 1) parsed = migrateV1State(parsed);
 	const loaded = Object.assign(defaultState(), parsed);
-	for (const id in loaded.items)
-		loaded.items[id] = Object.assign({ seen: 0, correct: 0, level: 0, lastSeen: null, intro: false }, loaded.items[id]);
+	for (const id in loaded.items) loaded.items[id] = Object.assign({ seen: 0, correct: 0, level: 0, lastSeen: null, intro: false }, loaded.items[id]);
 	return loaded;
 }
 
@@ -145,21 +144,14 @@ function migrateLegacyState() {
 	}
 
 	localStorage.setItem(STATE_KEY, JSON.stringify(migrated));
-	for (const key of ['name', 'streak', 'itemsCompletedToday', 'totalItemsCompleted', 'lastActivity', 'wordRecord'])
-		localStorage.removeItem(key);
+	for (const key of ['name', 'streak', 'itemsCompletedToday', 'totalItemsCompleted', 'lastActivity', 'wordRecord']) localStorage.removeItem(key);
 
 	console.log('Migrated legacy progress to ' + STATE_KEY);
 	return migrated;
 }
 
 function dayString(date) {
-	return (
-		date.getFullYear() +
-		'-' +
-		String(date.getMonth() + 1).padStart(2, '0') +
-		'-' +
-		String(date.getDate()).padStart(2, '0')
-	);
+	return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
 }
 
 // Called on every completed item: maintains the streak and daily counter.
@@ -174,8 +166,7 @@ function registerActivity() {
 }
 
 function itemRecord(id) {
-	if (!Object.hasOwn(state.items, id))
-		state.items[id] = { seen: 0, correct: 0, level: 0, lastSeen: null, intro: false };
+	if (!Object.hasOwn(state.items, id)) state.items[id] = { seen: 0, correct: 0, level: 0, lastSeen: null, intro: false };
 	return state.items[id];
 }
 
@@ -312,9 +303,7 @@ function startDailyLesson() {
 }
 
 function startUnitLesson(unit, review) {
-	const items = review
-		? shuffleArray(unit.items.slice()).slice(0, LESSON_NEW_ITEMS)
-		: unitNewItems(unit).slice(0, LESSON_NEW_ITEMS);
+	const items = review ? shuffleArray(unit.items.slice()).slice(0, LESSON_NEW_ITEMS) : unitNewItems(unit).slice(0, LESSON_NEW_ITEMS);
 	startLesson(buildExercises(items, []));
 }
 
@@ -367,8 +356,7 @@ function buildExercises(newItems, reviewItems) {
 		}
 	}
 
-	if (matchItems.length > 0)
-		exercises.splice(Math.floor(Math.random() * (exercises.length + 1)), 0, { type: 'match', items: matchItems });
+	if (matchItems.length > 0) exercises.splice(Math.floor(Math.random() * (exercises.length + 1)), 0, { type: 'match', items: matchItems });
 	return exercises;
 }
 
@@ -380,8 +368,7 @@ function renderExercise() {
 	const ex = lesson.queue[lesson.index];
 	lesson.answered = false;
 
-	document.getElementById('lesson-progress-fill').style.width =
-		Math.round((lesson.index / lesson.queue.length) * 100) + '%';
+	document.getElementById('lesson-progress-fill').style.width = Math.round((lesson.index / lesson.queue.length) * 100) + '%';
 	document.getElementById('lesson-feedback').classList.add('hide');
 
 	// Restart the slide-in animation for each new exercise.
@@ -690,8 +677,7 @@ function editDistance(a, b) {
 	const dp = Array.from({ length: a.length + 1 }, (_, i) => [i].concat(new Array(b.length).fill(0)));
 	for (let j = 1; j <= b.length; j++) dp[0][j] = j;
 	for (let i = 1; i <= a.length; i++)
-		for (let j = 1; j <= b.length; j++)
-			dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+		for (let j = 1; j <= b.length; j++) dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
 	return dp[a.length][b.length];
 }
 
@@ -703,14 +689,12 @@ function continueLesson() {
 
 function finishLesson() {
 	saveState();
-	document.getElementById('complete-stats').textContent =
-		lesson.firstTryCorrect + ' of ' + lesson.statTotal + ' correct on the first try';
+	document.getElementById('complete-stats').textContent = lesson.firstTryCorrect + ' of ' + lesson.statTotal + ' correct on the first try';
 
 	const streakEl = document.getElementById('complete-streak');
 	streakEl.classList.toggle('hide', !lesson.firstOfDay);
 	if (lesson.firstOfDay)
-		document.getElementById('complete-streak-text').textContent =
-			state.streak === 1 ? 'Streak started!' : state.streak + ' day streak!';
+		document.getElementById('complete-streak-text').textContent = state.streak === 1 ? 'Streak started!' : state.streak + ' day streak!';
 
 	const strengthenedEl = document.getElementById('complete-strengthened');
 	strengthenedEl.classList.toggle('hide', lesson.leveledUp === 0);
@@ -740,9 +724,7 @@ function renderTables() {
 
 		for (const item of unit.items) {
 			const row = document.createElement('tr');
-			const cells = isPhrases
-				? [item.np, item.pron, item.en, item.usage]
-				: [item.np, item.pron, item.emoji, item.en];
+			const cells = isPhrases ? [item.np, item.pron, item.en, item.usage] : [item.np, item.pron, item.emoji, item.en];
 			cells.forEach((text, i) => {
 				const cell = document.createElement(i === 0 ? 'th' : 'td');
 				cell.textContent = text;
