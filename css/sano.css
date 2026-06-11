@@ -804,9 +804,16 @@ table#vocab tbody td:nth-child(3) {
 	gap: 10px;
 	align-content: flex-start;
 	min-height: 70px;
-	margin-top: 3rem;
+	margin-top: 1rem;
 	padding-bottom: 12px;
 	border-bottom: 2px solid var(--border-color);
+}
+#wordbank-answer:empty::before {
+	content: 'Tap the tiles below to build the phrase…';
+	align-self: center;
+	font-size: 1.6rem;
+	font-style: italic;
+	color: var(--text-color-softer);
 }
 #wordbank-pool {
 	display: flex;
@@ -890,6 +897,38 @@ table#vocab tbody td:nth-child(3) {
 	margin-top: 2.5rem;
 }
 
+/* Primary action buttons in the lesson flow */
+
+#exercise-check,
+#lesson-continue,
+#complete-continue {
+	height: auto;
+	padding: 1rem 3.2rem;
+	font-size: 1.6rem;
+	font-weight: 700;
+	color: var(--text-color-invert);
+	background: hsl(var(--accent-hue), 65%, 45%);
+	border: 0;
+	border-radius: 1rem;
+}
+#exercise-check:hover:not(:disabled),
+#lesson-continue:hover,
+#complete-continue:hover {
+	color: var(--text-color-invert);
+	background: hsl(var(--accent-hue), 65%, 38%);
+}
+#exercise-check:disabled {
+	background: var(--text-color-softer);
+	cursor: default;
+}
+
+/* Hide the site footer while inside a lesson */
+
+#screen-lesson:not(.hide) ~ .footer,
+#screen-complete:not(.hide) ~ .footer {
+	display: none;
+}
+
 #lesson-feedback {
 	position: fixed;
 	bottom: 0;
@@ -938,7 +977,102 @@ table#vocab tbody td:nth-child(3) {
 	font-weight: 700;
 	font-size: 4.6rem;
 	color: var(--text-complete-color);
+	animation: grow-in 0.4s ease-out;
+}
+#complete-streak {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	font-size: 2.4rem;
+	font-weight: 700;
+	color: var(--text-color-code-func);
+	animation: grow-in 0.5s ease-out;
+}
+#complete-streak .material-icons {
+	font-size: 3rem;
 }
 #complete-stats {
 	font-size: 2rem;
+	margin-bottom: 0.5rem;
+}
+#complete-strengthened {
+	font-size: 1.7rem;
+	color: var(--text-color-soft);
+}
+
+/* Animations */
+
+@keyframes slide-in {
+	from {
+		opacity: 0;
+		transform: translateX(40px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+#exercise-body.slide-in {
+	animation: slide-in 0.25s ease-out;
+}
+
+@keyframes slide-up {
+	from {
+		transform: translateY(100%);
+	}
+	to {
+		transform: none;
+	}
+}
+#lesson-feedback:not(.hide) {
+	animation: slide-up 0.25s ease-out;
+}
+
+@keyframes grow-in {
+	from {
+		opacity: 0;
+		transform: scale(0.7);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes tile-pop {
+	50% {
+		transform: scale(1.08);
+	}
+}
+.match-tile.matched {
+	animation: tile-pop 0.3s ease;
+}
+
+@keyframes tile-shake {
+	20%,
+	60% {
+		transform: translateX(-4px);
+	}
+	40%,
+	80% {
+		transform: translateX(4px);
+	}
+}
+.match-tile.miss {
+	animation: tile-shake 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#exercise-body.slide-in,
+	#lesson-feedback:not(.hide),
+	#complete-title,
+	#complete-streak,
+	.match-tile.matched,
+	.match-tile.miss {
+		animation: none;
+	}
+	#lesson-progress-fill {
+		transition: none;
+	}
 }

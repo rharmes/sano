@@ -327,6 +327,8 @@ function startLesson(queue) {
 		// A matching exercise covers several items, so stats count items rather than exercises.
 		statTotal: queue.reduce((n, ex) => n + (ex.items ? ex.items.length : 1), 0),
 		levelAdjusted: {},
+		leveledUp: 0,
+		firstOfDay: state.lastActivityDay !== dayString(new Date()),
 	};
 	showScreen('lesson');
 	renderExercise();
@@ -381,6 +383,12 @@ function renderExercise() {
 	document.getElementById('lesson-progress-fill').style.width =
 		Math.round((lesson.index / lesson.queue.length) * 100) + '%';
 	document.getElementById('lesson-feedback').classList.add('hide');
+
+	// Restart the slide-in animation for each new exercise.
+	const bodyEl = document.getElementById('exercise-body');
+	bodyEl.classList.remove('slide-in');
+	void bodyEl.offsetWidth;
+	bodyEl.classList.add('slide-in');
 
 	document.getElementById('exercise-choices').classList.toggle('hide', ex.type !== 'choice');
 	document.getElementById('exercise-wordbank').classList.toggle('hide', ex.type !== 'wordbank');
@@ -548,7 +556,12 @@ function finishMatch() {
 		}
 		if (!lesson.levelAdjusted[item.id]) {
 			lesson.levelAdjusted[item.id] = true;
-			record.level = correct ? Math.min(record.level + 1, MAX_LEVEL) : Math.max(record.level - 1, 0);
+			if (correct) {
+				record.level = Math.min(record.level + 1, MAX_LEVEL);
+				lesson.leveledUp++;
+			} else {
+				record.level = Math.max(record.level - 1, 0);
+			}
 		}
 	}
 
@@ -628,7 +641,12 @@ function applyAnswer(ex, correct) {
 		// Move the item one Leitner level per lesson, based on its first exercise.
 		if (!lesson.levelAdjusted[ex.item.id]) {
 			lesson.levelAdjusted[ex.item.id] = true;
-			record.level = correct ? Math.min(record.level + 1, MAX_LEVEL) : Math.max(record.level - 1, 0);
+			if (correct) {
+				record.level = Math.min(record.level + 1, MAX_LEVEL);
+				lesson.leveledUp++;
+			} else {
+				record.level = Math.max(record.level - 1, 0);
+			}
 		}
 	}
 	if (!correct && !ex.requeued) lesson.queue.push(Object.assign({}, ex, { requeued: true }));
@@ -687,6 +705,17 @@ function finishLesson() {
 	saveState();
 	document.getElementById('complete-stats').textContent =
 		lesson.firstTryCorrect + ' of ' + lesson.statTotal + ' correct on the first try';
+
+	const streakEl = document.getElementById('complete-streak');
+	streakEl.classList.toggle('hide', !lesson.firstOfDay);
+	if (lesson.firstOfDay)
+		document.getElementById('complete-streak-text').textContent =
+			state.streak === 1 ? 'Streak started!' : state.streak + ' day streak!';
+
+	const strengthenedEl = document.getElementById('complete-strengthened');
+	strengthenedEl.classList.toggle('hide', lesson.leveledUp === 0);
+	strengthenedEl.textContent = lesson.leveledUp + (lesson.leveledUp === 1 ? ' word' : ' words') + ' strengthened';
+
 	showScreen('complete');
 }
 
