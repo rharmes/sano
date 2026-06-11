@@ -162,6 +162,335 @@ const COURSE = [
 		]
 	},
 	{
+		"id": "numbers",
+		"title": "Numbers & Counting",
+		"kind": "vocab",
+		"items": [
+			{
+				"id": "ek-one",
+				"np": "Ek",
+				"pron": "ayk",
+				"emoji": "1️⃣",
+				"en": "One"
+			},
+			{
+				"id": "dui-two",
+				"np": "Dui",
+				"pron": "dwee",
+				"emoji": "2️⃣",
+				"en": "Two"
+			},
+			{
+				"id": "tin-three",
+				"np": "Tin",
+				"pron": "teen",
+				"emoji": "3️⃣",
+				"en": "Three"
+			},
+			{
+				"id": "chaar-four",
+				"np": "Chaar",
+				"pron": "chaar",
+				"emoji": "4️⃣",
+				"en": "Four"
+			},
+			{
+				"id": "paanch-five",
+				"np": "Paanch",
+				"pron": "paanch",
+				"emoji": "5️⃣",
+				"en": "Five"
+			},
+			{
+				"id": "chha-six",
+				"np": "Chha",
+				"pron": "chhuh",
+				"emoji": "6️⃣",
+				"en": "Six"
+			},
+			{
+				"id": "saat-seven",
+				"np": "Saat",
+				"pron": "saat",
+				"emoji": "7️⃣",
+				"en": "Seven"
+			},
+			{
+				"id": "aath-eight",
+				"np": "Aath",
+				"pron": "aath",
+				"emoji": "8️⃣",
+				"en": "Eight"
+			},
+			{
+				"id": "nau-nine",
+				"np": "Nau",
+				"pron": "now",
+				"emoji": "9️⃣",
+				"en": "Nine"
+			},
+			{
+				"id": "das-ten",
+				"np": "Das",
+				"pron": "dus",
+				"emoji": "🔟",
+				"en": "Ten"
+			},
+			{
+				"id": "bis-twenty",
+				"np": "Bis",
+				"pron": "bees",
+				"emoji": "🔢",
+				"en": "Twenty"
+			},
+			{
+				"id": "pachaas-fifty",
+				"np": "Pachaas",
+				"pron": "puh-chaas",
+				"emoji": "🔢",
+				"en": "Fifty"
+			},
+			{
+				"id": "saya-hundred",
+				"np": "Saya",
+				"pron": "suh-yuh",
+				"emoji": "💯",
+				"en": "Hundred"
+			},
+			{
+				"id": "hajaar-thousand",
+				"np": "Hajaar",
+				"pron": "huh-jaar",
+				"emoji": "🔢",
+				"en": "Thousand"
+			},
+			{
+				"id": "aadha-half",
+				"np": "Aadha",
+				"pron": "aa-dhaa",
+				"emoji": "🌗",
+				"en": "Half"
+			}
+		]
+	},
+	{
+		"id": "pronouns",
+		"title": "Pronouns & Possessives",
+		"kind": "phrases",
+		"items": [
+			{
+				"id": "ma-i-me",
+				"np": "Ma",
+				"pron": "muh",
+				"en": "I / Me",
+				"usage": "The first-person pronoun. You have already seen it in phrases like \"Ma Nepali bolchhu\" (I speak Nepali). Nepali usually drops pronouns when the meaning is clear from the verb, so \"ma\" is often optional in casual speech."
+			},
+			{
+				"id": "hami-we-us",
+				"np": "Hami",
+				"pron": "huh-mi",
+				"en": "We / Us",
+				"usage": "The plural \"we.\" You may also hear \"hamiharu,\" which adds the plural marker \"-haru\" for emphasis. Used the same way in formal and informal speech."
+			},
+			{
+				"id": "tapai-you-formal",
+				"np": "Tapai",
+				"pron": "tuh-pie",
+				"en": "You (formal)",
+				"usage": "The respectful \"you,\" safe to use with anyone — elders, strangers, in-laws, shopkeepers. When in doubt, use \"tapai\" rather than \"timi.\" It pairs with the polite verb endings you have seen, like \"-nu huncha.\""
+			},
+			{
+				"id": "u-he-she-informal",
+				"np": "U",
+				"pron": "oo",
+				"en": "He / She (informal)",
+				"usage": "Informal third person, used for friends, children, or people younger than you. Like \"timi,\" avoid it for elders or people you respect — use \"uhaa\" instead."
+			},
+			{
+				"id": "uhaa-he-she-polite",
+				"np": "Uhaa",
+				"pron": "oo-haa",
+				"en": "He / She (polite)",
+				"usage": "The respectful way to say \"he\" or \"she.\" Use it for elders, in-laws, teachers, or anyone you would address as \"tapai.\" Using the polite third person shows the same respect as polite \"you.\""
+			},
+			{
+				"id": "uniharu-they",
+				"np": "Uniharu",
+				"pron": "oo-ni-huh-roo",
+				"en": "They",
+				"usage": "Third-person plural. The \"-haru\" ending is the general plural marker in Nepali — you can attach it to most nouns too: \"saathiharu\" (friends), \"bachchaharu\" (children)."
+			},
+			{
+				"id": "yo-this",
+				"np": "Yo",
+				"pron": "yo",
+				"en": "This",
+				"usage": "Points to something near you. You have seen it in \"Yo ke ho?\" (What is this?). Also doubles as \"it\" for nearby things: \"yo ramro cha\" (this is good)."
+			},
+			{
+				"id": "tyo-that",
+				"np": "Tyo",
+				"pron": "tyo",
+				"en": "That",
+				"usage": "Points to something away from you, the counterpart of \"yo.\" \"Tyo ke ho?\" (What is that?), \"tyo mero ho\" (that is mine)."
+			},
+			{
+				"id": "mero-my-mine",
+				"np": "Mero",
+				"pron": "meh-ro",
+				"en": "My / Mine",
+				"usage": "First-person possessive, as in \"Mero naam\" (my name). Possessives agree with what is owned, but \"mero\" works in almost all everyday cases."
+			},
+			{
+				"id": "hamro-our-ours",
+				"np": "Hamro",
+				"pron": "hum-ro",
+				"en": "Our / Ours",
+				"usage": "The possessive of \"hami.\" \"Hamro ghar\" means \"our house.\" Very common in family settings since the household is usually talked about as shared."
+			},
+			{
+				"id": "timro-your-informal",
+				"np": "Timro",
+				"pron": "tim-ro",
+				"en": "Your (informal)",
+				"usage": "The possessive of \"timi,\" for friends, children, and people younger than you. \"Timro naam ke ho?\" is the informal way to ask a name."
+			},
+			{
+				"id": "tapaiko-your-formal",
+				"np": "Tapaiko",
+				"pron": "tuh-pie-ko",
+				"en": "Your (formal)",
+				"usage": "The possessive of \"tapai.\" \"Tapaiko\" is built from \"tapai\" + \"ko,\" the same \"ko\" that marks possession across Nepali: \"Ross ko kitab\" (Ross's book)."
+			},
+			{
+				"id": "usko-his-her-informal",
+				"np": "Usko",
+				"pron": "oos-ko",
+				"en": "His / Her (informal)",
+				"usage": "The possessive of \"u.\" For the polite version use \"uhaako\" (his/her, respectful), following the same pattern of adding \"ko.\""
+			}
+		]
+	},
+	{
+		"id": "family-people",
+		"title": "Family & People",
+		"kind": "vocab",
+		"items": [
+			{
+				"id": "aamaa-mother",
+				"np": "Aamaa",
+				"pron": "aa-maa",
+				"emoji": "👩",
+				"en": "Mother"
+			},
+			{
+				"id": "buwa-father",
+				"np": "Buwa",
+				"pron": "boo-waa",
+				"emoji": "👨",
+				"en": "Father"
+			},
+			{
+				"id": "didi-older-sister",
+				"np": "Didi",
+				"pron": "di-di",
+				"emoji": "👧",
+				"en": "Older sister"
+			},
+			{
+				"id": "bahini-younger-sister",
+				"np": "Bahini",
+				"pron": "buh-hi-ni",
+				"emoji": "👧",
+				"en": "Younger sister"
+			},
+			{
+				"id": "dai-older-brother",
+				"np": "Dai",
+				"pron": "dye",
+				"emoji": "👦",
+				"en": "Older brother"
+			},
+			{
+				"id": "bhai-younger-brother",
+				"np": "Bhai",
+				"pron": "bye",
+				"emoji": "👦",
+				"en": "Younger brother"
+			},
+			{
+				"id": "chhora-son",
+				"np": "Chhora",
+				"pron": "chho-raa",
+				"emoji": "👦",
+				"en": "Son"
+			},
+			{
+				"id": "chhori-daughter",
+				"np": "Chhori",
+				"pron": "chho-ree",
+				"emoji": "👧",
+				"en": "Daughter"
+			},
+			{
+				"id": "hajurbuwa-grandfather",
+				"np": "Hajurbuwa",
+				"pron": "huh-joor-boo-waa",
+				"emoji": "👴",
+				"en": "Grandfather"
+			},
+			{
+				"id": "hajuraamaa-grandmother",
+				"np": "Hajuraamaa",
+				"pron": "huh-joor-aa-maa",
+				"emoji": "👵",
+				"en": "Grandmother"
+			},
+			{
+				"id": "shrimaan-husband",
+				"np": "Shrimaan",
+				"pron": "shree-maan",
+				"emoji": "🤵",
+				"en": "Husband"
+			},
+			{
+				"id": "shrimati-wife",
+				"np": "Shrimati",
+				"pron": "shree-muh-ti",
+				"emoji": "👰",
+				"en": "Wife"
+			},
+			{
+				"id": "saathi-friend",
+				"np": "Saathi",
+				"pron": "saa-thi",
+				"emoji": "🧑‍🤝‍🧑",
+				"en": "Friend"
+			},
+			{
+				"id": "chhimeki-neighbor",
+				"np": "Chhimeki",
+				"pron": "chhi-meh-ki",
+				"emoji": "🏠",
+				"en": "Neighbor"
+			},
+			{
+				"id": "manchhe-person",
+				"np": "Manchhe",
+				"pron": "maan-chhe",
+				"emoji": "🧑",
+				"en": "Person"
+			},
+			{
+				"id": "bachcha-child-baby",
+				"np": "Bachcha",
+				"pron": "bach-chaa",
+				"emoji": "👶",
+				"en": "Child / Baby"
+			}
+		]
+	},
+	{
 		"id": "introductions",
 		"title": "Introductions",
 		"kind": "phrases",
@@ -400,6 +729,90 @@ const COURSE = [
 		]
 	},
 	{
+		"id": "connectors",
+		"title": "Connectors & Fillers",
+		"kind": "phrases",
+		"items": [
+			{
+				"id": "ra-and",
+				"np": "Ra",
+				"pron": "ruh",
+				"en": "And",
+				"usage": "The basic \"and,\" joining words and clauses: \"dal ra bhaat\" (lentils and rice). One of the most frequent words in the language."
+			},
+			{
+				"id": "tara-but",
+				"np": "Tara",
+				"pron": "tuh-ruh",
+				"en": "But",
+				"usage": "Introduces a contrast: \"mitho cha, tara piro cha\" (it's tasty, but it's spicy). Works just like English \"but.\""
+			},
+			{
+				"id": "ani-and-then-also",
+				"np": "Ani",
+				"pron": "uh-ni",
+				"en": "And then / Also",
+				"usage": "A conversational connector for continuing a story or list: \"ani ke bhayo?\" (and then what happened?). You will hear it constantly in spoken Nepali."
+			},
+			{
+				"id": "ki-or-in-questions",
+				"np": "Ki",
+				"pron": "ki",
+				"en": "Or (in questions)",
+				"usage": "Offers alternatives in questions: \"chiya ki coffee?\" (tea or coffee?). It can also turn a statement into a tag question when added at the end."
+			},
+			{
+				"id": "athawa-or-in-statements",
+				"np": "Athawa",
+				"pron": "uh-thuh-waa",
+				"en": "Or (in statements)",
+				"usage": "The \"or\" used in statements rather than questions: \"aaja athawa bholi\" (today or tomorrow). In casual speech, \"ki\" often covers both."
+			},
+			{
+				"id": "pani-also-too",
+				"np": "Pani",
+				"pron": "puh-ni",
+				"en": "Also / Too",
+				"usage": "Means \"also\" or \"even\": \"ma pani\" (me too). Note the short vowel — \"paani\" with a long aa means water. Context and length tell them apart."
+			},
+			{
+				"id": "matra-only-just",
+				"np": "Matra",
+				"pron": "maa-truh",
+				"en": "Only / Just",
+				"usage": "Restricts to \"only\": \"ek matra\" (only one), \"herna matra\" (just looking — useful in shops!). It follows the word it limits."
+			},
+			{
+				"id": "ahile-now-right-now",
+				"np": "Ahile",
+				"pron": "uh-hi-lay",
+				"en": "Now / Right now",
+				"usage": "Refers to the present moment: \"ahile aaunus\" (come now). \"Ahile nai\" makes it stronger — \"right this moment.\""
+			},
+			{
+				"id": "pachhi-later-after",
+				"np": "Pachhi",
+				"pron": "puh-chhi",
+				"en": "Later / After",
+				"usage": "Means \"later\" on its own (\"pachhi bhetaula\" — see you later) or \"after\" following another word: \"khana pachhi\" (after the meal)."
+			},
+			{
+				"id": "aba-now-next",
+				"np": "Aba",
+				"pron": "uh-buh",
+				"en": "Now / Next",
+				"usage": "Marks a transition to what happens next: \"aba ke garne?\" (now what shall we do?). Slightly different from \"ahile\" — \"aba\" is about sequence, \"ahile\" about the present moment."
+			},
+			{
+				"id": "pheri-again",
+				"np": "Pheri",
+				"pron": "pheh-ri",
+				"en": "Again",
+				"usage": "Means \"again,\" already familiar from \"pheri bhetaula\" (let's meet again) and \"pheri bhannus\" (please say it again). On its own: \"pheri garnus\" (do it again)."
+			}
+		]
+	},
+	{
 		"id": "meals",
 		"title": "Meals",
 		"kind": "phrases",
@@ -634,6 +1047,97 @@ const COURSE = [
 				"pron": "hi-jo",
 				"en": "Yesterday",
 				"usage": "Refers to the previous day. This word is commonly used when recounting recent events or experiences. It's a straightforward time marker in everyday conversation."
+			},
+			{
+				"id": "bihaana-morning",
+				"np": "Bihaana",
+				"pron": "bi-haa-nuh",
+				"en": "Morning",
+				"usage": "The morning hours. \"Bihaana sabere\" means early in the morning. Often used with meals: morning daal bhaat is eaten mid-morning in most households."
+			},
+			{
+				"id": "diuso-afternoon-daytime",
+				"np": "Diuso",
+				"pron": "dyoo-so",
+				"en": "Afternoon / Daytime",
+				"usage": "The middle of the day, roughly late morning through afternoon. \"Diuso khana\" can refer to a midday meal or snack."
+			},
+			{
+				"id": "beluka-evening",
+				"np": "Beluka",
+				"pron": "bay-loo-kaa",
+				"en": "Evening",
+				"usage": "The evening hours, from late afternoon until night. \"Beluka bhetaula\" — see you this evening."
+			},
+			{
+				"id": "raati-night",
+				"np": "Raati",
+				"pron": "raa-ti",
+				"en": "Night",
+				"usage": "Nighttime. You have seen it inside \"Subha ratri\" (good night). \"Raati abela\" means late at night."
+			},
+			{
+				"id": "aaitabaar-sunday",
+				"np": "Aaitabaar",
+				"pron": "aai-tuh-baar",
+				"en": "Sunday",
+				"usage": "The first day of the Nepali week — and a normal working day in Nepal, unlike in Western countries."
+			},
+			{
+				"id": "sombaar-monday",
+				"np": "Sombaar",
+				"pron": "som-baar",
+				"en": "Monday",
+				"usage": "All weekday names end in \"-baar\" (day). \"Som\" relates to the moon, like \"lunes\" or \"Monday\" in other languages."
+			},
+			{
+				"id": "mangalbaar-tuesday",
+				"np": "Mangalbaar",
+				"pron": "mun-gul-baar",
+				"en": "Tuesday",
+				"usage": ""
+			},
+			{
+				"id": "budhabaar-wednesday",
+				"np": "Budhabaar",
+				"pron": "boo-dhuh-baar",
+				"en": "Wednesday",
+				"usage": ""
+			},
+			{
+				"id": "bihibaar-thursday",
+				"np": "Bihibaar",
+				"pron": "bi-hi-baar",
+				"en": "Thursday",
+				"usage": ""
+			},
+			{
+				"id": "sukrabaar-friday",
+				"np": "Sukrabaar",
+				"pron": "sook-ruh-baar",
+				"en": "Friday",
+				"usage": ""
+			},
+			{
+				"id": "sanibaar-saturday",
+				"np": "Sanibaar",
+				"pron": "suh-ni-baar",
+				"en": "Saturday",
+				"usage": "The weekly holiday in Nepal — offices and schools close on Saturday, not Sunday. Weekend plans revolve around Sanibaar."
+			},
+			{
+				"id": "kati-bajyo-what-time-is-it",
+				"np": "Kati bajyo?",
+				"pron": "kuh-ti buh-jyo",
+				"en": "What time is it?",
+				"usage": "The standard way to ask the time. \"Bajyo\" literally means \"(the hour) struck.\" You will need your numbers for the answer!"
+			},
+			{
+				"id": "bajyo-it-s-o-clock",
+				"np": "___ bajyo",
+				"pron": "buh-jyo",
+				"en": "It's ___ o'clock",
+				"usage": "The answer to \"kati bajyo?\" — insert a number: \"paanch bajyo\" (it's five o'clock). For half past, add \"saadhe\": \"saadhe paanch\" (half past five)."
 			}
 		]
 	},
