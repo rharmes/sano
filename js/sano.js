@@ -307,6 +307,8 @@ function renderPath() {
 	COURSE.forEach((unit, index) => {
 		const complete = unitIsComplete(unit);
 		const isCurrent = unit === current;
+		// Phase-shifted so the path starts at the left edge rather than the center.
+		const angle = index * 0.9 - Math.PI / 2;
 
 		if (PATH_SECTIONS[unit.id]) {
 			const section = document.createElement('div');
@@ -319,7 +321,7 @@ function renderPath() {
 			if (isCurrent) y += 34;
 		}
 		const status = complete ? 'complete' : isCurrent ? 'current' : 'locked';
-		const x = center + Math.sin(index * 0.9) * amplitude;
+		const x = center + Math.sin(angle) * amplitude;
 		centers.push({ x: x, y: y + nodeSize / 2, complete: complete });
 
 		if (isCurrent) {
@@ -371,7 +373,7 @@ function renderPath() {
 		if (complete || isCurrent) node.addEventListener('click', () => startUnitLesson(unit, complete));
 		wrap.appendChild(node);
 
-		const onLeft = Math.sin(index * 0.9) > 0;
+		const onLeft = Math.sin(angle) > 0;
 		const label = document.createElement('div');
 		label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
 		label.style.width = labelWidth + 'px';

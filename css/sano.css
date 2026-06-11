@@ -579,6 +579,41 @@ table#vocab tbody td:nth-child(3) {
 	}
 }
 
+/* Compact fixed header for narrow phones: fill the full width, smaller icons. */
+@media (max-width: 429px) {
+	#progress {
+		box-sizing: border-box;
+		width: 100%;
+		margin-left: 0;
+		padding: 10px 10px 1.8rem;
+		justify-content: space-between;
+	}
+	#progress span,
+	#progress a {
+		padding-left: 0;
+	}
+	#progress .material-icons {
+		padding-left: 4px;
+		font-size: 2rem;
+		line-height: 1.5;
+	}
+	#progress #user-label {
+		margin-left: 0;
+	}
+	#progress #streak-label {
+		margin: 0 -3px 0 0;
+	}
+	#progress #name {
+		max-width: 56px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	#progress span {
+		font-size: 1.6rem;
+	}
+}
+
 @media (max-width: 500px) {
 	#flashcard-next,
 	#flashcard-prev {
