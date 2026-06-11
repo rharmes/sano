@@ -292,10 +292,10 @@ function renderPath() {
 	const halfSpan = window.innerWidth / 2 - 12;
 	let amplitude, labelWidth;
 	if (compact) {
-		amplitude = Math.min(130, width * 0.27);
+		amplitude = Math.min(140, width * 0.27 + 10);
 		labelWidth = Math.max(86, width / 2 - amplitude - nodeSize / 2 - labelGap - 2);
 	} else {
-		amplitude = Math.min(130, width * 0.27, Math.max(72, halfSpan - nodeSize / 2 - labelGap - 150));
+		amplitude = Math.min(140, width * 0.27 + 10, Math.max(72, halfSpan - nodeSize / 2 - labelGap - 150));
 		labelWidth = Math.min(150, Math.max(86, halfSpan - amplitude - nodeSize / 2 - labelGap));
 	}
 	const center = width / 2;
