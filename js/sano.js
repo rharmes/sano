@@ -57,6 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	refreshHeader();
 	renderHome();
+
+	let resizeTimer;
+	window.addEventListener('resize', () => {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(() => {
+			if (!document.getElementById('screen-home').classList.contains('hide')) renderPath();
+		}, 150);
+	});
 });
 
 // State management. All progress lives in a single versioned LocalStorage entry.
@@ -217,8 +225,9 @@ function showScreen(name) {
 
 function goHome() {
 	lesson = null;
-	renderHome();
+	// Show the screen first so the path can measure its real width.
 	showScreen('home');
+	renderHome();
 }
 
 // Home screen: a Duolingo-style path of units.
@@ -239,40 +248,16 @@ function currentUnit() {
 	return null;
 }
 
+const PATH_SECTIONS = {
+	basics: 'Foundations',
+	meals: 'Around the table',
+	'household-living': 'Around the house',
+	purchasing: 'Out and about',
+	'bedroom-items': 'Building vocabulary',
+};
+
 function renderHome() {
-	const listEl = document.getElementById('unit-list');
-	listEl.textContent = '';
-
-	COURSE.forEach((unit, index) => {
-		const complete = unitIsComplete(unit);
-		const unlocked = unitIsUnlocked(index);
-
-		const card = document.createElement('div');
-		card.className = 'unit-card' + (complete ? ' complete' : unlocked ? ' unlocked' : ' locked');
-
-		const icon = document.createElement('span');
-		icon.className = 'material-icons unit-icon';
-		icon.textContent = complete ? 'check_circle' : unlocked ? 'play_circle' : 'lock';
-		card.appendChild(icon);
-
-		const info = document.createElement('div');
-		info.className = 'unit-info';
-		const title = document.createElement('div');
-		title.className = 'unit-title';
-		title.textContent = unit.title;
-		const due = unitDueCount(unit);
-		const meta = document.createElement('div');
-		meta.className = 'unit-meta';
-		meta.textContent = complete
-			? unit.items.length + ' words · ' + (due > 0 ? due + ' due for review' : 'tap to review')
-			: unit.items.length - unitNewItems(unit).length + ' / ' + unit.items.length + ' words';
-		info.appendChild(title);
-		info.appendChild(meta);
-		card.appendChild(info);
-
-		if (unlocked) card.addEventListener('click', () => startUnitLesson(unit, complete));
-		listEl.appendChild(card);
-	});
+	renderPath();
 
 	const dailyButton = document.getElementById('daily-lesson');
 	const unit = currentUnit();
@@ -288,6 +273,125 @@ function renderHome() {
 		dailyButton.textContent = 'All caught up! Come back tomorrow';
 		dailyButton.disabled = true;
 	}
+}
+
+// The Duolingo-style winding path. All geometry is computed here so it can
+// adapt to the container width; CSS handles colors and type.
+function renderPath() {
+	const wrap = document.getElementById('path');
+	wrap.textContent = '';
+
+	const width = wrap.clientWidth || 560;
+	const compact = width < 520;
+	const nodeSize = compact ? 64 : 76;
+	const step = compact ? 108 : 124;
+	const amplitude = Math.min(130, width * 0.27);
+	const labelWidth = compact ? Math.max(86, width / 2 - amplitude - nodeSize / 2 - 14) : 150;
+	const center = width / 2;
+	const current = currentUnit();
+
+	let y = 30;
+	const centers = [];
+
+	COURSE.forEach((unit, index) => {
+		const complete = unitIsComplete(unit);
+		const isCurrent = unit === current;
+
+		if (PATH_SECTIONS[unit.id]) {
+			const section = document.createElement('div');
+			section.className = 'path-section';
+			section.textContent = PATH_SECTIONS[unit.id];
+			section.style.top = y + 'px';
+			wrap.appendChild(section);
+			y += compact ? 56 : 64;
+			// The START bubble extends above the current node; keep it clear of the banner.
+			if (isCurrent) y += 34;
+		}
+		const status = complete ? 'complete' : isCurrent ? 'current' : 'locked';
+		const x = center + Math.sin(index * 0.9) * amplitude;
+		centers.push({ x: x, y: y + nodeSize / 2, complete: complete });
+
+		if (isCurrent) {
+			const ringSize = nodeSize + 20;
+			const introduced = unit.items.length - unitNewItems(unit).length;
+			const ring = document.createElement('div');
+			ring.className = 'path-ring';
+			ring.style.width = ringSize + 'px';
+			ring.style.height = ringSize + 'px';
+			ring.style.left = x - ringSize / 2 + 'px';
+			ring.style.top = y + nodeSize / 2 - ringSize / 2 + 'px';
+			ring.style.background =
+				'conic-gradient(hsl(var(--accent-hue), 65%, 55%) ' +
+				Math.round((introduced / unit.items.length) * 100) +
+				'%, var(--border-color) 0)';
+			const mask = 'radial-gradient(circle, transparent ' + (nodeSize / 2 + 4) + 'px, black ' + (nodeSize / 2 + 5) + 'px)';
+			ring.style.webkitMask = mask;
+			ring.style.mask = mask;
+			wrap.appendChild(ring);
+
+			const start = document.createElement('div');
+			start.className = 'path-start';
+			start.textContent = 'START';
+			start.style.left = x + 'px';
+			start.style.top = y - (compact ? 48 : 54) + 'px';
+			wrap.appendChild(start);
+		}
+
+		const node = document.createElement('button');
+		node.type = 'button';
+		node.className = 'path-node ' + status;
+		node.style.width = nodeSize + 'px';
+		node.style.height = nodeSize + 'px';
+		node.style.left = x - nodeSize / 2 + 'px';
+		node.style.top = y + 'px';
+		node.title = unit.title;
+		const icon = document.createElement('span');
+		icon.className = 'material-icons';
+		icon.textContent = complete ? 'check' : isCurrent ? 'play_arrow' : 'lock';
+		node.appendChild(icon);
+
+		const due = complete ? unitDueCount(unit) : 0;
+		if (due > 0) {
+			const badge = document.createElement('span');
+			badge.className = 'path-badge';
+			badge.textContent = due;
+			node.appendChild(badge);
+		}
+		if (complete || isCurrent) node.addEventListener('click', () => startUnitLesson(unit, complete));
+		wrap.appendChild(node);
+
+		const onLeft = Math.sin(index * 0.9) > 0;
+		const label = document.createElement('div');
+		label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
+		label.style.width = labelWidth + 'px';
+		label.style.top = y + (compact ? 10 : 16) + 'px';
+		label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - 12 : x + nodeSize / 2 + 12) + 'px';
+
+		const title = document.createElement('div');
+		title.textContent = unit.title;
+		const meta = document.createElement('small');
+		meta.textContent = complete
+			? unit.items.length + ' words'
+			: unit.items.length - unitNewItems(unit).length + ' / ' + unit.items.length + ' words';
+		label.appendChild(title);
+		label.appendChild(meta);
+		wrap.appendChild(label);
+
+		y += step;
+	});
+
+	for (let i = 1; i < centers.length; i++) {
+		const from = centers[i - 1];
+		const to = centers[i];
+		for (const t of [0.32, 0.5, 0.68]) {
+			const dot = document.createElement('div');
+			dot.className = 'path-dot' + (from.complete ? ' done' : '');
+			dot.style.left = from.x + (to.x - from.x) * t - 4.5 + 'px';
+			dot.style.top = from.y + (to.y - from.y) * t - 4.5 + 'px';
+			wrap.appendChild(dot);
+		}
+	}
+	wrap.style.height = y + 30 + 'px';
 }
 
 // Lesson engine. A lesson is a queue of exercises; missed ones are re-queued at the end.
