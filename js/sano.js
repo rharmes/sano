@@ -301,14 +301,18 @@ function renderPath() {
 	const center = width / 2;
 	const current = currentUnit();
 
+	// ~5 nodes per sine cycle keeps the road flowing rather than zigzagging;
+	// phase-shifted so the path starts at the left edge.
+	const WAVE = 1.2;
+	const xAt = (i) => center + Math.sin(i * WAVE - Math.PI / 2) * amplitude;
+
 	let y = 30;
 	const centers = [];
 
 	COURSE.forEach((unit, index) => {
 		const complete = unitIsComplete(unit);
 		const isCurrent = unit === current;
-		// Phase-shifted so the path starts at the left edge rather than the center.
-		const angle = index * 0.9 - Math.PI / 2;
+		const angle = index * WAVE - Math.PI / 2;
 
 		if (PATH_SECTIONS[unit.id]) {
 			const section = document.createElement('div');
@@ -321,8 +325,8 @@ function renderPath() {
 			if (isCurrent) y += 34;
 		}
 		const status = complete ? 'complete' : isCurrent ? 'current' : 'locked';
-		const x = center + Math.sin(angle) * amplitude;
-		centers.push({ x: x, y: y + nodeSize / 2, complete: complete });
+		const x = xAt(index);
+		centers.push({ y: y + nodeSize / 2, complete: complete });
 
 		if (isCurrent) {
 			const ringSize = nodeSize + 20;
@@ -393,14 +397,15 @@ function renderPath() {
 		y += step;
 	});
 
+	// Dots sample the continuous sine between nodes, so the trail curves with the road.
 	for (let i = 1; i < centers.length; i++) {
 		const from = centers[i - 1];
 		const to = centers[i];
-		for (const t of [0.32, 0.5, 0.68]) {
+		for (const t of [0.2, 0.4, 0.6, 0.8]) {
 			const dot = document.createElement('div');
 			dot.className = 'path-dot' + (from.complete ? ' done' : '');
-			dot.style.left = from.x + (to.x - from.x) * t - 4.5 + 'px';
-			dot.style.top = from.y + (to.y - from.y) * t - 4.5 + 'px';
+			dot.style.left = xAt(i - 1 + t) - 4 + 'px';
+			dot.style.top = from.y + (to.y - from.y) * t - 4 + 'px';
 			wrap.appendChild(dot);
 		}
 	}

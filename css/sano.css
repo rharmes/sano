@@ -755,8 +755,8 @@ html {
 }
 .path-dot {
 	position: absolute;
-	width: 9px;
-	height: 9px;
+	width: 8px;
+	height: 8px;
 	border-radius: 50%;
 	background: var(--border-color);
 }
