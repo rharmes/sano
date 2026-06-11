@@ -664,7 +664,8 @@ html {
 	border: 0;
 	padding: 0;
 	background: var(--border-color);
-	box-shadow: 0 5px 0 rgba(0, 0, 0, 0.35);
+	/* Solid shadow: a translucent one lets path dots show through. */
+	box-shadow: 0 5px 0 color-mix(in srgb, rgb(0, 0, 0) 35%, var(--background-color));
 }
 .path-node .material-icons {
 	font-size: 3.4rem;
@@ -684,9 +685,13 @@ html {
 .path-node.current:hover {
 	filter: brightness(1.12);
 }
+/* Solid colors rather than opacity, so path dots can't show through. */
 .path-node.locked {
 	cursor: default;
-	opacity: 0.55;
+	background: color-mix(in srgb, var(--border-color) 55%, var(--background-color));
+}
+.path-node.locked .material-icons {
+	color: color-mix(in srgb, var(--text-color-softer) 60%, var(--background-color));
 }
 .path-ring {
 	position: absolute;
