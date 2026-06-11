@@ -1285,6 +1285,90 @@ const COURSE = [
 				"pron": "muh bhaan-daa maaj-choo",
 				"en": "I'll wash the dishes",
 				"usage": "Offers to do the dishes. \"Bhada\" (or \"bhanda\") means dishes/utensils, and \"maajhchu\" means \"I will wash/clean.\" This is a helpful phrase for contributing to household chores. In many Nepali homes, guests are not expected to wash dishes, but offering shows good manners and appreciation. Your host may decline the offer, but it's polite to make it."
+			},
+			{
+				"id": "dhoka-banda-garnus-please-close-the-door",
+				"np": "Dhoka banda garnus",
+				"pron": "dho-kaa bun-duh gur-noos",
+				"en": "Please close the door",
+				"usage": "\"Dhoka\" is door and \"banda\" means closed or shut. \"Banda garnus\" (please close) works for windows too: \"jhyaal banda garnus.\""
+			},
+			{
+				"id": "dhoka-banda-garnu-bhayo-did-you-close-the-door",
+				"np": "Dhoka banda garnu bhayo?",
+				"pron": "dho-kaa bun-duh gur-noo bhuh-yo",
+				"en": "Did you close the door?",
+				"usage": "The past-tense polite question form \"-nu bhayo?\" asks whether someone did something. The nightly household check."
+			},
+			{
+				"id": "batti-balnus-please-turn-on-the-light",
+				"np": "Batti balnus",
+				"pron": "but-ti baal-noos",
+				"en": "Please turn on the light",
+				"usage": "\"Batti\" is light or lamp, \"balnu\" is to light or switch on. Also used for the stove flame: \"ggyaas balnus\" (light the gas)."
+			},
+			{
+				"id": "batti-nibhaunus-please-turn-off-the-light",
+				"np": "Batti nibhaunus",
+				"pron": "but-ti ni-bhau-noos",
+				"en": "Please turn off the light",
+				"usage": "\"Nibhaunu\" means to extinguish or switch off — the counterpart of \"balnu.\" Last one out of the room hears this."
+			},
+			{
+				"id": "ma-lugaa-dhunchu-i-will-wash-the-clothes",
+				"np": "Ma lugaa dhunchu",
+				"pron": "muh loo-gaa dhoon-choo",
+				"en": "I will wash the clothes",
+				"usage": "\"Lugaa\" is clothes and \"dhunu\" is to wash. The same verb covers washing dishes, hands, and laundry."
+			},
+			{
+				"id": "ma-ghar-safaa-garchu-i-will-clean-the-house",
+				"np": "Ma ghar safaa garchu",
+				"pron": "muh ghur suh-faa gur-choo",
+				"en": "I will clean the house",
+				"usage": "\"Safaa\" means clean. \"Safaa garnu\" (to make clean) is the general cleaning verb: \"tebul safaa garnus\" (please wipe the table)."
+			},
+			{
+				"id": "ma-fohor-falchhu-i-will-take-out-the-trash",
+				"np": "Ma fohor falchhu",
+				"pron": "muh fo-hor faal-choo",
+				"en": "I will take out the trash",
+				"usage": "\"Fohor\" is trash (short for \"fohormailaa\") and \"falnu\" means to throw. A reliable way to be a popular member of the household."
+			},
+			{
+				"id": "paahuna-aaudai-chan-guests-are-coming",
+				"np": "Paahuna aaudai chan",
+				"pron": "paa-hoo-naa aau-dye chun",
+				"en": "Guests are coming",
+				"usage": "\"Paahuna\" means guest — a word with weight in Nepal, where guests are treated as honored. Expect rapid cleaning and cooking to follow this announcement."
+			},
+			{
+				"id": "bhitra-aaunus-please-come-in",
+				"np": "Bhitra aaunus",
+				"pron": "bhi-truh aau-noos",
+				"en": "Please come in",
+				"usage": "\"Bhitra\" means inside. The standard welcome at the door, usually followed by an offer of chiya."
+			},
+			{
+				"id": "ma-maddat-garchu-i-will-help",
+				"np": "Ma maddat garchu",
+				"pron": "muh mud-dut gur-choo",
+				"en": "I will help",
+				"usage": "Combines \"maddat\" (help) with the \"garchu\" pattern. The active offer, next to the question \"Ma kehi maddat garna sakchu?\" you already know."
+			},
+			{
+				"id": "maddat-chaahiyo-do-you-need-help",
+				"np": "Maddat chaahiyo?",
+				"pron": "mud-dut chaa-hi-yo",
+				"en": "Do you need help?",
+				"usage": "The \"chaahiyo\" pattern as a question. Said while walking into the kitchen with sleeves rolled up."
+			},
+			{
+				"id": "sutne-bela-bhayo-it-s-bedtime",
+				"np": "Sutne bela bhayo",
+				"pron": "soot-nay bay-laa bhuh-yo",
+				"en": "It's bedtime",
+				"usage": "\"Bela\" means time or moment, so this is literally \"sleeping time happened.\" Used for children and tired adults alike."
 			}
 		]
 	},
@@ -1425,6 +1509,188 @@ const COURSE = [
 				"pron": "ek chhin purkh-uh-noos",
 				"en": "Wait a moment, please",
 				"usage": "\"Ek chhin\" is \"one moment\" — your number \"ek\" at work. \"Parkhanus\" is the polite form of \"parkhanu\" (to wait). Buy yourself time mid-conversation while you find a word!"
+			}
+		]
+	},
+	{
+		"id": "daily-routine",
+		"title": "Daily Routine",
+		"kind": "phrases",
+		"items": [
+			{
+				"id": "ma-uthchu-i-get-up-i-will-get-up",
+				"np": "Ma uthchu",
+				"pron": "muh ooth-choo",
+				"en": "I get up / I will get up",
+				"usage": "\"Uthnu\" means to rise or get up. \"Ma bihaana sabere uthchu\" — I get up early in the morning."
+			},
+			{
+				"id": "uthnus-please-get-up-wake-up",
+				"np": "Uthnus!",
+				"pron": "ooth-noos",
+				"en": "Please get up / Wake up!",
+				"usage": "The polite wake-up call. For family you might hear the informal \"utha!\" instead."
+			},
+			{
+				"id": "ma-mukh-dhunchhu-i-will-wash-my-face",
+				"np": "Ma mukh dhunchhu",
+				"pron": "muh mookh dhoon-choo",
+				"en": "I will wash my face",
+				"usage": "\"Mukh\" means face (and mouth). Washing your face is the standard Nepali morning freshen-up, mentioned as routinely as brushing teeth."
+			},
+			{
+				"id": "ma-daat-maajhchu-i-will-brush-my-teeth",
+				"np": "Ma daat maajhchu",
+				"pron": "muh daat maaj-choo",
+				"en": "I will brush my teeth",
+				"usage": "\"Daat\" is teeth, and \"maajhnu\" (to scrub) is the same verb as in \"bhada maajhchu\" (washing dishes). Scrubbing is scrubbing!"
+			},
+			{
+				"id": "ma-kaam-jaanchu-i-am-going-to-work",
+				"np": "Ma kaam jaanchu",
+				"pron": "muh kaam jaan-choo",
+				"en": "I am going to work",
+				"usage": "The \"jaanchu\" pattern with \"kaam\" (work). The standard morning departure line."
+			},
+			{
+				"id": "ma-ghar-aaye-i-am-home-i-came-home",
+				"np": "Ma ghar aaye",
+				"pron": "muh ghur aa-yay",
+				"en": "I am home / I came home",
+				"usage": "\"Aaye\" is the past tense of \"aaunu\" (to come). Announce yourself at the door with this."
+			},
+			{
+				"id": "khana-khane-bela-bhayo-it-is-time-to-eat",
+				"np": "Khana khane bela bhayo",
+				"pron": "kha-na khaa-nay bay-laa bhuh-yo",
+				"en": "It is time to eat",
+				"usage": "\"Bela\" (time) again — literally \"food-eating time happened.\" The call that gathers the household."
+			},
+			{
+				"id": "ma-thakeko-chu-i-am-tired",
+				"np": "Ma thakeko chu",
+				"pron": "muh thaa-kay-ko choo",
+				"en": "I am tired",
+				"usage": "Uses \"thakeko\" (tired) with \"chu\" (I am). The honest end-of-day report, and a polite path toward excusing yourself to bed."
+			},
+			{
+				"id": "dhilo-bhayo-it-is-late-i-am-running-late",
+				"np": "Dhilo bhayo",
+				"pron": "dhi-lo bhuh-yo",
+				"en": "It is late / I am running late",
+				"usage": "\"Dhilo\" means late. Works for the hour (\"it has gotten late\") and for yourself when rushing out the door."
+			},
+			{
+				"id": "ma-chaadai-aaunchu-i-will-come-back-soon",
+				"np": "Ma chaadai aaunchu",
+				"pron": "muh chaa-dye aaun-choo",
+				"en": "I will come back soon",
+				"usage": "\"Chaadai\" means soon or early. A fuller version of \"Ma ahile aaunchu\" when you will be gone a bit longer."
+			},
+			{
+				"id": "ramro-sanga-sutnus-sleep-well",
+				"np": "Ramro sanga sutnus",
+				"pron": "rum-ro sung-guh soot-noos",
+				"en": "Sleep well",
+				"usage": "Literally \"sleep with goodness.\" A warmer companion to \"subha ratri\" within the household."
+			},
+			{
+				"id": "subha-din-have-a-good-day",
+				"np": "Subha din",
+				"pron": "soo-bhuh din",
+				"en": "Have a good day",
+				"usage": "\"Din\" means day — the same pattern as \"subha prabhat\" and \"subha ratri.\" A slightly formal but kind send-off."
+			}
+		]
+	},
+	{
+		"id": "cooking",
+		"title": "Cooking Together",
+		"kind": "phrases",
+		"items": [
+			{
+				"id": "ma-tarkari-kaatchu-i-will-cut-the-vegetables",
+				"np": "Ma tarkari kaatchu",
+				"pron": "muh tur-kaa-ri kaat-choo",
+				"en": "I will cut the vegetables",
+				"usage": "\"Kaatnu\" means to cut or chop. The classic way to be useful in a Nepali kitchen without being trusted with the spices yet."
+			},
+			{
+				"id": "paani-umaalnus-please-boil-the-water",
+				"np": "Paani umaalnus",
+				"pron": "paa-ni oo-maal-noos",
+				"en": "Please boil the water",
+				"usage": "\"Umaalnu\" means to boil. Step one of chiya, daal, and most of dinner."
+			},
+			{
+				"id": "bhaat-pakaunus-please-cook-the-rice",
+				"np": "Bhaat pakaunus",
+				"pron": "bhaat puh-kow-noos",
+				"en": "Please cook the rice",
+				"usage": "\"Pakaunu\" (to cook) from the pattern you know, now as a polite request. \"Bhaat\" is cooked rice — the center of the Nepali meal."
+			},
+			{
+				"id": "yo-piro-cha-is-this-spicy",
+				"np": "Yo piro cha?",
+				"pron": "yo pi-ro chuh",
+				"en": "Is this spicy?",
+				"usage": "\"Piro\" means spicy-hot. Possibly the most important question in this entire course. Ask before, not after."
+			},
+			{
+				"id": "dherai-piro-cha-it-is-very-spicy",
+				"np": "Dherai piro cha",
+				"pron": "dheh-rye pi-ro chuh",
+				"en": "It is very spicy",
+				"usage": "When the answer to \"yo piro cha?\" arrives too late. \"Dherai\" (very) plus \"piro.\" Keep water nearby — or better, dahi."
+			},
+			{
+				"id": "nun-pugyo-there-is-enough-salt",
+				"np": "Nun pugyo",
+				"pron": "noon poog-yo",
+				"en": "There is enough salt",
+				"usage": "\"Pugyo\" (enough) applied to cooking. The verdict after tasting: \"nun pugyo\" — the salt has arrived where it needs to be."
+			},
+			{
+				"id": "aru-nun-chaahiyo-it-needs-more-salt",
+				"np": "Aru nun chaahiyo",
+				"pron": "uh-roo noon chaa-hi-yo",
+				"en": "It needs more salt",
+				"usage": "\"Aru\" (more) + \"chaahiyo\" (is needed). The other possible verdict. Salt opinions are strong in every kitchen on earth."
+			},
+			{
+				"id": "chakhnus-please-taste-it",
+				"np": "Chakhnus",
+				"pron": "chaakh-noos",
+				"en": "Please taste it",
+				"usage": "\"Chakhnu\" means to taste. An invitation and an honor — the cook wants your opinion. Answer with \"mitho cha!\" if at all possible."
+			},
+			{
+				"id": "tato-cha-it-is-hot-to-the-touch",
+				"np": "Tato cha",
+				"pron": "taa-to chuh",
+				"en": "It is hot (to the touch)",
+				"usage": "\"Tato\" is hot for objects and food — different from \"garmi,\" which is hot weather. Said while handing someone a fresh cup of chiya."
+			},
+			{
+				"id": "hosh-garnus-be-careful",
+				"np": "Hosh garnus",
+				"pron": "hosh gur-noos",
+				"en": "Be careful",
+				"usage": "\"Hosh\" means awareness or care. Heard around hot pots, sharp knives, and slippery floors — anywhere in a busy kitchen."
+			},
+			{
+				"id": "ramro-basna-aayo-it-smells-good",
+				"np": "Ramro basna aayo",
+				"pron": "rum-ro baas-nuh aa-yo",
+				"en": "It smells good",
+				"usage": "\"Basna\" is smell or aroma — literally \"a good smell came.\" The compliment that drifts into the kitchen before dinner."
+			},
+			{
+				"id": "khana-sakiyo-the-food-is-finished-all-gone",
+				"np": "Khana sakiyo",
+				"pron": "kha-na suh-ki-yo",
+				"en": "The food is finished / all gone",
+				"usage": "\"Sakinu\" means to be finished or used up. Works for the pot being empty and for declaring the meal over."
 			}
 		]
 	},
@@ -1723,6 +1989,90 @@ const COURSE = [
 		]
 	},
 	{
+		"id": "colors",
+		"title": "Colors",
+		"kind": "vocab",
+		"items": [
+			{
+				"id": "rang-color",
+				"np": "Rang",
+				"pron": "rung",
+				"emoji": "🎨",
+				"en": "Color"
+			},
+			{
+				"id": "rato-red",
+				"np": "Rato",
+				"pron": "raa-to",
+				"emoji": "🔴",
+				"en": "Red"
+			},
+			{
+				"id": "nilo-blue",
+				"np": "Nilo",
+				"pron": "ni-lo",
+				"emoji": "🔵",
+				"en": "Blue"
+			},
+			{
+				"id": "hariyo-green",
+				"np": "Hariyo",
+				"pron": "huh-ri-yo",
+				"emoji": "🟢",
+				"en": "Green"
+			},
+			{
+				"id": "pahelo-yellow",
+				"np": "Pahelo",
+				"pron": "puh-hay-lo",
+				"emoji": "🟡",
+				"en": "Yellow"
+			},
+			{
+				"id": "seto-white",
+				"np": "Seto",
+				"pron": "say-to",
+				"emoji": "⚪",
+				"en": "White"
+			},
+			{
+				"id": "kalo-black",
+				"np": "Kalo",
+				"pron": "kaa-lo",
+				"emoji": "⚫",
+				"en": "Black"
+			},
+			{
+				"id": "khairo-brown",
+				"np": "Khairo",
+				"pron": "khai-ro",
+				"emoji": "🟤",
+				"en": "Brown"
+			},
+			{
+				"id": "suntala-rang-orange-color",
+				"np": "Suntala rang",
+				"pron": "soon-tuh-laa rung",
+				"emoji": "🟠",
+				"en": "Orange (color)"
+			},
+			{
+				"id": "gulabi-pink",
+				"np": "Gulabi",
+				"pron": "goo-laa-bi",
+				"emoji": "🌸",
+				"en": "Pink"
+			},
+			{
+				"id": "pyaji-purple",
+				"np": "Pyaji",
+				"pron": "pyaa-ji",
+				"emoji": "🟣",
+				"en": "Purple"
+			}
+		]
+	},
+	{
 		"id": "weather",
 		"title": "Weather",
 		"kind": "phrases",
@@ -1754,6 +2104,104 @@ const COURSE = [
 				"pron": "jaa-do chuh",
 				"en": "It's cold",
 				"usage": "Used to describe cold weather, especially during winter months in Nepal. \"Jado\" means cold or winter. In mountainous areas, you'll hear this frequently during the colder seasons."
+			}
+		]
+	},
+	{
+		"id": "body-parts",
+		"title": "Body Parts",
+		"kind": "vocab",
+		"items": [
+			{
+				"id": "tauko-head",
+				"np": "Tauko",
+				"pron": "tow-ko",
+				"emoji": "👤",
+				"en": "Head"
+			},
+			{
+				"id": "kapaal-hair",
+				"np": "Kapaal",
+				"pron": "kuh-paal",
+				"emoji": "💇",
+				"en": "Hair"
+			},
+			{
+				"id": "aankha-eye",
+				"np": "Aankha",
+				"pron": "aan-khaa",
+				"emoji": "👁️",
+				"en": "Eye"
+			},
+			{
+				"id": "kaan-ear",
+				"np": "Kaan",
+				"pron": "kaan",
+				"emoji": "👂",
+				"en": "Ear"
+			},
+			{
+				"id": "naak-nose",
+				"np": "Naak",
+				"pron": "naak",
+				"emoji": "👃",
+				"en": "Nose"
+			},
+			{
+				"id": "mukh-mouth-face",
+				"np": "Mukh",
+				"pron": "mookh",
+				"emoji": "👄",
+				"en": "Mouth / Face"
+			},
+			{
+				"id": "daat-teeth",
+				"np": "Daat",
+				"pron": "daat",
+				"emoji": "🦷",
+				"en": "Teeth"
+			},
+			{
+				"id": "ghaati-throat-neck",
+				"np": "Ghaati",
+				"pron": "ghaa-ti",
+				"emoji": "🗣️",
+				"en": "Throat / Neck"
+			},
+			{
+				"id": "haat-hand-arm",
+				"np": "Haat",
+				"pron": "haat",
+				"emoji": "✋",
+				"en": "Hand / Arm"
+			},
+			{
+				"id": "aaulaa-finger",
+				"np": "Aaulaa",
+				"pron": "ow-laa",
+				"emoji": "☝️",
+				"en": "Finger"
+			},
+			{
+				"id": "pet-stomach-belly",
+				"np": "Pet",
+				"pron": "pet",
+				"emoji": "🫄",
+				"en": "Stomach / Belly"
+			},
+			{
+				"id": "dhaad-back",
+				"np": "Dhaad",
+				"pron": "dhaad",
+				"emoji": "🦴",
+				"en": "Back"
+			},
+			{
+				"id": "khutta-leg-foot",
+				"np": "Khutta",
+				"pron": "khoot-taa",
+				"emoji": "🦵",
+				"en": "Leg / Foot"
 			}
 		]
 	},
