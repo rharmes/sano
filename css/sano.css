@@ -645,12 +645,7 @@ table#vocab tbody td:nth-child(3) {
    this handles colors, type, and decoration. */
 
 html {
-	--path-complete-color: hsl(190, 85%, 36%);
-}
-@media (prefers-color-scheme: dark) {
-	html {
-		--path-complete-color: hsl(190, 75%, 42%);
-	}
+	--path-complete-color: #166bf5;
 }
 
 #path {
@@ -660,6 +655,7 @@ html {
 }
 .path-node {
 	position: absolute;
+	z-index: 1;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -694,10 +690,12 @@ html {
 }
 .path-ring {
 	position: absolute;
+	z-index: 1;
 	border-radius: 50%;
 }
 .path-label {
 	position: absolute;
+	z-index: 1;
 	font-size: 1.5rem;
 	font-weight: 700;
 	line-height: 1.25;
@@ -742,6 +740,7 @@ html {
 }
 .path-start {
 	position: absolute;
+	z-index: 2;
 	transform: translate(-50%, 0);
 	padding: 0.5rem 1.4rem;
 	border-radius: 1rem;
@@ -776,6 +775,7 @@ html {
 }
 .path-section {
 	position: absolute;
+	z-index: 1;
 	left: 0;
 	width: 100%;
 	display: flex;

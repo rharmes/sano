@@ -286,7 +286,8 @@ function renderPath() {
 	const nodeSize = compact ? 64 : 76;
 	const step = compact ? 108 : 124;
 	const amplitude = Math.min(130, width * 0.27);
-	const labelWidth = compact ? Math.max(86, width / 2 - amplitude - nodeSize / 2 - 14) : 150;
+	const labelGap = 22;
+	const labelWidth = compact ? Math.max(86, width / 2 - amplitude - nodeSize / 2 - labelGap - 2) : 150;
 	const center = width / 2;
 	const current = currentUnit();
 
@@ -365,7 +366,7 @@ function renderPath() {
 		label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
 		label.style.width = labelWidth + 'px';
 		label.style.top = y + (compact ? 10 : 16) + 'px';
-		label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - 12 : x + nodeSize / 2 + 12) + 'px';
+		label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - labelGap : x + nodeSize / 2 + labelGap) + 'px';
 
 		const title = document.createElement('div');
 		title.textContent = unit.title;
