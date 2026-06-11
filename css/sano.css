@@ -503,8 +503,9 @@ table#vocab tbody td:nth-child(3) {
 		z-index: 0;
 	}
 	#progress {
+		box-sizing: border-box;
 		left: 0;
-		width: 1200px;
+		width: 100%;
 		margin-left: 0;
 		padding-left: 2rem;
 		justify-content: flex-start;
