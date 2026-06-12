@@ -2,8 +2,8 @@
 
 A static web app: essential Nepali phrases with Romanized pronunciations.
 Plain HTML/CSS/JS, no build step: `index.html`, `css/sano.css`, `js/`,
-`fonts/`, `tools/`. Deployed by manually uploading files to namastesano.com
-(Apache); Ross tests on an iPhone running iOS 26.
+`fonts/`, `tools/`. Deployed to namastesano.com (Apache) with
+`tools/deploy.sh`; Ross tests on an iPhone running iOS 26.
 
 No external requests at runtime: fonts (Neuton, Lato) are self-hosted woff2
 files in `fonts/` declared in `css/fonts.css`, and icons are an inline SVG
@@ -20,6 +20,11 @@ significantly, update CLAUDE.md in the same commit.
 - `.claude/settings.json` also configures a status line whose script is
   gitignored; restore it on a fresh clone with
   `curl -o .claude/scripts/status-line.sh https://raw.githubusercontent.com/shanraisshan/claude-code-status-line/main/status-line.sh && chmod +x .claude/scripts/status-line.sh`.
+- **Deploy**: `tools/deploy.sh` rsyncs the site to the server (`-n` for a dry
+  run); run it only when Ross asks. Connection details live in the
+  `sano-deploy` alias in `~/.ssh/config` (key auth) — no credentials or
+  hostnames in the repo. On a new machine, recreate the alias (HostName
+  namastesano.com, User + key from Ross).
 - Recent work: see `git log` — commit messages are descriptive.
 
 ## Workflow for every code change
@@ -35,6 +40,8 @@ significantly, update CLAUDE.md in the same commit.
    branch. Push only when asked.
 5. Commit messages: short imperative summary ending with a period, plus
    `Co-Authored-By` attribution.
+6. Deploy with `tools/deploy.sh` only when Ross asks; verify with the live
+   cache check below.
 
 ## Testing and verification
 
