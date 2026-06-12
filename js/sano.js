@@ -340,7 +340,7 @@ function renderPath() {
 			ring.style.left = x - ringSize / 2 + 'px';
 			ring.style.top = y + nodeSize / 2 - ringSize / 2 + 'px';
 			ring.style.background =
-				'conic-gradient(hsl(var(--accent-hue), 65%, 55%) ' +
+				'conic-gradient(var(--accent) ' +
 				Math.round((introduced / unit.items.length) * 100) +
 				'%, var(--border-color) 0)';
 			const mask = 'radial-gradient(circle, transparent ' + (nodeSize / 2 + 4) + 'px, black ' + (nodeSize / 2 + 5) + 'px)';

@@ -1,36 +1,54 @@
+/* "Pennant & Paper-cut" brand: softened Nepal-flag crimson and indigo on warm
+   paper stock. Light theme; dark theme is midnight card stock with colors
+   lifted one step for contrast. */
 html {
-	--theme-hue: 0;
-	--accent-hue: 315;
+	--accent: #dd6470; /* paper crimson: CTAs, current node, links */
+	--accent-deep: #b94f5b; /* hover / pressed */
+	--path-complete-color: #56629e; /* paper indigo: completed nodes */
 
-	--text-color-richer: hsl(var(--theme-hue), 0%, 5%);
-	--text-color-normal: hsl(var(--theme-hue), 0%, 15%);
-	--text-color-soft: hsl(var(--theme-hue), 0%, 40%);
-	--text-color-softer: hsl(var(--theme-hue), 0%, 70%);
+	--text-color-richer: #2e2933;
+	--text-color-normal: #45404c;
+	--text-color-soft: #79705f;
+	--text-color-softer: #b1a795;
 
-	--badge-color: #e9950c;
-	--word-color: #df3079;
-	--text-complete-color: #1b9423;
-	--text-incomplete-color: #d12d2d;
+	--badge-color: #d99e3a; /* pennant gold */
+	--word-color: #c25566;
+	--text-complete-color: #38824a;
+	--text-incomplete-color: #c2403d;
 
-	/* Warm paper tint instead of barebones' flat white/near-black. */
-	--background-color: hsl(35, 30%, 98%);
-	--background-color-softer: hsl(35, 20%, 94%);
+	--background-color: #fbf5e9;
+	--background-color-softer: #f3ecdb;
 
-	--flashcard-background: rgba(0, 0, 0, 0.85);
+	/* barebones overrides */
+	--accent-color: var(--accent);
+	--accent-color-hover: var(--accent-deep);
+	--border-color: #e0d8c4;
+	--border-color-softer: #e9e2d1;
+
+	--flashcard-background: rgba(26, 22, 32, 0.88);
 }
 
 @media (prefers-color-scheme: dark) {
 	html {
-		--theme-hue: 0;
-		--accent-hue: 315;
+		--accent: #e0697a;
+		--accent-deep: #c25462;
+		--path-complete-color: #7384c4;
 
-		--text-color-richer: hsl(var(--theme-hue), 0%, 95%);
-		--text-color-normal: hsl(var(--theme-hue), 0%, 85%);
-		--text-color-soft: hsl(var(--theme-hue), 0%, 60%);
-		--text-color-softer: hsl(var(--theme-hue), 0%, 40%);
+		--text-color-richer: #efe9f0;
+		--text-color-normal: #d8d1da;
+		--text-color-soft: #9a91a4;
+		--text-color-softer: #645c70;
 
-		--background-color: hsl(30, 6%, 11%);
-		--background-color-softer: hsl(30, 5%, 16%);
+		--badge-color: #d9aa4e;
+		--word-color: #e58794;
+		--text-complete-color: #7fae83;
+		--text-incomplete-color: #e07a72;
+
+		--background-color: #1b1822;
+		--background-color-softer: #262230;
+
+		--border-color: #37323f;
+		--border-color-softer: #2e2a38;
 	}
 }
 
@@ -155,13 +173,13 @@ ul {
 	text-transform: none;
 	letter-spacing: normal;
 	color: var(--button-primary-color);
-	background: hsl(var(--accent-hue), 65%, 45%);
+	background: var(--accent);
 	border: 0;
 }
 #controls button:hover,
 #controls button:focus {
 	color: var(--button-primary-color);
-	background: hsl(var(--accent-hue), 65%, 38%);
+	background: var(--accent-deep);
 }
 
 #progress {
@@ -659,13 +677,13 @@ table#vocab tbody td:nth-child(3) {
 	text-transform: none;
 	letter-spacing: normal;
 	color: var(--button-primary-color);
-	background: hsl(var(--accent-hue), 65%, 45%);
+	background: var(--accent);
 	border: 0;
 	border-radius: 1rem;
 	cursor: pointer;
 }
 #daily-lesson:hover:not(:disabled) {
-	background: hsl(var(--accent-hue), 65%, 38%);
+	background: var(--accent-deep);
 }
 #daily-lesson:disabled {
 	background: var(--text-color-softer);
@@ -674,10 +692,6 @@ table#vocab tbody td:nth-child(3) {
 
 /* The winding lesson path. Geometry (positions, node sizes) is computed in JS;
    this handles colors, type, and decoration. */
-
-html {
-	--path-complete-color: #166bf5;
-}
 
 #path {
 	position: relative;
@@ -706,7 +720,7 @@ html {
 	background: var(--path-complete-color);
 }
 .path-node.current {
-	background: hsl(var(--accent-hue), 65%, 45%);
+	background: var(--accent);
 }
 .path-node.complete .material-icons,
 .path-node.current .material-icons {
@@ -781,8 +795,8 @@ html {
 	padding: 0.5rem 1.4rem;
 	border-radius: 1rem;
 	background: var(--background-color);
-	border: 2px solid hsl(var(--accent-hue), 65%, 45%);
-	color: hsl(var(--accent-hue), 65%, 55%);
+	border: 2px solid var(--accent);
+	color: var(--accent);
 	font-size: 1.3rem;
 	font-weight: 800;
 	letter-spacing: 0.12rem;
@@ -798,8 +812,8 @@ html {
 	height: 12px;
 	transform: translateX(-50%) rotate(45deg);
 	background: var(--background-color);
-	border-right: 2px solid hsl(var(--accent-hue), 65%, 45%);
-	border-bottom: 2px solid hsl(var(--accent-hue), 65%, 45%);
+	border-right: 2px solid var(--accent);
+	border-bottom: 2px solid var(--accent);
 }
 @keyframes bob {
 	from {
@@ -1087,7 +1101,7 @@ html {
 }
 .match-tile.selected {
 	color: var(--text-color-richer);
-	border-color: hsl(var(--accent-hue), 65%, 45%);
+	border-color: var(--accent);
 }
 .match-tile.miss {
 	color: var(--text-color-richer);
@@ -1113,7 +1127,7 @@ html {
 	font-size: 1.6rem;
 	font-weight: 700;
 	color: var(--button-primary-color);
-	background: hsl(var(--accent-hue), 65%, 45%);
+	background: var(--accent);
 	border: 0;
 	border-radius: 1rem;
 }
@@ -1121,7 +1135,7 @@ html {
 #lesson-continue:hover,
 #complete-continue:hover {
 	color: var(--button-primary-color);
-	background: hsl(var(--accent-hue), 65%, 38%);
+	background: var(--accent-deep);
 }
 #exercise-check:disabled {
 	background: var(--text-color-softer);

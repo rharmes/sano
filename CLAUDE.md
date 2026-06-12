@@ -38,6 +38,9 @@ significantly, update CLAUDE.md in the same commit.
 - **Screenshots**: `tools/screenshot.sh <url> <out.png> [WxH] [budget-ms]` —
   headless-Chrome wrapper with a stable prefix so one permission rule covers
   all invocations; always use it instead of calling Chrome directly.
+- **App icon**: `apple-touch-icon.png` is generated, not hand-edited —
+  regenerate after brand-art changes by serving the repo and running
+  `tools/screenshot.sh <server>/tools/make-touch-icon.html apple-touch-icon.png 180x180`.
 - **Screenshot harness**: write a temp `.shot-harness.html` in the repo root
   that (a) seeds localStorage key `sano.state.v1` (the stats bar `#progress`
   only renders with saved progress — copy the representative state from
