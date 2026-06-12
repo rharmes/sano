@@ -2,8 +2,12 @@
 
 A static web app: essential Nepali phrases with Romanized pronunciations.
 Plain HTML/CSS/JS, no build step: `index.html`, `css/sano.css`, `js/`,
-`tools/`. Deployed by manually uploading files to namastesano.com (Apache);
-Ross tests on an iPhone running iOS 26.
+`fonts/`, `tools/`. Deployed by manually uploading files to namastesano.com
+(Apache); Ross tests on an iPhone running iOS 26.
+
+No external requests at runtime: fonts (Neuton, Lato) are self-hosted woff2
+files in `fonts/` declared in `css/fonts.css`, and icons are an inline SVG
+sprite in `index.html` (`#i-*` symbols, used via `<use href="#i-name">`).
 
 **Keep this file current**: when testing tools or architecture change
 significantly, update CLAUDE.md in the same commit.
