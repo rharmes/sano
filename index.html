@@ -20,11 +20,11 @@
 
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=9987cbcd" />
+		<link rel="stylesheet" href="css/sano.css?v=a39e16d0" />
 		<link rel="icon" href="favicon.svg?v=7bbb07d7" type="image/svg+xml" />
 
 		<script src="js/data.js?v=9c2d19e9"></script>
-		<script src="js/sano.js?v=e55447f9"></script>
+		<script src="js/sano.js?v=ed071c2f"></script>
 	</head>
 	<body>
 		<div class="container" id="nepali">
@@ -136,10 +136,17 @@
 			<div id="flashcard" class="hide">
 				<a id="flashcard-prev" class="material-icons">navigate_before</a>
 				<div id="flashcard-content">
-					<div id="flashcard-word"></div>
-					<div id="flashcard-pronounce"></div>
-					<div id="flashcard-meaning"></div>
-					<div id="flashcard-usage"></div>
+					<div id="flashcard-card">
+						<div id="flashcard-front">
+							<div id="flashcard-word"></div>
+							<div id="flashcard-pronounce"></div>
+							<p id="flashcard-hint">Tap to reveal</p>
+						</div>
+						<div id="flashcard-back">
+							<div id="flashcard-meaning"></div>
+							<div id="flashcard-usage"></div>
+						</div>
+					</div>
 				</div>
 				<div id="quiz-content">
 					<div id="quiz-word"></div>

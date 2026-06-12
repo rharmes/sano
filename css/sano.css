@@ -349,9 +349,55 @@ table#vocab tbody td:nth-child(3) {
 	width: 100%;
 	max-width: 900px;
 	height: 500px;
+}
+#quiz-content {
 	padding: 10px 40px;
 	background-color: var(--background-color);
 	border: 1px solid var(--text-color-softer);
+}
+#flashcard-content {
+	perspective: 1400px;
+}
+#flashcard-card {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	transition: transform 0.5s ease;
+	cursor: pointer;
+	user-select: none;
+}
+#flashcard-card.flipped {
+	transform: rotateY(180deg);
+}
+#flashcard-card.snap {
+	transition: none;
+}
+#flashcard-front,
+#flashcard-back {
+	position: absolute;
+	inset: 0;
+	padding: 10px 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: var(--background-color);
+	border: 1px solid var(--text-color-softer);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+#flashcard-back {
+	transform: rotateY(180deg);
+}
+#flashcard-hint {
+	margin: 3rem 0 0;
+	font-size: 1.3rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.12rem;
+	color: var(--text-color-softer);
 }
 #flashcard-content.hide,
 #quiz-content.hide {
@@ -496,6 +542,10 @@ table#vocab tbody td:nth-child(3) {
 	#flashcard-content,
 	#quiz-content {
 		height: 650px;
+	}
+	#quiz-content,
+	#flashcard-front,
+	#flashcard-back {
 		padding: 8px 30px;
 	}
 	#flashcard-close {
@@ -827,6 +877,7 @@ html {
 #screen-lesson {
 	max-width: 700px;
 	margin: 0 auto;
+	padding-top: 4rem;
 	padding-bottom: 220px;
 }
 #lesson-top {
@@ -1045,10 +1096,14 @@ html {
 	cursor: default;
 }
 
-/* Hide the site footer while inside a lesson */
+/* Focus mode: hide the site chrome (branding, stats bar, footer) inside lessons */
 
 #screen-lesson:not(.hide) ~ .footer,
 #screen-complete:not(.hide) ~ .footer {
+	display: none;
+}
+#nepali:has(#screen-lesson:not(.hide)) #header,
+#nepali:has(#screen-complete:not(.hide)) #header {
 	display: none;
 }
 
@@ -1100,7 +1155,7 @@ html {
 	font-weight: 700;
 	font-size: 4.6rem;
 	color: var(--text-complete-color);
-	animation: grow-in 0.4s ease-out;
+	animation: pop-in 0.45s ease-out backwards;
 }
 #complete-streak {
 	display: flex;
@@ -1110,18 +1165,25 @@ html {
 	font-size: 2.4rem;
 	font-weight: 700;
 	color: var(--badge-color);
-	animation: grow-in 0.5s ease-out;
+	animation: pop-in 0.45s ease-out 0.15s backwards;
 }
 #complete-streak .material-icons {
 	font-size: 3rem;
+	border-radius: 50%;
+	animation: burst 0.7s ease-out 0.45s backwards;
 }
 #complete-stats {
 	font-size: 2rem;
 	margin-bottom: 0.5rem;
+	animation: rise-in 0.4s ease-out 0.3s backwards;
 }
 #complete-strengthened {
 	font-size: 1.7rem;
 	color: var(--text-color-soft);
+	animation: rise-in 0.4s ease-out 0.4s backwards;
+}
+#complete-continue {
+	animation: rise-in 0.4s ease-out 0.5s backwards;
 }
 
 /* Animations */
@@ -1152,14 +1214,37 @@ html {
 	animation: slide-up 0.25s ease-out;
 }
 
-@keyframes grow-in {
+@keyframes pop-in {
+	0% {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	70% {
+		transform: scale(1.12);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes rise-in {
 	from {
 		opacity: 0;
-		transform: scale(0.7);
+		transform: translateY(14px);
 	}
 	to {
 		opacity: 1;
 		transform: none;
+	}
+}
+
+@keyframes burst {
+	from {
+		box-shadow: 0 0 0 0 hsla(36, 88%, 55%, 0.55);
+	}
+	to {
+		box-shadow: 0 0 0 40px hsla(36, 88%, 55%, 0);
 	}
 }
 
@@ -1191,12 +1276,17 @@ html {
 	#lesson-feedback:not(.hide),
 	#complete-title,
 	#complete-streak,
+	#complete-streak .material-icons,
+	#complete-stats,
+	#complete-strengthened,
+	#complete-continue,
 	.match-tile.matched,
 	.match-tile.miss,
 	.path-start {
 		animation: none;
 	}
-	#lesson-progress-fill {
+	#lesson-progress-fill,
+	#flashcard-card {
 		transition: none;
 	}
 }

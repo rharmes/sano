@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('flashcard-close').addEventListener('click', close);
 	document.getElementById('flashcard-next').addEventListener('click', next);
 	document.getElementById('flashcard-prev').addEventListener('click', prev);
+	document.getElementById('flashcard-card').addEventListener('click', flipCard);
 
 	const quizChoiceEls = document.getElementById('quiz-choices').getElementsByTagName('button');
 	for (const choiceEl of quizChoiceEls) choiceEl.addEventListener('click', checkChoice);
@@ -957,8 +958,22 @@ function prev() {
 	}
 }
 
+function flipCard() {
+	document.getElementById('flashcard-card').classList.toggle('flipped');
+}
+
+// Show the front face without animating the flip back.
+function snapToFront() {
+	const card = document.getElementById('flashcard-card');
+	card.classList.add('snap');
+	card.classList.remove('flipped');
+	void card.offsetWidth; // flush styles so the un-flip isn't transitioned
+	card.classList.remove('snap');
+}
+
 function loadWord() {
 	const word = words[wordIndex];
+	snapToFront();
 	document.getElementById('flashcard-word').textContent = word.item.np;
 	document.getElementById('flashcard-pronounce').textContent = word.item.pron;
 	document.getElementById('flashcard-meaning').textContent = word.item.en;
