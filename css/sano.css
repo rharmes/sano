@@ -239,35 +239,20 @@ code .var {
 	font-size: 1.3rem;
 }
 
-/* Stats and navigation live in a bar fixed to the bottom of the viewport.
-   margin: 0 matters — with bottom: 0, a <p>'s default margin-bottom would
-   push the bar up off the bottom edge. */
 #progress {
 	position: fixed;
-	bottom: 0;
-	left: 0;
-	z-index: 40;
+	top: 0;
+	left: 50%;
+	z-index: 10;
 
-	box-sizing: border-box;
-	width: 100%;
-	margin: 0;
-	padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+	width: 1200px;
+	margin-left: -600px;
+	padding-bottom: 2.5rem;
+	background: linear-gradient(to bottom, var(--background-color) 60%, rgba(0, 0, 0, 0));
 
 	display: flex;
-	justify-content: center;
-	background: var(--background-color);
-	border-top: 1px solid var(--border-color);
-}
-
-/* The bottom bar yields to the lesson flow, which has its own bottom UI. */
-#nepali:has(#screen-lesson:not(.hide)) #progress,
-#nepali:has(#screen-complete:not(.hide)) #progress {
-	display: none;
-}
-
-/* Clearance so scrolled-to-bottom content isn't hidden behind the bar. */
-#nepali {
-	padding-bottom: 90px;
+	justify-content: flex-end;
+	padding-top: 12px;
 }
 #progress.loading {
 	display: none;
@@ -513,6 +498,18 @@ table#vocab tbody td:nth-child(3) {
 }
 
 @media (max-width: 1210px) {
+	#header h1 {
+		padding-top: 5rem;
+		z-index: 0;
+	}
+	#progress {
+		box-sizing: border-box;
+		left: 0;
+		width: 100%;
+		margin-left: 0;
+		padding-left: 2rem;
+		justify-content: flex-start;
+	}
 	#flashcard-content,
 	#quiz-content {
 		height: 590px;
@@ -537,6 +534,8 @@ table#vocab tbody td:nth-child(3) {
 	#controls {
 		min-width: auto;
 		width: 100%;
+	}
+	#progress {
 	}
 	#progress .material-icons {
 		line-height: 1.4;
@@ -581,10 +580,13 @@ table#vocab tbody td:nth-child(3) {
 	}
 }
 
-/* Compact bottom bar for narrow phones: fill the full width, smaller icons. */
+/* Compact fixed header for narrow phones: fill the full width, smaller icons. */
 @media (max-width: 429px) {
 	#progress {
-		padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+		box-sizing: border-box;
+		width: 100%;
+		margin-left: 0;
+		padding: 10px 10px 1.8rem;
 		justify-content: space-between;
 	}
 	#progress span,
