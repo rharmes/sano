@@ -20,7 +20,7 @@
 
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=c53b1491" />
+		<link rel="stylesheet" href="css/sano.css?v=ae22c666" />
 		<link rel="icon" href="favicon.svg?v=63f99c36" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=53b56320" />
 		<meta name="theme-color" content="#fbf5e9" media="(prefers-color-scheme: light)" />
@@ -30,15 +30,55 @@
 		<script src="js/sano.js?v=c35d0a04"></script>
 	</head>
 	<body>
+		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+			<defs>
+				<filter id="paper-grain" x="-10%" y="-10%" width="120%" height="120%">
+					<feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n" />
+					<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.16 0.16 0.16 0 0" result="na" />
+					<feComposite in="na" in2="SourceGraphic" operator="atop" />
+				</filter>
+			</defs>
+		</svg>
 		<div class="container" id="nepali">
 			<div id="header">
-				<h1>Nepali Study Guide</h1>
+				<h1>
+					<svg class="sano-mascot" viewBox="40 10 140 174" aria-hidden="true">
+						<g class="paper-grain">
+							<g class="cut"><path d="M100 18 L138 38 L142 66 L150 150 L120 178 L80 178 L50 150 L58 66 L62 38 Z" class="f-indigo" /></g>
+							<g class="cut">
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+							</g>
+							<g class="cut"><path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" /></g>
+							<g class="cut"><path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" /></g>
+							<g class="cut"><path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" /></g>
+							<circle cx="88" cy="72" r="4.4" class="f-ink" />
+							<circle cx="112" cy="72" r="4.4" class="f-ink" />
+							<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+							<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+						</g>
+					</svg>
+					Nepali Study Guide
+				</h1>
 				<p id="controls" class="loading">
 					<input type="text" id="name-field" name="name-field" placeholder="Enter your name here to track progress" />
 					<button id="submit">Submit</button>
 				</p>
 				<p id="progress" class="loading">
-					<span class="material-icons" id="user-label" role="img" aria-label="Learner" title="Learner">face</span> <span id="name"></span>
+					<svg id="user-label" class="sano-head" viewBox="46 16 108 94" role="img" aria-label="Learner">
+						<title>Learner</title>
+						<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+						<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+						<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+						<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+						<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+						<circle cx="88" cy="72" r="6" class="f-ink" />
+						<circle cx="112" cy="72" r="6" class="f-ink" />
+						<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+					</svg>
+					<span id="name"></span>
 					<span class="material-icons" id="streak-label" role="img" aria-label="Day streak" title="Day streak">bolt</span> <span id="streak">0</span>
 					<span class="material-icons" id="words-today-label" role="img" aria-label="Words today" title="Words today">spellcheck</span> <span id="words-today">0</span>
 					<span class="material-icons" id="words-all-time-label" role="img" aria-label="Words all time" title="Words all time">menu_book</span> <span id="words-all-time">0</span>
@@ -101,6 +141,24 @@
 			</div>
 
 			<div id="screen-complete" class="hide">
+				<svg class="sano-mascot" id="complete-sano" viewBox="40 10 140 174" aria-hidden="true">
+					<g class="paper-grain">
+						<g class="cut"><path d="M100 18 L138 38 L142 66 L150 150 L120 178 L80 178 L50 150 L58 66 L62 38 Z" class="f-indigo" /></g>
+						<g class="cut">
+							<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+							<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+							<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+							<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+						</g>
+						<g class="cut"><path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" /></g>
+						<g class="cut"><path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" /></g>
+						<g class="cut"><path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" /></g>
+						<circle cx="88" cy="72" r="4.4" class="f-ink" />
+						<circle cx="112" cy="72" r="4.4" class="f-ink" />
+						<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+						<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+					</g>
+				</svg>
 				<h2 id="complete-title">Lesson complete!</h2>
 				<p id="complete-streak" class="hide"><span class="material-icons">bolt</span><span id="complete-streak-text"></span></p>
 				<p id="complete-stats"></p>
