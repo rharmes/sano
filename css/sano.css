@@ -6,17 +6,12 @@ html {
 	--text-color-normal: hsl(var(--theme-hue), 0%, 15%);
 	--text-color-soft: hsl(var(--theme-hue), 0%, 40%);
 	--text-color-softer: hsl(var(--theme-hue), 0%, 70%);
-	--text-color-invert: hsl(var(--theme-hue), 0%, 100%);
 
-	--text-color-photo-overlay: #fff;
-	--text-color-code-string: #0c87c9;
-	--text-color-code-func: #e9950c;
-	--text-color-code-var: #df3079;
-	--text-shadow-color: rgba(0, 0, 0, 0.4);
+	--badge-color: #e9950c;
+	--word-color: #df3079;
 	--text-complete-color: #1b9423;
 	--text-incomplete-color: #d12d2d;
 
-	--svg-background: hsl(var(--theme-hue), 0%, 100%);
 	--flashcard-background: rgba(0, 0, 0, 0.85);
 }
 
@@ -29,9 +24,6 @@ html {
 		--text-color-normal: hsl(var(--theme-hue), 0%, 85%);
 		--text-color-soft: hsl(var(--theme-hue), 0%, 60%);
 		--text-color-softer: hsl(var(--theme-hue), 0%, 40%);
-		--text-color-invert: hsl(var(--theme-hue), 0%, 0%);
-
-		--svg-background: hsl(var(--theme-hue), 0%, 80%);
 	}
 }
 
@@ -48,21 +40,6 @@ h1 {
 	font-size: 7.2rem;
 	color: var(--text-color-richer);
 }
-h1.hero {
-	width: 100%;
-	aspect-ratio: 4 / 3;
-	background: url('/images/header@1x.webp') no-repeat top left;
-	line-height: 6rem;
-	color: var(--text-color-photo-overlay);
-	text-shadow: 2px 2px 6px var(--text-shadow-color);
-	text-indent: 1.5rem;
-}
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-	h1.hero {
-		background: url('/images/header@2x.webp') no-repeat top left;
-		background-size: 100%;
-	}
-}
 h2,
 h3 {
 	font-size: 2.3rem;
@@ -72,59 +49,14 @@ h3 {
 h3 {
 	font-size: 2.2rem;
 }
-h2 span,
-h3 span {
-	display: inline-block;
-	position: relative;
-	top: -0.2rem;
-	width: 3rem;
-	height: 3rem;
-	margin: 0 0.3rem 0 0;
-	line-height: 2.8rem;
-	border-radius: 0.6rem;
-	font-size: 2rem;
-	color: var(--text-color-invert);
-	text-align: center;
-	background: var(--text-color-softer);
-}
-h3 span {
-	width: auto;
-	height: 2.8rem;
-	padding: 0 0.76rem;
-	line-height: 2.6rem;
-	border-radius: 0.5rem;
-	font-size: 1.8rem;
-	letter-spacing: 0.001rem;
-}
-h2 span span,
-h3 span span {
-	display: none;
-}
 table {
 	width: 100%;
 }
 table thead th {
 	color: var(--text-color-softer);
 }
-table th.number,
-table td.number {
-	text-align: right;
-}
-
 a {
 	text-decoration: none;
-}
-figure {
-	margin: 0 0 2rem;
-}
-figcaption {
-	font-size: 1.4rem;
-	color: var(--text-color-softer);
-	text-align: center;
-}
-img.svg {
-	background: var(--svg-background);
-	border-radius: 0.8rem;
 }
 ul,
 ol {
@@ -137,20 +69,6 @@ ul {
 ::marker {
 	color: var(--text-color-softer);
 }
-code {
-	font-size: 1.5rem;
-	white-space: normal;
-	color: var(--text-color-richer);
-}
-code .string {
-	color: var(--text-color-code-string);
-}
-code .func {
-	color: var(--text-color-code-func);
-}
-code .var {
-	color: var(--text-color-code-var);
-}
 
 .container {
 	position: relative;
@@ -160,15 +78,6 @@ code .var {
 	padding: 0 20px;
 	box-sizing: border-box;
 }
-.grid-container {
-	padding: 0;
-	grid-gap: 0 20px;
-	gap: 0 20px;
-}
-.grid-container p {
-	text-align: left;
-}
-
 .footer {
 	text-align: center;
 	color: var(--text-color-softer);
@@ -181,19 +90,8 @@ code .var {
 	h1 {
 		font-size: 4.3rem;
 	}
-	h1.hero {
-		width: 100%;
-	}
 	h2 {
 		font-size: 2rem;
-	}
-	h2 span {
-		top: -0.2rem;
-		width: 2.5rem;
-		height: 2.5rem;
-		margin: 0 0.3rem 0 0;
-		line-height: 2.3rem;
-		font-size: 1.5rem;
 	}
 	table th,
 	table td {
@@ -268,6 +166,24 @@ code .var {
 	cursor: pointer;
 	user-select: none;
 }
+/* Nav icons are real buttons for keyboard access; undo barebones button chrome. */
+#progress button {
+	height: auto;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--accent-color);
+	user-select: none;
+}
+#progress button:hover,
+#progress button:focus {
+	color: var(--accent-color-hover);
+}
+/* Separate the nav-icon group from the stats. */
+#progress #nav-home {
+	margin-left: 1.8rem;
+}
 #progress .material-icons {
 	padding-left: 14px;
 	line-height: 1.6;
@@ -290,7 +206,7 @@ table#words thead th {
 
 table#words tbody th:first-child {
 	font-weight: 300;
-	color: var(--text-color-code-var);
+	color: var(--word-color);
 }
 table#words tbody td:nth-child(2) {
 	font-style: italic;
@@ -325,7 +241,7 @@ table#words tbody tr.topic th {
 }
 table#words tbody tr.solo th {
 	position: relative;
-	color: var(--text-color-code-func);
+	color: var(--badge-color);
 }
 table#words tbody tr.solo th::before {
 	content: '🔍';
@@ -374,7 +290,7 @@ table#vocab tbody tr:not(.topic) td {
 table#vocab tbody tr:not(.topic) th:first-child {
 	background-color: var(--background-color-softer);
 	font-weight: 300;
-	color: var(--text-color-code-var);
+	color: var(--word-color);
 }
 table#vocab tbody td:nth-child(2) {
 	font-style: italic;
@@ -420,7 +336,7 @@ table#vocab tbody td:nth-child(3) {
 	font-weight: 700;
 	font-style: normal;
 	font-size: 6.2rem;
-	color: var(--text-color-code-var);
+	color: var(--word-color);
 }
 #flashcard-pronounce,
 #quiz-pronounce {
@@ -535,8 +451,6 @@ table#vocab tbody td:nth-child(3) {
 		min-width: auto;
 		width: 100%;
 	}
-	#progress {
-	}
 	#progress .material-icons {
 		line-height: 1.4;
 	}
@@ -604,6 +518,10 @@ table#vocab tbody td:nth-child(3) {
 	#progress #streak-label {
 		margin: 0 -3px 0 0;
 	}
+	/* space-between already separates the groups at this width */
+	#progress #nav-home {
+		margin-left: 0;
+	}
 	#progress #name {
 		max-width: 56px;
 		overflow: hidden;
@@ -663,7 +581,7 @@ table#vocab tbody td:nth-child(3) {
 	line-height: 1.4;
 	text-transform: none;
 	letter-spacing: normal;
-	color: var(--text-color-invert);
+	color: var(--button-primary-color);
 	background: hsl(var(--accent-hue), 65%, 45%);
 	border: 0;
 	border-radius: 1rem;
@@ -772,7 +690,7 @@ html {
 	height: 26px;
 	padding: 0 6px;
 	border-radius: 13px;
-	background: var(--text-color-code-func);
+	background: var(--badge-color);
 	color: #fff;
 	font-size: 1.3rem;
 	font-weight: 700;
@@ -926,7 +844,7 @@ html {
 	font-weight: 700;
 	font-size: 5.2rem;
 	line-height: 1.2;
-	color: var(--text-color-code-var);
+	color: var(--word-color);
 }
 #exercise-pronounce {
 	min-height: 4rem;
@@ -1084,7 +1002,7 @@ html {
 	padding: 1rem 3.2rem;
 	font-size: 1.6rem;
 	font-weight: 700;
-	color: var(--text-color-invert);
+	color: var(--button-primary-color);
 	background: hsl(var(--accent-hue), 65%, 45%);
 	border: 0;
 	border-radius: 1rem;
@@ -1092,7 +1010,7 @@ html {
 #exercise-check:hover:not(:disabled),
 #lesson-continue:hover,
 #complete-continue:hover {
-	color: var(--text-color-invert);
+	color: var(--button-primary-color);
 	background: hsl(var(--accent-hue), 65%, 38%);
 }
 #exercise-check:disabled {
@@ -1164,7 +1082,7 @@ html {
 	gap: 0.5rem;
 	font-size: 2.4rem;
 	font-weight: 700;
-	color: var(--text-color-code-func);
+	color: var(--badge-color);
 	animation: grow-in 0.5s ease-out;
 }
 #complete-streak .material-icons {
