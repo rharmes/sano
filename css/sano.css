@@ -831,6 +831,38 @@ html {
 	background: var(--border-color);
 }
 
+/* Top-to-bottom reveal: JS staggers each element's animation-delay by its y
+   position and applies .reveal on the first render only. */
+#path.reveal .path-node,
+#path.reveal .path-ring,
+#path.reveal .path-label,
+#path.reveal .path-dot,
+#path.reveal .path-section {
+	animation: path-reveal 0.3s ease-out backwards;
+}
+/* Opacity-only fade for the START bubble so it doesn't fight bob's transform;
+   bob is restated because the shorthand would otherwise drop it. */
+#path.reveal .path-start {
+	animation:
+		path-reveal-fade 0.3s ease-out backwards,
+		bob 1.2s ease-in-out infinite alternate;
+}
+@keyframes path-reveal {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+@keyframes path-reveal-fade {
+	from {
+		opacity: 0;
+	}
+}
+
 @media (max-width: 520px) {
 	#daily-lesson {
 		font-size: 1.6rem;
@@ -1282,7 +1314,13 @@ html {
 	#complete-continue,
 	.match-tile.matched,
 	.match-tile.miss,
-	.path-start {
+	.path-start,
+	#path.reveal .path-node,
+	#path.reveal .path-ring,
+	#path.reveal .path-label,
+	#path.reveal .path-dot,
+	#path.reveal .path-section,
+	#path.reveal .path-start {
 		animation: none;
 	}
 	#lesson-progress-fill,

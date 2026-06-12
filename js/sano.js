@@ -15,6 +15,7 @@ let soloTopic = '';
 let currentQuizItem = null;
 let lesson = null;
 let matchState = null;
+let pathRevealed = false;
 
 document.addEventListener('DOMContentLoaded', () => {
 	state = loadState();
@@ -411,6 +412,17 @@ function renderPath() {
 		}
 	}
 	wrap.style.height = y + 30 + 'px';
+
+	// Stagger a top-to-bottom reveal, but only on the very first render:
+	// returning home or resizing rebuilds the path and shouldn't replay it.
+	if (!pathRevealed) {
+		pathRevealed = true;
+		wrap.classList.add('reveal');
+		for (const el of wrap.children)
+			el.style.animationDelay = Math.max(0, Math.min(parseFloat(el.style.top) * 0.55, 700)) + 'ms';
+	} else {
+		wrap.classList.remove('reveal');
+	}
 }
 
 // Lesson engine. A lesson is a queue of exercises; missed ones are re-queued at the end.
