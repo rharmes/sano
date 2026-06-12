@@ -35,16 +35,16 @@ significantly, update CLAUDE.md in the same commit.
   widths (320–521px) in headless Chrome via same-origin iframes (headless
   Chrome can't open windows narrower than 500px); exits non-zero and writes
   `/tmp/sano-viewports.png` on failure.
+- **Screenshots**: `tools/screenshot.sh <url> <out.png> [WxH] [budget-ms]` —
+  headless-Chrome wrapper with a stable prefix so one permission rule covers
+  all invocations; always use it instead of calling Chrome directly.
 - **Screenshot harness**: write a temp `.shot-harness.html` in the repo root
   that (a) seeds localStorage key `sano.state.v1` (the stats bar `#progress`
   only renders with saved progress — copy the representative state from
   `tools/check-viewports.mjs`), (b) iframes the app at the desired width, and
   (c) optionally clicks elements inside the iframe to reach lesson /
-  dictionary / flashcard / quiz screens. Screenshot using the same Chrome
-  binary as `tools/check-viewports.mjs` (its `CHROME` constant/env var):
-  `"$CHROME" --headless=new --disable-gpu --window-size=W,H --hide-scrollbars
-  --virtual-time-budget=6000 --screenshot=out.png <url>`. Delete temp harness
-  files before committing.
+  dictionary / flashcard / quiz screens. Delete temp harness files before
+  committing.
 - **Forcing light mode**: headless Chrome follows the system theme. Strip the
   dark `@media` blocks into temp copies (`css/.light.css`,
   `css/.light-barebones.css`) and a `.light.html` that references them.
