@@ -847,20 +847,23 @@ table#vocab tbody td:nth-child(3) {
 .path-dot.done {
 	background: var(--path-complete-color);
 }
+/* Due-review badge shaped like a pennant flying off the node. */
 .path-badge {
 	position: absolute;
 	top: -6px;
-	right: -6px;
-	min-width: 26px;
+	right: -14px;
+	min-width: 34px;
 	height: 26px;
-	padding: 0 6px;
-	border-radius: 13px;
+	padding: 0 14px 0 7px;
+	border-radius: 3px 0 0 3px;
+	clip-path: polygon(0 0, 100% 0, 76% 50%, 100% 100%, 0 100%);
 	background: var(--badge-color);
 	color: #fff;
 	font-size: 1.3rem;
 	font-weight: 700;
 	line-height: 26px;
-	text-align: center;
+	text-align: left;
+	text-indent: 2px;
 }
 .path-start {
 	position: absolute;
@@ -972,8 +975,10 @@ table#vocab tbody td:nth-child(3) {
 		letter-spacing: 0.1rem;
 	}
 	.path-badge {
-		min-width: 22px;
+		right: -12px;
+		min-width: 30px;
 		height: 22px;
+		padding: 0 12px 0 6px;
 		line-height: 22px;
 		font-size: 1.1rem;
 	}

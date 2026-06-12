@@ -61,10 +61,13 @@ significantly, update CLAUDE.md in the same commit.
 
 ## Design direction
 
-- Current accent is magenta (`--accent-hue: 315`); completed path nodes are
-  hardcoded `#166bf5`. Semantic tokens live at the top of `css/sano.css`.
-- The "identity pass" (Nepal-flag crimson/blue palette, Himalayan ridgeline
-  behind the path, Devanagari-capable fonts) is deferred — Ross has bigger
-  ideas here; do not start it without him.
+- The brand is "Pennant & Paper-cut": softened Nepal-flag crimson + indigo on
+  warm paper, a paper-cut mouse mascot named Sano, and a Nepal-pennant
+  favicon/app icon. All theme tokens live at the top of `css/sano.css`
+  (light block + dark `@media` block — change both). The mascot is inline
+  SVG in `index.html`, styled by `.f-*`/`.cut`/`.paper-grain` classes.
+- Prayer-flag section dividers were built and pulled (2026-06-12) — Ross is
+  reconsidering them; don't re-add without him. The concept lives in the
+  untracked `.mockups.html`.
 - Respect `prefers-reduced-motion` for any new animation (see the block at
   the bottom of `css/sano.css`).
