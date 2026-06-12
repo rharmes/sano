@@ -166,6 +166,12 @@ ul {
 	text-align: center;
 	color: var(--text-color-softer);
 }
+.footer .sano-head {
+	width: 24px;
+	height: 21px;
+	vertical-align: -4px;
+	margin-right: 0.4rem;
+}
 
 @media (max-width: 810px) {
 	body {
@@ -299,16 +305,8 @@ ul {
 #progress span.material-icons {
 	color: var(--text-color-softer);
 }
-#progress #user-label {
+#progress #name {
 	padding-left: 0;
-	margin-left: -3px;
-}
-#progress .sano-head {
-	width: 26px;
-	height: 23px;
-	align-self: center;
-	margin-right: 2px;
-	flex-shrink: 0;
 }
 #progress #streak-label {
 	margin: 0 -7px;
@@ -677,19 +675,12 @@ table#vocab tbody td:nth-child(3) {
 		font-size: 2rem;
 		line-height: 1.5;
 	}
-	#progress #user-label {
-		margin-left: 0;
-	}
 	#progress #streak-label {
 		margin: 0 -3px 0 0;
 	}
 	/* space-between already separates the groups at this width */
 	#progress #nav-home {
 		margin-left: 0;
-	}
-	#progress .sano-head {
-		width: 20px;
-		height: 18px;
 	}
 	#progress #name {
 		max-width: 56px;
