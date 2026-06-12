@@ -13,6 +13,9 @@ significantly, update CLAUDE.md in the same commit.
 - Remote: `git@github.com:rharmes/sano.git`, branch `main`.
 - `.claude/settings.json` sets `worktree.bgIsolation: "none"` — background
   sessions edit this checkout directly; do not use worktrees.
+- `.claude/settings.json` also configures a status line whose script is
+  gitignored; restore it on a fresh clone with
+  `curl -o .claude/scripts/status-line.sh https://raw.githubusercontent.com/shanraisshan/claude-code-status-line/main/status-line.sh && chmod +x .claude/scripts/status-line.sh`.
 - Recent work: see `git log` — commit messages are descriptive.
 
 ## Workflow for every code change
