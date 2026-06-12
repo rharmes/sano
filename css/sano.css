@@ -100,6 +100,20 @@ html {
 	filter: url(#paper-grain);
 }
 
+/* Inline SVG icons (replacing the Material Icons font). The wrapper keeps the
+   font-era contract: font-size sets the glyph size, color sets its fill. */
+.icon {
+	display: inline-block;
+	font-size: 2.4rem; /* the icon font's 24px default */
+	line-height: 1;
+}
+.icon svg {
+	width: 1em;
+	height: 1em;
+	fill: currentColor;
+	vertical-align: -0.125em;
+}
+
 #header h1 {
 	display: flex;
 	align-items: center;
@@ -298,11 +312,11 @@ ul {
 #progress #nav-home {
 	margin-left: 1.8rem;
 }
-#progress .material-icons {
+#progress .icon {
 	padding-left: 14px;
 	line-height: 1.6;
 }
-#progress span.material-icons {
+#progress span.icon {
 	color: var(--text-color-softer);
 }
 #progress #name {
@@ -610,7 +624,7 @@ table#vocab tbody td:nth-child(3) {
 		min-width: auto;
 		width: 100%;
 	}
-	#progress .material-icons {
+	#progress .icon {
 		line-height: 1.4;
 	}
 
@@ -670,7 +684,7 @@ table#vocab tbody td:nth-child(3) {
 	#progress a {
 		padding-left: 0;
 	}
-	#progress .material-icons {
+	#progress .icon {
 		padding-left: 4px;
 		font-size: 2rem;
 		line-height: 1.5;
@@ -777,7 +791,7 @@ table#vocab tbody td:nth-child(3) {
 	/* Solid shadow: a translucent one lets path dots show through. */
 	box-shadow: 0 5px 0 color-mix(in srgb, rgb(0, 0, 0) 35%, var(--background-color));
 }
-.path-node .material-icons {
+.path-node .icon {
 	font-size: 3.4rem;
 	color: var(--text-color-softer);
 }
@@ -787,8 +801,8 @@ table#vocab tbody td:nth-child(3) {
 .path-node.current {
 	background: var(--accent);
 }
-.path-node.complete .material-icons,
-.path-node.current .material-icons {
+.path-node.complete .icon,
+.path-node.current .icon {
 	color: #fff;
 }
 .path-node.complete:hover,
@@ -800,7 +814,7 @@ table#vocab tbody td:nth-child(3) {
 	cursor: default;
 	background: color-mix(in srgb, var(--border-color) 55%, var(--background-color));
 }
-.path-node.locked .material-icons {
+.path-node.locked .icon {
 	color: color-mix(in srgb, var(--text-color-softer) 60%, var(--background-color));
 }
 .path-ring {
@@ -952,7 +966,7 @@ table#vocab tbody td:nth-child(3) {
 		white-space: normal;
 		line-height: 1.35;
 	}
-	.path-node .material-icons {
+	.path-node .icon {
 		font-size: 2.8rem;
 	}
 	.path-label {
@@ -1290,7 +1304,7 @@ table#vocab tbody td:nth-child(3) {
 	color: var(--badge-color);
 	animation: pop-in 0.45s ease-out 0.15s backwards;
 }
-#complete-streak .material-icons {
+#complete-streak .icon {
 	font-size: 3rem;
 	border-radius: 50%;
 	animation: burst 0.7s ease-out 0.45s backwards;
@@ -1400,7 +1414,7 @@ table#vocab tbody td:nth-child(3) {
 	#complete-sano,
 	#complete-title,
 	#complete-streak,
-	#complete-streak .material-icons,
+	#complete-streak .icon,
 	#complete-stats,
 	#complete-strengthened,
 	#complete-continue,

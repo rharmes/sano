@@ -365,8 +365,13 @@ function renderPath() {
 		node.style.top = y + 'px';
 		node.title = unit.title;
 		const icon = document.createElement('span');
-		icon.className = 'material-icons';
-		icon.textContent = complete ? 'check' : isCurrent ? 'play_arrow' : 'lock';
+		icon.className = 'icon';
+		const svgNS = 'http://www.w3.org/2000/svg';
+		const svg = document.createElementNS(svgNS, 'svg');
+		const use = document.createElementNS(svgNS, 'use');
+		use.setAttribute('href', '#i-' + (complete ? 'check' : isCurrent ? 'play_arrow' : 'lock'));
+		svg.appendChild(use);
+		icon.appendChild(svg);
 		node.appendChild(icon);
 
 		const due = complete ? unitDueCount(unit) : 0;
