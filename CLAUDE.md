@@ -11,7 +11,6 @@ significantly, update CLAUDE.md in the same commit.
 ## Repo facts
 
 - Remote: `git@github.com:rharmes/sano.git`, branch `main`.
-- `/Users/ross/Documents/rosssharmes.net/sano` is an abandoned old copy — never touch it.
 - `.claude/settings.json` sets `worktree.bgIsolation: "none"` — background
   sessions edit this checkout directly; do not use worktrees.
 - Recent work: see `git log` — commit messages are descriptive.
@@ -41,10 +40,11 @@ significantly, update CLAUDE.md in the same commit.
   only renders with saved progress — copy the representative state from
   `tools/check-viewports.mjs`), (b) iframes the app at the desired width, and
   (c) optionally clicks elements inside the iframe to reach lesson /
-  dictionary / flashcard / quiz screens. Screenshot with:
-  `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new
-  --disable-gpu --window-size=W,H --hide-scrollbars --virtual-time-budget=6000
-  --screenshot=out.png <url>`. Delete temp harness files before committing.
+  dictionary / flashcard / quiz screens. Screenshot using the same Chrome
+  binary as `tools/check-viewports.mjs` (its `CHROME` constant/env var):
+  `"$CHROME" --headless=new --disable-gpu --window-size=W,H --hide-scrollbars
+  --virtual-time-budget=6000 --screenshot=out.png <url>`. Delete temp harness
+  files before committing.
 - **Forcing light mode**: headless Chrome follows the system theme. Strip the
   dark `@media` blocks into temp copies (`css/.light.css`,
   `css/.light-barebones.css`) and a `.light.html` that references them.
