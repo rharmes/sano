@@ -13,6 +13,7 @@
 // Flags:
 //   --dry-run         List who would be notified, send nothing.
 //   --user <name>     Only consider that one user (testing).
+//   --force           Ignore the "haven't done a lesson today PT" filter (testing).
 //
 // Setup once on the server:
 //   cd ~ && mkdir -p sano-tools sano-vendor
@@ -61,6 +62,7 @@ foreach (['vapid_subject', 'vapid_public_key', 'vapid_private_key'] as $k) {
 }
 
 $dry = in_array('--dry-run', $argv, true);
+$force = in_array('--force', $argv, true);
 $onlyUser = null;
 foreach ($argv as $i => $a) {
 	if ($a === '--user' && isset($argv[$i + 1])) {
@@ -84,14 +86,21 @@ $sql = "SELECT u.id AS user_id, u.username,
                ps.id AS sub_id, ps.endpoint, ps.p256dh, ps.auth_secret
         FROM push_subscriptions ps
         JOIN users u ON u.id = ps.user_id
-        LEFT JOIN app_state s ON s.user_id = u.id
-        WHERE s.state IS NULL
-           OR JSON_UNQUOTE(JSON_EXTRACT(s.state, '$.lastActivityDay')) <> ?
-           OR JSON_UNQUOTE(JSON_EXTRACT(s.state, '$.lastActivityDay')) IS NULL";
-$params = [$today];
+        LEFT JOIN app_state s ON s.user_id = u.id";
+$params = [];
+$where = [];
+if (!$force) {
+	$where[] = "(s.state IS NULL
+	             OR JSON_UNQUOTE(JSON_EXTRACT(s.state, '$.lastActivityDay')) <> ?
+	             OR JSON_UNQUOTE(JSON_EXTRACT(s.state, '$.lastActivityDay')) IS NULL)";
+	$params[] = $today;
+}
 if ($onlyUser !== null) {
-	$sql .= ' AND u.username = ?';
+	$where[] = 'u.username = ?';
 	$params[] = $onlyUser;
+}
+if ($where) {
+	$sql .= ' WHERE ' . implode(' AND ', $where);
 }
 
 $stmt = $pdo->prepare($sql);
