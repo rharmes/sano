@@ -1315,10 +1315,10 @@ table#vocab tbody td:nth-child(3) {
 	z-index: 50;
 }
 #lesson-feedback.correct {
-	background: hsla(125, 69%, 34%, 0.16);
+	background: color-mix(in srgb, var(--background-color) 82%, hsl(125, 69%, 38%) 18%);
 }
 #lesson-feedback.incorrect {
-	background: hsla(0, 65%, 50%, 0.16);
+	background: color-mix(in srgb, var(--background-color) 82%, hsl(0, 65%, 50%) 18%);
 }
 #lesson-feedback p {
 	margin-bottom: 0.5rem;
@@ -1354,7 +1354,15 @@ table#vocab tbody td:nth-child(3) {
 	width: 110px;
 	height: 136px;
 	margin: 0 auto -0.5rem;
-	animation: pop-in 0.45s ease-out backwards;
+	transform-origin: 50% 100%;
+	animation:
+		pop-in 0.45s ease-out backwards,
+		sano-head-wobble 1s ease-in-out 0.55s 2;
+}
+#complete-sano .sano-tail {
+	transform-box: fill-box;
+	transform-origin: 0% 50%;
+	animation: sano-tail-wag 0.55s ease-in-out 0.55s 3;
 }
 #complete-title {
 	font-family: 'Neuton', serif;
@@ -1477,10 +1485,48 @@ table#vocab tbody td:nth-child(3) {
 	animation: tile-shake 0.4s ease;
 }
 
+/* Nepali-style head wobble + tail wag for the lesson-complete mascot.
+   Both fire after pop-in finishes (delay 0.55s) and play a few times. */
+@keyframes sano-head-wobble {
+	0%,
+	100% {
+		transform: rotate(0);
+	}
+	25% {
+		transform: rotate(-5deg);
+	}
+	75% {
+		transform: rotate(5deg);
+	}
+}
+@keyframes sano-tail-wag {
+	0%,
+	100% {
+		transform: rotate(0);
+	}
+	25% {
+		transform: rotate(-18deg);
+	}
+	75% {
+		transform: rotate(14deg);
+	}
+}
+
+/* Primary lesson-flow buttons go full-width on phones */
+@media (max-width: 520px) {
+	#exercise-check,
+	#lesson-continue,
+	#complete-continue {
+		display: block;
+		width: 100%;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	#exercise-body.slide-in,
 	#lesson-feedback:not(.hide),
 	#complete-sano,
+	#complete-sano .sano-tail,
 	#complete-title,
 	#complete-streak,
 	#complete-streak .icon,
