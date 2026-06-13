@@ -1,0 +1,1530 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		<title>Sano — Style Guide</title>
+		<link rel="stylesheet" href="../css/fonts.css" />
+		<style>
+			/* ───────────────────────────────────────────────────────────────
+			   Brand tokens — copied verbatim from css/sano.css (the source of
+			   truth). If they drift, sano.css wins; update this file to match.
+			   1rem = 10px throughout (base-font-size 62.5%, set on <html>).
+			   ─────────────────────────────────────────────────────────────── */
+			html {
+				font-size: 62.5%;
+
+				--accent: #dd6470; /* paper crimson: CTAs, current node, links */
+				--accent-deep: #b94f5b; /* hover / pressed */
+				--path-complete-color: #56629e; /* paper indigo: completed nodes */
+
+				--text-color-richer: #2e2933;
+				--text-color-normal: #45404c;
+				--text-color-soft: #79705f;
+				--text-color-softer: #b1a795;
+
+				--badge-color: #d99e3a; /* pennant gold */
+				--word-color: #c25566;
+				--text-complete-color: #38824a;
+				--text-incomplete-color: #c2403d;
+
+				--background-color: #fbf5e9;
+				--background-color-softer: #f3ecdb;
+
+				--border-color: #e0d8c4;
+				--border-color-softer: #e9e2d1;
+
+				--button-primary-color: #fff; /* from barebones.css */
+
+				/* paper-cut artwork (Sano mascot) */
+				--paper-petal: #f3c7cd;
+				--paper-cream: #f1e8d6;
+				--paper-cream-deep: #e8ddc6;
+				--paper-ink: #37323c;
+				--paper-whisker: #a59a86;
+				--cut-shadow: 0.25;
+			}
+			@media (prefers-color-scheme: dark) {
+				html {
+					--accent: #e0697a;
+					--accent-deep: #c25462;
+					--path-complete-color: #7384c4;
+
+					--text-color-richer: #efe9f0;
+					--text-color-normal: #d8d1da;
+					--text-color-soft: #9a91a4;
+					--text-color-softer: #645c70;
+
+					--badge-color: #d9aa4e;
+					--word-color: #e58794;
+					--text-complete-color: #7fae83;
+					--text-incomplete-color: #e07a72;
+
+					--background-color: #1b1822;
+					--background-color-softer: #262230;
+
+					--border-color: #37323f;
+					--border-color-softer: #2e2a38;
+
+					--paper-petal: #f0bfc7;
+					--paper-cream: #e6dac4;
+					--paper-cream-deep: #d6c9ae;
+					--paper-ink: #2e2935;
+					--paper-whisker: #8d8474;
+					--cut-shadow: 0.5;
+				}
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				font-family: 'Lato', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 300;
+				font-size: 1.8rem;
+				line-height: 1.6;
+				color: var(--text-color-normal);
+				background: var(--background-color);
+			}
+
+			/* Layout */
+			.wrap {
+				max-width: 960px;
+				margin: 0 auto;
+				padding: 0 2.4rem 8rem;
+			}
+			.masthead {
+				display: flex;
+				align-items: center;
+				gap: 2rem;
+				padding: 5rem 0 2rem;
+			}
+			.masthead .sano-mascot {
+				width: 89px;
+				height: 97px;
+				flex-shrink: 0;
+			}
+			.masthead h1 {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 5.6rem;
+				line-height: 1;
+				margin: 0;
+				color: var(--text-color-richer);
+			}
+			.masthead p {
+				margin: 0.6rem 0 0;
+				color: var(--text-color-soft);
+				font-size: 1.8rem;
+			}
+			.lede {
+				max-width: 64ch;
+				font-size: 1.9rem;
+				color: var(--text-color-soft);
+				border-bottom: 1px solid var(--border-color);
+				padding-bottom: 2.6rem;
+				margin: 0 0 1rem;
+			}
+			.lede code {
+				color: var(--text-color-richer);
+			}
+
+			/* Sticky section nav */
+			nav.toc {
+				position: sticky;
+				top: 0;
+				z-index: 5;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6rem 1.4rem;
+				padding: 1.4rem 0;
+				margin-bottom: 2rem;
+				background: linear-gradient(to bottom, var(--background-color) 80%, transparent);
+				border-bottom: 1px solid var(--border-color-softer);
+			}
+			nav.toc a {
+				font-size: 1.4rem;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				font-weight: 700;
+				color: var(--text-color-soft);
+				text-decoration: none;
+			}
+			nav.toc a:hover {
+				color: var(--accent);
+			}
+
+			section {
+				padding-top: 4rem;
+				margin-top: 2rem;
+				border-top: 1px solid var(--border-color-softer);
+			}
+			section:first-of-type {
+				border-top: 0;
+			}
+			h2.sg {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 3.4rem;
+				line-height: 1.1;
+				margin: 0 0 0.4rem;
+				color: var(--text-color-richer);
+			}
+			.sg-note {
+				margin: 0 0 2.4rem;
+				max-width: 70ch;
+				color: var(--text-color-soft);
+				font-size: 1.7rem;
+			}
+			h3.sg {
+				font-size: 1.4rem;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				font-weight: 700;
+				color: var(--text-color-softer);
+				margin: 3.2rem 0 1.4rem;
+			}
+			code,
+			.mono {
+				font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+				font-size: 0.86em;
+			}
+			a {
+				color: var(--accent);
+			}
+
+			/* ── Color swatches ──────────────────────────────────────────── */
+			.swatches {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+				gap: 1.4rem;
+			}
+			.swatch {
+				border: 1px solid var(--border-color-softer);
+				border-radius: 10px;
+				overflow: hidden;
+				background: var(--background-color-softer);
+			}
+			.swatch .chip {
+				height: 78px;
+				border-bottom: 1px solid var(--border-color-softer);
+			}
+			.swatch .meta {
+				padding: 1rem 1.2rem 1.2rem;
+			}
+			.swatch .tok {
+				display: block;
+				font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+				font-size: 1.35rem;
+				color: var(--text-color-richer);
+				word-break: break-all;
+			}
+			.swatch .use {
+				display: block;
+				margin-top: 0.4rem;
+				font-size: 1.4rem;
+				color: var(--text-color-soft);
+			}
+			.swatch .hex {
+				display: block;
+				margin-top: 0.5rem;
+				font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+				font-size: 1.25rem;
+				color: var(--text-color-softer);
+			}
+
+			/* ── Type specimens ──────────────────────────────────────────── */
+			.spec {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 0.4rem;
+				padding: 1.8rem 0;
+				border-bottom: 1px solid var(--border-color-softer);
+			}
+			.spec .label {
+				font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+				font-size: 1.3rem;
+				color: var(--text-color-softer);
+			}
+			.t-display {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 7.2rem;
+				line-height: 1;
+				color: var(--text-color-richer);
+			}
+			.t-word {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 5.2rem;
+				line-height: 1.1;
+				color: var(--word-color);
+			}
+			.t-h2 {
+				font-size: 2.3rem;
+				font-weight: 400;
+				color: var(--text-color-richer);
+			}
+			.t-body {
+				font-size: 2.3rem;
+				font-weight: 300;
+				color: var(--text-color-normal);
+			}
+			.t-pron {
+				font-size: 2.6rem;
+				font-style: italic;
+				color: var(--text-color-soft);
+			}
+			.t-eyebrow {
+				font-size: 1.6rem;
+				text-transform: uppercase;
+				letter-spacing: 0.1rem;
+				color: var(--text-color-soft);
+			}
+			.fonts {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 1.6rem;
+				margin-bottom: 1rem;
+			}
+			.fontcard {
+				padding: 1.8rem;
+				border: 1px solid var(--border-color-softer);
+				border-radius: 10px;
+				background: var(--background-color-softer);
+			}
+			.fontcard .big {
+				font-size: 3.8rem;
+				line-height: 1.1;
+				color: var(--text-color-richer);
+			}
+			.fontcard .neuton {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+			}
+			.fontcard .lato {
+				font-family: 'Lato', sans-serif;
+			}
+			.fontcard p {
+				margin: 1rem 0 0;
+				font-size: 1.5rem;
+				color: var(--text-color-soft);
+			}
+
+			/* ── Icon grid ───────────────────────────────────────────────── */
+			.icon {
+				display: inline-block;
+				font-size: 2.4rem;
+				line-height: 1;
+			}
+			.icon svg {
+				width: 1em;
+				height: 1em;
+				fill: currentColor;
+				vertical-align: -0.125em;
+			}
+			.icons {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+				gap: 1rem;
+			}
+			.iconcell {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.8rem;
+				padding: 1.6rem 1rem;
+				border: 1px solid var(--border-color-softer);
+				border-radius: 10px;
+				color: var(--text-color-soft);
+				background: var(--background-color-softer);
+			}
+			.iconcell .icon {
+				font-size: 3.2rem;
+				color: var(--accent);
+			}
+			.iconcell code {
+				font-size: 1.3rem;
+				color: var(--text-color-soft);
+			}
+
+			/* ── Mascot ──────────────────────────────────────────────────── */
+			.f-indigo {
+				fill: var(--path-complete-color);
+			}
+			.f-crimson {
+				fill: var(--accent);
+			}
+			.f-petal {
+				fill: var(--paper-petal);
+			}
+			.f-cream {
+				fill: var(--paper-cream);
+			}
+			.f-cream-deep {
+				fill: var(--paper-cream-deep);
+			}
+			.f-ink {
+				fill: var(--paper-ink);
+			}
+			.s-whisker {
+				fill: none;
+				stroke: var(--paper-whisker);
+				stroke-width: 2;
+				stroke-linecap: round;
+			}
+			.cut {
+				filter: drop-shadow(0 2px 1.5px rgba(10, 8, 14, var(--cut-shadow)));
+			}
+			.paper-grain {
+				filter: url(#paper-grain);
+			}
+
+			/* Idle mascot life — mirrors css/sano.css. Full mascots (.sano-idle)
+			   run all five loops; head crops (.sano-idle-head) run only the three
+			   that read at thumbnail size. Each loop is mostly at rest with a short
+			   active slice; de-synced periods + negative delays stagger them. */
+			.sano-mascot .sano-head {
+				transform-box: fill-box;
+				transform-origin: 50% 100%;
+			}
+			.sano-tail {
+				transform-box: fill-box;
+				transform-origin: 0% 50%;
+			}
+			.sano-eyes {
+				transform-box: fill-box;
+				transform-origin: 50% 50%;
+			}
+			.sano-ear {
+				transform-box: fill-box;
+				transform-origin: 50% 100%;
+			}
+			.sano-ear-left {
+				--ear-dir: 1;
+			}
+			.sano-ear-right {
+				--ear-dir: -1;
+			}
+			.sano-nose {
+				transform-box: fill-box;
+				transform-origin: 50% 30%;
+			}
+			.sano-idle .sano-tail {
+				animation: sano-idle-tail-wag 9s ease-in-out -3s infinite;
+			}
+			.sano-idle .sano-head {
+				animation: sano-idle-head-tilt 22s ease-in-out -6s infinite;
+			}
+			.sano-idle .sano-eyes,
+			.sano-idle-head .sano-eyes {
+				animation: sano-idle-blink 4s ease-in-out -1s infinite;
+			}
+			.sano-idle .sano-ear,
+			.sano-idle-head .sano-ear {
+				animation: sano-idle-ear-wiggle 14s ease-in-out -10s infinite;
+			}
+			.sano-idle .sano-nose,
+			.sano-idle-head .sano-nose {
+				animation: sano-idle-nose-wiggle 10s ease-in-out -5s infinite;
+			}
+			@keyframes sano-idle-tail-wag {
+				0%,
+				90%,
+				100% {
+					transform: rotate(0deg);
+				}
+				92% {
+					transform: rotate(-22deg);
+				}
+				94% {
+					transform: rotate(18deg);
+				}
+				96% {
+					transform: rotate(-14deg);
+				}
+				98% {
+					transform: rotate(10deg);
+				}
+			}
+			@keyframes sano-idle-head-tilt {
+				0%,
+				83% {
+					transform: rotate(0deg);
+				}
+				85%,
+				98% {
+					transform: rotate(-12deg);
+				}
+				100% {
+					transform: rotate(0deg);
+				}
+			}
+			@keyframes sano-idle-blink {
+				0%,
+				90%,
+				94.5%,
+				96%,
+				100% {
+					transform: scaleY(1);
+				}
+				95%,
+				95.5% {
+					transform: scaleY(0.06);
+				}
+			}
+			@keyframes sano-idle-ear-wiggle {
+				0%,
+				96%,
+				100% {
+					transform: rotate(0deg);
+				}
+				97% {
+					transform: rotate(calc(var(--ear-dir, 1) * -12deg));
+				}
+				98.2% {
+					transform: rotate(calc(var(--ear-dir, 1) * 10deg));
+				}
+				99.2% {
+					transform: rotate(calc(var(--ear-dir, 1) * -5deg));
+				}
+			}
+			@keyframes sano-idle-nose-wiggle {
+				0%,
+				94%,
+				100% {
+					transform: rotate(0deg) translateX(0);
+				}
+				95.2% {
+					transform: rotate(-4deg) translateX(-0.8px);
+				}
+				96.4% {
+					transform: rotate(4deg) translateX(0.8px);
+				}
+				97.6% {
+					transform: rotate(-3deg) translateX(-0.5px);
+				}
+				98.8% {
+					transform: rotate(3deg) translateX(0.5px);
+				}
+			}
+			.mascot-row {
+				display: flex;
+				align-items: flex-end;
+				gap: 3rem;
+				flex-wrap: wrap;
+			}
+			.mascot-row figure {
+				margin: 0;
+				text-align: center;
+			}
+			.mascot-row figcaption {
+				margin-top: 1rem;
+				font-size: 1.4rem;
+				color: var(--text-color-soft);
+			}
+			.mascot-full {
+				width: 148px;
+				height: 161px;
+			}
+			.mascot-head {
+				width: 69px;
+				height: 65px;
+			}
+
+			/* ── Components: buttons / inputs / panel ─────────────────────── */
+			.demo {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 1.6rem;
+				padding: 2rem;
+				border: 1px solid var(--border-color-softer);
+				border-radius: 12px;
+				background: var(--background-color-softer);
+				margin-bottom: 1.4rem;
+			}
+			.btn-primary {
+				height: auto;
+				padding: 1rem 3.2rem;
+				font-family: 'Lato', sans-serif;
+				font-size: 1.6rem;
+				font-weight: 700;
+				color: var(--button-primary-color);
+				background: var(--accent);
+				border: 0;
+				border-radius: 1rem;
+				cursor: pointer;
+			}
+			.btn-primary:hover {
+				background: var(--accent-deep);
+			}
+			.btn-primary.indigo {
+				background: var(--path-complete-color);
+			}
+			.btn-primary:disabled {
+				background: var(--text-color-softer);
+				cursor: default;
+			}
+			.icon-btn {
+				padding: 0;
+				border: 0;
+				background: transparent;
+				color: var(--accent);
+				cursor: pointer;
+			}
+			.icon-btn:hover {
+				color: var(--accent-deep);
+			}
+			.field {
+				width: 100%;
+				max-width: 280px;
+				height: 38px;
+				padding: 6px 10px;
+				font-size: 1.6rem;
+				color: var(--text-color-normal);
+				background: var(--background-color);
+				border: 1px solid var(--border-color-softer);
+				border-radius: 4px;
+				-webkit-appearance: none;
+				appearance: none;
+			}
+			.field:focus {
+				border-color: var(--accent);
+				outline: 0;
+			}
+			.check {
+				display: flex;
+				align-items: center;
+				gap: 0.8rem;
+				font-size: 1.6rem;
+				color: var(--text-color-normal);
+			}
+			.check input {
+				width: 1.8rem;
+				height: 1.8rem;
+				accent-color: var(--path-complete-color);
+			}
+			.panel {
+				width: 32rem;
+				max-width: 100%;
+				padding: 1.6rem;
+				background: var(--background-color);
+				border: 1px solid var(--border-color);
+				border-radius: 1rem;
+				box-shadow: 0 4px 16px rgba(10, 8, 14, 0.18);
+			}
+			.panel h4 {
+				margin: 0 0 1.2rem;
+				font-size: 1.4rem;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--text-color-softer);
+			}
+
+			/* ── Path nodes + pennant badge ──────────────────────────────── */
+			.nodes {
+				display: flex;
+				gap: 3rem;
+				flex-wrap: wrap;
+				align-items: flex-start;
+			}
+			.node-demo {
+				text-align: center;
+			}
+			.path-node {
+				position: relative;
+				width: 72px;
+				height: 72px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: 0;
+				background: var(--border-color);
+				box-shadow: 0 5px 0 color-mix(in srgb, rgb(0, 0, 0) 35%, var(--background-color));
+			}
+			.path-node .icon {
+				font-size: 3.4rem;
+				color: var(--text-color-softer);
+			}
+			.path-node.complete {
+				background: var(--path-complete-color);
+			}
+			.path-node.current {
+				background: var(--accent);
+			}
+			.path-node.complete .icon,
+			.path-node.current .icon {
+				color: #fff;
+			}
+			.path-node.locked {
+				background: color-mix(in srgb, var(--border-color) 55%, var(--background-color));
+			}
+			.path-node.locked .icon {
+				color: color-mix(in srgb, var(--text-color-softer) 60%, var(--background-color));
+			}
+			.node-demo .cap {
+				margin-top: 1.4rem;
+				font-size: 1.4rem;
+				color: var(--text-color-soft);
+			}
+			.path-badge {
+				position: absolute;
+				top: -6px;
+				right: -14px;
+				min-width: 34px;
+				height: 26px;
+				padding: 0 14px 0 7px;
+				border-radius: 3px 0 0 3px;
+				clip-path: polygon(0 0, 100% 0, 76% 50%, 100% 100%, 0 100%);
+				background: var(--badge-color);
+				color: #fff;
+				font-size: 1.3rem;
+				font-weight: 700;
+				line-height: 26px;
+				text-align: left;
+				text-indent: 2px;
+			}
+
+			/* ── Speech bubbles (ported from .mockups/whisper.html, re-keyed
+			      to canonical sano.css tokens — this is the conversation
+			      pattern slated for the app next). ───────────────────────── */
+			.thread {
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				gap: 2.6rem;
+				max-width: 560px;
+			}
+			.bubble {
+				position: relative;
+				padding: 1.4rem 1.6rem 1.6rem 2.4rem;
+				background: var(--background-color);
+				border: 1px solid var(--border-color);
+				border-radius: 4px;
+			}
+			.bubble::before {
+				content: '';
+				position: absolute;
+				top: 1.6rem;
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+				background: var(--accent);
+			}
+			.bubble.sano::before {
+				left: -6px;
+			}
+			.bubble.user {
+				margin-left: auto;
+				padding: 1.4rem 2.4rem 1.6rem 1.6rem;
+				text-align: right;
+			}
+			.bubble.user::before {
+				right: -6px;
+				background: var(--path-complete-color);
+			}
+			.bubble .speaker {
+				font-family: 'Lato', sans-serif;
+				font-weight: 700;
+				font-size: 1.2rem;
+				letter-spacing: 0.3em;
+				text-transform: uppercase;
+				color: var(--text-color-softer);
+				margin: 0 0 0.6rem;
+			}
+			.bubble .np {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 3rem;
+				line-height: 1.25;
+				color: var(--text-color-richer);
+				margin: 0 0 0.4rem;
+			}
+			.bubble .en {
+				font-family: 'Lato', sans-serif;
+				font-weight: 300;
+				font-style: italic;
+				font-size: 1.8rem;
+				color: var(--text-color-soft);
+				margin: 0;
+			}
+			.scene {
+				display: grid;
+				grid-template-columns: 160px 1fr;
+				gap: 2.6rem;
+				align-items: start;
+			}
+			.scene .mascot {
+				width: 100%;
+			}
+
+			/* ── Decisions list ──────────────────────────────────────────── */
+			.decisions {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				display: grid;
+				gap: 1.2rem;
+			}
+			.decisions li {
+				padding: 1.4rem 1.6rem;
+				border-left: 3px solid var(--accent);
+				background: var(--background-color-softer);
+				border-radius: 0 8px 8px 0;
+				font-size: 1.7rem;
+				color: var(--text-color-normal);
+			}
+			.decisions li b {
+				color: var(--text-color-richer);
+			}
+
+			.callout {
+				display: inline-block;
+				margin-top: 2rem;
+				padding: 1.2rem 2rem;
+				border: 1px solid var(--accent);
+				border-radius: 1rem;
+				color: var(--accent);
+				font-weight: 700;
+				font-size: 1.6rem;
+				text-decoration: none;
+			}
+			.callout:hover {
+				background: var(--accent);
+				color: var(--button-primary-color);
+			}
+
+			footer.sg {
+				margin-top: 5rem;
+				padding-top: 2.4rem;
+				border-top: 1px solid var(--border-color-softer);
+				text-align: center;
+				color: var(--text-color-softer);
+				font-size: 1.5rem;
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				.sano-idle .sano-tail,
+				.sano-idle .sano-head,
+				.sano-idle .sano-eyes,
+				.sano-idle .sano-ear,
+				.sano-idle .sano-nose,
+				.sano-idle-head .sano-eyes,
+				.sano-idle-head .sano-ear,
+				.sano-idle-head .sano-nose {
+					animation: none;
+				}
+			}
+			@media (max-width: 620px) {
+				.t-display {
+					font-size: 4.3rem;
+				}
+				.scene {
+					grid-template-columns: 1fr;
+				}
+				.scene .mascot {
+					max-width: 140px;
+					margin: 0 auto;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Shared defs: paper-grain filter + Material-icon symbol sprite,
+		     mirrored from index.html so specimens render identically. -->
+		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+			<defs>
+				<filter id="paper-grain" x="-25%" y="-20%" width="150%" height="140%">
+					<feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n" />
+					<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.16 0.16 0.16 0 0" result="na" />
+					<feComposite in="na" in2="SourceGraphic" operator="atop" />
+				</filter>
+				<symbol id="i-bolt" viewBox="0 0 24 24">
+					<path
+						d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"
+					/>
+				</symbol>
+				<symbol id="i-check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></symbol>
+				<symbol id="i-close" viewBox="0 0 24 24">
+					<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+				</symbol>
+				<symbol id="i-lock" viewBox="0 0 24 24">
+					<path
+						d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
+					/>
+				</symbol>
+				<symbol id="i-person" viewBox="0 0 24 24">
+					<path
+						d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+					/>
+				</symbol>
+				<symbol id="i-play_arrow" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></symbol>
+				<symbol id="i-school" viewBox="0 0 24 24">
+					<path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
+				</symbol>
+				<symbol id="i-toc" viewBox="0 0 24 24">
+					<path d="M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z" />
+				</symbol>
+			</defs>
+		</svg>
+
+		<div class="wrap">
+			<header class="masthead">
+				<svg class="sano-mascot mascot-full sano-idle" viewBox="30 10 160 174" aria-hidden="true">
+					<g>
+						<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+						<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+						<g class="sano-tail">
+							<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
+						</g>
+						<g class="sano-head">
+							<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+							<g class="sano-ear sano-ear-left">
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+							</g>
+							<g class="sano-ear sano-ear-right">
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+							</g>
+							<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+							<g class="sano-eyes">
+								<circle cx="88" cy="72" r="4.4" class="f-ink" />
+								<circle cx="112" cy="72" r="4.4" class="f-ink" />
+							</g>
+							<g class="sano-nose">
+								<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+								<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+							</g>
+						</g>
+					</g>
+				</svg>
+				<div>
+					<h1>Style Guide</h1>
+					<p>Sano — Nepali Study Guide · “Pennant &amp; Paper-cut”</p>
+				</div>
+			</header>
+
+			<p class="lede">
+				The single reference for building on-brand Sano pages. Tokens, type, and components below are mirrored from the live app —
+				<code>css/sano.css</code>, <code>css/fonts.css</code>, and the inline sprite in <code>index.html</code> are the sources of
+				truth. When they change, update this page in the same pass.
+			</p>
+
+			<nav class="toc">
+				<a href="#color">Color</a>
+				<a href="#type">Typography</a>
+				<a href="#icons">Icons</a>
+				<a href="#mascot">Mascot</a>
+				<a href="#controls">Buttons &amp; Inputs</a>
+				<a href="#panel">Panels</a>
+				<a href="#path">Path &amp; Badges</a>
+				<a href="#bubbles">Speech Bubbles</a>
+				<a href="#motion">Motion</a>
+				<a href="#decisions">Decisions</a>
+			</nav>
+
+			<!-- ── Color ──────────────────────────────────────────────── -->
+			<section id="color">
+				<h2 class="sg">Color &amp; theme</h2>
+				<p class="sg-note">
+					Every color is a CSS custom property declared on <code>html</code> in <code>css/sano.css</code>, with a dark override
+					inside <code>@media (prefers-color-scheme: dark)</code>. There is no theme toggle — the OS decides. Always edit both
+					blocks together. Chips below are rendered with the live token, so they already reflect your current mode; both hex
+					values are listed for reference.
+				</p>
+
+				<h3 class="sg">Brand</h3>
+				<div class="swatches">
+					<div class="swatch">
+						<div class="chip" style="background: var(--accent)"></div>
+						<div class="meta">
+							<span class="tok">--accent</span>
+							<span class="use">Crimson — CTAs, current node, links</span>
+							<span class="hex">#dd6470 · dark #e0697a</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--accent-deep)"></div>
+						<div class="meta">
+							<span class="tok">--accent-deep</span>
+							<span class="use">Crimson hover / pressed</span>
+							<span class="hex">#b94f5b · dark #c25462</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--path-complete-color)"></div>
+						<div class="meta">
+							<span class="tok">--path-complete-color</span>
+							<span class="use">Indigo — completed nodes, signed-in, user voice</span>
+							<span class="hex">#56629e · dark #7384c4</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--badge-color)"></div>
+						<div class="meta">
+							<span class="tok">--badge-color</span>
+							<span class="use">Pennant gold — streak, due badge</span>
+							<span class="hex">#d99e3a · dark #d9aa4e</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--word-color)"></div>
+						<div class="meta">
+							<span class="tok">--word-color</span>
+							<span class="use">Nepali vocabulary headwords</span>
+							<span class="hex">#c25566 · dark #e58794</span>
+						</div>
+					</div>
+				</div>
+
+				<h3 class="sg">Text</h3>
+				<div class="swatches">
+					<div class="swatch">
+						<div class="chip" style="background: var(--text-color-richer)"></div>
+						<div class="meta">
+							<span class="tok">--text-color-richer</span>
+							<span class="use">Headings, emphasis</span>
+							<span class="hex">#2e2933 · dark #efe9f0</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--text-color-normal)"></div>
+						<div class="meta">
+							<span class="tok">--text-color-normal</span>
+							<span class="use">Body copy (default)</span>
+							<span class="hex">#45404c · dark #d8d1da</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--text-color-soft)"></div>
+						<div class="meta">
+							<span class="tok">--text-color-soft</span>
+							<span class="use">Pronunciations, captions, secondary</span>
+							<span class="hex">#79705f · dark #9a91a4</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--text-color-softer)"></div>
+						<div class="meta">
+							<span class="tok">--text-color-softer</span>
+							<span class="use">Muted / disabled, table headers</span>
+							<span class="hex">#b1a795 · dark #645c70</span>
+						</div>
+					</div>
+				</div>
+
+				<h3 class="sg">Status</h3>
+				<div class="swatches">
+					<div class="swatch">
+						<div class="chip" style="background: var(--text-complete-color)"></div>
+						<div class="meta">
+							<span class="tok">--text-complete-color</span>
+							<span class="use">Correct / complete (green)</span>
+							<span class="hex">#38824a · dark #7fae83</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--text-incomplete-color)"></div>
+						<div class="meta">
+							<span class="tok">--text-incomplete-color</span>
+							<span class="use">Incorrect / error (red)</span>
+							<span class="hex">#c2403d · dark #e07a72</span>
+						</div>
+					</div>
+				</div>
+
+				<h3 class="sg">Surfaces &amp; lines</h3>
+				<div class="swatches">
+					<div class="swatch">
+						<div class="chip" style="background: var(--background-color)"></div>
+						<div class="meta">
+							<span class="tok">--background-color</span>
+							<span class="use">Page — warm paper / midnight card</span>
+							<span class="hex">#fbf5e9 · dark #1b1822</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--background-color-softer)"></div>
+						<div class="meta">
+							<span class="tok">--background-color-softer</span>
+							<span class="use">Recessed fills, tiles</span>
+							<span class="hex">#f3ecdb · dark #262230</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--border-color)"></div>
+						<div class="meta">
+							<span class="tok">--border-color</span>
+							<span class="use">Default borders, dividers</span>
+							<span class="hex">#e0d8c4 · dark #37323f</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--border-color-softer)"></div>
+						<div class="meta">
+							<span class="tok">--border-color-softer</span>
+							<span class="use">Hairline separators</span>
+							<span class="hex">#e9e2d1 · dark #2e2a38</span>
+						</div>
+					</div>
+				</div>
+
+				<h3 class="sg">Paper-cut artwork (mascot)</h3>
+				<div class="swatches">
+					<div class="swatch">
+						<div class="chip" style="background: var(--paper-petal)"></div>
+						<div class="meta">
+							<span class="tok">--paper-petal</span>
+							<span class="use">Inner ear</span>
+							<span class="hex">#f3c7cd · dark #f0bfc7</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--paper-cream)"></div>
+						<div class="meta">
+							<span class="tok">--paper-cream</span>
+							<span class="use">Face</span>
+							<span class="hex">#f1e8d6 · dark #e6dac4</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--paper-cream-deep)"></div>
+						<div class="meta">
+							<span class="tok">--paper-cream-deep</span>
+							<span class="use">Belly</span>
+							<span class="hex">#e8ddc6 · dark #d6c9ae</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--paper-ink)"></div>
+						<div class="meta">
+							<span class="tok">--paper-ink</span>
+							<span class="use">Eyes</span>
+							<span class="hex">#37323c · dark #2e2935</span>
+						</div>
+					</div>
+					<div class="swatch">
+						<div class="chip" style="background: var(--paper-whisker)"></div>
+						<div class="meta">
+							<span class="tok">--paper-whisker</span>
+							<span class="use">Whisker stroke</span>
+							<span class="hex">#a59a86 · dark #8d8474</span>
+						</div>
+					</div>
+				</div>
+				<p class="sg-note" style="margin-top: 1.6rem">
+					<code>--cut-shadow</code> (0.25 light / 0.5 dark) drives the paper drop-shadow opacity on each <code>.cut</code> layer.
+				</p>
+			</section>
+
+			<!-- ── Typography ─────────────────────────────────────────── -->
+			<section id="type">
+				<h2 class="sg">Typography</h2>
+				<p class="sg-note">
+					Two self-hosted families (no external requests). <b>Neuton</b> (serif, 700 only) is the display voice — the wordmark,
+					headings, and every Nepali phrase. <b>Lato</b> (300 / 400 / 700, plus 300 / 400 italic) carries all UI and body copy;
+					italic Lato is the house style for Romanized pronunciations. Sizes are <code>rem</code> on a <code>62.5%</code> base, so
+					<code>1rem = 10px</code> (body <code>2.3rem</code> = 23px).
+				</p>
+
+				<div class="fonts">
+					<div class="fontcard">
+						<div class="big neuton">Namaste</div>
+						<p><b>Neuton</b> · serif · 700 · display &amp; Nepali</p>
+					</div>
+					<div class="fontcard">
+						<div class="big lato" style="font-weight: 300">Namaste, Sano</div>
+						<p><b>Lato</b> · sans · 300/400/700 + italics · UI &amp; body</p>
+					</div>
+				</div>
+
+				<div class="spec">
+					<span class="label">Wordmark / H1 — Neuton 700 · 7.2rem (→ 4.3rem ≤810px)</span>
+					<span class="t-display">Sano</span>
+				</div>
+				<div class="spec">
+					<span class="label">Lesson word — Neuton 700 · 5.2rem · --word-color</span>
+					<span class="t-word">Dhanyabad</span>
+				</div>
+				<div class="spec">
+					<span class="label">H2 / H3 — Lato 400 · 2.3rem · --text-color-richer</span>
+					<span class="t-h2">Section heading</span>
+				</div>
+				<div class="spec">
+					<span class="label">Body — Lato 300 · 2.3rem · --text-color-normal</span>
+					<span class="t-body">Essential Nepali phrases with Romanized pronunciations for English speakers.</span>
+				</div>
+				<div class="spec">
+					<span class="label">Pronunciation — Lato 300 italic · 2.6rem · --text-color-soft</span>
+					<span class="t-pron">dhan-ya-baad</span>
+				</div>
+				<div class="spec">
+					<span class="label">Eyebrow / label — Lato 300 · 1.6rem · uppercase · 0.1rem tracking</span>
+					<span class="t-eyebrow">New phrase</span>
+				</div>
+			</section>
+
+			<!-- ── Icons ──────────────────────────────────────────────── -->
+			<section id="icons">
+				<h2 class="sg">Iconography</h2>
+				<p class="sg-note">
+					Icons are an inline SVG sprite of Material Icons symbols (<code>#i-*</code>) defined once in
+					<code>index.html</code>, used via <code>&lt;use href="#i-name"&gt;</code>. Wrap each in
+					<code>&lt;span class="icon"&gt;</code> (or a chromeless <code>&lt;button class="icon"&gt;</code> for actions): the
+					wrapper's <code>font-size</code> sets glyph size and <code>color</code> sets fill (<code>currentColor</code>). No icon
+					font, no network request.
+				</p>
+				<div class="icons">
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-school" /></svg></span
+						><code>#i-school</code>
+					</div>
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-toc" /></svg></span
+						><code>#i-toc</code>
+					</div>
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-bolt" /></svg></span
+						><code>#i-bolt</code>
+					</div>
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-person" /></svg></span
+						><code>#i-person</code>
+					</div>
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-check" /></svg></span
+						><code>#i-check</code>
+					</div>
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-close" /></svg></span
+						><code>#i-close</code>
+					</div>
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-lock" /></svg></span
+						><code>#i-lock</code>
+					</div>
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-play_arrow" /></svg></span
+						><code>#i-play_arrow</code>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── Mascot ─────────────────────────────────────────────── -->
+			<section id="mascot">
+				<h2 class="sg">Sano the mascot</h2>
+				<p class="sg-note">
+					A paper-cut mouse built from layered SVG polygons on a <code>viewBox="30 10 160 174"</code> (widened from the original
+					to give the tilted ears headroom). Fills are theme tokens via
+					<code>.f-indigo / .f-crimson / .f-petal / .f-cream / .f-cream-deep / .f-ink</code> and the
+					<code>.s-whisker</code> stroke. The indigo backing is split into separate head and body outlines so the head can tilt
+					independently, and the moving parts live in named groups (<code
+						>.sano-head / .sano-tail / .sano-eyes / .sano-ear / .sano-nose</code
+					>) that the idle loops target. The footer uses a head-only crop — which carries a bolder indigo outline (tapered at the
+					bottom to follow the chin) plus the full mascot's whiskers. Specimens here are shown flat; in the app each cut also sits
+					in a <code>.cut</code> group for its drop-shadow and the whole figure is wrapped in <code>.paper-grain</code> (the
+					<code>#paper-grain</code> filter from <code>index.html</code>).
+				</p>
+				<div class="mascot-row">
+					<figure>
+						<svg class="mascot-full sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
+							<g>
+								<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+								<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+								<g class="sano-tail">
+									<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
+								</g>
+								<g class="sano-head">
+									<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+									<g class="sano-ear sano-ear-left">
+										<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+										<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+									</g>
+									<g class="sano-ear sano-ear-right">
+										<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+										<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+									</g>
+									<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+									<g class="sano-eyes">
+										<circle cx="88" cy="72" r="4.4" class="f-ink" />
+										<circle cx="112" cy="72" r="4.4" class="f-ink" />
+									</g>
+									<g class="sano-nose">
+										<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+										<path
+											d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+											class="s-whisker"
+										/>
+									</g>
+								</g>
+							</g>
+						</svg>
+						<figcaption>Full mascot · header / completion</figcaption>
+					</figure>
+					<figure>
+						<svg class="mascot-head sano-idle-head" viewBox="42 8 116 110" aria-hidden="true">
+							<path d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z" class="f-indigo" />
+							<g class="sano-ear sano-ear-left">
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+							</g>
+							<g class="sano-ear sano-ear-right">
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+							</g>
+							<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+							<g class="sano-eyes">
+								<circle cx="88" cy="72" r="6" class="f-ink" />
+								<circle cx="112" cy="72" r="6" class="f-ink" />
+							</g>
+							<g class="sano-nose">
+								<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+								<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+							</g>
+						</svg>
+						<figcaption>Head crop · footer</figcaption>
+					</figure>
+				</div>
+				<a class="callout" href="animations.html">→ Open the animation tuner</a>
+			</section>
+
+			<!-- ── Buttons & inputs ───────────────────────────────────── -->
+			<section id="controls">
+				<h2 class="sg">Buttons &amp; inputs</h2>
+				<p class="sg-note">
+					The base layer is <code>barebones.css</code> (38px controls, <code>--accent</code> mapped from crimson). Sano's own
+					primary buttons override that to a softer, rounder shape: <code>1rem</code> radius, mixed-case <code>700</code> Lato,
+					crimson fill that deepens on hover. Indigo is the "advance / complete" variant. Icon buttons drop all chrome and tint
+					with <code>currentColor</code>.
+				</p>
+				<div class="demo">
+					<button class="btn-primary">Start today's lesson</button>
+					<button class="btn-primary indigo">Continue</button>
+					<button class="btn-primary" disabled>Check</button>
+					<button class="icon-btn icon" aria-label="Lessons">
+						<svg><use href="#i-school" /></svg>
+					</button>
+					<button class="icon-btn icon" aria-label="Account">
+						<svg><use href="#i-person" /></svg>
+					</button>
+				</div>
+				<div class="demo">
+					<input class="field" type="text" placeholder="Display name" />
+					<label class="check"><input type="checkbox" checked /> Daily reminder at 7pm PT</label>
+				</div>
+			</section>
+
+			<!-- ── Panel ──────────────────────────────────────────────── -->
+			<section id="panel">
+				<h2 class="sg">Panels &amp; cards</h2>
+				<p class="sg-note">
+					Floating surfaces (the login panel, popovers) use the page background, a <code>--border-color</code> hairline,
+					<code>1rem</code> radius, and a soft drop-shadow. Inset rows are divided with <code>--border-color-softer</code>.
+				</p>
+				<div class="panel">
+					<h4>Account</h4>
+					<input class="field" style="max-width: 100%; margin-bottom: 1rem" type="text" placeholder="Username" />
+					<input class="field" style="max-width: 100%; margin-bottom: 1.4rem" type="password" placeholder="Password" />
+					<button class="btn-primary" style="width: 100%; padding: 0.8rem 1.8rem; border-radius: 1rem">Sign in</button>
+				</div>
+			</section>
+
+			<!-- ── Path & badges ──────────────────────────────────────── -->
+			<section id="path">
+				<h2 class="sg">Lesson path &amp; badges</h2>
+				<p class="sg-note">
+					Circular nodes with a flat drop "shadow" (a hard <code>box-shadow</code>, not blur). State sets the fill: complete =
+					indigo, current = crimson, locked = muted border tint. The due-review badge is a gold pennant clipped to fly off the
+					node's upper-right.
+				</p>
+				<div class="nodes">
+					<div class="node-demo">
+						<div class="path-node current">
+							<span class="icon"
+								><svg><use href="#i-play_arrow" /></svg
+							></span>
+						</div>
+						<div class="cap">current</div>
+					</div>
+					<div class="node-demo">
+						<div class="path-node complete">
+							<span class="icon"
+								><svg><use href="#i-check" /></svg
+							></span>
+							<span class="path-badge">3</span>
+						</div>
+						<div class="cap">complete + badge</div>
+					</div>
+					<div class="node-demo">
+						<div class="path-node locked">
+							<span class="icon"
+								><svg><use href="#i-lock" /></svg
+							></span>
+						</div>
+						<div class="cap">locked</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── Speech bubbles ─────────────────────────────────────── -->
+			<section id="bubbles">
+				<h2 class="sg">Speech bubbles (conversation)</h2>
+				<p class="sg-note">
+					The two-language conversation pattern — Sano speaks from the left, the learner replies from the right. Each bubble leads
+					with Romanized Nepali in Neuton 700, English underneath in italic Lato. Crimson dot = Sano's voice, indigo dot = the
+					learner's. Re-keyed here from the <code>whisper</code> mockup onto the canonical tokens above so it drops straight into
+					the app.
+				</p>
+				<div class="scene">
+					<svg class="mascot sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
+						<g>
+							<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+							<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+							<g class="sano-tail">
+								<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
+							</g>
+							<g class="sano-head">
+								<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+								<g class="sano-ear sano-ear-left">
+									<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+									<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+								</g>
+								<g class="sano-ear sano-ear-right">
+									<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+									<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+								</g>
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+								<g class="sano-eyes">
+									<circle cx="88" cy="72" r="4.4" class="f-ink" />
+									<circle cx="112" cy="72" r="4.4" class="f-ink" />
+								</g>
+								<g class="sano-nose">
+									<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+									<path
+										d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+										class="s-whisker"
+									/>
+								</g>
+							</g>
+						</g>
+					</svg>
+					<div class="thread">
+						<div class="bubble sano">
+							<p class="speaker">Sano</p>
+							<p class="np">Namaste, mero naam Sano ho.</p>
+							<p class="en">Hello, my name is Sano.</p>
+						</div>
+						<div class="bubble user">
+							<p class="speaker">You</p>
+							<p class="np">Namaste, Sano.</p>
+							<p class="en">Hello, Sano.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ── Motion ─────────────────────────────────────────────── -->
+			<section id="motion">
+				<h2 class="sg">Motion</h2>
+				<p class="sg-note">
+					Animation is gentle and purposeful: staggered top-to-bottom reveals on the lesson path, a
+					<code>pop-in</code> + head-wobble + tail-wag flourish on lesson completion, and a set of slow, periodic idle motions
+					that keep Sano feeling alive without distracting (most of each cycle is at rest; periods are de-synced so motions don't
+					all fire at once). Wherever Sano appears it runs these idle loops — the full mascot does all five (tail wag, head tilt,
+					eye blink, ear wiggle, nose wiggle); the footer head crop runs only the three that read at thumbnail size (blink, ear,
+					nose). Every Sano on this page is idling right now.
+				</p>
+				<ul class="decisions">
+					<li>
+						<b>Always honor <code>prefers-reduced-motion: reduce</code></b> — every animated rule needs an opt-out (see the
+						block at the bottom of <code>css/sano.css</code>).
+					</li>
+					<li><b>Idle loops are long and quiet.</b> 4–22s periods with a short active window read as "alive," not "busy."</li>
+					<li><b>Celebrate completion, not every tap.</b> The big motion budget is spent on the lesson-complete screen.</li>
+				</ul>
+				<a class="callout" href="animations.html">→ Tune timings in the animation studio</a>
+			</section>
+
+			<!-- ── Decisions ──────────────────────────────────────────── -->
+			<section id="decisions">
+				<h2 class="sg">Design decisions</h2>
+				<ul class="decisions">
+					<li>
+						<b>Brand: “Pennant &amp; Paper-cut.”</b> Softened Nepal-flag crimson + indigo on warm paper stock, with a
+						paper-cut mouse named Sano and a Nepal-pennant favicon/app icon.
+					</li>
+					<li>
+						<b>Tokens are the contract.</b> All theme values live as CSS variables at the top of <code>css/sano.css</code> —
+						a light block and a dark <code>@media</code> block. Change both; never hard-code a hex in a component.
+					</li>
+					<li>
+						<b>Dark mode is automatic.</b> Driven entirely by <code>prefers-color-scheme</code>; dark is midnight card stock
+						with colors lifted one step for contrast. No manual toggle.
+					</li>
+					<li>
+						<b>No build step, no runtime network.</b> Plain HTML/CSS/JS. Fonts are self-hosted woff2 (Neuton, Lato); icons
+						are an inline SVG sprite. The only fetches are same-origin calls to <code>api/</code>.
+					</li>
+					<li>
+						<b><code>1rem = 10px</code>.</b> Base font-size is <code>62.5%</code> — read every <code>rem</code> as "tenths
+						of the value × 10px."
+					</li>
+					<li>
+						<b>Buttons round, not boxy.</b> Primary actions are <code>1rem</code>-radius crimson with mixed-case 700 Lato —
+						softer than the barebones default they override.
+					</li>
+					<li>
+						<b>Two type voices.</b> Neuton 700 for display + all Nepali; Lato for everything else, italic for Romanized
+						pronunciation.
+					</li>
+					<li>
+						<b>Design files live in <code>design/</code>.</b> Committed but excluded from the deploy rsync — nothing here
+						ships to the live site. This guide and the animation tuner both live here.
+					</li>
+				</ul>
+			</section>
+
+			<footer class="sg">
+				<svg
+					class="mascot-head sano-idle-head"
+					style="width: 43px; height: 41px; vertical-align: -10px"
+					viewBox="42 8 116 110"
+					aria-hidden="true"
+				>
+					<path d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z" class="f-indigo" />
+					<g class="sano-ear sano-ear-left">
+						<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+						<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+					</g>
+					<g class="sano-ear sano-ear-right">
+						<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+						<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+					</g>
+					<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+					<g class="sano-eyes">
+						<circle cx="88" cy="72" r="6" class="f-ink" />
+						<circle cx="112" cy="72" r="6" class="f-ink" />
+					</g>
+					<g class="sano-nose">
+						<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+						<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+					</g>
+				</svg>
+				Sources of truth: css/sano.css · css/fonts.css · index.html (sprite + mascot)
+			</footer>
+		</div>
+	</body>
+</html>
