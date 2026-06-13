@@ -1116,18 +1116,16 @@ table#vocab tbody td:nth-child(3) {
 /* Matching exercise */
 
 #exercise-match {
-	display: flex;
-	gap: 16px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 16px;
+	row-gap: 12px;
 	margin-top: 3rem;
 }
-#match-left,
-#match-right {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	gap: 12px;
-}
 .match-tile {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 100%;
 	height: auto;
 	min-height: 56px;

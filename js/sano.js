@@ -57,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		clearTimeout(resizeTimer);
 		resizeTimer = setTimeout(() => {
 			if (!document.getElementById('screen-home').classList.contains('hide')) renderPath();
+			const grid = document.getElementById('exercise-match');
+			if (!grid.classList.contains('hide')) fitMatchTiles(grid);
 		}, 150);
 	});
 });
@@ -444,8 +446,9 @@ function startLesson(queue) {
 		index: 0,
 		answered: false,
 		firstTryCorrect: 0,
-		// A matching exercise covers several items, so stats count items rather than exercises.
-		statTotal: queue.reduce((n, ex) => n + (ex.items ? ex.items.length : 1), 0),
+		// A matching exercise covers several items, so stats count items rather than
+		// exercises; the intro warmup is excluded since its words are scored by their drills.
+		statTotal: queue.reduce((n, ex) => n + (ex.items ? (ex.intro ? 0 : ex.items.length) : 1), 0),
 		levelAdjusted: {},
 		leveledUp: 0,
 		firstOfDay: state.lastActivityDay !== dayString(new Date()),
@@ -488,7 +491,35 @@ function buildExercises(newItems, reviewItems) {
 	}
 
 	if (matchItems.length > 0) exercises.splice(Math.floor(Math.random() * (exercises.length + 1)), 0, { type: 'match', items: matchItems });
+
+	// Open with a matching round whenever the lesson introduces new words. It's a
+	// pure warmup that previews the words; the drills below do all the SRS scoring,
+	// so this round must always sit first (after the review match has been placed).
+	const introItems = newItems.filter((item) => !(state.items[item.id] && state.items[item.id].intro));
+	if (introItems.length > 0) {
+		const warmup = warmupItems(introItems);
+		if (warmup.length >= 2) exercises.unshift({ type: 'match', items: warmup, intro: true });
+	}
 	return exercises;
+}
+
+const WARMUP_SIZE = 5;
+
+// The warmup always previews the lesson's new words; when there are only a few,
+// it's padded up to WARMUP_SIZE with the user's weakest already-seen words from
+// the same unit (lowest accuracy first, then lowest Leitner level) for extra reps.
+function warmupItems(newItems) {
+	const items = newItems.slice(0, WARMUP_SIZE);
+	if (items.length >= WARMUP_SIZE) return items;
+	const unit = COURSE.find((u) => u.items.includes(newItems[0]));
+	const seen = shuffleArray(unit.items.filter((item) => !items.includes(item) && state.items[item.id] && state.items[item.id].intro));
+	seen.sort((a, b) => itemAccuracy(a) - itemAccuracy(b) || state.items[a.id].level - state.items[b.id].level);
+	return items.concat(seen.slice(0, WARMUP_SIZE - items.length));
+}
+
+function itemAccuracy(item) {
+	const record = state.items[item.id];
+	return record.seen > 0 ? record.correct / record.seen : 0;
 }
 
 function promptText(item) {
@@ -595,15 +626,50 @@ function renderType(ex) {
 }
 
 function renderMatch(ex) {
-	setPrompt('Match the pairs', '', '');
+	setPrompt(ex.intro ? 'Tap the matching pairs' : 'Match the pairs', '', '');
 	matchState = { remaining: ex.items.length, missed: {}, selected: { left: null, right: null } };
 
-	const leftEl = document.getElementById('match-left');
-	const rightEl = document.getElementById('match-right');
-	leftEl.textContent = '';
-	rightEl.textContent = '';
-	for (const item of shuffleArray(ex.items.slice())) leftEl.appendChild(matchTile(item, 'left', item.np));
-	for (const item of shuffleArray(ex.items.slice())) rightEl.appendChild(matchTile(item, 'right', item.en));
+	const grid = document.getElementById('exercise-match');
+	grid.textContent = '';
+	const left = shuffleArray(ex.items.slice()).map((item) => matchTile(item, 'left', item.np));
+	const right = shuffleArray(ex.items.slice()).map((item) => matchTile(item, 'right', item.en));
+	// Interleave so each grid row holds one Nepali tile and one English tile; the
+	// row height (and thus both tiles) stays aligned even when a label wraps.
+	for (let i = 0; i < ex.items.length; i++) {
+		grid.appendChild(left[i]);
+		grid.appendChild(right[i]);
+	}
+	fitMatchTiles(grid);
+	if (document.fonts) document.fonts.ready.then(() => fitMatchTiles(grid));
+}
+
+// Shrink the tile labels to the largest uniform size that keeps every word on one
+// line, so the short Nepali column and the longer English column line up. If even
+// the minimum size can't fit a label it wraps (the grid keeps paired tiles equal
+// height). Sizes in px against the 10px root (1rem = 10px).
+function fitMatchTiles(grid) {
+	const tiles = grid.querySelectorAll('.match-tile');
+	if (!tiles.length) return;
+	const MAX = 17;
+	const MIN = 11.5;
+	const ctx = (fitMatchTiles.ctx = fitMatchTiles.ctx || document.createElement('canvas').getContext('2d'));
+
+	let size = MAX;
+	const measured = [];
+	for (const tile of tiles) {
+		const cs = getComputedStyle(tile);
+		const avail = tile.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+		ctx.font = cs.fontWeight + ' ' + MAX + 'px ' + cs.fontFamily;
+		const width = ctx.measureText(tile.textContent).width;
+		measured.push({ avail, width });
+		if (width > avail) size = Math.min(size, (MAX * avail) / width);
+	}
+	size = Math.max(MIN, size);
+	const wrap = measured.some((m) => (m.width * size) / MAX > m.avail + 0.5);
+	for (const tile of tiles) {
+		tile.style.fontSize = size.toFixed(2) + 'px';
+		tile.style.whiteSpace = wrap ? 'normal' : 'nowrap';
+	}
 }
 
 function matchTile(item, side, text) {
@@ -656,6 +722,14 @@ function selectMatchTile(tile, side) {
 function finishMatch() {
 	const ex = lesson.queue[lesson.index];
 	lesson.answered = true;
+
+	// The intro warmup only previews the new words; the drills that follow handle
+	// all scoring, streak, and leveling, so it touches no state.
+	if (ex.intro) {
+		showFeedback(true, "Now let's practice these.", '');
+		return;
+	}
+
 	registerActivity();
 
 	let clean = 0;
