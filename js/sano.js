@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	refreshHeader();
 	renderHome();
+	SanoSync.init();
 
 	let resizeTimer;
 	window.addEventListener('resize', () => {
@@ -95,11 +96,24 @@ function loadState() {
 	}
 	if (!parsed) parsed = migrateLegacyState();
 	if (!parsed) return defaultState();
+	return normalizeState(parsed);
+}
 
+// Fills in any missing fields (also used on state blobs arriving from the server).
+function normalizeState(parsed) {
 	if (parsed.version === 1) parsed = migrateV1State(parsed);
 	const loaded = Object.assign(defaultState(), parsed);
 	for (const id in loaded.items) loaded.items[id] = Object.assign({ seen: 0, correct: 0, level: 0, lastSeen: null, intro: false }, loaded.items[id]);
 	return loaded;
+}
+
+// Adopt the server's copy (called by sync.js). Mid-session this only happens
+// after a conflict with another device; refresh whatever is on screen.
+function applyServerState(serverState) {
+	state = normalizeState(serverState);
+	localStorage.setItem(STATE_KEY, JSON.stringify(state)); // not saveState(): must not re-mark dirty
+	refreshHeader();
+	if (!document.getElementById('screen-home').classList.contains('hide')) renderHome();
 }
 
 // v1 tracked unit progress as a count of completed 5-item lessons; v2 marks each
@@ -127,6 +141,7 @@ function migrateV1State(old) {
 
 function saveState() {
 	localStorage.setItem(STATE_KEY, JSON.stringify(state));
+	SanoSync.markDirty();
 }
 
 // Pulls progress out of the original per-key LocalStorage format, then removes those keys.

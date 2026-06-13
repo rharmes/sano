@@ -326,6 +326,75 @@ ul {
 	margin: 0 -7px;
 }
 
+/* Sign-in / account panel. Fixed and centered so it works from both the
+   pre-name controls row and the fixed stats bar, at every viewport width. */
+#controls-signin {
+	font-size: 1.3rem;
+	white-space: nowrap;
+	cursor: pointer;
+	user-select: none;
+}
+#login-panel {
+	position: fixed;
+	top: 5.4rem;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 30;
+	width: 32rem;
+	max-width: calc(100vw - 3.2rem);
+	padding: 1.6rem;
+	background: var(--background-color);
+	border: 1px solid var(--border-color);
+	border-radius: 1rem;
+	box-shadow: 0 4px 16px rgba(10, 8, 14, 0.18);
+}
+#login-panel form {
+	margin: 0;
+}
+#login-panel input {
+	width: 100%;
+	margin: 0 0 1rem;
+	font-size: 1.4rem;
+}
+#login-panel button {
+	height: auto;
+	margin: 0;
+	padding: 0.8rem 1.8rem;
+	font-size: 1.4rem;
+	line-height: 1.2;
+	font-weight: 700;
+	text-transform: none;
+	letter-spacing: normal;
+	color: var(--button-primary-color);
+	background: var(--accent);
+	border: 0;
+	border-radius: 1rem;
+}
+#login-panel button:hover,
+#login-panel button:focus {
+	color: var(--button-primary-color);
+	background: var(--accent-deep);
+}
+#login-error {
+	margin: 1rem 0 0;
+	font-size: 1.3rem;
+	color: var(--text-incomplete-color);
+}
+#logout-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+#logout-row span {
+	font-size: 1.4rem;
+	color: var(--text-color-normal);
+}
+/* Indigo marks the account icon as signed in / syncing. */
+#progress #account-button.signed-in {
+	color: var(--path-complete-color);
+}
+
 table#words thead th {
 	text-transform: uppercase;
 	font-size: 1.5rem;

@@ -1,0 +1,7 @@
+# API responses must never be cached.
+Header set Cache-Control "no-store"
+
+# lib.php is an include, not an endpoint.
+<Files "lib.php">
+	Require all denied
+</Files>

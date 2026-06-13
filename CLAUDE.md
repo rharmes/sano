@@ -1,13 +1,35 @@
 # sano — Nepali Study Guide
 
-A static web app: essential Nepali phrases with Romanized pronunciations.
-Plain HTML/CSS/JS, no build step: `index.html`, `css/sano.css`, `js/`,
-`fonts/`, `tools/`. Deployed to namastesano.com (Apache) with
-`tools/deploy.sh`; Ross tests on an iPhone running iOS 26.
+A web app: essential Nepali phrases with Romanized pronunciations. Plain
+HTML/CSS/JS frontend, no build step: `index.html`, `css/sano.css`, `js/`,
+`fonts/`, `tools/`; plus a small PHP/MySQL sync API in `api/`. Deployed to
+namastesano.com (Apache) with `tools/deploy.sh`; Ross tests on an iPhone
+running iOS 26.
 
 No external requests at runtime: fonts (Neuton, Lato) are self-hosted woff2
 files in `fonts/` declared in `css/fonts.css`, and icons are an inline SVG
 sprite in `index.html` (`#i-*` symbols, used via `<use href="#i-name">`).
+The only network calls are same-origin `fetch()`es to `api/`.
+
+## Server sync (api/)
+
+- Progress lives in localStorage (`sano.state.v1`, the working copy — the
+  app stays fully usable offline/logged-out) and syncs to MySQL through
+  `api/` (PHP + PDO): `login.php`, `logout.php`, `state.php` (GET/PUT),
+  shared `lib.php`. `js/sync.js` (`SanoSync`) does debounced pushes,
+  revision-checked conflict detection, and last-write-wins reconciliation;
+  its bookkeeping lives in localStorage `sano.sync.v1`.
+- Auth: invite-only username/password; DB-backed session tokens in an
+  HttpOnly `sano_session` cookie (90 days). CSRF guard: mutating requests
+  must send `X-Sano-Request: 1`.
+- **DB credentials are never in the repo.** `api/lib.php` requires
+  `sano-config.php` from one level above the docroot (`~/sano-config.php`
+  on the server; for local dev, one level above the repo). It returns
+  `['dsn' => ..., 'user' => ..., 'pass' => ...]`.
+- Schema: `tools/schema.sql` (users, app_state blob + revision, sessions).
+  Accounts are invite-only: `scp tools/make-user.php sano-deploy:` then
+  `ssh -t sano-deploy 'php make-user.php <user> [--reset-password]'`
+  (`tools/` is never deployed to the docroot).
 
 **Keep this file current**: when testing tools or architecture change
 significantly, update CLAUDE.md in the same commit.
@@ -34,8 +56,11 @@ significantly, update CLAUDE.md in the same commit.
    busting; never hand-edit the stamps.
 2. Run `node tools/check-viewports.mjs` and verify visually with headless
    Chrome screenshots (see below).
-3. Serve via `python3 -m http.server 8000` from the repo root and ask Ross to
-   review at http://127.0.0.1:8000/ BEFORE committing.
+3. Serve via `php -S 127.0.0.1:8000` from the repo root (executes `/api`;
+   needs the dev `sano-config.php` one level above the repo) and ask Ross
+   to review at http://127.0.0.1:8000/ BEFORE committing.
+   `python3 -m http.server 8000` still works for frontend-only checks (API
+   calls fail, exercising the app's offline path).
 4. After approval, commit directly to `main` — never leave work on a side
    branch. Push only when asked.
 5. Commit messages: short imperative summary ending with a period, plus
@@ -71,7 +96,8 @@ significantly, update CLAUDE.md in the same commit.
   results into the DOM, and read them with `--dump-dom`.
 - **Live cache check**: `curl -sI https://namastesano.com/ | grep -i
   cache-control` → HTML must be `no-cache` (`.htaccess`); css/js are
-  `max-age=2592000`, busted by the `?v=` stamps.
+  `max-age=2592000`, busted by the `?v=` stamps; `api/` responses are
+  `no-store` (`api/.htaccess`).
 
 ## Design direction
 

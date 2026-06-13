@@ -1,3 +1,5 @@
 .nova
 .DS_Store
 .claude/scripts/
+# DB credentials live outside the repo; defensive entry in case a copy strays in.
+sano-config.php
