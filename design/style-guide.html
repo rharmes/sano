@@ -43,7 +43,6 @@
 				--paper-cream-deep: #e8ddc6;
 				--paper-ink: #37323c;
 				--paper-whisker: #a59a86;
-				--cut-shadow: 0.25;
 			}
 			@media (prefers-color-scheme: dark) {
 				html {
@@ -72,7 +71,6 @@
 					--paper-cream-deep: #d6c9ae;
 					--paper-ink: #2e2935;
 					--paper-whisker: #8d8474;
-					--cut-shadow: 0.5;
 				}
 			}
 
@@ -374,12 +372,6 @@
 				stroke: var(--paper-whisker);
 				stroke-width: 2;
 				stroke-linecap: round;
-			}
-			.cut {
-				filter: drop-shadow(0 2px 1.5px rgba(10, 8, 14, var(--cut-shadow)));
-			}
-			.paper-grain {
-				filter: url(#paper-grain);
 			}
 
 			/* Idle mascot life — mirrors css/sano.css. Full mascots (.sano-idle)
@@ -834,15 +826,9 @@
 		</style>
 	</head>
 	<body>
-		<!-- Shared defs: paper-grain filter + Material-icon symbol sprite,
-		     mirrored from index.html so specimens render identically. -->
+		<!-- Material-icon symbol sprite, mirrored from index.html so specimens render identically. -->
 		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
 			<defs>
-				<filter id="paper-grain" x="-25%" y="-20%" width="150%" height="140%">
-					<feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n" />
-					<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.16 0.16 0.16 0 0" result="na" />
-					<feComposite in="na" in2="SourceGraphic" operator="atop" />
-				</filter>
 				<symbol id="i-bolt" viewBox="0 0 24 24">
 					<path
 						d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"
@@ -1117,9 +1103,6 @@
 						</div>
 					</div>
 				</div>
-				<p class="sg-note" style="margin-top: 1.6rem">
-					<code>--cut-shadow</code> (0.25 light / 0.5 dark) drives the paper drop-shadow opacity on each <code>.cut</code> layer.
-				</p>
 			</section>
 
 			<!-- ── Typography ─────────────────────────────────────────── -->
@@ -1234,9 +1217,8 @@
 					independently, and the moving parts live in named groups (<code
 						>.sano-head / .sano-tail / .sano-eyes / .sano-ear / .sano-nose</code
 					>) that the idle loops target. The footer uses a head-only crop — which carries a bolder indigo outline (tapered at the
-					bottom to follow the chin) plus the full mascot's whiskers. Specimens here are shown flat; in the app each cut also sits
-					in a <code>.cut</code> group for its drop-shadow and the whole figure is wrapped in <code>.paper-grain</code> (the
-					<code>#paper-grain</code> filter from <code>index.html</code>).
+					bottom to follow the chin) plus the full mascot's whiskers. Sano renders flat: shapes are layered directly with no
+					drop-shadow or grain.
 				</p>
 				<div class="mascot-row">
 					<figure>

@@ -31,7 +31,6 @@ html {
 	--paper-cream-deep: #e8ddc6;
 	--paper-ink: #37323c;
 	--paper-whisker: #a59a86;
-	--cut-shadow: 0.25;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -61,12 +60,10 @@ html {
 		--paper-cream-deep: #d6c9ae;
 		--paper-ink: #2e2935;
 		--paper-whisker: #8d8474;
-		--cut-shadow: 0.5;
 	}
 }
 
-/* Paper-cut Sano artwork: fills and per-layer shadows are theme tokens; the
-   grain filter lives in a hidden defs SVG in index.html. */
+/* Sano artwork: flat paper-cut shapes whose fills are theme tokens. */
 .f-indigo {
 	fill: var(--path-complete-color);
 }
@@ -90,12 +87,6 @@ html {
 	stroke: var(--paper-whisker);
 	stroke-width: 2;
 	stroke-linecap: round;
-}
-.cut {
-	filter: drop-shadow(0 2px 1.5px rgba(10, 8, 14, var(--cut-shadow)));
-}
-.paper-grain {
-	filter: url(#paper-grain);
 }
 
 /* Idle mascot life: small, slow, periodic motions so Sano feels alive on the

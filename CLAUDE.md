@@ -142,7 +142,11 @@ significantly, update CLAUDE.md in the same commit.
   warm paper, a paper-cut mouse mascot named Sano, and a Nepal-pennant
   favicon/app icon. All theme tokens live at the top of `css/sano.css`
   (light block + dark `@media` block — change both). The mascot is inline
-  SVG in `index.html`, styled by `.f-*`/`.cut`/`.paper-grain` classes.
+  SVG in `index.html`, drawn as flat layered shapes filled via `.f-*`
+  classes (with `.s-whisker` strokes) — no drop-shadow or grain. It appears
+  in the header, the lesson-complete screen, and a head-only footer crop;
+  wherever it appears it runs the idle animations (see `design/animations.html`
+  and `design/style-guide.html`).
 - Prayer-flag section dividers were built and pulled (2026-06-12) — Ross is
   reconsidering them; don't re-add without him. The concept lives in the
   untracked `.mockups.html`.
