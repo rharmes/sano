@@ -694,7 +694,7 @@
 			.bubble {
 				position: relative;
 				padding: 1.4rem 1.6rem 1.6rem 2.4rem;
-				background: var(--background-color);
+				background: var(--background-color-softer);
 				border: 1px solid var(--border-color);
 				border-radius: 4px;
 			}
@@ -815,12 +815,22 @@
 				.t-display {
 					font-size: 4.3rem;
 				}
+				/* Keep Sano beside the bubbles (conversation reads better) by tightening
+				   the gap and bubble type rather than shrinking Sano. */
 				.scene {
-					grid-template-columns: 1fr;
+					gap: 1rem;
 				}
-				.scene .mascot {
-					max-width: 140px;
-					margin: 0 auto;
+				.bubble {
+					padding: 1.2rem 1.2rem 1.2rem 1.6rem;
+				}
+				.bubble.user {
+					padding: 1.2rem 1.6rem 1.2rem 1.2rem;
+				}
+				.bubble .np {
+					font-size: 2rem;
+				}
+				.bubble .en {
+					font-size: 1.4rem;
 				}
 			}
 		</style>
