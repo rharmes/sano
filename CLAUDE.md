@@ -120,9 +120,17 @@ significantly, update CLAUDE.md in the same commit.
 - **Screenshots**: `tools/screenshot.sh <url> <out.png> [WxH] [budget-ms]` —
   headless-Chrome wrapper with a stable prefix so one permission rule covers
   all invocations; always use it instead of calling Chrome directly.
-- **App icon**: `apple-touch-icon.png` is generated, not hand-edited —
-  regenerate after brand-art changes by serving the repo and running
-  `tools/screenshot.sh <server>/tools/make-touch-icon.html apple-touch-icon.png 180x180`.
+- **App icons**: all PNGs (`apple-touch-icon.png`, `icon-192.png`,
+  `icon-512.png`, `icon-512-maskable.png`) are generated from
+  `tools/make-touch-icon.html`, not hand-edited. Headless Chrome clamps its
+  window to ~500px, so rendering directly at 180/192 yields a cropped top-left
+  zoom — instead render the 512 masters and downscale:
+  `tools/screenshot.sh "file://$PWD/tools/make-touch-icon.html" icon-512.png 512x512`,
+  `... "?safe" icon-512-maskable.png 512x512`, then
+  `sips -z 180 180 icon-512.png --out apple-touch-icon.png` and
+  `sips -z 192 192 icon-512.png --out icon-192.png`. So the full-bleed sizes
+  share identical framing. The generator is self-contained, so `file://` works
+  (no server needed).
 - **Screenshot harness**: write a temp `.shot-harness.html` in the repo root
   that (a) seeds localStorage key `sano.state.v1` (the stats bar `#progress`
   only renders with saved progress — copy the representative state from
@@ -145,8 +153,10 @@ significantly, update CLAUDE.md in the same commit.
 ## Design direction
 
 - The brand is "Pennant & Paper-cut": softened Nepal-flag crimson + indigo on
-  warm paper, a paper-cut mouse mascot named Sano, and a Nepal-pennant
-  favicon/app icon. All theme tokens live at the top of `css/sano.css`
+  warm paper and a paper-cut mouse mascot named Sano. Sano's centered head is
+  the favicon and the home-screen app icon (the Nepal pennant that earlier sat
+  behind it was dropped 2026-06-13 — see `design/icons.html`). All theme tokens
+  live at the top of `css/sano.css`
   (light block + dark `@media` block — change both). The mascot is inline
   SVG in `index.html`, drawn as flat layered shapes filled via `.f-*`
   classes (with `.s-whisker` strokes) — no drop-shadow or grain. It appears

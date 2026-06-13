@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Sano — Icon set</title>
+		<style>
+			:root {
+				--paper: #fbf5e9;
+				--paper-soft: #f3ecdb;
+				--dark: #1b1822;
+				--dark-soft: #262230;
+				--ink: #45404c;
+				--ink-soft: #79705f;
+				--accent: #dd6470;
+				--indigo: #56629e;
+				--border: #e0d8c4;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				background: var(--paper);
+				color: var(--ink);
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+				line-height: 1.5;
+			}
+			header {
+				padding: 40px 40px 8px;
+			}
+			header h1 {
+				margin: 0;
+				font-size: 28px;
+				letter-spacing: -0.01em;
+			}
+			header p {
+				margin: 6px 0 0;
+				color: var(--ink-soft);
+				max-width: 64ch;
+			}
+			.tag {
+				display: inline-block;
+				margin-top: 10px;
+				padding: 3px 10px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+				font-size: 12px;
+				color: var(--ink-soft);
+			}
+			section {
+				padding: 28px 40px;
+			}
+			h2 {
+				font-size: 13px;
+				font-weight: 700;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: var(--ink-soft);
+				margin: 0 0 18px;
+			}
+			.row {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: flex-end;
+				gap: 36px;
+			}
+			figure {
+				margin: 0;
+				text-align: center;
+			}
+			figure img {
+				display: block;
+			}
+			/* iOS superellipse-ish rounding for home-screen previews */
+			.ios {
+				border-radius: 22.37%;
+				box-shadow: 0 6px 18px rgba(20, 16, 26, 0.22);
+			}
+			.sq {
+				border-radius: 0;
+				border: 1px solid var(--border);
+			}
+			.circle {
+				border-radius: 50%;
+			}
+			.rrect {
+				border-radius: 18%;
+			}
+			figcaption {
+				margin-top: 10px;
+				font-size: 12px;
+				color: var(--ink-soft);
+			}
+			figcaption b {
+				display: block;
+				color: var(--ink);
+				font-size: 13px;
+			}
+			/* Theme strips for the favicon (browser-tab simulation) */
+			.strips {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 24px;
+			}
+			.strip {
+				flex: 1 1 320px;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				overflow: hidden;
+			}
+			.strip .bar {
+				padding: 9px 14px;
+				font-size: 12px;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+			.strip.light .bar {
+				background: #fff;
+				color: #3c3c3c;
+				border-bottom: 1px solid #e6e6e6;
+			}
+			.strip.dark .bar {
+				background: #2b2a2e;
+				color: #d8d8d8;
+				border-bottom: 1px solid #1d1c20;
+			}
+			.strip .body {
+				display: flex;
+				align-items: center;
+				gap: 28px;
+				padding: 22px 18px;
+			}
+			.strip.light .body {
+				background: #fafafa;
+			}
+			.strip.dark .body {
+				background: #202024;
+			}
+			.fav {
+				display: block;
+			}
+			.dark-card {
+				background: var(--dark);
+				border-radius: 12px;
+				padding: 28px 36px;
+			}
+			.dark-card h2 {
+				color: #9a91a4;
+			}
+			.dark-card figcaption {
+				color: #9a91a4;
+			}
+			.dark-card figcaption b {
+				color: #d8d1da;
+			}
+			footer {
+				padding: 24px 40px 48px;
+				color: var(--ink-soft);
+				font-size: 12px;
+			}
+			code {
+				font-family: ui-monospace, Menlo, monospace;
+				background: var(--paper-soft);
+				padding: 1px 5px;
+				border-radius: 4px;
+				font-size: 0.92em;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>Sano — icon set</h1>
+			<p>
+				Sano's head, centered, in every icon — the Nepal pennant has been dropped. Flat paper-cut shapes in the brand dark-theme tokens,
+				no grain or drop-shadow. The three full-bleed app icons share one framing at different sizes; the maskable adds safe-zone
+				padding; the favicon is a simplified, theme-aware head.
+			</p>
+			<span class="tag">Source: <code>tools/make-touch-icon.html</code> · favicon: <code>favicon.svg</code></span>
+		</header>
+
+		<section>
+			<h2>Home-screen app icon — iOS rounding applied</h2>
+			<div class="row">
+				<figure>
+					<img class="ios" src="../apple-touch-icon.png?p=3" width="180" height="180" />
+					<figcaption><b>apple-touch-icon.png</b>180 · actual size</figcaption>
+				</figure>
+				<figure>
+					<img class="ios" src="../icon-192.png?p=3" width="128" height="128" />
+					<figcaption><b>icon-192.png</b>shown @128</figcaption>
+				</figure>
+				<figure>
+					<img class="ios" src="../icon-512.png?p=3" width="88" height="88" />
+					<figcaption><b>icon-512.png</b>shown @88</figcaption>
+				</figure>
+				<figure>
+					<img class="ios" src="../apple-touch-icon.png?p=3" width="56" height="56" />
+					<figcaption><b>@56</b>settings/spotlight size</figcaption>
+				</figure>
+			</div>
+		</section>
+
+		<section>
+			<div class="dark-card">
+				<h2>Maskable (Android / PWA) — same art, full-bleed, under different masks</h2>
+				<div class="row">
+					<figure>
+						<img class="sq" src="../icon-512-maskable.png?p=3" width="120" height="120" />
+						<figcaption><b>full-bleed</b>as stored (512)</figcaption>
+					</figure>
+					<figure>
+						<img class="circle" src="../icon-512-maskable.png?p=3" width="120" height="120" />
+						<figcaption><b>circular mask</b>worst-case crop</figcaption>
+					</figure>
+					<figure>
+						<img class="rrect" src="../icon-512-maskable.png?p=3" width="120" height="120" />
+						<figcaption><b>rounded square</b>typical launcher</figcaption>
+					</figure>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<h2>Favicon — theme-aware browser tab (both palettes shown)</h2>
+			<div class="strips">
+				<div class="strip light">
+					<div class="bar">
+						<svg class="fav" width="16" height="16" viewBox="0 0 120 120" aria-hidden="true">
+							<g transform="translate(60 60) scale(0.95) translate(-100 -62.5)">
+								<path
+									d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+									fill="#56629e"
+								/>
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#dd6470" />
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#dd6470" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f3c7cd" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f3c7cd" />
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#f1e8d6" />
+								<circle cx="88" cy="72" r="6" fill="#37323c" />
+								<circle cx="112" cy="72" r="6" fill="#37323c" />
+								<path d="M93 88 L107 88 L100 97 Z" fill="#dd6470" />
+							</g>
+						</svg>
+						namastesano.com
+					</div>
+					<div class="body">
+						<svg width="64" height="64" viewBox="0 0 120 120">
+							<g transform="translate(60 60) scale(0.95) translate(-100 -62.5)">
+								<path
+									d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+									fill="#56629e"
+								/>
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#dd6470" />
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#dd6470" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f3c7cd" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f3c7cd" />
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#f1e8d6" />
+								<circle cx="88" cy="72" r="6" fill="#37323c" />
+								<circle cx="112" cy="72" r="6" fill="#37323c" />
+								<path d="M93 88 L107 88 L100 97 Z" fill="#dd6470" />
+							</g>
+						</svg>
+						<svg width="32" height="32" viewBox="0 0 120 120">
+							<g transform="translate(60 60) scale(0.95) translate(-100 -62.5)">
+								<path
+									d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+									fill="#56629e"
+								/>
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#dd6470" />
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#dd6470" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f3c7cd" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f3c7cd" />
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#f1e8d6" />
+								<circle cx="88" cy="72" r="6" fill="#37323c" />
+								<circle cx="112" cy="72" r="6" fill="#37323c" />
+								<path d="M93 88 L107 88 L100 97 Z" fill="#dd6470" />
+							</g>
+						</svg>
+						<svg width="16" height="16" viewBox="0 0 120 120">
+							<g transform="translate(60 60) scale(0.95) translate(-100 -62.5)">
+								<path
+									d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+									fill="#56629e"
+								/>
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#dd6470" />
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#dd6470" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f3c7cd" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f3c7cd" />
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#f1e8d6" />
+								<circle cx="88" cy="72" r="6" fill="#37323c" />
+								<circle cx="112" cy="72" r="6" fill="#37323c" />
+								<path d="M93 88 L107 88 L100 97 Z" fill="#dd6470" />
+							</g>
+						</svg>
+						<figcaption style="margin: 0">light tab · 64 / 32 / 16</figcaption>
+					</div>
+				</div>
+				<div class="strip dark">
+					<div class="bar">
+						<svg class="fav" width="16" height="16" viewBox="0 0 120 120" aria-hidden="true">
+							<g transform="translate(60 60) scale(0.95) translate(-100 -62.5)">
+								<path
+									d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+									fill="#7384c4"
+								/>
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#e0697a" />
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#e0697a" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f0bfc7" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f0bfc7" />
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#e6dac4" />
+								<circle cx="88" cy="72" r="6" fill="#2e2935" />
+								<circle cx="112" cy="72" r="6" fill="#2e2935" />
+								<path d="M93 88 L107 88 L100 97 Z" fill="#e0697a" />
+							</g>
+						</svg>
+						namastesano.com
+					</div>
+					<div class="body">
+						<svg width="64" height="64" viewBox="0 0 120 120">
+							<g transform="translate(60 60) scale(0.95) translate(-100 -62.5)">
+								<path
+									d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+									fill="#7384c4"
+								/>
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#e0697a" />
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#e0697a" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f0bfc7" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f0bfc7" />
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#e6dac4" />
+								<circle cx="88" cy="72" r="6" fill="#2e2935" />
+								<circle cx="112" cy="72" r="6" fill="#2e2935" />
+								<path d="M93 88 L107 88 L100 97 Z" fill="#e0697a" />
+							</g>
+						</svg>
+						<svg width="32" height="32" viewBox="0 0 120 120">
+							<g transform="translate(60 60) scale(0.95) translate(-100 -62.5)">
+								<path
+									d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+									fill="#7384c4"
+								/>
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#e0697a" />
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#e0697a" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f0bfc7" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f0bfc7" />
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#e6dac4" />
+								<circle cx="88" cy="72" r="6" fill="#2e2935" />
+								<circle cx="112" cy="72" r="6" fill="#2e2935" />
+								<path d="M93 88 L107 88 L100 97 Z" fill="#e0697a" />
+							</g>
+						</svg>
+						<svg width="16" height="16" viewBox="0 0 120 120">
+							<g transform="translate(60 60) scale(0.95) translate(-100 -62.5)">
+								<path
+									d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+									fill="#7384c4"
+								/>
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#e0697a" />
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#e0697a" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f0bfc7" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f0bfc7" />
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#e6dac4" />
+								<circle cx="88" cy="72" r="6" fill="#2e2935" />
+								<circle cx="112" cy="72" r="6" fill="#2e2935" />
+								<path d="M93 88 L107 88 L100 97 Z" fill="#e0697a" />
+							</g>
+						</svg>
+						<figcaption style="margin: 0; color: #9a91a4">dark tab · 64 / 32 / 16</figcaption>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<footer>
+			Lives in <code>design/</code> — committed but never deployed (not in the <code>tools/deploy.sh</code> allowlist). Open at
+			<code>http://127.0.0.1:8000/design/icons.html</code> while serving the repo.
+		</footer>
+	</body>
+</html>

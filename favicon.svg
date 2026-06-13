@@ -1,23 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
 	<style>
-		.pennant { fill: #dd6470; }
-		.ear { fill: #f3c7cd; }
-		.head { fill: #f1e8d6; }
-		.eye { fill: #37323c; }
-		.nose { fill: #dd6470; }
+		.indigo { fill: #56629e; }
+		.crimson { fill: #dd6470; }
+		.petal { fill: #f3c7cd; }
+		.cream { fill: #f1e8d6; }
+		.ink { fill: #37323c; }
 		@media (prefers-color-scheme: dark) {
-			.pennant { fill: #7384c4; }
-			.ear { fill: #f0bfc7; }
-			.head { fill: #e6dac4; }
-			.eye { fill: #2e2935; }
-			.nose { fill: #e0697a; }
+			.indigo { fill: #7384c4; }
+			.crimson { fill: #e0697a; }
+			.petal { fill: #f0bfc7; }
+			.cream { fill: #e6dac4; }
+			.ink { fill: #2e2935; }
 		}
 	</style>
-	<path class="pennant" d="M24 8 L96 52 L58 66 L100 110 L24 110 Z"/>
-	<path class="ear" d="M34 26 L52 36 L40 52 L26 40 Z"/>
-	<path class="ear" d="M86 26 L68 36 L80 52 L94 40 Z"/>
-	<path class="head" d="M60 34 L84 48 L86 74 L70 90 L50 90 L34 74 L36 48 Z"/>
-	<circle class="eye" cx="52" cy="62" r="3.8"/>
-	<circle class="eye" cx="68" cy="62" r="3.8"/>
-	<path class="nose" d="M55 76 L65 76 L60 83 Z"/>
+	<!-- Sano's footer head, centered: native bbox center (100,62.5) -> viewBox center (60,60). -->
+	<g transform="translate(60 60) scale(0.95) translate(-100 -62.5)">
+		<path class="indigo" d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"/>
+		<path class="crimson" d="M62 18 L88 34 L70 58 L48 42 Z"/>
+		<path class="crimson" d="M138 18 L112 34 L130 58 L152 42 Z"/>
+		<path class="petal" d="M64 26 L80 36 L69 50 L55 40 Z"/>
+		<path class="petal" d="M136 26 L120 36 L131 50 L145 40 Z"/>
+		<path class="cream" d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z"/>
+		<circle class="ink" cx="88" cy="72" r="6"/>
+		<circle class="ink" cx="112" cy="72" r="6"/>
+		<path class="crimson" d="M93 88 L107 88 L100 97 Z"/>
+	</g>
 </svg>

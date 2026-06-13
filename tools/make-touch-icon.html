@@ -9,7 +9,6 @@
 				padding: 0;
 				width: 100%;
 				height: 100%;
-				background: #000;
 			}
 			svg {
 				display: block;
@@ -19,53 +18,51 @@
 		</style>
 	</head>
 	<body>
-		<!-- Append `?safe` for the maskable variant (extra padding so the head + pennant
-		     stay inside the safe zone iOS / Android may crop). -->
+		<!-- App-icon source: Sano's head-only crop (the footer variant from
+		     index.html — its 9-point indigo backing wraps the whole head, including
+		     the chin, for a full blue outline). Flat paper-cut shapes (no grain, no
+		     drop-shadow) in the brand's dark-theme tokens on the dark-paper ground.
+		     The head's native bbox is centered on (100,62.5), so
+		     translate(60 60) scale(S) translate(-100 -62.5) drops it dead-center.
+		     Append `?safe` for the maskable variant (smaller scale so the ears stay
+		     inside the safe zone iOS / Android may crop).
+
+		     Headless Chrome clamps its window to a ~500px minimum, so rendering this at
+		     180/192 with tools/screenshot.sh produces a cropped top-left zoom. Always
+		     render at 512 and downscale: see CLAUDE.md "App icons". -->
 		<svg viewBox="0 0 120 120">
-			<defs>
-				<filter id="grain" x="-10%" y="-10%" width="120%" height="120%">
-					<feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n" />
-					<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.18 0.18 0.18 0 0" result="na" />
-					<feComposite in="na" in2="SourceGraphic" operator="atop" />
-				</filter>
-				<filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
-					<feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-opacity="0.55" />
-				</filter>
-			</defs>
-			<!-- True-black background (matches iOS dark mode systemBackground) -->
-			<rect width="120" height="120" fill="#000000" />
-			<!-- Outer scale wraps the head + pennant. JS bumps the scale down to 0.7 when
-			     `?safe` is present so maskable masks don't clip the ears. -->
-			<g id="content" transform="translate(60 60) scale(0.9) translate(-60 -60)">
-				<g filter="url(#grain)">
-					<!-- Indigo Nepal-pennant behind the head -->
-					<g filter="url(#shadow)">
-						<path d="M14 8 L100 56 L60 70 L106 114 L14 114 Z" fill="#7384c4" />
-					</g>
-					<!-- Mouse head pulled from the header mascot (viewBox 40-180, 10-184).
-				     transform: scale 0.95, translate so head center (100, 63) lands near icon center (60, 60). -->
-					<g transform="translate(-35, 0) scale(0.95)">
-						<g filter="url(#shadow)">
-							<!-- Outer ears -->
-							<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#e0697a" />
-							<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#e0697a" />
-							<!-- Inner ears -->
-							<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f0bfc7" />
-							<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f0bfc7" />
-							<!-- Face -->
-							<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#e6dac4" />
-						</g>
-						<!-- Eyes and nose (no extra shadow, drawn over the face) -->
-						<circle cx="88" cy="72" r="4.4" fill="#2e2935" />
-						<circle cx="112" cy="72" r="4.4" fill="#2e2935" />
-						<path d="M94 88 L106 88 L100 96 Z" fill="#e0697a" />
-					</g>
-				</g>
+			<!-- Dark-paper background (matches --background-color in dark mode). -->
+			<rect width="120" height="120" fill="#1b1822" />
+			<!-- Footer head in native head space (bbox center 100,62.5), centered + scaled. -->
+			<g id="content" transform="translate(60 60) scale(0.81) translate(-100 -62.5)">
+				<!-- Indigo head backing (full outline incl. chin) -->
+				<path d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z" fill="#7384c4" />
+				<!-- Outer ears (crimson) -->
+				<path d="M62 18 L88 34 L70 58 L48 42 Z" fill="#e0697a" />
+				<path d="M138 18 L112 34 L130 58 L152 42 Z" fill="#e0697a" />
+				<!-- Inner ears (petal) -->
+				<path d="M64 26 L80 36 L69 50 L55 40 Z" fill="#f0bfc7" />
+				<path d="M136 26 L120 36 L131 50 L145 40 Z" fill="#f0bfc7" />
+				<!-- Face (cream) -->
+				<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" fill="#e6dac4" />
+				<!-- Eyes (ink) -->
+				<circle cx="88" cy="72" r="6" fill="#2e2935" />
+				<circle cx="112" cy="72" r="6" fill="#2e2935" />
+				<!-- Nose (crimson) -->
+				<path d="M93 88 L107 88 L100 97 Z" fill="#e0697a" />
+				<!-- Whiskers -->
+				<path
+					d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+					fill="none"
+					stroke="#8d8474"
+					stroke-width="2"
+					stroke-linecap="round"
+				/>
 			</g>
 		</svg>
 		<script>
 			if (location.search.includes('safe')) {
-				document.getElementById('content').setAttribute('transform', 'translate(60 60) scale(0.7) translate(-60 -60)');
+				document.getElementById('content').setAttribute('transform', 'translate(60 60) scale(0.648) translate(-100 -62.5)');
 			}
 		</script>
 	</body>
