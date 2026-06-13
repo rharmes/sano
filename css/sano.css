@@ -98,6 +98,143 @@ html {
 	filter: url(#paper-grain);
 }
 
+/* Idle mascot life: small, slow, periodic motions so Sano feels alive on the
+   home and dictionary screens. Each loop is mostly at rest (the active motion
+   is a short slice at the end of a long period) and the periods are de-synced
+   so the twitches never all fire together. Negative delays seed the first
+   activations across the opening few seconds instead of a cold start. The full
+   header mascot (.sano-idle) runs all five; the footer head crop
+   (.sano-idle-head) runs only the three that read at thumbnail size. Geometry
+   developed in design/animations.html. */
+.sano-mascot .sano-head {
+	transform-box: fill-box;
+	transform-origin: 50% 100%;
+}
+.sano-tail {
+	transform-box: fill-box;
+	transform-origin: 0% 50%;
+}
+.sano-eyes {
+	transform-box: fill-box;
+	transform-origin: 50% 50%;
+}
+.sano-ear {
+	transform-box: fill-box;
+	transform-origin: 50% 100%;
+}
+/* Mirror each ear's rotation so they twitch outward symmetrically. */
+.sano-ear-left {
+	--ear-dir: 1;
+}
+.sano-ear-right {
+	--ear-dir: -1;
+}
+.sano-nose {
+	transform-box: fill-box;
+	transform-origin: 50% 30%;
+}
+
+.sano-idle .sano-tail {
+	animation: sano-idle-tail-wag 9s ease-in-out -3s infinite;
+}
+.sano-idle .sano-head {
+	animation: sano-idle-head-tilt 22s ease-in-out -6s infinite;
+}
+.sano-idle .sano-eyes,
+.sano-idle-head .sano-eyes {
+	animation: sano-idle-blink 4s ease-in-out -1s infinite;
+}
+.sano-idle .sano-ear,
+.sano-idle-head .sano-ear {
+	animation: sano-idle-ear-wiggle 14s ease-in-out -10s infinite;
+}
+.sano-idle .sano-nose,
+.sano-idle-head .sano-nose {
+	animation: sano-idle-nose-wiggle 10s ease-in-out -5s infinite;
+}
+
+@keyframes sano-idle-tail-wag {
+	0%,
+	90%,
+	100% {
+		transform: rotate(0deg);
+	}
+	92% {
+		transform: rotate(-22deg);
+	}
+	94% {
+		transform: rotate(18deg);
+	}
+	96% {
+		transform: rotate(-14deg);
+	}
+	98% {
+		transform: rotate(10deg);
+	}
+}
+/* Tilt in (83→85%), hold (85→98%), straighten (98→100%): ~3s hold per 22s cycle. */
+@keyframes sano-idle-head-tilt {
+	0%,
+	83% {
+		transform: rotate(0deg);
+	}
+	85%,
+	98% {
+		transform: rotate(-12deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
+@keyframes sano-idle-blink {
+	0%,
+	90%,
+	94.5%,
+	96%,
+	100% {
+		transform: scaleY(1);
+	}
+	95%,
+	95.5% {
+		transform: scaleY(0.06);
+	}
+}
+@keyframes sano-idle-ear-wiggle {
+	0%,
+	96%,
+	100% {
+		transform: rotate(0deg);
+	}
+	97% {
+		transform: rotate(calc(var(--ear-dir, 1) * -12deg));
+	}
+	98.2% {
+		transform: rotate(calc(var(--ear-dir, 1) * 10deg));
+	}
+	99.2% {
+		transform: rotate(calc(var(--ear-dir, 1) * -5deg));
+	}
+}
+@keyframes sano-idle-nose-wiggle {
+	0%,
+	94%,
+	100% {
+		transform: rotate(0deg) translateX(0);
+	}
+	95.2% {
+		transform: rotate(-4deg) translateX(-0.8px);
+	}
+	96.4% {
+		transform: rotate(4deg) translateX(0.8px);
+	}
+	97.6% {
+		transform: rotate(-3deg) translateX(-0.5px);
+	}
+	98.8% {
+		transform: rotate(3deg) translateX(0.5px);
+	}
+}
+
 /* Inline SVG icons (replacing the Material Icons font). The wrapper keeps the
    font-era contract: font-size sets the glyph size, color sets its fill. */
 .icon {
@@ -118,7 +255,7 @@ html {
 	gap: 1.4rem;
 }
 h1 .sano-mascot {
-	width: 80px;
+	width: 91px;
 	height: 99px;
 	flex-shrink: 0;
 }
@@ -179,7 +316,7 @@ ul {
 	color: var(--text-color-softer);
 }
 .footer .sano-head {
-	width: 24px;
+	width: 26px;
 	height: 21px;
 	vertical-align: -4px;
 	margin-right: 0.4rem;
@@ -193,7 +330,7 @@ ul {
 		font-size: 4.3rem;
 	}
 	h1 .sano-mascot {
-		width: 54px;
+		width: 62px;
 		height: 67px;
 	}
 	h2 {
@@ -1230,7 +1367,15 @@ table#vocab tbody td:nth-child(3) {
 	#path.reveal .path-ring,
 	#path.reveal .path-label,
 	#path.reveal .path-section,
-	#path.reveal .path-start {
+	#path.reveal .path-start,
+	.sano-idle .sano-tail,
+	.sano-idle .sano-head,
+	.sano-idle .sano-eyes,
+	.sano-idle .sano-ear,
+	.sano-idle .sano-nose,
+	.sano-idle-head .sano-eyes,
+	.sano-idle-head .sano-ear,
+	.sano-idle-head .sano-nose {
 		animation: none;
 	}
 	#lesson-progress-fill {
