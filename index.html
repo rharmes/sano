@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=8aac20c4" />
+		<link rel="stylesheet" href="css/sano.css?v=7703c352" />
 		<link rel="icon" href="favicon.svg?v=63f99c36" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a56fcd89" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -72,31 +72,23 @@
 			<div id="header">
 				<h1>
 					<svg class="sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
-						<g class="paper-grain">
-							<g class="cut">
-								<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
-							</g>
-							<g class="cut">
-								<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
-							</g>
-							<g class="cut sano-tail">
+						<g>
+							<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+							<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+							<g class="sano-tail">
 								<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
 							</g>
 							<g class="sano-head">
-								<g class="cut">
-									<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
-								</g>
-								<g class="cut sano-ear sano-ear-left">
+								<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+								<g class="sano-ear sano-ear-left">
 									<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
 									<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
 								</g>
-								<g class="cut sano-ear sano-ear-right">
+								<g class="sano-ear sano-ear-right">
 									<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
 									<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
 								</g>
-								<g class="cut">
-									<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
-								</g>
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
 								<g class="sano-eyes">
 									<circle cx="88" cy="72" r="4.4" class="f-ink" />
 									<circle cx="112" cy="72" r="4.4" class="f-ink" />
@@ -224,26 +216,33 @@
 			</div>
 
 			<div id="screen-complete" class="hide">
-				<svg class="sano-mascot" id="complete-sano" viewBox="40 10 140 174" aria-hidden="true">
-					<g class="paper-grain">
-						<g class="cut">
-							<path d="M100 18 L138 38 L142 66 L150 150 L120 178 L80 178 L50 150 L58 66 L62 38 Z" class="f-indigo" />
-						</g>
-						<g class="cut">
-							<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
-							<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
-							<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
-							<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
-						</g>
-						<g class="cut"><path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" /></g>
-						<g class="cut"><path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" /></g>
-						<g class="cut sano-tail">
+				<svg class="sano-mascot" id="complete-sano" viewBox="30 10 160 174" aria-hidden="true">
+					<g>
+						<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+						<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+						<g class="sano-tail">
 							<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
 						</g>
-						<circle cx="88" cy="72" r="4.4" class="f-ink" />
-						<circle cx="112" cy="72" r="4.4" class="f-ink" />
-						<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
-						<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+						<g class="sano-head">
+							<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+							<g class="sano-ear sano-ear-left">
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+							</g>
+							<g class="sano-ear sano-ear-right">
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+							</g>
+							<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+							<g class="sano-eyes">
+								<circle cx="88" cy="72" r="4.4" class="f-ink" />
+								<circle cx="112" cy="72" r="4.4" class="f-ink" />
+							</g>
+							<g class="sano-nose">
+								<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+								<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+							</g>
+						</g>
 					</g>
 				</svg>
 				<h2 id="complete-title">Lesson complete!</h2>
@@ -286,8 +285,8 @@
 			</div>
 
 			<p class="footer">
-				<svg class="sano-head sano-idle-head" viewBox="42 16 116 94" aria-hidden="true">
-					<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+				<svg class="sano-head sano-idle-head" viewBox="42 8 116 110" aria-hidden="true">
+					<path d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z" class="f-indigo" />
 					<g class="sano-ear sano-ear-left">
 						<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
 						<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
@@ -303,6 +302,7 @@
 					</g>
 					<g class="sano-nose">
 						<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+						<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
 					</g>
 				</svg>
 				&copy; 2026 Ross Harmes

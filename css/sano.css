@@ -317,8 +317,8 @@ ul {
 }
 .footer .sano-head {
 	width: 26px;
-	height: 21px;
-	vertical-align: -4px;
+	height: 25px;
+	vertical-align: -6px;
 	margin-right: 0.4rem;
 }
 
@@ -1178,7 +1178,7 @@ table#vocab tbody td:nth-child(3) {
 }
 #complete-sano {
 	display: block;
-	width: 110px;
+	width: 125px;
 	height: 136px;
 	margin: 0 auto -0.5rem;
 	transform-origin: 50% 100%;
