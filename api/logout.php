@@ -8,7 +8,9 @@ require_csrf_header();
 
 $token = $_COOKIE[SESSION_COOKIE] ?? '';
 if ($token !== '') {
-	db()->prepare('DELETE FROM sessions WHERE token_hash = ?')->execute([hash('sha256', $token)]);
+	db()
+		->prepare('DELETE FROM sessions WHERE token_hash = ?')
+		->execute([hash('sha256', $token)]);
 }
 set_session_cookie('', 0);
 respond(204, null);

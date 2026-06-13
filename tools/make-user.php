@@ -9,7 +9,9 @@
 // Looks for sano-config.php next to itself first (server home dir), then two
 // levels up (local dev layout, where config sits above the repo).
 
-if (PHP_SAPI !== 'cli') exit(1);
+if (PHP_SAPI !== 'cli') {
+	exit(1);
+}
 
 $args = array_slice($argv, 1);
 $reset = in_array('--reset-password', $args, true);
@@ -32,7 +34,8 @@ if (!$config) {
 	exit(1);
 }
 
-function prompt_password(string $label): string {
+function prompt_password(string $label): string
+{
 	fwrite(STDERR, $label);
 	shell_exec('stty -echo');
 	$password = rtrim(fgets(STDIN), "\n");

@@ -116,8 +116,9 @@ The login panel (`#login-panel` in index.html) is opened from the person icon in
 
 ## Tool scripts (tools/)
 
+- **`format.sh [--check]`** — Prettier over all HTML, CSS, JS, and PHP. Resolves Prettier and `@prettier/plugin-php` from `node_modules/` (run `npm install` once on a fresh clone — the only npm deps are tooling). Settings in `.prettierrc`; vendored CSS (`normalize.css`, `barebones.css`), `tools/schema.sql`, and `.mockups.html` are excluded via `.prettierignore`. `--check` exits non-zero on drift.
 - **`deploy.sh [-n]`** — rsync deploy to the live host (`-n` = dry run). Runs `stamp-version.mjs` first, then syncs `index.html .htaccess favicon.svg apple-touch-icon.png css js fonts api`. Uses `--checksum --no-times` because the host resets mtimes; deliberately no `--delete` (the server keeps a couple of files that aren't in the repo). `tools/` is never deployed.
-- **`stamp-version.mjs`** — rewrites the `?v=<content-hash>` stamps on local asset URLs in index.html. Run after every edit; never hand-edit a stamp. Skips fragment-only URLs (the icon sprite's `href="#i-*"`).
+- **`stamp-version.mjs`** — rewrites the `?v=<content-hash>` stamps on local asset URLs in index.html. Run after every edit (and after `format.sh`, since formatting changes hashes); never hand-edit a stamp. Skips fragment-only URLs (the icon sprite's `href="#i-*"`).
 - **`check-viewports.mjs`** — layout regression check. Spins up an in-process HTTP server, seeds a representative `sano.state.v1`, loads the app in same-origin iframes at 9 mobile widths (320–521px; headless Chrome can't open windows narrower than 500px, but iframes get their own viewport), and asserts no horizontal overflow and that key elements stay inside the viewport. Non-zero exit + `/tmp/sano-viewports.png` on failure.
 - **`screenshot.sh <url> <out.png> [WxH] [budget-ms]`** — headless-Chrome screenshot wrapper with a stable command prefix (so one permission rule covers all invocations). Always use it instead of invoking Chrome directly.
 - **`make-user.php`** — creates an account (or `--reset-password`). Invite-only means this script is the only way accounts exist. Run it _on the server_, where it finds `sano-config.php` next to itself: `scp tools/make-user.php sano-deploy:` then `ssh -t sano-deploy 'php make-user.php <username>; rm make-user.php'`.
@@ -127,6 +128,7 @@ The login panel (`#login-panel` in index.html) is opened from the person icon in
 ## Testing & verification
 
 - **Lint**: `php -l api/*.php tools/make-user.php`, `node --check js/*.js`.
+- **Format**: `tools/format.sh --check` after any edits.
 - **Layout**: `node tools/check-viewports.mjs` after every change.
 - **Visual**: serve locally and screenshot via a temp harness page (`.shot-harness.html` in the repo root) that seeds `sano.state.v1`, iframes the app, and clicks into specific screens; delete the harness before committing. Headless Chrome follows the system theme — to force light mode, strip the dark `@media` blocks into temp CSS copies.
 - **Live API**: a curl matrix exercises every status path — unauthenticated 401s, missing-CSRF-header 403s, login + cookie jar, PUT revision increment, stale-revision 409, `force` override, lockout 429 after 10 bad passwords, logout, `api/lib.php` → 403, `/sano-config.php` → 404, and `Cache-Control: no-store` on API responses.
@@ -140,4 +142,4 @@ php -S 127.0.0.1:8000     # from the repo root; executes /api locally
 
 The PHP dev server needs a dev `sano-config.php` one level above the repo (pointing at a local MySQL) for login/sync to work. For frontend-only work, `python3 -m http.server 8000` is fine — API calls fail and the app simply runs in its offline/logged-out mode, which is itself a code path worth testing.
 
-Workflow for any change: edit → `node tools/stamp-version.mjs` → `node tools/check-viewports.mjs` → review in a browser → commit to `main`.
+Workflow for any change: edit → `tools/format.sh` → `node tools/stamp-version.mjs` → `node tools/check-viewports.mjs` → review in a browser → commit to `main`.

@@ -12,17 +12,25 @@ if ($method === 'GET') {
 	respond(200, state_payload(state_row($userId)));
 }
 
-if ($method !== 'PUT') respond(405, ['error' => 'method']);
+if ($method !== 'PUT') {
+	respond(405, ['error' => 'method']);
+}
 require_csrf_header();
 $userId = require_user();
 
 // Decode to stdClass, not assoc arrays: an assoc round-trip would re-encode
 // empty JSON objects (a fresh state's "items": {}) as [], corrupting the blob.
 $body = json_decode(file_get_contents('php://input'));
-if (!is_object($body)) respond(400, ['error' => 'bad_json']);
-if (!isset($body->state) || !is_object($body->state)) respond(400, ['error' => 'missing_state']);
+if (!is_object($body)) {
+	respond(400, ['error' => 'bad_json']);
+}
+if (!isset($body->state) || !is_object($body->state)) {
+	respond(400, ['error' => 'missing_state']);
+}
 $stateJson = json_encode($body->state);
-if (strlen($stateJson) > MAX_STATE_BYTES) respond(413, ['error' => 'state_too_large']);
+if (strlen($stateJson) > MAX_STATE_BYTES) {
+	respond(413, ['error' => 'state_too_large']);
+}
 $baseRevision = (int) ($body->baseRevision ?? 0);
 $force = !empty($body->force);
 

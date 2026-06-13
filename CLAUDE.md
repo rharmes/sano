@@ -51,25 +51,31 @@ significantly, update CLAUDE.md in the same commit.
 
 ## Workflow for every code change
 
-1. Make edits, then run `node tools/stamp-version.mjs` — rewrites the `?v=`
-   content-hash stamps on local asset URLs in index.html. Required for cache
-   busting; never hand-edit the stamps.
-2. Run `node tools/check-viewports.mjs` and verify visually with headless
+1. Make edits, then run `tools/format.sh` — Prettier over all HTML/CSS/JS/PHP
+   (settings in `.prettierrc`, plugin via `@prettier/plugin-php`). On a fresh
+   clone, `npm install` once to fetch the devDeps. Vendored CSS and the SQL
+   schema are excluded via `.prettierignore`.
+2. Run `node tools/stamp-version.mjs` — rewrites the `?v=` content-hash stamps
+   on local asset URLs in index.html. Required for cache busting; never
+   hand-edit the stamps. Must run after formatting (formatter changes hashes).
+3. Run `node tools/check-viewports.mjs` and verify visually with headless
    Chrome screenshots (see below).
-3. Serve via `php -S 127.0.0.1:8000` from the repo root (executes `/api`;
+4. Serve via `php -S 127.0.0.1:8000` from the repo root (executes `/api`;
    needs the dev `sano-config.php` one level above the repo) and ask Ross
    to review at http://127.0.0.1:8000/ BEFORE committing.
    `python3 -m http.server 8000` still works for frontend-only checks (API
    calls fail, exercising the app's offline path).
-4. After approval, commit directly to `main` — never leave work on a side
+5. After approval, commit directly to `main` — never leave work on a side
    branch. Push only when asked.
-5. Commit messages: short imperative summary ending with a period, plus
+6. Commit messages: short imperative summary ending with a period, plus
    `Co-Authored-By` attribution.
-6. Deploy with `tools/deploy.sh` only when Ross asks; verify with the live
+7. Deploy with `tools/deploy.sh` only when Ross asks; verify with the live
    cache check below.
 
 ## Testing and verification
 
+- **Format check**: `tools/format.sh --check` (non-zero on any drift). The
+  write form (`tools/format.sh`) is part of the per-change workflow above.
 - **Viewport regression**: `node tools/check-viewports.mjs` tests 9 mobile
   widths (320–521px) in headless Chrome via same-origin iframes (headless
   Chrome can't open windows narrower than 500px); exits non-zero and writes

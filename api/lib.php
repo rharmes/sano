@@ -13,7 +13,8 @@ const LOCK_AFTER_FAILURES = 10;
 const LOCK_MINUTES = 15;
 const MAX_STATE_BYTES = 1048576;
 
-function db(): PDO {
+function db(): PDO
+{
 	static $pdo = null;
 	if ($pdo === null) {
 		$config = require __DIR__ . '/../../sano-config.php';
@@ -25,30 +26,43 @@ function db(): PDO {
 	return $pdo;
 }
 
-function respond(int $code, $data): void {
+function respond(int $code, $data): void
+{
 	http_response_code($code);
 	header('Content-Type: application/json');
-	if ($code !== 204) echo json_encode($data);
-	exit;
+	if ($code !== 204) {
+		echo json_encode($data);
+	}
+	exit();
 }
 
-function read_json_body(): array {
+function read_json_body(): array
+{
 	$body = json_decode(file_get_contents('php://input'), true);
-	if (!is_array($body)) respond(400, ['error' => 'bad_json']);
+	if (!is_array($body)) {
+		respond(400, ['error' => 'bad_json']);
+	}
 	return $body;
 }
 
-function require_method(string $method): void {
-	if ($_SERVER['REQUEST_METHOD'] !== $method) respond(405, ['error' => 'method']);
+function require_method(string $method): void
+{
+	if ($_SERVER['REQUEST_METHOD'] !== $method) {
+		respond(405, ['error' => 'method']);
+	}
 }
 
 // CSRF guard: same-origin fetch() must send this custom header. A cross-origin
 // request can only include it after a CORS preflight, which we never grant.
-function require_csrf_header(): void {
-	if (($_SERVER['HTTP_X_SANO_REQUEST'] ?? '') !== '1') respond(403, ['error' => 'csrf']);
+function require_csrf_header(): void
+{
+	if (($_SERVER['HTTP_X_SANO_REQUEST'] ?? '') !== '1') {
+		respond(403, ['error' => 'csrf']);
+	}
 }
 
-function set_session_cookie(string $value, int $maxAge): void {
+function set_session_cookie(string $value, int $maxAge): void
+{
 	setcookie(SESSION_COOKIE, $value, [
 		'expires' => $maxAge > 0 ? time() + $maxAge : 1,
 		'path' => '/',
@@ -59,32 +73,42 @@ function set_session_cookie(string $value, int $maxAge): void {
 }
 
 // Returns the authenticated user id, or null.
-function session_user(): ?int {
+function session_user(): ?int
+{
 	$token = $_COOKIE[SESSION_COOKIE] ?? '';
-	if ($token === '') return null;
+	if ($token === '') {
+		return null;
+	}
 	$stmt = db()->prepare('SELECT user_id FROM sessions WHERE token_hash = ? AND expires_at > NOW()');
 	$stmt->execute([hash('sha256', $token)]);
 	$userId = $stmt->fetchColumn();
 	return $userId === false ? null : (int) $userId;
 }
 
-function require_user(): int {
+function require_user(): int
+{
 	$userId = session_user();
-	if ($userId === null) respond(401, ['error' => 'auth']);
+	if ($userId === null) {
+		respond(401, ['error' => 'auth']);
+	}
 	return $userId;
 }
 
 // updated_at (DATETIME(3), server zone) -> epoch milliseconds, via SQL so PHP
 // and MySQL timezone settings can't disagree.
-function state_row(int $userId): ?array {
+function state_row(int $userId): ?array
+{
 	$stmt = db()->prepare('SELECT state, revision, ROUND(UNIX_TIMESTAMP(updated_at) * 1000) AS updated_ms FROM app_state WHERE user_id = ?');
 	$stmt->execute([$userId]);
 	$row = $stmt->fetch();
 	return $row === false ? null : $row;
 }
 
-function state_payload(?array $row): array {
-	if ($row === null) return ['state' => null, 'revision' => 0, 'updatedAt' => null];
+function state_payload(?array $row): array
+{
+	if ($row === null) {
+		return ['state' => null, 'revision' => 0, 'updatedAt' => null];
+	}
 	return [
 		'state' => json_decode($row['state']),
 		'revision' => (int) $row['revision'],

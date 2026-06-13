@@ -1,0 +1,13 @@
+{
+	"name": "sano",
+	"private": true,
+	"description": "Tooling deps only (Prettier + PHP plugin). The app itself has no build step.",
+	"scripts": {
+		"format": "tools/format.sh",
+		"check-format": "tools/format.sh --check"
+	},
+	"devDependencies": {
+		"prettier": "3.8.3",
+		"@prettier/plugin-php": "0.25.0"
+	}
+}

@@ -120,7 +120,7 @@ try {
 	const { stdout: dom } = await run(
 		CHROME,
 		['--headless=new', '--disable-gpu', resolverRules, '--virtual-time-budget=12000', '--window-size=1600,800', '--dump-dom', url],
-		{ maxBuffer: 64 * 1024 * 1024, timeout: 90000 }
+		{ maxBuffer: 64 * 1024 * 1024, timeout: 90000 },
 	);
 	title = (dom.match(/<title>VPCHECK::([^<]*)<\/title>/) || [])[1] || '';
 
@@ -136,10 +136,19 @@ try {
 			console.log((ok ? '  PASS  ' : '  FAIL  ') + line.replace(':OK', 'px').replace(':FAIL', 'px —'));
 		}
 		if (failed) {
-			await run(CHROME, [
-				'--headless=new', '--disable-gpu', resolverRules, '--virtual-time-budget=12000',
-				'--window-size=1600,1600', '--screenshot=/tmp/sano-viewports.png', url,
-			], { timeout: 90000 });
+			await run(
+				CHROME,
+				[
+					'--headless=new',
+					'--disable-gpu',
+					resolverRules,
+					'--virtual-time-budget=12000',
+					'--window-size=1600,1600',
+					'--screenshot=/tmp/sano-viewports.png',
+					url,
+				],
+				{ timeout: 90000 },
+			);
 			console.error('\nFailures found — screenshot at /tmp/sano-viewports.png');
 			process.exitCode = 1;
 		} else {

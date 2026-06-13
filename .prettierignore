@@ -1,0 +1,16 @@
+# Vendored from upstream — keep as-is so future updates diff cleanly.
+css/normalize.css
+css/barebones.css
+
+# Binaries / non-source.
+fonts/
+*.png
+*.woff2
+*.svg
+
+# Prettier has no SQL parser; schema.sql stays hand-formatted.
+tools/schema.sql
+
+# Gitignored / generated.
+node_modules/
+.mockups.html

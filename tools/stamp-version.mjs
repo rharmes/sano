@@ -18,7 +18,10 @@ const html = readFileSync(PAGE, 'utf8');
 // Matches href/src values without a scheme (no ':'), i.e. local files only.
 // Skips fragment-only URLs like the icon sprite's href="#i-bolt".
 const stamped = html.replace(/((?:href|src)=")([^":?#]+)(?:\?v=[0-9a-f]+)?(")/g, (_, pre, path, post) => {
-	const hash = createHash('md5').update(readFileSync(join(ROOT, path))).digest('hex').slice(0, 8);
+	const hash = createHash('md5')
+		.update(readFileSync(join(ROOT, path)))
+		.digest('hex')
+		.slice(0, 8);
 	return `${pre}${path}?v=${hash}${post}`;
 });
 

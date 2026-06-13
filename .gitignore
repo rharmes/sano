@@ -4,3 +4,4 @@
 # DB credentials live outside the repo; defensive entry in case a copy strays in.
 sano-config.php
 .mockups.html
+node_modules/
