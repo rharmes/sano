@@ -1,2 +1,6 @@
 Header set Cache-Control "no-cache" "expr=%{CONTENT_TYPE} =~ m#text/html#"
 Header set Cache-Control "max-age=31536000, immutable" "expr=%{CONTENT_TYPE} == 'font/woff2'"
+# Service worker: browsers update on their own schedule but want a fresh fetch each time.
+<Files "sw.js">
+    Header set Cache-Control "no-cache"
+</Files>

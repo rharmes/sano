@@ -60,6 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	refreshHeader();
 	renderHome();
 	SanoSync.init();
+	SanoPush.init();
+
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('/sw.js').catch((err) => console.warn('SW register failed:', err));
+	}
 
 	let resizeTimer;
 	window.addEventListener('resize', () => {

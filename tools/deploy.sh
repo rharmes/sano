@@ -22,5 +22,6 @@ node tools/stamp-version.mjs
 # --no-times: the host resets mtimes, so sync on checksum instead.
 exec rsync "${DRY[@]}" --recursive --links --checksum --no-times --compress \
 	--itemize-changes \
-	index.html .htaccess favicon.svg apple-touch-icon.png css js fonts api \
+	index.html .htaccess favicon.svg apple-touch-icon.png icon-192.png icon-512.png icon-512-maskable.png \
+	manifest.json sw.js css js fonts api \
 	"$DEST/"

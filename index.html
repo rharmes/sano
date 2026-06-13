@@ -15,15 +15,21 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=0934b675" />
+		<link rel="stylesheet" href="css/sano.css?v=194333b9" />
 		<link rel="icon" href="favicon.svg?v=63f99c36" type="image/svg+xml" />
-		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=53b56320" />
+		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a56fcd89" />
+		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
 		<meta name="theme-color" content="#fbf5e9" media="(prefers-color-scheme: light)" />
 		<meta name="theme-color" content="#1b1822" media="(prefers-color-scheme: dark)" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="Sano" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
 		<script src="js/data.js?v=a55841c5"></script>
-		<script src="js/sync.js?v=fb987455"></script>
-		<script src="js/sano.js?v=b5608340"></script>
+		<script src="js/sync.js?v=5e94a928"></script>
+		<script src="js/push.js?v=41740c97"></script>
+		<script src="js/sano.js?v=de02e63a"></script>
 	</head>
 	<body>
 		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
@@ -172,6 +178,10 @@
 					<div id="logout-row" class="hide">
 						<span id="login-status"></span>
 						<button type="button" id="logout-button">Sign out</button>
+					</div>
+					<div id="reminders-row" class="hide">
+						<label for="reminders-toggle"><input type="checkbox" id="reminders-toggle" /> Daily reminder at 7pm PT</label>
+						<p id="reminders-status" class="hide"></p>
 					</div>
 				</div>
 			</div>

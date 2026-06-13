@@ -226,6 +226,7 @@ const SanoSync = (() => {
 		document.getElementById('login-form').classList.toggle('hide', signedIn);
 		document.getElementById('logout-row').classList.toggle('hide', !signedIn);
 		if (signedIn) document.getElementById('login-status').textContent = 'Signed in as ' + meta.username;
+		if (typeof SanoPush !== 'undefined') SanoPush.refresh();
 	}
 
 	return { init, markDirty };

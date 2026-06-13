@@ -26,10 +26,37 @@ The only network calls are same-origin `fetch()`es to `api/`.
   `sano-config.php` from one level above the docroot (`~/sano-config.php`
   on the server; for local dev, one level above the repo). It returns
   `['dsn' => ..., 'user' => ..., 'pass' => ...]`.
-- Schema: `tools/schema.sql` (users, app_state blob + revision, sessions).
-  Accounts are invite-only: `scp tools/make-user.php sano-deploy:` then
+- Schema: `tools/schema.sql` (users, app_state blob + revision, sessions,
+  push_subscriptions). Accounts are invite-only:
+  `scp tools/make-user.php sano-deploy:` then
   `ssh -t sano-deploy 'php make-user.php <user> [--reset-password]'`
   (`tools/` is never deployed to the docroot).
+
+## PWA + daily reminders
+
+- Installable as an iOS home-screen app: `manifest.json` + iOS meta tags in
+  `index.html`, plus icons (`icon-192.png`, `icon-512.png`,
+  `icon-512-maskable.png`) generated from `tools/make-touch-icon.html` via
+  `tools/screenshot.sh` (`?safe` query param renders the maskable variant).
+- Service worker `sw.js` caches the shell (HTML network-first, stamped assets
+  cache-first), passes `/api/*` through to the network, and handles `push` /
+  `notificationclick` for reminders.
+- Reminder opt-in: `js/push.js` (`SanoPush`) shows a "Daily reminder" toggle
+  in the login panel when signed in AND running as an installed PWA. It calls
+  `pushManager.subscribe(VAPID_PUBLIC_KEY)` and stores the endpoint via
+  `POST /api/push-subscribe.php`. iOS only allows push for installed PWAs
+  (iOS 16.4+).
+- VAPID **public** key is baked into `js/push.js` (safe to ship). VAPID
+  **private** key + subject are in `~/sano-config.php` on the server next to
+  the DB creds (`vapid_subject`, `vapid_public_key`, `vapid_private_key`).
+- Dispatch: `tools/send-reminders.php` runs server-side at 7pm PT via cron
+  (`CRON_TZ=America/Los_Angeles 0 19 * * *`). It picks every user whose
+  `state.lastActivityDay` isn't today PT and who has a subscription, then
+  sends via minishlink/web-push (Composer dep at `~/sano-vendor/`). 410/404
+  responses prune the subscription row. Flags: `--dry-run`, `--user <name>`.
+- Deployed files: `manifest.json`, `sw.js`, icon PNGs, the two new
+  `api/push-*.php`, `js/push.js`. `tools/send-reminders.php` and the
+  Composer vendor dir are NOT in the rsync — they live on the server only.
 
 **Keep this file current**: when testing tools or architecture change
 significantly, update CLAUDE.md in the same commit.
