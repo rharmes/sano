@@ -1315,7 +1315,7 @@ table#vocab tbody td:nth-child(3) {
 	z-index: 50;
 }
 #lesson-feedback.correct {
-	background: color-mix(in srgb, var(--background-color) 82%, hsl(125, 69%, 38%) 18%);
+	background: color-mix(in srgb, var(--background-color) 82%, var(--path-complete-color) 18%);
 }
 #lesson-feedback.incorrect {
 	background: color-mix(in srgb, var(--background-color) 82%, hsl(0, 65%, 50%) 18%);
@@ -1328,7 +1328,7 @@ table#vocab tbody td:nth-child(3) {
 	font-weight: 700;
 }
 #lesson-feedback.correct #feedback-title {
-	color: var(--text-complete-color);
+	color: var(--path-complete-color);
 }
 #lesson-feedback.incorrect #feedback-title {
 	color: var(--text-incomplete-color);
@@ -1339,6 +1339,12 @@ table#vocab tbody td:nth-child(3) {
 }
 #lesson-continue {
 	margin-top: 1rem;
+}
+#lesson-feedback.correct #lesson-continue {
+	background: var(--path-complete-color);
+}
+#lesson-feedback.correct #lesson-continue:hover {
+	background: color-mix(in srgb, var(--path-complete-color), black 14%);
 }
 
 /* Completion screen */
