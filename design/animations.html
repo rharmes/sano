@@ -433,15 +433,19 @@
 			<div class="mascot-stage">
 				<svg class="mascot" viewBox="30 10 160 174" aria-hidden="true">
 					<g>
-						<path
-							d="M100 18 L138 38 L142 66 L150 150 L120 178 L80 178 L50 150 L58 66 L62 38 Z"
-							class="f-indigo"
-						/>
+						<!-- Body outline (indigo) — chevron tapering up to an apex on the rotation
+						     axis at (100, 30). Top corners pulled in to (55, 98) and (145, 98) so
+						     the body's sides trace the head outline's tapered edge seamlessly at
+						     rest, and the y=98 height matches where the head outline's bottom
+						     corners reach at max head-tilt angle (sin(12°) × 46 ≈ 9.57). -->
+						<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
 						<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
 						<g class="sano-tail">
 							<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
 						</g>
 						<g class="sano-head">
+							<!-- Head outline (indigo) — wide at the neck, follows all head transforms. -->
+							<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
 							<g class="sano-ear sano-ear-left">
 								<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
 								<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
