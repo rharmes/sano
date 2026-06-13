@@ -422,18 +422,6 @@ function renderPath() {
 		y += step;
 	});
 
-	// Dots sample the continuous sine between nodes, so the trail curves with the road.
-	for (let i = 1; i < centers.length; i++) {
-		const from = centers[i - 1];
-		const to = centers[i];
-		for (const t of [0.2, 0.4, 0.6, 0.8]) {
-			const dot = document.createElement('div');
-			dot.className = 'path-dot' + (from.complete ? ' done' : '');
-			dot.style.left = xAt(i - 1 + t) - 4 + 'px';
-			dot.style.top = from.y + (to.y - from.y) * t - 4 + 'px';
-			wrap.appendChild(dot);
-		}
-	}
 	wrap.style.height = y + 30 + 'px';
 
 	// Stagger a top-to-bottom reveal, but only on the very first render:

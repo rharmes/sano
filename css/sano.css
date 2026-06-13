@@ -880,7 +880,6 @@ table#vocab tbody td:nth-child(3) {
 	border: 0;
 	padding: 0;
 	background: var(--border-color);
-	/* Solid shadow: a translucent one lets path dots show through. */
 	box-shadow: 0 5px 0 color-mix(in srgb, rgb(0, 0, 0) 35%, var(--background-color));
 }
 .path-node .icon {
@@ -901,7 +900,6 @@ table#vocab tbody td:nth-child(3) {
 .path-node.current:hover {
 	filter: brightness(1.12);
 }
-/* Solid colors rather than opacity, so path dots can't show through. */
 .path-node.locked {
 	cursor: default;
 	background: color-mix(in srgb, var(--border-color) 55%, var(--background-color));
@@ -917,13 +915,14 @@ table#vocab tbody td:nth-child(3) {
 .path-label {
 	position: absolute;
 	z-index: 1;
-	font-size: 1.5rem;
+	font-size: 1.6875rem;
 	font-weight: 700;
 	line-height: 1.25;
 	color: var(--text-color-richer);
 }
 .path-label small {
 	display: block;
+	margin-top: 1px;
 	font-size: 1.25rem;
 	font-weight: 400;
 	color: var(--text-color-soft);
@@ -933,16 +932,6 @@ table#vocab tbody td:nth-child(3) {
 }
 .path-label.left {
 	text-align: right;
-}
-.path-dot {
-	position: absolute;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: var(--border-color);
-}
-.path-dot.done {
-	background: var(--path-complete-color);
 }
 /* Due-review badge shaped like a pennant flying off the node. */
 .path-badge {
@@ -1024,7 +1013,6 @@ table#vocab tbody td:nth-child(3) {
 #path.reveal .path-node,
 #path.reveal .path-ring,
 #path.reveal .path-label,
-#path.reveal .path-dot,
 #path.reveal .path-section {
 	animation: path-reveal 0.3s ease-out backwards;
 }
@@ -1062,7 +1050,7 @@ table#vocab tbody td:nth-child(3) {
 		font-size: 2.8rem;
 	}
 	.path-label {
-		font-size: 1.3rem;
+		font-size: 1.4375rem;
 	}
 	.path-label small {
 		font-size: 1.1rem;
