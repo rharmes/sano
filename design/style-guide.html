@@ -800,12 +800,12 @@
 			}
 
 			@media (prefers-reduced-motion: reduce) {
+				/* Keep only the eye blink (tiny, non-vestibular) under reduced motion so
+				   Sano still reads as alive; suppress the larger rotational idles. */
 				.sano-idle .sano-tail,
 				.sano-idle .sano-head,
-				.sano-idle .sano-eyes,
 				.sano-idle .sano-ear,
 				.sano-idle .sano-nose,
-				.sano-idle-head .sano-eyes,
 				.sano-idle-head .sano-ear,
 				.sano-idle-head .sano-nose {
 					animation: none;

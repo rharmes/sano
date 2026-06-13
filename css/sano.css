@@ -1439,13 +1439,15 @@ table#vocab tbody td:nth-child(3) {
 	#path.reveal .path-ring,
 	#path.reveal .path-label,
 	#path.reveal .path-section,
-	#path.reveal .path-start,
+	#path.reveal .path-start {
+		animation: none;
+	}
+	/* Under reduced motion, keep only the eye blink (a tiny, non-vestibular scale)
+	   so Sano still reads as alive; suppress the larger rotational idle motions. */
 	.sano-idle .sano-tail,
 	.sano-idle .sano-head,
-	.sano-idle .sano-eyes,
 	.sano-idle .sano-ear,
 	.sano-idle .sano-nose,
-	.sano-idle-head .sano-eyes,
 	.sano-idle-head .sano-ear,
 	.sano-idle-head .sano-nose {
 		animation: none;

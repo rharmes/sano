@@ -111,6 +111,12 @@ significantly, update CLAUDE.md in the same commit.
   widths (320–521px) in headless Chrome via same-origin iframes (headless
   Chrome can't open windows narrower than 500px); exits non-zero and writes
   `/tmp/sano-viewports.png` on failure.
+- **WebKit animations**: `node tools/check-webkit.mjs` drives real Safari via
+  `safaridriver` (everything else here is headless Chrome, which can't catch
+  WebKit-only bugs) and asserts the SVG idle animations run and the eye blink
+  actually moves. Run after animation/mascot-CSS changes. One-time setup:
+  `sudo safaridriver --enable` + Safari > Develop > "Allow Remote Automation".
+  Opens a Safari window; runs without Reduce Motion (full idle set).
 - **Screenshots**: `tools/screenshot.sh <url> <out.png> [WxH] [budget-ms]` —
   headless-Chrome wrapper with a stable prefix so one permission rule covers
   all invocations; always use it instead of calling Chrome directly.
@@ -151,4 +157,8 @@ significantly, update CLAUDE.md in the same commit.
   reconsidering them; don't re-add without him. The concept lives in the
   untracked `.mockups.html`.
 - Respect `prefers-reduced-motion` for any new animation (see the block at
-  the bottom of `css/sano.css`).
+  the bottom of `css/sano.css`). Under reduce-motion the mascot keeps only the
+  eye blink (a tiny, non-vestibular scale) so Sano still reads as alive; the
+  larger rotational idles (tail wag, head tilt, ear/nose wiggle) are suppressed.
+  iOS Safari honors the OS Reduce Motion setting, so this is what an iPhone with
+  Reduce Motion on will show — not a bug.
