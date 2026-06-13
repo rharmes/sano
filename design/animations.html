@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Sano — animation tuner</title>
+		<link rel="stylesheet" href="../css/fonts.css" />
+		<style>
+			:root {
+				--ink: #2a2630;
+				--ink-soft: #837b8e;
+				--ink-softer: #c8c1d2;
+				--paper: #fafaf6;
+				--paper-deep: #f0eee6;
+				--accent: #b8525e;
+				--indigo: #4c5896;
+				--gold: #c8a04a;
+				--paper-petal: #f3c7cd;
+				--paper-cream: #f1e8d6;
+				--paper-cream-deep: #e8ddc6;
+				--paper-ink: #2a2630;
+				--paper-whisker: #a59a86;
+			}
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--ink: #f3eff5;
+					--ink-soft: #948b9e;
+					--ink-softer: #5a5266;
+					--paper: #15131a;
+					--paper-deep: #1f1d26;
+					--accent: #d97585;
+					--indigo: #7d8dd2;
+					--gold: #d6b35a;
+				}
+			}
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				padding: 3rem 2.4rem;
+				font-family: 'Lato', sans-serif;
+				font-weight: 300;
+				color: var(--ink);
+				background: var(--paper);
+				min-height: 100vh;
+			}
+			.layout {
+				display: grid;
+				grid-template-columns: minmax(280px, 380px) 1fr;
+				gap: 3rem;
+				align-items: start;
+				max-width: 1100px;
+				margin: 0 auto;
+			}
+			.mascot-stage {
+				position: sticky;
+				top: 2rem;
+				padding: 2rem;
+				background: var(--paper-deep);
+				border: 1px solid var(--ink-softer);
+				border-radius: 8px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 380px;
+			}
+			.mascot {
+				width: 100%;
+				max-width: 280px;
+				display: block;
+				transform-origin: 50% 100%;
+				/* JS sets `animation:` on demand. Default is no animation. */
+			}
+			.sano-head {
+				transform-box: fill-box;
+				transform-origin: 50% 100%;
+			}
+			.sano-tail {
+				transform-box: fill-box;
+				transform-origin: 0% 50%;
+			}
+			.sano-eyes {
+				transform-box: fill-box;
+				transform-origin: 50% 50%;
+			}
+			.sano-ear {
+				transform-box: fill-box;
+				transform-origin: 50% 100%;
+			}
+			/* Mirror the wiggle direction so the two ears twitch outward symmetrically. */
+			.sano-ear-left {
+				--ear-dir: 1;
+			}
+			.sano-ear-right {
+				--ear-dir: -1;
+			}
+			.sano-nose {
+				transform-box: fill-box;
+				transform-origin: 50% 30%;
+			}
+
+			.controls {
+				display: flex;
+				flex-direction: column;
+				gap: 1.4rem;
+			}
+			.controls .global {
+				display: flex;
+				gap: 0.8rem;
+				flex-wrap: wrap;
+			}
+			.section-header {
+				font-family: 'Lato', sans-serif;
+				font-weight: 700;
+				font-size: 0.78rem;
+				letter-spacing: 0.32em;
+				text-transform: uppercase;
+				color: var(--ink-soft);
+				margin: 1.4rem 0 -0.4rem;
+				padding-bottom: 0.6rem;
+				border-bottom: 1px solid var(--ink-softer);
+			}
+			.section-header:first-child {
+				margin-top: 0;
+			}
+			.card {
+				padding: 1.4rem 1.6rem;
+				background: var(--paper-deep);
+				border: 1px solid var(--ink-softer);
+				border-radius: 6px;
+			}
+			.card h2 {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 1.4rem;
+				margin: 0 0 0.4rem;
+				color: var(--ink);
+			}
+			.card .desc {
+				font-family: 'Lato', sans-serif;
+				font-size: 0.92rem;
+				font-style: italic;
+				color: var(--ink-soft);
+				margin: 0 0 1rem;
+			}
+			.fields {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 0.8rem;
+				margin-bottom: 1rem;
+			}
+			.field {
+				display: flex;
+				flex-direction: column;
+				gap: 0.25rem;
+			}
+			.field label {
+				font-family: 'Lato', sans-serif;
+				font-weight: 700;
+				font-size: 0.7rem;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--ink-soft);
+			}
+			.field input[type='number'] {
+				font-family: 'Lato', sans-serif;
+				font-size: 1rem;
+				padding: 0.4rem 0.6rem;
+				background: var(--paper);
+				border: 1px solid var(--ink-softer);
+				border-radius: 4px;
+				color: var(--ink);
+				width: 100%;
+			}
+			.field input[type='number']:focus {
+				outline: 2px solid var(--accent);
+				outline-offset: 1px;
+			}
+			.row {
+				display: flex;
+				gap: 0.8rem;
+				align-items: center;
+				flex-wrap: wrap;
+			}
+			button.play {
+				padding: 0.5rem 1.2rem;
+				background: var(--accent);
+				color: white;
+				border: 0;
+				border-radius: 4px;
+				font-family: 'Lato', sans-serif;
+				font-weight: 700;
+				font-size: 0.95rem;
+				cursor: pointer;
+				transition: background 0.15s ease;
+			}
+			button.play:hover {
+				background: color-mix(in srgb, var(--accent) 80%, black 20%);
+			}
+			button.stop {
+				padding: 0.5rem 1.2rem;
+				background: transparent;
+				color: var(--ink);
+				border: 1px solid var(--ink-softer);
+				border-radius: 4px;
+				font-family: 'Lato', sans-serif;
+				font-weight: 700;
+				font-size: 0.95rem;
+				cursor: pointer;
+			}
+			button.stop:hover {
+				background: var(--paper);
+			}
+			.loop-toggle {
+				display: flex;
+				align-items: center;
+				gap: 0.4rem;
+				font-family: 'Lato', sans-serif;
+				font-size: 0.92rem;
+				color: var(--ink-soft);
+				cursor: pointer;
+				user-select: none;
+			}
+			.loop-toggle input {
+				accent-color: var(--indigo);
+				width: 1.1rem;
+				height: 1.1rem;
+			}
+			.loop-toggle.active {
+				color: var(--indigo);
+				font-weight: 700;
+			}
+			.css-snippet {
+				margin-top: 1rem;
+				padding: 0.7rem 0.8rem;
+				background: var(--paper);
+				border: 1px dashed var(--ink-softer);
+				border-radius: 4px;
+				font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+				font-size: 0.78rem;
+				color: var(--ink-soft);
+				white-space: pre-wrap;
+				word-break: break-all;
+			}
+			@media (max-width: 720px) {
+				.layout {
+					grid-template-columns: 1fr;
+				}
+				.mascot-stage {
+					position: relative;
+					top: 0;
+				}
+				.fields {
+					grid-template-columns: 1fr 1fr;
+				}
+			}
+
+			/* Animation keyframes — JS calls them by name. The geometry of each
+			   wiggle is locked here; only timing knobs are exposed in the UI. */
+			@keyframes tail-wag {
+				0%,
+				100% {
+					transform: rotate(0deg);
+				}
+				20% {
+					transform: rotate(-22deg);
+				}
+				40% {
+					transform: rotate(18deg);
+				}
+				60% {
+					transform: rotate(-14deg);
+				}
+				80% {
+					transform: rotate(10deg);
+				}
+			}
+			@keyframes head-shake {
+				0%,
+				100% {
+					transform: rotate(0deg);
+				}
+				22% {
+					transform: rotate(-9deg);
+				}
+				54% {
+					transform: rotate(9deg);
+				}
+				82% {
+					transform: rotate(-4deg);
+				}
+			}
+			@keyframes body-wiggle {
+				0%,
+				100% {
+					transform: rotate(0deg);
+				}
+				22% {
+					transform: rotate(-3deg);
+				}
+				54% {
+					transform: rotate(2.4deg);
+				}
+				82% {
+					transform: rotate(-1deg);
+				}
+			}
+			@keyframes excited-jump {
+				0% {
+					transform: translateY(0) scaleY(1);
+				}
+				12% {
+					transform: translateY(2px) scaleY(0.9);
+				}
+				32% {
+					transform: translateY(-26px) scaleY(1.05);
+				}
+				52% {
+					transform: translateY(0) scaleY(0.95);
+				}
+				68% {
+					transform: translateY(-14px) scaleY(1.02);
+				}
+				86% {
+					transform: translateY(0) scaleY(0.97);
+				}
+				100% {
+					transform: translateY(0) scaleY(1);
+				}
+			}
+			@keyframes little-bow {
+				0%,
+				100% {
+					transform: translateY(0) scaleY(1) rotate(0deg);
+				}
+				40% {
+					transform: translateY(8px) scaleY(0.82) rotate(0deg);
+				}
+				60% {
+					transform: translateY(8px) scaleY(0.82) rotate(0deg);
+				}
+			}
+			@keyframes eye-blink {
+				0%,
+				45%,
+				60%,
+				100% {
+					transform: scaleY(1);
+				}
+				50%,
+				55% {
+					transform: scaleY(0.06);
+				}
+			}
+			/* Each ear uses --ear-dir (+1 left / -1 right) to mirror its rotation
+			   so the two ears twitch outward in sync. */
+			@keyframes ear-wiggle {
+				0%,
+				100% {
+					transform: rotate(0deg);
+				}
+				25% {
+					transform: rotate(calc(var(--ear-dir, 1) * -12deg));
+				}
+				55% {
+					transform: rotate(calc(var(--ear-dir, 1) * 10deg));
+				}
+				80% {
+					transform: rotate(calc(var(--ear-dir, 1) * -5deg));
+				}
+			}
+			@keyframes nose-wiggle {
+				0%,
+				100% {
+					transform: rotate(0deg) translateX(0);
+				}
+				20% {
+					transform: rotate(-4deg) translateX(-0.8px);
+				}
+				40% {
+					transform: rotate(4deg) translateX(0.8px);
+				}
+				60% {
+					transform: rotate(-3deg) translateX(-0.5px);
+				}
+				80% {
+					transform: rotate(3deg) translateX(0.5px);
+				}
+			}
+			/* Tilt in (0 → 10%), hold (10 → 90%), tilt back (90 → 100%).
+			   At the default 3800ms duration this gives a 380ms ramp + 3s hold + 380ms return. */
+			@keyframes head-tilt {
+				0%,
+				100% {
+					transform: rotate(0deg);
+				}
+				10%,
+				90% {
+					transform: rotate(-12deg);
+				}
+			}
+
+			/* Paper-cut fills */
+			.f-indigo {
+				fill: var(--indigo);
+			}
+			.f-crimson {
+				fill: var(--accent);
+			}
+			.f-petal {
+				fill: var(--paper-petal);
+			}
+			.f-cream {
+				fill: var(--paper-cream);
+			}
+			.f-cream-deep {
+				fill: var(--paper-cream-deep);
+			}
+			.f-ink {
+				fill: var(--paper-ink);
+			}
+			.s-whisker {
+				fill: none;
+				stroke: var(--paper-whisker);
+				stroke-width: 1.4;
+				stroke-linecap: round;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="layout">
+			<div class="mascot-stage">
+				<svg class="mascot" viewBox="30 10 160 174" aria-hidden="true">
+					<g>
+						<path
+							d="M100 18 L138 38 L142 66 L150 150 L120 178 L80 178 L50 150 L58 66 L62 38 Z"
+							class="f-indigo"
+						/>
+						<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+						<g class="sano-tail">
+							<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
+						</g>
+						<g class="sano-head">
+							<g class="sano-ear sano-ear-left">
+								<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+								<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+							</g>
+							<g class="sano-ear sano-ear-right">
+								<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+								<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+							</g>
+							<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+							<g class="sano-eyes">
+								<circle cx="88" cy="72" r="4.4" class="f-ink" />
+								<circle cx="112" cy="72" r="4.4" class="f-ink" />
+							</g>
+							<g class="sano-nose">
+								<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+								<path
+									d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+									class="s-whisker"
+								/>
+							</g>
+						</g>
+					</g>
+				</svg>
+			</div>
+
+			<div class="controls">
+				<div class="global">
+					<button class="stop" id="stop-all" type="button">Stop all loops</button>
+					<button class="stop" id="play-all" type="button">Play all once</button>
+				</div>
+
+				<h3 class="section-header">Idle animations</h3>
+
+				<div class="card" data-anim="tail-wag" data-target=".sano-tail">
+					<h2>Tail wag</h2>
+					<p class="desc">Tail pivots at its base, four wags back and forth.</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="900" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="ease-in-out" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="9" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>
+
+				<div class="card" data-anim="head-tilt" data-target=".sano-head">
+					<h2>Head tilt</h2>
+					<p class="desc">Head leans left, holds, then straightens. Duration includes the 3s hold.</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="3800" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="ease-in-out" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="22" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>
+
+				<div class="card" data-anim="eye-blink" data-target=".sano-eyes">
+					<h2>Eye blink</h2>
+					<p class="desc">Eyes briefly squash to a horizontal slit and reopen.</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="400" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="ease-in-out" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="4" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>
+
+				<div class="card" data-anim="ear-wiggle" data-target=".sano-ear">
+					<h2>Ear wiggle</h2>
+					<p class="desc">Both ears twitch outward (mirrored via a CSS variable), then settle.</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="400" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="ease-in-out" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="14" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>
+
+				<div class="card" data-anim="nose-wiggle" data-target=".sano-nose">
+					<h2>Nose wiggle</h2>
+					<p class="desc">Nose and whiskers twitch together — small rotation + lateral nudge.</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="600" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="ease-in-out" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="10" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>
+
+				<h3 class="section-header">Action animations</h3>
+
+				<div class="card" data-anim="head-shake" data-target=".sano-head">
+					<h2>Head shake</h2>
+					<p class="desc">Head pivots at the neck — three swings, then a small follow-through.</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="800" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="ease-in-out" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="11" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>
+
+				<div class="card" data-anim="body-wiggle" data-target=".mascot">
+					<h2>Body wiggle</h2>
+					<p class="desc">Whole body sways at the feet — subtle, sub-2° rotation.</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="1000" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="ease-in-out" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="13" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>
+
+				<div class="card" data-anim="excited-jump" data-target=".mascot">
+					<h2>Excited jump</h2>
+					<p class="desc">Big hop, soft squash on landing, a smaller second hop.</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="1000" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="ease-out" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="17" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>
+
+				<div class="card" data-anim="little-bow" data-target=".sano-head">
+					<h2>Little bow</h2>
+					<p class="desc">Head tips forward (translateY + scaleY squish), holds, returns.</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="1100" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="ease-in-out" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="19" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>
+
+			</div>
+		</div>
+
+		<script>
+			// Per-card loop interval ids, keyed by data-anim so the card owns its own state.
+			const loops = {};
+
+			function readCard(card) {
+				return {
+					name: card.dataset.anim,
+					// querySelectorAll so a single selector can drive multiple elements
+					// (the ear-wiggle card animates both .sano-ear-left and .sano-ear-right).
+					targets: Array.from(document.querySelectorAll(card.dataset.target)),
+					duration: parseInt(card.querySelector('[data-field="duration"]').value, 10),
+					easing: card.querySelector('[data-field="easing"]').value.trim() || 'ease-in-out',
+					period: parseFloat(card.querySelector('[data-field="period"]').value),
+				};
+			}
+
+			function play(card) {
+				const { name, targets, duration, easing } = readCard(card);
+				if (!targets.length) return;
+				// Clear inline animation, let one paint frame pass, then re-apply.
+				// Reflow isn't enough — the animation engine coalesces same-task style
+				// changes and won't restart a finished animation. Double-rAF guarantees
+				// the 'cleared' state reaches the compositor.
+				targets.forEach((t) => (t.style.animation = ''));
+				requestAnimationFrame(() => {
+					requestAnimationFrame(() => {
+						targets.forEach((t) => (t.style.animation = `${name} ${duration}ms ${easing}`));
+					});
+				});
+				updateSnippet(card);
+			}
+
+			function updateSnippet(card) {
+				const { name, duration, easing } = readCard(card);
+				card.querySelector('[data-snippet]').textContent = `animation: ${name} ${duration}ms ${easing};`;
+			}
+
+			function syncLoop(card) {
+				const { name, period } = readCard(card);
+				const loopOn = card.querySelector('[data-field="loop"]').checked;
+				card.querySelector('.loop-toggle').classList.toggle('active', loopOn);
+
+				if (loops[name]) {
+					clearInterval(loops[name]);
+					delete loops[name];
+				}
+				if (loopOn && period > 0) {
+					play(card);
+					loops[name] = setInterval(() => play(card), period * 1000);
+				}
+			}
+
+			document.querySelectorAll('.card').forEach((card) => {
+				updateSnippet(card);
+				card.querySelector('.play').addEventListener('click', () => play(card));
+				card.querySelector('[data-field="loop"]').addEventListener('change', () => syncLoop(card));
+				// Re-sync the loop whenever timing changes so the new value takes effect immediately.
+				['duration', 'easing', 'period'].forEach((f) => {
+					card.querySelector(`[data-field="${f}"]`).addEventListener('change', () => {
+						updateSnippet(card);
+						if (card.querySelector('[data-field="loop"]').checked) syncLoop(card);
+					});
+				});
+				// Auto-start any loop that's checked at load (the idle animations),
+				// each on its own random offset within the first 3s so they don't
+				// all fire on the same frame.
+				if (card.querySelector('[data-field="loop"]').checked) {
+					setTimeout(() => syncLoop(card), Math.random() * 3000);
+				}
+			});
+
+			document.getElementById('stop-all').addEventListener('click', () => {
+				Object.values(loops).forEach(clearInterval);
+				for (const k in loops) delete loops[k];
+				document.querySelectorAll('[data-field="loop"]').forEach((cb) => {
+					cb.checked = false;
+					cb.closest('.card').querySelector('.loop-toggle').classList.remove('active');
+				});
+			});
+
+			document.getElementById('play-all').addEventListener('click', () => {
+				// Stagger by 250ms so simultaneous tail/head/body don't all start on the same frame.
+				let delay = 0;
+				document.querySelectorAll('.card').forEach((card) => {
+					setTimeout(() => play(card), delay);
+					delay += 250;
+				});
+			});
+		</script>
+	</body>
+</html>

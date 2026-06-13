@@ -74,6 +74,10 @@ significantly, update CLAUDE.md in the same commit.
   `sano-deploy` alias in `~/.ssh/config` (key auth) — no credentials or
   hostnames in the repo. On a new machine, recreate the alias (HostName
   namastesano.com, User + key from Ross).
+- `design/` holds in-repo design artifacts (e.g. the animation tuner). It is
+  committed but NOT in the deploy rsync allowlist, so nothing under it ships
+  to the live site. Future design files go here too — don't add `design` to
+  `tools/deploy.sh`.
 - Recent work: see `git log` — commit messages are descriptive.
 
 ## Workflow for every code change
