@@ -241,14 +241,10 @@ html {
 }
 
 #header h1 {
-	display: flex;
-	align-items: center;
-	gap: 1.4rem;
-}
-h1 .sano-mascot {
-	width: 91px;
-	height: 99px;
-	flex-shrink: 0;
+	position: relative;
+	top: -5px;
+	margin: 0;
+	font-size: 3rem;
 }
 
 body {
@@ -317,13 +313,6 @@ ul {
 	body {
 		font-size: 2rem;
 	}
-	h1 {
-		font-size: 4.3rem;
-	}
-	h1 .sano-mascot {
-		width: 62px;
-		height: 67px;
-	}
 	h2 {
 		font-size: 2rem;
 	}
@@ -343,16 +332,6 @@ ul {
 }
 
 #header {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-}
-#header h1 {
-	min-width: 604px;
-	z-index: 20;
-}
-
-#progress {
 	position: fixed;
 	top: 0;
 	left: 50%;
@@ -360,13 +339,20 @@ ul {
 
 	width: 1200px;
 	margin-left: -600px;
+	padding-top: 12px;
 	padding-bottom: 2.5rem;
 	background: linear-gradient(to bottom, var(--background-color) 60%, rgba(0, 0, 0, 0));
 
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
-	padding-top: 12px;
+	justify-content: space-between;
+}
+
+#progress {
+	margin: 0;
+	min-width: 0;
+	display: flex;
+	align-items: center;
 }
 #progress span {
 	padding-left: 5px;
@@ -397,7 +383,10 @@ ul {
 	margin: 0 -7px;
 }
 #progress #name {
-	padding-right: 2rem;
+	min-width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 /* Pennant gold once today's lesson has extended the streak. */
 #progress #streak-label.streak-extended {
@@ -591,24 +580,17 @@ table#vocab tbody td:nth-child(3) {
 }
 
 @media (max-width: 1210px) {
-	#header h1 {
-		padding-top: 5rem;
-		z-index: 0;
-	}
-	#progress {
+	#header {
 		box-sizing: border-box;
 		left: 0;
 		width: 100%;
 		margin-left: 0;
 		padding-left: 2rem;
+		padding-right: 2rem;
 	}
 }
 
 @media (max-width: 810px) {
-	#header h1 {
-		min-width: auto;
-		width: 100%;
-	}
 	table#words thead th {
 		font-size: 1.1rem;
 	}
@@ -633,6 +615,95 @@ table#vocab tbody td:nth-child(3) {
 }
 
 /* Home screen */
+
+/* Clear the fixed header bar (the lesson/complete screens hide it instead). */
+#screen-home,
+#screen-dictionary {
+	padding-top: 8.5rem;
+}
+
+/* Opening conversation between Sano and the learner. Mirrors the speech-bubble
+   pattern in design/style-guide.html — keep the two in sync. */
+.scene {
+	display: grid;
+	grid-template-columns: 160px 1fr;
+	gap: 2.6rem;
+	align-items: start;
+	max-width: 720px;
+	margin: 0 auto 3.5rem;
+}
+.scene .mascot {
+	width: 100%;
+}
+.thread {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 2.6rem;
+	max-width: 560px;
+}
+.bubble {
+	position: relative;
+	padding: 1.4rem 1.6rem 1.6rem 2.4rem;
+	background: var(--background-color);
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+}
+.bubble::before {
+	content: '';
+	position: absolute;
+	top: 1.6rem;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: var(--accent);
+}
+.bubble.sano::before {
+	left: -6px;
+}
+.bubble.user {
+	margin-left: auto;
+	padding: 1.4rem 2.4rem 1.6rem 1.6rem;
+	text-align: right;
+}
+.bubble.user::before {
+	right: -6px;
+	background: var(--path-complete-color);
+}
+.bubble .speaker {
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	font-size: 1.2rem;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+	color: var(--text-color-softer);
+	margin: 0 0 0.6rem;
+}
+.bubble .np {
+	font-family: 'Neuton', serif;
+	font-weight: 700;
+	font-size: 3rem;
+	line-height: 1.25;
+	color: var(--text-color-richer);
+	margin: 0 0 0.4rem;
+}
+.bubble .en {
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+	font-style: italic;
+	font-size: 1.8rem;
+	color: var(--text-color-soft);
+	margin: 0;
+}
+@media (max-width: 620px) {
+	.scene {
+		grid-template-columns: 1fr;
+	}
+	.scene .mascot {
+		max-width: 150px;
+		margin: 0 auto;
+	}
+}
 
 #daily-lesson {
 	display: block;

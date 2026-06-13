@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=7f3e65b6" />
+		<link rel="stylesheet" href="css/sano.css?v=dde3480b" />
 		<link rel="icon" href="favicon.svg?v=63f99c36" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a56fcd89" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -65,41 +65,7 @@
 		</svg>
 		<div class="container" id="nepali">
 			<div id="header">
-				<h1>
-					<svg class="sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
-						<g>
-							<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
-							<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
-							<g class="sano-tail">
-								<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
-							</g>
-							<g class="sano-head">
-								<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
-								<g class="sano-ear sano-ear-left">
-									<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
-									<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
-								</g>
-								<g class="sano-ear sano-ear-right">
-									<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
-									<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
-								</g>
-								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
-								<g class="sano-eyes">
-									<circle cx="88" cy="72" r="4.4" class="f-ink" />
-									<circle cx="112" cy="72" r="4.4" class="f-ink" />
-								</g>
-								<g class="sano-nose">
-									<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
-									<path
-										d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
-										class="s-whisker"
-									/>
-								</g>
-							</g>
-						</g>
-					</svg>
-					Sano
-				</h1>
+				<h1>Sano</h1>
 				<p id="progress">
 					<button type="button" class="icon" id="nav-home" title="Lessons" aria-label="Lessons">
 						<svg><use href="#i-school" /></svg>
@@ -158,7 +124,52 @@
 			</div>
 
 			<div id="screen-home">
-				<p id="intro">Essential Nepali phrases with Romanized pronunciations for English speakers</p>
+				<div class="scene">
+					<svg class="mascot sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
+						<g>
+							<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+							<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+							<g class="sano-tail">
+								<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
+							</g>
+							<g class="sano-head">
+								<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+								<g class="sano-ear sano-ear-left">
+									<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+									<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+								</g>
+								<g class="sano-ear sano-ear-right">
+									<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+									<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+								</g>
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+								<g class="sano-eyes">
+									<circle cx="88" cy="72" r="4.4" class="f-ink" />
+									<circle cx="112" cy="72" r="4.4" class="f-ink" />
+								</g>
+								<g class="sano-nose">
+									<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+									<path
+										d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+										class="s-whisker"
+									/>
+								</g>
+							</g>
+						</g>
+					</svg>
+					<div class="thread">
+						<div class="bubble sano">
+							<p class="speaker">Sano</p>
+							<p class="np">Namaste, mero naam Sano ho.</p>
+							<p class="en">Hello, my name is Sano.</p>
+						</div>
+						<div class="bubble user">
+							<p class="speaker">You</p>
+							<p class="np">Namaste, Sano.</p>
+							<p class="en">Hello, Sano.</p>
+						</div>
+					</div>
+				</div>
 				<button id="daily-lesson">Start today's lesson</button>
 				<div id="path"></div>
 				<p id="dictionary-link-wrap"><a id="dictionary-link">Browse the full dictionary →</a></p>
