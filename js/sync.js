@@ -34,7 +34,6 @@ const SanoSync = (() => {
 
 	function init() {
 		document.getElementById('account-button').addEventListener('click', togglePanel);
-		document.getElementById('controls-signin').addEventListener('click', togglePanel);
 		document.getElementById('login-form').addEventListener('submit', submitLogin);
 		document.getElementById('logout-button').addEventListener('click', logout);
 		window.addEventListener('online', () => {

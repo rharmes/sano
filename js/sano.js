@@ -8,11 +8,6 @@ const MAX_LEVEL = 4;
 const REVIEW_INTERVALS = [1, 1, 3, 7, 14]; // Days until an item at this level is due for review
 
 let state;
-let words = []; // Flat list of phrase items (the #words table) used by flashcards and the quiz.
-let wordIndex = 0;
-let mode = '';
-let soloTopic = '';
-let currentQuizItem = null;
 let lesson = null;
 let matchState = null;
 let pathRevealed = false;
@@ -22,16 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	renderTables();
 
 	document.getElementById('words').addEventListener('click', toggleWord);
-	document.getElementById('submit').addEventListener('click', saveName);
-	document.getElementById('open-flashcards').addEventListener('click', openFlashcard);
-	document.getElementById('open-quiz').addEventListener('click', openQuiz);
-	document.getElementById('flashcard-close').addEventListener('click', close);
-	document.getElementById('flashcard-next').addEventListener('click', next);
-	document.getElementById('flashcard-prev').addEventListener('click', prev);
-	document.getElementById('flashcard-card').addEventListener('click', flipCard);
-
-	const quizChoiceEls = document.getElementById('quiz-choices').getElementsByTagName('button');
-	for (const choiceEl of quizChoiceEls) choiceEl.addEventListener('click', checkChoice);
+	document.getElementById('name-form').addEventListener('submit', saveName);
 
 	document.getElementById('nav-home').addEventListener('click', goHome);
 	document.getElementById('home-link').addEventListener('click', goHome);
@@ -876,52 +862,33 @@ function renderTables() {
 				row.appendChild(cell);
 			});
 			tbody.appendChild(row);
-
-			if (isPhrases) words.push({ item: item, row: row, topic: unit.title });
 		}
 	}
 }
 
 function refreshHeader() {
-	const controlsEl = document.getElementById('controls');
-	const progressEl = document.getElementById('progress');
+	document.getElementById('name').textContent = state.name || '';
+	document.getElementById('streak').textContent = state.streak;
 
-	if (state.name) {
-		progressEl.classList.remove('loading');
-		controlsEl.classList.add('loading');
-		document.getElementById('name').textContent = state.name;
-		document.getElementById('streak').textContent = state.streak;
-		document.getElementById('words-today').textContent = state.itemsToday;
-		document.getElementById('words-all-time').textContent = state.itemsTotal;
-	} else {
-		controlsEl.classList.remove('loading');
-		progressEl.classList.add('loading');
-	}
+	const extended = state.streak > 0 && state.lastActivityDay === dayString(new Date());
+	document.getElementById('streak-label').classList.toggle('streak-extended', extended);
+
+	document.getElementById('login-name-input').value = state.name || '';
 }
 
-function saveName() {
-	state.name = document.getElementById('name-field').value;
+function saveName(e) {
+	e.preventDefault();
+	state.name = document.getElementById('login-name-input').value.trim();
 	saveState();
 	refreshHeader();
+	document.getElementById('login-panel').classList.add('hide');
 }
 
 // Word table interactions.
 
 function toggleWord(e) {
 	const rowEl = e.target.parentNode;
-	if (rowEl.classList.contains('topic')) {
-		const rows = document.getElementById('words').getElementsByTagName('tr');
-		if (rowEl.classList.contains('solo')) {
-			soloTopic = '';
-			for (const row of rows) row.classList.remove('solo');
-		} else {
-			soloTopic = rowEl.children[0].textContent;
-			for (const row of rows) row.classList.remove('solo');
-			rowEl.classList.add('solo');
-		}
-		return;
-	}
-	if (!rowEl.parentNode || rowEl.classList.contains('header')) return;
+	if (rowEl.classList.contains('topic') || !rowEl.parentNode || rowEl.classList.contains('header')) return;
 
 	const delta = rowEl.classList.contains('complete') ? -1 : 1;
 	registerActivity();
@@ -930,161 +897,6 @@ function toggleWord(e) {
 	rowEl.classList.toggle('complete');
 	saveState();
 	refreshHeader();
-}
-
-function markWord(word) {
-	word.row.classList.add('complete');
-	registerActivity();
-	state.itemsToday++;
-	state.itemsTotal++;
-	saveState();
-	refreshHeader();
-}
-
-// Flashcard logic.
-
-function openFlashcard() {
-	mode = 'flashcard';
-	checkIndexForTopic();
-	loadWord();
-
-	document.getElementById('flashcard').classList.remove('hide');
-	document.getElementById('flashcard-content').classList.remove('hide');
-	document.getElementById('quiz-content').classList.add('hide');
-}
-
-function close() {
-	mode = '';
-	document.getElementById('flashcard').classList.add('hide');
-}
-
-function next() {
-	if (mode === 'flashcard') {
-		wordIndex++;
-		if (wordIndex >= words.length) wordIndex = 0;
-		checkIndexForTopic();
-		loadWord();
-	} else {
-		loadQuizWord();
-	}
-}
-
-function prev() {
-	if (mode === 'flashcard') {
-		wordIndex--;
-		if (wordIndex < 0) wordIndex = words.length - 1;
-		checkIndexForTopic(true);
-		loadWord();
-	} else {
-		loadQuizWord();
-	}
-}
-
-function flipCard() {
-	document.getElementById('flashcard-card').classList.toggle('flipped');
-}
-
-// Show the front face without animating the flip back.
-function snapToFront() {
-	const card = document.getElementById('flashcard-card');
-	card.classList.add('snap');
-	card.classList.remove('flipped');
-	void card.offsetWidth; // flush styles so the un-flip isn't transitioned
-	card.classList.remove('snap');
-}
-
-function loadWord() {
-	const word = words[wordIndex];
-	snapToFront();
-	document.getElementById('flashcard-word').textContent = word.item.np;
-	document.getElementById('flashcard-pronounce').textContent = word.item.pron;
-	document.getElementById('flashcard-meaning').textContent = word.item.en;
-	document.getElementById('flashcard-usage').textContent = word.item.usage;
-	markWord(word);
-}
-
-// Ensure we're within the range of the selected topic if in solo mode.
-function checkIndexForTopic(goToEnd) {
-	if (soloTopic === '') return;
-
-	if (words[wordIndex].topic !== soloTopic) {
-		if (!goToEnd) {
-			for (let i = 0; i < words.length; i++) {
-				if (words[i].topic === soloTopic) {
-					wordIndex = i;
-					break;
-				}
-			}
-		} else {
-			for (let i = words.length - 1; i >= 0; i--) {
-				if (words[i].topic === soloTopic) {
-					wordIndex = i;
-					break;
-				}
-			}
-		}
-	}
-}
-
-// Quiz logic.
-
-function openQuiz() {
-	mode = 'quiz';
-	loadQuizWord();
-
-	document.getElementById('flashcard').classList.remove('hide');
-	document.getElementById('flashcard-content').classList.add('hide');
-	document.getElementById('quiz-content').classList.remove('hide');
-}
-
-function loadQuizWord() {
-	const quizChoiceEls = document.getElementById('quiz-choices').getElementsByTagName('button');
-
-	const word = getRandomWord();
-	const choices = [word];
-	choices.push(getRandomWord(choices));
-	choices.push(getRandomWord(choices));
-	choices.push(getRandomWord(choices));
-	shuffleArray(choices);
-
-	currentQuizItem = word.item;
-	document.getElementById('quiz-word').textContent = word.item.np;
-	document.getElementById('quiz-pronounce').textContent = word.item.pron;
-
-	let index = 0;
-	for (const choiceEl of quizChoiceEls) {
-		choiceEl.textContent = choices[index].item.en;
-		choiceEl.dataset.status = word.item.id === choices[index].item.id ? 'correct' : 'incorrect';
-		choiceEl.className = '';
-		index++;
-	}
-
-	markWord(word);
-	itemRecord(word.item.id).seen++;
-	saveState();
-}
-
-function checkChoice(e) {
-	const quizChoiceEls = document.getElementById('quiz-choices').getElementsByTagName('button');
-	for (const choiceEl of quizChoiceEls) {
-		if (choiceEl.dataset.status === 'correct') choiceEl.classList.add('correct');
-	}
-
-	if (e.target.classList.contains('correct')) {
-		itemRecord(currentQuizItem.id).correct++;
-	} else {
-		e.target.classList.add('incorrect');
-	}
-	saveState();
-}
-
-function getRandomWord(alreadySelectedWords) {
-	let word = words[Math.floor(Math.random() * words.length)];
-	// Stay within the topic in solo mode, and avoid words already chosen for this question.
-	while ((soloTopic !== '' && word.topic !== soloTopic) || (alreadySelectedWords && alreadySelectedWords.includes(word)))
-		word = words[Math.floor(Math.random() * words.length)];
-
-	return word;
 }
 
 function shuffleArray(array) {

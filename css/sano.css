@@ -32,8 +32,6 @@ html {
 	--paper-ink: #37323c;
 	--paper-whisker: #a59a86;
 	--cut-shadow: 0.25;
-
-	--flashcard-background: rgba(26, 22, 32, 0.88);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -226,45 +224,6 @@ ul {
 	z-index: 20;
 }
 
-#controls {
-	display: flex;
-	width: 380px;
-	align-items: center;
-}
-#controls.loading {
-	display: none;
-}
-#controls input,
-#controls button {
-	display: inline-block;
-	height: auto;
-	margin: 0;
-	margin-right: 1rem;
-	padding: 0.8rem 1.4rem;
-	font-size: 1.4rem;
-	line-height: 1.2;
-	border-radius: 1rem;
-}
-#controls input {
-	flex: 1;
-	min-width: 0;
-	font-size: 1.3rem;
-}
-#controls button {
-	padding: 0.8rem 1.8rem;
-	font-weight: 700;
-	text-transform: none;
-	letter-spacing: normal;
-	color: var(--button-primary-color);
-	background: var(--accent);
-	border: 0;
-}
-#controls button:hover,
-#controls button:focus {
-	color: var(--button-primary-color);
-	background: var(--accent-deep);
-}
-
 #progress {
 	position: fixed;
 	top: 0;
@@ -277,22 +236,13 @@ ul {
 	background: linear-gradient(to bottom, var(--background-color) 60%, rgba(0, 0, 0, 0));
 
 	display: flex;
+	align-items: center;
 	justify-content: flex-end;
 	padding-top: 12px;
 }
-#progress.loading {
-	display: none;
-}
-#progress span,
-#progress a {
-	padding-left: 5px;
-}
 #progress span {
+	padding-left: 5px;
 	color: var(--text-color-richer);
-}
-#progress a {
-	cursor: pointer;
-	user-select: none;
 }
 /* Nav icons are real buttons for keyboard access; undo barebones button chrome. */
 #progress button {
@@ -308,10 +258,6 @@ ul {
 #progress button:focus {
 	color: var(--accent-color-hover);
 }
-/* Separate the nav-icon group from the stats. */
-#progress #nav-home {
-	margin-left: 1.8rem;
-}
 #progress .icon {
 	padding-left: 14px;
 	line-height: 1.6;
@@ -319,20 +265,15 @@ ul {
 #progress span.icon {
 	color: var(--text-color-softer);
 }
-#progress #name {
-	padding-left: 0;
-}
 #progress #streak-label {
 	margin: 0 -7px;
 }
-
-/* Sign-in / account panel. Fixed and centered so it works from both the
-   pre-name controls row and the fixed stats bar, at every viewport width. */
-#controls-signin {
-	font-size: 1.3rem;
-	white-space: nowrap;
-	cursor: pointer;
-	user-select: none;
+#progress #name {
+	padding-right: 2rem;
+}
+/* Pennant gold once today's lesson has extended the streak. */
+#progress #streak-label.streak-extended {
+	color: var(--badge-color);
 }
 #login-panel {
 	position: fixed;
@@ -350,6 +291,21 @@ ul {
 }
 #login-panel form {
 	margin: 0;
+}
+#name-form {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	margin-bottom: 1.2rem !important;
+	padding-bottom: 1.2rem;
+	border-bottom: 1px solid var(--border-color-softer);
+}
+#name-form input {
+	flex: 1;
+	margin: 0 !important;
+}
+#name-form button {
+	flex-shrink: 0;
 }
 #login-panel input {
 	width: 100%;
@@ -458,21 +414,6 @@ table#words tbody tr.topic th {
 	color: var(--text-color-richer);
 	font-weight: 700;
 }
-table#words tbody tr.solo th {
-	position: relative;
-	color: var(--badge-color);
-}
-table#words tbody tr.solo th::before {
-	content: '🔍';
-	position: absolute;
-	width: 3rem;
-	height: 3rem;
-	line-height: 3rem;
-	text-align: center;
-	top: 50%;
-	left: -3.5rem;
-	transform: translateY(-50%);
-}
 
 table#vocab thead {
 	display: none;
@@ -521,163 +462,6 @@ table#vocab tbody td:nth-child(3) {
 	line-height: 1;
 }
 
-#flashcard {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: var(--flashcard-background);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 100;
-}
-#flashcard.hide {
-	display: none;
-}
-#flashcard-content,
-#quiz-content {
-	width: 100%;
-	max-width: 900px;
-	height: 500px;
-}
-#quiz-content {
-	padding: 10px 40px;
-	background-color: var(--background-color);
-	border: 1px solid var(--text-color-softer);
-}
-#flashcard-content {
-	perspective: 1400px;
-}
-#flashcard-card {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	transform-style: preserve-3d;
-	transition: transform 0.5s ease;
-	cursor: pointer;
-	user-select: none;
-}
-#flashcard-card.flipped {
-	transform: rotateY(180deg);
-}
-#flashcard-card.snap {
-	transition: none;
-}
-#flashcard-front,
-#flashcard-back {
-	position: absolute;
-	inset: 0;
-	padding: 10px 40px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	background-color: var(--background-color);
-	border: 1px solid var(--text-color-softer);
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
-}
-#flashcard-back {
-	transform: rotateY(180deg);
-}
-#flashcard-hint {
-	margin: 3rem 0 0;
-	font-size: 1.3rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.12rem;
-	color: var(--text-color-softer);
-}
-#flashcard-content.hide,
-#quiz-content.hide {
-	display: none;
-}
-#flashcard-word,
-#quiz-word {
-	font-family: 'Neuton', serif;
-	font-weight: 700;
-	font-style: normal;
-	font-size: 6.2rem;
-	color: var(--word-color);
-}
-#flashcard-pronounce,
-#quiz-pronounce {
-	font-size: 3rem;
-	font-style: italic;
-	color: var(--text-color-soft);
-}
-#flashcard-meaning {
-	font-family: 'Neuton', serif;
-	font-weight: 700;
-	font-style: normal;
-	font-size: 6.2rem;
-}
-#flashcard-usage {
-	margin-top: 28px;
-	font-size: 2rem;
-}
-#flashcard-close {
-	position: fixed;
-	top: 0;
-	right: 0;
-	display: block;
-	z-index: 110;
-	padding: 30px;
-	cursor: pointer;
-	font-size: 4rem;
-	user-select: none;
-}
-#flashcard-next,
-#flashcard-prev {
-	width: 120px;
-	height: 520px;
-	cursor: pointer;
-	font-size: 7rem;
-	line-height: 7.5;
-	text-align: center;
-	user-select: none;
-}
-
-#quiz-choices {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	list-style: none;
-	width: 100%;
-	margin-top: 4rem;
-	padding: 0;
-}
-#quiz-choices li {
-	margin-bottom: 1.5rem;
-}
-#quiz-choices li button {
-	width: 440px;
-	height: 74px;
-	font-size: 1.8rem;
-	font-weight: 500;
-	line-height: 25px;
-	color: var(--text-color-normal);
-	text-wrap: wrap;
-	overflow: visible;
-}
-#quiz-choices li button:hover {
-	color: var(--text-color-richer);
-}
-#quiz-choices li button.correct {
-	color: var(--text-color-richer);
-	border-color: var(--text-complete-color);
-}
-#quiz-choices li button.incorrect {
-	color: var(--text-color-richer);
-	border-color: var(--text-incomplete-color);
-}
-#quiz-choices li button.unselected {
-	color: var(--text-color-softer);
-}
-
 @media (max-width: 1210px) {
 	#header h1 {
 		padding-top: 5rem;
@@ -689,37 +473,14 @@ table#vocab tbody td:nth-child(3) {
 		width: 100%;
 		margin-left: 0;
 		padding-left: 2rem;
-		justify-content: flex-start;
-	}
-	#flashcard-content,
-	#quiz-content {
-		height: 590px;
-	}
-	#quiz-choices li button {
-		width: 74vw;
-		min-width: 320px;
-	}
-	#flashcard-word,
-	#quiz-word,
-	#flashcard-meaning {
-		font-size: 4.2rem;
-	}
-	#flashcard-pronounce,
-	#quiz-pronounce {
-		font-size: 2.7rem;
 	}
 }
 
 @media (max-width: 810px) {
-	#header h1,
-	#controls {
+	#header h1 {
 		min-width: auto;
 		width: 100%;
 	}
-	#progress .icon {
-		line-height: 1.4;
-	}
-
 	table#words thead th {
 		font-size: 1.1rem;
 	}
@@ -729,96 +490,6 @@ table#vocab tbody td:nth-child(3) {
 	}
 	table#words tbody tr.complete th::before {
 		left: -2.5rem;
-	}
-
-	#flashcard-content,
-	#quiz-content {
-		height: 650px;
-	}
-	#quiz-content,
-	#flashcard-front,
-	#flashcard-back {
-		padding: 8px 30px;
-	}
-	#flashcard-close {
-		padding: 15px;
-	}
-	#flashcard-next,
-	#flashcard-prev {
-		height: 670px;
-		line-height: 9.5;
-	}
-	#flashcard-word,
-	#quiz-word,
-	#flashcard-meaning {
-		font-size: 3.8rem;
-	}
-	#flashcard-pronounce,
-	#quiz-pronounce {
-		font-size: 2.5rem;
-	}
-	#flashcard-usage {
-		margin-top: 20px;
-		font-size: 1.6rem;
-	}
-}
-
-/* Compact fixed header for narrow phones: fill the full width, smaller icons. */
-@media (max-width: 429px) {
-	#progress {
-		box-sizing: border-box;
-		width: 100%;
-		margin-left: 0;
-		padding: 10px 10px 1.8rem;
-		justify-content: space-between;
-	}
-	#progress span,
-	#progress a {
-		padding-left: 0;
-	}
-	#progress .icon {
-		padding-left: 4px;
-		font-size: 2rem;
-		line-height: 1.5;
-	}
-	#progress #streak-label {
-		margin: 0 -3px 0 0;
-	}
-	/* space-between already separates the groups at this width */
-	#progress #nav-home {
-		margin-left: 0;
-	}
-	#progress #name {
-		max-width: 56px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	#progress span {
-		font-size: 1.6rem;
-	}
-}
-
-@media (max-width: 500px) {
-	#flashcard-next,
-	#flashcard-prev {
-		position: fixed;
-		line-height: 25.8;
-		z-index: 10;
-		font-size: 5rem;
-	}
-	#flashcard-prev {
-		left: 0;
-		text-align: left;
-	}
-	#flashcard-next {
-		right: 0;
-		text-align: right;
-	}
-	#quiz-choices li button {
-		width: 84vw;
-		position: relative;
-		z-index: 20;
 	}
 }
 
@@ -1558,13 +1229,11 @@ table#vocab tbody td:nth-child(3) {
 	#path.reveal .path-node,
 	#path.reveal .path-ring,
 	#path.reveal .path-label,
-	#path.reveal .path-dot,
 	#path.reveal .path-section,
 	#path.reveal .path-start {
 		animation: none;
 	}
-	#lesson-progress-fill,
-	#flashcard-card {
+	#lesson-progress-fill {
 		transition: none;
 	}
 }
