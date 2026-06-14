@@ -28,6 +28,15 @@ CREATE TABLE sessions (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Per-IP signup throttle: one row per account-creation attempt that passed
+-- validation. api/register.php counts rows from the last hour to rate-limit, and
+-- prunes rows older than that. IP stored as packed bytes (INET6_ATON / inet_pton).
+CREATE TABLE signup_attempts (
+  ip         VARBINARY(16) NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_ip_time (ip, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Web Push subscriptions: one row per browser/device that opted in to reminders.
 -- A user can have many; the daily dispatcher iterates per-row.
 CREATE TABLE push_subscriptions (

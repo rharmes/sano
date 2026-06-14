@@ -186,19 +186,48 @@ const SanoOnboard = (() => {
 		);
 
 		const error = el('p', 'onboard-error hide');
-		const submit = primaryButton('Create account', () => createAccount(user.value.trim(), pass.value, error));
+		const submit = primaryButton('Create account', () => createAccount(user.value.trim(), pass.value, error, submit));
 		controlsEl.appendChild(submit);
 		controlsEl.appendChild(error);
 		reveal();
 		user.focus();
 	}
 
-	// Phase 1: validate client-side and advance (stub). Phase 2 will POST these to
-	// api/register.php, establish a session via SanoSync, then advance to install.
-	function createAccount(username, password, errorEl) {
+	// Validate client-side, then create the account on the server. On success the
+	// endpoint sets a session cookie; SanoSync.adoptSession reconciles the local
+	// onboarding progress up to the new account, then we move on to the install
+	// step. Server-side validation is authoritative; this only saves a round-trip.
+	async function createAccount(username, password, errorEl, submit) {
 		if (!USERNAME_RE.test(username)) return showError(errorEl, 'Username must be 3–32 characters: a–z, 0–9, underscore.');
 		if (password.length < 8) return showError(errorEl, 'Password must be at least 8 characters.');
 		showError(errorEl, '');
+		submit.disabled = true;
+
+		let res;
+		try {
+			res = await fetch('api/register.php', {
+				method: 'POST',
+				credentials: 'include',
+				headers: { 'Content-Type': 'application/json', 'X-Sano-Request': '1' },
+				body: JSON.stringify({ username, password }),
+			});
+		} catch (e) {
+			submit.disabled = false;
+			return showError(errorEl, 'Could not reach the server — try again.');
+		}
+		if (!res.ok) {
+			submit.disabled = false;
+			if (res.status === 409) return showError(errorEl, 'That username is taken — try another.');
+			if (res.status === 429) return showError(errorEl, 'Too many sign-ups from here — try again later.');
+			if (res.status === 400) return showError(errorEl, 'Please check your username and password.');
+			return showError(errorEl, 'Could not create the account (' + res.status + ').');
+		}
+
+		let payload = {};
+		try {
+			payload = await res.json();
+		} catch (e) {}
+		SanoSync.adoptSession(username, payload);
 		show('install');
 	}
 

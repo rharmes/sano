@@ -192,14 +192,21 @@ const SanoSync = (() => {
 			return;
 		}
 		const body = await res.json();
+		document.getElementById('login-password').value = '';
+		hidePanel();
+		adoptSession(username, body);
+	}
+
+	// Adopt a freshly authenticated session (from login.php or register.php) and
+	// reconcile local progress against it. `body` is the endpoint's JSON payload
+	// (the same {state, revision, updatedAt} shape both endpoints return).
+	function adoptSession(username, body) {
 		// A revision counter only means something for the account it came from.
 		if (meta.lastUsername !== username) meta.revision = 0;
 		meta.username = username;
 		meta.lastUsername = username;
 		saveMeta();
-		document.getElementById('login-password').value = '';
 		updateUi();
-		hidePanel();
 		reconcile(body);
 	}
 
@@ -228,5 +235,5 @@ const SanoSync = (() => {
 		if (typeof SanoPush !== 'undefined') SanoPush.refresh();
 	}
 
-	return { init, markDirty };
+	return { init, markDirty, adoptSession };
 })();

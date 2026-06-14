@@ -15,19 +15,25 @@ The only network calls are same-origin `fetch()`es to `api/`.
 
 - Progress lives in localStorage (`sano.state.v1`, the working copy — the
   app stays fully usable offline/logged-out) and syncs to MySQL through
-  `api/` (PHP + PDO): `login.php`, `logout.php`, `state.php` (GET/PUT),
-  shared `lib.php`. `js/sync.js` (`SanoSync`) does debounced pushes,
-  revision-checked conflict detection, and last-write-wins reconciliation;
-  its bookkeeping lives in localStorage `sano.sync.v1`.
-- Auth: invite-only username/password; DB-backed session tokens in an
-  HttpOnly `sano_session` cookie (90 days). CSRF guard: mutating requests
-  must send `X-Sano-Request: 1`.
+  `api/` (PHP + PDO): `register.php`, `login.php`, `logout.php`,
+  `state.php` (GET/PUT), shared `lib.php`. `js/sync.js` (`SanoSync`) does
+  debounced pushes, revision-checked conflict detection, and last-write-wins
+  reconciliation; its bookkeeping lives in localStorage `sano.sync.v1`.
+  `SanoSync.adoptSession(username, body)` adopts a fresh session from either
+  `login.php` or `register.php`.
+- Auth: username/password; DB-backed session tokens in an HttpOnly
+  `sano_session` cookie (90 days). CSRF guard: mutating requests must send
+  `X-Sano-Request: 1`. **Two ways to create an account:** the onboarding
+  flow's self-service `register.php` (open signup — strict username/password
+  validation, argon2id, auto-login; per-IP hourly throttle via
+  `signup_attempts`), and the invite-only `tools/make-user.php` CLI (still
+  used for password resets).
 - **DB credentials are never in the repo.** `api/lib.php` requires
   `sano-config.php` from one level above the docroot (`~/sano-config.php`
   on the server; for local dev, one level above the repo). It returns
   `['dsn' => ..., 'user' => ..., 'pass' => ...]`.
 - Schema: `tools/schema.sql` (users, app_state blob + revision, sessions,
-  push_subscriptions). Accounts are invite-only:
+  signup_attempts, push_subscriptions). Reset/seed a password via
   `scp tools/make-user.php sano-deploy:` then
   `ssh -t sano-deploy 'php make-user.php <user> [--reset-password]'`
   (`tools/` is never deployed to the docroot).
