@@ -38,8 +38,13 @@ them as authoritative or silently "correct" them; flag questions to Ross.
   `sano-config.php` from one level above the docroot (`~/sano-config.php`
   on the server; for local dev, one level above the repo). It returns
   `['dsn' => ..., 'user' => ..., 'pass' => ...]`.
+- Hardening: argon2id hashing; per-account lockout (10 fails → 15min) **and**
+  per-IP login throttle (`login_attempts`); per-IP signup throttle
+  (`signup_attempts`); CSRF header on mutations; CSP + HSTS + nosniff in
+  `.htaccess`; and a `set_exception_handler` in `lib.php` that turns any uncaught
+  error into a generic JSON 500 (no stack/DSN leak).
 - Schema: `tools/schema.sql` (users, app_state blob + revision, sessions,
-  signup_attempts, push_subscriptions). Reset/seed a password via
+  signup_attempts, login_attempts, push_subscriptions). Reset/seed a password via
   `scp tools/make-user.php sano-deploy:` then
   `ssh -t sano-deploy 'php make-user.php <user> [--reset-password]'`
   (`tools/` is never deployed to the docroot). **Live-DB schema changes go

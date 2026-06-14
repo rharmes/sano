@@ -87,21 +87,24 @@ A 401 from any endpoint is the client's signal to show the login UI.
 
 Security model:
 
-- Passwords hashed with **argon2id** (`password_hash`; the host's PHP 8.2 supports it). Ten consecutive failures lock the account for 15 minutes (`failed_logins` / `locked_until` on the users row).
+- Passwords hashed with **argon2id** (`password_hash`; the host's PHP 8.2 supports it). Ten consecutive failures lock that account for 15 minutes (`failed_logins` / `locked_until` on the users row); a **per-IP throttle** (`login_attempts`, counted before `password_verify` so a flood can't burn argon2 CPU) bounds credential-stuffing across many usernames.
 - Sessions are **DB-backed tokens**, not PHP native sessions: 32 random bytes, sent in an HttpOnly `sano_session` cookie (`Secure; SameSite=Strict; Max-Age=90 days`); the DB stores only the token's sha256, so a DB leak yields no usable tokens. Expired sessions are swept opportunistically on login.
 - CSRF: mutating requests must carry `X-Sano-Request: 1`. Cross-origin pages can't add that header without a CORS preflight, which is never granted; belt-and-braces on top of SameSite=Strict.
 - Signup (`register.php`) is **open but rate-limited** — at most 5 accounts/hour per IP (the `signup_attempts` table), usernames validated `^[a-z0-9_]{3,32}$`, passwords 8–200 chars, duplicates caught on the `UNIQUE(username)` constraint. No third-party captcha (it would break the no-external-requests rule); the IP throttle is the bot defense. On success it issues the same session cookie as `login.php`.
 - **Credentials are never in the repo.** `api/lib.php` does `require __DIR__ . '/../../sano-config.php'` — one level _above_ the docroot. On the server that's `~/sano-config.php` (mode 600); for local dev, one level above the repo checkout. The file returns `['dsn' => 'mysql:host=...;dbname=...;charset=utf8mb4', 'user' => ..., 'pass' => ...]`.
 - `api/.htaccess` marks all API responses `Cache-Control: no-store` and denies `lib.php`.
+- **Fail closed:** `api/lib.php` sets `display_errors` off and a `set_exception_handler` that turns any uncaught error (PDO failure, missing config, a re-thrown insert) into a generic `{error:"server"}` 500 — no stack trace or DSN ever reaches the client.
+- **Response headers** (root `.htaccess`): a strict `Content-Security-Policy` (feasible because there are no external requests — `default-src 'self'`, `frame-ancestors 'none'`, `object-src 'none'`, `style-src 'self' 'unsafe-inline'` for JS-set inline styles), plus `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, and `Referrer-Policy`.
 
 ### Database (tools/schema.sql)
 
-Five InnoDB/utf8mb4 tables:
+Six InnoDB/utf8mb4 tables:
 
 - `users` — id, username (unique), password_hash, failed_logins, locked_until, **reminder_hour** (0–23, null = no reminder), **reminder_tz** (IANA name, null), created_at.
 - `app_state` — user_id (PK, FK cascade), state (MEDIUMTEXT JSON blob), revision (counter), updated_at (DATETIME(3), auto-updated).
 - `sessions` — token_hash (PK), user_id (FK cascade), created_at, expires_at.
 - `signup_attempts` — ip (VARBINARY(16)), created_at; per-IP signup throttle, pruned to the last hour on each attempt.
+- `login_attempts` — ip (VARBINARY(16)), created_at; per-IP login throttle (failed logins), pruned to the throttle window.
 - `push_subscriptions` — id, user_id (FK cascade), endpoint (unique), p256dh, auth_secret, plus delivery bookkeeping (last_success_at / last_failure_at / failure_count). One row per opted-in browser/device; the dispatcher iterates per row.
 
 ### Sync protocol (js/sync.js)

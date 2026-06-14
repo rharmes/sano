@@ -50,6 +50,10 @@ try {
 	$pdo->prepare('INSERT INTO users (username, password_hash) VALUES (?, ?)')->execute([$username, $hash]);
 } catch (PDOException $e) {
 	// 23000 = integrity constraint violation, i.e. the UNIQUE(username) race.
+	// NOTE: a distinct 409 lets a probe learn which usernames exist (enumeration).
+	// Accepted — it's inherent to any "username taken" signup UX, and the per-IP
+	// throttle above bounds how fast a probe can sweep. A non-23000 error re-throws
+	// to the lib.php exception handler, which returns a generic 500 (no leak).
 	if ($e->getCode() === '23000') {
 		respond(409, ['error' => 'username_taken']);
 	}

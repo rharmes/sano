@@ -66,19 +66,19 @@ highest-leverage change.
 
 ## 3. Security & hardening
 
-- [ ] **R12 [P1] API error boundary.** `set_exception_handler` → clean JSON 500 +
+- [x] **R12 [P1] API error boundary.** `set_exception_handler` → clean JSON 500 +
   `display_errors` off in `api/lib.php`. Today an uncaught `PDOException` is a raw PHP
   fatal that can leak the DSN/paths if display_errors is on.
-- [ ] **R13 [P2] Security headers in `.htaccess`.** No external requests makes a strict
+- [x] **R13 [P2] Security headers in `.htaccess`.** _(deployed config — verify live)_ No external requests makes a strict
   CSP feasible (`default-src 'self'; style-src 'self' 'unsafe-inline'; object-src
   'none'; base-uri 'self'; frame-ancestors 'none'; …`), plus HSTS,
   `X-Content-Type-Options: nosniff`, `Referrer-Policy`. (Apache-only — verify live.)
-- [ ] **R14 [P2] Per-IP login throttle.** `login.php` has per-account lockout but no
+- [x] **R14 [P2] Per-IP login throttle.** _(needs the login_attempts migration on the live DB)_ `login.php` has per-account lockout but no
   per-IP limit, so credential-stuffing across many usernames is unbounded. Reuse the
   `signup_attempts` pattern.
-- [ ] **R15 [P3] Note the lockout-DoS tradeoff.** Per-account lockout (10 fails →
+- [x] **R15 [P3] Note the lockout-DoS tradeoff.** Per-account lockout (10 fails →
   15min) lets someone lock out a known username. Fine for a personal app — document it.
-- [ ] **R16 [P3] Username enumeration.** register.php's 409 reveals taken usernames;
+- [x] **R16 [P3] Username enumeration.** register.php's 409 reveals taken usernames;
   already IP-throttled, acceptable — note it.
 
 ## 4. Architecture & readability

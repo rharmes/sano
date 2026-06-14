@@ -11,7 +11,23 @@ const SESSION_COOKIE = 'sano_session';
 const SESSION_DAYS = 90;
 const LOCK_AFTER_FAILURES = 10;
 const LOCK_MINUTES = 15;
+const LOGIN_IP_WINDOW_MINUTES = 15; // per-IP login throttle window
+const LOGIN_IP_MAX = 30; // failed logins per IP per window before a 429
 const MAX_STATE_BYTES = 1048576;
+
+// Fail closed: never surface a stack trace or the DB DSN to the client. Any
+// uncaught exception (a PDO error, a bad config, register.php's re-thrown
+// non-duplicate insert) becomes a generic JSON 500; the detail is logged
+// server-side only. Endpoints just `require` this file, so the guard covers all.
+ini_set('display_errors', '0');
+set_exception_handler(function (Throwable $e): void {
+	error_log('sano api: ' . $e);
+	if (!headers_sent()) {
+		http_response_code(500);
+		header('Content-Type: application/json');
+	}
+	echo json_encode(['error' => 'server']);
+});
 
 function db(): PDO
 {

@@ -43,6 +43,15 @@ CREATE TABLE signup_attempts (
   KEY idx_ip_time (ip, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Per-IP login throttle: one row per failed login. api/login.php counts rows in
+-- the last LOGIN_IP_WINDOW_MINUTES to bound credential-stuffing across usernames,
+-- and prunes older rows. Same shape as signup_attempts.
+CREATE TABLE login_attempts (
+  ip         VARBINARY(16) NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_ip_time (ip, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Web Push subscriptions: one row per browser/device that opted in to reminders.
 -- A user can have many; the daily dispatcher iterates per-row.
 CREATE TABLE push_subscriptions (

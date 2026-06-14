@@ -4,3 +4,15 @@ Header set Cache-Control "max-age=31536000, immutable" "expr=%{CONTENT_TYPE} == 
 <Files "sw.js">
     Header set Cache-Control "no-cache"
 </Files>
+
+# Security headers (`always` so they cover error responses too). The app makes no
+# external requests at runtime, so the CSP is tight: scripts are all external
+# same-origin files (no inline <script>), and style-src needs 'unsafe-inline' only
+# for the inline style attributes JS sets (animation-delay) and the inline sprite
+# <svg style>. frame-ancestors 'none' blocks clickjacking of the login.
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+# HTTPS only (session cookie is Secure). Add includeSubDomains/preload once every
+# browser-facing subdomain is confirmed HTTPS.
+Header always set Strict-Transport-Security "max-age=31536000"
