@@ -47,19 +47,26 @@ The only network calls are same-origin `fetch()`es to `api/`.
 - Service worker `sw.js` caches the shell (HTML network-first, stamped assets
   cache-first), passes `/api/*` through to the network, and handles `push` /
   `notificationclick` for reminders.
-- Reminder opt-in: `js/push.js` (`SanoPush`) shows a "Daily reminder" toggle
-  in the login panel when signed in AND running as an installed PWA. It calls
-  `pushManager.subscribe(VAPID_PUBLIC_KEY)` and stores the endpoint via
-  `POST /api/push-subscribe.php`. iOS only allows push for installed PWAs
-  (iOS 16.4+).
+- Reminder opt-in: `js/push.js` (`SanoPush`) shows a "Daily reminder" toggle +
+  time label in the login panel when signed in AND running as an installed PWA,
+  and pops a one-time setup modal on the home screen when such a PWA has no
+  reminder configured. A reminder needs two things: a *subscription* (per
+  device, `pushManager.subscribe(VAPID_PUBLIC_KEY)` → `POST
+  /api/push-subscribe.php`) and a *time* (per account: `reminder_hour` 0–23 +
+  `reminder_tz` IANA, GET/POST `/api/reminder.php`). The modal collects a
+  whole-hour time + timezone (defaulted from
+  `Intl.DateTimeFormat().resolvedOptions().timeZone`), subscribes, and saves.
+  iOS only allows push for installed PWAs (iOS 16.4+).
 - VAPID **public** key is baked into `js/push.js` (safe to ship). VAPID
   **private** key + subject are in `~/sano-config.php` on the server next to
   the DB creds (`vapid_subject`, `vapid_public_key`, `vapid_private_key`).
-- Dispatch: `tools/send-reminders.php` runs server-side at 7pm PT via cron
-  (`CRON_TZ=America/Los_Angeles 0 19 * * *`). It picks every user whose
-  `state.lastActivityDay` isn't today PT and who has a subscription, then
-  sends via minishlink/web-push (Composer dep at `~/sano-vendor/`). 410/404
-  responses prune the subscription row. Flags: `--dry-run`, `--user <name>`.
+- Dispatch: `tools/send-reminders.php` runs server-side **hourly** via cron
+  (`0 * * * *` — no `CRON_TZ`; each user's zone is handled in PHP). It selects
+  every subscription whose user set `reminder_hour`, and for each one whose
+  chosen hour matches the current hour in their `reminder_tz` and who hasn't
+  studied yet today (local date), sends via minishlink/web-push (Composer dep at
+  `~/sano-vendor/`). 410/404 responses prune the subscription row. Flags:
+  `--dry-run`, `--user <name>`, `--force` (ignore hour + studied-today filters).
 - Deployed files: `manifest.json`, `sw.js`, icon PNGs, the two new
   `api/push-*.php`, `js/push.js`. `tools/send-reminders.php` and the
   Composer vendor dir are NOT in the rsync — they live on the server only.

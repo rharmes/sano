@@ -1,19 +1,21 @@
 <?php
 // Sano daily reminder dispatcher.
 //
-// Picks every user whose state's lastActivityDay isn't today (Pacific) and who
-// has at least one push subscription, then sends a Web Push notification to each
-// of their subscriptions. tools/ is never deployed to the docroot — install on
-// the server as ~/sano-tools/send-reminders.php and run via cron.
+// Picks every user who set a daily reminder (reminder_hour/reminder_tz) and has
+// at least one push subscription, then — for those whose chosen hour matches the
+// current hour in their own timezone and who haven't studied yet today — sends a
+// Web Push notification to each of their subscriptions. tools/ is never deployed
+// to the docroot — install on the server as ~/sano-tools/send-reminders.php.
 //
-// Cron (Pacific, fires at 7pm PT regardless of server TZ):
-//   CRON_TZ=America/Los_Angeles
-//   0 19 * * * php $HOME/sano-tools/send-reminders.php >> $HOME/sano-reminders.log 2>&1
+// Cron — runs hourly (each user fires at their own local hour, so it must run
+// every hour on the hour; no CRON_TZ needed, zones are handled per-user):
+//   0 * * * * php $HOME/sano-tools/send-reminders.php >> $HOME/sano-reminders.log 2>&1
 //
 // Flags:
 //   --dry-run         List who would be notified, send nothing.
 //   --user <name>     Only consider that one user (testing).
-//   --force           Ignore the "haven't done a lesson today PT" filter (testing).
+//   --force           Ignore the hour-match and the "studied today" filter
+//                     (testing — sends to every reminder-enabled subscription).
 //
 // Setup once on the server:
 //   cd ~ && mkdir -p sano-tools sano-vendor
@@ -75,40 +77,50 @@ $pdo = new PDO($config['dsn'], $config['user'], $config['pass'], [
 	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ]);
 
-// Two-step form so the parens survive prettier-php (chained `new()->m()` needs PHP 8.4).
-$nowPt = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
-$today = $nowPt->format('Y-m-d');
-
-// Hand-rolled LEFT JOIN so a user who has never saved state (no app_state row) still
-// gets reminded. JSON_EXTRACT returns SQL NULL for a missing key — both branches mean
-// "hasn't done a lesson today PT".
-$sql = "SELECT u.id AS user_id, u.username,
-               ps.id AS sub_id, ps.endpoint, ps.p256dh, ps.auth_secret
+// Pull every reminder-enabled subscription with the user's chosen hour/zone and
+// their last activity day. The LEFT JOIN keeps users who have never saved state
+// (JSON_EXTRACT yields SQL NULL there, which never equals today's date).
+$sql = "SELECT u.id AS user_id, u.username, u.reminder_hour, u.reminder_tz,
+               ps.id AS sub_id, ps.endpoint, ps.p256dh, ps.auth_secret,
+               JSON_UNQUOTE(JSON_EXTRACT(s.state, '$.lastActivityDay')) AS last_activity_day
         FROM push_subscriptions ps
         JOIN users u ON u.id = ps.user_id
-        LEFT JOIN app_state s ON s.user_id = u.id";
+        LEFT JOIN app_state s ON s.user_id = u.id
+        WHERE u.reminder_hour IS NOT NULL";
 $params = [];
-$where = [];
-if (!$force) {
-	$where[] = "(s.state IS NULL
-	             OR JSON_UNQUOTE(JSON_EXTRACT(s.state, '$.lastActivityDay')) <> ?
-	             OR JSON_UNQUOTE(JSON_EXTRACT(s.state, '$.lastActivityDay')) IS NULL)";
-	$params[] = $today;
-}
 if ($onlyUser !== null) {
-	$where[] = 'u.username = ?';
+	$sql .= ' AND u.username = ?';
 	$params[] = $onlyUser;
-}
-if ($where) {
-	$sql .= ' WHERE ' . implode(' AND ', $where);
 }
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
-$rows = $stmt->fetchAll();
+$candidates = $stmt->fetchAll();
+
+// Filter in PHP (not SQL) so we never depend on the MySQL timezone tables being
+// loaded: a subscription is due when it's the user's chosen hour in their own
+// zone and they haven't studied yet today (local date).
+$rows = [];
+foreach ($candidates as $r) {
+	try {
+		$now = new DateTime('now', new DateTimeZone($r['reminder_tz']));
+	} catch (Exception $e) {
+		fwrite(STDERR, "skip {$r['username']}: bad tz {$r['reminder_tz']}\n");
+		continue;
+	}
+	if (!$force) {
+		if ((int) $now->format('G') !== (int) $r['reminder_hour']) {
+			continue;
+		}
+		if ($r['last_activity_day'] === $now->format('Y-m-d')) {
+			continue;
+		}
+	}
+	$rows[] = $r;
+}
 
 if (!$rows) {
-	fwrite(STDERR, "No one to notify (PT today: $today)\n");
+	fwrite(STDERR, "No one to notify this hour\n");
 	exit(0);
 }
 

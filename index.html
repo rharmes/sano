@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=7cd3c048" />
+		<link rel="stylesheet" href="css/sano.css?v=ae1cbc5d" />
 		<link rel="icon" href="favicon.svg?v=e1facae9" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a0282fd9" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -28,7 +28,7 @@
 
 		<script src="js/data.js?v=a55841c5"></script>
 		<script src="js/sync.js?v=d3bb6cae"></script>
-		<script src="js/push.js?v=41740c97"></script>
+		<script src="js/push.js?v=7db6a8dc"></script>
 		<script src="js/onboarding.js?v=1ef9fd3d"></script>
 		<script src="js/sano.js?v=937e3967"></script>
 	</head>
@@ -128,7 +128,10 @@
 						<button type="button" id="logout-button">Sign out</button>
 					</div>
 					<div id="reminders-row" class="hide">
-						<label for="reminders-toggle"><input type="checkbox" id="reminders-toggle" /> Daily reminder at 7pm PT</label>
+						<label for="reminders-toggle"
+							><input type="checkbox" id="reminders-toggle" /> <span id="reminders-label">Daily reminder</span></label
+						>
+						<button type="button" id="reminders-edit" class="hide">Change time</button>
 						<p id="reminders-status" class="hide"></p>
 					</div>
 				</div>
@@ -382,6 +385,26 @@
 				</svg>
 				&copy; 2026 Ross Harmes
 			</p>
+		</div>
+
+		<div id="reminder-modal" class="hide">
+			<div class="reminder-card">
+				<h2>Daily reminder</h2>
+				<p class="reminder-lead">I'll nudge you once a day if you haven't studied yet. When should I?</p>
+				<label class="reminder-field"
+					>Time
+					<select id="reminder-hour"></select>
+				</label>
+				<label class="reminder-field"
+					>Time zone
+					<select id="reminder-tz"></select>
+				</label>
+				<p id="reminder-modal-error" class="hide"></p>
+				<div class="reminder-actions">
+					<button type="button" id="reminder-cancel">Not now</button>
+					<button type="button" id="reminder-save">Enable</button>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

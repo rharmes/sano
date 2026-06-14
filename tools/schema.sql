@@ -8,8 +8,14 @@ CREATE TABLE users (
   password_hash VARCHAR(255) NOT NULL,
   failed_logins TINYINT UNSIGNED NOT NULL DEFAULT 0,
   locked_until  DATETIME NULL,
+  -- Daily reminder: whole-hour local time (0-23) + IANA zone. NULL = none set.
+  reminder_hour TINYINT UNSIGNED NULL,
+  reminder_tz   VARCHAR(64) NULL,
   created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Existing DB: ALTER TABLE users
+--   ADD COLUMN reminder_hour TINYINT UNSIGNED NULL,
+--   ADD COLUMN reminder_tz VARCHAR(64) NULL;
 
 CREATE TABLE app_state (
   user_id    INT UNSIGNED PRIMARY KEY,

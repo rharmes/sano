@@ -486,6 +486,110 @@ ul {
 	font-size: 1.3rem;
 	color: var(--text-color-soft);
 }
+/* "Change time" reopens the reminder modal; a quiet link, not the crimson CTA. */
+#login-panel #reminders-edit {
+	height: auto;
+	margin: 0.6rem 0 0;
+	padding: 0;
+	font-size: 1.3rem;
+	font-weight: 700;
+	text-transform: none;
+	letter-spacing: normal;
+	color: var(--accent);
+	background: none;
+	border: 0;
+	cursor: pointer;
+}
+
+/* Daily-reminder setup modal (shown on the home screen for an installed,
+   signed-in PWA with no reminder configured; also reachable from the panel). */
+#reminder-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 60;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.6rem;
+	background: rgba(10, 8, 14, 0.55);
+}
+.reminder-card {
+	width: 34rem;
+	max-width: 100%;
+	padding: 2.4rem;
+	background: var(--background-color);
+	border: 1px solid var(--border-color);
+	border-radius: 1.4rem;
+	box-shadow: 0 12px 40px rgba(10, 8, 14, 0.4);
+}
+.reminder-card h2 {
+	margin: 0 0 0.8rem;
+	font-size: 2.2rem;
+}
+.reminder-lead {
+	margin: 0 0 1.8rem;
+	font-size: 1.5rem;
+	color: var(--text-color-soft);
+}
+.reminder-field {
+	display: block;
+	margin-bottom: 1.4rem;
+	font-size: 1.2rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--text-color-softer);
+}
+.reminder-field select {
+	display: block;
+	width: 100%;
+	height: auto;
+	margin-top: 0.6rem;
+	padding: 0.9rem 1rem;
+	font-size: 1.5rem;
+	font-weight: 400;
+	letter-spacing: normal;
+	text-transform: none;
+	color: var(--text-color-richer);
+	background: var(--background-color-softer);
+	border: 1px solid var(--border-color);
+	border-radius: 0.8rem;
+}
+#reminder-modal-error {
+	margin: 0 0 1.2rem;
+	font-size: 1.3rem;
+	color: var(--text-incomplete-color);
+}
+.reminder-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	margin-top: 0.6rem;
+}
+.reminder-actions button {
+	height: auto;
+	margin: 0;
+	padding: 0.9rem 2rem;
+	font-size: 1.5rem;
+	font-weight: 700;
+	text-transform: none;
+	letter-spacing: normal;
+	border-radius: 1rem;
+	cursor: pointer;
+}
+#reminder-cancel {
+	color: var(--text-color-normal);
+	background: var(--background-color-softer);
+	border: 1px solid var(--border-color);
+}
+#reminder-save {
+	color: var(--button-primary-color);
+	background: var(--accent);
+	border: 0;
+}
+#reminder-save:hover {
+	background: var(--accent-deep);
+}
 /* Indigo marks the account icon as signed in / syncing. */
 #progress #account-button.signed-in {
 	color: var(--path-complete-color);
