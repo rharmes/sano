@@ -219,11 +219,13 @@ const SanoPush = (() => {
 		document.getElementById('reminder-hour').value = String(reminderConfig ? reminderConfig.hour : 19);
 		document.getElementById('reminder-tz').value = (reminderConfig && reminderConfig.tz) || detectTz();
 		document.getElementById('reminder-modal-error').classList.add('hide');
-		document.getElementById('reminder-modal').classList.remove('hide');
+		const modal = document.getElementById('reminder-modal');
+		if (!modal.open) modal.showModal();
 	}
 
 	function closeModal() {
-		document.getElementById('reminder-modal').classList.add('hide');
+		const modal = document.getElementById('reminder-modal');
+		if (modal.open) modal.close();
 	}
 
 	function maybeShowModal() {
@@ -289,8 +291,18 @@ const SanoPush = (() => {
 		document.getElementById('reminders-edit').addEventListener('click', () => openModal(false));
 		document.getElementById('reminder-save').addEventListener('click', onSave);
 		document.getElementById('reminder-cancel').addEventListener('click', onCancel);
-		document.getElementById('reminder-modal').addEventListener('click', (e) => {
-			if (e.target.id === 'reminder-modal') onCancel();
+		const modal = document.getElementById('reminder-modal');
+		// Click on the ::backdrop (outside the dialog box) cancels. Coordinate check
+		// so a click on the dialog's own padding doesn't count as a backdrop click.
+		modal.addEventListener('click', (e) => {
+			const r = modal.getBoundingClientRect();
+			if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) onCancel();
+		});
+		// Escape fires the dialog's native `cancel`; route it through onCancel so the
+		// dismiss flag + UI refresh still run (then close it ourselves).
+		modal.addEventListener('cancel', (e) => {
+			e.preventDefault();
+			onCancel();
 		});
 
 		refresh();

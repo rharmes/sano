@@ -67,7 +67,7 @@ const SCENARIOS = [
 			const hs = doc.getElementById('reminder-hour');
 			for (let h = 0; h < 24; h++) { const o = doc.createElement('option'); o.value = h; o.textContent = h + ':00'; hs.appendChild(o); }
 			const ts = doc.getElementById('reminder-tz'); const o = doc.createElement('option'); o.value = 'Asia/Kathmandu'; o.textContent = 'Asia/Kathmandu'; ts.appendChild(o);
-			doc.getElementById('reminder-modal').classList.remove('hide');
+			doc.getElementById('reminder-modal').showModal();
 		`,
 		selectors: ['.reminder-card', '.reminder-field select', '.reminder-actions'],
 	},

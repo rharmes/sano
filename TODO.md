@@ -95,10 +95,10 @@ highest-leverage change.
 
 ## 5. Frontend-design polish (brand is strong — elevate, don't redesign)
 
-- [ ] **R20 [P2] Modal accessibility.** Make `#reminder-modal` a real dialog (`<dialog>`
+- [x] **R20 [P2] Modal accessibility.** Make `#reminder-modal` a real dialog (`<dialog>`
   or `role="dialog" aria-modal="true"`) with focus trap, Escape-to-close, focus return.
   Spot-check `--text-color-soft` contrast.
-- [ ] **R21 [P3] Type scale as tokens.** Font-sizes are scattered magic rems. Define
+- [x] **R21 [P3] Type scale as tokens.** Font-sizes are scattered magic rems. Define
   `--text-display/-word/-body/-label/…` matching the style guide's specimens (ties to R6).
 - [ ] **R22 [P3] Warm the reminder modal to Sano's voice.** A small Sano head + a line
   in his voice would make it feel of a piece with the conversational onboarding.

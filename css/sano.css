@@ -35,6 +35,13 @@ html {
 	--paper-cream-deep: #e8ddc6;
 	--paper-ink: #37323c;
 	--paper-whisker: #a59a86;
+
+	/* Type scale — the voices documented in design/style-guide.html (theme-invariant). */
+	--text-display: 7.2rem; /* wordmark / H1 (Neuton 700) */
+	--text-word: 5.2rem; /* lesson headword (Neuton 700) */
+	--text-pron: 2.6rem; /* pronunciation (Lato 300 italic) */
+	--text-body: 2.3rem; /* body + H2 / H3 (Lato) */
+	--text-label: 1.6rem; /* eyebrow / label (uppercase) */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -349,19 +356,19 @@ button {
 body {
 	font-family: 'Lato', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	color: var(--text-color-normal);
-	font-size: 2.3rem;
+	font-size: var(--text-body);
 	font-weight: 300;
 }
 h1 {
 	font-family: 'Neuton', serif;
 	font-weight: 700;
 	font-style: normal;
-	font-size: 7.2rem;
+	font-size: var(--text-display);
 	color: var(--text-color-richer);
 }
 h2,
 h3 {
-	font-size: 2.3rem;
+	font-size: var(--text-body);
 	font-weight: 400;
 	color: var(--text-color-richer);
 }
@@ -583,14 +590,13 @@ ul {
 
 /* Daily-reminder setup modal (shown on the home screen for an installed,
    signed-in PWA with no reminder configured; also reachable from the panel). */
+/* Reminder setup is a native <dialog>: showModal() centers it (top layer), traps
+   focus, and wires Escape; ::backdrop dims the page. The box is .panel.reminder-card. */
 #reminder-modal {
-	position: fixed;
-	inset: 0;
-	z-index: 60;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 1.6rem;
+	box-sizing: border-box; /* so max-width includes the card's padding + border */
+	max-width: calc(100vw - 3.2rem); /* gap from the screen edge on phones */
+}
+#reminder-modal::backdrop {
 	background: rgba(var(--shadow-rgb), 0.55);
 }
 /* The modal card is a heavier .panel — wider, more padding, a stronger shadow to
@@ -1323,7 +1329,7 @@ table#vocab tbody td:nth-child(3) {
 
 #exercise-label {
 	margin-bottom: 1rem;
-	font-size: 1.6rem;
+	font-size: var(--text-label);
 	text-transform: uppercase;
 	letter-spacing: 0.1rem;
 	color: var(--text-color-soft);
@@ -1331,13 +1337,13 @@ table#vocab tbody td:nth-child(3) {
 #exercise-word {
 	font-family: 'Neuton', serif;
 	font-weight: 700;
-	font-size: 5.2rem;
+	font-size: var(--text-word);
 	line-height: 1.2;
 	color: var(--word-color);
 }
 #exercise-pronounce {
 	min-height: 4rem;
-	font-size: 2.6rem;
+	font-size: var(--text-pron);
 	font-style: italic;
 	color: var(--text-color-soft);
 }

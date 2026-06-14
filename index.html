@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=e3fba8da" />
+		<link rel="stylesheet" href="css/sano.css?v=48b45f4d" />
 		<link rel="icon" href="favicon.svg?v=e1facae9" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a0282fd9" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -30,7 +30,7 @@
 
 		<script src="js/data.js?v=a55841c5" defer></script>
 		<script src="js/sync.js?v=df6e0665" defer></script>
-		<script src="js/push.js?v=7db6a8dc" defer></script>
+		<script src="js/push.js?v=89293764" defer></script>
 		<script src="js/onboarding.js?v=a750aec0" defer></script>
 		<script src="js/sano.js?v=8137dcd2" defer></script>
 	</head>
@@ -393,24 +393,22 @@
 			</p>
 		</div>
 
-		<div id="reminder-modal" class="hide">
-			<div class="panel reminder-card">
-				<h2>Daily reminder</h2>
-				<p class="reminder-lead">I'll nudge you once a day if you haven't studied yet. When should I?</p>
-				<label class="reminder-field"
-					>Time
-					<select id="reminder-hour"></select>
-				</label>
-				<label class="reminder-field"
-					>Time zone
-					<select id="reminder-tz"></select>
-				</label>
-				<p id="reminder-modal-error" class="hide"></p>
-				<div class="reminder-actions">
-					<button type="button" id="reminder-cancel" class="btn-secondary">Not now</button>
-					<button type="button" id="reminder-save" class="btn-primary">Enable</button>
-				</div>
+		<dialog id="reminder-modal" class="panel reminder-card" aria-labelledby="reminder-modal-title">
+			<h2 id="reminder-modal-title">Daily reminder</h2>
+			<p class="reminder-lead">I'll nudge you once a day if you haven't studied yet. When should I?</p>
+			<label class="reminder-field"
+				>Time
+				<select id="reminder-hour"></select>
+			</label>
+			<label class="reminder-field"
+				>Time zone
+				<select id="reminder-tz"></select>
+			</label>
+			<p id="reminder-modal-error" class="hide"></p>
+			<div class="reminder-actions">
+				<button type="button" id="reminder-cancel" class="btn-secondary">Not now</button>
+				<button type="button" id="reminder-save" class="btn-primary">Enable</button>
 			</div>
-		</div>
+		</dialog>
 	</body>
 </html>
