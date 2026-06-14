@@ -18,6 +18,10 @@ const html = readFileSync(PAGE, 'utf8');
 // Matches href/src values without a scheme (no ':'), i.e. local files only.
 // Skips fragment-only URLs like the icon sprite's href="#i-bolt".
 const stamped = html.replace(/((?:href|src)=")([^":?#]+)(?:\?v=[0-9a-f]+)?(")/g, (_, pre, path, post) => {
+	// Fonts are immutable by filename (a content change means a new filename) and
+	// the @font-face url()s in fonts.css are unstamped, so a preloaded font must
+	// stay unstamped too — otherwise the URLs mismatch and the preload is wasted.
+	if (path.endsWith('.woff2')) return `${pre}${path}${post}`;
 	const hash = createHash('md5')
 		.update(readFileSync(join(ROOT, path)))
 		.digest('hex')

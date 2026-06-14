@@ -47,20 +47,20 @@ highest-leverage change.
 
 ## 2. Performance
 
-- [ ] **R7 [P1] `defer` the scripts.** `index.html:29-33` load five scripts in
+- [x] **R7 [P1] `defer` the scripts.** `index.html:29-33` load five scripts in
   `<head>` with no `defer` — render-blocking (data.js alone is 100K). sano.js waits
   for `DOMContentLoaded` and the others only define globals, so `defer` is safe and
   preserves order.
-- [ ] **R8 [P1] Preload hero fonts.** `<link rel="preload" as="font" type="font/woff2"
+- [x] **R8 [P1] Preload hero fonts.** `<link rel="preload" as="font" type="font/woff2"
   crossorigin>` for `fonts/neuton-latin-700.woff2` + `fonts/lato-latin-400.woff2` to
   cut FOUT/LCP.
-- [ ] **R9 [P2] Put caching + gzip in the repo.** Live returns `max-age=2592000` +
+- [x] **R9 [P2] Put caching + gzip in the repo.** _(Apache config — verify live)_ Live returns `max-age=2592000` +
   gzip for css/js, but those rules are host-managed, not in `.htaccess` — invisible
   and unportable. Add explicit `Cache-Control: max-age=31536000, immutable` for
   css/js (safe — URLs are `?v=`-stamped) + a `mod_deflate` block.
-- [ ] **R10 [P3] Lazy-render the dictionary.** `renderTables()` (sano.js:913) builds
+- [x] **R10 [P3] Lazy-render the dictionary.** `renderTables()` (sano.js:913) builds
   every word row + vocab card at boot though `#screen-dictionary` is hidden.
-- [ ] **R11 [P3] sw.js precache vs. comment.** The comment claims it caches the shell,
+- [x] **R11 [P3] sw.js precache vs. comment.** The comment claims it caches the shell,
   but caching is lazy/runtime. Add an install-time `cache.addAll([…])` or soften the
   comment.
 

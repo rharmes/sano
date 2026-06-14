@@ -14,15 +14,14 @@ let pathRevealed = false;
 
 document.addEventListener('DOMContentLoaded', () => {
 	state = loadState();
-	renderTables();
 
 	document.getElementById('words').addEventListener('click', toggleWord);
 	document.getElementById('name-form').addEventListener('submit', saveName);
 
 	document.getElementById('nav-home').addEventListener('click', goHome);
 	document.getElementById('home-link').addEventListener('click', goHome);
-	document.getElementById('nav-dictionary').addEventListener('click', () => showScreen('dictionary'));
-	document.getElementById('dictionary-link').addEventListener('click', () => showScreen('dictionary'));
+	document.getElementById('nav-dictionary').addEventListener('click', openDictionary);
+	document.getElementById('dictionary-link').addEventListener('click', openDictionary);
 
 	document.getElementById('daily-lesson').addEventListener('click', startDailyLesson);
 	document.getElementById('lesson-quit').addEventListener('click', goHome);
@@ -229,6 +228,17 @@ function unitDueCount(unit) {
 }
 
 // Screens.
+
+// The dictionary's two tables are large, so build them the first time it's opened
+// rather than at boot (it starts hidden and many sessions never open it).
+let tablesRendered = false;
+function openDictionary() {
+	if (!tablesRendered) {
+		renderTables();
+		tablesRendered = true;
+	}
+	showScreen('dictionary');
+}
 
 function showScreen(name) {
 	for (const screen of ['onboarding', 'home', 'lesson', 'complete', 'dictionary'])

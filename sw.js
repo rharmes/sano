@@ -1,7 +1,10 @@
 // Service worker for the Sano PWA.
-//   - Caches the app shell for offline boot (HTML network-first, assets cache-first).
+//   - Caches the app shell at runtime as it's fetched (HTML network-first, the
+//     content-stamped assets cache-first), so a returning visit works offline.
+//     There's no install-time precache: the ?v= asset URLs aren't known here, and
+//     a returning visit has already populated the cache.
 //   - Lets /api/* pass through to the network untouched.
-//   - Handles `push` and `notificationclick` for daily reminders (phase 3 wires up the server side).
+//   - Handles `push` and `notificationclick` for daily reminders.
 //
 // Bump VERSION when the cache strategy changes so existing clients drop their old cache.
 

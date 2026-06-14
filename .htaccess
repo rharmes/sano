@@ -1,9 +1,18 @@
 Header set Cache-Control "no-cache" "expr=%{CONTENT_TYPE} =~ m#text/html#"
 Header set Cache-Control "max-age=31536000, immutable" "expr=%{CONTENT_TYPE} == 'font/woff2'"
-# Service worker: browsers update on their own schedule but want a fresh fetch each time.
+# Content-stamped (?v=hash) css/js never change under a given URL — cache them hard.
+Header set Cache-Control "max-age=31536000, immutable" "expr=%{CONTENT_TYPE} =~ m#^(text/css|application/javascript|text/javascript)#"
+# Service worker must always revalidate. This <Files> is applied after the rules
+# above, so its no-cache wins over the js rule for /sw.js.
 <Files "sw.js">
     Header set Cache-Control "no-cache"
 </Files>
+
+# Compress text responses. The shared host already gzips; codifying it keeps the
+# behavior in the repo and portable (mod_deflate won't double-compress).
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
 
 # Security headers (`always` so they cover error responses too). The app makes no
 # external requests at runtime, so the CSP is tight: scripts are all external
