@@ -2,7 +2,7 @@
 
 Learn Nepali with short daily lessons. Live at <https://namastesano.com>.
 
-A Duolingo-style course of essential Nepali phrases with Romanized pronunciations: a winding path of units, a daily lesson that mixes new words with spaced-repetition reviews, plus a browsable dictionary, flashcards, and a quiz. Progress syncs to the server behind an invite-only login, but the app is fully usable offline or logged out.
+A Duolingo-style course of essential Nepali phrases with Romanized pronunciations: a winding path of units, a daily lesson that mixes new words with spaced-repetition reviews, plus a browsable dictionary. New learners get a short conversational onboarding where Sano introduces the app and captures a display name. Progress lives in localStorage and optionally syncs to the server behind an account — self-service signup, or stay fully local. The app works offline or logged out, installs as an iOS home-screen PWA, and can send an opt-in daily reminder at a time you choose.
 
 ## Architecture at a glance
 
@@ -19,8 +19,11 @@ js/
   data.js         COURSE: the entire course content as a static array
   sano.js         App logic: screens, lessons, spaced repetition, state
   sync.js         SanoSync: server sync layer + login panel logic
-api/              PHP endpoints (login, logout, state) — see "Server sync"
+  onboarding.js   SanoOnboard: first-run conversational setup flow
+  push.js         SanoPush: daily-reminder subscriptions + setup modal
+api/              PHP endpoints (register, login, logout, state, reminder, push-*) — see "Server sync"
 fonts/            Self-hosted woff2 (Neuton 700; Lato 300/400/700 + italics)
+manifest.json     PWA manifest; sw.js is the service worker; icon-*.png are the app icons
 tools/            Dev/ops scripts — see "Tool scripts"
 .htaccess         Cache-control tiers on the Apache host
 ```
@@ -33,7 +36,7 @@ tools/            Dev/ops scripts — see "Tool scripts"
 
 ### App logic (js/sano.js)
 
-One screen at a time (`showScreen`): `home` (the unit path + daily-lesson button), `lesson`, `complete`, `dictionary`. Flashcards and the quiz are overlays on the dictionary's word list.
+One screen at a time (`showScreen`): `onboarding` (first-run only), `home` (the unit path + daily-lesson button), `lesson`, `complete`, `dictionary`.
 
 Lessons are a queue of exercises built by `buildExercises`: each new item gets an intro card then is tested; exercise types are multiple choice, word-bank sentence assembly, free typing (with typo leniency via edit distance), and tile matching. A daily lesson takes up to 4 new items from the current unit plus up to 6 due reviews (`DAILY_NEW_ITEMS`, `DAILY_REVIEW_ITEMS`).
 
@@ -44,7 +47,8 @@ Lessons are a queue of exercises built by `buildExercises`: each new item gets a
 ```js
 {
   version: 2,
-  name,                // display name (the header form), or null
+  name,                // display name (set in onboarding or the panel), or null
+  onboarded,           // true once the first-run flow completes
   streak,              // consecutive study days
   lastActivityDay,     // 'YYYY-MM-DD'
   itemsToday, itemsTotal,
@@ -56,9 +60,13 @@ Lessons are a queue of exercises built by `buildExercises`: each new item gets a
 
 `loadState` runs synchronously at boot and funnels everything through `normalizeState`, which fills missing fields and applies migrations (an original multi-key format → v1 → v2 lives in `migrateLegacyState` / `migrateV1State`). `saveState` writes localStorage and notifies the sync layer; it is called after every answered exercise, so saves are frequent and the sync layer must debounce.
 
+### First-run onboarding (js/onboarding.js)
+
+`SanoOnboard.maybeStart()` runs at boot and, when no name is saved, takes over the screen with a scripted conversation in Sano's voice — reusing the home-screen speech-bubble styling (`.scene` / `.thread` / `.bubble`). It asks the learner's name (required), then offers two optional branches: create a cloud account (username + password → `register.php`, which auto-logs-in and syncs the local progress up), and a walkthrough for installing the PWA to the home screen. Every optional step has a "Not right now" exit to a "Set up complete" celebration, then the home path. Returning users (name already set) boot straight to home. The scripted lines are Romanized Nepali with English subtitles, kept together in the `L` object at the top of the module.
+
 ## Server sync
 
-Server-side persistence is **one JSON blob per user** — the same object as localStorage — in MySQL, fronted by three PHP endpoints. localStorage stays the working copy: the app boots instantly from it, works offline, and the sync layer reconciles with the server when it can. Accounts are **invite-only** (no signup UI; see `tools/make-user.php`). A visitor with no account just uses localStorage forever, with an unobtrusive "Sign in" affordance.
+Server-side persistence is **one JSON blob per user** — the same object as localStorage — in MySQL, fronted by a handful of PHP endpoints. localStorage stays the working copy: the app boots instantly from it, works offline, and the sync layer reconciles with the server when it can. Accounts are **optional**: a visitor can sign up themselves through the onboarding flow (`register.php`) or stay fully local with a "Sign in" affordance; the invite-only `tools/make-user.php` CLI remains for manual accounts and password resets. A visitor with no account just uses localStorage.
 
 ### API (api/)
 
@@ -66,10 +74,14 @@ All endpoints are same-origin JSON. `lib.php` holds the shared helpers (config, 
 
 | Endpoint | Method | Request | Responses |
 | --- | --- | --- | --- |
+| `register.php` | POST | `{username, password}` | 201 `{ok, state, revision, updatedAt}` + session cookie · 400 bad username/password · 409 `{error:"username_taken"}` · 429 `{error:"rate_limited", retryAfter}` |
 | `login.php` | POST | `{username, password}` | 200 `{ok, state, revision, updatedAt}` + session cookie · 401 bad credentials · 429 `{error:"locked", retryAfter}` |
 | `logout.php` | POST | — | 204; deletes the session, clears the cookie |
 | `state.php` | GET | — | 200 `{state, revision, updatedAt}` (`state` null until first PUT) · 401 |
 | `state.php` | PUT | `{state, baseRevision, force?}` | 200 `{revision, updatedAt}` · 409 `{error:"conflict", state, revision, updatedAt}` · 401 |
+| `reminder.php` | GET | — | 200 `{hour, tz}` (nulls if unset) · 401 |
+| `reminder.php` | POST | `{hour, tz}` or `{disable:true}` | 200 `{ok, hour, tz}` · 400 bad hour/tz · 401 |
+| `push-subscribe.php` · `push-unsubscribe.php` | POST | `{endpoint, keys}` · `{endpoint}` | 200 `{ok}` · 401 |
 
 A 401 from any endpoint is the client's signal to show the login UI.
 
@@ -78,20 +90,23 @@ Security model:
 - Passwords hashed with **argon2id** (`password_hash`; the host's PHP 8.2 supports it). Ten consecutive failures lock the account for 15 minutes (`failed_logins` / `locked_until` on the users row).
 - Sessions are **DB-backed tokens**, not PHP native sessions: 32 random bytes, sent in an HttpOnly `sano_session` cookie (`Secure; SameSite=Strict; Max-Age=90 days`); the DB stores only the token's sha256, so a DB leak yields no usable tokens. Expired sessions are swept opportunistically on login.
 - CSRF: mutating requests must carry `X-Sano-Request: 1`. Cross-origin pages can't add that header without a CORS preflight, which is never granted; belt-and-braces on top of SameSite=Strict.
+- Signup (`register.php`) is **open but rate-limited** — at most 5 accounts/hour per IP (the `signup_attempts` table), usernames validated `^[a-z0-9_]{3,32}$`, passwords 8–200 chars, duplicates caught on the `UNIQUE(username)` constraint. No third-party captcha (it would break the no-external-requests rule); the IP throttle is the bot defense. On success it issues the same session cookie as `login.php`.
 - **Credentials are never in the repo.** `api/lib.php` does `require __DIR__ . '/../../sano-config.php'` — one level _above_ the docroot. On the server that's `~/sano-config.php` (mode 600); for local dev, one level above the repo checkout. The file returns `['dsn' => 'mysql:host=...;dbname=...;charset=utf8mb4', 'user' => ..., 'pass' => ...]`.
 - `api/.htaccess` marks all API responses `Cache-Control: no-store` and denies `lib.php`.
 
 ### Database (tools/schema.sql)
 
-Three InnoDB/utf8mb4 tables:
+Five InnoDB/utf8mb4 tables:
 
-- `users` — id, username (unique), password_hash, failed_logins, locked_until, created_at.
+- `users` — id, username (unique), password_hash, failed_logins, locked_until, **reminder_hour** (0–23, null = no reminder), **reminder_tz** (IANA name, null), created_at.
 - `app_state` — user_id (PK, FK cascade), state (MEDIUMTEXT JSON blob), revision (counter), updated_at (DATETIME(3), auto-updated).
 - `sessions` — token_hash (PK), user_id (FK cascade), created_at, expires_at.
+- `signup_attempts` — ip (VARBINARY(16)), created_at; per-IP signup throttle, pruned to the last hour on each attempt.
+- `push_subscriptions` — id, user_id (FK cascade), endpoint (unique), p256dh, auth_secret, plus delivery bookkeeping (last_success_at / last_failure_at / failure_count). One row per opted-in browser/device; the dispatcher iterates per row.
 
 ### Sync protocol (js/sync.js)
 
-`SanoSync` keeps its bookkeeping in localStorage `sano.sync.v1`: `{ revision, dirty, localModifiedAt, username, lastUsername }`. `username` is only a UI hint — the HttpOnly cookie is the real credential, invisible to JS. `lastUsername` exists so logging into a _different_ account resets the revision counter (a revision only means something for the account that issued it).
+`SanoSync` keeps its bookkeeping in localStorage `sano.sync.v1`: `{ revision, dirty, localModifiedAt, username, lastUsername }`. `username` is only a UI hint — the HttpOnly cookie is the real credential, invisible to JS. `lastUsername` exists so logging into a _different_ account resets the revision counter (a revision only means something for the account that issued it). Login and signup converge on `adoptSession(username, body)`: it sets the username and runs `reconcile` on the endpoint's `{state, revision, updatedAt}` payload, so a brand-new account imports the local progress on its first sync (rule 1 below).
 
 Flow:
 
@@ -109,6 +124,19 @@ Flow:
 
 The login panel (`#login-panel` in index.html) is opened from the person icon in the stats bar (or the "Sign in" link before a name is set) and doubles as the signed-in/logout view.
 
+## PWA & daily reminders
+
+Sano installs to the iOS home screen (`manifest.json` + the apple-touch / maskable icons + iOS meta tags in index.html). `sw.js` is the service worker: it caches the shell (HTML network-first, `?v=`-stamped assets cache-first), passes `/api/*` straight to the network, and handles `push` / `notificationclick`.
+
+A working reminder needs **two** things, deliberately split:
+
+- a **push subscription** — per browser/device. `SanoPush.enable()` requests notification permission, calls `pushManager.subscribe(VAPID_PUBLIC_KEY)`, and stores the endpoint via `push-subscribe.php` (the `push_subscriptions` table). iOS only delivers Web Push inside an _installed_ PWA (16.4+), and permission must come from a user gesture. The VAPID **public** key is baked into `js/push.js` (safe to ship); the private key + subject live only in `~/sano-config.php`.
+- a **reminder time** — per account: `reminder_hour` (whole hour 0–23) + `reminder_tz` (IANA), via `reminder.php`. Whole hours only, so the cron need run just once an hour.
+
+`SanoPush` shows a toggle + time label in the login panel (signed-in, installed PWA only) and pops a one-time **setup modal** on the home screen when such a PWA has no reminder yet. The modal collects an hour + timezone (defaulted from `Intl.DateTimeFormat().resolvedOptions().timeZone`, listed via `Intl.supportedValuesOf('timeZone')`), then subscribes and saves together. Toggling the reminder off unsubscribes _and_ clears the schedule.
+
+**Dispatch** is `tools/send-reminders.php`, run **hourly** by cron (`0 * * * *` — no `CRON_TZ`; each user's zone is resolved in PHP, so it never depends on the MySQL timezone tables). For every reminder-enabled subscription it sends only when the current hour in that user's `reminder_tz` equals their `reminder_hour` **and** they haven't studied yet today (local date). Delivery is via minishlink/web-push (Composer dep at `~/sano-vendor/`); a 410/404 prunes the dead subscription. Flags: `--dry-run`, `--user <name>`, `--force` (ignore the hour + studied-today filters). The script and the vendor dir live **only on the server** (not in the deploy rsync) — install at `~/sano-tools/send-reminders.php`.
+
 ## Caching and deployment
 
 - HTML is served `no-cache`; css/js get `max-age=2592000` busted by `?v=` content-hash stamps on every URL in index.html; woff2 fonts are `max-age=31536000, immutable` (they only change by filename); API responses are `no-store`. Tiers live in `.htaccess` + `api/.htaccess`.
@@ -122,18 +150,20 @@ The login panel (`#login-panel` in index.html) is opened from the person icon in
 - **`check-viewports.mjs`** — layout regression check. Spins up an in-process HTTP server, seeds a representative `sano.state.v1`, loads the app in same-origin iframes at 9 mobile widths (320–521px; headless Chrome can't open windows narrower than 500px, but iframes get their own viewport), and asserts no horizontal overflow and that key elements stay inside the viewport. Non-zero exit + `/tmp/sano-viewports.png` on failure.
 - **`check-webkit.mjs`** — real-Safari smoke test for the Sano idle animations, so the app isn't only validated in headless Chrome (the rest of the tooling is Chromium, which can't catch WebKit-only rendering bugs). Serves the repo in-process, drives **real Safari** through `safaridriver` (macOS's built-in WebDriver), and asserts every idle group is running its expected keyframe **and** that the eye blink actually changes the SVG transform over a blink cycle (proving WebKit animates it, not just that it reports `running`). Opens a Safari window briefly — run it after animation or mascot-CSS changes. **One-time setup:** `sudo safaridriver --enable`, then Safari > Settings > Advanced > "Show features for web developers" and Safari > Develop > "Allow Remote Automation". Note it runs without Reduce Motion, so it checks the full idle set; the reduced-motion path (blink only) is verified on-device.
 - **`screenshot.sh <url> <out.png> [WxH] [budget-ms]`** — headless-Chrome screenshot wrapper with a stable command prefix (so one permission rule covers all invocations). Always use it instead of invoking Chrome directly.
-- **`make-user.php`** — creates an account (or `--reset-password`). Invite-only means this script is the only way accounts exist. Run it _on the server_, where it finds `sano-config.php` next to itself: `scp tools/make-user.php sano-deploy:` then `ssh -t sano-deploy 'php make-user.php <username>; rm make-user.php'`.
-- **`schema.sql`** — the DDL above. Apply once with `ssh sano-deploy 'mysql <flags> sano' < tools/schema.sql`.
-- **`make-touch-icon.html`** — renders the Nepal-pennant brand art at 180×180; `apple-touch-icon.png` is a screenshot of it (`tools/screenshot.sh <server>/tools/make-touch-icon.html apple-touch-icon.png 180x180`), regenerated after brand-art changes, never hand-edited.
+- **`make-user.php`** — creates or resets (`--reset-password`) an account from the CLI. Self-service `register.php` is the usual signup path now; this is for manual accounts and password resets. Run it _on the server_, where it finds `sano-config.php` next to itself: `scp tools/make-user.php sano-deploy:` then `ssh -t sano-deploy 'php make-user.php <username>; rm make-user.php'`.
+- **`send-reminders.php`** — the hourly reminder dispatcher (see "PWA & daily reminders"). Lives **only on the server** (`~/sano-tools/`), outside the deploy rsync; update it with `scp tools/send-reminders.php sano-deploy:sano-tools/`, and smoke-test with `ssh sano-deploy 'php sano-tools/send-reminders.php --user <name> --force --dry-run'`.
+- **`schema.sql`** — the DDL above; apply on a fresh DB with `ssh sano-deploy 'mysql <flags> sano' < tools/schema.sql`. For incremental changes to a live DB, write a one-off idempotent migration instead — never re-run the full schema.
+- **`migrate-2026-06-reminders.php`** — example of that: an idempotent PDO migration (reads `sano-config.php` like make-user.php) that adds `signup_attempts` and the `users.reminder_*` columns. `scp` it to the server home and run once with `ssh sano-deploy 'php migrate-2026-06-reminders.php'`.
+- **`make-touch-icon.html`** — renders Sano's head as the app-icon art. The PNGs (`apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, and the maskable `icon-512-maskable.png` via the `?safe` query) are made by rendering the **512** masters with `screenshot.sh` and downscaling with `sips` — headless Chrome clamps its window to ~500px, so rendering directly at 180/192 crops the top-left. The generator is self-contained (`file://` works); never hand-edit the PNGs.
 
 ## Testing & verification
 
-- **Lint**: `php -l api/*.php tools/make-user.php`, `node --check js/*.js`.
+- **Lint**: `php -l api/*.php tools/*.php`, `node --check js/*.js`.
 - **Format**: `tools/format.sh --check` after any edits.
 - **Layout**: `node tools/check-viewports.mjs` after every change.
 - **WebKit/Safari**: `node tools/check-webkit.mjs` after animation or mascot-CSS changes — drives real Safari via `safaridriver` to confirm the SVG idle animations run in WebKit (the rest of the tooling is headless Chrome). Needs the one-time `safaridriver --enable` + Develop > Allow Remote Automation.
 - **Visual**: serve locally and screenshot via a temp harness page (`.shot-harness.html` in the repo root) that seeds `sano.state.v1`, iframes the app, and clicks into specific screens; delete the harness before committing. Headless Chrome follows the system theme — to force light mode, strip the dark `@media` blocks into temp CSS copies.
-- **Live API**: a curl matrix exercises every status path — unauthenticated 401s, missing-CSRF-header 403s, login + cookie jar, PUT revision increment, stale-revision 409, `force` override, lockout 429 after 10 bad passwords, logout, `api/lib.php` → 403, `/sano-config.php` → 404, and `Cache-Control: no-store` on API responses.
+- **Live API**: a curl matrix exercises every status path — unauthenticated 401s, missing-CSRF-header 403s, signup (happy path + duplicate 409 + per-IP 429 + bad-input 400), login + cookie jar, PUT revision increment, stale-revision 409, `force` override, lockout 429 after 10 bad passwords, reminder get/set/clear, logout, `api/lib.php` → 403, `/sano-config.php` → 404, and `Cache-Control: no-store` on API responses.
 - **Live cache tiers**: `curl -sI https://namastesano.com/ | grep -i cache-control` (and the same for a css/js/woff2/api URL).
 
 ## Local development

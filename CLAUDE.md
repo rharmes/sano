@@ -11,6 +11,12 @@ files in `fonts/` declared in `css/fonts.css`, and icons are an inline SVG
 sprite in `index.html` (`#i-*` symbols, used via `<use href="#i-name">`).
 The only network calls are same-origin `fetch()`es to `api/`.
 
+First-run onboarding (`js/onboarding.js`, `SanoOnboard`) greets brand-new users
+(no saved name) with a scripted Sano conversation that captures their name and
+optionally creates a cloud account / shows the PWA install steps. **The
+Romanized-Nepali strings in its `L` object are drafts Ross owns** — don't treat
+them as authoritative or silently "correct" them; flag questions to Ross.
+
 ## Server sync (api/)
 
 - Progress lives in localStorage (`sano.state.v1`, the working copy — the
@@ -36,7 +42,10 @@ The only network calls are same-origin `fetch()`es to `api/`.
   signup_attempts, push_subscriptions). Reset/seed a password via
   `scp tools/make-user.php sano-deploy:` then
   `ssh -t sano-deploy 'php make-user.php <user> [--reset-password]'`
-  (`tools/` is never deployed to the docroot).
+  (`tools/` is never deployed to the docroot). **Live-DB schema changes go
+  through a one-off idempotent `tools/migrate-*.php` run** (PDO, reads
+  `sano-config.php` like make-user.php; e.g. `migrate-2026-06-reminders.php`) —
+  never re-apply the full `schema.sql` to an existing DB.
 
 ## PWA + daily reminders
 
@@ -67,9 +76,10 @@ The only network calls are same-origin `fetch()`es to `api/`.
   studied yet today (local date), sends via minishlink/web-push (Composer dep at
   `~/sano-vendor/`). 410/404 responses prune the subscription row. Flags:
   `--dry-run`, `--user <name>`, `--force` (ignore hour + studied-today filters).
-- Deployed files: `manifest.json`, `sw.js`, icon PNGs, the two new
-  `api/push-*.php`, `js/push.js`. `tools/send-reminders.php` and the
-  Composer vendor dir are NOT in the rsync — they live on the server only.
+- Deployed files: `manifest.json`, `sw.js`, icon PNGs, all of `api/` (now incl.
+  `register.php`, `reminder.php`, `push-*.php`), and the JS (`js/push.js`,
+  `js/onboarding.js`, …). `tools/send-reminders.php` and the Composer vendor dir
+  are NOT in the rsync — they live on the server only.
 
 **Keep this file current**: when testing tools or architecture change
 significantly, update CLAUDE.md in the same commit.
