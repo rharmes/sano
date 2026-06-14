@@ -3,9 +3,16 @@
 	"private": true,
 	"description": "Tooling deps only (Prettier + PHP plugin). The app itself has no build step.",
 	"scripts": {
+		"start": "php -S 127.0.0.1:8000",
+		"stop": "kill $(lsof -ti tcp:8000) 2>/dev/null || true",
 		"format": "tools/format.sh",
-		"check-format": "tools/format.sh --check",
-		"check": "tools/check.sh"
+		"lint": "npm run format",
+		"check": "tools/check.sh",
+		"check:fast": "tools/check.sh --no-viewports",
+		"test": "npm run check",
+		"stamp": "node tools/stamp-version.mjs",
+		"deploy:preview": "tools/deploy.sh -n",
+		"deploy": "tools/deploy.sh"
 	},
 	"devDependencies": {
 		"prettier": "3.8.3",

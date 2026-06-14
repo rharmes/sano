@@ -180,4 +180,6 @@ php -S 127.0.0.1:8000     # from the repo root; executes /api locally
 
 The PHP dev server needs a dev `sano-config.php` one level above the repo (pointing at a local MySQL) for login/sync to work. For frontend-only work, `python3 -m http.server 8000` is fine — API calls fail and the app simply runs in its offline/logged-out mode, which is itself a code path worth testing.
 
-Workflow for any change: edit → `tools/format.sh` → `node tools/stamp-version.mjs` → **`npm run check`** (format + lint + layout in one) → review in a browser → commit to `main`. CI re-runs the static checks on every push.
+**npm scripts** — `npm run` with no name prints the full menu. `start` / `stop` run and kill the dev server on :8000; `format` (alias `lint`) formats in place; `check` (alias `test`) is the full preflight, with `check:fast` its browser-less subset (what CI runs); `stamp` rewrites the `?v=` hashes; `deploy:preview` / `deploy` dry-run / ship. (`start`, `stop`, and `test` are npm lifecycle names, so they also work without `run`.)
+
+Workflow for any change: edit → `npm run format` → `npm run stamp` → **`npm run check`** (format + lint + layout in one) → review in a browser → commit to `main`. CI re-runs the static checks on every push.
