@@ -10,6 +10,9 @@ cd "$(dirname "$0")/.."
 echo "==> Prettier"
 tools/format.sh --check
 
+echo "==> Asset stamps"
+node tools/stamp-version.mjs --check
+
 echo "==> PHP lint"
 for f in api/*.php tools/*.php; do
 	if ! php -l "$f" >/dev/null 2>&1; then

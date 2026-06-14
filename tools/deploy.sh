@@ -34,8 +34,10 @@ if [[ ${#DRY[@]} -eq 0 && $ALLOW_DIRTY -eq 0 ]] && ! git diff --quiet HEAD; then
 	exit 1
 fi
 
-node tools/stamp-version.mjs
-
+# No stamping here: `npm run stamp` is a pre-commit step and `npm run check`
+# verifies the ?v= hashes are current, so the committed tree is ship-ready and
+# deploy is a pure transfer.
+#
 # --no-times: the host resets mtimes, so sync on checksum instead.
 exec rsync "${DRY[@]}" --recursive --links --checksum --no-times --compress \
 	--itemize-changes \
