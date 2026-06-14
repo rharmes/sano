@@ -108,16 +108,16 @@ highest-leverage change.
 
 ## 6. Tools, build & deploy
 
-- [ ] **R24 [P1] Extend `check-viewports.mjs` to the new screens.** It seeds a *named*
+- [x] **R24 [P1] Extend `check-viewports.mjs` to the new screens.** It seeds a *named*
   state, so onboarding + the reminder modal are never layout-tested. Add a no-name
   seed (onboarding) and a forced-modal case.
-- [ ] **R25 [P2] One-command preflight.** `tools/check.sh` (+ `npm run check`) =
+- [x] **R25 [P2] One-command preflight.** `tools/check.sh` (+ `npm run check`) =
   `format.sh --check` + `php -l api/*.php tools/*.php` + `node --check js/*.js` +
   `check-viewports.mjs`.
-- [ ] **R26 [P2] CI on GitHub.** A GitHub Action running the R25 preflight on push/PR.
-- [ ] **R27 [P3] `deploy.sh` dirty-tree guard.** It rsyncs the working tree (committed
+- [x] **R26 [P2] CI on GitHub.** A GitHub Action running the R25 preflight on push/PR.
+- [x] **R27 [P3] `deploy.sh` dirty-tree guard.** It rsyncs the working tree (committed
   or not). Add a `git diff --quiet` warn/abort.
-- [ ] **R28 [P3] Formalize migrations.** The one-off `migrate-*.php` works but is ad
+- [x] **R28 [P3] ~~Formalize migrations.~~** _Evaluated — keep the one-off idempotent `migrate-*.php` pattern; a framework is over-engineering at this cadence._ The one-off `migrate-*.php` works but is ad
   hoc. A `tools/migrations/NNNN_*.sql` convention + a runner scales better.
 
 ## Suggested sequencing

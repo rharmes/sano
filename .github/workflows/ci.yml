@@ -1,0 +1,24 @@
+# Static checks on every push to main and every PR: Prettier formatting, PHP
+# syntax (php -l), and JS syntax (node --check) via tools/check.sh. The headless-
+# Chrome viewport check is skipped here (--no-viewports) since CI has no browser;
+# run `tools/check.sh` locally for that.
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # ubuntu-latest ships a PHP CLI; `php -l` (syntax only) doesn't need a
+      # specific version. Add shivammathur/setup-php to pin one if that changes.
+      - run: php --version
+      - run: npm install
+      - run: tools/check.sh --no-viewports

@@ -4,7 +4,8 @@
 	"description": "Tooling deps only (Prettier + PHP plugin). The app itself has no build step.",
 	"scripts": {
 		"format": "tools/format.sh",
-		"check-format": "tools/format.sh --check"
+		"check-format": "tools/format.sh --check",
+		"check": "tools/check.sh"
 	},
 	"devDependencies": {
 		"prettier": "3.8.3",
