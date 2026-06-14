@@ -88,7 +88,7 @@ const SanoOnboard = (() => {
 	}
 
 	function primaryButton(label, onClick, disabled) {
-		const btn = el('button', 'onboard-primary', label);
+		const btn = el('button', 'btn-primary onboard-primary', label);
 		btn.type = 'button';
 		btn.disabled = !!disabled;
 		btn.addEventListener('click', onClick);

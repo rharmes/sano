@@ -24,6 +24,7 @@ html {
 	--accent-color-hover: var(--accent-deep);
 	--border-color: #e0d8c4;
 	--border-color-softer: #e9e2d1;
+	--button-primary-color: #fff; /* text on a crimson/indigo fill (also set by barebones) */
 
 	/* paper-cut artwork (Sano mascot) */
 	--paper-petal: #f3c7cd;
@@ -240,6 +241,99 @@ html {
 	vertical-align: -0.125em;
 }
 
+/* ── Shared components ───────────────────────────────────────────────────────
+   Reusable primitives mirrored from design/style-guide.html. Defined here, before
+   the contextual variants further down, so those (same specificity, later in the
+   file) win on the few properties they override (mostly size). */
+
+/* Every button in the app is custom-styled, so neutralize barebones' uppercase +
+   letter-spacing once here instead of re-undoing it in each component. */
+button {
+	text-transform: none;
+	letter-spacing: normal;
+}
+
+/* Primary action — crimson 1rem-radius pill, mixed-case 700 Lato. Base behind
+   #daily-lesson, the lesson-flow buttons, the login panel, the reminder modal,
+   and onboarding; `.indigo` is the advance/complete variant. */
+.btn-primary {
+	height: auto;
+	margin: 0;
+	padding: 1rem 3.2rem;
+	font-size: 1.6rem;
+	font-weight: 700;
+	color: var(--button-primary-color);
+	background: var(--accent);
+	border: 0;
+	border-radius: 1rem;
+	cursor: pointer;
+}
+.btn-primary:hover:not(:disabled),
+.btn-primary:focus-visible:not(:disabled) {
+	color: var(--button-primary-color);
+	background: var(--accent-deep);
+}
+.btn-primary:disabled {
+	background: var(--text-color-softer);
+	cursor: default;
+}
+.btn-primary.indigo {
+	background: var(--path-complete-color);
+}
+.btn-primary.indigo:hover:not(:disabled),
+.btn-primary.indigo:focus-visible:not(:disabled) {
+	background: color-mix(in srgb, var(--path-complete-color), black 14%);
+}
+
+/* Secondary — paired with a primary (e.g. the modal's "Not now"). */
+.btn-secondary {
+	height: auto;
+	margin: 0;
+	padding: 1rem 3.2rem;
+	font-size: 1.6rem;
+	font-weight: 700;
+	color: var(--text-color-normal);
+	background: var(--background-color-softer);
+	border: 1px solid var(--border-color);
+	border-radius: 1rem;
+	cursor: pointer;
+}
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+	border-color: var(--text-color-softer);
+}
+
+/* Floating surface — login panel, reminder modal. Each adds its own positioning. */
+.panel {
+	width: 32rem;
+	max-width: 100%;
+	padding: 1.6rem;
+	background: var(--background-color);
+	border: 1px solid var(--border-color);
+	border-radius: 1rem;
+	box-shadow: 0 4px 16px rgba(10, 8, 14, 0.18);
+}
+
+/* Text input. The reminder-modal <select> (keeps its native arrow) and the
+   onboarding fill-in-the-blank (.onboard-input) are deliberate variants, not .field. */
+.field {
+	width: 100%;
+	max-width: 280px;
+	height: 38px;
+	padding: 6px 10px;
+	font-size: 1.6rem;
+	color: var(--text-color-normal);
+	background: var(--background-color);
+	border: 1px solid var(--border-color-softer);
+	border-radius: 4px;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.field:focus {
+	border-color: var(--accent);
+	outline: 0;
+}
+
 #header h1 {
 	position: relative;
 	top: -5px;
@@ -322,13 +416,9 @@ ul {
 	}
 }
 
-#nepali.container {
-	position: relative;
-	width: 100%;
+/* Same as .container but wider (the rest is inherited from .container). */
+#nepali {
 	max-width: 1200px;
-	margin: 0 auto;
-	padding: 0 20px;
-	box-sizing: border-box;
 }
 
 #header {
@@ -393,60 +483,45 @@ ul {
 	color: var(--badge-color);
 }
 #login-panel {
+	/* visuals come from .panel; this only positions it under the account icon */
 	position: fixed;
 	top: 5.4rem;
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 30;
-	width: 32rem;
 	max-width: calc(100vw - 3.2rem);
-	padding: 1.6rem;
-	background: var(--background-color);
-	border: 1px solid var(--border-color);
-	border-radius: 1rem;
-	box-shadow: 0 4px 16px rgba(10, 8, 14, 0.18);
 }
 #login-panel form {
 	margin: 0;
 }
-#name-form {
+/* Scoped under #login-panel to outrank the generic #login-panel form/input rules
+   below without needing !important. */
+#login-panel #name-form {
 	display: flex;
 	gap: 1rem;
 	align-items: center;
-	margin-bottom: 1.2rem !important;
+	margin-bottom: 1.2rem;
 	padding-bottom: 1.2rem;
 	border-bottom: 1px solid var(--border-color-softer);
 }
-#name-form input {
+#login-panel #name-form input {
 	flex: 1;
-	margin: 0 !important;
+	margin: 0;
 }
-#name-form button {
+#login-panel #name-form button {
 	flex-shrink: 0;
 }
 #login-panel input {
 	width: 100%;
+	max-width: 100%; /* full panel width; overrides .field's 280px cap */
 	margin: 0 0 1rem;
 	font-size: 1.4rem;
 }
-#login-panel button {
-	height: auto;
-	margin: 0;
+/* Panel buttons are the small variant (look comes from .btn-primary). */
+#login-panel .btn-primary {
 	padding: 0.8rem 1.8rem;
 	font-size: 1.4rem;
 	line-height: 1.2;
-	font-weight: 700;
-	text-transform: none;
-	letter-spacing: normal;
-	color: var(--button-primary-color);
-	background: var(--accent);
-	border: 0;
-	border-radius: 1rem;
-}
-#login-panel button:hover,
-#login-panel button:focus {
-	color: var(--button-primary-color);
-	background: var(--accent-deep);
 }
 #login-error {
 	margin: 1rem 0 0;
@@ -513,13 +588,11 @@ ul {
 	padding: 1.6rem;
 	background: rgba(10, 8, 14, 0.55);
 }
+/* The modal card is a heavier .panel — wider, more padding, a stronger shadow to
+   lift it off the backdrop (radius normalizes to the panel's 1rem). */
 .reminder-card {
 	width: 34rem;
-	max-width: 100%;
 	padding: 2.4rem;
-	background: var(--background-color);
-	border: 1px solid var(--border-color);
-	border-radius: 1.4rem;
 	box-shadow: 0 12px 40px rgba(10, 8, 14, 0.4);
 }
 .reminder-card h2 {
@@ -566,29 +639,10 @@ ul {
 	gap: 1rem;
 	margin-top: 0.6rem;
 }
+/* Both modal buttons share this size; look comes from .btn-primary / .btn-secondary. */
 .reminder-actions button {
-	height: auto;
-	margin: 0;
 	padding: 0.9rem 2rem;
 	font-size: 1.5rem;
-	font-weight: 700;
-	text-transform: none;
-	letter-spacing: normal;
-	border-radius: 1rem;
-	cursor: pointer;
-}
-#reminder-cancel {
-	color: var(--text-color-normal);
-	background: var(--background-color-softer);
-	border: 1px solid var(--border-color);
-}
-#reminder-save {
-	color: var(--button-primary-color);
-	background: var(--accent);
-	border: 0;
-}
-#reminder-save:hover {
-	background: var(--accent-deep);
 }
 /* Indigo marks the account icon as signed in / syncing. */
 #progress #account-button.signed-in {
@@ -885,28 +939,10 @@ table#vocab tbody td:nth-child(3) {
 	align-items: flex-end;
 	gap: 1.4rem;
 }
+/* Onboarding buttons are the large variant (look + states from .btn-primary). */
 .onboard-primary {
-	height: auto;
-	margin: 0;
 	padding: 1.2rem 3.2rem;
 	font-size: 1.8rem;
-	font-weight: 700;
-	text-transform: none;
-	letter-spacing: normal;
-	color: var(--button-primary-color);
-	background: var(--accent);
-	border: 0;
-	border-radius: 1rem;
-	cursor: pointer;
-}
-.onboard-primary:hover:not(:disabled),
-.onboard-primary:focus:not(:disabled) {
-	color: var(--button-primary-color);
-	background: var(--accent-deep);
-}
-.onboard-primary:disabled {
-	background: var(--text-color-softer);
-	cursor: default;
 }
 .onboard-error {
 	margin: 0;
@@ -1010,30 +1046,15 @@ table#vocab tbody td:nth-child(3) {
 	animation: path-reveal 0.3s ease-out backwards;
 }
 
+/* The home CTA is a full-width, larger .btn-primary (look + states from it). */
 #daily-lesson {
 	display: block;
 	width: 100%;
 	max-width: 560px;
 	margin: 0 auto;
-	height: auto;
 	padding: 1.6rem;
 	font-size: 2rem;
-	font-weight: 700;
 	line-height: 1.4;
-	text-transform: none;
-	letter-spacing: normal;
-	color: var(--button-primary-color);
-	background: var(--accent);
-	border: 0;
-	border-radius: 1rem;
-	cursor: pointer;
-}
-#daily-lesson:hover:not(:disabled) {
-	background: var(--accent-deep);
-}
-#daily-lesson:disabled {
-	background: var(--text-color-softer);
-	cursor: default;
 }
 
 /* The winding lesson path. Geometry (positions, node sizes) is computed in JS;
@@ -1454,30 +1475,8 @@ table#vocab tbody td:nth-child(3) {
 	margin-top: 2.5rem;
 }
 
-/* Primary action buttons in the lesson flow */
-
-#exercise-check,
-#lesson-continue,
-#complete-continue {
-	height: auto;
-	padding: 1rem 3.2rem;
-	font-size: 1.6rem;
-	font-weight: 700;
-	color: var(--button-primary-color);
-	background: var(--accent);
-	border: 0;
-	border-radius: 1rem;
-}
-#exercise-check:hover:not(:disabled),
-#lesson-continue:hover,
-#complete-continue:hover {
-	color: var(--button-primary-color);
-	background: var(--accent-deep);
-}
-#exercise-check:disabled {
-	background: var(--text-color-softer);
-	cursor: default;
-}
+/* Lesson-flow buttons use .btn-primary (#complete-continue also .indigo); only
+   their per-button spacing/animation deltas live below. */
 
 /* Focus mode: hide the site chrome (branding, stats bar, footer) inside lessons */
 
@@ -1526,12 +1525,12 @@ table#vocab tbody td:nth-child(3) {
 #lesson-continue {
 	margin-top: 1rem;
 }
-#lesson-feedback.correct #lesson-continue,
-#complete-continue {
+/* #lesson-continue turns indigo only when the answer was correct; #complete-continue
+   is always indigo via .btn-primary.indigo. */
+#lesson-feedback.correct #lesson-continue {
 	background: var(--path-complete-color);
 }
-#lesson-feedback.correct #lesson-continue:hover,
-#complete-continue:hover {
+#lesson-feedback.correct #lesson-continue:hover {
 	background: color-mix(in srgb, var(--path-complete-color), black 14%);
 }
 

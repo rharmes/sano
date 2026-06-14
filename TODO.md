@@ -24,23 +24,23 @@ highest-leverage change.
 
 ## 1. CSS reusability & style-guide consistency
 
-- [ ] **R1 [P1] Adopt `.btn-primary` as a real class.** Promote the style guide's
+- [x] **R1 [P1] Adopt `.btn-primary` as a real class.** Promote the style guide's
   `.btn-primary` / `.btn-primary.indigo` / `:disabled` into `css/sano.css` and
   replace the six duplicate button blocks with it + small per-element modifiers
   (e.g. `#daily-lesson` keeps only its full-width/larger-type delta).
-- [ ] **R2 [P1] One button reset.** The `height:auto; text-transform:none;
+- [x] **R2 [P1] One button reset.** The `height:auto; text-transform:none;
   letter-spacing:normal` every custom button repeats is undoing
   `css/barebones.css:251-265`. Centralize it so new buttons inherit the brand shape.
-- [ ] **R3 [P2] Converge panels onto `.panel`.** `#login-panel` (radius `1rem`,
+- [x] **R3 [P2] Converge panels onto `.panel`.** `#login-panel` (radius `1rem`,
   shadow `.18`) and `.reminder-card` (radius `1.4rem`, shadow `.4`) are the same
   concept with different numbers. Adopt the style guide's `.panel` for both.
-- [ ] **R4 [P2] Converge inputs onto `.field`.** `#login-panel input`, `#type-answer`,
+- [x] **R4 [P2] Converge inputs onto `.field`.** `#login-panel input`, `#type-answer`,
   `.reminder-field select`, `.onboard-input` vary. Base them on `.field`; keep
   `.onboard-input` as a documented fill-in-the-blank variant.
-- [ ] **R5 [P2] Re-sync `design/style-guide.html`.** It predates onboarding (no
+- [x] **R5 [P2] Re-sync `design/style-guide.html`.** It predates onboarding (no
   input/choice-bubble variants, no reminder modal) and still shows "Daily reminder
   at 7pm PT" (`style-guide.html:1318`). After R1/R3/R4 the app and guide share classes.
-- [ ] **R6 [P3] DRY + token nits.** `#nepali.container` (sano.css:325-332) re-declares
+- [x] **R6 [P3] DRY + token nits.** _(+ lesson buttons normalized to mixed-case)_ `#nepali.container` (sano.css:325-332) re-declares
   all of `.container` just to change `max-width`. Drop the two `!important` in
   `#name-form` (412-423). Promote `--button-primary-color` (today only in barebones)
   into sano.css's token block.

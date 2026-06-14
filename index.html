@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=ae1cbc5d" />
+		<link rel="stylesheet" href="css/sano.css?v=90278b98" />
 		<link rel="icon" href="favicon.svg?v=e1facae9" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a0282fd9" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -29,7 +29,7 @@
 		<script src="js/data.js?v=a55841c5"></script>
 		<script src="js/sync.js?v=d3bb6cae"></script>
 		<script src="js/push.js?v=7db6a8dc"></script>
-		<script src="js/onboarding.js?v=1ef9fd3d"></script>
+		<script src="js/onboarding.js?v=c8608d6c"></script>
 		<script src="js/sano.js?v=937e3967"></script>
 	</head>
 	<body>
@@ -93,21 +93,23 @@
 					</button>
 					<span id="name"></span>
 				</p>
-				<div id="login-panel" class="hide">
+				<div id="login-panel" class="panel hide">
 					<form id="name-form">
 						<input
 							type="text"
 							id="login-name-input"
+							class="field"
 							name="display-name"
 							placeholder="Display name"
 							autocomplete="nickname"
 						/>
-						<button type="submit" id="login-name-submit">Save</button>
+						<button type="submit" id="login-name-submit" class="btn-primary">Save</button>
 					</form>
 					<form id="login-form">
 						<input
 							type="text"
 							id="login-username"
+							class="field"
 							name="username"
 							placeholder="Username"
 							autocomplete="username"
@@ -116,16 +118,17 @@
 						<input
 							type="password"
 							id="login-password"
+							class="field"
 							name="password"
 							placeholder="Password"
 							autocomplete="current-password"
 						/>
-						<button type="submit" id="login-submit">Sign in</button>
+						<button type="submit" id="login-submit" class="btn-primary">Sign in</button>
 						<p id="login-error" class="hide"></p>
 					</form>
 					<div id="logout-row" class="hide">
 						<span id="login-status"></span>
-						<button type="button" id="logout-button">Sign out</button>
+						<button type="button" id="logout-button" class="btn-primary">Sign out</button>
 					</div>
 					<div id="reminders-row" class="hide">
 						<label for="reminders-toggle"
@@ -245,7 +248,7 @@
 						</div>
 					</div>
 				</div>
-				<button id="daily-lesson">Start today's lesson</button>
+				<button id="daily-lesson" class="btn-primary">Start today's lesson</button>
 				<div id="path"></div>
 				<p id="dictionary-link-wrap"><a id="dictionary-link">Browse the full dictionary →</a></p>
 			</div>
@@ -275,6 +278,7 @@
 						<input
 							type="text"
 							id="type-answer"
+							class="field"
 							autocomplete="off"
 							autocapitalize="off"
 							spellcheck="false"
@@ -282,13 +286,13 @@
 						/>
 					</p>
 					<div id="exercise-match" class="hide"></div>
-					<button id="exercise-check" class="hide">Check</button>
+					<button id="exercise-check" class="btn-primary hide">Check</button>
 				</div>
 				<div id="lesson-feedback" class="hide">
 					<div class="container">
 						<p id="feedback-title"></p>
 						<p id="feedback-answer"></p>
-						<button id="lesson-continue">Continue</button>
+						<button id="lesson-continue" class="btn-primary">Continue</button>
 					</div>
 				</div>
 			</div>
@@ -331,7 +335,7 @@
 				</p>
 				<p id="complete-stats"></p>
 				<p id="complete-strengthened" class="hide"></p>
-				<button id="complete-continue">Continue</button>
+				<button id="complete-continue" class="btn-primary indigo">Continue</button>
 			</div>
 
 			<div id="screen-dictionary" class="hide">
@@ -388,7 +392,7 @@
 		</div>
 
 		<div id="reminder-modal" class="hide">
-			<div class="reminder-card">
+			<div class="panel reminder-card">
 				<h2>Daily reminder</h2>
 				<p class="reminder-lead">I'll nudge you once a day if you haven't studied yet. When should I?</p>
 				<label class="reminder-field"
@@ -401,8 +405,8 @@
 				</label>
 				<p id="reminder-modal-error" class="hide"></p>
 				<div class="reminder-actions">
-					<button type="button" id="reminder-cancel">Not now</button>
-					<button type="button" id="reminder-save">Enable</button>
+					<button type="button" id="reminder-cancel" class="btn-secondary">Not now</button>
+					<button type="button" id="reminder-save" class="btn-primary">Enable</button>
 				</div>
 			</div>
 		</div>
