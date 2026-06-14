@@ -92,7 +92,7 @@ const SanoSync = (() => {
 		meta.revision = server.revision;
 		meta.dirty = false;
 		saveMeta();
-		applyServerState(server.state);
+		Sano.applyServerState(server.state);
 	}
 
 	function schedulePush(delay = PUSH_DEBOUNCE_MS) {
@@ -120,7 +120,7 @@ const SanoSync = (() => {
 			res = await api('state.php', {
 				method: 'PUT',
 				keepalive,
-				body: JSON.stringify({ state, baseRevision: meta.revision, force }),
+				body: JSON.stringify({ state: Sano.state, baseRevision: meta.revision, force }),
 			});
 		} catch (e) {
 			pushing = false;

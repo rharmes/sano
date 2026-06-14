@@ -83,13 +83,13 @@ highest-leverage change.
 
 ## 4. Architecture & readability
 
-- [ ] **R17 [P2] Make the module contract explicit.** `SanoSync`/`SanoPush`/`SanoOnboard`
+- [x] **R17 [P2] Make the module contract explicit.** `SanoSync`/`SanoPush`/`SanoOnboard`
   reach into sano.js's bare globals (`state`, `saveState`, `showScreen`, `renderHome`,
   `pathRevealed`, …). Expose a small `window.Sano = { … }` surface so the modules use it.
-- [ ] **R18 [P3] Optionally split sano.js (~990 lines).** State + SRS + path geometry +
+- [x] **R18 [P3] ~~Optionally split sano.js (~990 lines).~~** _Evaluated — keep whole: splitting in a no-build app scatters functions into more implicit globals, against R17._ State + SRS + path geometry +
   lesson engine + rendering. Extracting `renderPath` and/or the lesson engine aids
   readability. Low priority.
-- [ ] **R19 [P3] Tokenize stray hardcoded colors.** `#fff`, `rgba(10,8,14,…)`,
+- [x] **R19 [P3] Tokenize stray hardcoded colors.** `#fff`, `rgba(10,8,14,…)`,
   `hsl(0,65%,50%)`, `hsla(36,88%,55%,…)` bypass the token system. Promote to
   `--on-accent` / `--shadow-color` / etc.
 

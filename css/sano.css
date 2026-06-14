@@ -19,6 +19,9 @@ html {
 	--background-color: #fbf5e9;
 	--background-color-softer: #f3ecdb;
 
+	--shadow-rgb: 10, 8, 14; /* drop-shadow + modal-backdrop base; alpha set per use */
+	--badge-rgb: 217, 158, 58; /* --badge-color (#d99e3a) as rgb, for the streak-burst alpha */
+
 	/* barebones overrides */
 	--accent-color: var(--accent);
 	--accent-color-hover: var(--accent-deep);
@@ -52,6 +55,8 @@ html {
 
 		--background-color: #1b1822;
 		--background-color-softer: #262230;
+
+		--badge-rgb: 217, 170, 78; /* matches dark --badge-color #d9aa4e */
 
 		--border-color: #37323f;
 		--border-color-softer: #2e2a38;
@@ -311,7 +316,7 @@ button {
 	background: var(--background-color);
 	border: 1px solid var(--border-color);
 	border-radius: 1rem;
-	box-shadow: 0 4px 16px rgba(10, 8, 14, 0.18);
+	box-shadow: 0 4px 16px rgba(var(--shadow-rgb), 0.18);
 }
 
 /* Text input. The reminder-modal <select> (keeps its native arrow) and the
@@ -586,14 +591,14 @@ ul {
 	align-items: center;
 	justify-content: center;
 	padding: 1.6rem;
-	background: rgba(10, 8, 14, 0.55);
+	background: rgba(var(--shadow-rgb), 0.55);
 }
 /* The modal card is a heavier .panel — wider, more padding, a stronger shadow to
    lift it off the backdrop (radius normalizes to the panel's 1rem). */
 .reminder-card {
 	width: 34rem;
 	padding: 2.4rem;
-	box-shadow: 0 12px 40px rgba(10, 8, 14, 0.4);
+	box-shadow: 0 12px 40px rgba(var(--shadow-rgb), 0.4);
 }
 .reminder-card h2 {
 	margin: 0 0 0.8rem;
@@ -1090,7 +1095,7 @@ table#vocab tbody td:nth-child(3) {
 }
 .path-node.complete .icon,
 .path-node.current .icon {
-	color: #fff;
+	color: var(--button-primary-color);
 }
 .path-node.complete:hover,
 .path-node.current:hover {
@@ -1140,7 +1145,7 @@ table#vocab tbody td:nth-child(3) {
 	border-radius: 3px 0 0 3px;
 	clip-path: polygon(0 0, 100% 0, 76% 50%, 100% 100%, 0 100%);
 	background: var(--badge-color);
-	color: #fff;
+	color: var(--button-primary-color);
 	font-size: 1.3rem;
 	font-weight: 700;
 	line-height: 26px;
@@ -1503,7 +1508,7 @@ table#vocab tbody td:nth-child(3) {
 	background: color-mix(in srgb, var(--background-color) 82%, var(--path-complete-color) 18%);
 }
 #lesson-feedback.incorrect {
-	background: color-mix(in srgb, var(--background-color) 82%, hsl(0, 65%, 50%) 18%);
+	background: color-mix(in srgb, var(--background-color) 82%, var(--text-incomplete-color) 18%);
 }
 #lesson-feedback p {
 	margin-bottom: 0.5rem;
@@ -1648,10 +1653,10 @@ table#vocab tbody td:nth-child(3) {
 
 @keyframes burst {
 	from {
-		box-shadow: 0 0 0 0 hsla(36, 88%, 55%, 0.55);
+		box-shadow: 0 0 0 0 rgba(var(--badge-rgb), 0.55);
 	}
 	to {
-		box-shadow: 0 0 0 40px hsla(36, 88%, 55%, 0);
+		box-shadow: 0 0 0 40px rgba(var(--badge-rgb), 0);
 	}
 }
 

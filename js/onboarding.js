@@ -4,8 +4,9 @@
 // styles are shared with the home-screen conversation (.thread / .bubble in
 // css/sano.css and design/style-guide.html).
 //
-// State lives in sano.js (global `state`, plus saveState / refreshHeader /
-// showScreen / renderHome); this module only drives the conversation UI.
+// State + screen control live in sano.js, reached through the global `Sano`
+// surface (Sano.state, saveState, refreshHeader, showScreen, renderHome,
+// resetPathReveal); this module only drives the conversation UI.
 //
 // NOTE: the Romanized Nepali strings below are a first draft — Ross corrects
 // them during review. $NAME is substituted with the learner's name at render.
@@ -68,7 +69,7 @@ const SanoOnboard = (() => {
 	}
 
 	function withName(pair) {
-		return [pair[0].replace('$NAME', state.name), pair[1].replace('$NAME', state.name)];
+		return [pair[0].replace('$NAME', Sano.state.name), pair[1].replace('$NAME', Sano.state.name)];
 	}
 
 	function clear() {
@@ -147,9 +148,9 @@ const SanoOnboard = (() => {
 		const input = threadEl.querySelector('.onboard-input');
 		const value = input.value.trim();
 		if (value === '') return;
-		state.name = value;
-		saveState();
-		refreshHeader();
+		Sano.state.name = value;
+		Sano.saveState();
+		Sano.refreshHeader();
 		show('account');
 	}
 
@@ -263,13 +264,13 @@ const SanoOnboard = (() => {
 	}
 
 	function finish() {
-		state.onboarded = true;
-		saveState();
+		Sano.state.onboarded = true;
+		Sano.saveState();
 		// Replay the path's entrance animation when the new learner first lands home
 		// (it otherwise "revealed" invisibly behind the onboarding screen at boot).
-		pathRevealed = false;
-		showScreen('home');
-		renderHome();
+		Sano.resetPathReveal();
+		Sano.showScreen('home');
+		Sano.renderHome();
 	}
 
 	// Entry point, called from sano.js boot. Runs the flow only for brand-new
@@ -279,8 +280,8 @@ const SanoOnboard = (() => {
 		threadEl = document.getElementById('onboard-thread');
 		controlsEl = document.getElementById('onboard-controls');
 		diagramEl = document.getElementById('onboard-diagram');
-		if (!screenEl || state.name) return;
-		showScreen('onboarding');
+		if (!screenEl || Sano.state.name) return;
+		Sano.showScreen('onboarding');
 		show('name');
 	}
 

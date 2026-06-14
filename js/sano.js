@@ -997,3 +997,20 @@ function shuffleArray(array) {
 
 	return array;
 }
+
+// Explicit surface for the sibling modules (sync.js, onboarding.js) so the
+// cross-script contract is visible instead of each reaching into bare globals.
+// Defined at file top-level, so it exists before any handler that uses it fires.
+window.Sano = {
+	get state() {
+		return state;
+	},
+	saveState,
+	refreshHeader,
+	showScreen,
+	renderHome,
+	applyServerState,
+	resetPathReveal() {
+		pathRevealed = false;
+	},
+};
