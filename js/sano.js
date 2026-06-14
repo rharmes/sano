@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	renderHome();
 	SanoSync.init();
 	SanoPush.init();
+	SanoOnboard.maybeStart();
 
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('/sw.js').catch((err) => console.warn('SW register failed:', err));
@@ -69,6 +70,7 @@ function defaultState() {
 	return {
 		version: 2,
 		name: null,
+		onboarded: false,
 		streak: 0,
 		lastActivityDay: null,
 		itemsToday: 0,
@@ -229,7 +231,7 @@ function unitDueCount(unit) {
 // Screens.
 
 function showScreen(name) {
-	for (const screen of ['home', 'lesson', 'complete', 'dictionary'])
+	for (const screen of ['onboarding', 'home', 'lesson', 'complete', 'dictionary'])
 		document.getElementById('screen-' + screen).classList.toggle('hide', screen !== name);
 }
 

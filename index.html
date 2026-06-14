@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=55963350" />
+		<link rel="stylesheet" href="css/sano.css?v=7cd3c048" />
 		<link rel="icon" href="favicon.svg?v=e1facae9" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a0282fd9" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -29,7 +29,8 @@
 		<script src="js/data.js?v=a55841c5"></script>
 		<script src="js/sync.js?v=a9826811"></script>
 		<script src="js/push.js?v=41740c97"></script>
-		<script src="js/sano.js?v=087088e3"></script>
+		<script src="js/onboarding.js?v=3f9c6601"></script>
+		<script src="js/sano.js?v=937e3967"></script>
 	</head>
 	<body>
 		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
@@ -60,6 +61,16 @@
 				</symbol>
 				<symbol id="i-toc" viewBox="0 0 24 24">
 					<path d="M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z" />
+				</symbol>
+				<symbol id="i-ios-share" viewBox="0 0 24 24">
+					<path
+						d="M16 5l-1.42 1.42-1.59-1.59V16h-1.98V4.83L9.42 6.42 8 5l4-4 4 4zm4 5v11c0 1.1-.9 2-2 2H6c-1.11 0-2-.9-2-2V10c0-1.11.89-2 2-2h3v2H6v11h12V10h-3V8h3c1.1 0 2 .89 2 2z"
+					/>
+				</symbol>
+				<symbol id="i-add-box" viewBox="0 0 24 24">
+					<path
+						d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+					/>
 				</symbol>
 			</defs>
 		</svg>
@@ -121,6 +132,67 @@
 						<p id="reminders-status" class="hide"></p>
 					</div>
 				</div>
+			</div>
+
+			<div id="screen-onboarding" class="hide">
+				<div class="scene onboard-scene">
+					<svg class="mascot sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
+						<g>
+							<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+							<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+							<g class="sano-tail">
+								<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
+							</g>
+							<g class="sano-head">
+								<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+								<g class="sano-ear sano-ear-left">
+									<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+									<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+								</g>
+								<g class="sano-ear sano-ear-right">
+									<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+									<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+								</g>
+								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+								<g class="sano-eyes">
+									<circle cx="88" cy="72" r="4.4" class="f-ink" />
+									<circle cx="112" cy="72" r="4.4" class="f-ink" />
+								</g>
+								<g class="sano-nose">
+									<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+									<path
+										d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+										class="s-whisker"
+									/>
+								</g>
+							</g>
+						</g>
+					</svg>
+					<div class="thread" id="onboard-thread"></div>
+				</div>
+				<div id="onboard-diagram" class="hide">
+					<ol>
+						<li>
+							<span class="onboard-step-icon"
+								><svg><use href="#i-ios-share" /></svg
+							></span>
+							<span>Tap the <strong>Share</strong> button in your browser toolbar.</span>
+						</li>
+						<li>
+							<span class="onboard-step-icon"
+								><svg><use href="#i-add-box" /></svg
+							></span>
+							<span>Choose <strong>Add to Home Screen</strong>.</span>
+						</li>
+						<li>
+							<span class="onboard-step-icon"
+								><svg><use href="#i-check" /></svg
+							></span>
+							<span>Open <strong>Sano</strong> from your home screen.</span>
+						</li>
+					</ol>
+				</div>
+				<div id="onboard-controls"></div>
 			</div>
 
 			<div id="screen-home">

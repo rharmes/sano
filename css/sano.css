@@ -715,6 +715,197 @@ table#vocab tbody td:nth-child(3) {
 	}
 }
 
+/* First-run onboarding: a full-screen scripted conversation. Reuses the shared
+   .scene / .thread / .bubble vocabulary; these rules add the screen frame, the
+   in-bubble fill-in-the-blank inputs, the tappable choice bubbles, the install
+   diagram, and the celebration state. */
+#screen-onboarding {
+	display: flex;
+	flex-direction: column;
+	gap: 2.6rem;
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 4rem 0 6rem;
+}
+/* Mobile-first: a small Sano stacked above the full-width conversation, so the
+   interactive bubbles (inputs, choices) get the whole width on a phone. */
+#screen-onboarding .onboard-scene {
+	grid-template-columns: 1fr;
+	justify-items: center;
+	gap: 1.6rem;
+	margin: 0;
+}
+#screen-onboarding .onboard-scene .mascot {
+	width: 110px;
+}
+#screen-onboarding .thread {
+	width: 100%;
+}
+/* Beside-mascot layout once there's room (matches the home conversation). */
+@media (min-width: 620px) {
+	#screen-onboarding .onboard-scene {
+		grid-template-columns: 160px 1fr;
+		justify-items: stretch;
+		align-items: start;
+	}
+	#screen-onboarding .onboard-scene .mascot {
+		width: 100%;
+	}
+}
+
+/* Inputs that live inside a speech bubble, styled as a fill-in-the-blank. */
+.onboard-input {
+	width: 7em;
+	margin: 0;
+	padding: 0 0.4rem;
+	font-family: 'Neuton', serif;
+	font-weight: 700;
+	font-size: inherit;
+	line-height: 1.1;
+	color: var(--accent);
+	background: transparent;
+	border: 0;
+	border-bottom: 2px dashed var(--border-color);
+	border-radius: 0;
+}
+.onboard-input:focus {
+	outline: none;
+	border-bottom-color: var(--accent);
+}
+
+/* Controls: the bottom action button(s) and the answer choices, right-aligned
+   to sit on the learner's side of the conversation. */
+#onboard-controls {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 1.4rem;
+}
+.onboard-primary {
+	height: auto;
+	margin: 0;
+	padding: 1.2rem 3.2rem;
+	font-size: 1.8rem;
+	font-weight: 700;
+	text-transform: none;
+	letter-spacing: normal;
+	color: var(--button-primary-color);
+	background: var(--accent);
+	border: 0;
+	border-radius: 1rem;
+	cursor: pointer;
+}
+.onboard-primary:hover:not(:disabled),
+.onboard-primary:focus:not(:disabled) {
+	color: var(--button-primary-color);
+	background: var(--accent-deep);
+}
+.onboard-primary:disabled {
+	background: var(--text-color-softer);
+	cursor: default;
+}
+.onboard-error {
+	margin: 0;
+	font-size: 1.4rem;
+	color: var(--text-incomplete-color);
+}
+
+/* Answer options rendered as tappable user speech bubbles. */
+.onboard-choices {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 1.4rem;
+	width: 100%;
+	max-width: 360px;
+}
+.bubble.user.choice {
+	display: block;
+	width: 100%;
+	height: auto;
+	margin: 0;
+	font: inherit;
+	text-transform: none;
+	letter-spacing: normal;
+	cursor: pointer;
+	transition: border-color 0.15s ease;
+}
+.bubble.user.choice:hover,
+.bubble.user.choice:focus {
+	border-color: var(--path-complete-color);
+	outline: none;
+}
+.bubble.user.choice .np {
+	font-size: 2.2rem;
+}
+.bubble.user.choice .en {
+	font-size: 1.4rem;
+}
+
+/* Install diagram: three numbered steps, each with an icon. */
+#onboard-diagram {
+	width: 100%;
+	max-width: 480px;
+	margin: 0 auto;
+}
+#onboard-diagram ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#onboard-diagram li {
+	display: flex;
+	align-items: center;
+	gap: 1.4rem;
+	padding: 1.2rem 0;
+	font-size: 1.6rem;
+	color: var(--text-color-normal);
+	border-bottom: 1px solid var(--border-color-softer);
+}
+#onboard-diagram li:last-child {
+	border-bottom: 0;
+}
+#onboard-diagram strong {
+	color: var(--text-color-richer);
+}
+.onboard-step-icon {
+	flex-shrink: 0;
+	display: inline-flex;
+	color: var(--accent);
+}
+.onboard-step-icon svg {
+	width: 2.8rem;
+	height: 2.8rem;
+	fill: currentColor;
+}
+
+/* Celebration: center Sano and the closing line in the viewport. */
+#screen-onboarding.onboard-celebrate {
+	min-height: 80vh;
+	justify-content: center;
+}
+#screen-onboarding.onboard-celebrate .onboard-scene {
+	grid-template-columns: 1fr;
+	justify-items: center;
+	text-align: center;
+}
+#screen-onboarding.onboard-celebrate .onboard-scene .mascot {
+	width: 160px;
+}
+#screen-onboarding.onboard-celebrate .thread {
+	max-width: 460px;
+	align-items: center;
+}
+#screen-onboarding.onboard-celebrate #onboard-controls {
+	align-items: center;
+}
+
+/* Reveal: reuse the lesson path's top-to-bottom stagger for the bubbles.
+   JS sets each child's animation-delay. */
+.thread.reveal > * {
+	animation: path-reveal 0.3s ease-out backwards;
+}
+
 #daily-lesson {
 	display: block;
 	width: 100%;
@@ -1186,10 +1377,12 @@ table#vocab tbody td:nth-child(3) {
 
 /* Focus mode: hide the site chrome (branding, stats bar, footer) inside lessons */
 
+#screen-onboarding:not(.hide) ~ .footer,
 #screen-lesson:not(.hide) ~ .footer,
 #screen-complete:not(.hide) ~ .footer {
 	display: none;
 }
+#nepali:has(#screen-onboarding:not(.hide)) #header,
 #nepali:has(#screen-lesson:not(.hide)) #header,
 #nepali:has(#screen-complete:not(.hide)) #header {
 	display: none;
@@ -1437,7 +1630,8 @@ table#vocab tbody td:nth-child(3) {
 	#path.reveal .path-ring,
 	#path.reveal .path-label,
 	#path.reveal .path-section,
-	#path.reveal .path-start {
+	#path.reveal .path-start,
+	.thread.reveal > * {
 		animation: none;
 	}
 	/* Under reduced motion, keep only the eye blink (a tiny, non-vestibular scale)
