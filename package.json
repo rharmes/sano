@@ -6,10 +6,9 @@
 		"start": "php -S 127.0.0.1:8000",
 		"stop": "kill $(lsof -ti tcp:8000) 2>/dev/null || true",
 		"format": "tools/format.sh",
-		"lint": "npm run format",
+		"lint": "tools/check.sh --no-viewports",
+		"test": "node tools/check-viewports.mjs",
 		"check": "tools/check.sh",
-		"check:fast": "tools/check.sh --no-viewports",
-		"test": "npm run check",
 		"stamp": "node tools/stamp-version.mjs",
 		"deploy:preview": "tools/deploy.sh -n",
 		"deploy": "tools/deploy.sh"

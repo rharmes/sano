@@ -1,7 +1,7 @@
-# Static checks on every push to main and every PR: Prettier formatting, PHP
-# syntax (php -l), and JS syntax (node --check) via tools/check.sh. The headless-
-# Chrome viewport check is skipped here (--no-viewports) since CI has no browser;
-# run `tools/check.sh` locally for that.
+# Static checks on every push to main and every PR: Prettier formatting, stamp
+# freshness, PHP syntax (php -l), and JS syntax (node --check) — i.e. `npm run
+# lint` (tools/check.sh --no-viewports). The headless-Chrome viewport check
+# (`npm test`) is skipped here since CI has no browser; run it locally.
 name: checks
 
 on:
@@ -21,4 +21,4 @@ jobs:
       # specific version. Add shivammathur/setup-php to pin one if that changes.
       - run: php --version
       - run: npm install
-      - run: tools/check.sh --no-viewports
+      - run: npm run lint
