@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=48b45f4d" />
+		<link rel="stylesheet" href="css/sano.css?v=3aad3783" />
 		<link rel="icon" href="favicon.svg?v=e1facae9" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a0282fd9" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -393,9 +393,32 @@
 			</p>
 		</div>
 
-		<dialog id="reminder-modal" class="panel reminder-card" aria-labelledby="reminder-modal-title">
-			<h2 id="reminder-modal-title">Daily reminder</h2>
-			<p class="reminder-lead">I'll nudge you once a day if you haven't studied yet. When should I?</p>
+		<dialog id="reminder-modal" class="panel reminder-card" aria-label="Daily reminder">
+			<svg class="sano-head sano-idle-head reminder-sano" viewBox="42 8 116 110" aria-hidden="true">
+				<path d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z" class="f-indigo" />
+				<g class="sano-ear sano-ear-left">
+					<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+					<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+				</g>
+				<g class="sano-ear sano-ear-right">
+					<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+					<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+				</g>
+				<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+				<g class="sano-eyes">
+					<circle cx="88" cy="72" r="6" class="f-ink" />
+					<circle cx="112" cy="72" r="6" class="f-ink" />
+				</g>
+				<g class="sano-nose">
+					<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+					<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+				</g>
+			</svg>
+			<div class="bubble sano reminder-bubble">
+				<p class="speaker">Sano</p>
+				<p class="np">Ma har din samjhana garaun?</p>
+				<p class="en">Want me to nudge you each day?</p>
+			</div>
 			<label class="reminder-field"
 				>Time
 				<select id="reminder-hour"></select>

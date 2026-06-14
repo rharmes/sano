@@ -100,8 +100,10 @@ highest-leverage change.
   Spot-check `--text-color-soft` contrast.
 - [x] **R21 [P3] Type scale as tokens.** Font-sizes are scattered magic rems. Define
   `--text-display/-word/-body/-label/…` matching the style guide's specimens (ties to R6).
-- [ ] **R22 [P3] Warm the reminder modal to Sano's voice.** A small Sano head + a line
-  in his voice would make it feel of a piece with the conversational onboarding.
+- [x] **R22 [P3] Warm the reminder modal to Sano's voice.** _(shipped variant B: Sano's
+  head crop + a bilingual `.bubble.sano` — "Ma har din samjhana garaun?" / "Want me to nudge
+  you each day?" — in his voice, echoing onboarding. Nepali is a draft Ross owns.)_ A small
+  Sano head + a line in his voice would make it feel of a piece with the conversational onboarding.
 - [ ] **R23 [P3] Gentle modal entrance + memorable celebration.** Give the modal a
   `pop-in`/`rise-in` entrance (reduced-motion-safe); spend a touch more motion budget
   on the onboarding celebration.

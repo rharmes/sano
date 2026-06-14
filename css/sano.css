@@ -606,14 +606,22 @@ ul {
 	padding: 2.4rem;
 	box-shadow: 0 12px 40px rgba(var(--shadow-rgb), 0.4);
 }
-.reminder-card h2 {
-	margin: 0 0 0.8rem;
-	font-size: 2.2rem;
+/* R22: the modal opens with Sano's head + a speech bubble (the .bubble vocabulary
+   from onboarding), so the daily nudge is asked in his voice rather than read as a
+   stock settings sheet. */
+.reminder-sano {
+	display: block;
+	width: 64px;
+	height: auto;
+	margin: 0 auto 1.4rem;
 }
-.reminder-lead {
-	margin: 0 0 1.8rem;
-	font-size: 1.5rem;
-	color: var(--text-color-soft);
+.reminder-bubble {
+	margin-bottom: 2rem;
+}
+/* The card is always ~34rem, so pin the headline narrow — don't let it jump to the
+   wide 3rem .np size on desktop and wrap to three lines. */
+#reminder-modal .bubble .np {
+	font-size: 2.2rem;
 }
 .reminder-field {
 	display: block;
