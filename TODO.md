@@ -104,9 +104,12 @@ highest-leverage change.
   head crop + a bilingual `.bubble.sano` — "Ma har din samjhana garaun?" / "Want me to nudge
   you each day?" — in his voice, echoing onboarding. Nepali is a draft Ross owns.)_ A small
   Sano head + a line in his voice would make it feel of a piece with the conversational onboarding.
-- [ ] **R23 [P3] Gentle modal entrance + memorable celebration.** Give the modal a
-  `pop-in`/`rise-in` entrance (reduced-motion-safe); spend a touch more motion budget
-  on the onboarding celebration.
+- [x] **R23 [P3] Gentle modal entrance + memorable celebration.** _(shipped: reminder
+  modal pops in via `modal-pop` on `[open]`; the onboarding finish amps to a Sano
+  pop+wobble+tail-wag with a burst ring + paper-cut confetti (`.onboard-fx`), rhyming
+  with the lesson-complete finale. Both reduced-motion-safe — modal fades, celebration
+  drops the flourish.)_ Give the modal a `pop-in`/`rise-in` entrance (reduced-motion-safe);
+  spend a touch more motion budget on the onboarding celebration.
 
 ## 6. Tools, build & deploy
 
