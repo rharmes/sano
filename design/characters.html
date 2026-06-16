@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Sano's friends — paper-cut explorations</title>
+		<link rel="stylesheet" href="../css/fonts.css" />
+		<link rel="stylesheet" href="../css/sano.css" />
+		<style>
+			/* Force the light "warm paper" palette regardless of device theme, and add a
+         few animal-specific paper-cut tones that harmonize with the brand set. */
+			html {
+				font-size: 62.5%;
+				--path-complete-color: #56629e; /* indigo */
+				--accent: #dd6470; /* crimson */
+				--paper-petal: #f3c7cd;
+				--paper-cream: #f1e8d6;
+				--paper-cream-deep: #e8ddc6;
+				--paper-ink: #37323c;
+				--paper-whisker: #a59a86;
+				--badge-color: #d99e3a;
+				--background-color: #fbf5e9;
+				--background-color-softer: #f3ecdb;
+				--border-color: #e0d8c4;
+				--text-color-richer: #2e2933;
+				--text-color-soft: #79705f;
+				--text-color-softer: #b1a795;
+
+				--f-rust: #c66a38;
+				--f-rust-deep: #a9522a;
+				--f-orange: #d98a43;
+				--f-slate: #9aa1ad;
+				--f-slate-deep: #6f7585;
+				--f-brown: #8c6a45;
+				--f-brown-deep: #674a2e;
+				--f-olive: #7f8a52;
+				--f-olive-deep: #5d6740;
+				--f-teal: #3f8f8a;
+				--f-copper: #c0703f;
+				--f-green: #708f4a;
+				--f-snow: #f6efe2;
+				--f-charcoal: #3a3540;
+			}
+			.f-rust {
+				fill: var(--f-rust);
+			}
+			.f-rust-deep {
+				fill: var(--f-rust-deep);
+			}
+			.f-orange {
+				fill: var(--f-orange);
+			}
+			.f-slate {
+				fill: var(--f-slate);
+			}
+			.f-slate-deep {
+				fill: var(--f-slate-deep);
+			}
+			.f-brown {
+				fill: var(--f-brown);
+			}
+			.f-brown-deep {
+				fill: var(--f-brown-deep);
+			}
+			.f-olive {
+				fill: var(--f-olive);
+			}
+			.f-olive-deep {
+				fill: var(--f-olive-deep);
+			}
+			.f-teal {
+				fill: var(--f-teal);
+			}
+			.f-copper {
+				fill: var(--f-copper);
+			}
+			.f-green {
+				fill: var(--f-green);
+			}
+			.f-snow {
+				fill: var(--f-snow);
+			}
+			.f-charcoal {
+				fill: var(--f-charcoal);
+			}
+			.f-badge {
+				fill: var(--badge-color);
+			}
+
+			body {
+				margin: 0;
+				padding: 2.4rem 1.6rem 6rem;
+				background: var(--background-color);
+				color: var(--text-color-richer);
+				font-family: 'Lato', sans-serif;
+			}
+			.wrap {
+				max-width: 760px;
+				margin: 0 auto;
+			}
+			h1 {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 3.6rem;
+				margin: 0 0 0.4rem;
+			}
+			.lede {
+				font-size: 1.5rem;
+				color: var(--text-color-soft);
+				margin: 0 0 2.4rem;
+				line-height: 1.5;
+			}
+			.char {
+				margin: 0 0 2rem;
+				padding: 1.6rem;
+				background: var(--background-color-softer);
+				border: 1px solid var(--border-color);
+				border-radius: 1.2rem;
+			}
+			.char-head {
+				display: flex;
+				align-items: baseline;
+				gap: 0.8rem;
+				margin: 0 0 1.2rem;
+			}
+			.char-name {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 2.4rem;
+			}
+			.char-meaning {
+				font-size: 1.4rem;
+				color: var(--text-color-soft);
+			}
+			.variants {
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				gap: 0.8rem;
+			}
+			figure {
+				margin: 0;
+				text-align: center;
+			}
+			.tile {
+				background: var(--background-color);
+				border: 1px solid var(--border-color);
+				border-radius: 0.8rem;
+				aspect-ratio: 1;
+				display: grid;
+				place-items: center;
+				padding: 6%;
+			}
+			.tile svg {
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+			figcaption {
+				font-size: 1.1rem;
+				color: var(--text-color-softer);
+				margin-top: 0.4rem;
+				letter-spacing: 0.02em;
+			}
+			@media (max-width: 560px) {
+				.variants {
+					gap: 0.5rem;
+				}
+				figcaption {
+					font-size: 1rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<h1>Sano's friends</h1>
+			<p class="lede">
+				Paper-cut explorations — five directions per character, in Sano's flat layered-shape style. Pick a favorite per animal (or mix
+				features across them) and I'll refine it.
+			</p>
+
+			<section class="char" id="pyaro">
+				<div class="char-head"><span class="char-name">Pyaro</span><span class="char-meaning">"dear" · red panda</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 sitting, natural -->
+							<svg viewBox="0 0 200 200" aria-label="Pyaro sitting">
+								<g class="sano-tail">
+									<path d="M150 96 L182 112 L184 150 L168 168 L150 150 L152 120 Z" class="f-rust-deep" />
+									<path d="M156 122 L180 134 L181 150 L170 160 Z" class="f-cream" />
+									<path d="M154 100 L176 112 L178 122 L156 118 Z" class="f-cream" />
+								</g>
+								<path d="M70 120 L130 120 L142 158 L116 182 L84 182 L58 158 Z" class="f-rust" />
+								<path d="M84 140 L116 140 L124 164 L108 178 L92 178 L76 164 Z" class="f-cream" />
+								<path d="M74 172 L94 172 L94 186 L74 186 Z" class="f-charcoal" />
+								<path d="M106 172 L126 172 L126 186 L106 186 Z" class="f-charcoal" />
+								<path d="M58 70 L48 36 L86 58 Z" class="f-rust" />
+								<path d="M142 70 L152 36 L114 58 Z" class="f-rust" />
+								<path d="M62 64 L56 44 L80 58 Z" class="f-cream" />
+								<path d="M138 64 L144 44 L120 58 Z" class="f-cream" />
+								<path d="M100 44 L142 70 L140 108 L100 132 L60 108 L58 70 Z" class="f-rust" />
+								<path d="M100 64 L128 84 L124 112 L100 128 L76 112 L72 84 Z" class="f-cream" />
+								<path d="M84 92 L92 88 L90 116 L82 110 Z" class="f-rust" />
+								<path d="M116 92 L108 88 L110 116 L118 110 Z" class="f-rust" />
+								<circle cx="84" cy="88" r="5.5" class="f-ink" />
+								<circle cx="116" cy="88" r="5.5" class="f-ink" />
+								<path d="M93 108 L107 108 L100 118 Z" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>1 · sitting</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 head bust, natural -->
+							<svg viewBox="0 0 200 200" aria-label="Pyaro face">
+								<path d="M50 78 L36 30 L92 60 Z" class="f-rust" />
+								<path d="M150 78 L164 30 L108 60 Z" class="f-rust" />
+								<path d="M56 70 L46 42 L82 60 Z" class="f-cream" />
+								<path d="M144 70 L154 42 L118 60 Z" class="f-cream" />
+								<path d="M100 40 L154 74 L150 124 L118 160 L82 160 L50 124 L46 74 Z" class="f-rust" />
+								<path d="M100 66 L134 92 L128 134 L100 154 L72 134 L66 92 Z" class="f-cream" />
+								<path d="M82 104 L90 98 L88 138 L78 130 Z" class="f-rust" />
+								<path d="M118 104 L110 98 L112 138 L122 130 Z" class="f-rust" />
+								<circle cx="82" cy="96" r="7" class="f-ink" />
+								<circle cx="118" cy="96" r="7" class="f-ink" />
+								<path d="M90 124 L110 124 L100 138 Z" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 walking profile, natural -->
+							<svg viewBox="0 0 200 200" aria-label="Pyaro walking">
+								<g class="sano-tail">
+									<path d="M40 110 L8 96 L8 132 L26 150 L44 138 Z" class="f-rust-deep" />
+									<path d="M14 104 L34 114 L30 126 L12 120 Z" class="f-cream" />
+									<path d="M12 128 L30 134 L28 146 L16 144 Z" class="f-cream" />
+								</g>
+								<path d="M46 96 L132 96 L150 120 L150 150 L44 150 L34 120 Z" class="f-rust" />
+								<path d="M60 130 L140 130 L140 152 L60 152 Z" class="f-cream" />
+								<path d="M58 148 L74 148 L74 176 L58 176 Z" class="f-charcoal" />
+								<path d="M120 148 L136 148 L136 176 L120 176 Z" class="f-charcoal" />
+								<path d="M132 70 L186 92 L184 132 L150 138 L130 116 Z" class="f-rust" />
+								<path d="M150 60 L142 36 L170 56 Z" class="f-rust" />
+								<path d="M152 96 L182 108 L180 126 L156 124 Z" class="f-cream" />
+								<circle cx="162" cy="98" r="5.5" class="f-ink" />
+								<path d="M176 112 L188 110 L184 122 Z" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>3 · walking</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 sitting, brand-harmonized palette -->
+							<svg viewBox="0 0 200 200" aria-label="Pyaro brand tint">
+								<g class="sano-tail">
+									<path d="M150 96 L182 112 L184 150 L168 168 L150 150 L152 120 Z" class="f-indigo" />
+									<path d="M156 122 L180 134 L181 150 L170 160 Z" class="f-cream" />
+									<path d="M154 100 L176 112 L178 122 L156 118 Z" class="f-cream" />
+								</g>
+								<path d="M70 120 L130 120 L142 158 L116 182 L84 182 L58 158 Z" class="f-indigo" />
+								<path d="M84 140 L116 140 L124 164 L108 178 L92 178 L76 164 Z" class="f-cream" />
+								<path d="M74 172 L94 172 L94 186 L74 186 Z" class="f-ink" />
+								<path d="M106 172 L126 172 L126 186 L106 186 Z" class="f-ink" />
+								<path d="M58 70 L48 36 L86 58 Z" class="f-crimson" />
+								<path d="M142 70 L152 36 L114 58 Z" class="f-crimson" />
+								<path d="M62 64 L56 44 L80 58 Z" class="f-petal" />
+								<path d="M138 64 L144 44 L120 58 Z" class="f-petal" />
+								<path d="M100 44 L142 70 L140 108 L100 132 L60 108 L58 70 Z" class="f-indigo" />
+								<path d="M100 64 L128 84 L124 112 L100 128 L76 112 L72 84 Z" class="f-cream" />
+								<path d="M84 92 L92 88 L90 116 L82 110 Z" class="f-crimson" />
+								<path d="M116 92 L108 88 L110 116 L118 110 Z" class="f-crimson" />
+								<circle cx="84" cy="88" r="5.5" class="f-ink" />
+								<circle cx="116" cy="88" r="5.5" class="f-ink" />
+								<path d="M93 108 L107 108 L100 118 Z" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 geometric minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Pyaro minimal">
+								<path d="M54 74 L42 38 L84 62 Z" class="f-rust" />
+								<path d="M146 74 L158 38 L116 62 Z" class="f-rust" />
+								<path d="M100 52 L148 86 L100 150 L52 86 Z" class="f-rust" />
+								<path d="M100 86 L128 104 L100 138 L72 104 Z" class="f-cream" />
+								<circle cx="86" cy="98" r="6" class="f-ink" />
+								<circle cx="114" cy="98" r="6" class="f-ink" />
+								<path d="M92 112 L108 112 L100 122 Z" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section class="char" id="rangin">
+				<div class="char-head">
+					<span class="char-name">Rangin</span><span class="char-meaning">"colorful" · Himalayan monal / danphe</span>
+				</div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 standing profile, natural iridescent -->
+							<svg viewBox="0 0 200 200" aria-label="Rangin standing">
+								<path d="M92 150 L98 150 L98 182 L92 182 Z" class="f-charcoal" />
+								<path d="M112 150 L118 150 L118 182 L112 182 Z" class="f-charcoal" />
+								<path d="M72 104 L24 90 L12 118 L28 152 L76 142 Z" class="f-copper" />
+								<path d="M38 106 L70 116 L68 134 L36 140 Z" class="f-green" />
+								<path d="M64 98 L124 90 L146 120 L122 154 L78 156 L56 124 Z" class="f-teal" />
+								<path d="M70 134 L98 132 L94 152 L74 152 Z" class="f-snow" />
+								<path d="M84 102 L134 108 L126 142 L90 144 Z" class="f-indigo" />
+								<path d="M98 110 L128 114 L122 134 L100 134 Z" class="f-green" />
+								<path d="M120 94 L146 64 L162 76 L140 112 Z" class="f-copper" />
+								<path d="M138 58 L170 64 L172 90 L146 98 L130 82 Z" class="f-green" />
+								<path d="M146 58 L148 36 L156 56 Z" class="f-teal" />
+								<circle cx="148" cy="37" r="4.5" class="f-teal" />
+								<path d="M158 60 L165 40 L169 60 Z" class="f-teal" />
+								<circle cx="163" cy="41" r="4.5" class="f-teal" />
+								<path d="M170 76 L190 78 L170 88 Z" class="f-charcoal" />
+								<circle cx="153" cy="77" r="5" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>1 · standing</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 head bust, natural -->
+							<svg viewBox="0 0 200 200" aria-label="Rangin face">
+								<path d="M60 132 L140 132 L130 172 L70 172 Z" class="f-copper" />
+								<path d="M66 78 L134 78 L142 120 L100 144 L58 120 Z" class="f-green" />
+								<path d="M78 88 L120 90 L116 116 L100 128 L84 114 Z" class="f-teal" />
+								<path d="M140 102 L168 106 L142 120 Z" class="f-charcoal" />
+								<circle cx="116" cy="100" r="7" class="f-ink" />
+								<path d="M74 78 L70 40 L82 46 Z" class="f-teal" />
+								<circle cx="71" cy="40" r="5" class="f-teal" />
+								<path d="M90 76 L88 36 L100 44 Z" class="f-teal" />
+								<circle cx="88" cy="36" r="5" class="f-teal" />
+								<path d="M106 76 L108 38 L118 48 Z" class="f-teal" />
+								<circle cx="108" cy="38" r="5" class="f-teal" />
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 perched, proud -->
+							<svg viewBox="0 0 200 200" aria-label="Rangin perched">
+								<path d="M86 158 L70 178 L86 178 Z" class="f-charcoal" />
+								<path d="M104 158 L120 178 L104 178 Z" class="f-charcoal" />
+								<path d="M60 150 L140 150 L132 124 L100 110 L68 124 Z" class="f-copper" />
+								<path d="M70 120 L130 116 L138 92 L100 70 L62 92 Z" class="f-teal" />
+								<path d="M78 116 L120 112 L124 96 L100 84 L76 96 Z" class="f-indigo" />
+								<path d="M84 70 L120 66 L124 92 L100 104 L78 90 Z" class="f-green" />
+								<path d="M92 60 L96 96 L88 96 Z" class="f-copper" />
+								<path d="M96 56 L98 36 L106 54 Z" class="f-teal" />
+								<circle cx="98" cy="37" r="4.5" class="f-teal" />
+								<path d="M108 58 L116 40 L120 60 Z" class="f-teal" />
+								<circle cx="114" cy="41" r="4.5" class="f-teal" />
+								<path d="M120 78 L140 80 L120 88 Z" class="f-charcoal" />
+								<circle cx="110" cy="78" r="5" class="f-ink" />
+								<path d="M86 132 L114 132 L110 148 L90 148 Z" class="f-snow" />
+							</svg>
+						</div>
+						<figcaption>3 · perched</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 brand-harmonized -->
+							<svg viewBox="0 0 200 200" aria-label="Rangin brand tint">
+								<path d="M92 150 L98 150 L98 182 L92 182 Z" class="f-ink" />
+								<path d="M112 150 L118 150 L118 182 L112 182 Z" class="f-ink" />
+								<path d="M72 104 L24 90 L12 118 L28 152 L76 142 Z" class="f-crimson" />
+								<path d="M38 106 L70 116 L68 134 L36 140 Z" class="f-petal" />
+								<path d="M64 98 L124 90 L146 120 L122 154 L78 156 L56 124 Z" class="f-indigo" />
+								<path d="M70 134 L98 132 L94 152 L74 152 Z" class="f-cream" />
+								<path d="M84 102 L134 108 L126 142 L90 144 Z" class="f-crimson" />
+								<path d="M98 110 L128 114 L122 134 L100 134 Z" class="f-petal" />
+								<path d="M120 94 L146 64 L162 76 L140 112 Z" class="f-crimson" />
+								<path d="M138 58 L170 64 L172 90 L146 98 L130 82 Z" class="f-indigo" />
+								<path d="M146 58 L148 36 L156 56 Z" class="f-badge" />
+								<circle cx="148" cy="37" r="4.5" class="f-badge" />
+								<path d="M158 60 L165 40 L169 60 Z" class="f-badge" />
+								<circle cx="163" cy="41" r="4.5" class="f-badge" />
+								<path d="M170 76 L190 78 L170 88 Z" class="f-ink" />
+								<circle cx="153" cy="77" r="5" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 geometric minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Rangin minimal">
+								<path d="M58 118 L120 100 L150 130 L116 160 L66 156 Z" class="f-teal" />
+								<path d="M40 112 L70 122 L66 140 L36 138 Z" class="f-copper" />
+								<path d="M122 98 L156 78 L168 96 L138 122 Z" class="f-green" />
+								<path d="M150 84 L152 56 L162 80 Z" class="f-teal" />
+								<circle cx="152" cy="57" r="5" class="f-teal" />
+								<path d="M166 90 L186 92 L166 100 Z" class="f-charcoal" />
+								<circle cx="150" cy="92" r="5.5" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section class="char" id="bahadur">
+				<div class="char-head"><span class="char-name">Bahadur</span><span class="char-meaning">"brave" · Bengal tiger</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 sitting -->
+							<svg viewBox="0 0 200 200" aria-label="Bahadur sitting">
+								<g class="sano-tail">
+									<path d="M134 150 L176 146 L184 162 L168 178 L140 170 Z" class="f-orange" />
+									<path d="M150 152 L158 154 L156 172 L148 170 Z" class="f-charcoal" />
+									<path d="M166 150 L174 154 L172 168 L164 166 Z" class="f-charcoal" />
+								</g>
+								<path d="M66 120 L134 120 L146 160 L114 184 L86 184 L54 160 Z" class="f-orange" />
+								<path d="M84 140 L116 140 L126 168 L108 182 L92 182 L74 168 Z" class="f-cream" />
+								<path d="M68 128 L76 130 L72 152 L64 148 Z" class="f-charcoal" />
+								<path d="M132 128 L124 130 L128 152 L136 148 Z" class="f-charcoal" />
+								<path d="M78 176 L98 176 L98 188 L78 188 Z" class="f-cream" />
+								<path d="M102 176 L122 176 L122 188 L102 188 Z" class="f-cream" />
+								<path d="M58 72 L52 42 L84 62 Z" class="f-orange" />
+								<path d="M142 72 L148 42 L116 62 Z" class="f-orange" />
+								<path d="M62 68 L58 50 L78 62 Z" class="f-petal" />
+								<path d="M138 68 L142 50 L122 62 Z" class="f-petal" />
+								<path d="M100 48 L142 74 L140 108 L100 130 L60 108 L58 74 Z" class="f-orange" />
+								<path d="M100 88 L126 100 L116 126 L100 132 L84 126 L74 100 Z" class="f-cream" />
+								<path d="M96 50 L104 50 L102 66 L98 66 Z" class="f-charcoal" />
+								<path d="M84 54 L90 56 L86 70 L80 66 Z" class="f-charcoal" />
+								<path d="M116 54 L110 56 L114 70 L120 66 Z" class="f-charcoal" />
+								<circle cx="84" cy="84" r="5" class="f-ink" />
+								<circle cx="116" cy="84" r="5" class="f-ink" />
+								<path d="M93 102 L107 102 L100 111 Z" class="f-petal" />
+								<path
+									d="M80 108 L60 104 M80 113 L61 116 M120 108 L140 104 M120 113 L139 116"
+									class="s-whisker"
+								/>
+							</svg>
+						</div>
+						<figcaption>1 · sitting</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 face -->
+							<svg viewBox="0 0 200 200" aria-label="Bahadur face">
+								<path d="M48 70 L40 32 L86 58 Z" class="f-orange" />
+								<path d="M152 70 L160 32 L114 58 Z" class="f-orange" />
+								<path d="M54 64 L48 42 L80 58 Z" class="f-petal" />
+								<path d="M146 64 L152 42 L120 58 Z" class="f-petal" />
+								<path d="M100 40 L150 72 L148 118 L116 156 L84 156 L52 118 L50 72 Z" class="f-orange" />
+								<path d="M100 92 L132 108 L118 144 L100 152 L82 144 L68 108 Z" class="f-cream" />
+								<path d="M96 44 L104 44 L102 66 L98 66 Z" class="f-charcoal" />
+								<path d="M82 48 L90 52 L86 70 L78 64 Z" class="f-charcoal" />
+								<path d="M118 48 L110 52 L114 70 L122 64 Z" class="f-charcoal" />
+								<path d="M54 92 L70 98 L64 108 L52 102 Z" class="f-charcoal" />
+								<path d="M146 92 L130 98 L136 108 L148 102 Z" class="f-charcoal" />
+								<circle cx="80" cy="88" r="6.5" class="f-ink" />
+								<circle cx="120" cy="88" r="6.5" class="f-ink" />
+								<path d="M90 110 L110 110 L100 122 Z" class="f-petal" />
+								<path
+									d="M82 118 L56 112 M82 124 L58 128 M118 118 L144 112 M118 124 L142 128"
+									class="s-whisker"
+								/>
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 walking -->
+							<svg viewBox="0 0 200 200" aria-label="Bahadur walking">
+								<g class="sano-tail">
+									<path d="M44 104 L10 92 L4 112 L18 126 L46 120 Z" class="f-orange" />
+									<path d="M16 98 L26 102 L24 116 L14 112 Z" class="f-charcoal" />
+								</g>
+								<path d="M44 100 L130 100 L150 122 L150 150 L42 150 L34 122 Z" class="f-orange" />
+								<path d="M58 132 L140 132 L140 152 L58 152 Z" class="f-cream" />
+								<path d="M52 116 L60 116 L56 134 L48 134 Z" class="f-charcoal" />
+								<path d="M80 110 L88 110 L84 130 L76 130 Z" class="f-charcoal" />
+								<path d="M108 110 L116 110 L112 130 L104 130 Z" class="f-charcoal" />
+								<path d="M52 148 L66 148 L66 176 L52 176 Z" class="f-orange" />
+								<path d="M120 148 L134 148 L134 176 L120 176 Z" class="f-orange" />
+								<path d="M130 74 L182 92 L182 132 L148 138 L128 116 Z" class="f-orange" />
+								<path d="M150 62 L144 38 L172 58 Z" class="f-orange" />
+								<path d="M152 100 L182 108 L180 130 L154 126 Z" class="f-cream" />
+								<circle cx="164" cy="96" r="5.5" class="f-ink" />
+								<path d="M176 110 L190 108 L186 120 Z" class="f-petal" />
+							</svg>
+						</div>
+						<figcaption>3 · walking</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 brand tint -->
+							<svg viewBox="0 0 200 200" aria-label="Bahadur brand tint">
+								<g class="sano-tail">
+									<path d="M134 150 L176 146 L184 162 L168 178 L140 170 Z" class="f-crimson" />
+									<path d="M150 152 L158 154 L156 172 L148 170 Z" class="f-ink" />
+									<path d="M166 150 L174 154 L172 168 L164 166 Z" class="f-ink" />
+								</g>
+								<path d="M66 120 L134 120 L146 160 L114 184 L86 184 L54 160 Z" class="f-crimson" />
+								<path d="M84 140 L116 140 L126 168 L108 182 L92 182 L74 168 Z" class="f-cream" />
+								<path d="M68 128 L76 130 L72 152 L64 148 Z" class="f-ink" />
+								<path d="M132 128 L124 130 L128 152 L136 148 Z" class="f-ink" />
+								<path d="M78 176 L98 176 L98 188 L78 188 Z" class="f-cream" />
+								<path d="M102 176 L122 176 L122 188 L102 188 Z" class="f-cream" />
+								<path d="M58 72 L52 42 L84 62 Z" class="f-crimson" />
+								<path d="M142 72 L148 42 L116 62 Z" class="f-crimson" />
+								<path d="M62 68 L58 50 L78 62 Z" class="f-petal" />
+								<path d="M138 68 L142 50 L122 62 Z" class="f-petal" />
+								<path d="M100 48 L142 74 L140 108 L100 130 L60 108 L58 74 Z" class="f-crimson" />
+								<path d="M100 88 L126 100 L116 126 L100 132 L84 126 L74 100 Z" class="f-cream" />
+								<path d="M96 50 L104 50 L102 66 L98 66 Z" class="f-ink" />
+								<path d="M84 54 L90 56 L86 70 L80 66 Z" class="f-ink" />
+								<path d="M116 54 L110 56 L114 70 L120 66 Z" class="f-ink" />
+								<circle cx="84" cy="84" r="5" class="f-ink" />
+								<circle cx="116" cy="84" r="5" class="f-ink" />
+								<path d="M93 102 L107 102 L100 111 Z" class="f-petal" />
+								<path
+									d="M80 108 L60 104 M80 113 L61 116 M120 108 L140 104 M120 113 L139 116"
+									class="s-whisker"
+								/>
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Bahadur minimal">
+								<path d="M54 70 L46 38 L86 60 Z" class="f-orange" />
+								<path d="M146 70 L154 38 L114 60 Z" class="f-orange" />
+								<path d="M100 50 L148 80 L132 142 L100 158 L68 142 L52 80 Z" class="f-orange" />
+								<path d="M100 96 L126 110 L114 142 L100 150 L86 142 L74 110 Z" class="f-cream" />
+								<path d="M96 54 L104 54 L100 78 Z" class="f-charcoal" />
+								<path d="M80 60 L88 62 L84 80 Z" class="f-charcoal" />
+								<path d="M120 60 L112 62 L116 80 Z" class="f-charcoal" />
+								<circle cx="84" cy="92" r="6" class="f-ink" />
+								<circle cx="116" cy="92" r="6" class="f-ink" />
+								<path d="M92 110 L108 110 L100 120 Z" class="f-petal" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section class="char" id="gyani">
+				<div class="char-head"><span class="char-name">Gyani</span><span class="char-meaning">"wise" · Asian elephant</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 standing profile -->
+							<svg viewBox="0 0 200 200" aria-label="Gyani standing">
+								<path d="M48 78 L150 70 L168 104 L162 150 L138 158 L60 158 L40 150 L36 104 Z" class="f-slate" />
+								<path d="M52 150 L74 150 L74 184 L52 184 Z" class="f-slate" />
+								<path d="M96 150 L118 150 L118 184 L96 184 Z" class="f-slate" />
+								<path d="M124 150 L144 150 L144 184 L124 184 Z" class="f-slate-deep" />
+								<path d="M60 150 L80 150 L80 184 L60 184 Z" class="f-slate-deep" />
+								<path d="M150 74 L178 70 L182 116 L156 126 L142 100 Z" class="f-slate-deep" />
+								<path d="M158 96 L172 92 L172 116 L160 118 Z" class="f-petal" />
+								<path d="M150 120 L168 122 L160 178 L146 178 L150 150 Z" class="f-slate" />
+								<path d="M148 168 L160 168 L156 186 L150 186 Z" class="f-cream" />
+								<circle cx="158" cy="98" r="4.5" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>1 · standing</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 face -->
+							<svg viewBox="0 0 200 200" aria-label="Gyani face">
+								<path d="M30 64 L74 60 L84 120 L40 132 L22 96 Z" class="f-slate-deep" />
+								<path d="M170 64 L126 60 L116 120 L160 132 L178 96 Z" class="f-slate-deep" />
+								<path d="M66 50 L134 50 L146 116 L122 156 L78 156 L54 116 Z" class="f-slate" />
+								<path d="M88 150 L96 150 L92 186 L84 184 Z" class="f-slate" />
+								<path d="M112 150 L104 150 L108 186 L116 184 Z" class="f-slate" />
+								<path d="M84 124 L78 184 L70 182 L80 120 Z" class="f-cream" />
+								<path d="M116 124 L122 184 L130 182 L120 120 Z" class="f-cream" />
+								<circle cx="82" cy="92" r="6" class="f-ink" />
+								<circle cx="118" cy="92" r="6" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 walking -->
+							<svg viewBox="0 0 200 200" aria-label="Gyani walking">
+								<path d="M40 86 L150 78 L166 108 L160 146 L44 146 L32 112 Z" class="f-slate" />
+								<path d="M48 144 L68 144 L68 178 L48 178 Z" class="f-slate-deep" />
+								<path d="M84 144 L104 144 L104 178 L84 178 Z" class="f-slate" />
+								<path d="M118 144 L138 144 L138 178 L118 178 Z" class="f-slate-deep" />
+								<path d="M148 82 L176 80 L178 120 L154 128 L142 104 Z" class="f-slate-deep" />
+								<path d="M156 100 L170 98 L170 120 L158 122 Z" class="f-petal" />
+								<path d="M150 124 L166 128 L156 170 L144 168 Z" class="f-slate" />
+								<path d="M146 160 L158 162 L154 178 L148 176 Z" class="f-cream" />
+								<circle cx="158" cy="100" r="4.5" class="f-ink" />
+								<path d="M44 92 L30 74 L40 96 Z" class="f-slate" />
+							</svg>
+						</div>
+						<figcaption>3 · walking</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 brand tint -->
+							<svg viewBox="0 0 200 200" aria-label="Gyani brand tint">
+								<path d="M30 64 L74 60 L84 120 L40 132 L22 96 Z" class="f-indigo" />
+								<path d="M170 64 L126 60 L116 120 L160 132 L178 96 Z" class="f-indigo" />
+								<path d="M36 78 L66 76 L72 110 L44 118 Z" class="f-petal" />
+								<path d="M164 78 L134 76 L128 110 L156 118 Z" class="f-petal" />
+								<path d="M66 50 L134 50 L146 116 L122 156 L78 156 L54 116 Z" class="f-indigo" />
+								<path d="M88 150 L96 150 L92 186 L84 184 Z" class="f-indigo" />
+								<path d="M112 150 L104 150 L108 186 L116 184 Z" class="f-indigo" />
+								<path d="M84 124 L78 184 L70 182 L80 120 Z" class="f-cream" />
+								<path d="M116 124 L122 184 L130 182 L120 120 Z" class="f-cream" />
+								<circle cx="82" cy="92" r="6" class="f-ink" />
+								<circle cx="118" cy="92" r="6" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Gyani minimal">
+								<path d="M44 70 L84 66 L92 118 L52 128 Z" class="f-slate-deep" />
+								<path d="M156 70 L116 66 L108 118 L148 128 Z" class="f-slate-deep" />
+								<path d="M70 58 L130 58 L140 120 L116 150 L84 150 L60 120 Z" class="f-slate" />
+								<path d="M88 120 L84 168 L96 168 L98 120 Z" class="f-slate" />
+								<path d="M112 120 L116 168 L104 168 L102 120 Z" class="f-slate" />
+								<circle cx="84" cy="96" r="6" class="f-ink" />
+								<circle cx="116" cy="96" r="6" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section class="char" id="thulo">
+				<div class="char-head"><span class="char-name">Thulo</span><span class="char-meaning">"big" · one-horned rhinoceros</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 standing profile -->
+							<svg viewBox="0 0 200 200" aria-label="Thulo standing">
+								<path d="M30 110 L40 86 L150 80 L176 108 L172 146 L150 156 L40 156 L26 140 Z" class="f-slate" />
+								<path d="M44 152 L64 152 L64 182 L44 182 Z" class="f-slate-deep" />
+								<path d="M84 152 L104 152 L104 182 L84 182 Z" class="f-slate" />
+								<path d="M118 152 L138 152 L138 182 L118 182 Z" class="f-slate-deep" />
+								<path d="M150 84 L178 96 L176 128 L150 132 L142 108 Z" class="f-slate" />
+								<path d="M168 78 L182 60 L184 86 L172 96 Z" class="f-cream-deep" />
+								<path d="M88 90 L100 92 L98 150 L86 150 Z" class="f-slate-deep" />
+								<circle cx="160" cy="104" r="4" class="f-ink" />
+								<path d="M150 76 L160 70 L160 80 Z" class="f-slate-deep" />
+								<path d="M26 124 L12 120 L18 132 Z" class="f-slate" />
+							</svg>
+						</div>
+						<figcaption>1 · standing</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 face -->
+							<svg viewBox="0 0 200 200" aria-label="Thulo face">
+								<path d="M56 64 L70 44 L82 62 Z" class="f-slate-deep" />
+								<path d="M144 64 L130 44 L118 62 Z" class="f-slate-deep" />
+								<path d="M58 60 L142 60 L156 110 L128 150 L100 162 L72 150 L44 110 Z" class="f-slate" />
+								<path d="M84 150 L116 150 L120 176 L80 176 Z" class="f-slate-deep" />
+								<path d="M92 92 L108 92 L104 120 L96 120 Z" class="f-cream-deep" />
+								<path d="M88 60 L112 60 L106 38 L94 38 Z" class="f-cream-deep" />
+								<circle cx="78" cy="100" r="5.5" class="f-ink" />
+								<circle cx="122" cy="100" r="5.5" class="f-ink" />
+								<circle cx="86" cy="138" r="4" class="f-slate-deep" />
+								<circle cx="114" cy="138" r="4" class="f-slate-deep" />
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 walking -->
+							<svg viewBox="0 0 200 200" aria-label="Thulo walking">
+								<path d="M28 116 L38 92 L142 86 L168 110 L164 144 L36 144 L24 130 Z" class="f-slate" />
+								<path d="M44 142 L62 142 L62 174 L44 174 Z" class="f-slate-deep" />
+								<path d="M78 142 L96 142 L96 174 L78 174 Z" class="f-slate" />
+								<path d="M110 142 L128 142 L128 174 L110 174 Z" class="f-slate-deep" />
+								<path d="M142 90 L170 100 L168 130 L144 134 L138 110 Z" class="f-slate" />
+								<path d="M160 84 L174 66 L176 92 L164 100 Z" class="f-cream-deep" />
+								<path d="M82 94 L94 96 L92 140 L80 140 Z" class="f-slate-deep" />
+								<circle cx="154" cy="108" r="4" class="f-ink" />
+								<path d="M24 128 L10 124 L16 136 Z" class="f-slate" />
+							</svg>
+						</div>
+						<figcaption>3 · walking</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 brand tint -->
+							<svg viewBox="0 0 200 200" aria-label="Thulo brand tint">
+								<path
+									d="M30 110 L40 86 L150 80 L176 108 L172 146 L150 156 L40 156 L26 140 Z"
+									class="f-indigo"
+								/>
+								<path d="M44 152 L64 152 L64 182 L44 182 Z" class="f-ink" />
+								<path d="M84 152 L104 152 L104 182 L84 182 Z" class="f-indigo" />
+								<path d="M118 152 L138 152 L138 182 L118 182 Z" class="f-ink" />
+								<path d="M150 84 L178 96 L176 128 L150 132 L142 108 Z" class="f-indigo" />
+								<path d="M168 76 L182 58 L184 84 L172 94 Z" class="f-badge" />
+								<path d="M88 90 L100 92 L98 150 L86 150 Z" class="f-ink" />
+								<circle cx="160" cy="104" r="4" class="f-ink" />
+								<path d="M26 124 L12 120 L18 132 Z" class="f-indigo" />
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Thulo minimal">
+								<path d="M34 118 L48 88 L150 84 L168 116 L150 150 L48 150 L30 134 Z" class="f-slate" />
+								<path d="M150 88 L176 100 L172 130 L150 132 Z" class="f-slate" />
+								<path d="M166 80 L180 62 L182 88 L170 96 Z" class="f-cream-deep" />
+								<path d="M60 150 L78 150 L78 176 L60 176 Z" class="f-slate" />
+								<path d="M118 150 L136 150 L136 176 L118 176 Z" class="f-slate" />
+								<circle cx="158" cy="108" r="4.5" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section class="char" id="hiun">
+				<div class="char-head"><span class="char-name">Hiun</span><span class="char-meaning">"snow" · snow leopard</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 sitting -->
+							<svg viewBox="0 0 200 200" aria-label="Hiun sitting">
+								<g class="sano-tail">
+									<path d="M128 150 L176 138 L188 158 L180 182 L136 176 Z" class="f-slate" />
+									<circle cx="150" cy="160" r="4" class="f-slate-deep" />
+									<circle cx="167" cy="156" r="4" class="f-slate-deep" />
+									<circle cx="175" cy="172" r="3.5" class="f-slate-deep" />
+								</g>
+								<path d="M66 120 L134 120 L146 160 L114 184 L86 184 L54 160 Z" class="f-slate" />
+								<path d="M84 140 L116 140 L126 168 L108 182 L92 182 L74 168 Z" class="f-snow" />
+								<circle cx="73" cy="134" r="4" class="f-slate-deep" />
+								<circle cx="127" cy="134" r="4" class="f-slate-deep" />
+								<circle cx="69" cy="153" r="3.5" class="f-slate-deep" />
+								<circle cx="131" cy="153" r="3.5" class="f-slate-deep" />
+								<path d="M78 176 L98 176 L98 188 L78 188 Z" class="f-snow" />
+								<path d="M102 176 L122 176 L122 188 L102 188 Z" class="f-snow" />
+								<path d="M58 72 L52 44 L84 62 Z" class="f-slate" />
+								<path d="M142 72 L148 44 L116 62 Z" class="f-slate" />
+								<path d="M62 68 L58 52 L78 62 Z" class="f-snow" />
+								<path d="M138 68 L142 52 L122 62 Z" class="f-snow" />
+								<path d="M100 48 L142 74 L140 108 L100 130 L60 108 L58 74 Z" class="f-slate" />
+								<path d="M100 90 L124 100 L116 124 L100 130 L84 124 L76 100 Z" class="f-snow" />
+								<circle cx="74" cy="70" r="3.5" class="f-slate-deep" />
+								<circle cx="126" cy="70" r="3.5" class="f-slate-deep" />
+								<circle cx="100" cy="60" r="3.5" class="f-slate-deep" />
+								<circle cx="84" cy="84" r="5" class="f-ink" />
+								<circle cx="116" cy="84" r="5" class="f-ink" />
+								<path d="M94 102 L106 102 L100 110 Z" class="f-charcoal" />
+								<path
+									d="M80 108 L60 104 M80 113 L61 116 M120 108 L140 104 M120 113 L139 116"
+									class="s-whisker"
+								/>
+							</svg>
+						</div>
+						<figcaption>1 · sitting</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 face -->
+							<svg viewBox="0 0 200 200" aria-label="Hiun face">
+								<path d="M48 70 L40 32 L86 58 Z" class="f-slate" />
+								<path d="M152 70 L160 32 L114 58 Z" class="f-slate" />
+								<path d="M54 64 L48 44 L80 58 Z" class="f-snow" />
+								<path d="M146 64 L152 44 L120 58 Z" class="f-snow" />
+								<path d="M100 40 L150 72 L148 118 L116 156 L84 156 L52 118 L50 72 Z" class="f-slate" />
+								<path d="M100 92 L132 108 L118 144 L100 152 L82 144 L68 108 Z" class="f-snow" />
+								<circle cx="74" cy="72" r="4" class="f-slate-deep" />
+								<circle cx="126" cy="72" r="4" class="f-slate-deep" />
+								<circle cx="100" cy="60" r="4" class="f-slate-deep" />
+								<circle cx="62" cy="100" r="4" class="f-slate-deep" />
+								<circle cx="138" cy="100" r="4" class="f-slate-deep" />
+								<circle cx="80" cy="88" r="6.5" class="f-ink" />
+								<circle cx="120" cy="88" r="6.5" class="f-ink" />
+								<path d="M91 112 L109 112 L100 124 Z" class="f-charcoal" />
+								<path
+									d="M82 120 L56 114 M82 126 L58 130 M118 120 L144 114 M118 126 L142 130"
+									class="s-whisker"
+								/>
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 prowling -->
+							<svg viewBox="0 0 200 200" aria-label="Hiun prowling">
+								<g class="sano-tail">
+									<path d="M40 118 L8 112 L2 134 L18 148 L42 138 Z" class="f-slate" />
+									<circle cx="20" cy="126" r="3.5" class="f-slate-deep" />
+									<circle cx="12" cy="138" r="3" class="f-slate-deep" />
+								</g>
+								<path d="M44 104 L132 104 L152 124 L150 150 L42 150 L34 124 Z" class="f-slate" />
+								<path d="M58 134 L142 134 L142 152 L58 152 Z" class="f-snow" />
+								<circle cx="70" cy="116" r="4" class="f-slate-deep" />
+								<circle cx="96" cy="114" r="4" class="f-slate-deep" />
+								<circle cx="122" cy="118" r="4" class="f-slate-deep" />
+								<path d="M52 148 L66 148 L66 176 L52 176 Z" class="f-slate" />
+								<path d="M120 148 L134 148 L134 176 L120 176 Z" class="f-slate" />
+								<path d="M132 78 L182 96 L182 134 L150 138 L130 118 Z" class="f-slate" />
+								<path d="M148 66 L142 42 L170 60 Z" class="f-slate" />
+								<path d="M152 102 L182 110 L180 132 L154 128 Z" class="f-snow" />
+								<circle cx="162" cy="98" r="5.5" class="f-ink" />
+								<path d="M176 112 L190 110 L186 122 Z" class="f-charcoal" />
+							</svg>
+						</div>
+						<figcaption>3 · prowling</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 brand tint -->
+							<svg viewBox="0 0 200 200" aria-label="Hiun brand tint">
+								<path d="M48 70 L40 32 L86 58 Z" class="f-indigo" />
+								<path d="M152 70 L160 32 L114 58 Z" class="f-indigo" />
+								<path d="M54 64 L48 44 L80 58 Z" class="f-petal" />
+								<path d="M146 64 L152 44 L120 58 Z" class="f-petal" />
+								<path d="M100 40 L150 72 L148 118 L116 156 L84 156 L52 118 L50 72 Z" class="f-indigo" />
+								<path d="M100 92 L132 108 L118 144 L100 152 L82 144 L68 108 Z" class="f-cream" />
+								<circle cx="74" cy="72" r="4" class="f-ink" />
+								<circle cx="126" cy="72" r="4" class="f-ink" />
+								<circle cx="100" cy="60" r="4" class="f-ink" />
+								<circle cx="62" cy="100" r="4" class="f-ink" />
+								<circle cx="138" cy="100" r="4" class="f-ink" />
+								<circle cx="80" cy="88" r="6.5" class="f-ink" />
+								<circle cx="120" cy="88" r="6.5" class="f-ink" />
+								<path d="M91 112 L109 112 L100 124 Z" class="f-crimson" />
+								<path
+									d="M82 120 L56 114 M82 126 L58 130 M118 120 L144 114 M118 126 L142 130"
+									class="s-whisker"
+								/>
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Hiun minimal">
+								<path d="M54 70 L46 38 L86 60 Z" class="f-slate" />
+								<path d="M146 70 L154 38 L114 60 Z" class="f-slate" />
+								<path d="M100 50 L148 80 L132 142 L100 158 L68 142 L52 80 Z" class="f-slate" />
+								<path d="M100 96 L126 110 L114 142 L100 150 L86 142 L74 110 Z" class="f-snow" />
+								<circle cx="78" cy="74" r="4" class="f-slate-deep" />
+								<circle cx="122" cy="74" r="4" class="f-slate-deep" />
+								<circle cx="84" cy="92" r="6" class="f-ink" />
+								<circle cx="116" cy="92" r="6" class="f-ink" />
+								<path d="M93 110 L107 110 L100 120 Z" class="f-charcoal" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section class="char" id="shanta">
+				<div class="char-head"><span class="char-name">Shanta</span><span class="char-meaning">"calm" · yak</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 standing profile -->
+							<svg viewBox="0 0 200 200" aria-label="Shanta standing">
+								<path d="M38 92 L150 86 L166 110 L162 134 L44 134 L30 114 Z" class="f-brown-deep" />
+								<path
+									d="M40 128 L52 150 L64 128 L76 150 L88 128 L100 150 L112 128 L124 150 L136 128 L148 150 L158 128 L160 134 L44 134 Z"
+									class="f-brown"
+								/>
+								<path d="M50 132 L64 132 L64 176 L50 176 Z" class="f-brown-deep" />
+								<path d="M120 132 L134 132 L134 176 L120 176 Z" class="f-brown-deep" />
+								<path d="M148 92 L182 90 L184 120 L156 128 L144 110 Z" class="f-brown-deep" />
+								<path d="M152 92 L146 66 L156 66 L160 90 Z" class="f-cream-deep" />
+								<path d="M178 92 L190 66 L196 72 L186 94 Z" class="f-cream-deep" />
+								<path d="M152 86 L166 80 L180 86 L168 76 L154 78 Z" class="f-brown" />
+								<path d="M178 112 L192 114 L180 124 Z" class="f-brown" />
+								<circle cx="166" cy="104" r="4.5" class="f-ink" />
+								<path d="M30 104 L14 98 L12 122 L28 118 Z" class="f-brown-deep" />
+							</svg>
+						</div>
+						<figcaption>1 · standing</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 face -->
+							<svg viewBox="0 0 200 200" aria-label="Shanta face">
+								<path d="M70 64 L40 38 L34 56 L62 84 Z" class="f-cream-deep" />
+								<path d="M130 64 L160 38 L166 56 L138 84 Z" class="f-cream-deep" />
+								<path d="M62 66 L138 66 L146 116 L100 154 L54 116 Z" class="f-brown-deep" />
+								<path
+									d="M62 66 L72 54 L82 66 L92 52 L100 66 L108 52 L118 66 L128 54 L138 66 Z"
+									class="f-brown"
+								/>
+								<path d="M70 120 L130 120 L120 150 L100 162 L80 150 Z" class="f-brown" />
+								<path d="M86 124 L114 124 L108 146 L92 146 Z" class="f-cream-deep" />
+								<circle cx="80" cy="100" r="6" class="f-ink" />
+								<circle cx="120" cy="100" r="6" class="f-ink" />
+								<circle cx="90" cy="136" r="3" class="f-brown-deep" />
+								<circle cx="110" cy="136" r="3" class="f-brown-deep" />
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 walking -->
+							<svg viewBox="0 0 200 200" aria-label="Shanta walking">
+								<path d="M36 96 L146 90 L162 112 L158 132 L42 132 L28 114 Z" class="f-brown-deep" />
+								<path
+									d="M40 126 L50 146 L62 126 L74 146 L86 126 L98 146 L110 126 L122 146 L134 126 L146 146 L156 126 L158 132 L42 132 Z"
+									class="f-brown"
+								/>
+								<path d="M46 130 L58 130 L58 172 L46 172 Z" class="f-brown-deep" />
+								<path d="M84 130 L96 130 L96 172 L84 172 Z" class="f-brown" />
+								<path d="M120 130 L132 130 L132 172 L120 172 Z" class="f-brown-deep" />
+								<path d="M144 96 L178 94 L180 122 L152 130 L140 112 Z" class="f-brown-deep" />
+								<path d="M148 96 L142 70 L152 70 L156 94 Z" class="f-cream-deep" />
+								<path d="M174 96 L186 70 L192 76 L182 98 Z" class="f-cream-deep" />
+								<circle cx="162" cy="108" r="4.5" class="f-ink" />
+								<path d="M174 116 L188 118 L176 128 Z" class="f-brown" />
+								<path d="M28 106 L12 100 L10 124 L26 120 Z" class="f-brown-deep" />
+							</svg>
+						</div>
+						<figcaption>3 · walking</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 brand tint -->
+							<svg viewBox="0 0 200 200" aria-label="Shanta brand tint">
+								<path d="M38 92 L150 86 L166 110 L162 134 L44 134 L30 114 Z" class="f-indigo" />
+								<path
+									d="M40 128 L52 150 L64 128 L76 150 L88 128 L100 150 L112 128 L124 150 L136 128 L148 150 L158 128 L160 134 L44 134 Z"
+									class="f-cream"
+								/>
+								<path d="M50 132 L64 132 L64 176 L50 176 Z" class="f-ink" />
+								<path d="M120 132 L134 132 L134 176 L120 176 Z" class="f-ink" />
+								<path d="M148 92 L182 90 L184 120 L156 128 L144 110 Z" class="f-indigo" />
+								<path d="M152 92 L146 66 L156 66 L160 90 Z" class="f-cream" />
+								<path d="M178 92 L190 66 L196 72 L186 94 Z" class="f-cream" />
+								<circle cx="166" cy="104" r="4.5" class="f-ink" />
+								<path d="M30 104 L14 98 L12 122 L28 118 Z" class="f-indigo" />
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Shanta minimal">
+								<path d="M44 96 L150 90 L164 116 L150 146 L50 146 L34 120 Z" class="f-brown" />
+								<path d="M150 92 L146 66 L156 66 L158 92 Z" class="f-cream-deep" />
+								<path d="M176 92 L188 68 L194 74 L184 94 Z" class="f-cream-deep" />
+								<path d="M150 94 L182 92 L184 122 L156 128 Z" class="f-brown-deep" />
+								<path d="M56 146 L70 146 L70 174 L56 174 Z" class="f-brown" />
+								<path d="M120 146 L134 146 L134 174 L120 174 Z" class="f-brown" />
+								<circle cx="166" cy="106" r="4.5" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section class="char" id="phurtilo">
+				<div class="char-head"><span class="char-name">Phurtilo</span><span class="char-meaning">"nimble" · Himalayan tahr</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 standing alert -->
+							<svg viewBox="0 0 200 200" aria-label="Phurtilo standing">
+								<path d="M50 98 L140 94 L156 114 L152 142 L54 142 L42 118 Z" class="f-brown" />
+								<path d="M44 110 L78 108 L74 150 L50 150 Z" class="f-rust" />
+								<path d="M54 140 L68 140 L68 176 L54 176 Z" class="f-brown-deep" />
+								<path d="M84 140 L98 140 L98 176 L84 176 Z" class="f-brown-deep" />
+								<path d="M116 140 L130 140 L130 176 L116 176 Z" class="f-brown-deep" />
+								<path d="M138 96 L168 100 L170 126 L146 132 L136 114 Z" class="f-brown" />
+								<path d="M142 98 L132 74 L120 62 L126 56 L150 78 L154 98 Z" class="f-brown-deep" />
+								<path d="M164 98 L156 74 L146 62 L152 56 L172 80 L176 98 Z" class="f-brown-deep" />
+								<circle cx="156" cy="110" r="4.5" class="f-ink" />
+								<path d="M166 120 L180 122 L168 130 Z" class="f-cream-deep" />
+							</svg>
+						</div>
+						<figcaption>1 · standing</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 face -->
+							<svg viewBox="0 0 200 200" aria-label="Phurtilo face">
+								<path d="M66 66 L54 40 L40 22 L50 18 L70 42 L80 64 Z" class="f-brown-deep" />
+								<path d="M134 66 L146 40 L160 22 L150 18 L130 42 L120 64 Z" class="f-brown-deep" />
+								<path d="M60 64 L140 64 L150 104 L122 144 L100 156 L78 144 L50 104 Z" class="f-brown" />
+								<path d="M70 70 L130 70 L138 102 L100 120 L62 102 Z" class="f-rust" />
+								<path d="M84 120 L116 120 L110 150 L100 158 L90 150 Z" class="f-cream-deep" />
+								<circle cx="80" cy="98" r="6" class="f-ink" />
+								<circle cx="120" cy="98" r="6" class="f-ink" />
+								<circle cx="92" cy="140" r="3" class="f-brown-deep" />
+								<circle cx="108" cy="140" r="3" class="f-brown-deep" />
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 leaping -->
+							<svg viewBox="0 0 200 200" aria-label="Phurtilo leaping">
+								<path d="M48 86 L138 100 L156 96 L150 118 L120 124 L52 116 L36 104 Z" class="f-brown" />
+								<path d="M50 104 L84 110 L78 142 L54 138 Z" class="f-rust" />
+								<path d="M58 116 L52 150 L62 152 L72 120 Z" class="f-brown-deep" />
+								<path d="M80 118 L88 152 L98 150 L92 120 Z" class="f-brown-deep" />
+								<path d="M118 118 L132 148 L142 142 L128 116 Z" class="f-brown-deep" />
+								<path d="M104 116 L116 146 L126 142 L114 114 Z" class="f-brown-deep" />
+								<path d="M138 84 L168 90 L170 114 L146 118 L136 100 Z" class="f-brown" />
+								<path d="M142 86 L134 62 L122 50 L128 44 L150 66 L154 86 Z" class="f-brown-deep" />
+								<path d="M164 86 L158 62 L148 50 L154 44 L174 68 L178 86 Z" class="f-brown-deep" />
+								<circle cx="156" cy="98" r="4.5" class="f-ink" />
+								<path d="M166 108 L180 110 L168 118 Z" class="f-cream-deep" />
+							</svg>
+						</div>
+						<figcaption>3 · leaping</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 brand tint -->
+							<svg viewBox="0 0 200 200" aria-label="Phurtilo brand tint">
+								<path d="M50 98 L140 94 L156 114 L152 142 L54 142 L42 118 Z" class="f-indigo" />
+								<path d="M44 110 L78 108 L74 150 L50 150 Z" class="f-crimson" />
+								<path d="M54 140 L68 140 L68 176 L54 176 Z" class="f-ink" />
+								<path d="M84 140 L98 140 L98 176 L84 176 Z" class="f-ink" />
+								<path d="M116 140 L130 140 L130 176 L116 176 Z" class="f-ink" />
+								<path d="M138 96 L168 100 L170 126 L146 132 L136 114 Z" class="f-indigo" />
+								<path d="M142 98 L132 74 L120 62 L126 56 L150 78 L154 98 Z" class="f-cream" />
+								<path d="M164 98 L156 74 L146 62 L152 56 L172 80 L176 98 Z" class="f-cream" />
+								<circle cx="156" cy="110" r="4.5" class="f-ink" />
+								<path d="M166 120 L180 122 L168 130 Z" class="f-petal" />
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Phurtilo minimal">
+								<path d="M64 80 L136 80 L146 116 L100 152 L54 116 Z" class="f-brown" />
+								<path d="M72 84 L128 84 L134 110 L100 124 L66 110 Z" class="f-rust" />
+								<path d="M66 80 L54 52 L42 36 L52 34 L72 58 Z" class="f-brown-deep" />
+								<path d="M134 80 L146 52 L158 36 L148 34 L128 58 Z" class="f-brown-deep" />
+								<circle cx="82" cy="100" r="6" class="f-ink" />
+								<circle cx="118" cy="100" r="6" class="f-ink" />
+								<path d="M88 126 L112 126 L100 144 Z" class="f-cream-deep" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section class="char" id="chanchal">
+				<div class="char-head"><span class="char-name">Chanchal</span><span class="char-meaning">"lively" · gray langur</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 sitting upright -->
+							<svg viewBox="0 0 200 200" aria-label="Chanchal sitting">
+								<g class="sano-tail">
+									<path d="M132 150 L168 130 L188 92 L198 98 L180 138 L146 166 Z" class="f-slate" />
+								</g>
+								<path d="M70 110 L130 110 L140 156 L116 182 L84 182 L60 156 Z" class="f-slate" />
+								<path d="M84 128 L116 128 L122 160 L106 176 L94 176 L78 160 Z" class="f-cream" />
+								<path d="M70 148 L84 148 L84 168 L70 168 Z" class="f-charcoal" />
+								<path d="M116 148 L130 148 L130 168 L116 168 Z" class="f-charcoal" />
+								<path d="M78 176 L96 176 L96 188 L78 188 Z" class="f-charcoal" />
+								<path d="M104 176 L122 176 L122 188 L104 188 Z" class="f-charcoal" />
+								<path d="M100 44 L138 64 L140 96 L100 116 L60 96 L62 64 Z" class="f-cream" />
+								<path d="M58 84 L48 74 L62 72 Z" class="f-slate" />
+								<path d="M142 84 L152 74 L138 72 Z" class="f-slate" />
+								<path d="M100 60 L124 76 L120 100 L100 110 L80 100 L76 76 Z" class="f-charcoal" />
+								<path d="M82 78 L118 78 L116 88 L84 88 Z" class="f-cream-deep" />
+								<circle cx="88" cy="90" r="4.5" class="f-cream" />
+								<circle cx="112" cy="90" r="4.5" class="f-cream" />
+								<circle cx="88" cy="90" r="2.2" class="f-ink" />
+								<circle cx="112" cy="90" r="2.2" class="f-ink" />
+								<circle cx="95" cy="102" r="2" class="f-cream-deep" />
+								<circle cx="105" cy="102" r="2" class="f-cream-deep" />
+							</svg>
+						</div>
+						<figcaption>1 · sitting</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 face -->
+							<svg viewBox="0 0 200 200" aria-label="Chanchal face">
+								<path d="M100 32 L150 64 L154 112 L122 152 L78 152 L46 112 L50 64 Z" class="f-cream" />
+								<path d="M46 92 L34 82 L50 78 Z" class="f-slate" />
+								<path d="M154 92 L166 82 L150 78 Z" class="f-slate" />
+								<path d="M100 56 L132 78 L130 118 L100 142 L70 118 L68 78 Z" class="f-charcoal" />
+								<path d="M74 84 L126 84 L122 98 L78 98 Z" class="f-cream-deep" />
+								<circle cx="84" cy="102" r="7" class="f-cream" />
+								<circle cx="116" cy="102" r="7" class="f-cream" />
+								<circle cx="84" cy="102" r="3.4" class="f-ink" />
+								<circle cx="116" cy="102" r="3.4" class="f-ink" />
+								<circle cx="92" cy="120" r="2.6" class="f-cream-deep" />
+								<circle cx="108" cy="120" r="2.6" class="f-cream-deep" />
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 on all fours -->
+							<svg viewBox="0 0 200 200" aria-label="Chanchal clambering">
+								<g class="sano-tail">
+									<path d="M48 112 L18 98 L4 70 L14 64 L28 92 L58 108 Z" class="f-slate" />
+								</g>
+								<path d="M50 104 L128 104 L150 122 L150 144 L46 144 L36 124 Z" class="f-slate" />
+								<path d="M60 132 L140 132 L140 146 L60 146 Z" class="f-cream" />
+								<path d="M52 142 L64 142 L64 174 L52 174 Z" class="f-charcoal" />
+								<path d="M120 142 L132 142 L132 174 L120 174 Z" class="f-charcoal" />
+								<path d="M128 76 L166 84 L168 116 L140 124 L126 104 Z" class="f-cream" />
+								<path d="M140 84 L162 90 L162 116 L142 118 Z" class="f-charcoal" />
+								<path d="M132 72 L126 60 L136 64 Z" class="f-slate" />
+								<circle cx="152" cy="98" r="4.5" class="f-cream" />
+								<circle cx="152" cy="98" r="2.2" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>3 · clambering</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 brand tint -->
+							<svg viewBox="0 0 200 200" aria-label="Chanchal brand tint">
+								<g class="sano-tail">
+									<path d="M132 150 L168 130 L188 92 L198 98 L180 138 L146 166 Z" class="f-indigo" />
+								</g>
+								<path d="M70 110 L130 110 L140 156 L116 182 L84 182 L60 156 Z" class="f-indigo" />
+								<path d="M84 128 L116 128 L122 160 L106 176 L94 176 L78 160 Z" class="f-cream" />
+								<path d="M70 148 L84 148 L84 168 L70 168 Z" class="f-ink" />
+								<path d="M116 148 L130 148 L130 168 L116 168 Z" class="f-ink" />
+								<path d="M78 176 L96 176 L96 188 L78 188 Z" class="f-ink" />
+								<path d="M104 176 L122 176 L122 188 L104 188 Z" class="f-ink" />
+								<path d="M100 44 L138 64 L140 96 L100 116 L60 96 L62 64 Z" class="f-cream" />
+								<path d="M58 84 L48 74 L62 72 Z" class="f-indigo" />
+								<path d="M142 84 L152 74 L138 72 Z" class="f-indigo" />
+								<path d="M100 60 L124 76 L120 100 L100 110 L80 100 L76 76 Z" class="f-ink" />
+								<path d="M82 78 L118 78 L116 88 L84 88 Z" class="f-petal" />
+								<circle cx="88" cy="90" r="4.5" class="f-cream" />
+								<circle cx="112" cy="90" r="4.5" class="f-cream" />
+								<circle cx="88" cy="90" r="2.2" class="f-ink" />
+								<circle cx="112" cy="90" r="2.2" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Chanchal minimal">
+								<path d="M100 44 L148 76 L150 120 L100 150 L50 120 L52 76 Z" class="f-cream" />
+								<path d="M100 64 L132 86 L130 120 L100 140 L70 120 L68 86 Z" class="f-charcoal" />
+								<circle cx="86" cy="100" r="7" class="f-cream" />
+								<circle cx="114" cy="100" r="7" class="f-cream" />
+								<circle cx="86" cy="100" r="3.2" class="f-ink" />
+								<circle cx="114" cy="100" r="3.2" class="f-ink" />
+								<circle cx="100" cy="122" r="3" class="f-cream-deep" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+
+			<section class="char" id="lamo">
+				<div class="char-head"><span class="char-name">Lamo</span><span class="char-meaning">"long" · gharial</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 full profile -->
+							<svg viewBox="0 0 200 200" aria-label="Lamo profile">
+								<g class="sano-tail">
+									<path d="M44 112 L12 100 L4 116 L14 130 L46 126 Z" class="f-olive-deep" />
+									<path d="M40 104 L46 96 L52 106 Z" class="f-olive-deep" />
+									<path d="M26 104 L32 96 L38 106 Z" class="f-olive-deep" />
+								</g>
+								<path d="M44 108 L150 102 L160 116 L150 128 L44 130 L34 119 Z" class="f-olive" />
+								<path d="M48 122 L150 120 L150 128 L48 130 Z" class="f-cream" />
+								<path d="M56 102 L62 92 L68 102 Z" class="f-olive-deep" />
+								<path d="M74 101 L80 91 L86 101 Z" class="f-olive-deep" />
+								<path d="M92 100 L98 90 L104 100 Z" class="f-olive-deep" />
+								<path d="M110 100 L116 90 L122 100 Z" class="f-olive-deep" />
+								<path d="M128 100 L134 90 L140 100 Z" class="f-olive-deep" />
+								<path d="M60 128 L70 128 L70 144 L60 144 Z" class="f-olive-deep" />
+								<path d="M108 128 L118 128 L118 144 L108 144 Z" class="f-olive-deep" />
+								<path d="M150 104 L196 108 L196 116 L150 118 Z" class="f-olive" />
+								<circle cx="192" cy="112" r="6" class="f-olive-deep" />
+								<circle cx="150" cy="100" r="4.5" class="f-ink" />
+								<path d="M158 108 L188 108 L188 110 L158 111 Z" class="f-charcoal" />
+							</svg>
+						</div>
+						<figcaption>1 · profile</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 head + long snout -->
+							<svg viewBox="0 0 200 200" aria-label="Lamo head">
+								<path d="M30 84 L78 80 L88 118 L40 128 L22 104 Z" class="f-olive" />
+								<path d="M40 116 L84 112 L84 122 L42 126 Z" class="f-cream" />
+								<path d="M34 84 L40 72 L46 84 Z" class="f-olive-deep" />
+								<path d="M50 82 L56 70 L62 82 Z" class="f-olive-deep" />
+								<path d="M78 92 L182 98 L186 110 L78 112 Z" class="f-olive" />
+								<path d="M82 106 L182 106 L182 112 L82 113 Z" class="f-cream" />
+								<circle cx="184" cy="104" r="8" class="f-olive-deep" />
+								<path d="M90 98 L96 92 L100 98 Z" class="f-snow" />
+								<path d="M108 98 L114 92 L118 98 Z" class="f-snow" />
+								<path d="M126 99 L132 93 L136 99 Z" class="f-snow" />
+								<path d="M144 99 L150 93 L154 99 Z" class="f-snow" />
+								<path d="M162 100 L168 94 L172 100 Z" class="f-snow" />
+								<circle cx="56" cy="96" r="6" class="f-ink" />
+								<circle cx="58" cy="94" r="2" class="f-snow" />
+							</svg>
+						</div>
+						<figcaption>2 · head</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V3 swimming curve -->
+							<svg viewBox="0 0 200 200" aria-label="Lamo swimming">
+								<path
+									d="M30 150 L60 120 L120 118 L150 96 L160 104 L132 132 L70 134 L44 158 Z"
+									class="f-olive"
+								/>
+								<path d="M40 146 L66 124 L122 124 L120 130 L70 130 L48 152 Z" class="f-cream" />
+								<path d="M62 120 L66 112 L72 120 Z" class="f-olive-deep" />
+								<path d="M80 119 L84 111 L90 119 Z" class="f-olive-deep" />
+								<path d="M98 119 L102 111 L108 119 Z" class="f-olive-deep" />
+								<path d="M150 98 L192 86 L196 96 L154 108 Z" class="f-olive" />
+								<circle cx="190" cy="90" r="6" class="f-olive-deep" />
+								<circle cx="150" cy="98" r="4.5" class="f-ink" />
+								<path d="M26 150 L8 142 L6 158 L22 160 Z" class="f-olive-deep" />
+							</svg>
+						</div>
+						<figcaption>3 · swimming</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V4 brand tint -->
+							<svg viewBox="0 0 200 200" aria-label="Lamo brand tint">
+								<g class="sano-tail">
+									<path d="M44 112 L12 100 L4 116 L14 130 L46 126 Z" class="f-indigo" />
+									<path d="M40 104 L46 96 L52 106 Z" class="f-badge" />
+									<path d="M26 104 L32 96 L38 106 Z" class="f-badge" />
+								</g>
+								<path d="M44 108 L150 102 L160 116 L150 128 L44 130 L34 119 Z" class="f-indigo" />
+								<path d="M48 122 L150 120 L150 128 L48 130 Z" class="f-cream" />
+								<path d="M56 102 L62 92 L68 102 Z" class="f-badge" />
+								<path d="M74 101 L80 91 L86 101 Z" class="f-badge" />
+								<path d="M92 100 L98 90 L104 100 Z" class="f-badge" />
+								<path d="M110 100 L116 90 L122 100 Z" class="f-badge" />
+								<path d="M128 100 L134 90 L140 100 Z" class="f-badge" />
+								<path d="M60 128 L70 128 L70 144 L60 144 Z" class="f-ink" />
+								<path d="M108 128 L118 128 L118 144 L108 144 Z" class="f-ink" />
+								<path d="M150 104 L196 108 L196 116 L150 118 Z" class="f-indigo" />
+								<circle cx="192" cy="112" r="6" class="f-crimson" />
+								<circle cx="150" cy="100" r="4.5" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>4 · brand tint</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V5 minimal -->
+							<svg viewBox="0 0 200 200" aria-label="Lamo minimal">
+								<path d="M40 104 L120 98 L196 108 L196 118 L120 116 L48 124 L30 116 Z" class="f-olive" />
+								<path d="M40 132 L52 116 L64 132 Z" class="f-olive" />
+								<path d="M96 130 L108 114 L120 130 Z" class="f-olive" />
+								<circle cx="188" cy="113" r="5.5" class="f-olive-deep" />
+								<circle cx="118" cy="104" r="4.5" class="f-ink" />
+							</svg>
+						</div>
+						<figcaption>5 · minimal</figcaption>
+					</figure>
+				</div>
+			</section>
+		</div>
+
+		<script>
+			// ?only=<id> shows a single character card (for clean per-animal phone shots).
+			const only = new URLSearchParams(location.search).get('only');
+			if (only) {
+				document.querySelectorAll('.char').forEach((c) => {
+					if (c.id !== only) c.style.display = 'none';
+				});
+				const lede = document.querySelector('.lede');
+				if (lede) lede.style.display = 'none';
+			}
+		</script>
+	</body>
+</html>
