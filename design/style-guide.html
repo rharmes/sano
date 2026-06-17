@@ -1313,6 +1313,7 @@
 					</figure>
 				</div>
 				<a class="callout" href="animations.html">→ Open the animation tuner</a>
+				<a class="callout" href="characters.html">→ See Sano's friends (character explorations)</a>
 			</section>
 
 			<!-- ── Buttons & inputs ───────────────────────────────────── -->
@@ -1352,8 +1353,10 @@
 				<p class="sg-note">
 					Floating surfaces use the shared <code>.panel</code> class — page background, a <code>--border-color</code> hairline,
 					<code>1rem</code> radius, a soft drop-shadow. The login panel is <code>.panel</code> plus positioning; the reminder
-					modal is <code>.panel.reminder-card</code> — a heavier variant (wider, more padding, a stronger shadow to lift it off
-					the dimmed backdrop). Inset rows are divided with <code>--border-color-softer</code>.
+					modal is a real <code>&lt;dialog&gt;</code> (<code>.panel.reminder-card</code>) — a heavier variant (wider, more
+					padding, a stronger shadow to lift it off the dimmed backdrop) that opens with Sano's head and a speech bubble so the
+					daily-reminder ask is in his voice, and pops in on open (see Motion). Inset rows are divided with
+					<code>--border-color-softer</code>.
 				</p>
 				<div class="panel">
 					<h4>Account</h4>
@@ -1406,8 +1409,9 @@
 				<p class="sg-note">
 					The two-language conversation pattern — Sano speaks from the left, the learner replies from the right. Each bubble leads
 					with Romanized Nepali in Neuton 700, English underneath in italic Lato. Crimson dot = Sano's voice, indigo dot = the
-					learner's. Re-keyed here from the <code>whisper</code> mockup onto the canonical tokens above so it drops straight into
-					the app.
+					learner's. The same <code>.bubble.sano</code> carries Sano's voice through the first-run onboarding and the
+					daily-reminder modal. Re-keyed here from the <code>whisper</code> mockup onto the canonical tokens above so it drops
+					straight into the app.
 				</p>
 				<div class="scene">
 					<svg class="mascot sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
@@ -1462,11 +1466,13 @@
 				<h2 class="sg">Motion</h2>
 				<p class="sg-note">
 					Animation is gentle and purposeful: staggered top-to-bottom reveals on the lesson path, a
-					<code>pop-in</code> + head-wobble + tail-wag flourish on lesson completion, and a set of slow, periodic idle motions
-					that keep Sano feeling alive without distracting (most of each cycle is at rest; periods are de-synced so motions don't
-					all fire at once). Wherever Sano appears it runs these idle loops — the full mascot does all five (tail wag, head tilt,
-					eye blink, ear wiggle, nose wiggle); the footer head crop runs only the three that read at thumbnail size (blink, ear,
-					nose). Every Sano on this page is idling right now.
+					<code>pop-in</code> + head-wobble + tail-wag flourish on lesson completion, a matching celebration on the onboarding
+					finish (Sano pops and wobbles with a burst ring and a few paper-cut confetti flecks), a <code>pop-in</code> entrance on
+					the reminder <code>&lt;dialog&gt;</code> as it opens, and a set of slow, periodic idle motions that keep Sano feeling
+					alive without distracting (most of each cycle is at rest; periods are de-synced so motions don't all fire at once).
+					Wherever Sano appears it runs these idle loops — the full mascot does all five (tail wag, head tilt, eye blink, ear
+					wiggle, nose wiggle); the footer head crop runs only the three that read at thumbnail size (blink, ear, nose). Every
+					Sano on this page is idling right now.
 				</p>
 				<ul class="decisions">
 					<li>
@@ -1474,7 +1480,10 @@
 						block at the bottom of <code>css/sano.css</code>).
 					</li>
 					<li><b>Idle loops are long and quiet.</b> 4–22s periods with a short active window read as "alive," not "busy."</li>
-					<li><b>Celebrate completion, not every tap.</b> The big motion budget is spent on the lesson-complete screen.</li>
+					<li>
+						<b>Celebrate completion, not every tap.</b> The big motion budget is spent on the two "win" moments — the
+						lesson-complete screen and the onboarding finish — which share the same pop / burst / confetti vocabulary.
+					</li>
 				</ul>
 				<a class="callout" href="animations.html">→ Tune timings in the animation studio</a>
 			</section>
