@@ -812,6 +812,40 @@
 				color: var(--button-primary-color);
 			}
 
+			/* ── Companion design pages (links to the sister docs in design/) ── */
+			.pages {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+				gap: 1.4rem;
+				margin: 0 0 1rem;
+			}
+			.page-card {
+				display: block;
+				padding: 1.8rem;
+				border: 1px solid var(--border-color-softer);
+				border-radius: 10px;
+				background: var(--background-color-softer);
+				text-decoration: none;
+				transition: border-color 0.15s ease;
+			}
+			.page-card:hover {
+				border-color: var(--accent);
+			}
+			.page-card .pc-title {
+				display: block;
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 2.4rem;
+				line-height: 1.1;
+				color: var(--text-color-richer);
+			}
+			.page-card .pc-desc {
+				display: block;
+				margin-top: 0.4rem;
+				font-size: 1.5rem;
+				color: var(--text-color-soft);
+			}
+
 			footer.sg {
 				margin-top: 5rem;
 				padding-top: 2.4rem;
@@ -932,6 +966,21 @@
 				<code>css/sano.css</code>, <code>css/fonts.css</code>, and the inline sprite in <code>index.html</code> are the sources of
 				truth. When they change, update this page in the same pass.
 			</p>
+
+			<nav class="pages" aria-label="Companion design pages">
+				<a class="page-card" href="animations.html">
+					<span class="pc-title">Animation tuner</span>
+					<span class="pc-desc">Tune the idle and action timings for all eleven characters.</span>
+				</a>
+				<a class="page-card" href="characters.html">
+					<span class="pc-title">Sano &amp; friends</span>
+					<span class="pc-desc">Paper-cut explorations — the source of truth for every character.</span>
+				</a>
+				<a class="page-card" href="icons.html">
+					<span class="pc-title">Icon set</span>
+					<span class="pc-desc">Home-screen app icons and the theme-aware favicon.</span>
+				</a>
+			</nav>
 
 			<nav class="toc">
 				<a href="#color">Color</a>
@@ -1522,7 +1571,8 @@
 					</li>
 					<li>
 						<b>Design files live in <code>design/</code>.</b> Committed but excluded from the deploy rsync — nothing here
-						ships to the live site. This guide and the animation tuner both live here.
+						ships to the live site. This guide and its companion pages (the animation tuner, character explorations, and the
+						icon set) all live here.
 					</li>
 				</ul>
 			</section>
