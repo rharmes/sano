@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Sano's friends — paper-cut explorations</title>
+		<title>Sano and friends — paper-cut explorations</title>
 		<link rel="stylesheet" href="../css/fonts.css" />
 		<link rel="stylesheet" href="../css/sano.css" />
 		<style>
@@ -194,11 +194,96 @@
 	</head>
 	<body>
 		<div class="wrap">
-			<h1>Sano's friends</h1>
+			<h1>Sano and friends</h1>
 			<p class="lede">
-				Paper-cut explorations — a full-body pose and a head for each character, in Sano's flat layered-shape style. Tell me what to
-				adjust and I'll refine.
+				<strong>This page is the source of truth for all the characters and their animations.</strong> Each has a full-body pose and a
+				head in Sano's flat layered-shape paper-cut style, rigged with the <code>.part-*</code> groups (head, tail, eyes, ears, nose)
+				that the animation tuner reads from. (The app UIs will read from here too — that's next.)
 			</p>
+
+			<section class="char" id="sano">
+				<div class="char-head"><span class="char-name">Sano</span><span class="char-meaning">"small" · mouse mascot</span></div>
+				<div class="variants">
+					<figure>
+						<div class="tile">
+							<!-- V1 whole body (the tuned mascot) -->
+							<svg viewBox="30 10 160 174" aria-label="Sano sitting">
+								<g>
+									<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+									<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+									<g class="part-tail">
+										<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
+									</g>
+									<g class="part-head">
+										<path
+											d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z"
+											class="f-indigo"
+										/>
+										<g class="part-ear part-ear-left">
+											<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+											<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+										</g>
+										<g class="part-ear part-ear-right">
+											<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+											<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+										</g>
+										<path
+											d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z"
+											class="f-cream"
+										/>
+										<g class="part-eyes">
+											<circle cx="88" cy="72" r="4.4" class="f-ink" />
+											<circle cx="112" cy="72" r="4.4" class="f-ink" />
+										</g>
+										<g class="part-nose">
+											<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+											<path
+												d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+												class="s-whisker"
+											/>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</div>
+						<figcaption>1 · sitting</figcaption>
+					</figure>
+					<figure>
+						<div class="tile">
+							<!-- V2 head (purpose-built crop) -->
+							<svg viewBox="42 8 116 110" aria-label="Sano face">
+								<g class="part-head">
+									<path
+										d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+										class="f-indigo"
+									/>
+									<g class="part-ear part-ear-left">
+										<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+										<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+									</g>
+									<g class="part-ear part-ear-right">
+										<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+										<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+									</g>
+									<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+									<g class="part-eyes">
+										<circle cx="88" cy="72" r="6" class="f-ink" />
+										<circle cx="112" cy="72" r="6" class="f-ink" />
+									</g>
+									<g class="part-nose">
+										<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+										<path
+											d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+											class="s-whisker"
+										/>
+									</g>
+								</g>
+							</svg>
+						</div>
+						<figcaption>2 · face</figcaption>
+					</figure>
+				</div>
+			</section>
 
 			<section class="char" id="pyaro">
 				<div class="char-head"><span class="char-name">Pyaro</span><span class="char-meaning">"dear" · red panda</span></div>

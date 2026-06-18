@@ -90,7 +90,7 @@
 			/* Top bar — head thumbnails (Sano first) with the theme toggle on the right. */
 			.topbar {
 				display: flex;
-				align-items: center;
+				align-items: flex-start;
 				gap: 1rem;
 				max-width: 1100px;
 				margin: 0 auto 2rem;
@@ -102,24 +102,9 @@
 				gap: 0.6rem;
 				justify-content: center;
 			}
+			/* Chips and the theme toggle share one square, head-sized shape. */
+			.char-picker button,
 			.theme-toggle {
-				flex: none;
-				padding: 0.5rem 0.9rem;
-				background: var(--paper-deep);
-				color: var(--ink);
-				border: 1px solid var(--ink-softer);
-				border-radius: 8px;
-				font-family: 'Lato', sans-serif;
-				font-weight: 700;
-				font-size: 0.8rem;
-				letter-spacing: 0.04em;
-				cursor: pointer;
-				white-space: nowrap;
-			}
-			.theme-toggle:hover {
-				border-color: var(--accent);
-			}
-			.char-picker button {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
@@ -134,23 +119,29 @@
 					border-color 0.15s ease,
 					transform 0.1s ease;
 			}
-			.char-picker button:hover {
+			.theme-toggle {
+				flex: none;
+			}
+			.char-picker button:hover,
+			.theme-toggle:hover {
 				transform: translateY(-2px);
 			}
 			.char-picker button.active {
 				border-color: var(--accent);
 				box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
 			}
-			.char-picker .chip-art {
+			.chip-art {
 				width: 48px;
 				height: 48px;
+				display: grid;
+				place-items: center;
 			}
-			.char-picker .chip-art svg {
+			.chip-art svg {
 				width: 100%;
 				height: 100%;
 				display: block;
 			}
-			.char-picker .chip-name {
+			.chip-name {
 				font-size: 0.66rem;
 				font-weight: 700;
 				letter-spacing: 0.06em;
@@ -641,7 +632,10 @@
 	<body>
 		<div class="topbar">
 			<div class="char-picker" id="picker"></div>
-			<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">☾ Dark</button>
+			<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+				<span class="chip-art" id="theme-icon"></span>
+				<span class="chip-name" id="theme-label">Dark</span>
+			</button>
 		</div>
 
 		<div class="layout">
@@ -656,69 +650,8 @@
 			</div>
 		</div>
 
-		<!-- Sano's art lives here (not in characters.html). The whole-body view is the
-		     existing tuned mascot; the head view is the same head group, cropped. Both
-		     are instrumented with the shared .part-* groups. -->
-		<template id="sano-whole">
-			<svg viewBox="30 10 160 174" aria-label="Sano whole body">
-				<g>
-					<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
-					<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
-					<g class="part-tail">
-						<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
-					</g>
-					<g class="part-head">
-						<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
-						<g class="part-ear part-ear-left">
-							<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
-							<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
-						</g>
-						<g class="part-ear part-ear-right">
-							<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
-							<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
-						</g>
-						<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
-						<g class="part-eyes">
-							<circle cx="88" cy="72" r="4.4" class="f-ink" />
-							<circle cx="112" cy="72" r="4.4" class="f-ink" />
-						</g>
-						<g class="part-nose">
-							<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
-							<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
-						</g>
-					</g>
-				</g>
-			</svg>
-		</template>
-		<!-- Sano's purpose-built head-only view (the app's footer crop, index.html) —
-		     rounder outline + larger eyes than the body-view head, framed to the head. -->
-		<template id="sano-head">
-			<svg viewBox="42 8 116 110" aria-label="Sano head">
-				<g class="part-head">
-					<path d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z" class="f-indigo" />
-					<g class="part-ear part-ear-left">
-						<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
-						<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
-					</g>
-					<g class="part-ear part-ear-right">
-						<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
-						<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
-					</g>
-					<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
-					<g class="part-eyes">
-						<circle cx="88" cy="72" r="6" class="f-ink" />
-						<circle cx="112" cy="72" r="6" class="f-ink" />
-					</g>
-					<g class="part-nose">
-						<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
-						<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
-					</g>
-				</g>
-			</svg>
-		</template>
-
-		<!-- Companion art (the 10 friends), generated from characters.html by
-		     tools/build-anim-characters.mjs. Defines window.ANIM_CHARACTERS. -->
+		<!-- All character art (Sano + the 10 friends), generated from characters.html
+		     by tools/build-anim-characters.mjs. Defines window.ANIM_CHARACTERS. -->
 		<script src="anim-characters.js"></script>
 		<script>
 			// ---- Animation catalogue ------------------------------------------------
@@ -839,20 +772,10 @@
 			const SECTION_TITLE = { idle: 'Idle animations', action: 'Action animations' };
 
 			// ---- Character roster ---------------------------------------------------
-			// Sano (inline templates) first, then the generated companions. Every
-			// character implicitly has a `body` (the whole SVG), so body-wiggle and
-			// excited-jump always apply.
-			function sanoCharacter() {
-				const grab = (id) => document.getElementById(id).innerHTML.trim();
-				return {
-					id: 'sano',
-					name: 'Sano',
-					whole: grab('sano-whole'),
-					head: grab('sano-head'),
-					parts: ['head', 'tail', 'eyes', 'ear', 'nose', 'body'],
-				};
-			}
-			const CHARACTERS = [sanoCharacter(), ...(window.ANIM_CHARACTERS || [])].map((c) => ({
+			// All eleven characters (Sano first) come from characters.html via
+			// design/anim-characters.js. Every character implicitly has a `body` (the
+			// whole SVG), so body-wiggle and excited-jump always apply.
+			const CHARACTERS = (window.ANIM_CHARACTERS || []).map((c) => ({
 				...c,
 				parts: Array.from(new Set([...(c.parts || []), 'body'])),
 			}));
@@ -1005,11 +928,19 @@
 			});
 
 			// ---- Theme toggle (light default; .dark on <html> mirrors the app) ------
+			// Styled as a head-sized chip: a moon/sun icon over a label.
 			const THEME_KEY = 'sano-tuner-theme';
+			const MOON_ICON =
+				'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z" style="fill: var(--path-complete-color)" /></svg>';
+			const SUN_ICON =
+				'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" style="fill: var(--badge-color)" /><g style="stroke: var(--badge-color); stroke-width: 2; stroke-linecap: round"><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.1 5.1l2.1 2.1M16.8 16.8l2.1 2.1M18.9 5.1l-2.1 2.1M7.2 16.8l-2.1 2.1" /></g></svg>';
 			const themeBtn = document.getElementById('theme-toggle');
+			const themeIcon = document.getElementById('theme-icon');
+			const themeLabel = document.getElementById('theme-label');
 			function applyTheme(dark) {
 				document.documentElement.classList.toggle('dark', dark);
-				themeBtn.textContent = dark ? '☀ Light' : '☾ Dark';
+				themeIcon.innerHTML = dark ? SUN_ICON : MOON_ICON;
+				themeLabel.textContent = dark ? 'Light' : 'Dark';
 				themeBtn.setAttribute('aria-pressed', String(dark));
 			}
 			themeBtn.addEventListener('click', () => {

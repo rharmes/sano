@@ -105,17 +105,20 @@ significantly, update CLAUDE.md in the same commit.
 - `design/` holds in-repo design artifacts. It is committed but NOT in the
   deploy rsync allowlist, so nothing under it ships to the live site. Future
   design files go here too — don't add `design` to `tools/deploy.sh`.
-  - `design/characters.html` is the paper-cut gallery for Sano's 10 animal
-    companions (each a whole-body + head view); their parts are wrapped in
-    `.part-*` groups (head/tail/eyes/ear[-left|-right]/nose) purely for
-    animation targeting — inert in the gallery itself.
-  - `design/animations.html` is the **11-character** animation tuner (Sano +
-    the 10 companions): pick a character up top, both its views mount on the
-    left, and the per-animation cards on the right apply to it (cards for parts
-    a character lacks are auto-hidden). Sano's two views are inline; the
-    companions come from `design/anim-characters.js`, **generated** from
-    `characters.html` by `node tools/build-anim-characters.mjs` (re-run it after
-    editing companion art; the file is `.prettierignore`d). `?char=<id>` deep-links a character.
+  - `design/characters.html` ("Sano and friends") is the **source of truth for
+    all eleven characters and their animations** — Sano first, then the 10
+    companions, each a whole-body + head view. Every character's parts are
+    wrapped in `.part-*` groups (head/tail/eyes/ear[-left|-right]/nose) for
+    animation targeting — inert in the gallery itself. The app UIs don't read
+    from here yet (planned next); the tuner already does.
+  - `design/animations.html` is the **11-character** animation tuner: pick a
+    character up top, both its views mount on the left, and the per-animation
+    cards on the right apply to it (cards for parts a character lacks are
+    auto-hidden). All characters (incl. Sano) come from `design/anim-characters.js`,
+    **generated** from `characters.html` by `node tools/build-anim-characters.mjs`
+    (re-run after editing any character art; the file is `.prettierignore`d).
+    A dark/light toggle (mirrors the app palette) sits in the top bar.
+    `?char=<id>` and `?theme=dark|light` deep-link a character and theme.
 - Recent work: see `git log` — commit messages are descriptive.
 
 ## Workflow for every code change
