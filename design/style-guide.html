@@ -130,46 +130,187 @@
 				font-size: 1.8rem;
 			}
 
-			/* Theme toggle — a head-sized chip mirroring design/animations.html,
-			   pushed to the right of the masthead: a moon/sun glyph over a label. */
-			.theme-toggle {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				gap: 0.2rem;
+			/* ── Day / night theme switch ──────────────────────────────────
+			   One consistent control across the design pages: a pill switch in
+			   the classic day↔night style — light on the left, dark on the
+			   right. A sun knob over a sky-blue track slides right and morphs
+			   into a cratered moon over a night sky. Every visual is keyed off
+			   html.dark, so it animates in lockstep with the theme. */
+			.theme-switch {
+				flex: none;
+				align-self: center;
 				margin-left: auto;
-				width: 76px;
-				padding: 0.4rem 0.2rem 0.3rem;
-				background: var(--background-color-softer);
-				border: 1px solid var(--border-color);
-				border-radius: 8px;
+				width: 68px;
+				height: 34px;
+				padding: 0;
+				border: 0;
+				border-radius: 17px;
+				background: none;
 				cursor: pointer;
-				transition:
-					border-color 0.15s ease,
-					transform 0.1s ease;
+				-webkit-tap-highlight-color: transparent;
 			}
-			.theme-toggle:hover {
-				transform: translateY(-2px);
-				border-color: var(--text-color-softer);
+			.theme-switch:focus-visible {
+				outline: 2px solid #4a6cf0;
+				outline-offset: 3px;
 			}
-			.chip-art {
-				width: 48px;
-				height: 48px;
-				display: grid;
-				place-items: center;
-			}
-			/* The sun/moon glyph reads a touch smaller than the chip box. */
-			.theme-toggle .chip-art svg {
-				width: 70%;
-				height: 70%;
+			.switch-track {
+				position: relative;
 				display: block;
+				width: 100%;
+				height: 100%;
+				border-radius: inherit;
+				overflow: hidden;
+				isolation: isolate;
+				box-shadow:
+					inset 0 1px 3px rgba(8, 18, 40, 0.35),
+					0 1px 2px rgba(8, 18, 40, 0.18);
 			}
-			.chip-name {
-				font-size: 0.66rem;
-				font-weight: 700;
-				letter-spacing: 0.06em;
-				text-transform: uppercase;
-				color: var(--text-color-soft);
+			/* Two crossfading skies (gradients can't be transitioned directly). */
+			.switch-track::before,
+			.switch-track::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				transition: opacity 0.5s ease;
+			}
+			.switch-track::before {
+				background: linear-gradient(160deg, #5b9fe0, #8fc8f1 55%, #bce3fb);
+			}
+			.switch-track::after {
+				background: linear-gradient(160deg, #15203a, #28335c);
+				opacity: 0;
+			}
+			html.dark .switch-track::before {
+				opacity: 0;
+			}
+			html.dark .switch-track::after {
+				opacity: 1;
+			}
+			/* Clouds (day) and stars (night) sit between sky and knob. */
+			.switch-clouds,
+			.switch-stars {
+				position: absolute;
+				inset: 0;
+				z-index: 1;
+				pointer-events: none;
+				transition:
+					opacity 0.45s ease,
+					transform 0.55s cubic-bezier(0.4, 1.3, 0.5, 1);
+			}
+			.switch-stars {
+				opacity: 0;
+				transform: scale(0.6);
+			}
+			html.dark .switch-clouds {
+				opacity: 0;
+				transform: translateX(16px);
+			}
+			html.dark .switch-stars {
+				opacity: 1;
+				transform: scale(1);
+			}
+			.switch-clouds i {
+				position: absolute;
+				background: rgba(255, 255, 255, 0.92);
+				border-radius: 50%;
+			}
+			.switch-clouds i:nth-child(1) {
+				width: 13px;
+				height: 13px;
+				right: 8px;
+				bottom: 3px;
+			}
+			.switch-clouds i:nth-child(2) {
+				width: 9px;
+				height: 9px;
+				right: 17px;
+				bottom: 8px;
+			}
+			.switch-clouds i:nth-child(3) {
+				width: 7px;
+				height: 7px;
+				right: 5px;
+				bottom: 11px;
+			}
+			.switch-stars i {
+				position: absolute;
+				background: #fff;
+				border-radius: 50%;
+			}
+			.switch-stars i:nth-child(1) {
+				width: 3px;
+				height: 3px;
+				left: 11px;
+				top: 8px;
+			}
+			.switch-stars i:nth-child(2) {
+				width: 2px;
+				height: 2px;
+				left: 19px;
+				top: 19px;
+			}
+			.switch-stars i:nth-child(3) {
+				width: 2.5px;
+				height: 2.5px;
+				left: 25px;
+				top: 6px;
+			}
+			.switch-stars i:nth-child(4) {
+				width: 2px;
+				height: 2px;
+				left: 8px;
+				top: 21px;
+			}
+			/* The sliding knob: a sun that becomes a moon. */
+			.switch-thumb {
+				position: absolute;
+				z-index: 2;
+				top: 4px;
+				left: 4px;
+				width: 26px;
+				height: 26px;
+				border-radius: 50%;
+				background: radial-gradient(circle at 34% 32%, #ffe7a3, #ffd35c 55%, #f6b73c);
+				box-shadow:
+					0 0 6px rgba(255, 199, 71, 0.7),
+					inset 0 -2px 3px rgba(214, 138, 26, 0.35);
+				transition:
+					transform 0.55s cubic-bezier(0.4, 1.3, 0.5, 1),
+					background 0.5s ease,
+					box-shadow 0.5s ease;
+			}
+			html.dark .switch-thumb {
+				transform: translateX(34px);
+				background: radial-gradient(circle at 36% 32%, #f6f7fb, #dde3f0 60%, #c2cadd);
+				box-shadow:
+					0 0 6px rgba(207, 217, 240, 0.5),
+					inset 0 -2px 3px rgba(120, 132, 165, 0.45);
+			}
+			/* Moon craters — flat discs revealed only in dark. */
+			.switch-thumb::before,
+			.switch-thumb::after {
+				content: '';
+				position: absolute;
+				border-radius: 50%;
+				background: rgba(150, 161, 191, 0.55);
+				opacity: 0;
+				transition: opacity 0.4s ease 0.1s;
+			}
+			.switch-thumb::before {
+				width: 6px;
+				height: 6px;
+				top: 6px;
+				left: 13px;
+			}
+			.switch-thumb::after {
+				width: 4px;
+				height: 4px;
+				top: 14px;
+				left: 7px;
+			}
+			html.dark .switch-thumb::before,
+			html.dark .switch-thumb::after {
+				opacity: 1;
 			}
 			.lede {
 				max-width: 64ch;
@@ -1017,9 +1158,20 @@
 					<h1>Style Guide</h1>
 					<p>Sano — Nepali Study Guide · “Pennant &amp; Paper-cut”</p>
 				</div>
-				<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
-					<span class="chip-art" id="theme-icon"></span>
-					<span class="chip-name" id="theme-label">Dark</span>
+				<button
+					class="theme-switch"
+					id="theme-toggle"
+					type="button"
+					role="switch"
+					aria-checked="false"
+					aria-label="Toggle light or dark mode"
+					title="Toggle light / dark"
+				>
+					<span class="switch-track">
+						<span class="switch-clouds" aria-hidden="true"><i></i><i></i><i></i></span>
+						<span class="switch-stars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+						<span class="switch-thumb"></span>
+					</span>
 				</button>
 			</header>
 
@@ -1672,20 +1824,11 @@
 		<script>
 			// Theme toggle — same control as design/animations.html. The head
 			// script already set the .dark class; this wires the button and keeps
-			// its moon/sun icon + label in sync.
+			// its aria-checked state in sync.
 			const THEME_KEY = 'sano-guide-theme';
-			const MOON_ICON =
-				'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z" style="fill: var(--path-complete-color)" /></svg>';
-			const SUN_ICON =
-				'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" style="fill: var(--badge-color)" /><g style="stroke: var(--badge-color); stroke-width: 2; stroke-linecap: round"><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.1 5.1l2.1 2.1M16.8 16.8l2.1 2.1M18.9 5.1l-2.1 2.1M7.2 16.8l-2.1 2.1" /></g></svg>';
 			const themeBtn = document.getElementById('theme-toggle');
-			const themeIcon = document.getElementById('theme-icon');
-			const themeLabel = document.getElementById('theme-label');
 			function syncToggle() {
-				const dark = document.documentElement.classList.contains('dark');
-				themeIcon.innerHTML = dark ? SUN_ICON : MOON_ICON;
-				themeLabel.textContent = dark ? 'Light' : 'Dark';
-				themeBtn.setAttribute('aria-pressed', String(dark));
+				themeBtn.setAttribute('aria-checked', String(document.documentElement.classList.contains('dark')));
 			}
 			themeBtn.addEventListener('click', () => {
 				const dark = !document.documentElement.classList.contains('dark');
