@@ -6,48 +6,164 @@
 		<title>Sano — animation tuner</title>
 		<link rel="stylesheet" href="../css/fonts.css" />
 		<style>
+			/* Warm "paper" palette matching design/characters.html so all eleven
+			   characters render on the tones they were drawn for. Light by default; the
+			   top-bar toggle adds .dark on <html> to mirror the app's dark mode
+			   (css/sano.css). The --f-* animal fills are light-only (as in
+			   characters.html); Sano, the shipped mascot, recolors via the brand tokens. */
 			:root {
+				/* dev-tool chrome */
 				--ink: #2a2630;
 				--ink-soft: #837b8e;
 				--ink-softer: #c8c1d2;
 				--paper: #fafaf6;
 				--paper-deep: #f0eee6;
-				--accent: #b8525e;
 				--indigo: #4c5896;
 				--gold: #c8a04a;
+
+				/* brand + paper-cut palette (ported from characters.html / sano.css) */
+				--accent: #dd6470; /* crimson */
+				--path-complete-color: #56629e; /* indigo (f-indigo) */
 				--paper-petal: #f3c7cd;
 				--paper-cream: #f1e8d6;
 				--paper-cream-deep: #e8ddc6;
-				--paper-ink: #2a2630;
+				--paper-ink: #37323c;
 				--paper-whisker: #a59a86;
+				--badge-color: #d99e3a;
+				--background-color: #fbf5e9; /* warm paper for character tiles */
+
+				/* animal fills */
+				--f-rust: #c66a38;
+				--f-rust-deep: #a9522a;
+				--f-orange: #d98a43;
+				--f-slate: #a4abb8;
+				--f-slate-deep: #717a8d;
+				--f-ele: #ad9ca7;
+				--f-ele-deep: #6f5f6a;
+				--f-rhino: #8e8b72;
+				--f-rhino-deep: #5d5b46;
+				--f-brown: #8c6a45;
+				--f-brown-deep: #674a2e;
+				--f-olive: #7f8a52;
+				--f-olive-deep: #5d6740;
+				--f-teal: #3f8f8a;
+				--f-copper: #c0703f;
+				--f-green: #708f4a;
+				--f-snow: #f6efe2;
+				--f-charcoal: #3a3540;
+				--f-horn: #c2b48f;
 			}
-			@media (prefers-color-scheme: dark) {
-				:root {
-					--ink: #f3eff5;
-					--ink-soft: #948b9e;
-					--ink-softer: #5a5266;
-					--paper: #15131a;
-					--paper-deep: #1f1d26;
-					--accent: #d97585;
-					--indigo: #7d8dd2;
-					--gold: #d6b35a;
-				}
+			:root.dark {
+				/* dev-tool chrome */
+				--ink: #f3eff5;
+				--ink-soft: #948b9e;
+				--ink-softer: #463f52;
+				--paper: #15131a;
+				--paper-deep: #1f1d26;
+				--indigo: #7d8dd2;
+				--gold: #d6b35a;
+
+				/* brand + paper-cut palette — mirrors css/sano.css dark mode */
+				--accent: #e0697a;
+				--path-complete-color: #7384c4;
+				--paper-petal: #f0bfc7;
+				--paper-cream: #e6dac4;
+				--paper-cream-deep: #d6c9ae;
+				--paper-ink: #2e2935;
+				--paper-whisker: #8d8474;
+				--badge-color: #d9aa4e;
+				--background-color: #1b1822; /* dark warm paper for tiles */
 			}
 			* {
 				box-sizing: border-box;
 			}
 			body {
 				margin: 0;
-				padding: 3rem 2.4rem;
+				padding: 2.4rem 2.4rem 4rem;
 				font-family: 'Lato', sans-serif;
 				font-weight: 300;
 				color: var(--ink);
 				background: var(--paper);
 				min-height: 100vh;
 			}
+
+			/* Top bar — head thumbnails (Sano first) with the theme toggle on the right. */
+			.topbar {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+				max-width: 1100px;
+				margin: 0 auto 2rem;
+			}
+			.char-picker {
+				flex: 1;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6rem;
+				justify-content: center;
+			}
+			.theme-toggle {
+				flex: none;
+				padding: 0.5rem 0.9rem;
+				background: var(--paper-deep);
+				color: var(--ink);
+				border: 1px solid var(--ink-softer);
+				border-radius: 8px;
+				font-family: 'Lato', sans-serif;
+				font-weight: 700;
+				font-size: 0.8rem;
+				letter-spacing: 0.04em;
+				cursor: pointer;
+				white-space: nowrap;
+			}
+			.theme-toggle:hover {
+				border-color: var(--accent);
+			}
+			.char-picker button {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.2rem;
+				width: 76px;
+				padding: 0.4rem 0.2rem 0.3rem;
+				background: var(--background-color);
+				border: 1px solid var(--ink-softer);
+				border-radius: 8px;
+				cursor: pointer;
+				transition:
+					border-color 0.15s ease,
+					transform 0.1s ease;
+			}
+			.char-picker button:hover {
+				transform: translateY(-2px);
+			}
+			.char-picker button.active {
+				border-color: var(--accent);
+				box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
+			}
+			.char-picker .chip-art {
+				width: 48px;
+				height: 48px;
+			}
+			.char-picker .chip-art svg {
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+			.char-picker .chip-name {
+				font-size: 0.66rem;
+				font-weight: 700;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: var(--ink-soft);
+			}
+			.char-picker button.active .chip-name {
+				color: var(--accent);
+			}
+
 			.layout {
 				display: grid;
-				grid-template-columns: minmax(280px, 380px) 1fr;
+				grid-template-columns: minmax(260px, 340px) 1fr;
 				gap: 3rem;
 				align-items: start;
 				max-width: 1100px;
@@ -55,47 +171,70 @@
 			}
 			.mascot-stage {
 				position: sticky;
-				top: 2rem;
-				padding: 2rem;
-				background: var(--paper-deep);
+				top: 1.5rem;
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+			}
+			.stage-view {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.4rem;
+			}
+			.tile {
+				width: 100%;
+				background: var(--background-color);
 				border: 1px solid var(--ink-softer);
 				border-radius: 8px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				min-height: 380px;
+				aspect-ratio: 1;
+				display: grid;
+				place-items: center;
+				padding: 7%;
 			}
-			.mascot {
+			.tile svg {
 				width: 100%;
-				max-width: 280px;
+				height: 100%;
 				display: block;
-				transform-origin: 50% 100%;
-				/* JS sets `animation:` on demand. Default is no animation. */
 			}
-			.sano-head {
+			.stage-view figcaption {
+				font-size: 0.7rem;
+				font-weight: 700;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: var(--ink-soft);
+			}
+
+			/* Whole SVG (body-wiggle / excited-jump) pivots at the feet. */
+			.part-body {
+				transform-origin: 50% 100%;
+			}
+			/* Per-part pivots — fill-box keeps the origin local to each part's own
+			   bbox, so the same rule works for every character. */
+			.part-head {
 				transform-box: fill-box;
 				transform-origin: 50% 100%;
 			}
-			.sano-tail {
+			.part-tail {
 				transform-box: fill-box;
 				transform-origin: 0% 50%;
 			}
-			.sano-eyes {
+			.part-eyes {
 				transform-box: fill-box;
 				transform-origin: 50% 50%;
 			}
-			.sano-ear {
+			.part-ear {
 				transform-box: fill-box;
 				transform-origin: 50% 100%;
 			}
-			/* Mirror the wiggle direction so the two ears twitch outward symmetrically. */
-			.sano-ear-left {
+			/* Mirror the wiggle direction so paired ears twitch outward symmetrically. */
+			.part-ear-left {
 				--ear-dir: 1;
 			}
-			.sano-ear-right {
+			.part-ear-right {
 				--ear-dir: -1;
 			}
-			.sano-nose {
+			.part-nose {
 				transform-box: fill-box;
 				transform-origin: 50% 30%;
 			}
@@ -109,6 +248,11 @@
 				display: flex;
 				gap: 0.8rem;
 				flex-wrap: wrap;
+			}
+			#cards {
+				display: flex;
+				flex-direction: column;
+				gap: 1.4rem;
 			}
 			.section-header {
 				font-family: 'Lato', sans-serif;
@@ -163,7 +307,7 @@
 				text-transform: uppercase;
 				color: var(--ink-soft);
 			}
-			.field input[type='number'] {
+			.field input {
 				font-family: 'Lato', sans-serif;
 				font-size: 1rem;
 				padding: 0.4rem 0.6rem;
@@ -173,7 +317,7 @@
 				color: var(--ink);
 				width: 100%;
 			}
-			.field input[type='number']:focus {
+			.field input:focus {
 				outline: 2px solid var(--accent);
 				outline-offset: 1px;
 			}
@@ -250,6 +394,12 @@
 				.mascot-stage {
 					position: relative;
 					top: 0;
+					flex-direction: row;
+					flex-wrap: wrap;
+					justify-content: center;
+				}
+				.stage-view {
+					width: 220px;
 				}
 				.fields {
 					grid-template-columns: 1fr 1fr;
@@ -401,9 +551,9 @@
 				}
 			}
 
-			/* Paper-cut fills */
+			/* Paper-cut fills — Sano + companions share this set. */
 			.f-indigo {
-				fill: var(--indigo);
+				fill: var(--path-complete-color);
 			}
 			.f-crimson {
 				fill: var(--accent);
@@ -420,292 +570,312 @@
 			.f-ink {
 				fill: var(--paper-ink);
 			}
+			.f-rust {
+				fill: var(--f-rust);
+			}
+			.f-rust-deep {
+				fill: var(--f-rust-deep);
+			}
+			.f-orange {
+				fill: var(--f-orange);
+			}
+			.f-slate {
+				fill: var(--f-slate);
+			}
+			.f-slate-deep {
+				fill: var(--f-slate-deep);
+			}
+			.f-ele {
+				fill: var(--f-ele);
+			}
+			.f-ele-deep {
+				fill: var(--f-ele-deep);
+			}
+			.f-rhino {
+				fill: var(--f-rhino);
+			}
+			.f-rhino-deep {
+				fill: var(--f-rhino-deep);
+			}
+			.f-brown {
+				fill: var(--f-brown);
+			}
+			.f-brown-deep {
+				fill: var(--f-brown-deep);
+			}
+			.f-olive {
+				fill: var(--f-olive);
+			}
+			.f-olive-deep {
+				fill: var(--f-olive-deep);
+			}
+			.f-teal {
+				fill: var(--f-teal);
+			}
+			.f-copper {
+				fill: var(--f-copper);
+			}
+			.f-green {
+				fill: var(--f-green);
+			}
+			.f-snow {
+				fill: var(--f-snow);
+			}
+			.f-charcoal {
+				fill: var(--f-charcoal);
+			}
+			.f-horn {
+				fill: var(--f-horn);
+			}
+			.f-badge {
+				fill: var(--badge-color);
+			}
 			.s-whisker {
 				fill: none;
 				stroke: var(--paper-whisker);
-				stroke-width: 1.4;
+				stroke-width: 2;
 				stroke-linecap: round;
 			}
 		</style>
 	</head>
 	<body>
+		<div class="topbar">
+			<div class="char-picker" id="picker"></div>
+			<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">☾ Dark</button>
+		</div>
+
 		<div class="layout">
-			<div class="mascot-stage">
-				<svg class="mascot" viewBox="30 10 160 174" aria-hidden="true">
-					<g>
-						<!-- Body outline (indigo) — chevron tapering up to an apex on the rotation
-						     axis at (100, 30). Top corners pulled in to (55, 98) and (145, 98) so
-						     the body's sides trace the head outline's tapered edge seamlessly at
-						     rest, and the y=98 height matches where the head outline's bottom
-						     corners reach at max head-tilt angle (sin(12°) × 46 ≈ 9.57). -->
-						<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
-						<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
-						<g class="sano-tail">
-							<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
-						</g>
-						<g class="sano-head">
-							<!-- Head outline (indigo) — wide at the neck, follows all head transforms. -->
-							<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
-							<g class="sano-ear sano-ear-left">
-								<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
-								<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
-							</g>
-							<g class="sano-ear sano-ear-right">
-								<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
-								<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
-							</g>
-							<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
-							<g class="sano-eyes">
-								<circle cx="88" cy="72" r="4.4" class="f-ink" />
-								<circle cx="112" cy="72" r="4.4" class="f-ink" />
-							</g>
-							<g class="sano-nose">
-								<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
-								<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
-							</g>
-						</g>
-					</g>
-				</svg>
-			</div>
+			<div class="mascot-stage" id="stage"></div>
 
 			<div class="controls">
 				<div class="global">
 					<button class="stop" id="stop-all" type="button">Stop all loops</button>
 					<button class="stop" id="play-all" type="button">Play all once</button>
 				</div>
-
-				<h3 class="section-header">Idle animations</h3>
-
-				<div class="card" data-anim="tail-wag" data-target=".sano-tail">
-					<h2>Tail wag</h2>
-					<p class="desc">Tail pivots at its base, four wags back and forth.</p>
-					<div class="fields">
-						<div class="field">
-							<label>Duration (ms)</label>
-							<input type="number" data-field="duration" value="900" min="100" max="10000" step="50" />
-						</div>
-						<div class="field">
-							<label>Easing</label>
-							<input type="text" data-field="easing" value="ease-in-out" />
-						</div>
-						<div class="field">
-							<label>Period (s)</label>
-							<input type="number" data-field="period" value="9" min="0.5" max="60" step="0.5" />
-						</div>
-					</div>
-					<div class="row">
-						<button class="play" type="button">Play once</button>
-						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
-					</div>
-					<div class="css-snippet" data-snippet></div>
-				</div>
-
-				<div class="card" data-anim="head-tilt" data-target=".sano-head">
-					<h2>Head tilt</h2>
-					<p class="desc">Head leans left, holds, then straightens. Duration includes the 3s hold.</p>
-					<div class="fields">
-						<div class="field">
-							<label>Duration (ms)</label>
-							<input type="number" data-field="duration" value="3800" min="100" max="10000" step="50" />
-						</div>
-						<div class="field">
-							<label>Easing</label>
-							<input type="text" data-field="easing" value="ease-in-out" />
-						</div>
-						<div class="field">
-							<label>Period (s)</label>
-							<input type="number" data-field="period" value="22" min="0.5" max="60" step="0.5" />
-						</div>
-					</div>
-					<div class="row">
-						<button class="play" type="button">Play once</button>
-						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
-					</div>
-					<div class="css-snippet" data-snippet></div>
-				</div>
-
-				<div class="card" data-anim="eye-blink" data-target=".sano-eyes">
-					<h2>Eye blink</h2>
-					<p class="desc">Eyes briefly squash to a horizontal slit and reopen.</p>
-					<div class="fields">
-						<div class="field">
-							<label>Duration (ms)</label>
-							<input type="number" data-field="duration" value="400" min="100" max="10000" step="50" />
-						</div>
-						<div class="field">
-							<label>Easing</label>
-							<input type="text" data-field="easing" value="ease-in-out" />
-						</div>
-						<div class="field">
-							<label>Period (s)</label>
-							<input type="number" data-field="period" value="4" min="0.5" max="60" step="0.5" />
-						</div>
-					</div>
-					<div class="row">
-						<button class="play" type="button">Play once</button>
-						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
-					</div>
-					<div class="css-snippet" data-snippet></div>
-				</div>
-
-				<div class="card" data-anim="ear-wiggle" data-target=".sano-ear">
-					<h2>Ear wiggle</h2>
-					<p class="desc">Both ears twitch outward (mirrored via a CSS variable), then settle.</p>
-					<div class="fields">
-						<div class="field">
-							<label>Duration (ms)</label>
-							<input type="number" data-field="duration" value="400" min="100" max="10000" step="50" />
-						</div>
-						<div class="field">
-							<label>Easing</label>
-							<input type="text" data-field="easing" value="ease-in-out" />
-						</div>
-						<div class="field">
-							<label>Period (s)</label>
-							<input type="number" data-field="period" value="14" min="0.5" max="60" step="0.5" />
-						</div>
-					</div>
-					<div class="row">
-						<button class="play" type="button">Play once</button>
-						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
-					</div>
-					<div class="css-snippet" data-snippet></div>
-				</div>
-
-				<div class="card" data-anim="nose-wiggle" data-target=".sano-nose">
-					<h2>Nose wiggle</h2>
-					<p class="desc">Nose and whiskers twitch together — small rotation + lateral nudge.</p>
-					<div class="fields">
-						<div class="field">
-							<label>Duration (ms)</label>
-							<input type="number" data-field="duration" value="600" min="100" max="10000" step="50" />
-						</div>
-						<div class="field">
-							<label>Easing</label>
-							<input type="text" data-field="easing" value="ease-in-out" />
-						</div>
-						<div class="field">
-							<label>Period (s)</label>
-							<input type="number" data-field="period" value="10" min="0.5" max="60" step="0.5" />
-						</div>
-					</div>
-					<div class="row">
-						<button class="play" type="button">Play once</button>
-						<label class="loop-toggle"><input type="checkbox" data-field="loop" checked /> Auto-loop</label>
-					</div>
-					<div class="css-snippet" data-snippet></div>
-				</div>
-
-				<h3 class="section-header">Action animations</h3>
-
-				<div class="card" data-anim="head-shake" data-target=".sano-head">
-					<h2>Head shake</h2>
-					<p class="desc">Head pivots at the neck — three swings, then a small follow-through.</p>
-					<div class="fields">
-						<div class="field">
-							<label>Duration (ms)</label>
-							<input type="number" data-field="duration" value="800" min="100" max="10000" step="50" />
-						</div>
-						<div class="field">
-							<label>Easing</label>
-							<input type="text" data-field="easing" value="ease-in-out" />
-						</div>
-						<div class="field">
-							<label>Period (s)</label>
-							<input type="number" data-field="period" value="11" min="0.5" max="60" step="0.5" />
-						</div>
-					</div>
-					<div class="row">
-						<button class="play" type="button">Play once</button>
-						<label class="loop-toggle"><input type="checkbox" data-field="loop" /> Auto-loop</label>
-					</div>
-					<div class="css-snippet" data-snippet></div>
-				</div>
-
-				<div class="card" data-anim="body-wiggle" data-target=".mascot">
-					<h2>Body wiggle</h2>
-					<p class="desc">Whole body sways at the feet — subtle, sub-2° rotation.</p>
-					<div class="fields">
-						<div class="field">
-							<label>Duration (ms)</label>
-							<input type="number" data-field="duration" value="1000" min="100" max="10000" step="50" />
-						</div>
-						<div class="field">
-							<label>Easing</label>
-							<input type="text" data-field="easing" value="ease-in-out" />
-						</div>
-						<div class="field">
-							<label>Period (s)</label>
-							<input type="number" data-field="period" value="13" min="0.5" max="60" step="0.5" />
-						</div>
-					</div>
-					<div class="row">
-						<button class="play" type="button">Play once</button>
-						<label class="loop-toggle"><input type="checkbox" data-field="loop" /> Auto-loop</label>
-					</div>
-					<div class="css-snippet" data-snippet></div>
-				</div>
-
-				<div class="card" data-anim="excited-jump" data-target=".mascot">
-					<h2>Excited jump</h2>
-					<p class="desc">Big hop, soft squash on landing, a smaller second hop.</p>
-					<div class="fields">
-						<div class="field">
-							<label>Duration (ms)</label>
-							<input type="number" data-field="duration" value="1000" min="100" max="10000" step="50" />
-						</div>
-						<div class="field">
-							<label>Easing</label>
-							<input type="text" data-field="easing" value="ease-out" />
-						</div>
-						<div class="field">
-							<label>Period (s)</label>
-							<input type="number" data-field="period" value="17" min="0.5" max="60" step="0.5" />
-						</div>
-					</div>
-					<div class="row">
-						<button class="play" type="button">Play once</button>
-						<label class="loop-toggle"><input type="checkbox" data-field="loop" /> Auto-loop</label>
-					</div>
-					<div class="css-snippet" data-snippet></div>
-				</div>
-
-				<div class="card" data-anim="little-bow" data-target=".sano-head">
-					<h2>Little bow</h2>
-					<p class="desc">Head tips forward (translateY + scaleY squish), holds, returns.</p>
-					<div class="fields">
-						<div class="field">
-							<label>Duration (ms)</label>
-							<input type="number" data-field="duration" value="1100" min="100" max="10000" step="50" />
-						</div>
-						<div class="field">
-							<label>Easing</label>
-							<input type="text" data-field="easing" value="ease-in-out" />
-						</div>
-						<div class="field">
-							<label>Period (s)</label>
-							<input type="number" data-field="period" value="19" min="0.5" max="60" step="0.5" />
-						</div>
-					</div>
-					<div class="row">
-						<button class="play" type="button">Play once</button>
-						<label class="loop-toggle"><input type="checkbox" data-field="loop" /> Auto-loop</label>
-					</div>
-					<div class="css-snippet" data-snippet></div>
-				</div>
+				<div id="cards"></div>
 			</div>
 		</div>
 
+		<!-- Sano's art lives here (not in characters.html). The whole-body view is the
+		     existing tuned mascot; the head view is the same head group, cropped. Both
+		     are instrumented with the shared .part-* groups. -->
+		<template id="sano-whole">
+			<svg viewBox="30 10 160 174" aria-label="Sano whole body">
+				<g>
+					<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+					<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+					<g class="part-tail">
+						<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
+					</g>
+					<g class="part-head">
+						<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+						<g class="part-ear part-ear-left">
+							<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+							<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+						</g>
+						<g class="part-ear part-ear-right">
+							<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+							<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+						</g>
+						<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+						<g class="part-eyes">
+							<circle cx="88" cy="72" r="4.4" class="f-ink" />
+							<circle cx="112" cy="72" r="4.4" class="f-ink" />
+						</g>
+						<g class="part-nose">
+							<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+							<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+						</g>
+					</g>
+				</g>
+			</svg>
+		</template>
+		<!-- Sano's purpose-built head-only view (the app's footer crop, index.html) —
+		     rounder outline + larger eyes than the body-view head, framed to the head. -->
+		<template id="sano-head">
+			<svg viewBox="42 8 116 110" aria-label="Sano head">
+				<g class="part-head">
+					<path d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z" class="f-indigo" />
+					<g class="part-ear part-ear-left">
+						<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+						<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+					</g>
+					<g class="part-ear part-ear-right">
+						<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+						<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+					</g>
+					<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+					<g class="part-eyes">
+						<circle cx="88" cy="72" r="6" class="f-ink" />
+						<circle cx="112" cy="72" r="6" class="f-ink" />
+					</g>
+					<g class="part-nose">
+						<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+						<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+					</g>
+				</g>
+			</svg>
+		</template>
+
+		<!-- Companion art (the 10 friends), generated from characters.html by
+		     tools/build-anim-characters.mjs. Defines window.ANIM_CHARACTERS. -->
+		<script src="anim-characters.js"></script>
 		<script>
-			// Per-card loop interval ids, keyed by data-anim so the card owns its own state.
+			// ---- Animation catalogue ------------------------------------------------
+			// One entry per animation. `part` is which body part it needs (a card is
+			// shown only when the selected character has that part); `target` is the
+			// selector the animation is applied to within the mounted character.
+			// Defaults match the tuned values from the original single-mascot tuner.
+			const CARDS = [
+				{
+					name: 'tail-wag',
+					part: 'tail',
+					target: '.part-tail',
+					section: 'idle',
+					label: 'Tail wag',
+					desc: 'Tail pivots at its base, four wags back and forth.',
+					duration: 900,
+					easing: 'ease-in-out',
+					period: 9,
+					loop: true,
+				},
+				{
+					name: 'head-tilt',
+					part: 'head',
+					target: '.part-head',
+					section: 'idle',
+					label: 'Head tilt',
+					desc: 'Head leans, holds, then straightens. Duration includes the 3s hold.',
+					duration: 3800,
+					easing: 'ease-in-out',
+					period: 22,
+					loop: true,
+				},
+				{
+					name: 'eye-blink',
+					part: 'eyes',
+					target: '.part-eyes',
+					section: 'idle',
+					label: 'Eye blink',
+					desc: 'Eyes briefly squash to a horizontal slit and reopen.',
+					duration: 400,
+					easing: 'ease-in-out',
+					period: 4,
+					loop: true,
+				},
+				{
+					name: 'ear-wiggle',
+					part: 'ear',
+					target: '.part-ear',
+					section: 'idle',
+					label: 'Ear wiggle',
+					desc: 'Both ears twitch outward (mirrored via a CSS variable), then settle.',
+					duration: 400,
+					easing: 'ease-in-out',
+					period: 14,
+					loop: true,
+				},
+				{
+					name: 'nose-wiggle',
+					part: 'nose',
+					target: '.part-nose',
+					section: 'idle',
+					label: 'Nose wiggle',
+					desc: 'Nose and whiskers twitch together — small rotation + lateral nudge.',
+					duration: 600,
+					easing: 'ease-in-out',
+					period: 10,
+					loop: true,
+				},
+				{
+					name: 'head-shake',
+					part: 'head',
+					target: '.part-head',
+					section: 'action',
+					label: 'Head shake',
+					desc: 'Head pivots at the neck — three swings, then a small follow-through.',
+					duration: 800,
+					easing: 'ease-in-out',
+					period: 11,
+					loop: false,
+				},
+				{
+					name: 'body-wiggle',
+					part: 'body',
+					target: '.part-body',
+					section: 'action',
+					label: 'Body wiggle',
+					desc: 'Whole body sways at the feet — subtle, sub-2° rotation.',
+					duration: 1000,
+					easing: 'ease-in-out',
+					period: 13,
+					loop: false,
+				},
+				{
+					name: 'excited-jump',
+					part: 'body',
+					target: '.part-body',
+					section: 'action',
+					label: 'Excited jump',
+					desc: 'Big hop, soft squash on landing, a smaller second hop.',
+					duration: 1000,
+					easing: 'ease-out',
+					period: 17,
+					loop: false,
+				},
+				{
+					name: 'little-bow',
+					part: 'head',
+					target: '.part-head',
+					section: 'action',
+					label: 'Little bow',
+					desc: 'Head tips forward (translateY + scaleY squish), holds, returns.',
+					duration: 1100,
+					easing: 'ease-in-out',
+					period: 19,
+					loop: false,
+				},
+			];
+			const SECTION_TITLE = { idle: 'Idle animations', action: 'Action animations' };
+
+			// ---- Character roster ---------------------------------------------------
+			// Sano (inline templates) first, then the generated companions. Every
+			// character implicitly has a `body` (the whole SVG), so body-wiggle and
+			// excited-jump always apply.
+			function sanoCharacter() {
+				const grab = (id) => document.getElementById(id).innerHTML.trim();
+				return {
+					id: 'sano',
+					name: 'Sano',
+					whole: grab('sano-whole'),
+					head: grab('sano-head'),
+					parts: ['head', 'tail', 'eyes', 'ear', 'nose', 'body'],
+				};
+			}
+			const CHARACTERS = [sanoCharacter(), ...(window.ANIM_CHARACTERS || [])].map((c) => ({
+				...c,
+				parts: Array.from(new Set([...(c.parts || []), 'body'])),
+			}));
+
+			const stage = document.getElementById('stage');
+			const cardsEl = document.getElementById('cards');
+			const picker = document.getElementById('picker');
+
+			// Per-animation loop interval ids, keyed by animation name.
 			const loops = {};
+			function stopAllLoops() {
+				Object.values(loops).forEach(clearInterval);
+				for (const k in loops) delete loops[k];
+			}
 
 			function readCard(card) {
 				return {
 					name: card.dataset.anim,
-					// querySelectorAll so a single selector can drive multiple elements
-					// (the ear-wiggle card animates both .sano-ear-left and .sano-ear-right).
-					targets: Array.from(document.querySelectorAll(card.dataset.target)),
+					target: card.dataset.target,
+					// querySelectorAll within the stage so a single selector can drive
+					// multiple elements (e.g. both ears) across both mounted views, and
+					// never the head thumbnails in the picker.
+					targets: Array.from(stage.querySelectorAll(card.dataset.target)),
 					duration: parseInt(card.querySelector('[data-field="duration"]').value, 10),
 					easing: card.querySelector('[data-field="easing"]').value.trim() || 'ease-in-out',
 					period: parseFloat(card.querySelector('[data-field="period"]').value),
@@ -715,7 +885,7 @@
 			function play(card) {
 				const { name, targets, duration, easing } = readCard(card);
 				if (!targets.length) return;
-				// Clear inline animation, let one paint frame pass, then re-apply.
+				// Clear inline animation, let two paint frames pass, then re-apply.
 				// Reflow isn't enough — the animation engine coalesces same-task style
 				// changes and won't restart a finished animation. Double-rAF guarantees
 				// the 'cleared' state reaches the compositor.
@@ -748,42 +918,127 @@
 				}
 			}
 
-			document.querySelectorAll('.card').forEach((card) => {
+			function cardHTML(c) {
+				return `
+				<div class="card" data-anim="${c.name}" data-target="${c.target}">
+					<h2>${c.label}</h2>
+					<p class="desc">${c.desc}</p>
+					<div class="fields">
+						<div class="field">
+							<label>Duration (ms)</label>
+							<input type="number" data-field="duration" value="${c.duration}" min="100" max="10000" step="50" />
+						</div>
+						<div class="field">
+							<label>Easing</label>
+							<input type="text" data-field="easing" value="${c.easing}" />
+						</div>
+						<div class="field">
+							<label>Period (s)</label>
+							<input type="number" data-field="period" value="${c.period}" min="0.5" max="60" step="0.5" />
+						</div>
+					</div>
+					<div class="row">
+						<button class="play" type="button">Play once</button>
+						<label class="loop-toggle"><input type="checkbox" data-field="loop" ${c.loop ? 'checked' : ''} /> Auto-loop</label>
+					</div>
+					<div class="css-snippet" data-snippet></div>
+				</div>`;
+			}
+
+			function bindCard(card) {
 				updateSnippet(card);
 				card.querySelector('.play').addEventListener('click', () => play(card));
 				card.querySelector('[data-field="loop"]').addEventListener('change', () => syncLoop(card));
-				// Re-sync the loop whenever timing changes so the new value takes effect immediately.
 				['duration', 'easing', 'period'].forEach((f) => {
 					card.querySelector(`[data-field="${f}"]`).addEventListener('change', () => {
 						updateSnippet(card);
 						if (card.querySelector('[data-field="loop"]').checked) syncLoop(card);
 					});
 				});
-				// Auto-start any loop that's checked at load (the idle animations),
-				// each on its own random offset within the first 3s so they don't
-				// all fire on the same frame.
+				// Auto-start any loop checked at load (the idle set), each on a random
+				// offset within the first 3s so they don't all fire on the same frame.
 				if (card.querySelector('[data-field="loop"]').checked) {
 					setTimeout(() => syncLoop(card), Math.random() * 3000);
 				}
+			}
+
+			function selectCharacter(id) {
+				const char = CHARACTERS.find((c) => c.id === id) || CHARACTERS[0];
+				stopAllLoops();
+
+				picker.querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.id === char.id));
+
+				// Mount the two views and tag each <svg> as a body for whole-body anims.
+				stage.innerHTML = `
+					<div class="stage-view">
+						<div class="tile">${char.whole}</div>
+						<figcaption>whole body</figcaption>
+					</div>
+					<div class="stage-view">
+						<div class="tile">${char.head}</div>
+						<figcaption>head</figcaption>
+					</div>`;
+				stage.querySelectorAll('.tile > svg').forEach((s) => s.classList.add('part-body'));
+
+				// Rebuild the cards for this character's available parts.
+				const applicable = CARDS.filter((c) => char.parts.includes(c.part));
+				let html = '';
+				let lastSection = null;
+				for (const c of applicable) {
+					if (c.section !== lastSection) {
+						html += `<h3 class="section-header">${SECTION_TITLE[c.section]}</h3>`;
+						lastSection = c.section;
+					}
+					html += cardHTML(c);
+				}
+				cardsEl.innerHTML = html;
+				cardsEl.querySelectorAll('.card').forEach(bindCard);
+			}
+
+			// ---- Picker + boot ------------------------------------------------------
+			picker.innerHTML = CHARACTERS.map(
+				(c) =>
+					`<button type="button" data-id="${c.id}" aria-label="${c.name}"><span class="chip-art">${c.head}</span><span class="chip-name">${c.name}</span></button>`,
+			).join('');
+			picker.querySelectorAll('button').forEach((b) => {
+				b.addEventListener('click', () => selectCharacter(b.dataset.id));
 			});
 
+			// ---- Theme toggle (light default; .dark on <html> mirrors the app) ------
+			const THEME_KEY = 'sano-tuner-theme';
+			const themeBtn = document.getElementById('theme-toggle');
+			function applyTheme(dark) {
+				document.documentElement.classList.toggle('dark', dark);
+				themeBtn.textContent = dark ? '☀ Light' : '☾ Dark';
+				themeBtn.setAttribute('aria-pressed', String(dark));
+			}
+			themeBtn.addEventListener('click', () => {
+				const dark = !document.documentElement.classList.contains('dark');
+				localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+				applyTheme(dark);
+			});
+			// ?theme=dark|light forces a theme for this load (else use the stored one).
+			const wantedTheme = new URLSearchParams(location.search).get('theme');
+			applyTheme(wantedTheme ? wantedTheme === 'dark' : localStorage.getItem(THEME_KEY) === 'dark');
+
 			document.getElementById('stop-all').addEventListener('click', () => {
-				Object.values(loops).forEach(clearInterval);
-				for (const k in loops) delete loops[k];
-				document.querySelectorAll('[data-field="loop"]').forEach((cb) => {
+				stopAllLoops();
+				cardsEl.querySelectorAll('[data-field="loop"]').forEach((cb) => {
 					cb.checked = false;
 					cb.closest('.card').querySelector('.loop-toggle').classList.remove('active');
 				});
 			});
-
 			document.getElementById('play-all').addEventListener('click', () => {
-				// Stagger by 250ms so simultaneous tail/head/body don't all start on the same frame.
 				let delay = 0;
-				document.querySelectorAll('.card').forEach((card) => {
+				cardsEl.querySelectorAll('.card').forEach((card) => {
 					setTimeout(() => play(card), delay);
 					delay += 250;
 				});
 			});
+
+			// ?char=<id> deep link (mirrors characters.html's ?only=), else Sano.
+			const wanted = new URLSearchParams(location.search).get('char');
+			selectCharacter(wanted && CHARACTERS.some((c) => c.id === wanted) ? wanted : 'sano');
 		</script>
 	</body>
 </html>

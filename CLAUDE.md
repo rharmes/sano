@@ -102,10 +102,20 @@ significantly, update CLAUDE.md in the same commit.
   `sano-deploy` alias in `~/.ssh/config` (key auth) — no credentials or
   hostnames in the repo. On a new machine, recreate the alias (HostName
   namastesano.com, User + key from Ross).
-- `design/` holds in-repo design artifacts (e.g. the animation tuner). It is
-  committed but NOT in the deploy rsync allowlist, so nothing under it ships
-  to the live site. Future design files go here too — don't add `design` to
-  `tools/deploy.sh`.
+- `design/` holds in-repo design artifacts. It is committed but NOT in the
+  deploy rsync allowlist, so nothing under it ships to the live site. Future
+  design files go here too — don't add `design` to `tools/deploy.sh`.
+  - `design/characters.html` is the paper-cut gallery for Sano's 10 animal
+    companions (each a whole-body + head view); their parts are wrapped in
+    `.part-*` groups (head/tail/eyes/ear[-left|-right]/nose) purely for
+    animation targeting — inert in the gallery itself.
+  - `design/animations.html` is the **11-character** animation tuner (Sano +
+    the 10 companions): pick a character up top, both its views mount on the
+    left, and the per-animation cards on the right apply to it (cards for parts
+    a character lacks are auto-hidden). Sano's two views are inline; the
+    companions come from `design/anim-characters.js`, **generated** from
+    `characters.html` by `node tools/build-anim-characters.mjs` (re-run it after
+    editing companion art; the file is `.prettierignore`d). `?char=<id>` deep-links a character.
 - Recent work: see `git log` — commit messages are descriptive.
 
 ## Workflow for every code change
