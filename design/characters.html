@@ -251,31 +251,37 @@
 					<figure>
 						<div class="tile">
 							<!-- V2 head (purpose-built crop) -->
-							<svg viewBox="42 8 116 110" aria-label="Sano face">
-								<g class="part-head">
-									<path
-										d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
-										class="f-indigo"
-									/>
-									<g class="part-ear part-ear-left">
-										<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
-										<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
-									</g>
-									<g class="part-ear part-ear-right">
-										<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
-										<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
-									</g>
-									<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
-									<g class="part-eyes">
-										<circle cx="88" cy="72" r="6" class="f-ink" />
-										<circle cx="112" cy="72" r="6" class="f-ink" />
-									</g>
-									<g class="part-nose">
-										<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+							<svg viewBox="0 0 200 200" aria-label="Sano face">
+								<!-- Head centered + scaled into the shared 0 0 200 200 frame (≈ Pyaro size). -->
+								<g transform="translate(100 100) scale(0.9) translate(-100 -62.5)">
+									<g class="part-head">
 										<path
-											d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
-											class="s-whisker"
+											d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+											class="f-indigo"
 										/>
+										<g class="part-ear part-ear-left">
+											<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+											<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+										</g>
+										<g class="part-ear part-ear-right">
+											<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+											<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+										</g>
+										<path
+											d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z"
+											class="f-cream"
+										/>
+										<g class="part-eyes">
+											<circle cx="88" cy="72" r="6" class="f-ink" />
+											<circle cx="112" cy="72" r="6" class="f-ink" />
+										</g>
+										<g class="part-nose">
+											<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+											<path
+												d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+												class="s-whisker"
+											/>
+										</g>
 									</g>
 								</g>
 							</svg>
