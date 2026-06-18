@@ -14,6 +14,7 @@
 			   ─────────────────────────────────────────────────────────────── */
 			html {
 				font-size: 62.5%;
+				color-scheme: light;
 
 				--accent: #dd6470; /* paper crimson: CTAs, current node, links */
 				--accent-deep: #b94f5b; /* hover / pressed */
@@ -51,34 +52,37 @@
 				--text-body: 2.3rem;
 				--text-label: 1.6rem;
 			}
-			@media (prefers-color-scheme: dark) {
-				html {
-					--accent: #e0697a;
-					--accent-deep: #c25462;
-					--path-complete-color: #7384c4;
+			/* Dark theme is class-toggled (html.dark) rather than @media so the
+			   top-bar switch can override it — mirrors design/animations.html and
+			   the app's css/sano.css dark token set. The head inline script applies
+			   the class (saved choice / ?theme= / OS) before paint. */
+			html.dark {
+				color-scheme: dark;
+				--accent: #e0697a;
+				--accent-deep: #c25462;
+				--path-complete-color: #7384c4;
 
-					--text-color-richer: #efe9f0;
-					--text-color-normal: #d8d1da;
-					--text-color-soft: #9a91a4;
-					--text-color-softer: #645c70;
+				--text-color-richer: #efe9f0;
+				--text-color-normal: #d8d1da;
+				--text-color-soft: #9a91a4;
+				--text-color-softer: #645c70;
 
-					--badge-color: #d9aa4e;
-					--word-color: #e58794;
-					--text-complete-color: #7fae83;
-					--text-incomplete-color: #e07a72;
+				--badge-color: #d9aa4e;
+				--word-color: #e58794;
+				--text-complete-color: #7fae83;
+				--text-incomplete-color: #e07a72;
 
-					--background-color: #1b1822;
-					--background-color-softer: #262230;
+				--background-color: #1b1822;
+				--background-color-softer: #262230;
 
-					--border-color: #37323f;
-					--border-color-softer: #2e2a38;
+				--border-color: #37323f;
+				--border-color-softer: #2e2a38;
 
-					--paper-petal: #f0bfc7;
-					--paper-cream: #e6dac4;
-					--paper-cream-deep: #d6c9ae;
-					--paper-ink: #2e2935;
-					--paper-whisker: #8d8474;
-				}
+				--paper-petal: #f0bfc7;
+				--paper-cream: #e6dac4;
+				--paper-cream-deep: #d6c9ae;
+				--paper-ink: #2e2935;
+				--paper-whisker: #8d8474;
 			}
 
 			* {
@@ -103,6 +107,7 @@
 			.masthead {
 				display: flex;
 				align-items: center;
+				flex-wrap: wrap;
 				gap: 2rem;
 				padding: 5rem 0 2rem;
 			}
@@ -123,6 +128,48 @@
 				margin: 0.6rem 0 0;
 				color: var(--text-color-soft);
 				font-size: 1.8rem;
+			}
+
+			/* Theme toggle — a head-sized chip mirroring design/animations.html,
+			   pushed to the right of the masthead: a moon/sun glyph over a label. */
+			.theme-toggle {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.2rem;
+				margin-left: auto;
+				width: 76px;
+				padding: 0.4rem 0.2rem 0.3rem;
+				background: var(--background-color-softer);
+				border: 1px solid var(--border-color);
+				border-radius: 8px;
+				cursor: pointer;
+				transition:
+					border-color 0.15s ease,
+					transform 0.1s ease;
+			}
+			.theme-toggle:hover {
+				transform: translateY(-2px);
+				border-color: var(--text-color-softer);
+			}
+			.chip-art {
+				width: 48px;
+				height: 48px;
+				display: grid;
+				place-items: center;
+			}
+			/* The sun/moon glyph reads a touch smaller than the chip box. */
+			.theme-toggle .chip-art svg {
+				width: 70%;
+				height: 70%;
+				display: block;
+			}
+			.chip-name {
+				font-size: 0.66rem;
+				font-weight: 700;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: var(--text-color-soft);
 			}
 			.lede {
 				max-width: 64ch;
@@ -890,6 +937,17 @@
 				}
 			}
 		</style>
+		<script>
+			// Apply the saved / ?theme= / OS theme before paint so there's no flash.
+			(function () {
+				try {
+					var url = new URLSearchParams(location.search).get('theme');
+					var saved = localStorage.getItem('sano-guide-theme');
+					var dark = url ? url === 'dark' : saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+					document.documentElement.classList.toggle('dark', dark);
+				} catch (e) {}
+			})();
+		</script>
 	</head>
 	<body>
 		<!-- Material-icon symbol sprite, mirrored from index.html so specimens render identically. -->
@@ -959,6 +1017,10 @@
 					<h1>Style Guide</h1>
 					<p>Sano — Nepali Study Guide · “Pennant &amp; Paper-cut”</p>
 				</div>
+				<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+					<span class="chip-art" id="theme-icon"></span>
+					<span class="chip-name" id="theme-label">Dark</span>
+				</button>
 			</header>
 
 			<p class="lede">
@@ -1000,9 +1062,9 @@
 				<h2 class="sg">Color &amp; theme</h2>
 				<p class="sg-note">
 					Every color is a CSS custom property declared on <code>html</code> in <code>css/sano.css</code>, with a dark override
-					inside <code>@media (prefers-color-scheme: dark)</code>. There is no theme toggle — the OS decides. Always edit both
-					blocks together. Chips below are rendered with the live token, so they already reflect your current mode; both hex
-					values are listed for reference.
+					inside <code>@media (prefers-color-scheme: dark)</code>. In the app there is no theme toggle — the OS decides; the
+					switch up top re-themes only this guide. Always edit both blocks together. Chips below are rendered with the live token,
+					so they preview the active theme; both hex values are listed for reference.
 				</p>
 
 				<h3 class="sg">Brand</h3>
@@ -1551,7 +1613,8 @@
 					</li>
 					<li>
 						<b>Dark mode is automatic.</b> Driven entirely by <code>prefers-color-scheme</code>; dark is midnight card stock
-						with colors lifted one step for contrast. No manual toggle.
+						with colors lifted one step for contrast. No manual toggle in the app — the switch atop this guide just previews
+						the two themes.
 					</li>
 					<li>
 						<b>No build step, no runtime network.</b> Plain HTML/CSS/JS. Fonts are self-hosted woff2 (Neuton, Lato); icons
@@ -1606,5 +1669,31 @@
 				Sources of truth: css/sano.css · css/fonts.css · index.html (sprite + mascot)
 			</footer>
 		</div>
+		<script>
+			// Theme toggle — same control as design/animations.html. The head
+			// script already set the .dark class; this wires the button and keeps
+			// its moon/sun icon + label in sync.
+			const THEME_KEY = 'sano-guide-theme';
+			const MOON_ICON =
+				'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z" style="fill: var(--path-complete-color)" /></svg>';
+			const SUN_ICON =
+				'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" style="fill: var(--badge-color)" /><g style="stroke: var(--badge-color); stroke-width: 2; stroke-linecap: round"><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.1 5.1l2.1 2.1M16.8 16.8l2.1 2.1M18.9 5.1l-2.1 2.1M7.2 16.8l-2.1 2.1" /></g></svg>';
+			const themeBtn = document.getElementById('theme-toggle');
+			const themeIcon = document.getElementById('theme-icon');
+			const themeLabel = document.getElementById('theme-label');
+			function syncToggle() {
+				const dark = document.documentElement.classList.contains('dark');
+				themeIcon.innerHTML = dark ? SUN_ICON : MOON_ICON;
+				themeLabel.textContent = dark ? 'Light' : 'Dark';
+				themeBtn.setAttribute('aria-pressed', String(dark));
+			}
+			themeBtn.addEventListener('click', () => {
+				const dark = !document.documentElement.classList.contains('dark');
+				document.documentElement.classList.toggle('dark', dark);
+				localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+				syncToggle();
+			});
+			syncToggle();
+		</script>
 	</body>
 </html>
