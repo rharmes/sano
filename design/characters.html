@@ -11,6 +11,7 @@
          few animal-specific paper-cut tones that harmonize with the brand set. */
 			html {
 				font-size: 62.5%;
+				color-scheme: light;
 				--path-complete-color: #56629e; /* indigo */
 				--accent: #dd6470; /* crimson */
 				--paper-petal: #f3c7cd;
@@ -45,6 +46,27 @@
 				--f-snow: #f6efe2;
 				--f-charcoal: #3a3540;
 				--f-horn: #c2b48f; /* yak/tahr horn: bone, reads on cream */
+			}
+			/* Dark theme — class-toggled (html.dark) to mirror css/sano.css's dark
+			   mode; the toggle's head script sets the class. The --f-* animal fills
+			   stay as drawn (light); only the brand + paper-cut tokens shift, exactly
+			   like the animation tuner's :root.dark. */
+			html.dark {
+				color-scheme: dark;
+				--path-complete-color: #7384c4;
+				--accent: #e0697a;
+				--paper-petal: #f0bfc7;
+				--paper-cream: #e6dac4;
+				--paper-cream-deep: #d6c9ae;
+				--paper-ink: #2e2935;
+				--paper-whisker: #8d8474;
+				--badge-color: #d9aa4e;
+				--background-color: #1b1822;
+				--background-color-softer: #262230;
+				--border-color: #37323f;
+				--text-color-richer: #efe9f0;
+				--text-color-soft: #9a91a4;
+				--text-color-softer: #645c70;
 			}
 			.f-rust {
 				fill: var(--f-rust);
@@ -124,6 +146,57 @@
 				font-size: 3.6rem;
 				margin: 0 0 0.4rem;
 			}
+
+			/* Header row: title left, theme toggle right. */
+			.page-head {
+				display: flex;
+				align-items: flex-start;
+				gap: 1rem;
+				flex-wrap: wrap;
+			}
+			.page-head h1 {
+				flex: 1 1 auto;
+			}
+			/* Theme toggle — a head-sized chip mirroring design/animations.html. */
+			.theme-toggle {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.2rem;
+				margin-left: auto;
+				width: 76px;
+				padding: 0.4rem 0.2rem 0.3rem;
+				background: var(--background-color-softer);
+				border: 1px solid var(--border-color);
+				border-radius: 8px;
+				cursor: pointer;
+				transition:
+					border-color 0.15s ease,
+					transform 0.1s ease;
+			}
+			.theme-toggle:hover {
+				transform: translateY(-2px);
+				border-color: var(--text-color-softer);
+			}
+			.chip-art {
+				width: 48px;
+				height: 48px;
+				display: grid;
+				place-items: center;
+			}
+			/* The sun/moon glyph reads a touch smaller than the chip box. */
+			.theme-toggle .chip-art svg {
+				width: 70%;
+				height: 70%;
+				display: block;
+			}
+			.chip-name {
+				font-size: 0.66rem;
+				font-weight: 700;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: var(--text-color-soft);
+			}
 			.lede {
 				font-size: 1.5rem;
 				color: var(--text-color-soft);
@@ -191,10 +264,27 @@
 				}
 			}
 		</style>
+		<script>
+			// Apply the saved / ?theme= / OS theme before paint so there's no flash.
+			(function () {
+				try {
+					var url = new URLSearchParams(location.search).get('theme');
+					var saved = localStorage.getItem('sano-characters-theme');
+					var dark = url ? url === 'dark' : saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+					document.documentElement.classList.toggle('dark', dark);
+				} catch (e) {}
+			})();
+		</script>
 	</head>
 	<body>
 		<div class="wrap">
-			<h1>Sano and friends</h1>
+			<div class="page-head">
+				<h1>Sano and friends</h1>
+				<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+					<span class="chip-art" id="theme-icon"></span>
+					<span class="chip-name" id="theme-label">Dark</span>
+				</button>
+			</div>
 			<p class="lede">
 				<strong>This page is the source of truth for all the characters and their animations.</strong> Each has a full-body pose and a
 				head in Sano's flat layered-shape paper-cut style, rigged with the <code>.part-*</code> groups (head, tail, eyes, ears, nose)
@@ -1171,6 +1261,31 @@
 				const lede = document.querySelector('.lede');
 				if (lede) lede.style.display = 'none';
 			}
+
+			// Theme toggle — same control as design/animations.html. The head
+			// script already set the .dark class; this wires the button and keeps
+			// its moon/sun icon and label in sync.
+			const THEME_KEY = 'sano-characters-theme';
+			const MOON_ICON =
+				'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z" style="fill: var(--path-complete-color)" /></svg>';
+			const SUN_ICON =
+				'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" style="fill: var(--badge-color)" /><g style="stroke: var(--badge-color); stroke-width: 2; stroke-linecap: round"><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.1 5.1l2.1 2.1M16.8 16.8l2.1 2.1M18.9 5.1l-2.1 2.1M7.2 16.8l-2.1 2.1" /></g></svg>';
+			const themeBtn = document.getElementById('theme-toggle');
+			const themeIcon = document.getElementById('theme-icon');
+			const themeLabel = document.getElementById('theme-label');
+			function syncToggle() {
+				const dark = document.documentElement.classList.contains('dark');
+				themeIcon.innerHTML = dark ? SUN_ICON : MOON_ICON;
+				themeLabel.textContent = dark ? 'Light' : 'Dark';
+				themeBtn.setAttribute('aria-pressed', String(dark));
+			}
+			themeBtn.addEventListener('click', () => {
+				const dark = !document.documentElement.classList.contains('dark');
+				document.documentElement.classList.toggle('dark', dark);
+				localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+				syncToggle();
+			});
+			syncToggle();
 		</script>
 	</body>
 </html>
