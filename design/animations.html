@@ -52,6 +52,8 @@
 				--f-snow: #f6efe2;
 				--f-charcoal: #3a3540;
 				--f-horn: #c2b48f;
+				--f-bill: #5e6474; /* danphe beak + legs */
+				--f-tooth: #d6ccad; /* gharial teeth + claws */
 			}
 			:root.dark {
 				/* dev-tool chrome */
@@ -623,6 +625,12 @@
 			.f-horn {
 				fill: var(--f-horn);
 			}
+			.f-bill {
+				fill: var(--f-bill);
+			}
+			.f-tooth {
+				fill: var(--f-tooth);
+			}
 			.f-badge {
 				fill: var(--badge-color);
 			}
@@ -657,7 +665,7 @@
 
 		<!-- All character art (Sano + the 10 friends), generated from characters.html
 		     by tools/build-anim-characters.mjs. Defines window.ANIM_CHARACTERS. -->
-		<script src="anim-characters.js?v=48fd6a06"></script>
+		<script src="anim-characters.js?v=76dfda73"></script>
 		<script>
 			// ---- Animation catalogue ------------------------------------------------
 			// One entry per animation. `part` is which body part it needs (a card is
