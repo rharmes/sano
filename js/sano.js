@@ -71,6 +71,7 @@ function defaultState() {
 		name: null,
 		onboarded: false,
 		streak: 0,
+		streakFreezes: 1, // SR-09: forgiveness days that protect the streak (start 1, cap 2)
 		lastActivityDay: null,
 		itemsToday: 0,
 		itemsTotal: 0,
@@ -173,12 +174,34 @@ function dayString(date) {
 	return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
 }
 
-// Called on every completed item: maintains the streak and daily counter.
+// Calendar days from one YYYY-MM-DD day string to another (local midnight to midnight).
+function daysBetween(fromDay, toDay) {
+	const [fy, fm, fd] = fromDay.split('-').map(Number);
+	const [ty, tm, td] = toDay.split('-').map(Number);
+	return Math.round((new Date(ty, tm - 1, td) - new Date(fy, fm - 1, fd)) / 864e5);
+}
+
+// Whether a streak freeze was just spent; the complete screen reads it. Reset per lesson.
+let streakFreezeJustUsed = false;
+
+// Called on every completed item: maintains the streak and daily counter. A single
+// missed day is forgiven by a "streak freeze" rather than resetting to zero (SR-09).
 function registerActivity() {
 	const today = dayString(new Date());
 	if (state.lastActivityDay !== today) {
-		const yesterday = dayString(new Date(Date.now() - 24 * 60 * 60 * 1000));
-		state.streak = state.lastActivityDay === yesterday ? state.streak + 1 : 1;
+		const gap = state.lastActivityDay ? daysBetween(state.lastActivityDay, today) : null;
+		if (gap === 1) {
+			state.streak += 1;
+		} else if (gap === 2 && state.streakFreezes > 0) {
+			// Exactly one missed day, and a freeze to cover it: keep the streak going.
+			state.streakFreezes -= 1;
+			streakFreezeJustUsed = true;
+			state.streak += 1;
+		} else {
+			state.streak = 1;
+		}
+		// Reward consistency: bank a freeze at each 5-day milestone (capped at 2).
+		if (state.streak % 5 === 0) state.streakFreezes = Math.min(2, (state.streakFreezes || 0) + 1);
 		state.itemsToday = 0;
 	}
 	state.lastActivityDay = today;
@@ -462,6 +485,7 @@ function startUnitLesson(unit, review) {
 }
 
 function startLesson(queue) {
+	streakFreezeJustUsed = false;
 	lesson = {
 		queue: queue,
 		index: 0,
@@ -949,7 +973,11 @@ function finishLesson() {
 	const streakEl = document.getElementById('complete-streak');
 	streakEl.classList.toggle('hide', !lesson.firstOfDay);
 	if (lesson.firstOfDay)
-		document.getElementById('complete-streak-text').textContent = state.streak === 1 ? 'Streak started!' : state.streak + ' day streak!';
+		document.getElementById('complete-streak-text').textContent = streakFreezeJustUsed
+			? 'Streak freeze used — your ' + state.streak + '-day streak is safe'
+			: state.streak === 1
+				? 'Streak started!'
+				: state.streak + ' day streak!';
 
 	const strengthenedEl = document.getElementById('complete-strengthened');
 	strengthenedEl.classList.toggle('hide', lesson.leveledUp === 0);
