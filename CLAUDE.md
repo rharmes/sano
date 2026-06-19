@@ -17,6 +17,33 @@ optionally creates a cloud account / shows the PWA install steps. **The
 Romanized-Nepali strings in its `L` object are drafts Ross owns** — don't treat
 them as authoritative or silently "correct" them; flag questions to Ross.
 
+## Learning model (`js/sano.js` + `js/data.js`)
+
+Course content is `COURSE` in `js/data.js`: ~41 units, each `{ id, title, kind, items }`
+where `kind` is `'phrases'` (items have `np`/`pron`/`en`/`usage`) or `'vocab'` (items also
+carry an `emoji`); ~476 items total. `js/sano.js` is the lesson engine, and it is more
+pedagogically built-out than this file used to convey:
+
+- **Home** is a Duolingo-style winding **path** of units that unlock in order
+  (`renderPath`, `currentUnit`); the daily-lesson button mixes new items from the current
+  unit with the most-overdue reviews from anywhere in the course.
+- **Spaced repetition** is a **Leitner** system. Each item record
+  (`state.items[id]` = `seen/correct/level/lastSeen/intro`) climbs a level on a correct
+  lesson answer and drops on a miss; `REVIEW_INTERVALS = [1,1,3,7,14]` days set when each
+  level is due (`isDue`, `dueItems`, `MAX_LEVEL = 4`).
+- **Exercises escalate with level**: `choice` (multiple choice, both np→en and en→np),
+  `match` (tap-the-pairs, also the new-word warm-up), `wordbank` (assemble a phrase from
+  tiles), and `type` (typed recall, romanization-tolerant via edit distance). New items get
+  multiple choice both ways; higher-level reviews get wordbank/type.
+- **Progress**: a day **streak** plus daily/total counters in the header and the
+  lesson-complete screen; a **dictionary** screen lists every item. All progress lives in
+  localStorage `sano.state.v1` (schema version 2) and syncs to the server (below).
+
+`PEDAGOGY.md` (committed, not deployed) records the learning-science basis for this design
+and where it is headed; the working roadmap is the gitignored `PLAN.md`. Planned next (per
+PLAN.md): two-character **dialogues** with comprehension questions, and pre-generated
+self-hosted **Nepali TTS audio** (Devanagari-driven, one voice per character).
+
 ## Server sync (api/)
 
 - Progress lives in localStorage (`sano.state.v1`, the working copy — the
@@ -119,6 +146,9 @@ significantly, update CLAUDE.md in the same commit.
     (re-run after editing any character art; the file is `.prettierignore`d).
     A dark/light toggle (mirrors the app palette) sits in the top bar.
     `?char=<id>` and `?theme=dark|light` deep-link a character and theme.
+  - All three design pages (`style-guide.html`, `animations.html`, `characters.html`) share
+    one day/night **pill switch** (light on the left, dark on the right); the theme persists
+    per page in localStorage and `?theme=light|dark` deep-links it.
 - Recent work: see `git log` — commit messages are descriptive.
 
 ## Workflow for every code change
@@ -205,8 +235,7 @@ significantly, update CLAUDE.md in the same commit.
   wherever it appears it runs the idle animations (see `design/animations.html`
   and `design/style-guide.html`).
 - Prayer-flag section dividers were built and pulled (2026-06-12) — Ross is
-  reconsidering them; don't re-add without him. The concept lives in the
-  untracked `.mockups.html`.
+  reconsidering them; don't re-add without him.
 - Respect `prefers-reduced-motion` for any new animation (see the block at
   the bottom of `css/sano.css`). Under reduce-motion the mascot keeps only the
   eye blink (a tiny, non-vestibular scale) so Sano still reads as alive; the
