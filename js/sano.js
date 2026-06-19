@@ -563,14 +563,18 @@ function renderExercise() {
 	else renderMatch(ex);
 }
 
-function setPrompt(label, word, pron) {
+function setPrompt(label, word, pron, audioId) {
 	document.getElementById('exercise-label').textContent = label;
-	document.getElementById('exercise-word').textContent = word;
+	const wordEl = document.getElementById('exercise-word');
+	wordEl.textContent = word;
+	// When the displayed word is the Nepali (only direction where showing audio
+	// doesn't give the answer away), offer a play button beside it.
+	if (audioId) wordEl.appendChild(SanoAudio.button(audioId, { className: 'audio-inline' }));
 	document.getElementById('exercise-pronounce').textContent = pron;
 }
 
 function renderChoice(ex) {
-	if (ex.dir === 'np-en') setPrompt('Select the correct meaning', ex.item.np, ex.item.pron);
+	if (ex.dir === 'np-en') setPrompt('Select the correct meaning', ex.item.np, ex.item.pron, ex.item.id);
 	else setPrompt('Select the Nepali', promptText(ex.item), '');
 
 	const choiceText = ex.dir === 'np-en' ? (item) => item.en : (item) => item.np;
@@ -857,19 +861,22 @@ function applyAnswer(ex, correct) {
 
 	// Always show the full answer for recall exercises; for multiple choice only on a miss.
 	const showAnswer = !correct || ex.type === 'wordbank' || ex.type === 'type';
-	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? ex.item.np + ' = ' + promptText(ex.item) : '');
+	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? ex.item.np + ' = ' + promptText(ex.item) : '', ex.item.id);
 
 	saveState();
 	refreshHeader();
 }
 
-function showFeedback(correct, title, answerText) {
+function showFeedback(correct, title, answerText, audioId) {
 	const feedbackEl = document.getElementById('lesson-feedback');
 	feedbackEl.classList.remove('hide');
 	feedbackEl.classList.toggle('correct', correct);
 	feedbackEl.classList.toggle('incorrect', !correct);
 	document.getElementById('feedback-title').textContent = title;
-	document.getElementById('feedback-answer').textContent = answerText;
+	const answerEl = document.getElementById('feedback-answer');
+	answerEl.textContent = answerText;
+	// The reveal shows the Nepali answer ("<np> = <meaning>") — let the learner hear it.
+	if (answerText && audioId) answerEl.appendChild(SanoAudio.button(audioId, { className: 'audio-inline' }));
 }
 
 function normalize(s) {
@@ -945,6 +952,8 @@ function renderTables() {
 			cells.forEach((text, i) => {
 				const cell = document.createElement(i === 0 ? 'th' : 'td');
 				cell.textContent = text;
+				// First cell is the Nepali word — give every dictionary row a play button.
+				if (i === 0) cell.appendChild(SanoAudio.button(item.id, { className: 'audio-inline' }));
 				row.appendChild(cell);
 			});
 			tbody.appendChild(row);

@@ -253,6 +253,44 @@ html {
 	vertical-align: -0.125em;
 }
 
+/* Tap-to-play pronunciation button (SR-02 audio): an icon-only speaker glyph that
+   sits inline beside a Nepali word in the dictionary, lesson prompts, and answer
+   reveals. Color-matched to the crimson accent. */
+.audio-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+	width: 3.6rem;
+	height: 3.6rem;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: var(--accent);
+	cursor: pointer;
+	vertical-align: middle;
+	-webkit-tap-highlight-color: transparent;
+	transition:
+		background-color 0.15s ease,
+		transform 0.1s ease;
+}
+.audio-btn svg {
+	width: 2.2rem;
+	height: 2.2rem;
+	fill: currentColor;
+}
+.audio-btn:hover {
+	background: var(--background-color-softer);
+}
+.audio-btn:active {
+	transform: scale(0.9);
+	color: var(--accent-deep);
+}
+.audio-btn.audio-inline {
+	margin-left: 0.4rem;
+}
+
 /* ── Shared components ───────────────────────────────────────────────────────
    Reusable primitives mirrored from design/style-guide.html. Defined here, before
    the contextual variants further down, so those (same specificity, later in the

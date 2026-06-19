@@ -755,6 +755,38 @@
 				background: var(--text-color-softer);
 				cursor: default;
 			}
+			/* Tap-to-play pronunciation button (SR-02 audio): icon-only speaker glyph,
+				   color-matched to the crimson accent. Mirrors css/sano.css. */
+			.audio-btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				flex: none;
+				width: 3.6rem;
+				height: 3.6rem;
+				padding: 0;
+				border: 0;
+				border-radius: 50%;
+				background: transparent;
+				color: var(--accent);
+				cursor: pointer;
+				vertical-align: middle;
+			}
+			.audio-btn svg {
+				width: 2.2rem;
+				height: 2.2rem;
+				fill: currentColor;
+			}
+			.audio-btn:hover {
+				background: var(--background-color-softer);
+			}
+			.audio-btn:active {
+				transform: scale(0.9);
+				color: var(--accent-deep);
+			}
+			.audio-btn.audio-inline {
+				margin-left: 0.4rem;
+			}
 			.btn-secondary {
 				height: auto;
 				padding: 1rem 3.2rem;
@@ -1114,6 +1146,11 @@
 					/>
 				</symbol>
 				<symbol id="i-play_arrow" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></symbol>
+				<symbol id="i-volume-up" viewBox="0 0 24 24">
+					<path
+						d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
+					/>
+				</symbol>
 				<symbol id="i-school" viewBox="0 0 24 24">
 					<path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
 				</symbol>
@@ -1498,6 +1535,11 @@
 							><svg><use href="#i-play_arrow" /></svg></span
 						><code>#i-play_arrow</code>
 					</div>
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-volume-up" /></svg></span
+						><code>#i-volume-up</code>
+					</div>
 				</div>
 			</section>
 
@@ -1590,13 +1632,17 @@
 					barebones: <code>1rem</code> radius, mixed-case <code>700</code> Lato, crimson fill that deepens on hover. Icon buttons
 					drop all chrome and tint with <code>currentColor</code>. (Onboarding adds two documented variants in
 					<code>css/sano.css</code>: tappable choice speech-bubbles and the in-bubble fill-in-the-blank
-					<code>.onboard-input</code>.)
+					<code>.onboard-input</code>.) Audio adds <code>.audio-btn</code>, the icon-only tap-to-play pronunciation speaker
+					(SR-02).
 				</p>
 				<div class="demo">
 					<button class="btn-primary">Start today's lesson</button>
 					<button class="btn-primary indigo">Continue</button>
 					<button class="btn-secondary">Not now</button>
 					<button class="btn-primary" disabled>Check</button>
+					<button class="audio-btn" aria-label="Play pronunciation">
+						<svg><use href="#i-volume-up" /></svg>
+					</button>
 					<button class="icon-btn icon" aria-label="Lessons">
 						<svg><use href="#i-school" /></svg>
 					</button>

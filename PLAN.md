@@ -76,7 +76,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 | ✓ | ID | Recommendation | PEDAGOGY | Effort | Depends on |
 |---|----|----------------|----------|--------|------------|
 | ⬜ | **SR-01** | Two-character dialogues + comprehension questions | §1–3 | M–H | — (better with SR-02) |
-| ⬜ | **SR-02** | Self-hosted phrase & dialogue audio *(exploring: bake-off + voice gallery done)* | §7,§8 | H | — |
+| ✅ | **SR-02** | Self-hosted phrase & dialogue audio *(phrase audio shipped — 476 clips, Piper google spk 0; dialogue lines ride on SR-01; per-character voices = TODO)* | §7,§8 | H | — |
 | ⬜ | **SR-03** | Listening exercises ("tap/type what you hear") | §7,§8 | M | SR-02 |
 | ⬜ | **SR-04** | Speaking practice (speak-before-reveal + record/compare) | §4 | M | SR-02 |
 | ⬜ | **SR-05** | Evolve Leitner → per-item graded scheduler | §6 | M | — |
@@ -255,3 +255,12 @@ migration if the record shape changes).
   male variety we'd need a gated-model token or recorded voices.
 - **Devanagari** gates all of the above and is now **F2** (required groundwork), distinct
   from the optional learner-facing script track (**SR-11**).
+
+## TODO — follow-ups
+- [ ] **Assign a different voice to each character.** For now every character — and all
+  phrase audio — uses a single default voice: **Piper `ne_NP-google-medium` · speaker 0**
+  (Ross's pick, 2026-06-19). The audio layer is built voice-namespaced
+  (`audio/<voiceId>/<id>.m4a` + a `voiceForCharacter()` map that currently points every
+  character at `default`), so giving each character its own voice later is a data change +
+  a re-render, not a rewrite. Pick the 11 voices from `design/voice-gallery.html`, map one
+  per character, regenerate.
