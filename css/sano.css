@@ -291,6 +291,26 @@ html {
 	margin-left: 0.4rem;
 }
 
+/* Listening-exercise prompt (SR-03): a large filled play button that stands in for
+   the headword, so the learner identifies the phrase by ear. */
+.audio-btn.audio-prompt {
+	width: 8.4rem;
+	height: 8.4rem;
+	margin: 1rem 0 2rem;
+	background: var(--accent);
+	color: var(--button-primary-color);
+}
+.audio-btn.audio-prompt svg {
+	width: 4rem;
+	height: 4rem;
+}
+.audio-btn.audio-prompt:hover {
+	background: var(--accent-deep);
+}
+.audio-btn.audio-prompt:active {
+	color: var(--button-primary-color);
+}
+
 /* ── Shared components ───────────────────────────────────────────────────────
    Reusable primitives mirrored from design/style-guide.html. Defined here, before
    the contextual variants further down, so those (same specificity, later in the

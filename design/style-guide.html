@@ -787,6 +787,25 @@
 			.audio-btn.audio-inline {
 				margin-left: 0.4rem;
 			}
+			/* Listening-exercise prompt (SR-03): a large filled play button that stands
+			   in for the headword, so the learner identifies the phrase by ear. */
+			.audio-btn.audio-prompt {
+				width: 8.4rem;
+				height: 8.4rem;
+				margin: 1rem 0 2rem;
+				background: var(--accent);
+				color: var(--button-primary-color);
+			}
+			.audio-btn.audio-prompt svg {
+				width: 4rem;
+				height: 4rem;
+			}
+			.audio-btn.audio-prompt:hover {
+				background: var(--accent-deep);
+			}
+			.audio-btn.audio-prompt:active {
+				color: var(--button-primary-color);
+			}
 			.btn-secondary {
 				height: auto;
 				padding: 1rem 3.2rem;
@@ -1641,6 +1660,9 @@
 					<button class="btn-secondary">Not now</button>
 					<button class="btn-primary" disabled>Check</button>
 					<button class="audio-btn" aria-label="Play pronunciation">
+						<svg><use href="#i-volume-up" /></svg>
+					</button>
+					<button class="audio-btn audio-prompt" aria-label="Play pronunciation (listening prompt)">
 						<svg><use href="#i-volume-up" /></svg>
 					</button>
 					<button class="icon-btn icon" aria-label="Lessons">

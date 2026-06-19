@@ -469,10 +469,15 @@ function startLesson(queue) {
 	renderExercise();
 }
 
+// Fraction of eligible review drills delivered as listening exercises (SR-03):
+// an audio-only prompt with no romanization, so the ear does the work.
+const LISTEN_PROBABILITY = 0.5;
+
 // New items are drilled with multiple choice in both directions. Review items get
 // harder types as they level up: multiple choice at low levels, then word bank
-// (multi-word phrases) or typing (single words). Low-level vocab reviews are
-// bundled into a single matching exercise when there are enough of them.
+// (multi-word phrases) or typing (single words); half of those recall reviews are
+// delivered instead as "what you hear" listening drills. Low-level vocab reviews
+// are bundled into a single matching exercise when there are enough of them.
 function buildExercises(newItems, reviewItems) {
 	const exercises = [];
 	for (const item of newItems) {
@@ -487,7 +492,11 @@ function buildExercises(newItems, reviewItems) {
 		if (matchItems.includes(item)) continue;
 		if (itemRecord(item.id).level >= 2) {
 			if (item.np.split(/\s+/).length >= 2) exercises.push({ item: item, type: 'wordbank' });
-			else exercises.push({ item: item, type: 'type' });
+			// Half of single-word recall reviews become "type what you hear".
+			else exercises.push({ item: item, type: 'type', listen: Math.random() < LISTEN_PROBABILITY });
+		} else if (Math.random() < LISTEN_PROBABILITY) {
+			// "Select what you hear": audio-only prompt, pick the meaning.
+			exercises.push({ item: item, type: 'choice', dir: 'np-en', listen: true });
 		} else {
 			exercises.push({ item: item, type: 'choice', dir: Math.random() < 0.5 ? 'np-en' : 'en-np' });
 		}
@@ -573,8 +582,19 @@ function setPrompt(label, word, pron, audioId) {
 	document.getElementById('exercise-pronounce').textContent = pron;
 }
 
+// Listening prompt (SR-03): the headword slot becomes a big tap-to-play button and
+// no romanization shows, so the learner has to rely on the audio.
+function setListenPrompt(label, audioId) {
+	document.getElementById('exercise-label').textContent = label;
+	const wordEl = document.getElementById('exercise-word');
+	wordEl.textContent = '';
+	wordEl.appendChild(SanoAudio.button(audioId, { className: 'audio-prompt' }));
+	document.getElementById('exercise-pronounce').textContent = '';
+}
+
 function renderChoice(ex) {
-	if (ex.dir === 'np-en') setPrompt('Select the correct meaning', ex.item.np, ex.item.pron, ex.item.id);
+	if (ex.listen) setListenPrompt('Select what you hear', ex.item.id);
+	else if (ex.dir === 'np-en') setPrompt('Select the correct meaning', ex.item.np, ex.item.pron, ex.item.id);
 	else setPrompt('Select the Nepali', promptText(ex.item), '');
 
 	const choiceText = ex.dir === 'np-en' ? (item) => item.en : (item) => item.np;
@@ -634,7 +654,8 @@ function wordbankDistractors(item) {
 }
 
 function renderType(ex) {
-	setPrompt('Type the Nepali', promptText(ex.item), '');
+	if (ex.listen) setListenPrompt('Type what you hear', ex.item.id);
+	else setPrompt('Type the Nepali', promptText(ex.item), '');
 	const input = document.getElementById('type-answer');
 	input.value = '';
 	document.getElementById('exercise-check').disabled = true;
@@ -859,8 +880,9 @@ function applyAnswer(ex, correct) {
 	}
 	if (!correct && !ex.requeued) lesson.queue.push(Object.assign({}, ex, { requeued: true }));
 
-	// Always show the full answer for recall exercises; for multiple choice only on a miss.
-	const showAnswer = !correct || ex.type === 'wordbank' || ex.type === 'type';
+	// Always show the full answer for recall and listening exercises; for plain
+	// multiple choice only on a miss.
+	const showAnswer = !correct || ex.type === 'wordbank' || ex.type === 'type' || ex.listen;
 	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? ex.item.np + ' = ' + promptText(ex.item) : '', ex.item.id);
 
 	saveState();

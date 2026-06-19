@@ -77,7 +77,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 |---|----|----------------|----------|--------|------------|
 | ⬜ | **SR-01** | Two-character dialogues + comprehension questions | §1–3 | M–H | — (better with SR-02) |
 | ✅ | **SR-02** | Self-hosted phrase & dialogue audio *(phrase audio shipped — 476 clips, Piper google spk 0; dialogue lines ride on SR-01; per-character voices = TODO)* | §7,§8 | H | — |
-| ⬜ | **SR-03** | Listening exercises ("tap/type what you hear") | §7,§8 | M | SR-02 |
+| ✅ | **SR-03** | Listening exercises ("tap/type what you hear") *(audio-only prompt on ~half of recall reviews; choose-meaning + type variants)* | §7,§8 | M | SR-02 |
 | ⬜ | **SR-04** | Speaking practice (speak-before-reveal + record/compare) | §4 | M | SR-02 |
 | ⬜ | **SR-05** | Evolve Leitner → per-item graded scheduler | §6 | M | — |
 | ⬜ | **SR-06** | Communicative "can-do" goals & progress framing | §1,§9 | L–M | — |
