@@ -1,4 +1,6 @@
 // Course data for the Nepali study app. Generated from the original index.html tables.
+// NOTE: `dev` (Devanagari) fields were AI-drafted 2026-06-19 from the romanized `np`
+// strings and are PENDING Ross's verification — treat as drafts, not authoritative.
 const COURSE = [
 	{
 		id: 'basics',
@@ -8,6 +10,7 @@ const COURSE = [
 			{
 				id: 'namaste-hello-goodbye',
 				np: 'Namaste',
+				dev: 'नमस्ते',
 				pron: 'nuh-muh-stay',
 				en: 'Hello / Goodbye',
 				usage: 'This is the most common greeting in Nepal, used at any time of day. It\'s accompanied by pressing your palms together in front of your chest. The word literally means "I bow to the divine in you" and is appropriate in both formal and informal settings.',
@@ -15,6 +18,7 @@ const COURSE = [
 			{
 				id: 'namaskaar-hello-formal',
 				np: 'Namaskaar',
+				dev: 'नमस्कार',
 				pron: 'nuh-mus-kaar',
 				en: 'Hello (formal)',
 				usage: 'More formal version of "namaste." Both mean essentially the same thing and are used as greetings. "Namaskaar" might be used in very formal or official settings.',
@@ -22,6 +26,7 @@ const COURSE = [
 			{
 				id: 'hajur-yes-polite-pardon',
 				np: 'Hajur',
+				dev: 'हजुर',
 				pron: 'huh-joor',
 				en: 'Yes (polite) / Pardon?',
 				usage: 'This versatile word shows respect and can mean "yes," "I agree," or "pardon me?" depending on context and tone. It\'s considered more polite than simply saying "cha" (yes) and is commonly used when speaking to elders or in formal situations.',
@@ -29,6 +34,7 @@ const COURSE = [
 			{
 				id: 'ho-yes-informal',
 				np: 'Ho',
+				dev: 'हो',
 				pron: 'hoh',
 				en: 'Yes (informal)',
 				usage: 'Nepalis may also shake their head side-to-side for yes, which can confuse visitors at first!',
@@ -36,6 +42,7 @@ const COURSE = [
 			{
 				id: 'hoina-no-informal',
 				np: 'Hoina',
+				dev: 'होइन',
 				pron: 'HOY-nah',
 				en: 'No (informal)',
 				usage: '',
@@ -43,6 +50,7 @@ const COURSE = [
 			{
 				id: 'hola-maybe',
 				np: 'Hola',
+				dev: 'होला',
 				pron: 'ho-laa',
 				en: 'Maybe',
 				usage: 'Used to express possibility or uncertainty. This is a casual, conversational way to say "maybe" or "perhaps." It can be used when you\'re not sure about something or when you want to leave options open. For example, if someone asks if you\'ll come to dinner, you might say "hola" if you\'re uncertain.',
@@ -50,6 +58,7 @@ const COURSE = [
 			{
 				id: 'maaf-garnuhos-excuse-me-i-m-sorry',
 				np: 'Maaf garnuhos',
+				dev: 'माफ गर्नुहोस्',
 				pron: 'maaf gar-noo-hos',
 				en: "Excuse me / I'm sorry",
 				usage: "This phrase is used to apologize or to get someone's attention politely. It's appropriate in both casual and formal settings. You can use it when you need to pass by someone, when you've made a mistake, or when you need someone's attention.",
@@ -57,6 +66,7 @@ const COURSE = [
 			{
 				id: 'kripaya-please',
 				np: 'Kripaya',
+				dev: 'कृपया',
 				pron: 'kri-puh-yuh',
 				en: 'Please',
 				usage: 'This formal word for "please" is used to make polite requests. It\'s especially common in written communication and formal speech. In casual conversation, people often omit "kripaya" and rely on polite verb forms instead.',
@@ -64,6 +74,7 @@ const COURSE = [
 			{
 				id: 'dhanyabad-thank-you',
 				np: 'Dhanyabad',
+				dev: 'धन्यवाद',
 				pron: 'dhun-ya-baad',
 				en: 'Thank you',
 				usage: "This is the standard way to express gratitude. It's used in both casual and formal situations. While Nepali culture doesn't emphasize saying thank you as much as Western cultures, it's still appreciated and understood universally.",
@@ -71,6 +82,7 @@ const COURSE = [
 			{
 				id: 'swagat-cha-you-re-welcome',
 				np: 'Swagat cha',
+				dev: 'स्वागत छ',
 				pron: 'swaa-gut chuh',
 				en: "You're welcome",
 				usage: 'Standard response to "dhanyabad." "Swagat" means welcome. Shows politeness and acknowledges the thanks. You might also hear "kei pardaina" (it\'s nothing/no problem).',
@@ -78,6 +90,7 @@ const COURSE = [
 			{
 				id: 'subha-prabhat-good-morning',
 				np: 'Subha prabhat',
+				dev: 'शुभ प्रभात',
 				pron: 'shoo-bha pruh-bhaat',
 				en: 'Good morning',
 				usage: 'A formal morning greeting. "Prabhat" means morning or dawn. However, "namaste" is more commonly used throughout the day, including mornings. "Subha prabhat" is more formal and literary.',
@@ -85,6 +98,7 @@ const COURSE = [
 			{
 				id: 'subha-ratri-good-night',
 				np: 'Subha ratri',
+				dev: 'शुभ रात्री',
 				pron: 'shoo-bha raa-tree',
 				en: 'Good night',
 				usage: 'Used when saying goodbye at night or before going to sleep. "Subha" means good or auspicious, and "ratri" means night. It\'s a warm way to wish someone well before parting in the evening.',
@@ -92,6 +106,7 @@ const COURSE = [
 			{
 				id: 'huncha-okay-it-will-be-done',
 				np: 'Huncha',
+				dev: 'हुन्छ',
 				pron: 'hoon-chuh',
 				en: 'Okay / It will be done',
 				usage: 'This is one of the most useful words in Nepali, expressing agreement, acceptance, or acknowledgment. You\'ll hear it constantly in everyday conversation. It can mean "okay," "alright," "it\'s possible," or "it will happen."',
@@ -99,6 +114,7 @@ const COURSE = [
 			{
 				id: 'hudaina-not-okay-it-won-t-work',
 				np: 'Hudaina',
+				dev: 'हुँदैन',
 				pron: 'hoo-dye-nuh',
 				en: "Not okay / It won't work",
 				usage: 'This is the negative form of "huncha," used to express that something is not acceptable, not possible, or won\'t work. It\'s a polite way to decline or say no without being too direct.',
@@ -106,6 +122,7 @@ const COURSE = [
 			{
 				id: 'ke-bhayo-what-happened',
 				np: 'Ke bhayo?',
+				dev: 'के भयो?',
 				pron: 'kay bha-yo',
 				en: 'What happened?',
 				usage: 'Used to ask what\'s wrong or what occurred. If someone seems upset or if something unusual happened, this is an appropriate question. "Ke" means what, and "bhayo" means happened.',
@@ -113,6 +130,7 @@ const COURSE = [
 			{
 				id: 'kehi-chhaina-nothing-it-s-nothing',
 				np: 'Kehi chhaina',
+				dev: 'केही छैन',
 				pron: 'keh-hi chhai-nuh',
 				en: "Nothing / It's nothing",
 				usage: 'A polite response when asked what\'s wrong or if you need anything. "Kehi" means something/anything, and "chhaina" means "is not." It\'s a way to reassure someone that everything is fine.',
@@ -120,6 +138,7 @@ const COURSE = [
 			{
 				id: 'timi-you-informal',
 				np: 'Timi',
+				dev: 'तिमी',
 				pron: 'ti-mi',
 				en: 'You (informal)',
 				usage: 'The informal "you" used with friends, family, children, or people younger than you. Unlike "tapai" (formal you), "timi" shows familiarity and closeness. Use it only with people you know well or who are younger.',
@@ -127,6 +146,7 @@ const COURSE = [
 			{
 				id: 'cha-yes-is-has',
 				np: 'Cha',
+				dev: 'छ',
 				pron: 'chuh',
 				en: 'Yes / Is / Has',
 				usage: 'A simple affirmative word meaning "yes" or serving as the verb "to be" or "to have." It\'s one of the most frequently used words in Nepali. For example, "ramro cha" (it is good) or "paisa cha?" (do you have money?).',
@@ -134,6 +154,7 @@ const COURSE = [
 			{
 				id: 'chhaina-no-is-not-don-t-have',
 				np: 'Chhaina',
+				dev: 'छैन',
 				pron: 'chhai-nuh',
 				en: "No / Is not / Don't have",
 				usage: 'The negative form of "cha." It means "no," "is not," or "don\'t have." Used frequently in daily conversation. For example, "paisa chhaina" means "I don\'t have money" or "there is no money."',
@@ -141,6 +162,7 @@ const COURSE = [
 			{
 				id: 'dherai-ramro-very-good-excellent',
 				np: 'Dherai ramro',
+				dev: 'धेरै राम्रो',
 				pron: 'dheh-rye rum-ro',
 				en: 'Very good / Excellent',
 				usage: 'An emphatic way to say something is very good or excellent. "Dherai" intensifies "ramro." Use this to express strong approval or satisfaction with food, experiences, or outcomes.',
@@ -148,6 +170,7 @@ const COURSE = [
 			{
 				id: 'ekdum-ramro-very-good-excellent',
 				np: 'Ekdum ramro',
+				dev: 'एकदम राम्रो',
 				pron: 'ek-dum rum-ro',
 				en: 'Very good / Excellent',
 				usage: 'Strong expression of approval or satisfaction. "Ekdum" is an intensifier meaning "very" or "extremely." More emphatic than just "ramro" alone.',
@@ -155,6 +178,7 @@ const COURSE = [
 			{
 				id: 'sarai-ramro-very-good-really-good',
 				np: 'Sarai ramro',
+				dev: 'सारै राम्रो',
 				pron: 'suh-rye rum-ro',
 				en: 'Very good / Really good',
 				usage: 'Another way to emphasize something is very good. "Sarai" means "very" or "really." Interchangeable with "ekdum ramro" to express strong positive feelings.',
@@ -169,6 +193,7 @@ const COURSE = [
 			{
 				id: 'ek-one',
 				np: 'Ek',
+				dev: 'एक',
 				pron: 'ayk',
 				emoji: '1️⃣',
 				en: 'One',
@@ -176,6 +201,7 @@ const COURSE = [
 			{
 				id: 'dui-two',
 				np: 'Dui',
+				dev: 'दुई',
 				pron: 'dwee',
 				emoji: '2️⃣',
 				en: 'Two',
@@ -183,6 +209,7 @@ const COURSE = [
 			{
 				id: 'tin-three',
 				np: 'Tin',
+				dev: 'तीन',
 				pron: 'teen',
 				emoji: '3️⃣',
 				en: 'Three',
@@ -190,6 +217,7 @@ const COURSE = [
 			{
 				id: 'chaar-four',
 				np: 'Chaar',
+				dev: 'चार',
 				pron: 'chaar',
 				emoji: '4️⃣',
 				en: 'Four',
@@ -197,6 +225,7 @@ const COURSE = [
 			{
 				id: 'paanch-five',
 				np: 'Paanch',
+				dev: 'पाँच',
 				pron: 'paanch',
 				emoji: '5️⃣',
 				en: 'Five',
@@ -204,6 +233,7 @@ const COURSE = [
 			{
 				id: 'chha-six',
 				np: 'Chha',
+				dev: 'छ',
 				pron: 'chhuh',
 				emoji: '6️⃣',
 				en: 'Six',
@@ -211,6 +241,7 @@ const COURSE = [
 			{
 				id: 'saat-seven',
 				np: 'Saat',
+				dev: 'सात',
 				pron: 'saat',
 				emoji: '7️⃣',
 				en: 'Seven',
@@ -218,6 +249,7 @@ const COURSE = [
 			{
 				id: 'aath-eight',
 				np: 'Aath',
+				dev: 'आठ',
 				pron: 'aath',
 				emoji: '8️⃣',
 				en: 'Eight',
@@ -225,6 +257,7 @@ const COURSE = [
 			{
 				id: 'nau-nine',
 				np: 'Nau',
+				dev: 'नौ',
 				pron: 'now',
 				emoji: '9️⃣',
 				en: 'Nine',
@@ -232,6 +265,7 @@ const COURSE = [
 			{
 				id: 'das-ten',
 				np: 'Das',
+				dev: 'दस',
 				pron: 'dus',
 				emoji: '🔟',
 				en: 'Ten',
@@ -239,6 +273,7 @@ const COURSE = [
 			{
 				id: 'bis-twenty',
 				np: 'Bis',
+				dev: 'बीस',
 				pron: 'bees',
 				emoji: '🔢',
 				en: 'Twenty',
@@ -246,6 +281,7 @@ const COURSE = [
 			{
 				id: 'pachaas-fifty',
 				np: 'Pachaas',
+				dev: 'पचास',
 				pron: 'puh-chaas',
 				emoji: '🔢',
 				en: 'Fifty',
@@ -253,6 +289,7 @@ const COURSE = [
 			{
 				id: 'saya-hundred',
 				np: 'Saya',
+				dev: 'सय',
 				pron: 'suh-yay',
 				emoji: '💯',
 				en: 'Hundred',
@@ -260,6 +297,7 @@ const COURSE = [
 			{
 				id: 'hajaar-thousand',
 				np: 'Hajaar',
+				dev: 'हजार',
 				pron: 'huh-jaar',
 				emoji: '🔢',
 				en: 'Thousand',
@@ -267,6 +305,7 @@ const COURSE = [
 			{
 				id: 'aadha-half',
 				np: 'Aadha',
+				dev: 'आधा',
 				pron: 'aa-dhaa',
 				emoji: '🌗',
 				en: 'Half',
@@ -281,6 +320,7 @@ const COURSE = [
 			{
 				id: 'ma-i-me',
 				np: 'Ma',
+				dev: 'म',
 				pron: 'muh',
 				en: 'I / Me',
 				usage: 'The first-person pronoun. You have already seen it in phrases like "Ma Nepali bolchhu" (I speak Nepali). Nepali usually drops pronouns when the meaning is clear from the verb, so "ma" is often optional in casual speech.',
@@ -288,6 +328,7 @@ const COURSE = [
 			{
 				id: 'hami-we-us',
 				np: 'Hami',
+				dev: 'हामी',
 				pron: 'huh-mi',
 				en: 'We / Us',
 				usage: 'The plural "we." You may also hear "hamiharu," which adds the plural marker "-haru" for emphasis. Used the same way in formal and informal speech.',
@@ -295,6 +336,7 @@ const COURSE = [
 			{
 				id: 'tapai-you-formal',
 				np: 'Tapai',
+				dev: 'तपाईं',
 				pron: 'tuh-pie',
 				en: 'You (formal)',
 				usage: 'The respectful "you," safe to use with anyone — elders, strangers, in-laws, shopkeepers. When in doubt, use "tapai" rather than "timi." It pairs with the polite verb endings you have seen, like "-nu huncha."',
@@ -302,6 +344,7 @@ const COURSE = [
 			{
 				id: 'u-he-she-informal',
 				np: 'U',
+				dev: 'ऊ',
 				pron: 'oo',
 				en: 'He / She (informal)',
 				usage: 'Informal third person, used for friends, children, or people younger than you. Like "timi," avoid it for elders or people you respect — use "uhaa" instead.',
@@ -309,6 +352,7 @@ const COURSE = [
 			{
 				id: 'uhaa-he-she-polite',
 				np: 'Uhaa',
+				dev: 'उहाँ',
 				pron: 'oo-haa',
 				en: 'He / She (polite)',
 				usage: 'The respectful way to say "he" or "she." Use it for elders, in-laws, teachers, or anyone you would address as "tapai." Using the polite third person shows the same respect as polite "you."',
@@ -316,6 +360,7 @@ const COURSE = [
 			{
 				id: 'uniharu-they',
 				np: 'Uniharu',
+				dev: 'उनीहरू',
 				pron: 'oo-ni-huh-roo',
 				en: 'They',
 				usage: 'Third-person plural. The "-haru" ending is the general plural marker in Nepali — you can attach it to most nouns too: "saathiharu" (friends), "bachchaharu" (children).',
@@ -323,6 +368,7 @@ const COURSE = [
 			{
 				id: 'yo-this',
 				np: 'Yo',
+				dev: 'यो',
 				pron: 'yo',
 				en: 'This',
 				usage: 'Points to something near you. You have seen it in "Yo ke ho?" (What is this?). Also doubles as "it" for nearby things: "yo ramro cha" (this is good).',
@@ -330,6 +376,7 @@ const COURSE = [
 			{
 				id: 'tyo-that',
 				np: 'Tyo',
+				dev: 'त्यो',
 				pron: 'tyo',
 				en: 'That',
 				usage: 'Points to something away from you, the counterpart of "yo." "Tyo ke ho?" (What is that?), "tyo mero ho" (that is mine).',
@@ -337,6 +384,7 @@ const COURSE = [
 			{
 				id: 'mero-my-mine',
 				np: 'Mero',
+				dev: 'मेरो',
 				pron: 'meh-ro',
 				en: 'My / Mine',
 				usage: 'First-person possessive, as in "Mero naam" (my name). Possessives agree with what is owned, but "mero" works in almost all everyday cases.',
@@ -344,6 +392,7 @@ const COURSE = [
 			{
 				id: 'hamro-our-ours',
 				np: 'Hamro',
+				dev: 'हाम्रो',
 				pron: 'hum-ro',
 				en: 'Our / Ours',
 				usage: 'The possessive of "hami." "Hamro ghar" means "our house." Very common in family settings since the household is usually talked about as shared.',
@@ -351,6 +400,7 @@ const COURSE = [
 			{
 				id: 'timro-your-informal',
 				np: 'Timro',
+				dev: 'तिम्रो',
 				pron: 'tim-ro',
 				en: 'Your (informal)',
 				usage: 'The possessive of "timi," for friends, children, and people younger than you. "Timro naam ke ho?" is the informal way to ask a name.',
@@ -358,6 +408,7 @@ const COURSE = [
 			{
 				id: 'tapaiko-your-formal',
 				np: 'Tapaiko',
+				dev: 'तपाईंको',
 				pron: 'tuh-pie-ko',
 				en: 'Your (formal)',
 				usage: 'The possessive of "tapai." "Tapaiko" is built from "tapai" + "ko," the same "ko" that marks possession across Nepali: "Ross ko kitab" (Ross\'s book).',
@@ -365,6 +416,7 @@ const COURSE = [
 			{
 				id: 'usko-his-her-informal',
 				np: 'Usko',
+				dev: 'उसको',
 				pron: 'oos-ko',
 				en: 'His / Her (informal)',
 				usage: 'The possessive of "u." For the polite version use "uhaako" (his/her, respectful), following the same pattern of adding "ko."',
@@ -379,6 +431,7 @@ const COURSE = [
 			{
 				id: 'aamaa-mother',
 				np: 'Aamaa',
+				dev: 'आमा',
 				pron: 'aa-maa',
 				emoji: '👩',
 				en: 'Mother',
@@ -386,6 +439,7 @@ const COURSE = [
 			{
 				id: 'buwa-father',
 				np: 'Buwa',
+				dev: 'बुवा',
 				pron: 'boo-waa',
 				emoji: '👨',
 				en: 'Father',
@@ -393,6 +447,7 @@ const COURSE = [
 			{
 				id: 'didi-older-sister',
 				np: 'Didi',
+				dev: 'दिदी',
 				pron: 'di-di',
 				emoji: '👧',
 				en: 'Older sister',
@@ -400,6 +455,7 @@ const COURSE = [
 			{
 				id: 'bahini-younger-sister',
 				np: 'Bahini',
+				dev: 'बहिनी',
 				pron: 'buh-hi-ni',
 				emoji: '👧',
 				en: 'Younger sister',
@@ -407,6 +463,7 @@ const COURSE = [
 			{
 				id: 'dai-older-brother',
 				np: 'Dai',
+				dev: 'दाइ',
 				pron: 'dye',
 				emoji: '👦',
 				en: 'Older brother',
@@ -414,6 +471,7 @@ const COURSE = [
 			{
 				id: 'bhai-younger-brother',
 				np: 'Bhai',
+				dev: 'भाइ',
 				pron: 'bye',
 				emoji: '👦',
 				en: 'Younger brother',
@@ -421,6 +479,7 @@ const COURSE = [
 			{
 				id: 'chhora-son',
 				np: 'Chhora',
+				dev: 'छोरा',
 				pron: 'chho-raa',
 				emoji: '👦',
 				en: 'Son',
@@ -428,6 +487,7 @@ const COURSE = [
 			{
 				id: 'chhori-daughter',
 				np: 'Chhori',
+				dev: 'छोरी',
 				pron: 'chho-ree',
 				emoji: '👧',
 				en: 'Daughter',
@@ -435,6 +495,7 @@ const COURSE = [
 			{
 				id: 'hajurbuwa-grandfather',
 				np: 'Hajurbuwa',
+				dev: 'हजुरबुवा',
 				pron: 'huh-joor-boo-waa',
 				emoji: '👴',
 				en: 'Grandfather',
@@ -442,6 +503,7 @@ const COURSE = [
 			{
 				id: 'hajuraamaa-grandmother',
 				np: 'Hajuraamaa',
+				dev: 'हजुरआमा',
 				pron: 'huh-joor-aa-maa',
 				emoji: '👵',
 				en: 'Grandmother',
@@ -449,6 +511,7 @@ const COURSE = [
 			{
 				id: 'budha-husband',
 				np: 'Budha',
+				dev: 'बूढा',
 				pron: 'boo-dhaa',
 				emoji: '🤵',
 				en: 'Husband',
@@ -456,6 +519,7 @@ const COURSE = [
 			{
 				id: 'budhi-wife',
 				np: 'Budhi',
+				dev: 'बूढी',
 				pron: 'boo-dhi',
 				emoji: '👰',
 				en: 'Wife',
@@ -463,6 +527,7 @@ const COURSE = [
 			{
 				id: 'saathi-friend',
 				np: 'Saathi',
+				dev: 'साथी',
 				pron: 'saa-thi',
 				emoji: '🧑‍🤝‍🧑',
 				en: 'Friend',
@@ -470,6 +535,7 @@ const COURSE = [
 			{
 				id: 'chhimeki-neighbor',
 				np: 'Chhimeki',
+				dev: 'छिमेकी',
 				pron: 'chhi-meh-ki',
 				emoji: '🏠',
 				en: 'Neighbor',
@@ -477,6 +543,7 @@ const COURSE = [
 			{
 				id: 'manchhe-person',
 				np: 'Manchhe',
+				dev: 'मान्छे',
 				pron: 'maan-chhe',
 				emoji: '🧑',
 				en: 'Person',
@@ -484,6 +551,7 @@ const COURSE = [
 			{
 				id: 'bachcha-child-baby',
 				np: 'Bachcha',
+				dev: 'बच्चा',
 				pron: 'bach-chaa',
 				emoji: '👶',
 				en: 'Child / Baby',
@@ -498,6 +566,7 @@ const COURSE = [
 			{
 				id: 'tapai-ko-naam-ke-ho-what-is-your-name-formal',
 				np: 'Tapai ko naam ke ho?',
+				dev: 'तपाईंको नाम के हो?',
 				pron: 'tuh-pie-ko naam kay ho',
 				en: 'What is your name? (formal)',
 				usage: 'This is the polite way to ask someone\'s name. "Tapai" is the formal "you," "ko" makes it possessive, and "naam" means name. It\'s appropriate when meeting someone for the first time in a formal or respectful context.',
@@ -505,6 +574,7 @@ const COURSE = [
 			{
 				id: 'hajur-ko-naam-ke-ho-what-is-your-name-very-polite',
 				np: 'Hajur ko naam ke ho?',
+				dev: 'हजुरको नाम के हो?',
 				pron: 'huh-joor ko naam kay ho',
 				en: 'What is your name? (very polite)',
 				usage: 'An extremely respectful way to ask someone\'s name, more formal than "tapaiko naam ke ho." Used when addressing someone of very high status, significantly older, or in very formal situations.',
@@ -512,6 +582,7 @@ const COURSE = [
 			{
 				id: 'timro-naam-ke-ho-what-is-your-name-informal',
 				np: 'Timro naam ke ho?',
+				dev: 'तिम्रो नाम के हो?',
 				pron: 'tim-ro naam kay ho',
 				en: 'What is your name? (informal)',
 				usage: 'The informal way to ask someone\'s name using "timro" (your - informal). Use this with friends, children, or people younger than you. It establishes a casual, friendly tone.',
@@ -519,6 +590,7 @@ const COURSE = [
 			{
 				id: 'mero-naam-ho-my-name-is',
 				np: 'Mero naam ___ ho',
+				dev: 'मेरो नाम ___ हो',
 				pron: 'meh-ro naam ___ ho',
 				en: 'My name is ___',
 				usage: 'Use this phrase to introduce yourself. "Mero" means "my," "naam" is "name," and "ho" is "is." Simply insert your name in the blank space. This works in both formal and informal situations.',
@@ -526,6 +598,7 @@ const COURSE = [
 			{
 				id: 'tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you',
 				np: 'Tapai lai bhetda khushi lagyo',
+				dev: 'तपाईंलाई भेट्दा खुसी लाग्यो',
 				pron: 'tuh-pie lie bhet-daa khu-shi lug-yo',
 				en: 'Nice to meet you',
 				usage: 'A polite phrase when meeting someone for the first time. "Bhetda" means "meeting," and "khushi lagyo" means "felt happy." It\'s a formal way to express pleasure at making someone\'s acquaintance.',
@@ -533,6 +606,7 @@ const COURSE = [
 			{
 				id: 'tapai-lai-kasto-cha-how-are-you-formal',
 				np: 'Tapai lai kasto cha?',
+				dev: 'तपाईंलाई कस्तो छ?',
 				pron: 'tuh-pie lie kus-toh chuh',
 				en: 'How are you? (formal)',
 				usage: 'This is the polite way to ask someone how they\'re doing. Use "tapai" when addressing someone older, someone you don\'t know well, or in professional settings. The response is typically "Sanchai cha" (I\'m fine).',
@@ -540,6 +614,7 @@ const COURSE = [
 			{
 				id: 'sanchai-chu-i-m-fine',
 				np: 'Sanchai chu',
+				dev: 'सञ्चै छु',
 				pron: 'sun-chay choo',
 				en: "I'm fine",
 				usage: 'This is the standard response when someone asks how you are. "Sanchai" means fine or well, and "cha" is the verb "to be." You might also hear "ramro cha" (it\'s good) as a similar response.',
@@ -547,6 +622,7 @@ const COURSE = [
 			{
 				id: 'kaha-jane-where-are-you-going',
 				np: 'Kaha jane?',
+				dev: 'कहाँ जाने?',
 				pron: 'kuh-haa jaa-nay',
 				en: 'Where are you going?',
 				usage: 'This is a common casual greeting in Nepal, similar to "How are you?" in English. It\'s not always a literal question about your destination. A common response is to state where you\'re going or simply say "tira tira" (around/here and there).',
@@ -554,6 +630,7 @@ const COURSE = [
 			{
 				id: 'tapai-nepali-bolnu-hunchha-do-you-speak-nepali',
 				np: 'Tapai Nepali bolnu hunchha?',
+				dev: 'तपाईं नेपाली बोल्नुहुन्छ?',
 				pron: 'tuh-pie nay-paa-li bowl-noo hoon-chuh',
 				en: 'Do you speak Nepali?',
 				usage: 'A polite way to ask if someone speaks Nepali. "Tapai" is the respectful "you," "bolnu hunchha" means "do you speak." You can replace "Nepali" with "English" (Angreji) or other languages.',
@@ -561,6 +638,7 @@ const COURSE = [
 			{
 				id: 'ma-nepali-bolchhu-i-speak-nepali',
 				np: 'Ma Nepali bolchhu',
+				dev: 'म नेपाली बोल्छु',
 				pron: 'muh nay-paa-li bowl-choo',
 				en: 'I speak Nepali',
 				usage: 'Use this to indicate you can speak Nepali. You might add "ali ali" before "Nepali bolchhu" to say you speak only a little. This phrase helps set expectations for communication.',
@@ -568,6 +646,7 @@ const COURSE = [
 			{
 				id: 'ma-nepali-boldina-i-don-t-speak-nepali',
 				np: 'Ma Nepali boldina',
+				dev: 'म नेपाली बोल्दिनँ',
 				pron: 'muh nay-paa-li bowl-di-nuh',
 				en: "I don't speak Nepali",
 				usage: "The negative form, indicating you don't speak Nepali. This can be useful for tourists or new arrivals. Often people will still be helpful and try to communicate through gestures or simple words.",
@@ -575,6 +654,7 @@ const COURSE = [
 			{
 				id: 'tapai-kaha-bata-ho-where-are-you-from',
 				np: 'Tapai kaha bata ho?',
+				dev: 'तपाईं कहाँबाट हो?',
 				pron: 'tuh-pie kuh-haa buh-taa ho',
 				en: 'Where are you from?',
 				usage: 'A common question when meeting someone new. "Bata" means "from," so this literally asks "from where are you?" You can answer with your country or city name followed by "bata ho."',
@@ -582,6 +662,7 @@ const COURSE = [
 			{
 				id: 'ma-bata-ho-i-am-from',
 				np: 'Ma ___ bata ho',
+				dev: 'म ___ बाट हो',
 				pron: 'muh ___ buh-taa ho',
 				en: 'I am from ___',
 				usage: 'Insert your country or city in the blank to answer where you\'re from. For example, "Ma America bata ho" (I am from America) or "Ma Kathmandu bata ho" (I am from Kathmandu).',
@@ -589,6 +670,7 @@ const COURSE = [
 			{
 				id: 'kaha-basnu-huncha-where-do-you-live',
 				np: 'Kaha basnu huncha?',
+				dev: 'कहाँ बस्नुहुन्छ?',
 				pron: 'kuh-haa bus-noo hoon-chuh',
 				en: 'Where do you live?',
 				usage: 'Polite way to ask where someone lives. "Basnu huncha" is the respectful form of "to live/stay." You can respond with your neighborhood, city, or country.',
@@ -596,6 +678,7 @@ const COURSE = [
 			{
 				id: 'ma-ma-baschu-i-live-in',
 				np: 'Ma ___ ma baschu',
+				dev: 'म ___ मा बस्छु',
 				pron: 'muh ___ maa bus-choo',
 				en: 'I live in ___',
 				usage: 'Response to where you live. Insert your location in the blank. "Ma" means I, and "baschu" means "I live." For example, "Ma Kathmandu ma baschu."',
@@ -603,6 +686,7 @@ const COURSE = [
 			{
 				id: 'pheri-bhetaula-see-you-again-let-s-meet-again',
 				np: 'Pheri bhetaula',
+				dev: 'फेरि भेटौंला',
 				pron: 'pheh-ri bheh-tow-laa',
 				en: "See you again / Let's meet again",
 				usage: 'A friendly way to say goodbye with the expectation of meeting again. "Pheri" means again, and "bhetaula" means "let\'s meet." It\'s warmer than a simple goodbye and shows you value the relationship.',
@@ -610,6 +694,7 @@ const COURSE = [
 			{
 				id: 'ramrari-jaanu-go-safely-take-care',
 				np: 'Ramrari jaanu',
+				dev: 'राम्ररी जानु',
 				pron: 'ram-rah-ree jaa-noo',
 				en: 'Go safely / Take care',
 				usage: 'A caring farewell wishing someone a safe journey or safe travels. "Sanchai" means safe/well, and "jaanu" means to go. Shows concern for someone\'s wellbeing.',
@@ -624,6 +709,7 @@ const COURSE = [
 			{
 				id: 'maile-bujhe-i-understand-i-understood',
 				np: 'Maile bujhe',
+				dev: 'मैले बुझेँ',
 				pron: 'moy-lay boo-jhay',
 				en: 'I understand / I understood',
 				usage: 'This phrase indicates that you\'ve understood what someone said. "Bujhe" is the past tense form meaning "understood." You can also say "ma bujhchu" (I understand - present tense) for ongoing understanding. This is very useful when someone is explaining something to you and you want to confirm your comprehension.',
@@ -631,6 +717,7 @@ const COURSE = [
 			{
 				id: 'maile-bujhina-i-don-t-understand',
 				np: 'Maile bujhina',
+				dev: 'मैले बुझिनँ',
 				pron: 'moy-lay boo-jhi-nuh',
 				en: "I don't understand",
 				usage: 'This essential phrase lets others know you haven\'t understood. "Ma" means "I" and "bujhina" is "don\'t understand." It\'s helpful when learning the language or when someone is speaking too quickly.',
@@ -638,6 +725,7 @@ const COURSE = [
 			{
 				id: 'thaha-chhaina-i-don-t-know',
 				np: 'Thaha chhaina',
+				dev: 'थाहा छैन',
 				pron: 'tuh-haa chhai-nuh',
 				en: "I don't know",
 				usage: 'Indicates you don\'t know something. "Thaha" means knowledge, and "chhaina" means "is not" or "don\'t have." A straightforward way to admit you lack information about something.',
@@ -645,6 +733,7 @@ const COURSE = [
 			{
 				id: 'malai-thaaha-cha-i-know',
 				np: 'Malai thaaha cha',
+				dev: 'मलाई थाहा छ',
 				pron: 'muh-lie tuh-haa chuh',
 				en: 'I know',
 				usage: 'The opposite of "thaha chhaina," indicating you do know something. "Malai" means "to me" or "I," and "thaha cha" means "have knowledge." Shows understanding or awareness.',
@@ -652,6 +741,7 @@ const COURSE = [
 			{
 				id: 'sochna-parcha-need-to-think-let-me-think',
 				np: 'Sochna parcha',
+				dev: 'सोच्न पर्छ',
 				pron: 'soch-nuh pur-chuh',
 				en: 'Need to think / Let me think',
 				usage: 'Indicates you need time to consider something. "Sochna" means "to think," and "parcha" means "is needed." A polite way to delay giving an immediate answer.',
@@ -659,6 +749,7 @@ const COURSE = [
 			{
 				id: 'ali-bistari-bolnuhos-please-speak-slowly',
 				np: 'Ali bistari bolnuhos',
+				dev: 'अलि बिस्तारी बोल्नुहोस्',
 				pron: 'ah-lee bis-taa-ri bowl-noo-hos',
 				en: 'Please speak slowly',
 				usage: 'Use this when you need someone to slow down their speech. "Bistari" means slowly, and "bolnuhos" is the polite command form of "to speak." This is particularly useful for language learners.',
@@ -666,6 +757,7 @@ const COURSE = [
 			{
 				id: 'yo-ke-ho-what-is-this',
 				np: 'Yo ke ho?',
+				dev: 'यो के हो?',
 				pron: 'yo kay ho',
 				en: 'What is this?',
 				usage: 'A simple and useful question for identifying objects or learning new vocabulary. "Yo" means "this," "ke" means "what," and "ho" is "is." You can also say "tyo ke ho?" for "What is that?"',
@@ -673,6 +765,7 @@ const COURSE = [
 			{
 				id: 'kasari-how',
 				np: 'Kasari?',
+				dev: 'कसरी?',
 				pron: 'kuh-saa-ri',
 				en: 'How?',
 				usage: "A question word asking about the manner or method of doing something. It's useful when you need instructions or want to understand the process of something. People use it frequently when learning new tasks.",
@@ -680,6 +773,7 @@ const COURSE = [
 			{
 				id: 'kina-why',
 				np: 'Kina?',
+				dev: 'किन?',
 				pron: 'ki-nuh',
 				en: 'Why?',
 				usage: 'Asks for the reason behind something. While useful, be mindful that repeatedly asking "kina" might be seen as challenging authority in more traditional or formal settings, especially with elders.',
@@ -687,6 +781,7 @@ const COURSE = [
 			{
 				id: 'nepali-ma-lai-ke-bhanchha-how-do-you-say-in-nepali',
 				np: 'Nepali ma ___ lai ke bhanchha?',
+				dev: 'नेपालीमा ___ लाई के भन्छ?',
 				pron: 'nay-paa-li maa ___ lie kay bhaan-chuh',
 				en: 'How do you say ___ in Nepali?',
 				usage: 'Essential phrase for language learners. Insert the English word in the blank space. "Nepali ma" means "in Nepali," "lai" is a particle, "ke bhanchha" means "what do you say/call." For example, "Nepali ma \'apple\' lai ke bhanchha?" (How do you say \'apple\' in Nepali?). Very useful for building vocabulary.',
@@ -694,6 +789,7 @@ const COURSE = [
 			{
 				id: 'lekhera-dinuhola-can-you-write-that-down',
 				np: 'Lekhera dinuhola?',
+				dev: 'लेखेर दिनुहोला?',
 				pron: 'lay-khay-raa di-noo-ho-laa',
 				en: 'Can you write that down?',
 				usage: 'A polite request asking someone to write something for you. "Lekhera" means "writing" or "having written," "dinuhola" means "can you give/do." This is particularly helpful when learning new words, getting addresses, or when you need a written reference of something spoken.',
@@ -701,6 +797,7 @@ const COURSE = [
 			{
 				id: 'pheri-bhannus-can-you-repeat-that',
 				np: 'Pheri bhannus',
+				dev: 'फेरि भन्नुस्',
 				pron: 'pheh-ri bhan-noos',
 				en: 'Can you repeat that?',
 				usage: 'Polite way to ask someone to repeat what they just said. "Pheri" means "again," and "bhannus" or "bhandinuhos" means "please say." Use this when you didn\'t hear clearly or need to hear something again to understand better. The second version is slightly more formal.',
@@ -708,6 +805,7 @@ const COURSE = [
 			{
 				id: 'bujhnubhayo-bujyau-do-you-understand',
 				np: 'Bujhnubhayo? / Bujyau?',
+				dev: 'बुझ्नुभयो? / बुझ्यौ?',
 				pron: 'booj-noo-bha-yo / booj-yoo',
 				en: 'Do you understand?',
 				usage: 'Used to check if someone has understood what you said. "Bujhnubhayo" is the polite/formal version, while "bujhyo" is more casual. Teachers, hosts, and anyone explaining something will use this phrase to ensure comprehension. You can respond with "bujhe" (I understood) or "bujhina" (I didn\'t understand).',
@@ -715,6 +813,7 @@ const COURSE = [
 			{
 				id: 'tapai-bolnu-hunchha-do-you-speak-english',
 				np: 'Tapai ... bolnu hunchha?',
+				dev: 'तपाईं ... बोल्नुहुन्छ?',
 				pron: 'tuh-pie ... bowl-noo hoon-chuh',
 				en: 'Do you speak English?',
 				usage: '',
@@ -722,6 +821,7 @@ const COURSE = [
 			{
 				id: 'ma-bolchhu-i-speak-english',
 				np: 'Ma ... bolchhu',
+				dev: 'म ... बोल्छु',
 				pron: 'muh ... bowl-choo',
 				en: 'I speak English',
 				usage: '',
@@ -736,6 +836,7 @@ const COURSE = [
 			{
 				id: 'ra-and',
 				np: 'Ra',
+				dev: 'र',
 				pron: 'ruh',
 				en: 'And',
 				usage: 'The basic "and," joining words and clauses: "dal ra bhaat" (lentils and rice). One of the most frequent words in the language.',
@@ -743,6 +844,7 @@ const COURSE = [
 			{
 				id: 'tara-but',
 				np: 'Tara',
+				dev: 'तर',
 				pron: 'tuh-ruh',
 				en: 'But',
 				usage: 'Introduces a contrast: "mitho cha, tara piro cha" (it\'s tasty, but it\'s spicy). Works just like English "but."',
@@ -750,6 +852,7 @@ const COURSE = [
 			{
 				id: 'ani-and-then-also',
 				np: 'Ani',
+				dev: 'अनि',
 				pron: 'uh-ni',
 				en: 'And then / Also',
 				usage: 'A conversational connector for continuing a story or list: "ani ke bhayo?" (and then what happened?). You will hear it constantly in spoken Nepali.',
@@ -757,6 +860,7 @@ const COURSE = [
 			{
 				id: 'ki-or-in-questions',
 				np: 'Ki',
+				dev: 'कि',
 				pron: 'ki',
 				en: 'Or (in questions)',
 				usage: 'Offers alternatives in questions: "chiya ki coffee?" (tea or coffee?). It can also turn a statement into a tag question when added at the end.',
@@ -764,6 +868,7 @@ const COURSE = [
 			{
 				id: 'athawa-or-in-statements',
 				np: 'Athawa',
+				dev: 'अथवा',
 				pron: 'uh-thuh-waa',
 				en: 'Or (in statements)',
 				usage: 'The "or" used in statements rather than questions: "aaja athawa bholi" (today or tomorrow). In casual speech, "ki" often covers both.',
@@ -771,6 +876,7 @@ const COURSE = [
 			{
 				id: 'pani-also-too',
 				np: 'Pani',
+				dev: 'पनि',
 				pron: 'puh-ni',
 				en: 'Also / Too',
 				usage: 'Means "also" or "even": "ma pani" (me too). Note the short vowel — "paani" with a long aa means water. Context and length tell them apart.',
@@ -778,6 +884,7 @@ const COURSE = [
 			{
 				id: 'matra-only-just',
 				np: 'Matra',
+				dev: 'मात्र',
 				pron: 'maa-truh',
 				en: 'Only / Just',
 				usage: 'Restricts to "only": "ek matra" (only one), "herna matra" (just looking — useful in shops!). It follows the word it limits.',
@@ -785,6 +892,7 @@ const COURSE = [
 			{
 				id: 'ahile-now-right-now',
 				np: 'Ahile',
+				dev: 'अहिले',
 				pron: 'uh-hi-lay',
 				en: 'Now / Right now',
 				usage: 'Refers to the present moment: "ahile aaunus" (come now). "Ahile nai" makes it stronger — "right this moment."',
@@ -792,6 +900,7 @@ const COURSE = [
 			{
 				id: 'pachhi-later-after',
 				np: 'Pachhi',
+				dev: 'पछि',
 				pron: 'puh-chhi',
 				en: 'Later / After',
 				usage: 'Means "later" on its own ("pachhi bhetaula" — see you later) or "after" following another word: "khana pachhi" (after the meal).',
@@ -799,6 +908,7 @@ const COURSE = [
 			{
 				id: 'aba-now-next',
 				np: 'Aba',
+				dev: 'अब',
 				pron: 'uh-buh',
 				en: 'Now / Next',
 				usage: 'Marks a transition to what happens next: "aba ke garne?" (now what shall we do?). Slightly different from "ahile" — "aba" is about sequence, "ahile" about the present moment.',
@@ -806,6 +916,7 @@ const COURSE = [
 			{
 				id: 'pheri-again',
 				np: 'Pheri',
+				dev: 'फेरि',
 				pron: 'pheh-ri',
 				en: 'Again',
 				usage: 'Means "again," already familiar from "pheri bhetaula" (let\'s meet again) and "pheri bhannus" (please say it again). On its own: "pheri garnus" (do it again).',
@@ -820,6 +931,7 @@ const COURSE = [
 			{
 				id: 'paani-dinus-please-give-me-water',
 				np: 'Paani dinus',
+				dev: 'पानी दिनुस्',
 				pron: 'paa-ni di-noos',
 				en: 'Please give me water',
 				usage: 'A practical phrase for restaurants or homes. "Paani" is water and "dinus" is the polite form of "give me." You can replace "paani" with other items you need.',
@@ -827,6 +939,7 @@ const COURSE = [
 			{
 				id: 'khana-khanu-bhayo-have-you-eaten',
 				np: 'Khana khanu bhayo?',
+				dev: 'खाना खानुभयो?',
 				pron: 'kha-na kha-noo bha-yo',
 				en: 'Have you eaten?',
 				usage: 'This is a common way of showing care and concern in Nepali culture, similar to "How are you?" in English. It\'s not always a literal inquiry about whether someone has eaten, but rather a friendly greeting showing you care about their wellbeing.',
@@ -834,6 +947,7 @@ const COURSE = [
 			{
 				id: 'chiya-khaane-will-you-have-tea',
 				np: 'Chiya khaane?',
+				dev: 'चिया खाने?',
 				pron: 'chi-yaa khaa-nay',
 				en: 'Will you have tea?',
 				usage: 'Common offer of hospitality. Note that Nepalis say "eat tea" (chiya khaane) rather than "drink tea." Tea is an integral part of Nepali culture and this offer is made frequently.',
@@ -841,6 +955,7 @@ const COURSE = [
 			{
 				id: 'khana-khaeko-chu-i-ve-eaten-i-have-eaten',
 				np: 'Khana khaeko chu',
+				dev: 'खाना खाएको छु',
 				pron: 'kha-na khaa-ay-ko choo',
 				en: "I've eaten / I have eaten",
 				usage: 'Past tense statement indicating you\'ve already eaten. "Khaeko" is the past participle of "to eat," and "chu" means "I am/have." Use this when someone asks if you\'ve eaten or offers you food when you\'ve already had a meal. It\'s a polite way to decline additional food.',
@@ -848,6 +963,7 @@ const COURSE = [
 			{
 				id: 'khana-khaeko-chhaina-i-haven-t-eaten',
 				np: 'Khana khaeko chhaina',
+				dev: 'खाना खाएको छैन',
 				pron: 'kha-na khaa-ay-ko chhai-nuh',
 				en: "I haven't eaten",
 				usage: 'Indicates you have not yet eaten. "Chhaina" is the negative form meaning "have not" or "is not." Use this when someone asks if you\'ve eaten and you\'re still hungry. In Nepali culture, asking "khana khanu bhayo?" (have you eaten?) is a common way of showing care, and this is the honest response if you haven\'t.',
@@ -855,6 +971,7 @@ const COURSE = [
 			{
 				id: 'kasto-cha-how-is-it',
 				np: 'Kasto cha?',
+				dev: 'कस्तो छ?',
 				pron: 'kus-toh chuh',
 				en: 'How is it?',
 				usage: 'Asks about the quality, condition, or state of something. Can refer to food, weather, experiences, or situations. A versatile question used frequently in conversation.',
@@ -862,6 +979,7 @@ const COURSE = [
 			{
 				id: 'mitho-cha-it-s-delicious',
 				np: 'Mitho cha',
+				dev: 'मिठो छ',
 				pron: 'mi-toh chuh',
 				en: "It's delicious",
 				usage: 'Use this to compliment food. "Mitho" means delicious or sweet (in taste), and expressing appreciation for food is an important part of Nepali hospitality. Your host will be pleased to hear this.',
@@ -869,6 +987,7 @@ const COURSE = [
 			{
 				id: 'pugyo-enough-that-s-sufficient',
 				np: 'Pugyo',
+				dev: 'पुग्यो',
 				pron: 'poog-yo',
 				en: "Enough / That's sufficient",
 				usage: "This word indicates you've had enough, whether it's food being served, items being poured, or any other quantity. It's polite but firm. In restaurants, servers might keep offering more food, and this word stops them.",
@@ -876,6 +995,7 @@ const COURSE = [
 			{
 				id: 'pardaina-no-need-not-necessary',
 				np: 'Pardaina',
+				dev: 'पर्दैन',
 				pron: 'pur-dye-nuh',
 				en: 'No need / Not necessary',
 				usage: 'Politely declines something or indicates something isn\'t necessary. Less direct than saying "no." For example, when someone offers something you don\'t need, you can say "pardaina, dhanyabad."',
@@ -883,6 +1003,7 @@ const COURSE = [
 			{
 				id: 'thik-cha-it-s-okay-it-s-fine',
 				np: 'Thik cha',
+				dev: 'ठीक छ',
 				pron: 'teek chuh',
 				en: "It's okay / It's fine",
 				usage: 'A versatile phrase expressing that something is acceptable, correct, or fine. "Thik" means right, correct, or okay. You can use it to agree with someone, to say something is acceptable, or to indicate you\'re doing fine.',
@@ -890,6 +1011,7 @@ const COURSE = [
 			{
 				id: 'khana-mitho-cha-the-food-is-delicious',
 				np: 'Khana mitho cha',
+				dev: 'खाना मिठो छ',
 				pron: 'kha-na mi-toh chuh',
 				en: 'The food is delicious',
 				usage: 'Past tense compliment for food. "Thiyo" is the past tense of "was." Use this after finishing a meal to thank your host or compliment the chef.',
@@ -897,6 +1019,7 @@ const COURSE = [
 			{
 				id: 'ma-machha-maasu-khadina-i-don-t-eat-meat',
 				np: 'Ma machha-maasu khadina',
+				dev: 'म माछामासु खाँदिनँ',
 				pron: 'muh mah-cha maa-soo kha-di-nuh',
 				en: "I don't eat meat",
 				usage: 'Important phrase for vegetarians. "Maasu" means meat, and "khadina" means "don\'t eat." This clearly communicates dietary restrictions. You can also say "ma shakahari ho" (I am vegetarian) for a more general statement. Nepal has a large vegetarian population, so this dietary preference is well understood and respected.',
@@ -904,6 +1027,7 @@ const COURSE = [
 			{
 				id: 'ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod',
 				np: 'Ma dudh, dahi ra ghue khadina',
+				dev: 'म दूध, दही र घ्यू खाँदिनँ',
 				pron: 'muh doodh, da-hee raa ga-yoo kha-di-nuh',
 				en: "I don't eat milk and milk products",
 				usage: '"Dudh" means milk, "ra" means and, "banaeko kura" means "made things/products." You might also learn "paneer" (cheese), "dahi" (yogurt), and "ghee" (clarified butter) to identify specific items to avoid.',
@@ -911,6 +1035,7 @@ const COURSE = [
 			{
 				id: 'khana-tayar-bhayo-the-food-is-ready',
 				np: 'Khana tayar bhayo',
+				dev: 'खाना तयार भयो',
 				pron: 'kha-na tuh-yaar bha-yo',
 				en: 'The food is ready',
 				usage: 'Announces that a meal is prepared and ready to eat. "Tayar" means ready or prepared, and "bhayo" means "became" or "is." Family members often use this to call others to the table. You might also hear "khana khana aaunu" (come to eat) as an invitation to the meal.',
@@ -925,6 +1050,7 @@ const COURSE = [
 			{
 				id: 'bhanda-dishes-utensils',
 				np: 'Bhanda',
+				dev: 'भाँडा',
 				pron: 'bhaan-daa',
 				emoji: '🍽️',
 				en: 'Dishes / Utensils',
@@ -932,6 +1058,7 @@ const COURSE = [
 			{
 				id: 'thaal-plate',
 				np: 'Thaal',
+				dev: 'थाल',
 				pron: 'thaal',
 				emoji: '🍽️',
 				en: 'Plate',
@@ -939,6 +1066,7 @@ const COURSE = [
 			{
 				id: 'kachaura-bowl',
 				np: 'Kachaura',
+				dev: 'कचौरा',
 				pron: 'kuh-chow-raa',
 				emoji: '🥣',
 				en: 'Bowl',
@@ -946,6 +1074,7 @@ const COURSE = [
 			{
 				id: 'chamcha-spoon',
 				np: 'Chamcha',
+				dev: 'चम्चा',
 				pron: 'chum-chaa',
 				emoji: '🥄',
 				en: 'Spoon',
@@ -953,6 +1082,7 @@ const COURSE = [
 			{
 				id: 'kaanta-fork',
 				np: 'Kaanta',
+				dev: 'काँटा',
 				pron: 'kaan-taa',
 				emoji: '🍴',
 				en: 'Fork',
@@ -960,6 +1090,7 @@ const COURSE = [
 			{
 				id: 'churaa-knife',
 				np: 'Churaa',
+				dev: 'छुरा',
 				pron: 'choo-raa',
 				emoji: '🔪',
 				en: 'Knife',
@@ -967,6 +1098,7 @@ const COURSE = [
 			{
 				id: 'glass-glass-cup',
 				np: 'Glass',
+				dev: 'गिलास',
 				pron: 'glass',
 				emoji: '🥤',
 				en: 'Glass / Cup',
@@ -974,6 +1106,7 @@ const COURSE = [
 			{
 				id: 'kap-cup',
 				np: 'Kap',
+				dev: 'कप',
 				pron: 'cup',
 				emoji: '☕',
 				en: 'Cup',
@@ -981,6 +1114,7 @@ const COURSE = [
 			{
 				id: 'dekchi-pot-cooking-pot',
 				np: 'Dekchi',
+				dev: 'डेक्ची',
 				pron: 'dek-chi',
 				emoji: '🍲',
 				en: 'Pot / Cooking pot',
@@ -988,6 +1122,7 @@ const COURSE = [
 			{
 				id: 'taawaa-pan-frying-pan',
 				np: 'Taawaa',
+				dev: 'तावा',
 				pron: 'taa-waa',
 				emoji: '🍳',
 				en: 'Pan / Frying pan',
@@ -995,6 +1130,7 @@ const COURSE = [
 			{
 				id: 'chulho-stove',
 				np: 'Chulho',
+				dev: 'चुल्हो',
 				pron: 'chool-ho',
 				emoji: '🔥',
 				en: 'Stove',
@@ -1002,6 +1138,7 @@ const COURSE = [
 			{
 				id: 'fridge-refrigerator',
 				np: 'Fridge',
+				dev: 'फ्रिज',
 				pron: 'frij',
 				emoji: '🧊',
 				en: 'Refrigerator',
@@ -1009,6 +1146,7 @@ const COURSE = [
 			{
 				id: 'kitli-kettle',
 				np: 'Kitli',
+				dev: 'केतली',
 				pron: 'kit-li',
 				emoji: '🫖',
 				en: 'Kettle',
@@ -1016,6 +1154,7 @@ const COURSE = [
 			{
 				id: 'masala-daani-spice-container',
 				np: 'Masala daani',
+				dev: 'मसलादानी',
 				pron: 'muh-saa-laa daa-ni',
 				emoji: '🧂',
 				en: 'Spice container',
@@ -1030,6 +1169,7 @@ const COURSE = [
 			{
 				id: 'khana-food',
 				np: 'Khana',
+				dev: 'खाना',
 				pron: 'kha-na',
 				emoji: '🍽️',
 				en: 'Food',
@@ -1037,6 +1177,7 @@ const COURSE = [
 			{
 				id: 'bhaat-rice-cooked',
 				np: 'Bhaat',
+				dev: 'भात',
 				pron: 'bhaat',
 				emoji: '🍚',
 				en: 'Rice (cooked)',
@@ -1044,6 +1185,7 @@ const COURSE = [
 			{
 				id: 'daal-lentils',
 				np: 'Daal',
+				dev: 'दाल',
 				pron: 'daal',
 				emoji: '🫘',
 				en: 'Lentils',
@@ -1051,6 +1193,7 @@ const COURSE = [
 			{
 				id: 'tarkari-vegetables-curry',
 				np: 'Tarkari',
+				dev: 'तरकारी',
 				pron: 'tur-kaa-ri',
 				emoji: '🥗',
 				en: 'Vegetables / Curry',
@@ -1058,6 +1201,7 @@ const COURSE = [
 			{
 				id: 'roti-bread-flatbread',
 				np: 'Roti',
+				dev: 'रोटी',
 				pron: 'ro-ti',
 				emoji: '🫓',
 				en: 'Bread / Flatbread',
@@ -1065,6 +1209,7 @@ const COURSE = [
 			{
 				id: 'maasu-meat',
 				np: 'Maasu',
+				dev: 'मासु',
 				pron: 'maa-soo',
 				emoji: '🍖',
 				en: 'Meat',
@@ -1072,6 +1217,7 @@ const COURSE = [
 			{
 				id: 'machha-fish',
 				np: 'Machha',
+				dev: 'माछा',
 				pron: 'much-haa',
 				emoji: '🐟',
 				en: 'Fish',
@@ -1079,6 +1225,7 @@ const COURSE = [
 			{
 				id: 'kukhura-ko-phul-egg',
 				np: 'Kukhura ko phul',
+				dev: 'कुखुराको फुल',
 				pron: 'koo-khu-raa ko fool',
 				emoji: '🥚',
 				en: 'Egg',
@@ -1086,6 +1233,7 @@ const COURSE = [
 			{
 				id: 'dudh-milk',
 				np: 'Dudh',
+				dev: 'दूध',
 				pron: 'doodh',
 				emoji: '🥛',
 				en: 'Milk',
@@ -1093,6 +1241,7 @@ const COURSE = [
 			{
 				id: 'dahi-yogurt',
 				np: 'Dahi',
+				dev: 'दही',
 				pron: 'duh-hi',
 				emoji: '🥛',
 				en: 'Yogurt',
@@ -1100,6 +1249,7 @@ const COURSE = [
 			{
 				id: 'chiya-tea',
 				np: 'Chiya',
+				dev: 'चिया',
 				pron: 'chi-yaa',
 				emoji: '🍵',
 				en: 'Tea',
@@ -1107,6 +1257,7 @@ const COURSE = [
 			{
 				id: 'paani-water',
 				np: 'Paani',
+				dev: 'पानी',
 				pron: 'paa-ni',
 				emoji: '💧',
 				en: 'Water',
@@ -1114,6 +1265,7 @@ const COURSE = [
 			{
 				id: 'nun-salt',
 				np: 'Nun',
+				dev: 'नुन',
 				pron: 'noon',
 				emoji: '🧂',
 				en: 'Salt',
@@ -1121,6 +1273,7 @@ const COURSE = [
 			{
 				id: 'chini-sugar',
 				np: 'Chini',
+				dev: 'चिनी',
 				pron: 'chi-ni',
 				emoji: '🍬',
 				en: 'Sugar',
@@ -1128,6 +1281,7 @@ const COURSE = [
 			{
 				id: 'tel-oil',
 				np: 'Tel',
+				dev: 'तेल',
 				pron: 'tail',
 				emoji: '🛢️',
 				en: 'Oil',
@@ -1135,6 +1289,7 @@ const COURSE = [
 			{
 				id: 'masala-spices',
 				np: 'Masala',
+				dev: 'मसला',
 				pron: 'muh-saa-laa',
 				emoji: '🌶️',
 				en: 'Spices',
@@ -1142,6 +1297,7 @@ const COURSE = [
 			{
 				id: 'phal-fruit',
 				np: 'Phal',
+				dev: 'फल',
 				pron: 'ful',
 				emoji: '🍎',
 				en: 'Fruit',
@@ -1149,6 +1305,7 @@ const COURSE = [
 			{
 				id: 'achar-pickle-chutney',
 				np: 'Achar',
+				dev: 'अचार',
 				pron: 'uh-chaar',
 				emoji: '🫙',
 				en: 'Pickle / Chutney',
@@ -1156,6 +1313,7 @@ const COURSE = [
 			{
 				id: 'bhatta-soybean',
 				np: 'Bhatta',
+				dev: 'भटमास',
 				pron: 'bhut-taa',
 				emoji: '🫘',
 				en: 'Soybean',
@@ -1163,6 +1321,7 @@ const COURSE = [
 			{
 				id: 'maha-honey',
 				np: 'Maha',
+				dev: 'मह',
 				pron: 'muh-haa',
 				emoji: '🍯',
 				en: 'Honey',
@@ -1177,6 +1336,7 @@ const COURSE = [
 			{
 				id: 'malai-chaahiyo-i-need',
 				np: 'Malai ___ chaahiyo',
+				dev: 'मलाई ___ चाहियो',
 				pron: 'muh-lie ___ chaa-hi-yo',
 				en: 'I need ___',
 				usage: 'The general "I need" pattern — you have already seen "Pani chaahiyo" and "Doctor chaahiyo." "Malai" means "to me," so this is literally "to me, ___ is needed." Insert any noun: "Malai chamcha chaahiyo" (I need a spoon).',
@@ -1184,6 +1344,7 @@ const COURSE = [
 			{
 				id: 'malai-chiya-chaahiyo-i-need-tea',
 				np: 'Malai chiya chaahiyo',
+				dev: 'मलाई चिया चाहियो',
 				pron: 'muh-lie chi-yaa chaa-hi-yo',
 				en: 'I need tea',
 				usage: 'A worked example of the pattern — and a sentence you may use daily. Swap "chiya" for anything: paani, thaal, sabun.',
@@ -1191,6 +1352,7 @@ const COURSE = [
 			{
 				id: 'dinus-please-give-me',
 				np: '___ dinus',
+				dev: '___ दिनुस्',
 				pron: '___ di-noos',
 				en: 'Please give me ___',
 				usage: 'The polite request pattern behind "Paani dinus." "Dinus" is the respectful command form of "dinu" (to give). "Thaal dinus" (please give me a plate), "kap dinus" (please give me a cup).',
@@ -1198,6 +1360,7 @@ const COURSE = [
 			{
 				id: 'nun-dinus-please-pass-the-salt',
 				np: 'Nun dinus',
+				dev: 'नुन दिनुस्',
 				pron: 'noon di-noos',
 				en: 'Please pass the salt',
 				usage: 'The pattern at the dinner table. Any item within reach works the same way: "achar dinus" (please pass the pickle).',
@@ -1205,6 +1368,7 @@ const COURSE = [
 			{
 				id: 'kaha-cha-where-is',
 				np: '___ kaha cha?',
+				dev: '___ कहाँ छ?',
 				pron: '___ kuh-haa chuh',
 				en: 'Where is ___?',
 				usage: 'The general "where is" pattern from "Charpi kaha cha?" Works for any object: "sabun kaha cha?" (where is the soap?). For people, use the polite verb instead: "Aamaa kaha hunuhunchha?" (where is mother?).',
@@ -1212,6 +1376,7 @@ const COURSE = [
 			{
 				id: 'mero-kap-kaha-cha-where-is-my-cup',
 				np: 'Mero kap kaha cha?',
+				dev: 'मेरो कप कहाँ छ?',
 				pron: 'meh-ro cup kuh-haa chuh',
 				en: 'Where is my cup?',
 				usage: 'Combines "mero" (my) with the where-is pattern. The everyday mystery of the missing cup, in Nepali.',
@@ -1219,6 +1384,7 @@ const COURSE = [
 			{
 				id: 'ma-khojdai-chu-i-am-looking-for',
 				np: 'Ma ___ khojdai chu',
+				dev: 'म ___ खोज्दै छु',
 				pron: 'muh ___ khoj-dye choo',
 				en: 'I am looking for ___',
 				usage: '"Khojnu" means to search. The "-dai chu" ending means "am currently doing" — you will see it again in other patterns. "Ma mero kap khojdai chu" (I am looking for my cup).',
@@ -1226,6 +1392,7 @@ const COURSE = [
 			{
 				id: 'malai-man-parcha-i-like',
 				np: 'Malai ___ man parcha',
+				dev: 'मलाई ___ मन पर्छ',
 				pron: 'muh-lie ___ mun pur-chuh',
 				en: 'I like ___',
 				usage: 'Literally "to me, ___ falls on the mind." The standard way to express liking things: "Malai chiya man parcha" (I like tea). Great for complimenting food and making conversation.',
@@ -1233,6 +1400,7 @@ const COURSE = [
 			{
 				id: 'malai-dahi-man-parcha-i-like-yogurt',
 				np: 'Malai dahi man parcha',
+				dev: 'मलाई दही मन पर्छ',
 				pron: 'muh-lie duh-hi mun pur-chuh',
 				en: 'I like yogurt',
 				usage: 'Worked example of "man parcha." Nepali dahi is often homemade and a point of pride — this sentence will land well.',
@@ -1240,6 +1408,7 @@ const COURSE = [
 			{
 				id: 'malai-man-pardaina-i-don-t-like',
 				np: 'Malai ___ man pardaina',
+				dev: 'मलाई ___ मन पर्दैन',
 				pron: 'muh-lie ___ mun pur-dye-nuh',
 				en: "I don't like ___",
 				usage: 'The negative of "man parcha." Note it is gentler than refusing outright — pair it with "tara" (but) to stay polite: "Malai khursaani man pardaina, tara khana mitho cha" (I don\'t like chili, but the food is delicious).',
@@ -1247,6 +1416,7 @@ const COURSE = [
 			{
 				id: 'tapai-sanga-cha-do-you-have',
 				np: 'Tapai sanga ___ cha?',
+				dev: 'तपाईंसँग ___ छ?',
 				pron: 'tuh-pie sung-guh ___ chuh',
 				en: 'Do you have ___?',
 				usage: '"Sanga" means "with," so this asks "is ___ with you?" — the standard "do you have" for things someone carries: "Tapai sanga paisa cha?" (do you have money?). "Paisa" is the everyday word for money.',
@@ -1254,6 +1424,7 @@ const COURSE = [
 			{
 				id: 'arko-dinus-please-give-me-another',
 				np: 'Arko ___ dinus',
+				dev: 'अर्को ___ दिनुस्',
 				pron: 'ur-ko ___ di-noos',
 				en: 'Please give me another ___',
 				usage: '"Arko" means "another" or "the next one." "Arko roti dinus" (one more roti, please) — guaranteed to make a Nepali host happy.',
@@ -1268,6 +1439,7 @@ const COURSE = [
 			{
 				id: 'charpi-kaha-cha-where-is-the-bathroom',
 				np: 'Charpi kaha cha?',
+				dev: 'चर्पी कहाँ छ?',
 				pron: 'chur-pi kuh-haa chuh',
 				en: 'Where is the bathroom?',
 				usage: 'Essential question for any household. "Charpi" is the common Nepali word for bathroom/toilet (you may also hear "toilet"). "Kaha cha" means "where is." This is often one of the first questions you need to ask in a new place. The response will typically include directions like "tyaha" (there) with a gesture.',
@@ -1275,6 +1447,7 @@ const COURSE = [
 			{
 				id: 'ma-nuhaauna-jane-i-m-going-to-bathe',
 				np: 'Ma nuhaauna jane',
+				dev: 'म नुहाउन जाने',
 				pron: 'muh noo-hau-nuh jaa-nay',
 				en: "I'm going to bathe",
 				usage: 'Announces your intention to shower or bathe. "Nuhaauna" means "to bathe/shower," and "jane" means "going." This is polite to say in a household so others know the bathroom will be occupied.',
@@ -1282,6 +1455,7 @@ const COURSE = [
 			{
 				id: 'ma-kehi-maddat-garna-sakchu-can-i-help-with-anything',
 				np: 'Ma kehi maddat garna sakchu?',
+				dev: 'म केही मद्दत गर्न सक्छु?',
 				pron: 'muh keh-hi mud-dut gar-nuh suk-choo',
 				en: 'Can I help with anything?',
 				usage: 'Polite offer to assist with tasks. "Kehi" means "anything/something," "maddat" means "help," and "garna sakchu" means "can I do." This shows respect and willingness to contribute to household work. It\'s especially important in a host family situation to offer help with cooking, cleaning, or other chores.',
@@ -1289,6 +1463,7 @@ const COURSE = [
 			{
 				id: 'ma-bhada-maajhchu-i-ll-wash-the-dishes',
 				np: 'Ma bhada maajhchu',
+				dev: 'म भाँडा माझ्छु',
 				pron: 'muh bhaan-daa maaj-choo',
 				en: "I'll wash the dishes",
 				usage: 'Offers to do the dishes. "Bhada" (or "bhanda") means dishes/utensils, and "maajhchu" means "I will wash/clean." This is a helpful phrase for contributing to household chores. In many Nepali homes, guests are not expected to wash dishes, but offering shows good manners and appreciation. Your host may decline the offer, but it\'s polite to make it.',
@@ -1296,6 +1471,7 @@ const COURSE = [
 			{
 				id: 'dhoka-banda-garnus-please-close-the-door',
 				np: 'Dhoka banda garnus',
+				dev: 'ढोका बन्द गर्नुस्',
 				pron: 'dho-kaa bun-duh gur-noos',
 				en: 'Please close the door',
 				usage: '"Dhoka" is door and "banda" means closed or shut. "Banda garnus" (please close) works for windows too: "jhyaal banda garnus."',
@@ -1303,6 +1479,7 @@ const COURSE = [
 			{
 				id: 'dhoka-banda-garnu-bhayo-did-you-close-the-door',
 				np: 'Dhoka banda garnu bhayo?',
+				dev: 'ढोका बन्द गर्नुभयो?',
 				pron: 'dho-kaa bun-duh gur-noo bhuh-yo',
 				en: 'Did you close the door?',
 				usage: 'The past-tense polite question form "-nu bhayo?" asks whether someone did something. The nightly household check.',
@@ -1310,6 +1487,7 @@ const COURSE = [
 			{
 				id: 'batti-balnus-please-turn-on-the-light',
 				np: 'Batti balnus',
+				dev: 'बत्ती बाल्नुस्',
 				pron: 'but-ti baal-noos',
 				en: 'Please turn on the light',
 				usage: '"Batti" is light or lamp, "balnu" is to light or switch on. Also used for the stove flame: "ggyaas balnus" (light the gas).',
@@ -1317,6 +1495,7 @@ const COURSE = [
 			{
 				id: 'batti-nibhaunus-please-turn-off-the-light',
 				np: 'Batti nibhaunus',
+				dev: 'बत्ती निभाउनुस्',
 				pron: 'but-ti ni-bhau-noos',
 				en: 'Please turn off the light',
 				usage: '"Nibhaunu" means to extinguish or switch off — the counterpart of "balnu." Last one out of the room hears this.',
@@ -1324,6 +1503,7 @@ const COURSE = [
 			{
 				id: 'ma-lugaa-dhunchu-i-will-wash-the-clothes',
 				np: 'Ma lugaa dhunchu',
+				dev: 'म लुगा धुन्छु',
 				pron: 'muh loo-gaa dhoon-choo',
 				en: 'I will wash the clothes',
 				usage: '"Lugaa" is clothes and "dhunu" is to wash. The same verb covers washing dishes, hands, and laundry.',
@@ -1331,6 +1511,7 @@ const COURSE = [
 			{
 				id: 'ma-ghar-safaa-garchu-i-will-clean-the-house',
 				np: 'Ma ghar safaa garchu',
+				dev: 'म घर सफा गर्छु',
 				pron: 'muh ghur suh-faa gur-choo',
 				en: 'I will clean the house',
 				usage: '"Safaa" means clean. "Safaa garnu" (to make clean) is the general cleaning verb: "tebul safaa garnus" (please wipe the table).',
@@ -1338,6 +1519,7 @@ const COURSE = [
 			{
 				id: 'ma-fohor-falchhu-i-will-take-out-the-trash',
 				np: 'Ma fohor falchhu',
+				dev: 'म फोहोर फाल्छु',
 				pron: 'muh fo-hor faal-choo',
 				en: 'I will take out the trash',
 				usage: '"Fohor" is trash (short for "fohormailaa") and "falnu" means to throw. A reliable way to be a popular member of the household.',
@@ -1345,6 +1527,7 @@ const COURSE = [
 			{
 				id: 'paahuna-aaudai-chan-guests-are-coming',
 				np: 'Paahuna aaudai chan',
+				dev: 'पाहुना आउँदै छन्',
 				pron: 'paa-hoo-naa aau-dye chun',
 				en: 'Guests are coming',
 				usage: '"Paahuna" means guest — a word with weight in Nepal, where guests are treated as honored. Expect rapid cleaning and cooking to follow this announcement.',
@@ -1352,6 +1535,7 @@ const COURSE = [
 			{
 				id: 'bhitra-aaunus-please-come-in',
 				np: 'Bhitra aaunus',
+				dev: 'भित्र आउनुस्',
 				pron: 'bhi-truh aau-noos',
 				en: 'Please come in',
 				usage: '"Bhitra" means inside. The standard welcome at the door, usually followed by an offer of chiya.',
@@ -1359,6 +1543,7 @@ const COURSE = [
 			{
 				id: 'ma-maddat-garchu-i-will-help',
 				np: 'Ma maddat garchu',
+				dev: 'म मद्दत गर्छु',
 				pron: 'muh mud-dut gur-choo',
 				en: 'I will help',
 				usage: 'Combines "maddat" (help) with the "garchu" pattern. The active offer, next to the question "Ma kehi maddat garna sakchu?" you already know.',
@@ -1366,6 +1551,7 @@ const COURSE = [
 			{
 				id: 'maddat-chaahiyo-do-you-need-help',
 				np: 'Maddat chaahiyo?',
+				dev: 'मद्दत चाहियो?',
 				pron: 'mud-dut chaa-hi-yo',
 				en: 'Do you need help?',
 				usage: 'The "chaahiyo" pattern as a question. Said while walking into the kitchen with sleeves rolled up.',
@@ -1373,6 +1559,7 @@ const COURSE = [
 			{
 				id: 'sutne-bela-bhayo-it-s-bedtime',
 				np: 'Sutne bela bhayo',
+				dev: 'सुत्ने बेला भयो',
 				pron: 'soot-nay bay-laa bhuh-yo',
 				en: "It's bedtime",
 				usage: '"Bela" means time or moment, so this is literally "sleeping time happened." Used for children and tired adults alike.',
@@ -1387,6 +1574,7 @@ const COURSE = [
 			{
 				id: 'kucho-broom',
 				np: 'Kucho',
+				dev: 'कुचो',
 				pron: 'koo-cho',
 				emoji: '🧹',
 				en: 'Broom',
@@ -1394,6 +1582,7 @@ const COURSE = [
 			{
 				id: 'pochaa-mop',
 				np: 'Pochaa',
+				dev: 'पोछा',
 				pron: 'po-chaa',
 				emoji: '🧽',
 				en: 'Mop',
@@ -1401,6 +1590,7 @@ const COURSE = [
 			{
 				id: 'fohormailaa-garbage-trash',
 				np: 'Fohormailaa',
+				dev: 'फोहोरमैला',
 				pron: 'fo-hor-my-laa',
 				emoji: '🗑️',
 				en: 'Garbage / Trash',
@@ -1408,6 +1598,7 @@ const COURSE = [
 			{
 				id: 'fohormailaa-ko-thungaa-trash-can',
 				np: 'Fohormailaa ko thungaa',
+				dev: 'फोहोरमैलाको ठुँगा',
 				pron: 'fo-hor-my-laa ko thoon-gaa',
 				emoji: '🗑️',
 				en: 'Trash can',
@@ -1415,6 +1606,7 @@ const COURSE = [
 			{
 				id: 'jhaaru-duster-cleaning-cloth',
 				np: 'Jhaaru',
+				dev: 'झाडु',
 				pron: 'jhaa-roo',
 				emoji: '🧽',
 				en: 'Duster / Cleaning cloth',
@@ -1429,6 +1621,7 @@ const COURSE = [
 			{
 				id: 'ma-jaanchu-i-am-going-to',
 				np: 'Ma ___ jaanchu',
+				dev: 'म ___ जान्छु',
 				pron: 'muh ___ jaan-choo',
 				en: 'I am going to ___',
 				usage: 'The "I go / I am going" pattern from "jaanu" (to go). "Ma bajaar jaanchu" (I am going to the market — "bajaar" is the market/shops). Announce where you are headed before leaving the house.',
@@ -1436,6 +1629,7 @@ const COURSE = [
 			{
 				id: 'ma-ghar-jaanchu-i-am-going-home',
 				np: 'Ma ghar jaanchu',
+				dev: 'म घर जान्छु',
 				pron: 'muh ghur jaan-choo',
 				en: 'I am going home',
 				usage: '"Ghar" means house or home — one of the most useful words in Nepali, and the natural end to many conversations.',
@@ -1443,6 +1637,7 @@ const COURSE = [
 			{
 				id: 'ma-garchu-i-will-do',
 				np: 'Ma ___ garchu',
+				dev: 'म ___ गर्छु',
 				pron: 'muh ___ gur-choo',
 				en: 'I will do ___',
 				usage: 'From "garnu" (to do), the most versatile verb in Nepali. "Ma kaam garchu" (I will do the work). Offer to take on a task: "ma garchu!" (I\'ll do it!).',
@@ -1450,6 +1645,7 @@ const COURSE = [
 			{
 				id: 'ma-kaam-garchu-i-am-working-i-will-do-the-work',
 				np: 'Ma kaam garchu',
+				dev: 'म काम गर्छु',
 				pron: 'muh kaam gur-choo',
 				en: 'I am working / I will do the work',
 				usage: '"Kaam" means work or task — both a job and household chores. "Kaam cha" (there is work / I\'m busy) is a phrase you will hear constantly.',
@@ -1457,6 +1653,7 @@ const COURSE = [
 			{
 				id: 'tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite',
 				np: 'Tapai ke gardai hunuhunchha?',
+				dev: 'तपाईं के गर्दै हुनुहुन्छ?',
 				pron: 'tuh-pie kay gur-dye hoo-noo-hoon-chuh',
 				en: 'What are you doing? (polite)',
 				usage: 'An everyday question around the house. "-dai" marks an action in progress, like English "-ing." The casual version with "timi" is "timi ke gardai chhau?"',
@@ -1464,6 +1661,7 @@ const COURSE = [
 			{
 				id: 'ma-khana-pakaudai-chu-i-am-cooking-food',
 				np: 'Ma khana pakaudai chu',
+				dev: 'म खाना पकाउँदै छु',
 				pron: 'muh kha-na puh-kow-dye choo',
 				en: 'I am cooking food',
 				usage: '"Pakaunu" means to cook. Use it to announce you are at the stove — or "ma pakauchu" (I will cook) to volunteer for dinner duty.',
@@ -1471,6 +1669,7 @@ const COURSE = [
 			{
 				id: 'ma-kinchhu-i-will-buy',
 				np: 'Ma ___ kinchhu',
+				dev: 'म ___ किन्छु',
 				pron: 'muh ___ kin-choo',
 				en: 'I will buy ___',
 				usage: 'From "kinnu" (to buy). "Ma tarkari kinchhu" (I\'ll buy vegetables) — useful before a market run, and it pairs with the bargaining phrases you already know.',
@@ -1478,6 +1677,7 @@ const COURSE = [
 			{
 				id: 'tapai-khanu-huncha-will-you-have-polite-offer',
 				np: 'Tapai ___ khanu huncha?',
+				dev: 'तपाईं ___ खानुहुन्छ?',
 				pron: 'tuh-pie ___ khaa-noo hoon-chuh',
 				en: 'Will you have ___? (polite offer)',
 				usage: 'The polite version of "Chiya khaane?" for offering food or drink. "Tapai bhaat khanu huncha?" (will you have rice?). Expect to be asked this often — hospitality is serious business.',
@@ -1485,6 +1685,7 @@ const COURSE = [
 			{
 				id: 'ma-khanchu-i-will-have',
 				np: 'Ma ___ khanchu',
+				dev: 'म ___ खान्छु',
 				pron: 'muh ___ khaan-choo',
 				en: 'I will have ___',
 				usage: 'Accepting an offer: "Ma chiya khanchu" (I\'ll have tea). Remember Nepali "eats" tea rather than drinking it. To decline politely, "pardaina, dhanyabad."',
@@ -1492,6 +1693,7 @@ const COURSE = [
 			{
 				id: 'ma-sutna-jaane-i-am-going-to-bed',
 				np: 'Ma sutna jaane',
+				dev: 'म सुत्न जाने',
 				pron: 'muh soot-nuh jaa-nay',
 				en: 'I am going to bed',
 				usage: '"Sutnu" means to sleep. The same shape as "Ma nuhaauna jane" (I\'m going to bathe) — verb + "jaane" announces what you are off to do.',
@@ -1499,6 +1701,7 @@ const COURSE = [
 			{
 				id: 'ma-ahile-aaunchu-i-will-be-right-back',
 				np: 'Ma ahile aaunchu',
+				dev: 'म अहिले आउँछु',
 				pron: 'muh uh-hi-lay aaun-choo',
 				en: 'I will be right back',
 				usage: 'Literally "I come now," from "aaunu" (to come) plus "ahile" (now). The standard way to excuse yourself briefly.',
@@ -1506,6 +1709,7 @@ const COURSE = [
 			{
 				id: 'ek-chhin-parkhanus-wait-a-moment-please',
 				np: 'Ek chhin parkhanus',
+				dev: 'एक छिन पर्खनुस्',
 				pron: 'ek chhin purkh-uh-noos',
 				en: 'Wait a moment, please',
 				usage: '"Ek chhin" is "one moment" — your number "ek" at work. "Parkhanus" is the polite form of "parkhanu" (to wait). Buy yourself time mid-conversation while you find a word!',
@@ -1520,6 +1724,7 @@ const COURSE = [
 			{
 				id: 'ma-uthchu-i-get-up-i-will-get-up',
 				np: 'Ma uthchu',
+				dev: 'म उठ्छु',
 				pron: 'muh ooth-choo',
 				en: 'I get up / I will get up',
 				usage: '"Uthnu" means to rise or get up. "Ma bihaana sabere uthchu" — I get up early in the morning.',
@@ -1527,6 +1732,7 @@ const COURSE = [
 			{
 				id: 'uthnus-please-get-up-wake-up',
 				np: 'Uthnus!',
+				dev: 'उठ्नुस्!',
 				pron: 'ooth-noos',
 				en: 'Please get up / Wake up!',
 				usage: 'The polite wake-up call. For family you might hear the informal "utha!" instead.',
@@ -1534,6 +1740,7 @@ const COURSE = [
 			{
 				id: 'ma-mukh-dhunchhu-i-will-wash-my-face',
 				np: 'Ma mukh dhunchhu',
+				dev: 'म मुख धुन्छु',
 				pron: 'muh mookh dhoon-choo',
 				en: 'I will wash my face',
 				usage: '"Mukh" means face (and mouth). Washing your face is the standard Nepali morning freshen-up, mentioned as routinely as brushing teeth.',
@@ -1541,6 +1748,7 @@ const COURSE = [
 			{
 				id: 'ma-daat-maajhchu-i-will-brush-my-teeth',
 				np: 'Ma daat maajhchu',
+				dev: 'म दाँत माझ्छु',
 				pron: 'muh daat maaj-choo',
 				en: 'I will brush my teeth',
 				usage: '"Daat" is teeth, and "maajhnu" (to scrub) is the same verb as in "bhada maajhchu" (washing dishes). Scrubbing is scrubbing!',
@@ -1548,6 +1756,7 @@ const COURSE = [
 			{
 				id: 'ma-kaam-jaanchu-i-am-going-to-work',
 				np: 'Ma kaam jaanchu',
+				dev: 'म काम जान्छु',
 				pron: 'muh kaam jaan-choo',
 				en: 'I am going to work',
 				usage: 'The "jaanchu" pattern with "kaam" (work). The standard morning departure line.',
@@ -1555,6 +1764,7 @@ const COURSE = [
 			{
 				id: 'ma-ghar-aaye-i-am-home-i-came-home',
 				np: 'Ma ghar aaye',
+				dev: 'म घर आएँ',
 				pron: 'muh ghur aa-yay',
 				en: 'I am home / I came home',
 				usage: '"Aaye" is the past tense of "aaunu" (to come). Announce yourself at the door with this.',
@@ -1562,6 +1772,7 @@ const COURSE = [
 			{
 				id: 'khana-khane-bela-bhayo-it-is-time-to-eat',
 				np: 'Khana khane bela bhayo',
+				dev: 'खाना खाने बेला भयो',
 				pron: 'kha-na khaa-nay bay-laa bhuh-yo',
 				en: 'It is time to eat',
 				usage: '"Bela" (time) again — literally "food-eating time happened." The call that gathers the household.',
@@ -1569,6 +1780,7 @@ const COURSE = [
 			{
 				id: 'ma-thakeko-chu-i-am-tired',
 				np: 'Ma thakeko chu',
+				dev: 'म थकेको छु',
 				pron: 'muh thaa-kay-ko choo',
 				en: 'I am tired',
 				usage: 'Uses "thakeko" (tired) with "chu" (I am). The honest end-of-day report, and a polite path toward excusing yourself to bed.',
@@ -1576,6 +1788,7 @@ const COURSE = [
 			{
 				id: 'dhilo-bhayo-it-is-late-i-am-running-late',
 				np: 'Dhilo bhayo',
+				dev: 'ढिलो भयो',
 				pron: 'dhi-lo bhuh-yo',
 				en: 'It is late / I am running late',
 				usage: '"Dhilo" means late. Works for the hour ("it has gotten late") and for yourself when rushing out the door.',
@@ -1583,6 +1796,7 @@ const COURSE = [
 			{
 				id: 'ma-chaadai-aaunchu-i-will-come-back-soon',
 				np: 'Ma chaadai aaunchu',
+				dev: 'म चाँडै आउँछु',
 				pron: 'muh chaa-dye aaun-choo',
 				en: 'I will come back soon',
 				usage: '"Chaadai" means soon or early. A fuller version of "Ma ahile aaunchu" when you will be gone a bit longer.',
@@ -1590,6 +1804,7 @@ const COURSE = [
 			{
 				id: 'ramro-sanga-sutnus-sleep-well',
 				np: 'Ramro sanga sutnus',
+				dev: 'राम्रोसँग सुत्नुस्',
 				pron: 'rum-ro sung-guh soot-noos',
 				en: 'Sleep well',
 				usage: 'Literally "sleep with goodness." A warmer companion to "subha ratri" within the household.',
@@ -1597,6 +1812,7 @@ const COURSE = [
 			{
 				id: 'subha-din-have-a-good-day',
 				np: 'Subha din',
+				dev: 'शुभ दिन',
 				pron: 'soo-bhuh din',
 				en: 'Have a good day',
 				usage: '"Din" means day — the same pattern as "subha prabhat" and "subha ratri." A slightly formal but kind send-off.',
@@ -1611,6 +1827,7 @@ const COURSE = [
 			{
 				id: 'ma-tarkari-kaatchu-i-will-cut-the-vegetables',
 				np: 'Ma tarkari kaatchu',
+				dev: 'म तरकारी काट्छु',
 				pron: 'muh tur-kaa-ri kaat-choo',
 				en: 'I will cut the vegetables',
 				usage: '"Kaatnu" means to cut or chop. The classic way to be useful in a Nepali kitchen without being trusted with the spices yet.',
@@ -1618,6 +1835,7 @@ const COURSE = [
 			{
 				id: 'paani-umaalnus-please-boil-the-water',
 				np: 'Paani umaalnus',
+				dev: 'पानी उमाल्नुस्',
 				pron: 'paa-ni oo-maal-noos',
 				en: 'Please boil the water',
 				usage: '"Umaalnu" means to boil. Step one of chiya, daal, and most of dinner.',
@@ -1625,6 +1843,7 @@ const COURSE = [
 			{
 				id: 'bhaat-pakaunus-please-cook-the-rice',
 				np: 'Bhaat pakaunus',
+				dev: 'भात पकाउनुस्',
 				pron: 'bhaat puh-kow-noos',
 				en: 'Please cook the rice',
 				usage: '"Pakaunu" (to cook) from the pattern you know, now as a polite request. "Bhaat" is cooked rice — the center of the Nepali meal.',
@@ -1632,6 +1851,7 @@ const COURSE = [
 			{
 				id: 'yo-piro-cha-is-this-spicy',
 				np: 'Yo piro cha?',
+				dev: 'यो पिरो छ?',
 				pron: 'yo pi-ro chuh',
 				en: 'Is this spicy?',
 				usage: '"Piro" means spicy-hot. Possibly the most important question in this entire course. Ask before, not after.',
@@ -1639,6 +1859,7 @@ const COURSE = [
 			{
 				id: 'dherai-piro-cha-it-is-very-spicy',
 				np: 'Dherai piro cha',
+				dev: 'धेरै पिरो छ',
 				pron: 'dheh-rye pi-ro chuh',
 				en: 'It is very spicy',
 				usage: 'When the answer to "yo piro cha?" arrives too late. "Dherai" (very) plus "piro." Keep water nearby — or better, dahi.',
@@ -1646,6 +1867,7 @@ const COURSE = [
 			{
 				id: 'nun-pugyo-there-is-enough-salt',
 				np: 'Nun pugyo',
+				dev: 'नुन पुग्यो',
 				pron: 'noon poog-yo',
 				en: 'There is enough salt',
 				usage: '"Pugyo" (enough) applied to cooking. The verdict after tasting: "nun pugyo" — the salt has arrived where it needs to be.',
@@ -1653,6 +1875,7 @@ const COURSE = [
 			{
 				id: 'aru-nun-chaahiyo-it-needs-more-salt',
 				np: 'Aru nun chaahiyo',
+				dev: 'अरु नुन चाहियो',
 				pron: 'uh-roo noon chaa-hi-yo',
 				en: 'It needs more salt',
 				usage: '"Aru" (more) + "chaahiyo" (is needed). The other possible verdict. Salt opinions are strong in every kitchen on earth.',
@@ -1660,6 +1883,7 @@ const COURSE = [
 			{
 				id: 'chakhnus-please-taste-it',
 				np: 'Chakhnus',
+				dev: 'चाख्नुस्',
 				pron: 'chaakh-noos',
 				en: 'Please taste it',
 				usage: '"Chakhnu" means to taste. An invitation and an honor — the cook wants your opinion. Answer with "mitho cha!" if at all possible.',
@@ -1667,6 +1891,7 @@ const COURSE = [
 			{
 				id: 'tato-cha-it-is-hot-to-the-touch',
 				np: 'Tato cha',
+				dev: 'तातो छ',
 				pron: 'taa-to chuh',
 				en: 'It is hot (to the touch)',
 				usage: '"Tato" is hot for objects and food — different from "garmi," which is hot weather. Said while handing someone a fresh cup of chiya.',
@@ -1674,6 +1899,7 @@ const COURSE = [
 			{
 				id: 'hosh-garnus-be-careful',
 				np: 'Hosh garnus',
+				dev: 'होस गर्नुस्',
 				pron: 'hosh gur-noos',
 				en: 'Be careful',
 				usage: '"Hosh" means awareness or care. Heard around hot pots, sharp knives, and slippery floors — anywhere in a busy kitchen.',
@@ -1681,6 +1907,7 @@ const COURSE = [
 			{
 				id: 'ramro-basna-aayo-it-smells-good',
 				np: 'Ramro basna aayo',
+				dev: 'राम्रो बास्ना आयो',
 				pron: 'rum-ro baas-nuh aa-yo',
 				en: 'It smells good',
 				usage: '"Basna" is smell or aroma — literally "a good smell came." The compliment that drifts into the kitchen before dinner.',
@@ -1688,6 +1915,7 @@ const COURSE = [
 			{
 				id: 'khana-sakiyo-the-food-is-finished-all-gone',
 				np: 'Khana sakiyo',
+				dev: 'खाना सकियो',
 				pron: 'kha-na suh-ki-yo',
 				en: 'The food is finished / all gone',
 				usage: '"Sakinu" means to be finished or used up. Works for the pot being empty and for declaring the meal over.',
@@ -1702,6 +1930,7 @@ const COURSE = [
 			{
 				id: 'kati-ho-how-much-is-it',
 				np: 'Kati ho?',
+				dev: 'कति हो?',
 				pron: 'kuh-ti ho',
 				en: 'How much is it?',
 				usage: 'Essential for shopping and bargaining, this phrase asks about price or quantity. "Kati" means "how much" or "how many." Shopkeepers will understand this immediately and tell you the price.',
@@ -1709,6 +1938,7 @@ const COURSE = [
 			{
 				id: 'mahango-cha-it-s-expensive',
 				np: 'Mahango cha',
+				dev: 'महँगो छ',
 				pron: 'muh-hun-go chuh',
 				en: "It's expensive",
 				usage: 'Use this when you think the price is too high. Bargaining is common in Nepal\'s markets, and saying something is expensive might lead to a lower price. "Mahango" means expensive and "cha" means "is."',
@@ -1716,6 +1946,7 @@ const COURSE = [
 			{
 				id: 'sasto-cha-it-s-cheap',
 				np: 'Sasto cha',
+				dev: 'सस्तो छ',
 				pron: 'sus-toh chuh',
 				en: "It's cheap",
 				usage: 'The opposite of mahango, this phrase indicates something is inexpensive or affordable. "Sasto" means cheap or inexpensive. You can use this to compliment a good price or good value.',
@@ -1723,6 +1954,7 @@ const COURSE = [
 			{
 				id: 'kati-ma-for-how-much',
 				np: 'Kati ma?',
+				dev: 'कतिमा?',
 				pron: 'kuh-ti maa',
 				en: 'For how much?',
 				usage: 'Asks about price or cost. "Ma" in this context means "for." Used when bargaining or asking about prices. Shopkeepers expect this question in markets.',
@@ -1730,6 +1962,7 @@ const COURSE = [
 			{
 				id: 'kam-garnuhos-please-reduce-make-it-less',
 				np: 'Kam garnuhos',
+				dev: 'कम गर्नुहोस्',
 				pron: 'kum gar-noo-hos',
 				en: 'Please reduce / Make it less',
 				usage: 'Used when bargaining to ask for a lower price. "Kam" means less or reduce. Bargaining is common in Nepali markets, and sellers often expect some negotiation.',
@@ -1737,6 +1970,7 @@ const COURSE = [
 			{
 				id: 'antim-mol-kati-what-s-your-final-price',
 				np: 'Antim mol kati?',
+				dev: 'अन्तिम मोल कति?',
 				pron: 'un-tim mol kuh-ti',
 				en: "What's your final price?",
 				usage: 'Asks for the best/final price. "Antim" means final or last, and "mol" means price. Use this near the end of bargaining to get the seller\'s best offer.',
@@ -1744,6 +1978,7 @@ const COURSE = [
 			{
 				id: 'aru-ke-chaahiyo-what-else-do-you-need',
 				np: 'Aru ke chaahiyo?',
+				dev: 'अरु के चाहियो?',
 				pron: 'uh-roo kay chaa-hi-yo',
 				en: 'What else do you need?',
 				usage: 'Shopkeepers often ask this after you\'ve purchased something. "Aru" means other or else, "ke" means what, and "chaahiyo" means needed. You can say "aru kehi chhaina" (nothing else).',
@@ -1751,6 +1986,7 @@ const COURSE = [
 			{
 				id: 'aru-kehi-chhaina-nothing-else',
 				np: 'Aru kehi chhaina',
+				dev: 'अरु केही छैन',
 				pron: 'uh-roo keh-hi chhai-nuh',
 				en: 'Nothing else',
 				usage: 'Indicates you don\'t need anything else. "Kehi" means something/anything. A polite way to decline further offers from shopkeepers or hosts.',
@@ -1765,6 +2001,7 @@ const COURSE = [
 			{
 				id: 'kahile-when',
 				np: 'Kahile?',
+				dev: 'कहिले?',
 				pron: 'kuh-hi-lay',
 				en: 'When?',
 				usage: "A simple question word asking about time. You can use it to ask when something will happen, when someone will arrive, or when an event occurred. It's useful in planning and making arrangements.",
@@ -1772,6 +2009,7 @@ const COURSE = [
 			{
 				id: 'aaja-today',
 				np: 'Aaja',
+				dev: 'आज',
 				pron: 'aa-juh',
 				en: 'Today',
 				usage: 'Refers to the current day. You\'ll hear this often in daily conversation when discussing plans or events. It can be combined with other words like "aaja nai" (today itself, meaning right away).',
@@ -1779,6 +2017,7 @@ const COURSE = [
 			{
 				id: 'bholi-tomorrow',
 				np: 'Bholi',
+				dev: 'भोलि',
 				pron: 'bho-li',
 				en: 'Tomorrow',
 				usage: 'Refers to the next day. Interestingly, "bholi" is also used colloquially to mean "later" or "in the future," and Nepal has a reputation for "bholi culture" where things are often postponed until tomorrow.',
@@ -1786,6 +2025,7 @@ const COURSE = [
 			{
 				id: 'hijo-yesterday',
 				np: 'Hijo',
+				dev: 'हिजो',
 				pron: 'hi-jo',
 				en: 'Yesterday',
 				usage: "Refers to the previous day. This word is commonly used when recounting recent events or experiences. It's a straightforward time marker in everyday conversation.",
@@ -1793,6 +2033,7 @@ const COURSE = [
 			{
 				id: 'bihaana-morning',
 				np: 'Bihaana',
+				dev: 'बिहान',
 				pron: 'bi-haa-nuh',
 				en: 'Morning',
 				usage: 'The morning hours. "Bihaana sabere" means early in the morning. Often used with meals: morning daal bhaat is eaten mid-morning in most households.',
@@ -1800,6 +2041,7 @@ const COURSE = [
 			{
 				id: 'diuso-afternoon-daytime',
 				np: 'Diuso',
+				dev: 'दिउँसो',
 				pron: 'dyoo-so',
 				en: 'Afternoon / Daytime',
 				usage: 'The middle of the day, roughly late morning through afternoon. "Diuso khana" can refer to a midday meal or snack.',
@@ -1807,6 +2049,7 @@ const COURSE = [
 			{
 				id: 'beluka-evening',
 				np: 'Beluka',
+				dev: 'बेलुका',
 				pron: 'bay-loo-kaa',
 				en: 'Evening',
 				usage: 'The evening hours, from late afternoon until night. "Beluka bhetaula" — see you this evening.',
@@ -1814,6 +2057,7 @@ const COURSE = [
 			{
 				id: 'raati-night',
 				np: 'Raati',
+				dev: 'राति',
 				pron: 'raa-ti',
 				en: 'Night',
 				usage: 'Nighttime. You have seen it inside "Subha ratri" (good night). "Raati abela" means late at night.',
@@ -1821,6 +2065,7 @@ const COURSE = [
 			{
 				id: 'aaitabaar-sunday',
 				np: 'Aaitabaar',
+				dev: 'आइतबार',
 				pron: 'aai-tuh-baar',
 				en: 'Sunday',
 				usage: 'The first day of the Nepali week — and a normal working day in Nepal, unlike in Western countries.',
@@ -1828,6 +2073,7 @@ const COURSE = [
 			{
 				id: 'sombaar-monday',
 				np: 'Sombaar',
+				dev: 'सोमबार',
 				pron: 'som-baar',
 				en: 'Monday',
 				usage: 'All weekday names end in "-baar" (day). "Som" relates to the moon, like "lunes" or "Monday" in other languages.',
@@ -1835,6 +2081,7 @@ const COURSE = [
 			{
 				id: 'mangalbaar-tuesday',
 				np: 'Mangalbaar',
+				dev: 'मङ्गलबार',
 				pron: 'mun-gul-baar',
 				en: 'Tuesday',
 				usage: '',
@@ -1842,6 +2089,7 @@ const COURSE = [
 			{
 				id: 'budhabaar-wednesday',
 				np: 'Budhabaar',
+				dev: 'बुधबार',
 				pron: 'boo-dhuh-baar',
 				en: 'Wednesday',
 				usage: '',
@@ -1849,6 +2097,7 @@ const COURSE = [
 			{
 				id: 'bihibaar-thursday',
 				np: 'Bihibaar',
+				dev: 'बिहीबार',
 				pron: 'bi-hi-baar',
 				en: 'Thursday',
 				usage: '',
@@ -1856,6 +2105,7 @@ const COURSE = [
 			{
 				id: 'sukrabaar-friday',
 				np: 'Sukrabaar',
+				dev: 'शुक्रबार',
 				pron: 'sook-ruh-baar',
 				en: 'Friday',
 				usage: '',
@@ -1863,6 +2113,7 @@ const COURSE = [
 			{
 				id: 'sanibaar-saturday',
 				np: 'Sanibaar',
+				dev: 'शनिबार',
 				pron: 'suh-ni-baar',
 				en: 'Saturday',
 				usage: 'The weekly holiday in Nepal — offices and schools close on Saturday, not Sunday. Weekend plans revolve around Sanibaar.',
@@ -1870,6 +2121,7 @@ const COURSE = [
 			{
 				id: 'kati-bajyo-what-time-is-it',
 				np: 'Kati bajyo?',
+				dev: 'कति बज्यो?',
 				pron: 'kuh-ti buh-jyo',
 				en: 'What time is it?',
 				usage: 'The standard way to ask the time. "Bajyo" literally means "(the hour) struck." You will need your numbers for the answer!',
@@ -1877,6 +2129,7 @@ const COURSE = [
 			{
 				id: 'bajyo-it-s-o-clock',
 				np: '___ bajyo',
+				dev: '___ बज्यो',
 				pron: 'buh-jyo',
 				en: "It's ___ o'clock",
 				usage: 'The answer to "kati bajyo?" — insert a number: "paanch bajyo" (it\'s five o\'clock). For half past, add "saadhe": "saadhe paanch" (half past five).',
@@ -1891,6 +2144,7 @@ const COURSE = [
 			{
 				id: 'kaha-where',
 				np: 'Kaha?',
+				dev: 'कहाँ?',
 				pron: 'kuh-haa',
 				en: 'Where?',
 				usage: "A basic question word asking about location. It's essential for getting directions, finding places, or asking where things or people are. You can combine it with other words to form more specific questions.",
@@ -1898,6 +2152,7 @@ const COURSE = [
 			{
 				id: 'yaha-here',
 				np: 'Yaha',
+				dev: 'यहाँ',
 				pron: 'yuh-haa',
 				en: 'Here',
 				usage: "Indicates this location or place. Use it when pointing out where something is or where you are. It's often accompanied by a gesture to indicate the specific spot being referenced.",
@@ -1905,6 +2160,7 @@ const COURSE = [
 			{
 				id: 'tyaha-there',
 				np: 'Tyaha',
+				dev: 'त्यहाँ',
 				pron: 'tyuh-haa',
 				en: 'There',
 				usage: "Indicates that location or place, somewhere away from the speaker. It's used for pointing to locations that aren't immediately near. You can use it when giving or receiving directions.",
@@ -1912,6 +2168,7 @@ const COURSE = [
 			{
 				id: 'kata-janey-where-to-go',
 				np: 'Kata janey?',
+				dev: 'कता जाने?',
 				pron: 'kuh-taa jaa-nay',
 				en: 'Where to go?',
 				usage: 'Taxi drivers commonly ask this when you get in. It\'s a shortened, casual form asking where you want to go. You can respond with your destination or say "tira" (that way) while pointing.',
@@ -1919,6 +2176,7 @@ const COURSE = [
 			{
 				id: 'roknus-please-stop',
 				np: 'Roknus',
+				dev: 'रोक्नुस्',
 				pron: 'rok-noos',
 				en: 'Please stop',
 				usage: 'Useful in taxis or buses when you want the vehicle to stop. "Rok" means to stop, and "nus" makes it polite. You can also say "yaha roknus" (stop here) to indicate you want to get off at this location.',
@@ -1926,6 +2184,7 @@ const COURSE = [
 			{
 				id: 'bato-dekhaunus-please-show-me-the-way',
 				np: 'Bato dekhaunus',
+				dev: 'बाटो देखाउनुस्',
 				pron: 'baa-toh dekh-ow-noos',
 				en: 'Please show me the way',
 				usage: 'A polite request for directions. "Bato" means road or way, and "dekhaunus" means "please show." People in Nepal are generally helpful with directions and will often go out of their way to help.',
@@ -1933,6 +2192,7 @@ const COURSE = [
 			{
 				id: 'toilet-kaha-cha-where-is-the-toilet',
 				np: 'Toilet kaha cha?',
+				dev: 'शौचालय कहाँ छ?',
 				pron: 'toy-let kuh-haa chuh',
 				en: 'Where is the toilet?',
 				usage: 'A practical necessity. In Nepal, you might also hear "charpi" as another word for toilet. This question will be understood everywhere and people will happily point you in the right direction.',
@@ -1947,6 +2207,7 @@ const COURSE = [
 			{
 				id: 'ramro-good-nice-beautiful',
 				np: 'Ramro',
+				dev: 'राम्रो',
 				pron: 'rum-ro',
 				en: 'Good / Nice / Beautiful',
 				usage: 'A versatile adjective describing something positive. It can describe food, weather, people, experiences, or objects. "Ramro cha" means "it\'s good" and is a common way to express satisfaction.',
@@ -1954,6 +2215,7 @@ const COURSE = [
 			{
 				id: 'naramro-bad-not-good',
 				np: 'Naramro',
+				dev: 'नराम्रो',
 				pron: 'nuh-rum-ro',
 				en: 'Bad / Not good',
 				usage: 'The opposite of ramro, this word describes something negative or unpleasant. "Na-" is a common prefix in Nepali that negates words. It can describe poor quality, bad behavior, or unfortunate situations.',
@@ -1961,6 +2223,7 @@ const COURSE = [
 			{
 				id: 'thulo-big-large',
 				np: 'Thulo',
+				dev: 'ठूलो',
 				pron: 'thoo-lo',
 				en: 'Big / Large',
 				usage: 'Describes size or importance. It can refer to physical size or to someone\'s age or status. "Thulo manchhe" means "big person" and can refer to someone important or an adult.',
@@ -1968,6 +2231,7 @@ const COURSE = [
 			{
 				id: 'sano-small-little',
 				np: 'Sano',
+				dev: 'सानो',
 				pron: 'saa-no',
 				en: 'Small / Little',
 				usage: 'The opposite of thulo, indicating something small in size. "Sano bacha" means small child. It can also indicate something minor or insignificant in context.',
@@ -1975,6 +2239,7 @@ const COURSE = [
 			{
 				id: 'dherai-many-much-very',
 				np: 'Dherai',
+				dev: 'धेरै',
 				pron: 'dheh-rye',
 				en: 'Many / Much / Very',
 				usage: 'Indicates a large quantity or high degree. "Dherai dhanyabad" means "thank you very much." It\'s also used to say there\'s a lot of something. "Dherai manchhe" means many people.',
@@ -1982,6 +2247,7 @@ const COURSE = [
 			{
 				id: 'ali-ali-a-little-bit',
 				np: 'Ali ali',
+				dev: 'अलि अलि',
 				pron: 'uh-li uh-li',
 				en: 'A little bit',
 				usage: 'Indicates a small amount or degree. When learning Nepali, you might say "ma ali ali Nepali bolchhu" (I speak a little Nepali). The repetition emphasizes the smallness of the quantity.',
@@ -1996,6 +2262,7 @@ const COURSE = [
 			{
 				id: 'rang-color',
 				np: 'Rang',
+				dev: 'रङ',
 				pron: 'rung',
 				emoji: '🎨',
 				en: 'Color',
@@ -2003,6 +2270,7 @@ const COURSE = [
 			{
 				id: 'rato-red',
 				np: 'Rato',
+				dev: 'रातो',
 				pron: 'raa-to',
 				emoji: '🔴',
 				en: 'Red',
@@ -2010,6 +2278,7 @@ const COURSE = [
 			{
 				id: 'nilo-blue',
 				np: 'Nilo',
+				dev: 'निलो',
 				pron: 'ni-lo',
 				emoji: '🔵',
 				en: 'Blue',
@@ -2017,6 +2286,7 @@ const COURSE = [
 			{
 				id: 'hariyo-green',
 				np: 'Hariyo',
+				dev: 'हरियो',
 				pron: 'huh-ri-yo',
 				emoji: '🟢',
 				en: 'Green',
@@ -2024,6 +2294,7 @@ const COURSE = [
 			{
 				id: 'pahelo-yellow',
 				np: 'Pahelo',
+				dev: 'पहेँलो',
 				pron: 'puh-hay-lo',
 				emoji: '🟡',
 				en: 'Yellow',
@@ -2031,6 +2302,7 @@ const COURSE = [
 			{
 				id: 'seto-white',
 				np: 'Seto',
+				dev: 'सेतो',
 				pron: 'say-to',
 				emoji: '⚪',
 				en: 'White',
@@ -2038,6 +2310,7 @@ const COURSE = [
 			{
 				id: 'kalo-black',
 				np: 'Kalo',
+				dev: 'कालो',
 				pron: 'kaa-lo',
 				emoji: '⚫',
 				en: 'Black',
@@ -2045,6 +2318,7 @@ const COURSE = [
 			{
 				id: 'khairo-brown',
 				np: 'Khairo',
+				dev: 'खैरो',
 				pron: 'khai-ro',
 				emoji: '🟤',
 				en: 'Brown',
@@ -2052,6 +2326,7 @@ const COURSE = [
 			{
 				id: 'suntala-rang-orange-color',
 				np: 'Suntala rang',
+				dev: 'सुन्तला रङ',
 				pron: 'soon-tuh-laa rung',
 				emoji: '🟠',
 				en: 'Orange (color)',
@@ -2059,6 +2334,7 @@ const COURSE = [
 			{
 				id: 'gulabi-pink',
 				np: 'Gulabi',
+				dev: 'गुलाबी',
 				pron: 'goo-laa-bi',
 				emoji: '🌸',
 				en: 'Pink',
@@ -2066,6 +2342,7 @@ const COURSE = [
 			{
 				id: 'pyaji-purple',
 				np: 'Pyaji',
+				dev: 'प्याजी',
 				pron: 'pyaa-ji',
 				emoji: '🟣',
 				en: 'Purple',
@@ -2080,6 +2357,7 @@ const COURSE = [
 			{
 				id: 'kasto-chha-hawa-how-s-the-weather',
 				np: 'Kasto chha hawa?',
+				dev: 'कस्तो छ हावा?',
 				pron: 'kus-toh chha huh-waa',
 				en: "How's the weather?",
 				usage: 'Asks about weather conditions. "Hawa" means air or weather. You can respond with descriptions like "ramro cha" (it\'s good), "garmi cha" (it\'s hot), or "pani pariracha" (it\'s raining).',
@@ -2087,6 +2365,7 @@ const COURSE = [
 			{
 				id: 'pani-pariracha-it-is-raining',
 				np: 'Pani pariracha',
+				dev: 'पानी परिरहेको छ',
 				pron: 'paa-ni puh-ri-ruh-chuh',
 				en: 'It is raining',
 				usage: 'A useful phrase for discussing weather. "Pani" means water, and "pariracha" is the present continuous form of "to fall." Monsoon season makes this a frequently used phrase in Nepal.',
@@ -2094,6 +2373,7 @@ const COURSE = [
 			{
 				id: 'garmi-cha-it-s-hot',
 				np: 'Garmi cha',
+				dev: 'गर्मी छ',
 				pron: 'gur-mi chuh',
 				en: "It's hot",
 				usage: 'Describes hot weather or temperature. "Garmi" means heat. In Nepal\'s hot season (before monsoon), this phrase is commonly used. You might also hear "dherai garmi cha" (it\'s very hot).',
@@ -2101,6 +2381,7 @@ const COURSE = [
 			{
 				id: 'jado-cha-it-s-cold',
 				np: 'Jado cha',
+				dev: 'जाडो छ',
 				pron: 'jaa-do chuh',
 				en: "It's cold",
 				usage: 'Used to describe cold weather, especially during winter months in Nepal. "Jado" means cold or winter. In mountainous areas, you\'ll hear this frequently during the colder seasons.',
@@ -2115,6 +2396,7 @@ const COURSE = [
 			{
 				id: 'tauko-head',
 				np: 'Tauko',
+				dev: 'टाउको',
 				pron: 'tow-ko',
 				emoji: '👤',
 				en: 'Head',
@@ -2122,6 +2404,7 @@ const COURSE = [
 			{
 				id: 'kapaal-hair',
 				np: 'Kapaal',
+				dev: 'कपाल',
 				pron: 'kuh-paal',
 				emoji: '💇',
 				en: 'Hair',
@@ -2129,6 +2412,7 @@ const COURSE = [
 			{
 				id: 'aankha-eye',
 				np: 'Aankha',
+				dev: 'आँखा',
 				pron: 'aan-khaa',
 				emoji: '👁️',
 				en: 'Eye',
@@ -2136,6 +2420,7 @@ const COURSE = [
 			{
 				id: 'kaan-ear',
 				np: 'Kaan',
+				dev: 'कान',
 				pron: 'kaan',
 				emoji: '👂',
 				en: 'Ear',
@@ -2143,6 +2428,7 @@ const COURSE = [
 			{
 				id: 'naak-nose',
 				np: 'Naak',
+				dev: 'नाक',
 				pron: 'naak',
 				emoji: '👃',
 				en: 'Nose',
@@ -2150,6 +2436,7 @@ const COURSE = [
 			{
 				id: 'mukh-mouth-face',
 				np: 'Mukh',
+				dev: 'मुख',
 				pron: 'mookh',
 				emoji: '👄',
 				en: 'Mouth / Face',
@@ -2157,6 +2444,7 @@ const COURSE = [
 			{
 				id: 'oth-lips',
 				np: 'Oth',
+				dev: 'ओठ',
 				pron: 'oth',
 				emoji: '💋',
 				en: 'Lips',
@@ -2164,6 +2452,7 @@ const COURSE = [
 			{
 				id: 'daat-teeth',
 				np: 'Daat',
+				dev: 'दाँत',
 				pron: 'daat',
 				emoji: '🦷',
 				en: 'Teeth',
@@ -2171,6 +2460,7 @@ const COURSE = [
 			{
 				id: 'ghaati-throat-neck',
 				np: 'Ghaati',
+				dev: 'घाँटी',
 				pron: 'ghaa-ti',
 				emoji: '🗣️',
 				en: 'Throat / Neck',
@@ -2178,6 +2468,7 @@ const COURSE = [
 			{
 				id: 'haat-hand-arm',
 				np: 'Haat',
+				dev: 'हात',
 				pron: 'haat',
 				emoji: '✋',
 				en: 'Hand / Arm',
@@ -2185,6 +2476,7 @@ const COURSE = [
 			{
 				id: 'aaulaa-finger',
 				np: 'Aaulaa',
+				dev: 'औंला',
 				pron: 'ow-laa',
 				emoji: '☝️',
 				en: 'Finger',
@@ -2192,6 +2484,7 @@ const COURSE = [
 			{
 				id: 'pet-stomach-belly',
 				np: 'Pet',
+				dev: 'पेट',
 				pron: 'pet',
 				emoji: '🫄',
 				en: 'Stomach / Belly',
@@ -2199,6 +2492,7 @@ const COURSE = [
 			{
 				id: 'dhaad-back',
 				np: 'Dhaad',
+				dev: 'ढाड',
 				pron: 'dhaad',
 				emoji: '🦴',
 				en: 'Back',
@@ -2206,6 +2500,7 @@ const COURSE = [
 			{
 				id: 'khutta-leg-foot',
 				np: 'Khutta',
+				dev: 'खुट्टा',
 				pron: 'khoot-taa',
 				emoji: '🦵',
 				en: 'Leg / Foot',
@@ -2220,6 +2515,7 @@ const COURSE = [
 			{
 				id: 'kripaya-malaai-maddat-garnuhos-please-help-me',
 				np: 'Kripaya malaai maddat garnuhos',
+				dev: 'कृपया मलाई मद्दत गर्नुहोस्',
 				pron: 'kri-puh-yuh muh-lie mud-dut gar-noo-hos',
 				en: 'Please help me',
 				usage: 'A polite request for assistance. "Malaai" means "to me," and "maddat garnuhos" means "please help." This is useful in emergencies or when you need someone\'s assistance with something.',
@@ -2227,6 +2523,7 @@ const COURSE = [
 			{
 				id: 'sahayog-garnuhos-please-cooperate-please-help',
 				np: 'Sahayog garnuhos',
+				dev: 'सहयोग गर्नुहोस्',
 				pron: 'suh-haa-yog gar-noo-hos',
 				en: 'Please cooperate / Please help',
 				usage: 'Formal request for cooperation or assistance. "Sahayog" means cooperation or help. Often used in official or semi-formal contexts when requesting someone\'s support.',
@@ -2234,6 +2531,7 @@ const COURSE = [
 			{
 				id: 'ma-haraye-i-am-lost',
 				np: 'Ma haraye',
+				dev: 'म हराएँ',
 				pron: 'muh huh-ruh-yay',
 				en: 'I am lost',
 				usage: 'Essential phrase if you get lost. "Haraye" means lost. You can follow this with "bato dekhaunus" (please show me the way) to ask for directions back to your destination.',
@@ -2241,6 +2539,7 @@ const COURSE = [
 			{
 				id: 'hospital-kaha-cha-where-is-the-hospital',
 				np: 'Hospital kaha cha?',
+				dev: 'अस्पताल कहाँ छ?',
 				pron: 'hos-pi-taal kuh-haa chuh',
 				en: 'Where is the hospital?',
 				usage: 'Important phrase for emergencies. You can replace "hospital" with other locations like "police" (police station), "pharmacy" (ausadhi pasal), or any other place you need to find.',
@@ -2248,6 +2547,7 @@ const COURSE = [
 			{
 				id: 'malai-biraami-bhayo-i-am-sick',
 				np: 'Malai biraami bhayo',
+				dev: 'मलाई बिरामी भयो',
 				pron: 'muh-lie bi-raa-mi bha-yo',
 				en: 'I am sick',
 				usage: 'Use this when you\'re not feeling well. "Malai" means "to me," and "biraami" means sick. You can specify symptoms by adding words like "tauko dukhyo" (headache) or "pet dukhyo" (stomach ache).',
@@ -2255,6 +2555,7 @@ const COURSE = [
 			{
 				id: 'doctor-chaahiyo-i-need-a-doctor',
 				np: 'Doctor chaahiyo',
+				dev: 'डाक्टर चाहियो',
 				pron: 'doc-tor chaa-hi-yo',
 				en: 'I need a doctor',
 				usage: 'An urgent phrase when medical attention is needed. "Chaahiyo" means "is needed." This will help communicate that you require medical assistance quickly.',
@@ -2262,6 +2563,7 @@ const COURSE = [
 			{
 				id: 'tauko-dukhyo-my-head-hurts-headache',
 				np: 'Tauko dukhyo',
+				dev: 'टाउको दुख्यो',
 				pron: 'tow-ko dookh-yo',
 				en: 'My head hurts / Headache',
 				usage: 'Describes a headache. "Tauko" means head and "dukhyo" means hurts or pained. You can use this pattern with other body parts: "pet dukhyo" (stomach ache), "khutta dukhyo" (leg hurts).',
@@ -2269,6 +2571,7 @@ const COURSE = [
 			{
 				id: 'pani-chaahiyo-i-need-water',
 				np: 'Pani chaahiyo',
+				dev: 'पानी चाहियो',
 				pron: 'paa-ni chaa-hi-yo',
 				en: 'I need water',
 				usage: 'States you need water. More direct than "paani dinus" (please give water). "Chaahiyo" indicates necessity. You can replace "paani" with other items you need urgently.',
@@ -2283,6 +2586,7 @@ const COURSE = [
 			{
 				id: 'bistari-slowly-carefully',
 				np: 'Bistari',
+				dev: 'बिस्तारी',
 				pron: 'bis-taa-ri',
 				en: 'Slowly / Carefully',
 				usage: 'Can mean either slowly or carefully depending on context. You\'ll hear this when someone wants you to take your time or be cautious. "Bistari jaanus" means "go slowly/carefully."',
@@ -2290,6 +2594,7 @@ const COURSE = [
 			{
 				id: 'chitto-quickly-fast',
 				np: 'Chitto',
+				dev: 'छिटो',
 				pron: 'chi-toh',
 				en: 'Quickly / Fast',
 				usage: 'The opposite of bistari, meaning quickly or fast. "Chitto garnuhos" means "please do it quickly." Useful when you\'re in a hurry or need something done promptly.',
@@ -2297,6 +2602,7 @@ const COURSE = [
 			{
 				id: 'aaija-come-here',
 				np: 'Aaija',
+				dev: 'आइज',
 				pron: 'aa-i-juh',
 				en: 'Come here',
 				usage: 'An informal command asking someone to come. Used with friends, family, or subordinates. For a more polite version, use "aaunu hos" (please come).',
@@ -2304,6 +2610,7 @@ const COURSE = [
 			{
 				id: 'jaau-go-let-s-go',
 				np: 'Jaau',
+				dev: 'जाऊ',
 				pron: 'jaa-oo',
 				en: "Go / Let's go",
 				usage: 'Can be a command "go" or a suggestion "let\'s go" depending on context and tone. Among friends, it\'s a common way to suggest leaving. More polite form is "jaanuhola" (shall we go?).',
@@ -2311,6 +2618,7 @@ const COURSE = [
 			{
 				id: 'basnus-please-sit',
 				np: 'Basnus',
+				dev: 'बस्नुस्',
 				pron: 'bus-noos',
 				en: 'Please sit',
 				usage: 'Polite invitation to sit down. "Bas" means sit, and "nus" makes it respectful. Hosts commonly use this to invite guests to be seated. You can also say "yaha basnus" (sit here).',
@@ -2318,6 +2626,7 @@ const COURSE = [
 			{
 				id: 'khadai-garnus-please-eat',
 				np: 'Khadai garnus',
+				dev: 'खाँदै गर्नुस्',
 				pron: 'kha-dye gar-noos',
 				en: 'Please eat',
 				usage: "Polite invitation to eat, commonly used by hosts. It's considered good hospitality to encourage guests to eat. You'll hear this often at meals in Nepali homes.",
@@ -2325,6 +2634,7 @@ const COURSE = [
 			{
 				id: 'piudai-garnus-please-drink',
 				np: 'Piudai garnus',
+				dev: 'पिउँदै गर्नुस्',
 				pron: 'pee-oo-dye gar-noos',
 				en: 'Please drink',
 				usage: "Polite invitation to drink, whether it's water, tea, or other beverages. Hosts use this to ensure guests are comfortable and well-served.",
@@ -2339,6 +2649,7 @@ const COURSE = [
 			{
 				id: 'ochyan-bed',
 				np: 'Ochyan',
+				dev: 'ओछ्यान',
 				pron: 'oh-chyan',
 				emoji: '🛏️',
 				en: 'Bed',
@@ -2346,6 +2657,7 @@ const COURSE = [
 			{
 				id: 'sirani-pillow',
 				np: 'Sirani',
+				dev: 'सिरानी',
 				pron: 'si-raa-ni',
 				emoji: '🛋️',
 				en: 'Pillow',
@@ -2353,6 +2665,7 @@ const COURSE = [
 			{
 				id: 'kambal-blanket',
 				np: 'Kambal',
+				dev: 'कम्बल',
 				pron: 'kum-bul',
 				emoji: '🧺',
 				en: 'Blanket',
@@ -2360,6 +2673,7 @@ const COURSE = [
 			{
 				id: 'gadda-mattress',
 				np: 'Gadda',
+				dev: 'गद्दा',
 				pron: 'gad-daa',
 				emoji: '🛏️',
 				en: 'Mattress',
@@ -2367,6 +2681,7 @@ const COURSE = [
 			{
 				id: 'almari-wardrobe-closet',
 				np: 'Almari',
+				dev: 'अल्मारी',
 				pron: 'ul-maa-ri',
 				emoji: '🚪',
 				en: 'Wardrobe / Closet',
@@ -2374,6 +2689,7 @@ const COURSE = [
 			{
 				id: 'aaina-mirror',
 				np: 'Aaina',
+				dev: 'ऐना',
 				pron: 'eye-naa',
 				emoji: '🪞',
 				en: 'Mirror',
@@ -2381,6 +2697,7 @@ const COURSE = [
 			{
 				id: 'batti-light-lamp',
 				np: 'Batti',
+				dev: 'बत्ती',
 				pron: 'but-ti',
 				emoji: '💡',
 				en: 'Light / Lamp',
@@ -2388,6 +2705,7 @@ const COURSE = [
 			{
 				id: 'ghaadi-clock-watch',
 				np: 'Ghaadi',
+				dev: 'घडी',
 				pron: 'ghaa-di',
 				emoji: '⏰',
 				en: 'Clock / Watch',
@@ -2395,6 +2713,7 @@ const COURSE = [
 			{
 				id: 'pankha-fan',
 				np: 'Pankha',
+				dev: 'पंखा',
 				pron: 'pun-khaa',
 				emoji: '🌀',
 				en: 'Fan',
@@ -2409,6 +2728,7 @@ const COURSE = [
 			{
 				id: 'charpi-toilet',
 				np: 'Charpi',
+				dev: 'चर्पी',
 				pron: 'chur-pi',
 				emoji: '🚽',
 				en: 'Toilet',
@@ -2416,6 +2736,7 @@ const COURSE = [
 			{
 				id: 'nuhaaune-thaau-shower-bathing-area',
 				np: 'Nuhaaune thaau',
+				dev: 'नुहाउने ठाउँ',
 				pron: 'noo-hau-nay thau',
 				emoji: '🚿',
 				en: 'Shower / Bathing area',
@@ -2423,6 +2744,7 @@ const COURSE = [
 			{
 				id: 'sabun-soap',
 				np: 'Sabun',
+				dev: 'साबुन',
 				pron: 'saa-boon',
 				emoji: '🧼',
 				en: 'Soap',
@@ -2430,6 +2752,7 @@ const COURSE = [
 			{
 				id: 'taauliya-towel',
 				np: 'Taauliya',
+				dev: 'तौलिया',
 				pron: 'tau-li-yaa',
 				emoji: '🧽',
 				en: 'Towel',
@@ -2437,6 +2760,7 @@ const COURSE = [
 			{
 				id: 'brush-toothbrush',
 				np: 'Brush',
+				dev: 'ब्रस',
 				pron: 'brush',
 				emoji: '🪥',
 				en: 'Toothbrush',
@@ -2444,6 +2768,7 @@ const COURSE = [
 			{
 				id: 'toothpaste-toothpaste',
 				np: 'Toothpaste',
+				dev: 'टुथपेस्ट',
 				pron: 'tooth-paste',
 				emoji: '🦷',
 				en: 'Toothpaste',
@@ -2451,6 +2776,7 @@ const COURSE = [
 			{
 				id: 'shampoo-shampoo',
 				np: 'Shampoo',
+				dev: 'स्याम्पु',
 				pron: 'sham-poo',
 				emoji: '🧴',
 				en: 'Shampoo',
@@ -2458,6 +2784,7 @@ const COURSE = [
 			{
 				id: 'tissue-tissue-paper',
 				np: 'Tissue',
+				dev: 'टिस्यु',
 				pron: 'ti-shoo',
 				emoji: '🧻',
 				en: 'Tissue paper',
@@ -2465,6 +2792,7 @@ const COURSE = [
 			{
 				id: 'kaanchi-scissors',
 				np: 'Kaanchi',
+				dev: 'कैंची',
 				pron: 'koyin-chi',
 				emoji: '✂️',
 				en: 'Scissors',
@@ -2479,6 +2807,7 @@ const COURSE = [
 			{
 				id: 'kursi-chair',
 				np: 'Kursi',
+				dev: 'कुर्सी',
 				pron: 'koor-si',
 				emoji: '🪑',
 				en: 'Chair',
@@ -2486,6 +2815,7 @@ const COURSE = [
 			{
 				id: 'tebul-table',
 				np: 'Tebul',
+				dev: 'टेबल',
 				pron: 'tay-bool',
 				emoji: '🪑',
 				en: 'Table',
@@ -2493,6 +2823,7 @@ const COURSE = [
 			{
 				id: 'sofa-sofa-couch',
 				np: 'Sofa',
+				dev: 'सोफा',
 				pron: 'so-faa',
 				emoji: '🛋️',
 				en: 'Sofa / Couch',
@@ -2500,6 +2831,7 @@ const COURSE = [
 			{
 				id: 'tv-television',
 				np: 'TV',
+				dev: 'टिभी',
 				pron: 'tee-vee',
 				emoji: '📺',
 				en: 'Television',
@@ -2507,6 +2839,7 @@ const COURSE = [
 			{
 				id: 'remote-remote-control',
 				np: 'Remote',
+				dev: 'रिमोट',
 				pron: 'ri-mot',
 				emoji: '📱',
 				en: 'Remote control',
@@ -2514,6 +2847,7 @@ const COURSE = [
 			{
 				id: 'kitab-book',
 				np: 'Kitab',
+				dev: 'किताब',
 				pron: 'ki-taab',
 				emoji: '📚',
 				en: 'Book',
@@ -2521,6 +2855,7 @@ const COURSE = [
 			{
 				id: 'kaagaj-paper',
 				np: 'Kaagaj',
+				dev: 'कागज',
 				pron: 'kaa-guj',
 				emoji: '📄',
 				en: 'Paper',
@@ -2528,6 +2863,7 @@ const COURSE = [
 			{
 				id: 'kalam-pen',
 				np: 'Kalam',
+				dev: 'कलम',
 				pron: 'ku-lum',
 				emoji: '🖊️',
 				en: 'Pen',
@@ -2535,6 +2871,7 @@ const COURSE = [
 			{
 				id: 'galaicha-carpet-rug',
 				np: 'Galaicha',
+				dev: 'गलैंचा',
 				pron: 'guh-lye-chaa',
 				emoji: '🧶',
 				en: 'Carpet / Rug',
@@ -2542,6 +2879,7 @@ const COURSE = [
 			{
 				id: 'jhyaal-window',
 				np: 'Jhyaal',
+				dev: 'झ्याल',
 				pron: 'jyaal',
 				emoji: '🪟',
 				en: 'Window',
@@ -2549,6 +2887,7 @@ const COURSE = [
 			{
 				id: 'dhoka-door',
 				np: 'Dhoka',
+				dev: 'ढोका',
 				pron: 'dho-kaa',
 				emoji: '🚪',
 				en: 'Door',
@@ -2556,6 +2895,7 @@ const COURSE = [
 			{
 				id: 'taala-lock',
 				np: 'Taala',
+				dev: 'ताला',
 				pron: 'taa-laa',
 				emoji: '🔒',
 				en: 'Lock',
@@ -2563,6 +2903,7 @@ const COURSE = [
 			{
 				id: 'saacho-key',
 				np: 'Saacho',
+				dev: 'साँचो',
 				pron: 'saa-cho',
 				emoji: '🔑',
 				en: 'Key',
@@ -2577,6 +2918,7 @@ const COURSE = [
 			{
 				id: 'lugaa-clothes',
 				np: 'Lugaa',
+				dev: 'लुगा',
 				pron: 'loo-gaa',
 				emoji: '👕',
 				en: 'Clothes',
@@ -2584,6 +2926,7 @@ const COURSE = [
 			{
 				id: 'dhune-sabun-laundry-detergent',
 				np: 'Dhune sabun',
+				dev: 'धुने साबुन',
 				pron: 'dhoo-nay saa-boon',
 				emoji: '🧴',
 				en: 'Laundry detergent',
@@ -2591,6 +2934,7 @@ const COURSE = [
 			{
 				id: 'lugaa-dhune-machine-washing-machine',
 				np: 'Lugaa dhune machine',
+				dev: 'लुगा धुने मेसिन',
 				pron: 'loo-gaa dhoo-nay ma-sheen',
 				emoji: '🧺',
 				en: 'Washing machine',
@@ -2598,6 +2942,7 @@ const COURSE = [
 			{
 				id: 'dori-rope-clothesline',
 				np: 'Dori',
+				dev: 'डोरी',
 				pron: 'do-ri',
 				emoji: '🪢',
 				en: 'Rope / Clothesline',
@@ -2605,6 +2950,7 @@ const COURSE = [
 			{
 				id: 'chimtaa-clothespin-peg',
 				np: 'Chimtaa',
+				dev: 'चिम्टा',
 				pron: 'chim-taa',
 				emoji: '📎',
 				en: 'Clothespin / Peg',
@@ -2612,6 +2958,7 @@ const COURSE = [
 			{
 				id: 'istry-iron-for-clothes',
 				np: 'Istry',
+				dev: 'इस्त्री',
 				pron: 'is-tree',
 				emoji: '🔌',
 				en: 'Iron (for clothes)',
@@ -2626,6 +2973,7 @@ const COURSE = [
 			{
 				id: 'mobile-cell-phone',
 				np: 'Mobile',
+				dev: 'मोबाइल',
 				pron: 'mo-bile',
 				emoji: '📱',
 				en: 'Cell phone',
@@ -2633,6 +2981,7 @@ const COURSE = [
 			{
 				id: 'computer-computer',
 				np: 'Computer',
+				dev: 'कम्प्युटर',
 				pron: 'com-pyu-ter',
 				emoji: '💻',
 				en: 'Computer',
@@ -2640,6 +2989,7 @@ const COURSE = [
 			{
 				id: 'laptop-laptop',
 				np: 'Laptop',
+				dev: 'ल्यापटप',
 				pron: 'lap-top',
 				emoji: '💻',
 				en: 'Laptop',
@@ -2647,6 +2997,7 @@ const COURSE = [
 			{
 				id: 'charger-charger',
 				np: 'Charger',
+				dev: 'चार्जर',
 				pron: 'char-jer',
 				emoji: '🔌',
 				en: 'Charger',
@@ -2654,6 +3005,7 @@ const COURSE = [
 			{
 				id: 'wifi-wifi',
 				np: 'WiFi',
+				dev: 'वाइफाइ',
 				pron: 'wai-fai',
 				emoji: '🛜',
 				en: 'WiFi',
@@ -2661,6 +3013,7 @@ const COURSE = [
 			{
 				id: 'plug-electrical-plug',
 				np: 'Plug',
+				dev: 'प्लग',
 				pron: 'plug',
 				emoji: '🔌',
 				en: 'Electrical plug',
@@ -2668,6 +3021,7 @@ const COURSE = [
 			{
 				id: 'switch-light-switch',
 				np: 'Switch',
+				dev: 'स्विच',
 				pron: 'switch',
 				emoji: '🎚️',
 				en: 'Light switch',
@@ -2682,6 +3036,7 @@ const COURSE = [
 			{
 				id: 'jhola-bag',
 				np: 'Jhola',
+				dev: 'झोला',
 				pron: 'jho-laa',
 				emoji: '👜',
 				en: 'Bag',
@@ -2689,6 +3044,7 @@ const COURSE = [
 			{
 				id: 'chashma-glasses-spectacles',
 				np: 'Chashma',
+				dev: 'चश्मा',
 				pron: 'chush-maa',
 				emoji: '👓',
 				en: 'Glasses / Spectacles',
@@ -2696,6 +3052,7 @@ const COURSE = [
 			{
 				id: 'kapi-notebook',
 				np: 'Kapi',
+				dev: 'कापी',
 				pron: 'kaa-pi',
 				emoji: '📓',
 				en: 'Notebook',
@@ -2703,6 +3060,7 @@ const COURSE = [
 			{
 				id: 'wallet-wallet',
 				np: 'Wallet',
+				dev: 'वालेट',
 				pron: 'wal-let',
 				emoji: '💳',
 				en: 'Wallet',
@@ -2710,6 +3068,7 @@ const COURSE = [
 			{
 				id: 'chappal-slippers-sandals',
 				np: 'Chappal',
+				dev: 'चप्पल',
 				pron: 'chup-pul',
 				emoji: '🩴',
 				en: 'Slippers / Sandals',
@@ -2717,6 +3076,7 @@ const COURSE = [
 			{
 				id: 'jutta-shoes',
 				np: 'Jutta',
+				dev: 'जुत्ता',
 				pron: 'joo-taa',
 				emoji: '👞',
 				en: 'Shoes',
@@ -2731,6 +3091,7 @@ const COURSE = [
 			{
 				id: 'bottle-bottle',
 				np: 'Bottle',
+				dev: 'बोतल',
 				pron: 'bot-tel',
 				emoji: '🍾',
 				en: 'Bottle',
@@ -2738,6 +3099,7 @@ const COURSE = [
 			{
 				id: 'box-box',
 				np: 'Box',
+				dev: 'बाकस',
 				pron: 'box',
 				emoji: '📦',
 				en: 'Box',
@@ -2745,6 +3107,7 @@ const COURSE = [
 			{
 				id: 'thailo-bag-cloth-shopping',
 				np: 'Thailo',
+				dev: 'थैलो',
 				pron: 'thye-lo',
 				emoji: '🛍️',
 				en: 'Bag (cloth/shopping)',
@@ -2752,6 +3115,7 @@ const COURSE = [
 			{
 				id: 'mombatti-candle',
 				np: 'Mombatti',
+				dev: 'मोमबत्ती',
 				pron: 'mom-but-ti',
 				emoji: '🕯️',
 				en: 'Candle',
@@ -2759,6 +3123,7 @@ const COURSE = [
 			{
 				id: 'salai-match-matchstick',
 				np: 'Salai',
+				dev: 'सलाई',
 				pron: 'suh-lye',
 				emoji: '🔥',
 				en: 'Match / Matchstick',
@@ -2766,6 +3131,7 @@ const COURSE = [
 			{
 				id: 'aushadhi-medicine',
 				np: 'Aushadhi',
+				dev: 'औषधि',
 				pron: 'ow-shuh-dhi',
 				emoji: '💊',
 				en: 'Medicine',
@@ -2773,6 +3139,7 @@ const COURSE = [
 			{
 				id: 'chitthi-letter',
 				np: 'Chitthi',
+				dev: 'चिठ्ठी',
 				pron: 'chit-thi',
 				emoji: '✉️',
 				en: 'Letter',
@@ -2780,6 +3147,7 @@ const COURSE = [
 			{
 				id: 'ramailo-fun-entertainment',
 				np: 'Ramailo',
+				dev: 'रमाइलो',
 				pron: 'ruh-my-lo',
 				emoji: '🎉',
 				en: 'Fun / Entertainment',
@@ -2787,6 +3155,7 @@ const COURSE = [
 			{
 				id: 'baajaa-musical-instrument',
 				np: 'Baajaa',
+				dev: 'बाजा',
 				pron: 'baa-jaa',
 				emoji: '🎸',
 				en: 'Musical instrument',
@@ -2801,6 +3170,7 @@ const COURSE = [
 			{
 				id: 'khushi-happy',
 				np: 'Khushi',
+				dev: 'खुसी',
 				pron: 'khu-shi',
 				emoji: '😊',
 				en: 'Happy',
@@ -2808,6 +3178,7 @@ const COURSE = [
 			{
 				id: 'dukhi-sad',
 				np: 'Dukhi',
+				dev: 'दुःखी',
 				pron: 'doo-khi',
 				emoji: '😢',
 				en: 'Sad',
@@ -2815,6 +3186,7 @@ const COURSE = [
 			{
 				id: 'risaeko-angry',
 				np: 'Risaeko',
+				dev: 'रिसाएको',
 				pron: 'ri-saa-ay-ko',
 				emoji: '😠',
 				en: 'Angry',
@@ -2822,6 +3194,7 @@ const COURSE = [
 			{
 				id: 'dar-fear-scared',
 				np: 'Dar',
+				dev: 'डर',
 				pron: 'dur',
 				emoji: '😨',
 				en: 'Fear / Scared',
@@ -2829,6 +3202,7 @@ const COURSE = [
 			{
 				id: 'chinta-worry-anxiety',
 				np: 'Chinta',
+				dev: 'चिन्ता',
 				pron: 'chin-taa',
 				emoji: '😟',
 				en: 'Worry / Anxiety',
@@ -2836,6 +3210,7 @@ const COURSE = [
 			{
 				id: 'maya-love',
 				np: 'Maya',
+				dev: 'माया',
 				pron: 'muh-yaa',
 				emoji: '❤️',
 				en: 'Love',
@@ -2843,6 +3218,7 @@ const COURSE = [
 			{
 				id: 'ghamanda-pride-arrogance',
 				np: 'Ghamanda',
+				dev: 'घमण्ड',
 				pron: 'ghuh-mun-daa',
 				emoji: '😤',
 				en: 'Pride / Arrogance',
@@ -2850,6 +3226,7 @@ const COURSE = [
 			{
 				id: 'lajja-shame-embarrassment',
 				np: 'Lajja',
+				dev: 'लज्जा',
 				pron: 'luj-jaa',
 				emoji: '😳',
 				en: 'Shame / Embarrassment',
@@ -2857,6 +3234,7 @@ const COURSE = [
 			{
 				id: 'thakeko-tired',
 				np: 'Thakeko',
+				dev: 'थकेको',
 				pron: 'thaa-kay-ko',
 				emoji: '😴',
 				en: 'Tired',
@@ -2864,6 +3242,7 @@ const COURSE = [
 			{
 				id: 'biraami-sick',
 				np: 'Biraami',
+				dev: 'बिरामी',
 				pron: 'bi-raa-mi',
 				emoji: '🤒',
 				en: 'Sick',
@@ -2871,6 +3250,7 @@ const COURSE = [
 			{
 				id: 'aascharyya-surprise-wonder',
 				np: 'Aascharyya',
+				dev: 'आश्चर्य',
 				pron: 'aash-chur-yaa',
 				emoji: '😲',
 				en: 'Surprise / Wonder',
@@ -2878,6 +3258,7 @@ const COURSE = [
 			{
 				id: 'bore-bored',
 				np: 'Bore',
+				dev: 'बोर',
 				pron: 'bor',
 				emoji: '😑',
 				en: 'Bored',
@@ -2885,6 +3266,7 @@ const COURSE = [
 			{
 				id: 'aaramadaayak-comfortable-relaxed',
 				np: 'Aaramadaayak',
+				dev: 'आरामदायक',
 				pron: 'aa-raam-daa-yuk',
 				emoji: '😌',
 				en: 'Comfortable / Relaxed',
@@ -2892,6 +3274,7 @@ const COURSE = [
 			{
 				id: 'uddwignata-stress-tension',
 				np: 'Uddwignata',
+				dev: 'उद्विग्नता',
 				pron: 'ood-wig-nuh-taa',
 				emoji: '😰',
 				en: 'Stress / Tension',
@@ -2899,6 +3282,7 @@ const COURSE = [
 			{
 				id: 'khijna-frustration-irritation',
 				np: 'Khijna',
+				dev: 'खिन्नता',
 				pron: 'khij-naa',
 				emoji: '😖',
 				en: 'Frustration / Irritation',
@@ -2906,6 +3290,7 @@ const COURSE = [
 			{
 				id: 'santushta-content-satisfied',
 				np: 'Santushta',
+				dev: 'सन्तुष्ट',
 				pron: 'sun-toosh-taa',
 				emoji: '😇',
 				en: 'Content / Satisfied',
@@ -2913,6 +3298,7 @@ const COURSE = [
 			{
 				id: 'upekshya-indifferent-neglected',
 				np: 'Upekshya',
+				dev: 'उपेक्षा',
 				pron: 'oo-pek-shyaa',
 				emoji: '😐',
 				en: 'Indifferent / Neglected',
@@ -2920,6 +3306,7 @@ const COURSE = [
 			{
 				id: 'aakrosh-rage-fury',
 				np: 'Aakrosh',
+				dev: 'आक्रोश',
 				pron: 'aa-krosh',
 				emoji: '😡',
 				en: 'Rage / Fury',
@@ -2927,6 +3314,7 @@ const COURSE = [
 			{
 				id: 'nirasha-disappointment',
 				np: 'Nirasha',
+				dev: 'निराशा',
 				pron: 'ni-raa-shaa',
 				emoji: '😞',
 				en: 'Disappointment',
@@ -2934,6 +3322,7 @@ const COURSE = [
 			{
 				id: 'asha-hope',
 				np: 'Asha',
+				dev: 'आशा',
 				pron: 'aa-shaa',
 				emoji: '🤞',
 				en: 'Hope',
@@ -2948,6 +3337,7 @@ const COURSE = [
 			{
 				id: 'kukur-dog',
 				np: 'Kukur',
+				dev: 'कुकुर',
 				pron: 'koo-koor',
 				emoji: '🐕',
 				en: 'Dog',
@@ -2955,6 +3345,7 @@ const COURSE = [
 			{
 				id: 'biralo-cat',
 				np: 'Biralo',
+				dev: 'बिरालो',
 				pron: 'bi-raa-lo',
 				emoji: '🐈',
 				en: 'Cat',
@@ -2962,6 +3353,7 @@ const COURSE = [
 			{
 				id: 'gai-cow',
 				np: 'Gai',
+				dev: 'गाई',
 				pron: 'gye',
 				emoji: '🐄',
 				en: 'Cow',
@@ -2969,6 +3361,7 @@ const COURSE = [
 			{
 				id: 'raangaa-buffalo',
 				np: 'Raangaa',
+				dev: 'राँगा',
 				pron: 'raan-gaa',
 				emoji: '🐃',
 				en: 'Buffalo',
@@ -2976,6 +3369,7 @@ const COURSE = [
 			{
 				id: 'bakhra-goat',
 				np: 'Bakhra',
+				dev: 'बाख्रा',
 				pron: 'buk-raa',
 				emoji: '🐐',
 				en: 'Goat',
@@ -2983,6 +3377,7 @@ const COURSE = [
 			{
 				id: 'bhedaa-sheep',
 				np: 'Bhedaa',
+				dev: 'भेडा',
 				pron: 'bhay-daa',
 				emoji: '🐑',
 				en: 'Sheep',
@@ -2990,6 +3385,7 @@ const COURSE = [
 			{
 				id: 'ghoda-horse',
 				np: 'Ghoda',
+				dev: 'घोडा',
 				pron: 'gho-daa',
 				emoji: '🐴',
 				en: 'Horse',
@@ -2997,6 +3393,7 @@ const COURSE = [
 			{
 				id: 'gadha-donkey',
 				np: 'Gadha',
+				dev: 'गधा',
 				pron: 'guh-dhaa',
 				emoji: '🫏',
 				en: 'Donkey',
@@ -3004,6 +3401,7 @@ const COURSE = [
 			{
 				id: 'sungur-pig',
 				np: 'Sungur',
+				dev: 'सुँगुर',
 				pron: 'soon-goor',
 				emoji: '🐖',
 				en: 'Pig',
@@ -3011,6 +3409,7 @@ const COURSE = [
 			{
 				id: 'kukhura-chicken',
 				np: 'Kukhura',
+				dev: 'कुखुरा',
 				pron: 'koo-khu-raa',
 				emoji: '🐔',
 				en: 'Chicken',
@@ -3018,6 +3417,7 @@ const COURSE = [
 			{
 				id: 'haas-duck',
 				np: 'Haas',
+				dev: 'हाँस',
 				pron: 'haas',
 				emoji: '🦆',
 				en: 'Duck',
@@ -3025,6 +3425,7 @@ const COURSE = [
 			{
 				id: 'chaara-bird',
 				np: 'Chaara',
+				dev: 'चरा',
 				pron: 'chaa-raa',
 				emoji: '🐦',
 				en: 'Bird',
@@ -3032,6 +3433,7 @@ const COURSE = [
 			{
 				id: 'kaag-crow',
 				np: 'Kaag',
+				dev: 'काग',
 				pron: 'kaag',
 				emoji: '🐦‍⬛',
 				en: 'Crow',
@@ -3039,6 +3441,7 @@ const COURSE = [
 			{
 				id: 'mauri-bee',
 				np: 'Mauri',
+				dev: 'मौरी',
 				pron: 'mau-ri',
 				emoji: '🐝',
 				en: 'Bee',
@@ -3046,6 +3449,7 @@ const COURSE = [
 			{
 				id: 'putali-butterfly',
 				np: 'Putali',
+				dev: 'पुतली',
 				pron: 'poo-tuh-li',
 				emoji: '🦋',
 				en: 'Butterfly',
@@ -3053,6 +3457,7 @@ const COURSE = [
 			{
 				id: 'phatyangro-cricket-grasshopper',
 				np: 'Phatyangro',
+				dev: 'फट्याङ्ग्रो',
 				pron: 'fuh-tyang-ro',
 				emoji: '🦗',
 				en: 'Cricket / Grasshopper',
@@ -3060,6 +3465,7 @@ const COURSE = [
 			{
 				id: 'saanp-snake',
 				np: 'Saanp',
+				dev: 'साँप',
 				pron: 'saanp',
 				emoji: '🐍',
 				en: 'Snake',
@@ -3067,6 +3473,7 @@ const COURSE = [
 			{
 				id: 'kachuwa-turtle-tortoise',
 				np: 'Kachuwa',
+				dev: 'कछुवा',
 				pron: 'kuh-chu-waa',
 				emoji: '🐢',
 				en: 'Turtle / Tortoise',
@@ -3074,6 +3481,7 @@ const COURSE = [
 			{
 				id: 'maachha-fish',
 				np: 'Maachha',
+				dev: 'माछा',
 				pron: 'maa-chhaa',
 				emoji: '🐟',
 				en: 'Fish',
@@ -3081,6 +3489,7 @@ const COURSE = [
 			{
 				id: 'bagh-tiger',
 				np: 'Bagh',
+				dev: 'बाघ',
 				pron: 'baagh',
 				emoji: '🐅',
 				en: 'Tiger',
@@ -3088,6 +3497,7 @@ const COURSE = [
 			{
 				id: 'singha-lion',
 				np: 'Singha',
+				dev: 'सिंह',
 				pron: 'sing-huh',
 				emoji: '🦁',
 				en: 'Lion',
@@ -3095,6 +3505,7 @@ const COURSE = [
 			{
 				id: 'hatti-elephant',
 				np: 'Hatti',
+				dev: 'हात्ती',
 				pron: 'hut-ti',
 				emoji: '🐘',
 				en: 'Elephant',
@@ -3102,6 +3513,7 @@ const COURSE = [
 			{
 				id: 'bandar-monkey',
 				np: 'Bandar',
+				dev: 'बाँदर',
 				pron: 'bun-dur',
 				emoji: '🐒',
 				en: 'Monkey',
@@ -3109,6 +3521,7 @@ const COURSE = [
 			{
 				id: 'bhalu-bear',
 				np: 'Bhalu',
+				dev: 'भालु',
 				pron: 'bhaa-loo',
 				emoji: '🐻',
 				en: 'Bear',
@@ -3123,6 +3536,7 @@ const COURSE = [
 			{
 				id: 'syau-apple',
 				np: 'Syau',
+				dev: 'स्याउ',
 				pron: 'syau',
 				emoji: '🍎',
 				en: 'Apple',
@@ -3130,6 +3544,7 @@ const COURSE = [
 			{
 				id: 'kera-banana',
 				np: 'Kera',
+				dev: 'केरा',
 				pron: 'kay-raa',
 				emoji: '🍌',
 				en: 'Banana',
@@ -3137,6 +3552,7 @@ const COURSE = [
 			{
 				id: 'suntala-orange',
 				np: 'Suntala',
+				dev: 'सुन्तला',
 				pron: 'soon-tuh-laa',
 				emoji: '🍊',
 				en: 'Orange',
@@ -3144,6 +3560,7 @@ const COURSE = [
 			{
 				id: 'aaru-peach',
 				np: 'Aaru',
+				dev: 'आरु',
 				pron: 'aa-roo',
 				emoji: '🍑',
 				en: 'Peach',
@@ -3151,6 +3568,7 @@ const COURSE = [
 			{
 				id: 'amba-mango',
 				np: 'Amba',
+				dev: 'आँप',
 				pron: 'um-baa',
 				emoji: '🥭',
 				en: 'Mango',
@@ -3158,6 +3576,7 @@ const COURSE = [
 			{
 				id: 'angur-grapes',
 				np: 'Angur',
+				dev: 'अंगुर',
 				pron: 'un-goor',
 				emoji: '🍇',
 				en: 'Grapes',
@@ -3165,6 +3584,7 @@ const COURSE = [
 			{
 				id: 'tarbujo-watermelon',
 				np: 'Tarbujo',
+				dev: 'तरबुजा',
 				pron: 'tur-boo-jo',
 				emoji: '🍉',
 				en: 'Watermelon',
@@ -3172,6 +3592,7 @@ const COURSE = [
 			{
 				id: 'kagati-lemon-lime',
 				np: 'Kagati',
+				dev: 'कागती',
 				pron: 'kaa-guh-ti',
 				emoji: '🍋',
 				en: 'Lemon / Lime',
@@ -3179,6 +3600,7 @@ const COURSE = [
 			{
 				id: 'rukh-kaatahar-pineapple',
 				np: 'Rukh kaatahar',
+				dev: 'भुइँकटहर',
 				pron: 'rookh kaa-tuh-hur',
 				emoji: '🍍',
 				en: 'Pineapple',
@@ -3186,6 +3608,7 @@ const COURSE = [
 			{
 				id: 'golbheda-tomato',
 				np: 'Golbheda',
+				dev: 'गोलभेँडा',
 				pron: 'gol-bhay-daa',
 				emoji: '🍅',
 				en: 'Tomato',
@@ -3193,6 +3616,7 @@ const COURSE = [
 			{
 				id: 'kaankro-cucumber',
 				np: 'Kaankro',
+				dev: 'काँक्रो',
 				pron: 'kaan-kro',
 				emoji: '🥒',
 				en: 'Cucumber',
@@ -3200,6 +3624,7 @@ const COURSE = [
 			{
 				id: 'bandaa-cabbage',
 				np: 'Bandaa',
+				dev: 'बन्दाकोबी',
 				pron: 'bun-daa',
 				emoji: '🥬',
 				en: 'Cabbage',
@@ -3207,6 +3632,7 @@ const COURSE = [
 			{
 				id: 'aaalu-potato',
 				np: 'Aaalu',
+				dev: 'आलु',
 				pron: 'aa-loo',
 				emoji: '🥔',
 				en: 'Potato',
@@ -3214,6 +3640,7 @@ const COURSE = [
 			{
 				id: 'pyaaj-onion',
 				np: 'Pyaaj',
+				dev: 'प्याज',
 				pron: 'pyaaj',
 				emoji: '🧅',
 				en: 'Onion',
@@ -3221,6 +3648,7 @@ const COURSE = [
 			{
 				id: 'lasun-garlic',
 				np: 'Lasun',
+				dev: 'लसुन',
 				pron: 'luh-soon',
 				emoji: '🧄',
 				en: 'Garlic',
@@ -3228,6 +3656,7 @@ const COURSE = [
 			{
 				id: 'khursaani-chili-pepper',
 				np: 'Khursaani',
+				dev: 'खुर्सानी',
 				pron: 'khoor-saa-ni',
 				emoji: '🌶️',
 				en: 'Chili pepper',
@@ -3235,6 +3664,7 @@ const COURSE = [
 			{
 				id: 'karela-bitter-gourd',
 				np: 'Karela',
+				dev: 'करेला',
 				pron: 'kuh-ray-laa',
 				emoji: '🥒',
 				en: 'Bitter gourd',
@@ -3242,6 +3672,7 @@ const COURSE = [
 			{
 				id: 'pharsi-pumpkin',
 				np: 'Pharsi',
+				dev: 'फर्सी',
 				pron: 'fur-si',
 				emoji: '🎃',
 				en: 'Pumpkin',
@@ -3249,6 +3680,7 @@ const COURSE = [
 			{
 				id: 'mula-radish-daikon',
 				np: 'Mula',
+				dev: 'मुला',
 				pron: 'moo-laa',
 				emoji: '🥕',
 				en: 'Radish / Daikon',
@@ -3256,6 +3688,7 @@ const COURSE = [
 			{
 				id: 'simi-green-beans',
 				np: 'Simi',
+				dev: 'सिमी',
 				pron: 'si-mi',
 				emoji: '🫛',
 				en: 'Green beans',
@@ -3263,6 +3696,7 @@ const COURSE = [
 			{
 				id: 'broccoli-broccoli',
 				np: 'Broccoli',
+				dev: 'ब्रोकाउली',
 				pron: 'bro-ko-li',
 				emoji: '🥦',
 				en: 'Broccoli',
@@ -3270,6 +3704,7 @@ const COURSE = [
 			{
 				id: 'dhania-coriander-cilantro',
 				np: 'Dhania',
+				dev: 'धनिया',
 				pron: 'dhuh-ni-yaa',
 				emoji: '🌿',
 				en: 'Coriander / Cilantro',
@@ -3277,6 +3712,7 @@ const COURSE = [
 			{
 				id: 'chiura-beaten-rice-flattened-rice',
 				np: 'Chiura',
+				dev: 'चिउरा',
 				pron: 'chyu-raa',
 				emoji: '🌾',
 				en: 'Beaten rice / Flattened rice',
@@ -3284,6 +3720,7 @@ const COURSE = [
 			{
 				id: 'momo-dumplings-momos',
 				np: 'Momo',
+				dev: 'मोमो',
 				pron: 'mo-mo',
 				emoji: '🥟',
 				en: 'Dumplings / Momos',
@@ -3291,6 +3728,7 @@ const COURSE = [
 			{
 				id: 'sel-roti-sel-roti-ring-shaped-bread',
 				np: 'Sel roti',
+				dev: 'सेलरोटी',
 				pron: 'sel ro-ti',
 				emoji: '🍩',
 				en: 'Sel roti (ring-shaped bread)',
@@ -3298,6 +3736,7 @@ const COURSE = [
 			{
 				id: 'chatamari-nepali-pizza',
 				np: 'Chatamari',
+				dev: 'चटामरी',
 				pron: 'chuh-tuh-muh-ri',
 				emoji: '🍕',
 				en: 'Nepali pizza',
@@ -3305,6 +3744,7 @@ const COURSE = [
 			{
 				id: 'samosa-samosa',
 				np: 'Samosa',
+				dev: 'समोसा',
 				pron: 'suh-mo-saa',
 				emoji: '🥟',
 				en: 'Samosa',
@@ -3312,6 +3752,7 @@ const COURSE = [
 			{
 				id: 'pakoda-fritters-pakora',
 				np: 'Pakoda',
+				dev: 'पकौडा',
 				pron: 'puh-ko-daa',
 				emoji: '🍤',
 				en: 'Fritters / Pakora',
@@ -3319,6 +3760,7 @@ const COURSE = [
 			{
 				id: 'mithai-sweets-dessert',
 				np: 'Mithai',
+				dev: 'मिठाई',
 				pron: 'mi-thye',
 				emoji: '🍬',
 				en: 'Sweets / Dessert',
@@ -3326,6 +3768,7 @@ const COURSE = [
 			{
 				id: 'khaja-snacks',
 				np: 'Khaja',
+				dev: 'खाजा',
 				pron: 'khaa-jaa',
 				emoji: '🍪',
 				en: 'Snacks',
@@ -3333,6 +3776,7 @@ const COURSE = [
 			{
 				id: 'raksi-traditional-alcohol',
 				np: 'Raksi',
+				dev: 'रक्सी',
 				pron: 'ruk-si',
 				emoji: '🍶',
 				en: 'Traditional alcohol',
@@ -3340,6 +3784,7 @@ const COURSE = [
 			{
 				id: 'lassi-yogurt-drink',
 				np: 'Lassi',
+				dev: 'लस्सी',
 				pron: 'lus-si',
 				emoji: '🥛',
 				en: 'Yogurt drink',
@@ -3347,6 +3792,7 @@ const COURSE = [
 			{
 				id: 'juice-juice',
 				np: 'Juice',
+				dev: 'जुस',
 				pron: 'joos',
 				emoji: '🧃',
 				en: 'Juice',
@@ -3354,6 +3800,7 @@ const COURSE = [
 			{
 				id: 'coffee-coffee',
 				np: 'Coffee',
+				dev: 'कफी',
 				pron: 'ko-fee',
 				emoji: '☕',
 				en: 'Coffee',
@@ -3368,6 +3815,7 @@ const COURSE = [
 			{
 				id: 'ghaam-sun-sunshine',
 				np: 'Ghaam',
+				dev: 'घाम',
 				pron: 'ghaam',
 				emoji: '☀️',
 				en: 'Sun / Sunshine',
@@ -3375,6 +3823,7 @@ const COURSE = [
 			{
 				id: 'chandra-moon',
 				np: 'Chandra',
+				dev: 'चन्द्रमा',
 				pron: 'chun-draa',
 				emoji: '🌙',
 				en: 'Moon',
@@ -3382,6 +3831,7 @@ const COURSE = [
 			{
 				id: 'tara-star',
 				np: 'Tara',
+				dev: 'तारा',
 				pron: 'taa-raa',
 				emoji: '⭐',
 				en: 'Star',
@@ -3389,6 +3839,7 @@ const COURSE = [
 			{
 				id: 'badal-cloud',
 				np: 'Badal',
+				dev: 'बादल',
 				pron: 'buh-dul',
 				emoji: '☁️',
 				en: 'Cloud',
@@ -3396,6 +3847,7 @@ const COURSE = [
 			{
 				id: 'pani-rain',
 				np: 'Pani',
+				dev: 'पानी',
 				pron: 'paa-ni',
 				emoji: '🌧️',
 				en: 'Rain',
@@ -3403,6 +3855,7 @@ const COURSE = [
 			{
 				id: 'haawaahuri-wind-storm',
 				np: 'Haawaahuri',
+				dev: 'हावाहुरी',
 				pron: 'haa-waa-hoo-ri',
 				emoji: '💨',
 				en: 'Wind / Storm',
@@ -3410,6 +3863,7 @@ const COURSE = [
 			{
 				id: 'aandhi-storm-windstorm',
 				np: 'Aandhi',
+				dev: 'आँधी',
 				pron: 'aan-dhi',
 				emoji: '🌪️',
 				en: 'Storm / Windstorm',
@@ -3417,6 +3871,7 @@ const COURSE = [
 			{
 				id: 'hiune-paani-snow',
 				np: 'Hiune paani',
+				dev: 'हिउँ',
 				pron: 'hyu-nay paa-ni',
 				emoji: '❄️',
 				en: 'Snow',
@@ -3424,6 +3879,7 @@ const COURSE = [
 			{
 				id: 'tuhaaro-fog-mist',
 				np: 'Tuhaaro',
+				dev: 'तुवाँलो',
 				pron: 'too-haa-ro',
 				emoji: '🌫️',
 				en: 'Fog / Mist',
@@ -3431,6 +3887,7 @@ const COURSE = [
 			{
 				id: 'asina-hail',
 				np: 'Asina',
+				dev: 'असिना',
 				pron: 'uh-si-naa',
 				emoji: '🌨️',
 				en: 'Hail',
@@ -3438,6 +3895,7 @@ const COURSE = [
 			{
 				id: 'bijuli-lightning-electricity',
 				np: 'Bijuli',
+				dev: 'बिजुली',
 				pron: 'bi-joo-li',
 				emoji: '⚡',
 				en: 'Lightning / Electricity',
@@ -3445,6 +3903,7 @@ const COURSE = [
 			{
 				id: 'megh-garjana-thunder',
 				np: 'Megh garjana',
+				dev: 'मेघ गर्जन',
 				pron: 'maygh gur-juh-naa',
 				emoji: '⛈️',
 				en: 'Thunder',
@@ -3452,6 +3911,7 @@ const COURSE = [
 			{
 				id: 'indreini-rainbow',
 				np: 'Indreini',
+				dev: 'इन्द्रेणी',
 				pron: 'in-dray-ni',
 				emoji: '🌈',
 				en: 'Rainbow',
@@ -3459,6 +3919,7 @@ const COURSE = [
 			{
 				id: 'garmi-heat-hot-weather',
 				np: 'Garmi',
+				dev: 'गर्मी',
 				pron: 'gur-mi',
 				emoji: '🔥',
 				en: 'Heat / Hot weather',
@@ -3466,6 +3927,7 @@ const COURSE = [
 			{
 				id: 'jado-cold-winter',
 				np: 'Jado',
+				dev: 'जाडो',
 				pron: 'jaa-do',
 				emoji: '🧊',
 				en: 'Cold / Winter',
@@ -3473,6 +3935,7 @@ const COURSE = [
 			{
 				id: 'monsoon-monsoon-season',
 				np: 'Monsoon',
+				dev: 'मनसुन',
 				pron: 'mon-soon',
 				emoji: '🌧️',
 				en: 'Monsoon season',
@@ -3480,6 +3943,7 @@ const COURSE = [
 			{
 				id: 'haawa-air-wind',
 				np: 'Haawa',
+				dev: 'हावा',
 				pron: 'haa-waa',
 				emoji: '💨',
 				en: 'Air / Wind',
@@ -3487,6 +3951,7 @@ const COURSE = [
 			{
 				id: 'aakaash-sky',
 				np: 'Aakaash',
+				dev: 'आकाश',
 				pron: 'aa-kaash',
 				emoji: '🌌',
 				en: 'Sky',
@@ -3494,6 +3959,7 @@ const COURSE = [
 			{
 				id: 'dharti-earth-ground',
 				np: 'Dharti',
+				dev: 'धरती',
 				pron: 'dhur-ti',
 				emoji: '🌍',
 				en: 'Earth / Ground',
@@ -3501,6 +3967,7 @@ const COURSE = [
 			{
 				id: 'sansar-world',
 				np: 'Sansar',
+				dev: 'संसार',
 				pron: 'sun-saar',
 				emoji: '🌍',
 				en: 'World',
@@ -3508,6 +3975,7 @@ const COURSE = [
 			{
 				id: 'pahaad-mountain-hill',
 				np: 'Pahaad',
+				dev: 'पहाड',
 				pron: 'puh-haad',
 				emoji: '⛰️',
 				en: 'Mountain / Hill',
@@ -3515,6 +3983,7 @@ const COURSE = [
 			{
 				id: 'nadhi-river',
 				np: 'Nadhi',
+				dev: 'नदी',
 				pron: 'nuh-dhi',
 				emoji: '🏞️',
 				en: 'River',
@@ -3522,6 +3991,7 @@ const COURSE = [
 			{
 				id: 'taal-lake',
 				np: 'Taal',
+				dev: 'ताल',
 				pron: 'taal',
 				emoji: '🏞️',
 				en: 'Lake',
@@ -3529,6 +3999,7 @@ const COURSE = [
 			{
 				id: 'ban-forest',
 				np: 'Ban',
+				dev: 'वन',
 				pron: 'bun',
 				emoji: '🌲',
 				en: 'Forest',
@@ -3536,6 +4007,7 @@ const COURSE = [
 			{
 				id: 'rukh-tree',
 				np: 'Rukh',
+				dev: 'रुख',
 				pron: 'rookh',
 				emoji: '🌳',
 				en: 'Tree',
@@ -3543,6 +4015,7 @@ const COURSE = [
 			{
 				id: 'phul-flower',
 				np: 'Phul',
+				dev: 'फूल',
 				pron: 'fool',
 				emoji: '🌸',
 				en: 'Flower',
@@ -3550,6 +4023,7 @@ const COURSE = [
 			{
 				id: 'ghaas-grass',
 				np: 'Ghaas',
+				dev: 'घाँस',
 				pron: 'ghaas',
 				emoji: '🌱',
 				en: 'Grass',
@@ -3557,6 +4031,7 @@ const COURSE = [
 			{
 				id: 'khola-stream-creek',
 				np: 'Khola',
+				dev: 'खोला',
 				pron: 'kho-laa',
 				emoji: '🏞️',
 				en: 'Stream / Creek',
@@ -3564,6 +4039,7 @@ const COURSE = [
 			{
 				id: 'jharna-waterfall',
 				np: 'Jharna',
+				dev: 'झरना',
 				pron: 'jhar-naa',
 				emoji: '💧',
 				en: 'Waterfall',
@@ -3571,6 +4047,7 @@ const COURSE = [
 			{
 				id: 'bhukampa-earthquake',
 				np: 'Bhukampa',
+				dev: 'भूकम्प',
 				pron: 'bhoo-kum-paa',
 				emoji: '🌋',
 				en: 'Earthquake',
@@ -3578,6 +4055,7 @@ const COURSE = [
 			{
 				id: 'aago-fire',
 				np: 'Aago',
+				dev: 'आगो',
 				pron: 'aa-go',
 				emoji: '🔥',
 				en: 'Fire',

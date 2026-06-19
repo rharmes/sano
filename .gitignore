@@ -7,3 +7,7 @@ sano-config.php
 .mockups/
 PLAN.md
 node_modules/
+
+# TTS listening-test pages — self-contained, served from design/ for review; not committed.
+design/compare.html
+design/voice-gallery.html
