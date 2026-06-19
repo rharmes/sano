@@ -19,7 +19,7 @@ them as authoritative or silently "correct" them; flag questions to Ross.
 
 ## Learning model (`js/sano.js` + `js/data.js`)
 
-Course content is `COURSE` in `js/data.js`: ~41 units, each `{ id, title, kind, items }`
+Course content is `COURSE` in `js/data.js`: 36 units, each `{ id, title, kind, items }`
 where `kind` is `'phrases'` (items have `np`/`pron`/`en`/`usage`) or `'vocab'` (items also
 carry an `emoji`); ~476 items total. `js/sano.js` is the lesson engine, and it is more
 pedagogically built-out than this file used to convey:
