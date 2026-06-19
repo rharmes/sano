@@ -311,6 +311,23 @@ html {
 	color: var(--button-primary-color);
 }
 
+/* Communicative can-do goal (SR-06): the unit's real-world objective, framed as a
+   capability rather than a word count. Shown under the daily-lesson CTA and on the
+   lesson-complete screen; the "Goal ·" lead-in is the pennant-gold eyebrow. */
+.can-do-goal {
+	margin-top: 1.2rem;
+	font-size: var(--text-label);
+	color: var(--text-color-soft);
+	text-align: center;
+}
+.can-do-goal::before {
+	content: 'Goal · ';
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08rem;
+	color: var(--badge-color);
+}
+
 /* ── Shared components ───────────────────────────────────────────────────────
    Reusable primitives mirrored from design/style-guide.html. Defined here, before
    the contextual variants further down, so those (same specificity, later in the

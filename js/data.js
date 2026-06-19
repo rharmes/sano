@@ -1,11 +1,13 @@
 // Course data for the Nepali study app. Generated from the original index.html tables.
 // NOTE: `dev` (Devanagari) fields were AI-drafted 2026-06-19 from the romanized `np`
 // strings and are PENDING Ross's verification — treat as drafts, not authoritative.
+// The per-unit `goal` (can-do) strings are likewise AI-drafted and Ross's to refine.
 const COURSE = [
 	{
 		id: 'basics',
 		title: 'Basics',
 		kind: 'phrases',
+		goal: 'Greet people and be polite',
 		items: [
 			{
 				id: 'namaste-hello-goodbye',
@@ -189,6 +191,7 @@ const COURSE = [
 		id: 'numbers',
 		title: 'Numbers & Counting',
 		kind: 'vocab',
+		goal: 'Count and say numbers',
 		items: [
 			{
 				id: 'ek-one',
@@ -316,6 +319,7 @@ const COURSE = [
 		id: 'pronouns',
 		title: 'Pronouns & Possessives',
 		kind: 'phrases',
+		goal: 'Say who you mean — I, you, we, theirs',
 		items: [
 			{
 				id: 'ma-i-me',
@@ -427,6 +431,7 @@ const COURSE = [
 		id: 'family-people',
 		title: 'Family & People',
 		kind: 'vocab',
+		goal: 'Talk about family and people',
 		items: [
 			{
 				id: 'aamaa-mother',
@@ -562,6 +567,7 @@ const COURSE = [
 		id: 'introductions',
 		title: 'Introductions',
 		kind: 'phrases',
+		goal: 'Introduce yourself and ask names',
 		items: [
 			{
 				id: 'tapai-ko-naam-ke-ho-what-is-your-name-formal',
@@ -705,6 +711,7 @@ const COURSE = [
 		id: 'comprehension',
 		title: 'Comprehension',
 		kind: 'phrases',
+		goal: 'Say whether you understand',
 		items: [
 			{
 				id: 'maile-bujhe-i-understand-i-understood',
@@ -832,6 +839,7 @@ const COURSE = [
 		id: 'connectors',
 		title: 'Connectors & Fillers',
 		kind: 'phrases',
+		goal: 'Connect ideas with and, but, also',
 		items: [
 			{
 				id: 'ra-and',
@@ -927,6 +935,7 @@ const COURSE = [
 		id: 'meals',
 		title: 'Meals',
 		kind: 'phrases',
+		goal: 'Offer food and ask about meals',
 		items: [
 			{
 				id: 'paani-dinus-please-give-me-water',
@@ -1046,6 +1055,7 @@ const COURSE = [
 		id: 'kitchen-items',
 		title: 'Kitchen Items',
 		kind: 'vocab',
+		goal: 'Name things in the kitchen',
 		items: [
 			{
 				id: 'bhanda-dishes-utensils',
@@ -1165,6 +1175,7 @@ const COURSE = [
 		id: 'food-grocery-items',
 		title: 'Food & Grocery Items',
 		kind: 'vocab',
+		goal: 'Name foods and groceries',
 		items: [
 			{
 				id: 'khana-food',
@@ -1332,6 +1343,7 @@ const COURSE = [
 		id: 'patterns-requests',
 		title: 'Patterns: Needs & Requests',
 		kind: 'phrases',
+		goal: 'Ask for what you need',
 		items: [
 			{
 				id: 'malai-chaahiyo-i-need',
@@ -1435,6 +1447,7 @@ const COURSE = [
 		id: 'household-living',
 		title: 'Household Living',
 		kind: 'phrases',
+		goal: 'Handle everyday life at home',
 		items: [
 			{
 				id: 'charpi-kaha-cha-where-is-the-bathroom',
@@ -1570,6 +1583,7 @@ const COURSE = [
 		id: 'cleaning-items',
 		title: 'Cleaning Items',
 		kind: 'vocab',
+		goal: 'Name cleaning supplies',
 		items: [
 			{
 				id: 'kucho-broom',
@@ -1617,6 +1631,7 @@ const COURSE = [
 		id: 'patterns-doing',
 		title: 'Patterns: Doing & Going',
 		kind: 'phrases',
+		goal: "Say what you're doing and where you're going",
 		items: [
 			{
 				id: 'ma-jaanchu-i-am-going-to',
@@ -1720,6 +1735,7 @@ const COURSE = [
 		id: 'daily-routine',
 		title: 'Daily Routine',
 		kind: 'phrases',
+		goal: 'Talk through your daily routine',
 		items: [
 			{
 				id: 'ma-uthchu-i-get-up-i-will-get-up',
@@ -1823,6 +1839,7 @@ const COURSE = [
 		id: 'cooking',
 		title: 'Cooking Together',
 		kind: 'phrases',
+		goal: 'Pitch in while cooking',
 		items: [
 			{
 				id: 'ma-tarkari-kaatchu-i-will-cut-the-vegetables',
@@ -1926,6 +1943,7 @@ const COURSE = [
 		id: 'purchasing',
 		title: 'Purchasing',
 		kind: 'phrases',
+		goal: 'Ask prices and bargain',
 		items: [
 			{
 				id: 'kati-ho-how-much-is-it',
@@ -1997,6 +2015,7 @@ const COURSE = [
 		id: 'time',
 		title: 'Time',
 		kind: 'phrases',
+		goal: 'Talk about time and when things happen',
 		items: [
 			{
 				id: 'kahile-when',
@@ -2140,6 +2159,7 @@ const COURSE = [
 		id: 'navigation',
 		title: 'Navigation',
 		kind: 'phrases',
+		goal: 'Ask where things are',
 		items: [
 			{
 				id: 'kaha-where',
@@ -2203,6 +2223,7 @@ const COURSE = [
 		id: 'descriptors',
 		title: 'Descriptors',
 		kind: 'phrases',
+		goal: 'Describe what things are like',
 		items: [
 			{
 				id: 'ramro-good-nice-beautiful',
@@ -2258,6 +2279,7 @@ const COURSE = [
 		id: 'colors',
 		title: 'Colors',
 		kind: 'vocab',
+		goal: 'Name colors',
 		items: [
 			{
 				id: 'rang-color',
@@ -2353,6 +2375,7 @@ const COURSE = [
 		id: 'weather',
 		title: 'Weather',
 		kind: 'phrases',
+		goal: 'Talk about the weather',
 		items: [
 			{
 				id: 'kasto-chha-hawa-how-s-the-weather',
@@ -2392,6 +2415,7 @@ const COURSE = [
 		id: 'body-parts',
 		title: 'Body Parts',
 		kind: 'vocab',
+		goal: 'Name parts of the body',
 		items: [
 			{
 				id: 'tauko-head',
@@ -2511,6 +2535,7 @@ const COURSE = [
 		id: 'medical',
 		title: 'Medical',
 		kind: 'phrases',
+		goal: 'Ask for help in an emergency',
 		items: [
 			{
 				id: 'kripaya-malaai-maddat-garnuhos-please-help-me',
@@ -2582,6 +2607,7 @@ const COURSE = [
 		id: 'commands',
 		title: 'Commands',
 		kind: 'phrases',
+		goal: 'Tell someone to slow down or come',
 		items: [
 			{
 				id: 'bistari-slowly-carefully',
@@ -2645,6 +2671,7 @@ const COURSE = [
 		id: 'bedroom-items',
 		title: 'Bedroom Items',
 		kind: 'vocab',
+		goal: 'Name things in the bedroom',
 		items: [
 			{
 				id: 'ochyan-bed',
@@ -2724,6 +2751,7 @@ const COURSE = [
 		id: 'bathroom-items',
 		title: 'Bathroom Items',
 		kind: 'vocab',
+		goal: 'Name things in the bathroom',
 		items: [
 			{
 				id: 'charpi-toilet',
@@ -2803,6 +2831,7 @@ const COURSE = [
 		id: 'living-room-items',
 		title: 'Living Room Items',
 		kind: 'vocab',
+		goal: 'Name things in the living room',
 		items: [
 			{
 				id: 'kursi-chair',
@@ -2914,6 +2943,7 @@ const COURSE = [
 		id: 'laundry-clothing-items',
 		title: 'Laundry & Clothing Items',
 		kind: 'vocab',
+		goal: 'Name clothes and laundry items',
 		items: [
 			{
 				id: 'lugaa-clothes',
@@ -2969,6 +2999,7 @@ const COURSE = [
 		id: 'technology-electronics',
 		title: 'Technology & Electronics',
 		kind: 'vocab',
+		goal: 'Name devices and electronics',
 		items: [
 			{
 				id: 'mobile-cell-phone',
@@ -3032,6 +3063,7 @@ const COURSE = [
 		id: 'personal-items',
 		title: 'Personal Items',
 		kind: 'vocab',
+		goal: 'Name your personal belongings',
 		items: [
 			{
 				id: 'jhola-bag',
@@ -3087,6 +3119,7 @@ const COURSE = [
 		id: 'miscellaneous',
 		title: 'Miscellaneous',
 		kind: 'vocab',
+		goal: 'Name common objects',
 		items: [
 			{
 				id: 'bottle-bottle',
@@ -3166,6 +3199,7 @@ const COURSE = [
 		id: 'emotions-feelings',
 		title: 'Emotions & Feelings',
 		kind: 'vocab',
+		goal: 'Say how you feel',
 		items: [
 			{
 				id: 'khushi-happy',
@@ -3333,6 +3367,7 @@ const COURSE = [
 		id: 'animals',
 		title: 'Animals',
 		kind: 'vocab',
+		goal: 'Name animals',
 		items: [
 			{
 				id: 'kukur-dog',
@@ -3532,6 +3567,7 @@ const COURSE = [
 		id: 'food-drink',
 		title: 'Food & Drink',
 		kind: 'vocab',
+		goal: 'Name fruits, drinks, and dishes',
 		items: [
 			{
 				id: 'syau-apple',
@@ -3811,6 +3847,7 @@ const COURSE = [
 		id: 'weather-nature',
 		title: 'Weather & Nature',
 		kind: 'vocab',
+		goal: 'Name things in nature and the sky',
 		items: [
 			{
 				id: 'ghaam-sun-sunshine',

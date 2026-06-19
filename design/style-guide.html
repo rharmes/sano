@@ -806,6 +806,19 @@
 			.audio-btn.audio-prompt:active {
 				color: var(--button-primary-color);
 			}
+			.can-do-goal {
+				margin-top: 1.2rem;
+				font-size: var(--text-label);
+				color: var(--text-color-soft);
+				text-align: center;
+			}
+			.can-do-goal::before {
+				content: 'Goal · ';
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.08rem;
+				color: var(--badge-color);
+			}
 			.btn-secondary {
 				height: auto;
 				padding: 1rem 3.2rem;
@@ -1732,6 +1745,10 @@
 						<div class="cap">locked</div>
 					</div>
 				</div>
+				<p class="sg-note" style="margin-top: 2rem">
+					Unit can-do goal (SR-06), shown under the daily-lesson CTA and on the lesson-complete screen:
+				</p>
+				<p class="can-do-goal">Greet people and be polite</p>
 			</section>
 
 			<!-- ── Speech bubbles ─────────────────────────────────────── -->

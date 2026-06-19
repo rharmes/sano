@@ -295,6 +295,15 @@ function renderHome() {
 		dailyButton.textContent = 'All caught up! Come back tomorrow';
 		dailyButton.disabled = true;
 	}
+
+	// Frame the current unit as a real-world "can-do" objective (SR-06).
+	const goalEl = document.getElementById('home-goal');
+	if (unit && unit.goal) {
+		goalEl.textContent = unit.goal;
+		goalEl.classList.remove('hide');
+	} else {
+		goalEl.classList.add('hide');
+	}
 }
 
 // The Duolingo-style winding path. All geometry is computed here so it can
@@ -945,6 +954,16 @@ function finishLesson() {
 	const strengthenedEl = document.getElementById('complete-strengthened');
 	strengthenedEl.classList.toggle('hide', lesson.leveledUp === 0);
 	strengthenedEl.textContent = lesson.leveledUp + (lesson.leveledUp === 1 ? ' word' : ' words') + ' strengthened';
+
+	// Reinforce what this practice is building toward (SR-06 can-do goal).
+	const goalEl = document.getElementById('complete-goal');
+	const goalUnit = currentUnit();
+	if (goalUnit && goalUnit.goal) {
+		goalEl.textContent = goalUnit.goal;
+		goalEl.classList.remove('hide');
+	} else {
+		goalEl.classList.add('hide');
+	}
 
 	showScreen('complete');
 }

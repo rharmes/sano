@@ -80,7 +80,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 | ✅ | **SR-03** | Listening exercises ("tap/type what you hear") *(audio-only prompt on ~half of recall reviews; choose-meaning + type variants)* | §7,§8 | M | SR-02 |
 | ⬜ | **SR-04** | Speaking practice (speak-before-reveal + record/compare) | §4 | M | SR-02 |
 | ⬜ | **SR-05** | Evolve Leitner → per-item graded scheduler | §6 | M | — |
-| ⬜ | **SR-06** | Communicative "can-do" goals & progress framing | §1,§9 | L–M | — |
+| ✅ | **SR-06** | Communicative "can-do" goals & progress framing *(per-unit goals on the home CTA + complete screen; path labels left alone for layout safety; goal strings AI-drafted, Ross to refine)* | §1,§9 | L–M | — |
 | ⬜ | **SR-07** | Bring the 10 companions into the app | §9 | L–M | SR-01 |
 | ⬜ | **SR-08** | Pronunciation coaching for Nepali sounds | §4,§8 | M | SR-02 |
 | ⬜ | **SR-09** | Mindful gamification (streak freeze, no guilt) | §7,§9 | L | — |
