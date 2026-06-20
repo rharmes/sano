@@ -1208,6 +1208,9 @@ table#vocab tbody td:nth-child(3) {
 	height: auto;
 	margin: 0;
 	font: inherit;
+	/* override the barebones button default (white-space: nowrap) so the label
+	   and descriptor wrap inside the box instead of overflowing it. */
+	white-space: normal;
 	text-transform: none;
 	letter-spacing: normal;
 	cursor: pointer;

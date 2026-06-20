@@ -158,6 +158,16 @@
 			<button onclick="seed('sounds')">Seed &amp; open</button>
 		</div>
 		<div class="card">
+			<span class="tests">SR-10</span>
+			<h2>Placement / skip-ahead onboarding</h2>
+			<p>
+				Clears progress and replays onboarding. Enter a name, choose <b>“I already know some”</b>, pick a starting group, and finish —
+				the path then shows the earlier units already complete and the daily lesson starts at your chosen section.
+			</p>
+			<button onclick="seed('placement')">Reset &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>
@@ -211,7 +221,7 @@
 			}
 
 			function seed(which) {
-				if (which === 'reset') {
+				if (which === 'reset' || which === 'placement') {
 					localStorage.removeItem('sano.state.v1');
 					return (location.href = '/');
 				}

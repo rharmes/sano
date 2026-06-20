@@ -406,6 +406,48 @@ const PATH_SECTIONS = {
 	'bedroom-items': 'Building vocabulary',
 };
 
+// SR-10 placement / skip-ahead. An experienced learner can start partway in;
+// `placeBefore` marks every item in the units ahead of `unitId` as already
+// introduced at recall strength, so those units read complete (unlocking the
+// chosen start) while spaced reviews still resurface that "known" material over
+// the next few days to confirm the self-placement.
+function placeBefore(unitId) {
+	const idx = COURSE.findIndex((u) => u.id === unitId);
+	if (idx <= 0) return; // unknown id, or the first unit — nothing precedes it
+	const today = dayString(new Date());
+	for (let i = 0; i < idx; i++) {
+		for (const item of COURSE[i].items) {
+			const r = itemRecord(item.id);
+			r.intro = true;
+			r.seen = Math.max(r.seen, 1);
+			r.correct = Math.max(r.correct, 1);
+			r.interval = Math.max(r.interval, RECALL_INTERVAL);
+			r.ease = DEFAULT_EASE;
+			r.lastSeen = today;
+		}
+	}
+	saveState();
+}
+
+// The points a learner can skip ahead to: the start of each path section after
+// the first. Each option means "I already know <known>" and starts them at the
+// next section. Derived from PATH_SECTIONS so it tracks the course shape.
+function placementOptions() {
+	const startIds = Object.keys(PATH_SECTIONS);
+	const opts = [];
+	for (let s = 1; s < startIds.length; s++) {
+		const startIdx = COURSE.findIndex((u) => u.id === startIds[s]);
+		const knownIdx = COURSE.findIndex((u) => u.id === startIds[s - 1]);
+		opts.push({
+			startId: startIds[s],
+			startSection: PATH_SECTIONS[startIds[s]],
+			known: PATH_SECTIONS[startIds[s - 1]],
+			blurb: COURSE.slice(knownIdx, startIdx).map((u) => u.title),
+		});
+	}
+	return opts;
+}
+
 function renderHome() {
 	renderPath();
 
@@ -1668,6 +1710,8 @@ window.Sano = {
 	showScreen,
 	renderHome,
 	applyServerState,
+	placeBefore,
+	placementOptions,
 	resetPathReveal() {
 		pathRevealed = false;
 	},

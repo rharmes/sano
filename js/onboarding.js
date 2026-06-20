@@ -20,7 +20,6 @@ const SanoOnboard = (() => {
 		willSave: ['Ma tapaiko pragati surakshit garchu.', "I'll save your progress for you."],
 		thanks: ['Dhanyabaad, Sano.', 'Thank you, Sano.'],
 		askCloud: ['Ke ma tapaiko pragati cloud-ma pani surakshit garun?', 'Would you like me to also save your progress to the cloud?'],
-		optional: ['Yo aniwarya haina.', 'This is optional.'],
 		yes: ['Hunchha, kripaya.', 'Yes please.'],
 		no: ['Aile haina.', 'Not right now.'],
 		needCreds: ['Malai euta username ra password chahincha.', "I'll need a username and a password."],
@@ -31,6 +30,14 @@ const SanoOnboard = (() => {
 		],
 		showHow: ['Ke ma tapailai kasari garne dekhaun?', 'Should I show you how?'],
 		done: ['Setup pura bhayo! Ab sikne bela.', 'Set up complete! Time to learn.'],
+		// SR-10 placement step (Romanized Nepali drafts — Ross's to refine, like the rest):
+		askExperience: ['Tapaile pahile Nepali siknu bhayeko cha?', 'Have you studied Nepali before?'],
+		newLearner: ['Ma naulo sikne ho.', "I'm just starting out."],
+		knowSome: ['Malai ali-ali Nepali aauncha.', 'I already know some.'],
+		askLevel: ['Hami kaha bata suru garaun?', 'Where would you like to start?'],
+		levelHint: ['Tapaile janne antim samuha chhannuhos.', "Tap the last group you're comfortable with — I'll start you just after it."],
+		placed: ['Ramro! Suru garaun.', "Great — here's where we'll begin."],
+		startBeginning: ['Suru dekhi nai.', 'Start me at the very beginning.'],
 	};
 
 	const USERNAME_RE = /^[a-z0-9_]{3,32}$/;
@@ -122,6 +129,8 @@ const SanoOnboard = (() => {
 	function show(name) {
 		clear();
 		if (name === 'name') return renderName();
+		if (name === 'placement') return renderPlacement();
+		if (name === 'level') return renderLevel();
 		if (name === 'account') return renderAccount();
 		if (name === 'creds') return renderCreds();
 		if (name === 'install') return renderInstall();
@@ -151,15 +160,50 @@ const SanoOnboard = (() => {
 		Sano.state.name = value;
 		Sano.saveState();
 		Sano.refreshHeader();
-		show('account');
+		show('placement');
+	}
+
+	// SR-10: after the name, greet and ask about prior experience. Brand-new
+	// learners go straight on; those who know some Nepali get a starting-point picker.
+	function renderPlacement() {
+		threadEl.appendChild(sano(withName(L.greet)));
+		threadEl.appendChild(sano(L.askExperience));
+		controlsEl.appendChild(
+			choices([
+				{ pair: L.newLearner, onClick: () => show('account') },
+				{ pair: L.knowSome, onClick: () => show('level') },
+			]),
+		);
+		reveal();
+	}
+
+	// Skip-ahead picker: one option per path section the learner can test out of,
+	// built from the course (Sano.placementOptions), plus a start-from-scratch out.
+	function renderLevel() {
+		threadEl.appendChild(sano(L.askLevel));
+		threadEl.appendChild(sano(L.levelHint));
+		const options = Sano.placementOptions().map((o) => ({
+			pair: [o.known, o.blurb.slice(0, 4).join(', ') + (o.blurb.length > 4 ? '…' : '')],
+			onClick: () => choosePlacement(o.startId, o.startSection),
+		}));
+		options.push({ pair: L.startBeginning, onClick: () => show('account') });
+		controlsEl.appendChild(choices(options));
+		reveal();
+	}
+
+	// Mark everything before the chosen section as known, confirm, then carry on.
+	function choosePlacement(startId, startSection) {
+		Sano.placeBefore(startId);
+		clear();
+		threadEl.appendChild(bubble('sano', [L.placed[0]], "Great — I'll start you at " + startSection + '.', 'Sano'));
+		controlsEl.appendChild(primaryButton('Continue', () => show('account')));
+		reveal();
 	}
 
 	function renderAccount() {
-		threadEl.appendChild(sano(withName(L.greet)));
 		threadEl.appendChild(sano(L.willSave));
 		threadEl.appendChild(bubble('user', [L.thanks[0]], L.thanks[1], 'You'));
 		threadEl.appendChild(sano(L.askCloud));
-		threadEl.appendChild(sano(L.optional));
 		controlsEl.appendChild(
 			choices([
 				{ pair: L.yes, onClick: () => show('creds') },

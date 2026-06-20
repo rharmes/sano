@@ -84,7 +84,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 | 🟡 | **SR-07** | Bring the 10 companions into the app *(heads now in dialogue bubbles via js/characters.js + the ported companion palette; full-body / animated section hosts = follow-up)* | §9 | L–M | SR-01 |
 | ✅ | **SR-08** | Pronunciation coaching for Nepali sounds *(a "Sounds of Nepali" listen-and-repeat mode for the contrasts romanization hides — aspiration, retroflex/dental, nasal vowels, vowel length — placed as **four lavender path nodes with Devanagari-glyph icons** woven among the lessons (hiding the site chrome and exiting like a lesson). Each is illustrated by real course words found via their Devanagari `marks`, with the model audio + a record-and-compare step reusing SR-04. First place the app surfaces Devanagari. Intros/tips are drafts; examples ride on the under-review `dev` field)* | §4,§8 | M | SR-02 |
 | ✅ | **SR-09** | Mindful gamification (streak freeze, no guilt) *(forgives one missed day, earns at 5-day milestones; home "freeze ready" notice + complete-screen "freeze used"; existing copy already gentle)* | §7,§9 | L | — |
-| ⬜ | **SR-10** | Placement / skip-ahead for experienced learners | §9 | L | — |
+| ✅ | **SR-10** | Placement / skip-ahead for experienced learners *(onboarding asks about prior experience after the name; "I already know some" opens a starting-point picker — one option per path section, built from the course — that marks every item before the chosen section as introduced at recall strength, so those units read complete and reviews still resurface them. New onboarding Nepali strings are drafts, Ross's to refine)* | §9 | L | — |
 | ⬜ | **SR-11** | Optional Devanagari script track | §8 | H | — |
 
 ### SR-01 — Two-character dialogue lessons with comprehension questions
@@ -270,14 +270,20 @@ Most of the roadmap is built and deployed to namastesano.com. Status by ID:
   bubbles via the generated `js/characters.js` + the ported companion fill palette).
 - **Dev tooling:** every feature has a one-click scenario in `tools/dev-seed.html`, now a
   **required workflow step** in CLAUDE.md ("always create a dev-seed scenario").
-- **Remaining:** SR-10 (placement / skip-ahead), SR-11 (optional Devanagari script
-  track), and finishing SR-07 (full-body / animated companion hosts; per-character
+- **Remaining:** SR-11 (optional Devanagari script track), and finishing SR-07 (full-body / animated companion hosts; per-character
   voices — see the TODO below).
 - **2026-06-20 (later) — SR-05 live:** the Leitner box is now an SM-2-lite per-item
   scheduler (auto-graded from exercise difficulty, no new self-rating UI); legacy `level`
   records migrate on load, the pure math is unit-tested (`tools/check-scheduler.mjs`,
   wired into `tools/check.sh`), and dev-seed scenario 6 demonstrates difficulty escalating
   by strength. **Committed, pushed, and deployed.**
+- **2026-06-20 (later) — SR-10 live:** onboarding now offers placement / skip-ahead. After
+  the name, Sano asks about prior experience; "I already know some" opens a starting-point
+  picker (one option per path section, built from the course) that marks every item before the
+  chosen section as introduced at recall strength — units read complete and unlock the start,
+  while spaced reviews still resurface the "known" material to confirm the placement. Core is
+  `Sano.placeBefore` / `Sano.placementOptions`; dev-seed has a one-click scenario. The new
+  onboarding Nepali strings are drafts for Ross.
 - **2026-06-20 (later still) — SR-08 built:** a "Sounds of Nepali" listen-and-repeat mode
   (four **lavender path nodes** with Devanagari-glyph icons, woven into the path among the
   lessons — they hide the site chrome and exit like a lesson) covering aspiration,
