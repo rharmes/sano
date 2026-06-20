@@ -124,6 +124,17 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">SR-04 speaking</span>
+			<h2>5 · Speaking step (record yourself)</h2>
+			<p>
+				Tap the <b>Basics ✓</b> node in the path to start a quick review (no warm-up). Answer the multiple-choice cards — after each
+				word a skippable <b>"Say it aloud"</b> step appears: tap to record, then play <b>"Your recording"</b> against the model. Allow
+				the mic the first time.
+			</p>
+			<button onclick="seed('speak')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>
@@ -215,6 +226,20 @@
 						lastActivityDay: day(0),
 						itemsToday: 0,
 						itemsTotal: 30,
+						items,
+					};
+				} else if (which === 'speak') {
+					const items = {};
+					for (const it of COURSE[0].items) items[it.id] = rec({ level: 2, lastSeen: day(0) });
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 5,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 60,
 						items,
 					};
 				}
