@@ -453,9 +453,10 @@ function renderPath() {
 			section.style.top = y + 'px';
 			wrap.appendChild(section);
 			y += compact ? 56 : 64;
-			// The START bubble extends above the current node; keep it clear of the banner.
-			if (isCurrent) y += 34;
 		}
+		// The START bubble extends above the current node — always give it clearance,
+		// whether the node follows a section banner, a unit, or a conversation node.
+		if (isCurrent) y += 34;
 		const status = complete ? 'complete' : isCurrent ? 'current' : 'locked';
 		centers.push({ y: y + nodeSize / 2, complete: complete });
 
