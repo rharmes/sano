@@ -328,6 +328,32 @@ html {
 	color: var(--badge-color);
 }
 
+/* Streak-freeze reassurance (SR-09): shown on the home screen when a single missed
+   day is about to be covered by a banked freeze. Indigo "protected" framing. */
+.streak-freeze-notice {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	max-width: 40rem;
+	margin: 0 auto 1.6rem;
+	padding: 1rem 1.4rem;
+	border: 1px solid var(--border-color);
+	border-radius: 1.2rem;
+	background: var(--background-color-softer);
+	text-align: left;
+}
+.streak-freeze-notice .icon {
+	flex: none;
+	font-size: 2.8rem;
+	color: var(--path-complete-color);
+}
+.streak-freeze-notice p {
+	margin: 0;
+	font-size: 1.5rem;
+	line-height: 1.4;
+	color: var(--text-color-normal);
+}
+
 /* ── Shared components ───────────────────────────────────────────────────────
    Reusable primitives mirrored from design/style-guide.html. Defined here, before
    the contextual variants further down, so those (same specificity, later in the

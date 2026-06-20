@@ -819,6 +819,29 @@
 				letter-spacing: 0.08rem;
 				color: var(--badge-color);
 			}
+			.streak-freeze-notice {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+				max-width: 40rem;
+				margin: 0 auto 1.6rem;
+				padding: 1rem 1.4rem;
+				border: 1px solid var(--border-color);
+				border-radius: 1.2rem;
+				background: var(--background-color-softer);
+				text-align: left;
+			}
+			.streak-freeze-notice .icon {
+				flex: none;
+				font-size: 2.8rem;
+				color: var(--path-complete-color);
+			}
+			.streak-freeze-notice p {
+				margin: 0;
+				font-size: 1.5rem;
+				line-height: 1.4;
+				color: var(--text-color-normal);
+			}
 			.btn-secondary {
 				height: auto;
 				padding: 1rem 3.2rem;
@@ -1178,6 +1201,11 @@
 					/>
 				</symbol>
 				<symbol id="i-play_arrow" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></symbol>
+				<symbol id="i-ac-unit" viewBox="0 0 24 24">
+					<path
+						d="M22 11h-4.17l3.24-3.24-1.41-1.42L15 11h-2V9l4.66-4.66-1.42-1.41L13 6.17V2h-2v4.17L7.76 2.93 6.34 4.34 11 9v2H9L4.34 6.34 2.93 7.76 6.17 11H2v2h4.17l-3.24 3.24 1.41 1.42L9 13h2v2l-4.66 4.66 1.42 1.41L11 17.83V22h2v-4.17l3.24 3.24 1.42-1.41L13 15v-2h2l4.66 4.66 1.41-1.42L17.83 13H22z"
+					/>
+				</symbol>
 				<symbol id="i-volume-up" viewBox="0 0 24 24">
 					<path
 						d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
@@ -1572,6 +1600,11 @@
 							><svg><use href="#i-volume-up" /></svg></span
 						><code>#i-volume-up</code>
 					</div>
+					<div class="iconcell">
+						<span class="icon"
+							><svg><use href="#i-ac-unit" /></svg></span
+						><code>#i-ac-unit</code>
+					</div>
 				</div>
 			</section>
 
@@ -1749,6 +1782,12 @@
 					Unit can-do goal (SR-06), shown under the daily-lesson CTA and on the lesson-complete screen:
 				</p>
 				<p class="can-do-goal">Greet people and be polite</p>
+				<div class="streak-freeze-notice" style="margin-top: 1.6rem">
+					<span class="icon"
+						><svg><use href="#i-ac-unit" /></svg
+					></span>
+					<p>Streak freeze ready — your 7-day streak is safe. Finish a lesson to use it.</p>
+				</div>
 			</section>
 
 			<!-- ── Speech bubbles ─────────────────────────────────────── -->

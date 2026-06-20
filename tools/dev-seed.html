@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Sano · dev seed</title>
+		<!-- Local testing aid (served by the dev server, never deployed): seeds a ready-made
+		     sano.state.v1 into localStorage and opens the app where a new feature is visible.
+		     Add a scenario for every new feature. Served at /tools/dev-seed.html. -->
+		<script src="/js/data.js"></script>
+		<style>
+			body {
+				font-family: -apple-system, system-ui, sans-serif;
+				max-width: 640px;
+				margin: 0 auto;
+				padding: 24px 18px 60px;
+				line-height: 1.5;
+				color: #222;
+				background: #fbf5e9;
+			}
+			h1 {
+				font-size: 22px;
+			}
+			.note {
+				font-size: 14px;
+				color: #6b6358;
+				background: #f3ecdb;
+				border: 1px solid #e0d8c4;
+				border-radius: 10px;
+				padding: 10px 14px;
+			}
+			.card {
+				border: 1px solid #e0d8c4;
+				border-radius: 12px;
+				padding: 14px 16px;
+				margin: 14px 0;
+				background: #fff;
+			}
+			.card h2 {
+				font-size: 17px;
+				margin: 0 0 4px;
+			}
+			.card p {
+				font-size: 14px;
+				margin: 4px 0 12px;
+				color: #45404c;
+			}
+			.tests {
+				font-size: 12px;
+				color: #b94f5b;
+				font-weight: 700;
+				letter-spacing: 0.03em;
+				text-transform: uppercase;
+			}
+			button {
+				font-size: 15px;
+				font-weight: 700;
+				color: #fff;
+				background: #dd6470;
+				border: 0;
+				border-radius: 9px;
+				padding: 10px 18px;
+				cursor: pointer;
+			}
+			button.ghost {
+				background: #56629e;
+			}
+			code {
+				background: #f3ecdb;
+				padding: 1px 5px;
+				border-radius: 4px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Sano — dev seed</h1>
+		<p class="note">
+			Local testing aid (not shipped). Each button writes a ready-made <code>sano.state.v1</code> into this origin's localStorage and opens
+			the app where the feature is visible. <b>Stay signed out</b> while testing, or sync may reconcile the seeded state away. Use “Reset” to
+			return to a clean first-run.
+		</p>
+
+		<div class="card">
+			<span class="tests">SR-02 audio · SR-06 goal</span>
+			<h2>1 · Browse audio in the dictionary</h2>
+			<p>
+				Opens the app on home (note the <b>“Goal ·”</b> line under the lesson button). Tap the <b>dictionary icon</b> (top bar) and tap
+				any <b>🔊</b> next to a word.
+			</p>
+			<button onclick="seed('dict')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
+			<span class="tests">SR-02 · SR-03 · SR-06</span>
+			<h2>2 · A daily lesson (audio + listening + goal)</h2>
+			<p>
+				Lands mid-course with reviews due. Tap <b>“Start today's lesson.”</b> Expect audio on the Nepali prompts and answer reveals
+				(SR-02), several <b>“what you hear”</b> audio-only exercises among the reviews (SR-03), and the can-do goal on the finish screen
+				(SR-06). Restart the lesson to reshuffle if you want more listening items.
+			</p>
+			<button onclick="seed('lesson')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
+			<span class="tests">SR-09 streak freeze</span>
+			<h2>3 · Streak freeze (home notice + save)</h2>
+			<p>
+				Sets you up as if you <b>missed yesterday</b> (7-day streak, 1 freeze banked). The home screen shows the
+				<b>“Streak freeze ready”</b> notice. Then tap <b>“Start today's lesson”</b> and finish it — the complete screen reports
+				<b>“Streak freeze used — your 8-day streak is safe.”</b>
+			</p>
+			<button onclick="seed('freeze')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
+			<span class="tests">clean slate</span>
+			<h2>Reset to a brand-new user</h2>
+			<p>Clears all saved progress so the first-run onboarding plays again.</p>
+			<button class="ghost" onclick="seed('reset')">Reset &amp; open</button>
+		</div>
+
+		<script>
+			const day = (n) => {
+				const d = new Date(Date.now() - n * 864e5);
+				return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+			};
+			const rec = (o) => Object.assign({ seen: 4, correct: 4, level: 2, lastSeen: day(0), intro: true }, o);
+
+			// Mark whole units as learned-and-settled (intro'd, not due).
+			function learnUnits(items, from, to, opts) {
+				for (let u = from; u <= to; u++) for (const it of COURSE[u].items) items[it.id] = rec(opts);
+			}
+			// Make the first `count` items of units [from..to] overdue reviews at mixed levels.
+			function makeDue(items, from, to, count) {
+				let made = 0;
+				for (let u = from; u <= to && made < count; u++)
+					for (const it of COURSE[u].items) {
+						if (made >= count) break;
+						items[it.id] = rec({ level: made % 2 ? 2 : 1, correct: 3, lastSeen: day(12) });
+						made++;
+					}
+			}
+			// A mid-course state: units 0–2 done, unit 3 the current unit, plenty of due reviews.
+			function midCourse(extra) {
+				const items = {};
+				learnUnits(items, 0, 2, { level: 3, lastSeen: day(0) });
+				const cur = COURSE[3];
+				cur.items.forEach((it, i) => {
+					if (i < Math.ceil(cur.items.length / 2)) items[it.id] = rec({ level: 1, lastSeen: day(0) });
+				});
+				makeDue(items, 0, 2, 12);
+				return Object.assign(
+					{
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 5,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 220,
+						items,
+					},
+					extra,
+				);
+			}
+
+			function seed(which) {
+				if (which === 'reset') {
+					localStorage.removeItem('sano.state.v1');
+					return (location.href = '/');
+				}
+				let state;
+				if (which === 'dict') {
+					const items = {};
+					COURSE[0].items.slice(0, 8).forEach((it) => (items[it.id] = rec({ level: 1, lastSeen: day(0) })));
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 3,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 3,
+						itemsTotal: 40,
+						items,
+					};
+				} else if (which === 'lesson') {
+					state = midCourse();
+				} else if (which === 'freeze') {
+					// Missed exactly yesterday with a freeze banked -> home notice now, save on finish.
+					state = midCourse({ streak: 7, streakFreezes: 1, lastActivityDay: day(2) });
+				}
+				localStorage.setItem('sano.state.v1', JSON.stringify(state));
+				location.href = '/';
+			}
+		</script>
+	</body>
+</html>

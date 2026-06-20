@@ -209,6 +209,11 @@ significantly, update CLAUDE.md in the same commit.
   (c) optionally clicks elements inside the iframe to reach lesson /
   dictionary / flashcard / quiz screens. Delete temp harness files before
   committing.
+- **Manual feature testing**: `tools/dev-seed.html` (committed dev tool served at
+  `/tools/dev-seed.html`, never deployed) writes a ready-made `sano.state.v1` and opens
+  the app where a given feature is visible — needed because most features are gated
+  behind progress (due reviews, a missed day, a current unit). **Add a one-click
+  scenario for every new feature** so Ross can test it on localhost immediately.
 - **Forcing light mode**: headless Chrome follows the system theme. Strip the
   dark `@media` blocks into temp copies (`css/.light.css`,
   `css/.light-barebones.css`) and a `.light.html` that references them.

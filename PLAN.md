@@ -83,7 +83,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 | ✅ | **SR-06** | Communicative "can-do" goals & progress framing *(per-unit goals on the home CTA + complete screen; path labels left alone for layout safety; goal strings AI-drafted, Ross to refine)* | §1,§9 | L–M | — |
 | ⬜ | **SR-07** | Bring the 10 companions into the app | §9 | L–M | SR-01 |
 | ⬜ | **SR-08** | Pronunciation coaching for Nepali sounds | §4,§8 | M | SR-02 |
-| ✅ | **SR-09** | Mindful gamification (streak freeze, no guilt) *(forgives one missed day, earns at 5-day milestones; existing copy already gentle; proactive freeze UI = follow-up)* | §7,§9 | L | — |
+| ✅ | **SR-09** | Mindful gamification (streak freeze, no guilt) *(forgives one missed day, earns at 5-day milestones; home "freeze ready" notice + complete-screen "freeze used"; existing copy already gentle)* | §7,§9 | L | — |
 | ⬜ | **SR-10** | Placement / skip-ahead for experienced learners | §9 | L | — |
 | ⬜ | **SR-11** | Optional Devanagari script track | §8 | H | — |
 

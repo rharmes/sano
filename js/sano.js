@@ -327,6 +327,18 @@ function renderHome() {
 	} else {
 		goalEl.classList.add('hide');
 	}
+
+	// SR-09: if exactly one day was missed but a freeze is banked, reassure the user
+	// on the home screen that finishing a lesson will spend it and keep the streak.
+	const freezeEl = document.getElementById('home-streak-freeze');
+	const gap = state.lastActivityDay ? daysBetween(state.lastActivityDay, dayString(new Date())) : 0;
+	if (gap === 2 && state.streakFreezes > 0 && state.streak > 0) {
+		document.getElementById('home-streak-freeze-text').textContent =
+			'Streak freeze ready — your ' + state.streak + '-day streak is safe. Finish a lesson to use it.';
+		freezeEl.classList.remove('hide');
+	} else {
+		freezeEl.classList.add('hide');
+	}
 }
 
 // The Duolingo-style winding path. All geometry is computed here so it can
