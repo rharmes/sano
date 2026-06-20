@@ -82,7 +82,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 | ✅ | **SR-05** | Evolve Leitner → per-item graded scheduler *(SM-2-lite: each item gets its own `ease`+`interval`; reviews are auto-graded from exercise difficulty — miss = lapse, recognition hit = good, recall/listening hit = easy — so strong items stretch past the old 14-day cap while weak ones reset to daily. Old Leitner `level` records migrate to interval/ease on load; the pure scheduler block is unit-tested by `tools/check-scheduler.mjs`)* | §6 | M | — |
 | ✅ | **SR-06** | Communicative "can-do" goals & progress framing *(per-unit goals on the home CTA + complete screen; path labels left alone for layout safety; goal strings AI-drafted, Ross to refine)* | §1,§9 | L–M | — |
 | 🟡 | **SR-07** | Bring the 10 companions into the app *(heads now in dialogue bubbles via js/characters.js + the ported companion palette; full-body / animated section hosts = follow-up)* | §9 | L–M | SR-01 |
-| ✅ | **SR-08** | Pronunciation coaching for Nepali sounds *(a "Sounds of Nepali" listen-and-repeat mode for the contrasts romanization hides — aspiration, retroflex/dental, nasal vowels, vowel length — each illustrated by real course words found via their Devanagari `marks`, with the model audio + a record-and-compare step reusing SR-04. First place the app surfaces Devanagari. Intros/tips are drafts; examples ride on the under-review `dev` field)* | §4,§8 | M | SR-02 |
+| ✅ | **SR-08** | Pronunciation coaching for Nepali sounds *(a "Sounds of Nepali" listen-and-repeat mode for the contrasts romanization hides — aspiration, retroflex/dental, nasal vowels, vowel length — placed as **four lavender path nodes with Devanagari-glyph icons** woven among the lessons (hiding the site chrome and exiting like a lesson). Each is illustrated by real course words found via their Devanagari `marks`, with the model audio + a record-and-compare step reusing SR-04. First place the app surfaces Devanagari. Intros/tips are drafts; examples ride on the under-review `dev` field)* | §4,§8 | M | SR-02 |
 | ✅ | **SR-09** | Mindful gamification (streak freeze, no guilt) *(forgives one missed day, earns at 5-day milestones; home "freeze ready" notice + complete-screen "freeze used"; existing copy already gentle)* | §7,§9 | L | — |
 | ⬜ | **SR-10** | Placement / skip-ahead for experienced learners | §9 | L | — |
 | ⬜ | **SR-11** | Optional Devanagari script track | §8 | H | — |
@@ -279,7 +279,8 @@ Most of the roadmap is built and deployed to namastesano.com. Status by ID:
   wired into `tools/check.sh`), and dev-seed scenario 6 demonstrates difficulty escalating
   by strength. **Committed, pushed, and deployed.**
 - **2026-06-20 (later still) — SR-08 built:** a "Sounds of Nepali" listen-and-repeat mode
-  (reached from a home link beside the dictionary link) covering aspiration,
+  (four **lavender path nodes** with Devanagari-glyph icons, woven into the path among the
+  lessons — they hide the site chrome and exit like a lesson) covering aspiration,
   retroflex/dental, nasal vowels, and vowel length. Each contrast is illustrated by real
   course words located via their Devanagari, with model audio (SR-02) + a record-and-compare
   step (the SR-04 recorder, refactored into a shared `createRecorder`). New files

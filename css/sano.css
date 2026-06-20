@@ -12,6 +12,7 @@ html {
 	--text-color-softer: #b1a795;
 
 	--badge-color: #d99e3a; /* pennant gold */
+	--sound-color: #8a7fc4; /* lavender: pronunciation path nodes */
 	--word-color: #c25566;
 	--text-complete-color: #38824a;
 	--text-incomplete-color: #c2403d;
@@ -56,6 +57,7 @@ html {
 		--text-color-softer: #645c70;
 
 		--badge-color: #d9aa4e;
+		--sound-color: #a99fdb; /* lavender (dark) */
 		--word-color: #e58794;
 		--text-complete-color: #7fae83;
 		--text-incomplete-color: #e07a72;
@@ -1017,8 +1019,7 @@ table#vocab tbody td:nth-child(3) {
 
 /* Clear the fixed header bar (the lesson/complete screens hide it instead). */
 #screen-home,
-#screen-dictionary,
-#screen-sounds {
+#screen-dictionary {
 	padding-top: 8.5rem;
 }
 
@@ -1420,6 +1421,19 @@ table#vocab tbody td:nth-child(3) {
 .path-node.dialogue.complete:hover {
 	filter: brightness(1.12);
 }
+/* A pronunciation stop in the path — lavender, with a Devanagari glyph for its icon. */
+.path-node.sound.unlocked {
+	background: var(--sound-color);
+}
+.path-node.sound.unlocked .icon {
+	font-size: 3rem;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--button-primary-color);
+}
+.path-node.sound.unlocked:hover {
+	filter: brightness(1.12);
+}
 .path-ring {
 	position: absolute;
 	z-index: 1;
@@ -1582,21 +1596,16 @@ table#vocab tbody td:nth-child(3) {
 	}
 }
 
-#dictionary-link-wrap,
-#sounds-link-wrap {
+#dictionary-link-wrap {
 	text-align: center;
 }
 #dictionary-link,
-#home-link,
-#sounds-link,
-#sounds-home-link {
+#home-link {
 	cursor: pointer;
 	color: var(--text-color-soft);
 }
 #dictionary-link:hover,
-#home-link:hover,
-#sounds-link:hover,
-#sounds-home-link:hover {
+#home-link:hover {
 	color: var(--text-color-richer);
 }
 
@@ -2014,13 +2023,15 @@ table#vocab tbody td:nth-child(3) {
 #screen-onboarding:not(.hide) ~ .footer,
 #screen-lesson:not(.hide) ~ .footer,
 #screen-complete:not(.hide) ~ .footer,
-#screen-dialogue:not(.hide) ~ .footer {
+#screen-dialogue:not(.hide) ~ .footer,
+#screen-sounds:not(.hide) ~ .footer {
 	display: none;
 }
 #nepali:has(#screen-onboarding:not(.hide)) #header,
 #nepali:has(#screen-lesson:not(.hide)) #header,
 #nepali:has(#screen-complete:not(.hide)) #header,
-#nepali:has(#screen-dialogue:not(.hide)) #header {
+#nepali:has(#screen-dialogue:not(.hide)) #header,
+#nepali:has(#screen-sounds:not(.hide)) #header {
 	display: none;
 }
 
@@ -2294,8 +2305,14 @@ table#vocab tbody td:nth-child(3) {
 	}
 }
 
-/* Sounds of Nepali — pronunciation coaching (SR-08). Reuses .speak-record / .btn-secondary
-   and the lesson progress + top chrome (selectors extended above); the rest is below. */
+/* Sounds of Nepali — pronunciation coaching (SR-08). A path-node drill that hides the
+   site chrome like a lesson; reuses .speak-record / .btn-secondary + the lesson top bar. */
+#screen-sounds {
+	max-width: 700px;
+	margin: 0 auto;
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+}
 .sounds-heading {
 	margin: 0 0 0.6rem;
 	font-family: 'Neuton', serif;
@@ -2306,37 +2323,6 @@ table#vocab tbody td:nth-child(3) {
 	margin: 0 0 2.4rem;
 	font-size: 1.6rem;
 	line-height: 1.5;
-	color: var(--text-color-soft);
-}
-#sounds-topics {
-	margin-top: 0.4rem;
-}
-.sounds-topic {
-	display: block;
-	box-sizing: border-box;
-	width: 100%;
-	margin-bottom: 1.2rem;
-	padding: 1.6rem 1.8rem;
-	text-align: left;
-	background: var(--background-color-softer);
-	border: 1px solid var(--border-color);
-	border-radius: 1.2rem;
-	cursor: pointer;
-}
-.sounds-topic:hover,
-.sounds-topic:focus-visible {
-	border-color: var(--accent);
-}
-.sounds-topic-title {
-	display: block;
-	font-size: 1.9rem;
-	font-weight: 700;
-	color: var(--text-color-richer);
-}
-.sounds-topic-sub {
-	display: block;
-	margin-top: 0.3rem;
-	font-size: 1.5rem;
 	color: var(--text-color-soft);
 }
 .sounds-card {

@@ -118,9 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		recordingLabel: 'Stop recording',
 		againLabel: 'Record again',
 	});
-	document.getElementById('sounds-link').addEventListener('click', openSounds);
-	document.getElementById('sounds-home-link').addEventListener('click', goHome);
-	document.getElementById('sounds-drill-back').addEventListener('click', closeSoundDrill);
+	document.getElementById('sounds-drill-back').addEventListener('click', goHome);
 	document.getElementById('sounds-play').addEventListener('click', () => soundDrill && SanoAudio.play(soundDrill.examples[soundDrill.index].id));
 	document.getElementById('sounds-record').addEventListener('click', () => soundsRecorder.toggle());
 	document.getElementById('sounds-play-you').addEventListener('click', () => soundsRecorder.play());
@@ -494,6 +492,8 @@ function renderPath() {
 		seq.push({ kind: 'unit', unit: unit });
 		const dlg = DIALOGUES.find((d) => d.after === unit.id);
 		if (dlg) seq.push({ kind: 'dialogue', dialogue: dlg });
+		const snd = SOUND_TOPICS.find((t) => t.after === unit.id);
+		if (snd) seq.push({ kind: 'sound', topic: snd });
 	}
 
 	seq.forEach((entry, index) => {
@@ -543,6 +543,50 @@ function renderPath() {
 			return;
 		}
 
+		if (entry.kind === 'sound') {
+			const topic = entry.topic;
+			const unlocked = soundUnlocked(topic);
+			const status = unlocked ? 'unlocked' : 'locked';
+
+			const node = document.createElement('button');
+			node.type = 'button';
+			node.className = 'path-node sound ' + status;
+			node.style.width = nodeSize + 'px';
+			node.style.height = nodeSize + 'px';
+			node.style.left = x - nodeSize / 2 + 'px';
+			node.style.top = y + 'px';
+			node.title = topic.title;
+			const icon = document.createElement('span');
+			icon.className = 'icon';
+			if (unlocked) {
+				icon.textContent = topic.glyph; // a Devanagari letter from the lesson
+			} else {
+				const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+				const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+				use.setAttribute('href', '#i-lock');
+				svg.appendChild(use);
+				icon.appendChild(svg);
+			}
+			node.appendChild(icon);
+			if (unlocked) node.addEventListener('click', () => startSoundDrill(topic, soundExamples(topic)));
+			wrap.appendChild(node);
+
+			const label = document.createElement('div');
+			label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
+			label.style.width = labelWidth + 'px';
+			label.style.top = y + (compact ? 10 : 16) + 'px';
+			label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - labelGap : x + nodeSize / 2 + labelGap) + 'px';
+			const stitle = document.createElement('div');
+			stitle.textContent = topic.title;
+			const smeta = document.createElement('small');
+			smeta.textContent = 'Pronunciation';
+			label.appendChild(stitle);
+			label.appendChild(smeta);
+			wrap.appendChild(label);
+
+			y += step;
+			return;
+		}
 		const unit = entry.unit;
 		const complete = unitIsComplete(unit);
 		const isCurrent = unit === current;
@@ -971,40 +1015,10 @@ function renderSpeak(ex) {
 // (js/sounds.js) is illustrated by real course words found by scanning their Devanagari
 // for the topic's marks, so the audio and Nepali are the ones already shipped in COURSE.
 
-function openSounds() {
-	soundDrill = null;
-	document.getElementById('sounds-list').classList.remove('hide');
-	document.getElementById('sounds-drill').classList.add('hide');
-	renderSoundTopics();
-	showScreen('sounds');
-}
-
-function renderSoundTopics() {
-	const wrap = document.getElementById('sounds-topics');
-	wrap.textContent = '';
-	for (const topic of SOUND_TOPICS) {
-		const examples = soundExamples(topic);
-		if (examples.length === 0) continue; // never offer a contrast with no words to drill
-		const card = document.createElement('div');
-		card.className = 'sounds-topic';
-		card.setAttribute('role', 'button');
-		card.tabIndex = 0;
-		const title = document.createElement('span');
-		title.className = 'sounds-topic-title';
-		title.textContent = topic.title;
-		const sub = document.createElement('span');
-		sub.className = 'sounds-topic-sub';
-		sub.textContent = topic.sub;
-		card.append(title, sub);
-		card.addEventListener('click', () => startSoundDrill(topic, examples));
-		card.addEventListener('keydown', (e) => {
-			if (e.key === 'Enter' || e.key === ' ') {
-				e.preventDefault();
-				startSoundDrill(topic, examples);
-			}
-		});
-		wrap.appendChild(card);
-	}
+// A pronunciation node unlocks once the unit it follows in the path is complete.
+function soundUnlocked(topic) {
+	const afterUnit = COURSE.find((u) => u.id === topic.after);
+	return afterUnit ? unitIsComplete(afterUnit) : true;
 }
 
 // Real course words that exhibit a contrast: those whose Devanagari contains one of the
@@ -1025,10 +1039,10 @@ function soundExamples(topic) {
 	return matches.slice(0, 6);
 }
 
+// Open a contrast's drill straight from its path node (there's no longer a list).
 function startSoundDrill(topic, examples) {
 	soundDrill = { topic: topic, examples: examples, index: 0 };
-	document.getElementById('sounds-list').classList.add('hide');
-	document.getElementById('sounds-drill').classList.remove('hide');
+	showScreen('sounds');
 	document.getElementById('sounds-drill-title').textContent = topic.title;
 	document.getElementById('sounds-drill-intro').textContent = topic.intro;
 	document.getElementById('sounds-tip').textContent = topic.tip;
@@ -1073,18 +1087,11 @@ function highlightDev(dev, marks) {
 function advanceSound() {
 	if (!soundDrill) return;
 	if (soundDrill.index >= soundDrill.examples.length - 1) {
-		closeSoundDrill();
+		goHome();
 		return;
 	}
 	soundDrill.index++;
 	renderSoundCard();
-}
-
-function closeSoundDrill() {
-	soundsRecorder.reset();
-	soundDrill = null;
-	document.getElementById('sounds-drill').classList.add('hide');
-	document.getElementById('sounds-list').classList.remove('hide');
 }
 
 function renderMatch(ex) {
