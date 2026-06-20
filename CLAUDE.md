@@ -162,16 +162,24 @@ significantly, update CLAUDE.md in the same commit.
    hand-edit the stamps. Must run after formatting (formatter changes hashes).
 3. Run `node tools/check-viewports.mjs` and verify visually with headless
    Chrome screenshots (see below).
-4. Serve via `php -S 127.0.0.1:8000` from the repo root (executes `/api`;
+4. **For any new user-facing feature, add a one-click scenario to
+   `tools/dev-seed.html`** (the committed dev seeding tool, served at
+   `/tools/dev-seed.html`) that seeds `localStorage` and opens the app where the
+   feature is visible — then point Ross at it. Most features are gated behind
+   progress (due reviews, a current unit, a missed day, a completed unit), so a
+   fresh localhost won't show them; the seed is how Ross tests the feature
+   immediately. **Always create a dev-seed scenario for a new feature**; pure bug
+   fixes / refactors with nothing new to demo can skip it.
+5. Serve via `php -S 127.0.0.1:8000` from the repo root (executes `/api`;
    needs the dev `sano-config.php` one level above the repo) and ask Ross
    to review at http://127.0.0.1:8000/ BEFORE committing.
    `python3 -m http.server 8000` still works for frontend-only checks (API
    calls fail, exercising the app's offline path).
-5. After approval, commit directly to `main` — never leave work on a side
+6. After approval, commit directly to `main` — never leave work on a side
    branch. Push only when asked.
-6. Commit messages: short imperative summary ending with a period, plus
+7. Commit messages: short imperative summary ending with a period, plus
    `Co-Authored-By` attribution.
-7. Deploy with `tools/deploy.sh` only when Ross asks; verify with the live
+8. Deploy with `tools/deploy.sh` only when Ross asks; verify with the live
    cache check below.
 
 ## Testing and verification

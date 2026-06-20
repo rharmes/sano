@@ -256,6 +256,28 @@ migration if the record shape changes).
 - **Devanagari** gates all of the above and is now **F2** (required groundwork), distinct
   from the optional learner-facing script track (**SR-11**).
 
+## Update 2026-06-20 — shipped & live
+
+Most of the roadmap is built and deployed to namastesano.com. Status by ID:
+
+- **Live:** F1–F3 (docs); SR-02 (476-clip self-hosted audio); SR-03 (listening / "what
+  you hear"); SR-06 (can-do goals on the home CTA + complete screen); SR-09 (streak
+  freeze, with a "freeze ready" home notice + "freeze used" on completion); **SR-01**
+  (5 voiced dialogues composed from existing phrases, one per path section, revealed one
+  bubble at a time with autoplay, character heads beside bubbles, fixed bottom Continue
+  that the thread scrolls under); **SR-04** (skippable record-and-compare speaking step
+  per new word, no scoring); and SR-07's first slice (companion **heads** in the dialogue
+  bubbles via the generated `js/characters.js` + the ported companion fill palette).
+- **Dev tooling:** every feature has a one-click scenario in `tools/dev-seed.html`, now a
+  **required workflow step** in CLAUDE.md ("always create a dev-seed scenario").
+- **Remaining:** SR-05 (per-item graded / SM-2-lite scheduler), SR-08 (pronunciation
+  coaching for the sounds romanization hides), SR-10 (placement / skip-ahead), SR-11
+  (optional Devanagari script track), and finishing SR-07 (full-body / animated companion
+  hosts; per-character voices — see the TODO below).
+- **Pending Ross's review:** the AI-drafted `dev` (Devanagari) strings, the per-unit
+  `goal` strings, the dialogue compositions + comprehension questions, and picking the 11
+  per-character voices from `design/voice-gallery.html`.
+
 ## TODO — follow-ups
 - [ ] **Assign a different voice to each character.** For now every character — and all
   phrase audio — uses a single default voice: **Piper `ne_NP-google-medium` · speaker 0**
