@@ -507,27 +507,77 @@ function renderPath() {
 	const nodeSize = compact ? 64 : 76;
 	const step = compact ? 108 : 124;
 	const labelGap = 22;
+	// Two tuning knobs for the path's feel:
+	const SPACING = 0.84; // node-to-node distance along the curve, ×(even-Y step); < 1 = closer
+	const SWING = 0.81; // horizontal amplitude multiplier; < 1 = gentler left/right swings
 	// Labels may spill outside the path column into page margins, but must stay
 	// inside the viewport: shrink the curve, then the labels, when space is tight.
 	const halfSpan = window.innerWidth / 2 - 12;
 	let amplitude, labelWidth;
 	if (compact) {
-		amplitude = Math.min(140, width * 0.27 + 10);
+		// Swing wide — close to the edge — but never let a node clip off-screen.
+		amplitude = SWING * Math.min(width / 2 - nodeSize / 2 - 6, width * 0.34 + 12);
 		labelWidth = Math.max(86, width / 2 - amplitude - nodeSize / 2 - labelGap - 2);
 	} else {
-		amplitude = Math.min(140, width * 0.27 + 10, Math.max(72, halfSpan - nodeSize / 2 - labelGap - 150));
+		amplitude = SWING * Math.min(180, width * 0.34 + 12, Math.max(72, halfSpan - nodeSize / 2 - labelGap - 120));
 		labelWidth = Math.min(150, Math.max(86, halfSpan - amplitude - nodeSize / 2 - labelGap));
 	}
 	const center = width / 2;
 	const current = currentUnit();
 
-	// ~5 nodes per sine cycle keeps the road flowing rather than zigzagging;
-	// phase-shifted so the path starts at the left edge.
+	// The winding curve. Nodes ride a sine wave whose horizontal shape (amplitude +
+	// wavelength) is exactly what the path has always had — ~5 nodes per cycle,
+	// phase-shifted so it starts at the left edge — but they sit EVENLY ALONG THE CURVE
+	// instead of evenly down the Y axis. Picture beads strung at equal intervals, then
+	// the string wiggled: the beads keep their spacing along the string, so they bunch
+	// closer in Y on the diagonal runs and spread out at the turns. `vWave` is a virtual
+	// vertical that only the even-spacing walk advances; section banners / START
+	// clearance push the real `y` down without disturbing the horizontal wiggle.
 	const WAVE = 1.2;
-	const xAt = (i) => center + Math.sin(i * WAVE - Math.PI / 2) * amplitude;
+	const omega = WAVE / step; // spatial frequency (rad/px) — preserves the old wavelength
+	const xAtV = (v) => center + Math.sin(omega * (v - 30) - Math.PI / 2) * amplitude;
+
+	// Arc length per node. meanSpeed (= mean |curve velocity| ds/dv over one wave cycle)
+	// normalizes the walk so that at SPACING = 1 the average vertical advance equals
+	// `step`; the SPACING knob above then scales the node-to-node distance.
+	let meanSpeed = 0;
+	const SAMPLES = 64;
+	for (let k = 0; k < SAMPLES; k++) {
+		meanSpeed += Math.hypot(1, amplitude * omega * Math.cos((k / SAMPLES) * 2 * Math.PI));
+	}
+	meanSpeed /= SAMPLES;
+	const arcStep = step * meanSpeed * SPACING;
+
+	// March the virtual vertical until one arc-step of curve length has passed. Arc
+	// length is strictly increasing in v, so this is unambiguous (unlike a chord solve).
+	const nextV = (v0) => {
+		let v = v0;
+		let prevX = xAtV(v0);
+		let acc = 0;
+		for (;;) {
+			const nx = xAtV(v + 1);
+			const seg = Math.hypot(nx - prevX, 1);
+			if (acc + seg >= arcStep) return v + (arcStep - acc) / seg; // land exactly on it
+			acc += seg;
+			v += 1;
+			prevX = nx;
+		}
+	};
 
 	let y = 30;
-	const centers = [];
+	let vWave = 30;
+	const advance = () => {
+		const nv = nextV(vWave);
+		y += nv - vWave;
+		vWave = nv;
+	};
+	// Vertically center a label on its node's midpoint, whatever its line count (the node
+	// top is the current `y`). Must run after the label is in the DOM with its width set,
+	// so the wrapped height is real; falls back to a fixed offset if measured hidden.
+	const centerLabel = (label) => {
+		const h = label.offsetHeight;
+		label.style.top = (h ? y + nodeSize / 2 - h / 2 : y + (compact ? 10 : 16)) + 'px';
+	};
 
 	// Weave each section's conversation into the path right after the unit it follows.
 	const seq = [];
@@ -539,10 +589,9 @@ function renderPath() {
 		if (snd) seq.push({ kind: 'sound', topic: snd });
 	}
 
-	seq.forEach((entry, index) => {
-		const angle = index * WAVE - Math.PI / 2;
-		const x = xAt(index);
-		const onLeft = Math.sin(angle) > 0;
+	seq.forEach((entry) => {
+		const x = xAtV(vWave);
+		const onLeft = x > center;
 
 		if (entry.kind === 'dialogue') {
 			const dlg = entry.dialogue;
@@ -572,17 +621,14 @@ function renderPath() {
 			const label = document.createElement('div');
 			label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
 			label.style.width = labelWidth + 'px';
-			label.style.top = y + (compact ? 10 : 16) + 'px';
 			label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - labelGap : x + nodeSize / 2 + labelGap) + 'px';
 			const dtitle = document.createElement('div');
 			dtitle.textContent = dlg.title;
-			const dmeta = document.createElement('small');
-			dmeta.textContent = 'Conversation';
 			label.appendChild(dtitle);
-			label.appendChild(dmeta);
 			wrap.appendChild(label);
+			centerLabel(label);
 
-			y += step;
+			advance();
 			return;
 		}
 
@@ -624,17 +670,14 @@ function renderPath() {
 			const label = document.createElement('div');
 			label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
 			label.style.width = labelWidth + 'px';
-			label.style.top = y + (compact ? 10 : 16) + 'px';
 			label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - labelGap : x + nodeSize / 2 + labelGap) + 'px';
 			const stitle = document.createElement('div');
 			stitle.textContent = topic.title;
-			const smeta = document.createElement('small');
-			smeta.textContent = 'Pronunciation';
 			label.appendChild(stitle);
-			label.appendChild(smeta);
 			wrap.appendChild(label);
+			centerLabel(label);
 
-			y += step;
+			advance();
 			return;
 		}
 		const unit = entry.unit;
@@ -642,6 +685,10 @@ function renderPath() {
 		const isCurrent = unit === current;
 
 		if (PATH_SECTIONS[unit.id]) {
+			// The node above can carry a three-line label; with the tighter spacing, add
+			// clearance so it doesn't collide with the banner (skip the first banner — no
+			// node sits above it).
+			if (y > 30) y += compact ? 22 : 26;
 			const section = document.createElement('div');
 			section.className = 'path-section';
 			section.textContent = PATH_SECTIONS[unit.id];
@@ -653,7 +700,6 @@ function renderPath() {
 		// whether the node follows a section banner, a unit, or a conversation node.
 		if (isCurrent) y += 34;
 		const status = complete ? 'complete' : isCurrent ? 'current' : 'locked';
-		centers.push({ y: y + nodeSize / 2, complete: complete });
 
 		if (isCurrent) {
 			const ringSize = nodeSize + 20;
@@ -710,20 +756,15 @@ function renderPath() {
 		const label = document.createElement('div');
 		label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
 		label.style.width = labelWidth + 'px';
-		label.style.top = y + (compact ? 10 : 16) + 'px';
 		label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - labelGap : x + nodeSize / 2 + labelGap) + 'px';
 
 		const title = document.createElement('div');
 		title.textContent = unit.title;
-		const meta = document.createElement('small');
-		meta.textContent = complete
-			? unit.items.length + ' words'
-			: unit.items.length - unitNewItems(unit).length + ' / ' + unit.items.length + ' words';
 		label.appendChild(title);
-		label.appendChild(meta);
 		wrap.appendChild(label);
+		centerLabel(label);
 
-		y += step;
+		advance();
 	});
 
 	wrap.style.height = y + 30 + 'px';

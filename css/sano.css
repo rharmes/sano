@@ -1455,17 +1455,10 @@ table#vocab tbody td:nth-child(3) {
 .path-label {
 	position: absolute;
 	z-index: 1;
-	font-size: 1.6875rem;
+	font-size: 1.51875rem;
 	font-weight: 700;
 	line-height: 1.25;
 	color: var(--text-color-richer);
-}
-.path-label small {
-	display: block;
-	margin-top: 1px;
-	font-size: 1.25rem;
-	font-weight: 400;
-	color: var(--text-color-soft);
 }
 .path-label.locked-label {
 	color: var(--text-color-softer);
@@ -1590,10 +1583,7 @@ table#vocab tbody td:nth-child(3) {
 		font-size: 2.8rem;
 	}
 	.path-label {
-		font-size: 1.4375rem;
-	}
-	.path-label small {
-		font-size: 1.1rem;
+		font-size: 1.29375rem;
 	}
 	.path-section {
 		font-size: 1.1rem;
