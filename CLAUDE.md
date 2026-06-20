@@ -149,6 +149,17 @@ significantly, update CLAUDE.md in the same commit.
   - All three design pages (`style-guide.html`, `animations.html`, `characters.html`) share
     one day/night **pill switch** (light on the left, dark on the right); the theme persists
     per page in localStorage and `?theme=light|dark` deep-links it.
+  - `design/devanagari.html` is a **localhost-only review tool** for the native-speaker
+    pass over the AI-drafted Devanagari (`dev`) strings: all 476 course items grouped by
+    unit, each with its English, romanization, a ▶ that plays the `audio/default/<id>.mp3`
+    clip, and an editable Devanagari box pre-filled with the current `dev`. Submitting POSTs
+    only the changed rows to `design/devanagari-save.php`, which merges them (keyed by item
+    id) into the **gitignored** `design/devanagari-review.json` — it does **not** touch
+    `js/data.js`. Reloading restores prior corrections from that file. Uses a minimal theme
+    toggle (not the shared pill); serve it with `php -S` from the repo root.
+    - **Pending future task: Ross will ask Claude to merge
+      `design/devanagari-review.json` into the `dev` fields of `js/data.js`** — done here
+      in-session (no merge script), then the review file can be cleared.
 - Recent work: see `git log` — commit messages are descriptive.
 
 ## Workflow for every code change

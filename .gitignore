@@ -10,3 +10,8 @@ node_modules/
 # TTS listening-test pages — self-contained, served from design/ for review; not committed.
 design/compare.html
 design/voice-gallery.html
+
+# Native-speaker Devanagari corrections, written by design/devanagari-save.php.
+# Transient working data: review it, merge into js/data.js, then it can be cleared.
+design/devanagari-review.json
+design/devanagari-review.json.bak
