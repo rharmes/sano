@@ -1634,7 +1634,7 @@ table#vocab tbody td:nth-child(3) {
 #dialogue-thread {
 	margin: 0 auto;
 }
-#dialogue-to-quiz {
+#dialogue-advance {
 	display: block;
 	width: 100%;
 	margin-top: 3.5rem;

@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	document.getElementById('conversation-link').addEventListener('click', () => startDialogue(DIALOGUES[0]));
 	document.getElementById('dialogue-quit').addEventListener('click', goHome);
-	document.getElementById('dialogue-to-quiz').addEventListener('click', startDialogueQuiz);
+	document.getElementById('dialogue-advance').addEventListener('click', advanceDialogue);
 	document.getElementById('dialogue-continue').addEventListener('click', continueDialogue);
 	document.getElementById('dialogue-choices').addEventListener('click', answerDialogueQuestion);
 
@@ -1031,44 +1031,73 @@ function courseItem(id) {
 let dialogueSession = null;
 
 function startDialogue(dialogue) {
-	dialogueSession = { def: dialogue, qIndex: 0, correct: 0, answered: false };
+	dialogueSession = { def: dialogue, lineIndex: -1, qIndex: 0, correct: 0, answered: false };
 	showScreen('dialogue');
 	renderDialogueConvo();
 }
 
-// Phase 1: the conversation, a thread of bubbles with per-line audio (each spoken in
-// its character's voice — one default voice today, per-character voices later).
+// Phase 1: the conversation reveals one bubble at a time (Change 1), auto-playing each
+// line as it appears (in its character's voice — one default voice today,
+// per-character voices later).
 function renderDialogueConvo() {
 	const d = dialogueSession.def;
 	document.getElementById('dialogue-convo').classList.remove('hide');
 	document.getElementById('dialogue-quiz').classList.add('hide');
-	document.getElementById('dialogue-progress-fill').style.width = '0%';
 	document.getElementById('dialogue-goal').textContent = d.goal;
+	document.getElementById('dialogue-thread').textContent = '';
+	dialogueSession.lineIndex = -1;
+	window.scrollTo(0, 0);
+	revealNextLine();
+}
 
-	const thread = document.getElementById('dialogue-thread');
-	thread.textContent = '';
-	for (const line of d.lines) {
-		const item = courseItem(line.ref);
-		const charId = line.who === 'A' ? d.cast.A : d.cast.B;
-		const bubble = document.createElement('div');
-		bubble.className = 'bubble ' + (line.who === 'A' ? 'sano' : 'user');
+// Build one speech bubble for a dialogue line.
+function dialogueBubble(line) {
+	const d = dialogueSession.def;
+	const item = courseItem(line.ref);
+	const charId = line.who === 'A' ? d.cast.A : d.cast.B;
+	const bubble = document.createElement('div');
+	bubble.className = 'bubble ' + (line.who === 'A' ? 'sano' : 'user');
 
-		const speaker = document.createElement('p');
-		speaker.className = 'speaker';
-		speaker.textContent = CHARACTER_NAMES[charId] || charId;
+	const speaker = document.createElement('p');
+	speaker.className = 'speaker';
+	speaker.textContent = CHARACTER_NAMES[charId] || charId;
 
-		const np = document.createElement('p');
-		np.className = 'np';
-		np.textContent = item.np;
-		np.appendChild(SanoAudio.button(item.id, { className: 'audio-inline', voiceId: SanoAudio.voiceForCharacter(charId) }));
+	const np = document.createElement('p');
+	np.className = 'np';
+	np.textContent = item.np;
+	np.appendChild(SanoAudio.button(item.id, { className: 'audio-inline', voiceId: SanoAudio.voiceForCharacter(charId) }));
 
-		const en = document.createElement('p');
-		en.className = 'en';
-		en.textContent = item.en;
+	const en = document.createElement('p');
+	en.className = 'en';
+	en.textContent = item.en;
 
-		bubble.append(speaker, np, en);
-		thread.appendChild(bubble);
-	}
+	bubble.append(speaker, np, en);
+	return bubble;
+}
+
+// Reveal the next line, append its bubble, and auto-play it. The advance button is
+// only ever clicked from a tap, so this autoplay stays within a user gesture.
+function revealNextLine() {
+	const d = dialogueSession.def;
+	dialogueSession.lineIndex++;
+	const line = d.lines[dialogueSession.lineIndex];
+	const bubble = dialogueBubble(line);
+	document.getElementById('dialogue-thread').appendChild(bubble);
+
+	const charId = line.who === 'A' ? d.cast.A : d.cast.B;
+	SanoAudio.play(line.ref, SanoAudio.voiceForCharacter(charId));
+
+	// The conversation fills the first half of the progress bar; questions fill the rest.
+	const fill = Math.round(((dialogueSession.lineIndex + 1) / d.lines.length) * 50);
+	document.getElementById('dialogue-progress-fill').style.width = fill + '%';
+	const last = dialogueSession.lineIndex >= d.lines.length - 1;
+	document.getElementById('dialogue-advance').textContent = last ? 'Continue to questions' : 'Continue';
+	if (dialogueSession.lineIndex > 0) bubble.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function advanceDialogue() {
+	if (dialogueSession.lineIndex >= dialogueSession.def.lines.length - 1) startDialogueQuiz();
+	else revealNextLine();
 }
 
 // Phase 2: comprehension questions, scored on their own (no SRS or streak impact).
@@ -1084,7 +1113,7 @@ function renderDialogueQuestion() {
 	const d = dialogueSession.def;
 	const q = d.questions[dialogueSession.qIndex];
 	dialogueSession.answered = false;
-	document.getElementById('dialogue-progress-fill').style.width = Math.round((dialogueSession.qIndex / d.questions.length) * 100) + '%';
+	document.getElementById('dialogue-progress-fill').style.width = 50 + Math.round((dialogueSession.qIndex / d.questions.length) * 50) + '%';
 	document.getElementById('dialogue-feedback').classList.add('hide');
 	document.getElementById('dialogue-q-label').textContent = 'Question ' + (dialogueSession.qIndex + 1) + ' of ' + d.questions.length;
 	document.getElementById('dialogue-q-text').textContent = q.q;
