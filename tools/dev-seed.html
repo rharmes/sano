@@ -135,6 +135,18 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">SR-05 graded scheduler</span>
+			<h2>6 · Graded review scheduler (SM-2-lite)</h2>
+			<p>
+				Lands mid-course with a spread of due reviews. Tap <b>“Start today's lesson.”</b> <b>Stronger</b> words (long intervals) come
+				back as <b>typing / word-bank</b> drills; <b>weaker</b> ones as <b>multiple choice or matching</b>. Answer the strong ones right
+				and finish — the complete screen reports <b>“N words strengthened,”</b> and those items get pushed weeks out, so the
+				<b>review count on home drops</b>. The scheduling math is unit-tested by <code>tools/check-scheduler.mjs</code>.
+			</p>
+			<button onclick="seed('schedule')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>
@@ -240,6 +252,37 @@
 						lastActivityDay: day(0),
 						itemsToday: 0,
 						itemsTotal: 60,
+						items,
+					};
+				} else if (which === 'schedule') {
+					// SR-05: weak -> strong due items so difficulty escalates by strength and
+					// strong items visibly stretch out when answered correctly.
+					const items = {};
+					learnUnits(items, 0, 2, { interval: 9, ease: 2.6, lastSeen: day(0) }); // settled, not due
+					let made = 0;
+					for (const it of COURSE[0].items) {
+						if (made >= 4) break;
+						items[it.id] = rec({ interval: 14, ease: 2.7, seen: 12, correct: 11, lastSeen: day(16) }); // strong, due
+						made++;
+					}
+					made = 0;
+					for (const it of COURSE[1].items) {
+						if (made >= 4) break;
+						items[it.id] = rec({ interval: 1, ease: 1.3, seen: 6, correct: 2, lastSeen: day(2) }); // weak, due
+						made++;
+					}
+					COURSE[3].items.forEach((it, i) => {
+						if (i < 3) items[it.id] = rec({ interval: 2, ease: 2.5, lastSeen: day(0) });
+					});
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 6,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 180,
 						items,
 					};
 				}

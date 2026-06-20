@@ -26,6 +26,9 @@ echo "==> JS syntax"
 for f in js/*.js tools/*.mjs; do node --check "$f"; done
 echo "  ok"
 
+echo "==> Scheduler (SR-05)"
+node tools/check-scheduler.mjs
+
 if [ "${1:-}" != "--no-viewports" ]; then
 	echo "==> Viewport layout"
 	node tools/check-viewports.mjs

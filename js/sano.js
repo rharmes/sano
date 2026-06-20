@@ -4,8 +4,63 @@ const STATE_KEY = 'sano.state.v1';
 const LESSON_NEW_ITEMS = 5; // Items per unit lesson; each new item yields two exercises
 const DAILY_NEW_ITEMS = 4;
 const DAILY_REVIEW_ITEMS = 6;
-const MAX_LEVEL = 4;
-const REVIEW_INTERVALS = [1, 1, 3, 7, 14]; // Days until an item at this level is due for review
+// --- SR-05 spaced-repetition scheduler (SM-2-lite, pure) -----------------------
+// Each item carries its own review interval (days) and ease factor rather than a
+// shared Leitner table, so well-known items stretch out while weak ones come back
+// sooner. Reviews are graded automatically from how the answer was given: a miss is
+// a lapse, a recognition hit is "good", and recalling the word under a harder drill
+// (typing, word bank, or listening) is "easy". The block is pure (no DOM or shared
+// state) so tools/check-scheduler.mjs can extract and unit-test it.
+const MAX_LEVEL = 4; // only clamps a legacy Leitner level when migrating old records
+const DEFAULT_EASE = 2.5;
+const MIN_EASE = 1.3;
+const MAX_EASE = 2.7;
+const EASY_BONUS = 1.3; // extra interval stretch when recalled the hard way
+const RECALL_INTERVAL = 3; // at/above this many days, drill by recall not recognition
+const GRADE = { LAPSE: 0, GOOD: 1, EASY: 2 };
+// Fresh interval ladder; also seeds `interval` from a pre-SR-05 Leitner level.
+const LEGACY_LEVEL_INTERVALS = [1, 1, 3, 7, 14];
+
+// An introduced item with no interval yet is due after one day.
+function reviewInterval(record) {
+	return record.interval > 0 ? record.interval : 1;
+}
+
+// Difficulty escalation: a short interval means the item is still being learned
+// (recognition / matching); a longer one means it's known well enough for recall.
+function isRecallStrength(record) {
+	return reviewInterval(record) >= RECALL_INTERVAL;
+}
+
+// Advance an item's schedule by a graded review, mutating interval + ease in place.
+function scheduleReview(record, grade) {
+	if (grade === GRADE.LAPSE) {
+		record.ease = Math.max(MIN_EASE, record.ease - 0.2);
+		record.interval = 1; // back to daily until it sticks again
+		return;
+	}
+	const iv = reviewInterval(record);
+	if (grade === GRADE.EASY) {
+		record.ease = Math.min(MAX_EASE, record.ease + 0.15);
+		record.interval = iv <= 1 ? 4 : Math.round(iv * record.ease * EASY_BONUS);
+	} else {
+		record.interval = iv <= 1 ? 2 : Math.round(iv * record.ease); // GOOD
+	}
+}
+
+// Grade an answered exercise: a miss always lapses; a correct answer scores higher
+// the more retrieval it demanded (recall and listening over plain recognition).
+function exerciseGrade(ex, correct) {
+	if (!correct) return GRADE.LAPSE;
+	if (ex.type === 'type' || ex.type === 'wordbank' || ex.listen) return GRADE.EASY;
+	return GRADE.GOOD;
+}
+
+// Seed an interval from a legacy Leitner level (pre-SR-05 records and dev seeds).
+function legacyLevelToInterval(level, intro) {
+	return intro ? LEGACY_LEVEL_INTERVALS[Math.min(level || 0, MAX_LEVEL)] : 0;
+}
+// --- end SR-05 scheduler -------------------------------------------------------
 
 let state;
 let lesson = null;
@@ -86,7 +141,7 @@ function defaultState() {
 		lastActivityDay: null,
 		itemsToday: 0,
 		itemsTotal: 0,
-		items: {}, // item id -> { seen, correct, level, lastSeen, intro }
+		items: {}, // item id -> { seen, correct, ease, interval, lastSeen, intro }
 		dialoguesDone: {}, // SR-01: which path conversations have been completed
 	};
 }
@@ -110,7 +165,15 @@ function loadState() {
 function normalizeState(parsed) {
 	if (parsed.version === 1) parsed = migrateV1State(parsed);
 	const loaded = Object.assign(defaultState(), parsed);
-	for (const id in loaded.items) loaded.items[id] = Object.assign({ seen: 0, correct: 0, level: 0, lastSeen: null, intro: false }, loaded.items[id]);
+	for (const id in loaded.items) {
+		const record = Object.assign({ seen: 0, correct: 0, lastSeen: null, intro: false }, loaded.items[id]);
+		// SR-05: records and dev seeds predating the graded scheduler carry a Leitner
+		// `level`; derive a per-item interval/ease from it once, then drop it.
+		if (typeof record.interval !== 'number') record.interval = legacyLevelToInterval(record.level, record.intro);
+		if (typeof record.ease !== 'number') record.ease = DEFAULT_EASE;
+		delete record.level;
+		loaded.items[id] = record;
+	}
 	return loaded;
 }
 
@@ -220,12 +283,13 @@ function registerActivity() {
 }
 
 function itemRecord(id) {
-	if (!Object.hasOwn(state.items, id)) state.items[id] = { seen: 0, correct: 0, level: 0, lastSeen: null, intro: false };
+	if (!Object.hasOwn(state.items, id)) state.items[id] = { seen: 0, correct: 0, ease: DEFAULT_EASE, interval: 0, lastSeen: null, intro: false };
 	return state.items[id];
 }
 
-// Spaced repetition (Leitner). Items climb a level when answered correctly in a
-// lesson and drop a level when missed; each level has a longer review interval.
+// Spaced repetition (SM-2-lite). Each item tracks its own review interval and ease
+// factor (see the pure scheduler block up top); a graded review stretches or resets
+// the interval, and an item is due once that interval has elapsed since it was seen.
 
 function daysSince(day) {
 	if (!day) return Infinity;
@@ -235,12 +299,12 @@ function daysSince(day) {
 }
 
 function isDue(record) {
-	return record.intro && daysSince(record.lastSeen) >= REVIEW_INTERVALS[record.level];
+	return record.intro && daysSince(record.lastSeen) >= reviewInterval(record);
 }
 
 function overdueDays(item) {
 	const record = state.items[item.id];
-	return daysSince(record.lastSeen) - REVIEW_INTERVALS[record.level];
+	return daysSince(record.lastSeen) - reviewInterval(record);
 }
 
 function dueItems() {
@@ -579,8 +643,8 @@ function startLesson(queue) {
 		// A matching exercise covers several items, so stats count items rather than
 		// exercises; the intro warmup is excluded since its words are scored by their drills.
 		statTotal: queue.reduce((n, ex) => n + (ex.items ? (ex.intro ? 0 : ex.items.length) : ex.unscored ? 0 : 1), 0),
-		levelAdjusted: {},
-		leveledUp: 0,
+		scheduled: {},
+		strengthened: 0,
 		firstOfDay: state.lastActivityDay !== dayString(new Date()),
 	};
 	showScreen('lesson');
@@ -592,10 +656,11 @@ function startLesson(queue) {
 const LISTEN_PROBABILITY = 0.5;
 
 // New items are drilled with multiple choice in both directions. Review items get
-// harder types as they level up: multiple choice at low levels, then word bank
-// (multi-word phrases) or typing (single words); half of those recall reviews are
-// delivered instead as "what you hear" listening drills. Low-level vocab reviews
-// are bundled into a single matching exercise when there are enough of them.
+// harder types as their interval stretches (isRecallStrength): multiple choice while
+// the interval is still short, then word bank (multi-word phrases) or typing
+// (single words) once an item is known well enough for recall; half of those recall
+// reviews are delivered instead as "what you hear" listening drills. Vocab that's
+// still being learned is bundled into a single matching exercise when there's enough.
 function buildExercises(newItems, reviewItems) {
 	const exercises = [];
 	for (const item of newItems) {
@@ -605,12 +670,12 @@ function buildExercises(newItems, reviewItems) {
 		exercises.push({ item: item, type: 'speak', unscored: true });
 	}
 
-	const matchable = reviewItems.filter((item) => item.emoji && itemRecord(item.id).level <= 1);
+	const matchable = reviewItems.filter((item) => item.emoji && !isRecallStrength(itemRecord(item.id)));
 	const matchItems = matchable.length >= 4 ? matchable.slice(0, 5) : [];
 
 	for (const item of reviewItems) {
 		if (matchItems.includes(item)) continue;
-		if (itemRecord(item.id).level >= 2) {
+		if (isRecallStrength(itemRecord(item.id))) {
 			if (item.np.split(/\s+/).length >= 2) exercises.push({ item: item, type: 'wordbank' });
 			// Half of single-word recall reviews become "type what you hear".
 			else exercises.push({ item: item, type: 'type', listen: Math.random() < LISTEN_PROBABILITY });
@@ -654,7 +719,7 @@ function warmupItems(newItems) {
 	if (items.length >= WARMUP_SIZE) return items;
 	const unit = COURSE.find((u) => u.items.includes(newItems[0]));
 	const seen = shuffleArray(unit.items.filter((item) => !items.includes(item) && state.items[item.id] && state.items[item.id].intro));
-	seen.sort((a, b) => itemAccuracy(a) - itemAccuracy(b) || state.items[a.id].level - state.items[b.id].level);
+	seen.sort((a, b) => itemAccuracy(a) - itemAccuracy(b) || reviewInterval(state.items[a.id]) - reviewInterval(state.items[b.id]));
 	return items.concat(seen.slice(0, WARMUP_SIZE - items.length));
 }
 
@@ -971,14 +1036,11 @@ function finishMatch() {
 			clean++;
 			lesson.firstTryCorrect++;
 		}
-		if (!lesson.levelAdjusted[item.id]) {
-			lesson.levelAdjusted[item.id] = true;
-			if (correct) {
-				record.level = Math.min(record.level + 1, MAX_LEVEL);
-				lesson.leveledUp++;
-			} else {
-				record.level = Math.max(record.level - 1, 0);
-			}
+		if (!lesson.scheduled[item.id]) {
+			lesson.scheduled[item.id] = true;
+			const before = record.interval;
+			scheduleReview(record, correct ? GRADE.GOOD : GRADE.LAPSE);
+			if (record.interval > before) lesson.strengthened++;
 		}
 	}
 
@@ -1055,15 +1117,13 @@ function applyAnswer(ex, correct) {
 			record.correct++;
 			lesson.firstTryCorrect++;
 		}
-		// Move the item one Leitner level per lesson, based on its first exercise.
-		if (!lesson.levelAdjusted[ex.item.id]) {
-			lesson.levelAdjusted[ex.item.id] = true;
-			if (correct) {
-				record.level = Math.min(record.level + 1, MAX_LEVEL);
-				lesson.leveledUp++;
-			} else {
-				record.level = Math.max(record.level - 1, 0);
-			}
+		// Advance the item's spaced-repetition schedule once per lesson, graded by the
+		// exercise it first appeared in (SR-05).
+		if (!lesson.scheduled[ex.item.id]) {
+			lesson.scheduled[ex.item.id] = true;
+			const before = record.interval;
+			scheduleReview(record, exerciseGrade(ex, correct));
+			if (record.interval > before) lesson.strengthened++;
 		}
 	}
 	if (!correct && !ex.requeued) lesson.queue.push(Object.assign({}, ex, { requeued: true }));
@@ -1137,8 +1197,8 @@ function finishLesson() {
 				: state.streak + ' day streak!';
 
 	const strengthenedEl = document.getElementById('complete-strengthened');
-	strengthenedEl.classList.toggle('hide', lesson.leveledUp === 0);
-	strengthenedEl.textContent = lesson.leveledUp + (lesson.leveledUp === 1 ? ' word' : ' words') + ' strengthened';
+	strengthenedEl.classList.toggle('hide', lesson.strengthened === 0);
+	strengthenedEl.textContent = lesson.strengthened + (lesson.strengthened === 1 ? ' word' : ' words') + ' strengthened';
 
 	// Reinforce what this practice is building toward (SR-06 can-do goal).
 	const goalEl = document.getElementById('complete-goal');

@@ -79,7 +79,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 | ✅ | **SR-02** | Self-hosted phrase & dialogue audio *(phrase audio shipped — 476 clips, Piper google spk 0; dialogue lines ride on SR-01; per-character voices = TODO)* | §7,§8 | H | — |
 | ✅ | **SR-03** | Listening exercises ("tap/type what you hear") *(audio-only prompt on ~half of recall reviews; choose-meaning + type variants)* | §7,§8 | M | SR-02 |
 | ✅ | **SR-04** | Speaking practice (speak-before-reveal + record/compare) *(skippable "say it aloud" + record-yourself-and-compare step per new word; no scoring; getUserMedia/MediaRecorder verified headless, full record→playback needs device test)* | §4 | M | SR-02 |
-| ⬜ | **SR-05** | Evolve Leitner → per-item graded scheduler | §6 | M | — |
+| ✅ | **SR-05** | Evolve Leitner → per-item graded scheduler *(SM-2-lite: each item gets its own `ease`+`interval`; reviews are auto-graded from exercise difficulty — miss = lapse, recognition hit = good, recall/listening hit = easy — so strong items stretch past the old 14-day cap while weak ones reset to daily. Old Leitner `level` records migrate to interval/ease on load; the pure scheduler block is unit-tested by `tools/check-scheduler.mjs`)* | §6 | M | — |
 | ✅ | **SR-06** | Communicative "can-do" goals & progress framing *(per-unit goals on the home CTA + complete screen; path labels left alone for layout safety; goal strings AI-drafted, Ross to refine)* | §1,§9 | L–M | — |
 | 🟡 | **SR-07** | Bring the 10 companions into the app *(heads now in dialogue bubbles via js/characters.js + the ported companion palette; full-body / animated section hosts = follow-up)* | §9 | L–M | SR-01 |
 | ⬜ | **SR-08** | Pronunciation coaching for Nepali sounds | §4,§8 | M | SR-02 |
@@ -270,10 +270,16 @@ Most of the roadmap is built and deployed to namastesano.com. Status by ID:
   bubbles via the generated `js/characters.js` + the ported companion fill palette).
 - **Dev tooling:** every feature has a one-click scenario in `tools/dev-seed.html`, now a
   **required workflow step** in CLAUDE.md ("always create a dev-seed scenario").
-- **Remaining:** SR-05 (per-item graded / SM-2-lite scheduler), SR-08 (pronunciation
-  coaching for the sounds romanization hides), SR-10 (placement / skip-ahead), SR-11
-  (optional Devanagari script track), and finishing SR-07 (full-body / animated companion
-  hosts; per-character voices — see the TODO below).
+- **Remaining:** SR-08 (pronunciation coaching for the sounds romanization hides),
+  SR-10 (placement / skip-ahead), SR-11 (optional Devanagari script track), and
+  finishing SR-07 (full-body / animated companion hosts; per-character voices — see the
+  TODO below).
+- **2026-06-20 (later):** **SR-05** shipped — the Leitner box is now an SM-2-lite
+  per-item scheduler (auto-graded from exercise difficulty, no new self-rating UI);
+  legacy `level` records migrate on load, the pure math is unit-tested
+  (`tools/check-scheduler.mjs`, wired into `tools/check.sh`), and dev-seed scenario 6
+  demonstrates difficulty escalating by strength. Not yet deployed (awaiting Ross's
+  localhost review).
 - **Pending Ross's review:** the AI-drafted `dev` (Devanagari) strings, the per-unit
   `goal` strings, the dialogue compositions + comprehension questions, and picking the 11
   per-character voices from `design/voice-gallery.html`.
