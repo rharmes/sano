@@ -168,6 +168,16 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">nodes</span>
+			<h2>Completed conversation + pronunciation nodes</h2>
+			<p>
+				Opens home with the first <b>conversation</b> (gold) and <b>pronunciation</b> (lavender) nodes completed — each shows a
+				<b>checkmark</b> in its own colour instead of the chat / Devanagari icon.
+			</p>
+			<button onclick="seed('nodecheck')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>
@@ -305,6 +315,23 @@
 						itemsToday: 0,
 						itemsTotal: 180,
 						items,
+					};
+				} else if (which === 'nodecheck') {
+					// Completed conversation (gold) + pronunciation (lavender) nodes both show a checkmark.
+					const items = {};
+					learnUnits(items, 0, 4, { interval: 3, ease: 2.5, lastSeen: day(0) });
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 5,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 90,
+						items,
+						dialoguesDone: { 'greet-pyaro': true },
+						soundsDone: { aspiration: true },
 					};
 				} else if (which === 'sounds') {
 					// SR-08: Basics complete -> the aspiration sound node (after Basics) is unlocked in the path.

@@ -168,6 +168,7 @@ function defaultState() {
 		itemsTotal: 0,
 		items: {}, // item id -> { seen, correct, ease, interval, lastSeen, intro }
 		dialoguesDone: {}, // SR-01: which path conversations have been completed
+		soundsDone: {}, // SR-08: which pronunciation drills have been completed
 	};
 }
 
@@ -587,8 +588,9 @@ function renderPath() {
 
 		if (entry.kind === 'sound') {
 			const topic = entry.topic;
+			const done = !!(state.soundsDone && state.soundsDone[topic.id]);
 			const unlocked = soundUnlocked(topic);
-			const status = unlocked ? 'unlocked' : 'locked';
+			const status = done ? 'complete' : unlocked ? 'unlocked' : 'locked';
 
 			const node = document.createElement('button');
 			node.type = 'button';
@@ -600,7 +602,13 @@ function renderPath() {
 			node.title = topic.title;
 			const icon = document.createElement('span');
 			icon.className = 'icon';
-			if (unlocked) {
+			if (done) {
+				const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+				const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+				use.setAttribute('href', '#i-check');
+				svg.appendChild(use);
+				icon.appendChild(svg);
+			} else if (unlocked) {
 				icon.textContent = topic.glyph; // a Devanagari letter from the lesson
 			} else {
 				const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -610,7 +618,7 @@ function renderPath() {
 				icon.appendChild(svg);
 			}
 			node.appendChild(icon);
-			if (unlocked) node.addEventListener('click', () => startSoundDrill(topic, soundExamples(topic)));
+			if (unlocked || done) node.addEventListener('click', () => startSoundDrill(topic, soundExamples(topic)));
 			wrap.appendChild(node);
 
 			const label = document.createElement('div');
@@ -1141,6 +1149,9 @@ function advanceSound() {
 function finishSound() {
 	const topic = soundDrill.topic;
 	const count = soundDrill.examples.length;
+	if (!state.soundsDone) state.soundsDone = {};
+	state.soundsDone[topic.id] = true;
+	saveState();
 	soundsRecorder.reset();
 	soundDrill = null;
 	document.getElementById('complete-title').textContent = 'Sounds practiced!';

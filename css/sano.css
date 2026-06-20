@@ -1437,6 +1437,16 @@ table#vocab tbody td:nth-child(3) {
 .path-node.sound.unlocked:hover {
 	filter: brightness(1.12);
 }
+/* Completed: a checkmark (like the lesson nodes) but keeping the lavender. */
+.path-node.sound.complete {
+	background: var(--sound-color);
+}
+.path-node.sound.complete .icon {
+	color: var(--button-primary-color);
+}
+.path-node.sound.complete:hover {
+	filter: brightness(1.12);
+}
 .path-ring {
 	position: absolute;
 	z-index: 1;
@@ -1468,9 +1478,9 @@ table#vocab tbody td:nth-child(3) {
 	position: absolute;
 	top: -6px;
 	right: -14px;
-	min-width: 34px;
+	min-width: 20px;
 	height: 26px;
-	padding: 0 14px 0 7px;
+	padding: 0 12px 0 5px;
 	border-radius: 3px 0 0 3px;
 	clip-path: polygon(0 0, 100% 0, 76% 50%, 100% 100%, 0 100%);
 	background: var(--badge-color);
@@ -1591,9 +1601,9 @@ table#vocab tbody td:nth-child(3) {
 	}
 	.path-badge {
 		right: -12px;
-		min-width: 30px;
+		min-width: 20px;
 		height: 22px;
-		padding: 0 12px 0 6px;
+		padding: 0 10px 0 4px;
 		line-height: 22px;
 		font-size: 1.1rem;
 	}
