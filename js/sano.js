@@ -1087,11 +1087,27 @@ function highlightDev(dev, marks) {
 function advanceSound() {
 	if (!soundDrill) return;
 	if (soundDrill.index >= soundDrill.examples.length - 1) {
-		goHome();
+		finishSound();
 		return;
 	}
 	soundDrill.index++;
 	renderSoundCard();
+}
+
+// A celebration screen at the end of the drill, like other lessons. Pronunciation is
+// pure practice (no scoring, no streak/SRS effect), so it simply affirms the work done.
+function finishSound() {
+	const topic = soundDrill.topic;
+	const count = soundDrill.examples.length;
+	soundsRecorder.reset();
+	soundDrill = null;
+	document.getElementById('complete-title').textContent = 'Sounds practiced!';
+	document.getElementById('complete-streak').classList.add('hide');
+	document.getElementById('complete-strengthened').classList.add('hide');
+	document.getElementById('complete-stats').textContent =
+		'You practiced ' + count + ' ' + (count === 1 ? 'word' : 'words') + ' — ' + topic.title.toLowerCase();
+	document.getElementById('complete-goal').classList.add('hide');
+	showScreen('complete');
 }
 
 function renderMatch(ex) {
