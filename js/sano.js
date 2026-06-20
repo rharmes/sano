@@ -28,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('lesson-continue').addEventListener('click', continueLesson);
 	document.getElementById('complete-continue').addEventListener('click', goHome);
 
+	document.getElementById('conversation-link').addEventListener('click', () => startDialogue(DIALOGUES[0]));
+	document.getElementById('dialogue-quit').addEventListener('click', goHome);
+	document.getElementById('dialogue-to-quiz').addEventListener('click', startDialogueQuiz);
+	document.getElementById('dialogue-continue').addEventListener('click', continueDialogue);
+	document.getElementById('dialogue-choices').addEventListener('click', answerDialogueQuestion);
+
 	const exerciseChoiceEls = document.getElementById('exercise-choices').getElementsByTagName('button');
 	for (const choiceEl of exerciseChoiceEls) choiceEl.addEventListener('click', answerExercise);
 
@@ -264,7 +270,7 @@ function openDictionary() {
 }
 
 function showScreen(name) {
-	for (const screen of ['onboarding', 'home', 'lesson', 'complete', 'dictionary'])
+	for (const screen of ['onboarding', 'home', 'lesson', 'complete', 'dictionary', 'dialogue'])
 		document.getElementById('screen-' + screen).classList.toggle('hide', screen !== name);
 }
 
@@ -980,6 +986,8 @@ function continueLesson() {
 
 function finishLesson() {
 	saveState();
+	// Reset the title in case a dialogue left "Conversation complete!" behind.
+	document.getElementById('complete-title').textContent = 'Lesson complete!';
 	document.getElementById('complete-stats').textContent = lesson.firstTryCorrect + ' of ' + lesson.statTotal + ' correct on the first try';
 
 	const streakEl = document.getElementById('complete-streak');
@@ -1005,6 +1013,132 @@ function finishLesson() {
 		goalEl.classList.add('hide');
 	}
 
+	showScreen('complete');
+}
+
+// --- SR-01: two-character dialogues with comprehension questions ---
+
+// Lazy id -> COURSE item lookup, so dialogue lines can reference existing phrases.
+let courseItemMap = null;
+function courseItem(id) {
+	if (!courseItemMap) {
+		courseItemMap = {};
+		for (const unit of COURSE) for (const item of unit.items) courseItemMap[item.id] = item;
+	}
+	return courseItemMap[id];
+}
+
+let dialogueSession = null;
+
+function startDialogue(dialogue) {
+	dialogueSession = { def: dialogue, qIndex: 0, correct: 0, answered: false };
+	showScreen('dialogue');
+	renderDialogueConvo();
+}
+
+// Phase 1: the conversation, a thread of bubbles with per-line audio (each spoken in
+// its character's voice — one default voice today, per-character voices later).
+function renderDialogueConvo() {
+	const d = dialogueSession.def;
+	document.getElementById('dialogue-convo').classList.remove('hide');
+	document.getElementById('dialogue-quiz').classList.add('hide');
+	document.getElementById('dialogue-progress-fill').style.width = '0%';
+	document.getElementById('dialogue-goal').textContent = d.goal;
+
+	const thread = document.getElementById('dialogue-thread');
+	thread.textContent = '';
+	for (const line of d.lines) {
+		const item = courseItem(line.ref);
+		const charId = line.who === 'A' ? d.cast.A : d.cast.B;
+		const bubble = document.createElement('div');
+		bubble.className = 'bubble ' + (line.who === 'A' ? 'sano' : 'user');
+
+		const speaker = document.createElement('p');
+		speaker.className = 'speaker';
+		speaker.textContent = CHARACTER_NAMES[charId] || charId;
+
+		const np = document.createElement('p');
+		np.className = 'np';
+		np.textContent = item.np;
+		np.appendChild(SanoAudio.button(item.id, { className: 'audio-inline', voiceId: SanoAudio.voiceForCharacter(charId) }));
+
+		const en = document.createElement('p');
+		en.className = 'en';
+		en.textContent = item.en;
+
+		bubble.append(speaker, np, en);
+		thread.appendChild(bubble);
+	}
+}
+
+// Phase 2: comprehension questions, scored on their own (no SRS or streak impact).
+function startDialogueQuiz() {
+	dialogueSession.qIndex = 0;
+	dialogueSession.correct = 0;
+	document.getElementById('dialogue-convo').classList.add('hide');
+	document.getElementById('dialogue-quiz').classList.remove('hide');
+	renderDialogueQuestion();
+}
+
+function renderDialogueQuestion() {
+	const d = dialogueSession.def;
+	const q = d.questions[dialogueSession.qIndex];
+	dialogueSession.answered = false;
+	document.getElementById('dialogue-progress-fill').style.width = Math.round((dialogueSession.qIndex / d.questions.length) * 100) + '%';
+	document.getElementById('dialogue-feedback').classList.add('hide');
+	document.getElementById('dialogue-q-label').textContent = 'Question ' + (dialogueSession.qIndex + 1) + ' of ' + d.questions.length;
+	document.getElementById('dialogue-q-text').textContent = q.q;
+
+	const choices = shuffleArray(q.choices.map((text, i) => ({ text: text, correct: i === q.answer })));
+	const buttons = document.getElementById('dialogue-choices').getElementsByTagName('button');
+	let i = 0;
+	for (const b of buttons) {
+		if (i < choices.length) {
+			b.textContent = choices[i].text;
+			b.dataset.correct = choices[i].correct ? 'true' : 'false';
+			b.className = '';
+			b.disabled = false;
+			b.parentNode.classList.remove('hide');
+		} else {
+			b.parentNode.classList.add('hide');
+		}
+		i++;
+	}
+}
+
+function answerDialogueQuestion(e) {
+	const btn = e.target.closest('button');
+	if (!btn || dialogueSession.answered) return;
+	dialogueSession.answered = true;
+	const correct = btn.dataset.correct === 'true';
+	if (correct) dialogueSession.correct++;
+	for (const b of document.getElementById('dialogue-choices').getElementsByTagName('button')) {
+		b.disabled = true;
+		if (b.dataset.correct === 'true') b.classList.add('correct');
+		else if (b === btn) b.classList.add('incorrect');
+	}
+	const fb = document.getElementById('dialogue-feedback');
+	fb.classList.remove('hide');
+	fb.classList.toggle('correct', correct);
+	fb.classList.toggle('incorrect', !correct);
+	document.getElementById('dialogue-feedback-title').textContent = correct ? 'Correct!' : 'Not quite.';
+}
+
+function continueDialogue() {
+	dialogueSession.qIndex++;
+	if (dialogueSession.qIndex >= dialogueSession.def.questions.length) finishDialogue();
+	else renderDialogueQuestion();
+}
+
+function finishDialogue() {
+	const d = dialogueSession.def;
+	document.getElementById('complete-title').textContent = 'Conversation complete!';
+	document.getElementById('complete-streak').classList.add('hide');
+	document.getElementById('complete-strengthened').classList.add('hide');
+	document.getElementById('complete-stats').textContent = dialogueSession.correct + ' of ' + d.questions.length + ' questions correct';
+	const goalEl = document.getElementById('complete-goal');
+	goalEl.textContent = d.goal;
+	goalEl.classList.remove('hide');
 	showScreen('complete');
 }
 

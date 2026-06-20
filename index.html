@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=fc500602" />
+		<link rel="stylesheet" href="css/sano.css?v=781207f7" />
 		<link rel="icon" href="favicon.svg?v=e1facae9" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a0282fd9" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -33,7 +33,8 @@
 		<script src="js/push.js?v=89293764" defer></script>
 		<script src="js/onboarding.js?v=a750aec0" defer></script>
 		<script src="js/audio.js?v=d32b803b" defer></script>
-		<script src="js/sano.js?v=763f19a5" defer></script>
+		<script src="js/dialogues.js?v=04e931c3" defer></script>
+		<script src="js/sano.js?v=27070b1c" defer></script>
 	</head>
 	<body>
 		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
@@ -285,6 +286,7 @@
 				<button id="daily-lesson" class="btn-primary">Start today's lesson</button>
 				<p id="home-goal" class="can-do-goal hide"></p>
 				<div id="path"></div>
+				<p id="conversation-link-wrap"><a id="conversation-link">Practice a conversation →</a></p>
 				<p id="dictionary-link-wrap"><a id="dictionary-link">Browse the full dictionary →</a></p>
 			</div>
 
@@ -372,6 +374,34 @@
 				<p id="complete-strengthened" class="hide"></p>
 				<p id="complete-goal" class="can-do-goal hide"></p>
 				<button id="complete-continue" class="btn-primary indigo">Continue</button>
+			</div>
+
+			<div id="screen-dialogue" class="hide">
+				<div id="dialogue-top">
+					<a id="dialogue-quit" class="icon" role="button" aria-label="Quit conversation"
+						><svg><use href="#i-close" /></svg
+					></a>
+					<div id="dialogue-progress"><div id="dialogue-progress-fill"></div></div>
+				</div>
+				<div id="dialogue-convo">
+					<p id="dialogue-goal" class="can-do-goal"></p>
+					<div id="dialogue-thread" class="thread"></div>
+					<button id="dialogue-to-quiz" class="btn-primary">Continue to questions</button>
+				</div>
+				<div id="dialogue-quiz" class="hide">
+					<p id="dialogue-q-label"></p>
+					<p id="dialogue-q-text"></p>
+					<ol id="dialogue-choices">
+						<li><button></button></li>
+						<li><button></button></li>
+						<li><button></button></li>
+						<li><button></button></li>
+					</ol>
+					<div id="dialogue-feedback" class="hide">
+						<p id="dialogue-feedback-title"></p>
+						<button id="dialogue-continue" class="btn-primary">Continue</button>
+					</div>
+				</div>
 			</div>
 
 			<div id="screen-dictionary" class="hide">

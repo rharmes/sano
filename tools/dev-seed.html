@@ -113,6 +113,16 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">SR-01 dialogues</span>
+			<h2>4 · Practice a conversation</h2>
+			<p>
+				Opens the app on home. Tap <b>"Practice a conversation →"</b> (below the lesson path) to play the Sano ↔ Pyaro dialogue — listen
+				to each line, then <b>"Continue to questions"</b> for the comprehension quiz.
+			</p>
+			<button onclick="seed('dialogue')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>
@@ -190,6 +200,20 @@
 				} else if (which === 'freeze') {
 					// Missed exactly yesterday with a freeze banked -> home notice now, save on finish.
 					state = midCourse({ streak: 7, streakFreezes: 1, lastActivityDay: day(2) });
+				} else if (which === 'dialogue') {
+					const items = {};
+					COURSE[0].items.slice(0, 6).forEach((it) => (items[it.id] = rec({ level: 1, lastSeen: day(0) })));
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 4,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 30,
+						items,
+					};
 				}
 				localStorage.setItem('sano.state.v1', JSON.stringify(state));
 				location.href = '/';
