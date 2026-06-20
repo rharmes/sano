@@ -567,6 +567,8 @@ function renderPath() {
 	let y = 30;
 	let vWave = 30;
 	let currentNodeEl = null; // the in-progress unit's node — centered in the viewport on load
+	const anchors = []; // {x, yTop} per node, in order — drives decorative-companion placement
+	const bannerBands = []; // {top, bottom} of each full-width section banner, to dodge with companions
 	const advance = () => {
 		const nv = nextV(vWave);
 		y += nv - vWave;
@@ -618,6 +620,7 @@ function renderPath() {
 			node.appendChild(icon);
 			if (unlocked || done) node.addEventListener('click', () => startDialogue(dlg));
 			wrap.appendChild(node);
+			anchors.push({ x: x, yTop: y });
 
 			const label = document.createElement('div');
 			label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
@@ -667,6 +670,7 @@ function renderPath() {
 			node.appendChild(icon);
 			if (unlocked || done) node.addEventListener('click', () => startSoundDrill(topic, soundExamples(topic)));
 			wrap.appendChild(node);
+			anchors.push({ x: x, yTop: y });
 
 			const label = document.createElement('div');
 			label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
@@ -695,6 +699,7 @@ function renderPath() {
 			section.textContent = PATH_SECTIONS[unit.id];
 			section.style.top = y + 'px';
 			wrap.appendChild(section);
+			bannerBands.push({ top: y - (compact ? 8 : 10), bottom: y + (compact ? 56 : 64) });
 			y += compact ? 56 : 64;
 		}
 		// The START bubble extends above the current node — always give it clearance,
@@ -753,6 +758,7 @@ function renderPath() {
 		}
 		if (complete || isCurrent) node.addEventListener('click', () => startUnitLesson(unit, complete));
 		wrap.appendChild(node);
+		anchors.push({ x: x, yTop: y });
 		if (isCurrent) currentNodeEl = node;
 
 		const label = document.createElement('div');
@@ -769,7 +775,85 @@ function renderPath() {
 		advance();
 	});
 
-	wrap.style.height = y + 30 + 'px';
+	let contentBottom = y + 30;
+
+	// Decorative companions (SR-07): tuck Sano's friends into the path's deep pockets — the
+	// open side at each turn of the wave, beyond the label column — sized to nearly fill the
+	// pocket without crowding the page edge or the lesson text. Ordered Thulo, then Pyaro,
+	// then the rest, each friend appearing once. Purely ornamental: they idle like Sano and
+	// do a head-shake when tapped (wiring below), nothing more.
+	const buddyOrder = ['thulo', 'pyaro', 'rangin', 'bahadur', 'gyani', 'hiun', 'chanchal', 'shanta', 'phurtilo', 'lamo'];
+	if (typeof CHARACTER_BODIES !== 'undefined') {
+		// A turn is where the wave reverses horizontal direction. Right→left (a local max,
+		// node swung right) opens a pocket on the LEFT; left→right opens one on the RIGHT.
+		const turns = [];
+		let prevDx = 0;
+		for (let i = 1; i < anchors.length; i++) {
+			const dx = anchors[i].x - anchors[i - 1].x;
+			if (dx === 0) continue;
+			if (prevDx !== 0 && Math.sign(dx) !== Math.sign(prevDx)) {
+				turns.push({ x: anchors[i - 1].x, yTop: anchors[i - 1].yTop, pocket: prevDx > 0 ? 'left' : 'right' });
+			}
+			prevDx = dx;
+		}
+
+		const edgePad = compact ? 10 : 14; // keep clear of the page edge
+		const textPad = compact ? 14 : 18; // keep clear of the label column
+		const sizeCap = compact ? 150 : 168; // never bigger than this, even in a wide pocket
+		const minSize = 78; // skip shallow pockets too small for a readable figure
+
+		let bi = 0;
+		for (const t of turns) {
+			if (bi >= buddyOrder.length) break;
+			// Open horizontal span on the turn's side, past the reserved label column
+			// (labelWidth = the widest a label can wrap, so we stay clear of short ones too).
+			let left, right;
+			if (t.pocket === 'left') {
+				left = edgePad;
+				right = t.x - nodeSize / 2 - labelGap - labelWidth - textPad;
+			} else {
+				left = t.x + nodeSize / 2 + labelGap + labelWidth + textPad;
+				right = width - edgePad;
+			}
+			const pocketW = right - left;
+			if (pocketW < minSize) continue;
+			const size = Math.min(pocketW, sizeCap);
+			const top = t.yTop + nodeSize / 2 - size / 2; // center on the turn node's midline
+			if (bannerBands.some((b) => top < b.bottom && top + size > b.top)) continue; // dodge a banner
+
+			const id = buddyOrder[bi++];
+			const buddy = document.createElement('div');
+			buddy.className = 'path-buddy';
+			buddy.setAttribute('aria-hidden', 'true');
+			buddy.style.width = size + 'px';
+			buddy.style.height = size + 'px';
+			buddy.style.left = Math.round((left + right) / 2 - size / 2) + 'px';
+			buddy.style.top = Math.round(top) + 'px';
+			buddy.style.setProperty('--buddy-phase', '-' + (Math.random() * 9).toFixed(2) + 's');
+			buddy.innerHTML = '<div class="buddy-art">' + CHARACTER_BODIES[id] + '</div>';
+			if (!buddy.querySelector('.part-head')) buddy.classList.add('no-head'); // side view → shake whole figure
+			// Profiles (one eye) should face the path: flip a right-facing profile sitting in a
+			// right pocket (path on its left), and a left-facing one in a left pocket.
+			const eyes = buddy.querySelectorAll('.part-eyes circle');
+			if (eyes.length === 1) {
+				const vb = (buddy.querySelector('svg').getAttribute('viewBox') || '0 0 200 200').split(/\s+/).map(Number);
+				const eyeSide = parseFloat(eyes[0].getAttribute('cx')) > vb[0] + vb[2] / 2 ? 'right' : 'left';
+				if (eyeSide === t.pocket) buddy.classList.add('flip');
+			}
+			buddy.addEventListener('click', () => {
+				buddy.classList.remove('shake');
+				void buddy.offsetWidth; // reflow so a repeat tap restarts the shake
+				buddy.classList.add('shake');
+			});
+			buddy.addEventListener('animationend', (e) => {
+				if (e.animationName === 'buddy-head-shake') buddy.classList.remove('shake');
+			});
+			wrap.appendChild(buddy);
+			contentBottom = Math.max(contentBottom, top + size + 20);
+		}
+	}
+
+	wrap.style.height = contentBottom + 'px';
 
 	// First render only (app load): center the in-progress lesson in the viewport so a
 	// returning learner lands on what's next instead of at "Namaste". Resizing or

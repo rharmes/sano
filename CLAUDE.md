@@ -33,7 +33,13 @@ this file used to convey:
   (`renderPath`, `currentUnit`), with two-character **dialogue** nodes (gold) and
   **pronunciation** nodes (lavender) woven in after their anchor unit; a completed node
   shows a checkmark in its own colour. The daily-lesson button mixes new items from the
-  current unit with the most-overdue reviews from anywhere in the course.
+  current unit with the most-overdue reviews from anywhere in the course. On first render
+  the path auto-scrolls to center the in-progress unit. **Decorative companions** (SR-07)
+  sit in the path's empty pockets — full-body friends placed at each turn of the wave
+  (ordered Thulo, Pyaro, then the rest), sized to the pocket; they run the Sano idle
+  animations and do a head-shake when tapped, but are otherwise inert (`aria-hidden`,
+  behind the nodes). Art comes from `CHARACTER_BODIES` in `js/characters.js`; profiles are
+  flipped to face the path.
 - **Spaced repetition** is an **SM-2-lite** graded scheduler. Each item record
   (`state.items[id]` = `seen/correct/ease/interval/lastSeen/intro`) carries its own `ease`
   (≥ 1.3) and `interval` in days; a review is auto-graded from the exercise type (miss →
@@ -56,8 +62,9 @@ this file used to convey:
 and where it is headed; the working roadmap is `PLAN.md` (committed, but excluded from
 the deploy rsync). Two-character **dialogues** with comprehension questions and
 self-hosted **Nepali phrase audio** (Devanagari-driven Piper TTS) have since shipped, along
-with listening/speaking practice and pronunciation coaching; planned next (per PLAN.md):
-full-body / animated companions, one voice per character, and an optional Devanagari
+with listening/speaking practice, pronunciation coaching, and the decorative full-body
+**companions** on the path (above); planned next (per PLAN.md): companions that actively
+host/participate in lessons & dialogues, one voice per character, and an optional Devanagari
 script track.
 
 ## Server sync (api/)
@@ -152,8 +159,11 @@ significantly, update CLAUDE.md in the same commit.
     all eleven characters and their animations** — Sano first, then the 10
     companions, each a whole-body + head view. Every character's parts are
     wrapped in `.part-*` groups (head/tail/eyes/ear[-left|-right]/nose) for
-    animation targeting — inert in the gallery itself. The app UIs don't read
-    from here yet (planned next); the tuner already does.
+    animation targeting — inert in the gallery itself. The art reaches the app
+    through `js/characters.js` (`CHARACTER_HEADS` for dialogue bubbles +
+    `CHARACTER_BODIES` for the path companions), **generated** by
+    `node tools/build-character-heads.mjs` (from `anim-characters.js`); re-run it
+    after editing character art. The tuner reads the same source.
   - `design/animations.html` is the **11-character** animation tuner: pick a
     character up top, both its views mount on the left, and the per-animation
     cards on the right apply to it (cards for parts a character lacks are

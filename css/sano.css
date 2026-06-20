@@ -1541,11 +1541,122 @@ table#vocab tbody td:nth-child(3) {
 	background: var(--border-color);
 }
 
+/* Decorative companion characters (SR-07): full-body friends tucked into the path's
+   empty pockets. Purely ornamental — they idle like Sano and do a head-shake when
+   tapped, nothing more. JS (renderPath) positions and sizes each one and sets
+   --buddy-phase to de-sync the idles. z-index 0 keeps them behind the nodes/labels so
+   they never steal a real tap target. */
+.path-buddy {
+	position: absolute;
+	z-index: 0;
+	padding: 0;
+	border: 0;
+	margin: 0;
+	background: none;
+	cursor: pointer;
+	line-height: 0;
+	-webkit-tap-highlight-color: transparent;
+}
+.path-buddy svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+/* Inner wrapper carries the horizontal flip that turns a profile character to face the
+   path (JS adds .flip for a right-facing profile in a right pocket, and vice versa). It's
+   separate from the container (which the reveal animates) and the svg (which the no-head
+   shake animates) so neither transform clobbers the flip. */
+.path-buddy .buddy-art {
+	width: 100%;
+	height: 100%;
+}
+.path-buddy.flip .buddy-art {
+	transform: scaleX(-1);
+}
+/* Per-part pivots local to each part's own bbox (mirrors design/animations.html), so
+   the same rules animate any character. */
+.path-buddy .part-head {
+	transform-box: fill-box;
+	transform-origin: 50% 100%;
+}
+.path-buddy .part-tail {
+	transform-box: fill-box;
+	transform-origin: 0% 50%;
+}
+.path-buddy .part-eyes {
+	transform-box: fill-box;
+	transform-origin: 50% 50%;
+}
+.path-buddy .part-ear {
+	transform-box: fill-box;
+	transform-origin: 50% 100%;
+}
+.path-buddy .part-ear-left {
+	--ear-dir: 1;
+}
+.path-buddy .part-ear-right {
+	--ear-dir: -1;
+}
+.path-buddy .part-nose {
+	transform-box: fill-box;
+	transform-origin: 50% 30%;
+}
+/* Idle life — reuse Sano's idle keyframes, retargeted to the .part-* groups. The
+   inherited --buddy-phase offsets each companion's whole idle set so they never all
+   twitch in unison. */
+.path-buddy .part-tail {
+	animation: sano-idle-tail-wag 9s ease-in-out infinite;
+	animation-delay: calc(-3s + var(--buddy-phase, 0s));
+}
+.path-buddy .part-head {
+	animation: sano-idle-head-tilt 22s ease-in-out infinite;
+	animation-delay: calc(-6s + var(--buddy-phase, 0s));
+}
+.path-buddy .part-eyes {
+	animation: sano-idle-blink 4s ease-in-out infinite;
+	animation-delay: calc(-1s + var(--buddy-phase, 0s));
+}
+.path-buddy .part-ear {
+	animation: sano-idle-ear-wiggle 14s ease-in-out infinite;
+	animation-delay: calc(-10s + var(--buddy-phase, 0s));
+}
+.path-buddy .part-nose {
+	animation: sano-idle-nose-wiggle 10s ease-in-out infinite;
+	animation-delay: calc(-5s + var(--buddy-phase, 0s));
+}
+/* Tap → a quick head-shake (the tuner's geometry). The extra .shake class outranks the
+   idle head-tilt for its one run; JS removes it on animationend so the idle resumes.
+   Side-view characters have no .part-head group, so the whole figure shakes instead. */
+.path-buddy.shake .part-head {
+	animation: buddy-head-shake 0.7s ease-in-out;
+}
+.path-buddy.shake.no-head svg {
+	transform-origin: 50% 100%;
+	animation: buddy-head-shake 0.7s ease-in-out;
+}
+@keyframes buddy-head-shake {
+	0%,
+	100% {
+		transform: rotate(0deg);
+	}
+	22% {
+		transform: rotate(-9deg);
+	}
+	54% {
+		transform: rotate(9deg);
+	}
+	82% {
+		transform: rotate(-4deg);
+	}
+}
+
 /* Top-to-bottom reveal: JS staggers each element's animation-delay by its y
    position and applies .reveal on the first render only. */
 #path.reveal .path-node,
 #path.reveal .path-ring,
 #path.reveal .path-label,
+#path.reveal .path-buddy,
 #path.reveal .path-section {
 	animation: path-reveal 0.3s ease-out backwards;
 }
@@ -2279,8 +2390,11 @@ table#vocab tbody td:nth-child(3) {
 	#path.reveal .path-node,
 	#path.reveal .path-ring,
 	#path.reveal .path-label,
+	#path.reveal .path-buddy,
 	#path.reveal .path-section,
 	#path.reveal .path-start,
+	.path-buddy.shake .part-head,
+	.path-buddy.shake.no-head svg,
 	.thread.reveal > *,
 	#screen-onboarding.onboard-celebrate .onboard-scene .mascot,
 	#screen-onboarding.onboard-celebrate .onboard-scene .mascot .sano-tail,
@@ -2299,7 +2413,11 @@ table#vocab tbody td:nth-child(3) {
 	.sano-idle .sano-ear,
 	.sano-idle .sano-nose,
 	.sano-idle-head .sano-ear,
-	.sano-idle-head .sano-nose {
+	.sano-idle-head .sano-nose,
+	.path-buddy .part-tail,
+	.path-buddy .part-head,
+	.path-buddy .part-ear,
+	.path-buddy .part-nose {
 		animation: none;
 	}
 	#lesson-progress-fill,

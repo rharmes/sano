@@ -188,6 +188,17 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">path</span>
+			<h2>Companions along the path</h2>
+			<p>
+				Opens home near the <b>top</b> of the path (units 0–2 done, <b>unit 3</b> in progress) so Sano's decorative friends are in view
+				— <b>Thulo</b> in the first left pocket, <b>Pyaro</b> in the next right pocket, the rest further down. They run the idle
+				animations; <b>tap one</b> and it shakes its head.
+			</p>
+			<button onclick="seed('buddies')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>
@@ -357,6 +368,22 @@
 						lastActivityDay: day(0),
 						itemsToday: 0,
 						itemsTotal: 200,
+						items,
+					};
+				} else if (which === 'buddies') {
+					// SR-07: open near the top of the path (units 0–2 done, unit 3 current) so the
+					// decorative companions are in view — Thulo first, then Pyaro — without scrolling.
+					const items = {};
+					learnUnits(items, 0, 2, { interval: 3, ease: 2.5, lastSeen: day(0) });
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 4,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 40,
 						items,
 					};
 				} else if (which === 'sounds') {
