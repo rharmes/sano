@@ -1050,11 +1050,20 @@ function renderDialogueConvo() {
 	revealNextLine();
 }
 
-// Build one speech bubble for a dialogue line.
+// Build one dialogue line: a head-only character portrait beside a speech bubble
+// (Change 3 / SR-07). Sano sits on the left, the companion mirrored on the right.
 function dialogueBubble(line) {
 	const d = dialogueSession.def;
 	const item = courseItem(line.ref);
 	const charId = line.who === 'A' ? d.cast.A : d.cast.B;
+
+	const row = document.createElement('div');
+	row.className = 'dialogue-line ' + (line.who === 'A' ? 'sano' : 'pyaro');
+
+	const head = document.createElement('div');
+	head.className = 'dialogue-head';
+	head.innerHTML = CHARACTER_HEADS[charId] || '';
+
 	const bubble = document.createElement('div');
 	bubble.className = 'bubble ' + (line.who === 'A' ? 'sano' : 'user');
 
@@ -1072,7 +1081,8 @@ function dialogueBubble(line) {
 	en.textContent = item.en;
 
 	bubble.append(speaker, np, en);
-	return bubble;
+	row.append(head, bubble);
+	return row;
 }
 
 // Reveal the next line, append its bubble, and auto-play it. The advance button is
