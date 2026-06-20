@@ -566,6 +566,7 @@ function renderPath() {
 
 	let y = 30;
 	let vWave = 30;
+	let currentNodeEl = null; // the in-progress unit's node — centered in the viewport on load
 	const advance = () => {
 		const nv = nextV(vWave);
 		y += nv - vWave;
@@ -752,6 +753,7 @@ function renderPath() {
 		}
 		if (complete || isCurrent) node.addEventListener('click', () => startUnitLesson(unit, complete));
 		wrap.appendChild(node);
+		if (isCurrent) currentNodeEl = node;
 
 		const label = document.createElement('div');
 		label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
@@ -769,12 +771,34 @@ function renderPath() {
 
 	wrap.style.height = y + 30 + 'px';
 
-	// Stagger a top-to-bottom reveal, but only on the very first render:
-	// returning home or resizing rebuilds the path and shouldn't replay it.
+	// First render only (app load): center the in-progress lesson in the viewport so a
+	// returning learner lands on what's next instead of at "Namaste". Resizing or
+	// returning home rebuilds the path but must not re-scroll or replay the reveal.
 	if (!pathRevealed) {
 		pathRevealed = true;
-		wrap.classList.add('reveal');
-		for (const el of wrap.children) el.style.animationDelay = Math.max(0, Math.min(parseFloat(el.style.top) * 0.55, 700)) + 'ms';
+		const node = currentNodeEl;
+		// If the in-progress lesson is below the fold on load, scroll so it's centered in the
+		// viewport below the fixed header — returning learners land on what's next instead of
+		// at "Namaste". When it's already visible near the top (new / early learners), keep the
+		// natural top-of-page view and play the reveal instead.
+		if (node && node.getBoundingClientRect().bottom > window.innerHeight) {
+			const recenter = () => {
+				const rect = node.getBoundingClientRect();
+				const header = document.getElementById('header');
+				const headerH = header ? header.offsetHeight : 0;
+				const nodeCenter = rect.top + window.scrollY + rect.height / 2;
+				window.scrollTo(0, Math.max(0, Math.round(nodeCenter - (window.innerHeight + headerH) / 2)));
+			};
+			recenter();
+			// Web fonts reflow the content above the path, so re-center once they settle
+			// (instant on cached loads). The top-down reveal is skipped — its stagger would
+			// leave the centered node blank until its delay elapses.
+			if (document.fonts) document.fonts.ready.then(recenter);
+		} else {
+			// At/near the top: play the staggered top-to-bottom reveal.
+			wrap.classList.add('reveal');
+			for (const el of wrap.children) el.style.animationDelay = Math.max(0, Math.min(parseFloat(el.style.top) * 0.55, 700)) + 'ms';
+		}
 	} else {
 		wrap.classList.remove('reveal');
 	}

@@ -178,6 +178,16 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">path</span>
+			<h2>Auto-scroll to the current lesson</h2>
+			<p>
+				Opens home deep in the course (units 0–14 done, <b>unit 15</b> in progress) so the current lesson sits far down the winding path
+				— on load the view should jump to <b>center it</b> in the viewport.
+			</p>
+			<button onclick="seed('autoscroll')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>
@@ -332,6 +342,22 @@
 						items,
 						dialoguesDone: { 'greet-pyaro': true },
 						soundsDone: { aspiration: true },
+					};
+				} else if (which === 'autoscroll') {
+					// Deep into the course (units 0–14 done, unit 15 current) so the in-progress lesson
+					// sits far down the path — on load, home should auto-scroll to center it in view.
+					const items = {};
+					learnUnits(items, 0, 14, { interval: 3, ease: 2.5, lastSeen: day(0) });
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 9,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 200,
+						items,
 					};
 				} else if (which === 'sounds') {
 					// SR-08: Basics complete -> the aspiration sound node (after Basics) is unlocked in the path.
