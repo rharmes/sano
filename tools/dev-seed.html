@@ -147,6 +147,17 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">SR-08 pronunciation</span>
+			<h2>7 · Sounds of Nepali (pronunciation coaching)</h2>
+			<p>
+				Opens on home. Scroll to the bottom and tap <b>“Practice Nepali sounds →”</b> (below the path). Pick a contrast — say
+				<b>Aspirated consonants</b> — for a listen-and-repeat drill: the model word auto-plays, <b>“Hear it”</b> replays it,
+				<b>“Record yourself”</b> compares your take, and <b>“Next sound”</b> advances. The highlighted Devanagari shows where the sound
+				sits. Allow the mic the first time you record.
+			</p>
+			<button onclick="seed('sounds')">Seed &amp; open</button>
+		</div>
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>
@@ -283,6 +294,21 @@
 						lastActivityDay: day(0),
 						itemsToday: 0,
 						itemsTotal: 180,
+						items,
+					};
+				} else if (which === 'sounds') {
+					// SR-08: the "Practice Nepali sounds" link is on home for any onboarded user; land there.
+					const items = {};
+					for (const it of COURSE[0].items) items[it.id] = rec({ interval: 3, ease: 2.5, lastSeen: day(0) });
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 4,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 40,
 						items,
 					};
 				}

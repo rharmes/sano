@@ -1017,7 +1017,8 @@ table#vocab tbody td:nth-child(3) {
 
 /* Clear the fixed header bar (the lesson/complete screens hide it instead). */
 #screen-home,
-#screen-dictionary {
+#screen-dictionary,
+#screen-sounds {
 	padding-top: 8.5rem;
 }
 
@@ -1581,16 +1582,21 @@ table#vocab tbody td:nth-child(3) {
 	}
 }
 
-#dictionary-link-wrap {
+#dictionary-link-wrap,
+#sounds-link-wrap {
 	text-align: center;
 }
 #dictionary-link,
-#home-link {
+#home-link,
+#sounds-link,
+#sounds-home-link {
 	cursor: pointer;
 	color: var(--text-color-soft);
 }
 #dictionary-link:hover,
-#home-link:hover {
+#home-link:hover,
+#sounds-link:hover,
+#sounds-home-link:hover {
 	color: var(--text-color-richer);
 }
 
@@ -1602,29 +1608,34 @@ table#vocab tbody td:nth-child(3) {
 	padding-top: 4rem;
 	padding-bottom: 220px;
 }
-#lesson-top {
+#lesson-top,
+#sounds-drill-top {
 	display: flex;
 	align-items: center;
 	gap: 16px;
 	margin-bottom: 4rem;
 }
-#lesson-quit {
+#lesson-quit,
+#sounds-drill-back {
 	cursor: pointer;
 	font-size: 3rem;
 	color: var(--text-color-softer);
 	user-select: none;
 }
-#lesson-quit:hover {
+#lesson-quit:hover,
+#sounds-drill-back:hover {
 	color: var(--text-color-richer);
 }
-#lesson-progress {
+#lesson-progress,
+#sounds-progress {
 	flex: 1;
 	height: 14px;
 	border-radius: 7px;
 	background: var(--border-color);
 	overflow: hidden;
 }
-#lesson-progress-fill {
+#lesson-progress-fill,
+#sounds-progress-fill {
 	height: 100%;
 	width: 0;
 	border-radius: 7px;
@@ -2277,7 +2288,124 @@ table#vocab tbody td:nth-child(3) {
 	.sano-idle-head .sano-nose {
 		animation: none;
 	}
-	#lesson-progress-fill {
+	#lesson-progress-fill,
+	#sounds-progress-fill {
 		transition: none;
 	}
+}
+
+/* Sounds of Nepali — pronunciation coaching (SR-08). Reuses .speak-record / .btn-secondary
+   and the lesson progress + top chrome (selectors extended above); the rest is below. */
+.sounds-heading {
+	margin: 0 0 0.6rem;
+	font-family: 'Neuton', serif;
+	font-size: 2.4rem;
+	color: var(--text-display);
+}
+.sounds-lede {
+	margin: 0 0 2.4rem;
+	font-size: 1.6rem;
+	line-height: 1.5;
+	color: var(--text-color-soft);
+}
+#sounds-topics {
+	margin-top: 0.4rem;
+}
+.sounds-topic {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	margin-bottom: 1.2rem;
+	padding: 1.6rem 1.8rem;
+	text-align: left;
+	background: var(--background-color-softer);
+	border: 1px solid var(--border-color);
+	border-radius: 1.2rem;
+	cursor: pointer;
+}
+.sounds-topic:hover,
+.sounds-topic:focus-visible {
+	border-color: var(--accent);
+}
+.sounds-topic-title {
+	display: block;
+	font-size: 1.9rem;
+	font-weight: 700;
+	color: var(--text-color-richer);
+}
+.sounds-topic-sub {
+	display: block;
+	margin-top: 0.3rem;
+	font-size: 1.5rem;
+	color: var(--text-color-soft);
+}
+.sounds-card {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 1.2rem;
+	margin: 2rem 0;
+	padding: 2.4rem 2rem;
+	text-align: center;
+	background: var(--background-color-softer);
+	border: 1px solid var(--border-color);
+	border-radius: 1.6rem;
+}
+.sounds-dev {
+	margin: 0;
+	font-size: 5.2rem;
+	line-height: 1.2;
+	color: var(--text-word);
+}
+.sounds-mark {
+	color: var(--accent);
+}
+.sounds-roman {
+	margin: 0;
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--text-color-richer);
+}
+.sounds-en {
+	margin: 0 0 0.6rem;
+	font-size: 1.6rem;
+	color: var(--text-color-soft);
+}
+#sounds-play {
+	align-self: center;
+}
+.sounds-record-row {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+.sounds-record,
+#sounds-play-you {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+}
+.sounds-record.recording {
+	color: var(--button-primary-color);
+	background: var(--text-incomplete-color);
+	border-color: var(--text-incomplete-color);
+}
+.sounds-record .icon,
+#sounds-play-you .icon {
+	font-size: 2rem;
+}
+.sounds-tip {
+	margin: 0 0 2.4rem;
+	padding: 1.2rem 1.4rem;
+	font-size: 1.5rem;
+	line-height: 1.45;
+	text-align: left;
+	color: var(--text-color-normal);
+	background: var(--background-color-softer);
+	border-left: 3px solid var(--accent);
+	border-radius: 0.6rem;
+}
+#sounds-next {
+	width: 100%;
 }

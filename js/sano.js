@@ -66,6 +66,9 @@ let state;
 let lesson = null;
 let matchState = null;
 let pathRevealed = false;
+let speakRecorder = null; // SR-04 lesson speaking step; created in setup
+let soundsRecorder = null; // SR-08 sounds drill; shares createRecorder with speak
+let soundDrill = null; // SR-08 active drill: { topic, examples, index }
 
 document.addEventListener('DOMContentLoaded', () => {
 	state = loadState();
@@ -92,12 +95,36 @@ document.addEventListener('DOMContentLoaded', () => {
 	for (const choiceEl of exerciseChoiceEls) choiceEl.addEventListener('click', answerExercise);
 
 	document.getElementById('exercise-check').addEventListener('click', checkExercise);
-	document.getElementById('speak-record').addEventListener('click', speakToggleRecord);
-	document.getElementById('speak-play-you').addEventListener('click', speakPlayYou);
+	speakRecorder = createRecorder({
+		recordBtn: 'speak-record',
+		recordLabel: 'speak-record-label',
+		playBtn: 'speak-play-you',
+		recordingLabel: 'Stop recording',
+		againLabel: 'Record again',
+	});
+	document.getElementById('speak-record').addEventListener('click', () => speakRecorder.toggle());
+	document.getElementById('speak-play-you').addEventListener('click', () => speakRecorder.play());
 	document.getElementById('speak-continue').addEventListener('click', () => {
-		resetSpeak();
+		speakRecorder.reset();
 		continueLesson();
 	});
+
+	// SR-08: pronunciation coaching ("Sounds of Nepali").
+	soundsRecorder = createRecorder({
+		recordBtn: 'sounds-record',
+		recordLabel: 'sounds-record-label',
+		playBtn: 'sounds-play-you',
+		idleLabel: 'Record yourself',
+		recordingLabel: 'Stop recording',
+		againLabel: 'Record again',
+	});
+	document.getElementById('sounds-link').addEventListener('click', openSounds);
+	document.getElementById('sounds-home-link').addEventListener('click', goHome);
+	document.getElementById('sounds-drill-back').addEventListener('click', closeSoundDrill);
+	document.getElementById('sounds-play').addEventListener('click', () => soundDrill && SanoAudio.play(soundDrill.examples[soundDrill.index].id));
+	document.getElementById('sounds-record').addEventListener('click', () => soundsRecorder.toggle());
+	document.getElementById('sounds-play-you').addEventListener('click', () => soundsRecorder.play());
+	document.getElementById('sounds-next').addEventListener('click', advanceSound);
 	const typeInput = document.getElementById('type-answer');
 	typeInput.addEventListener('input', () => {
 		document.getElementById('exercise-check').disabled = typeInput.value.trim() === '';
@@ -340,13 +367,15 @@ function openDictionary() {
 }
 
 function showScreen(name) {
-	for (const screen of ['onboarding', 'home', 'lesson', 'complete', 'dictionary', 'dialogue'])
+	for (const screen of ['onboarding', 'home', 'lesson', 'complete', 'dictionary', 'dialogue', 'sounds'])
 		document.getElementById('screen-' + screen).classList.toggle('hide', screen !== name);
 }
 
 function goHome() {
 	lesson = null;
-	if (speakState && speakState.recording) resetSpeak(); // stop the mic if quitting mid-record
+	if (speakRecorder && speakRecorder.recording) speakRecorder.reset(); // stop the mic if quitting mid-record
+	if (soundsRecorder && soundsRecorder.recording) soundsRecorder.reset();
+	soundDrill = null;
 
 	// Show the screen first so the path can measure its real width.
 	showScreen('home');
@@ -853,66 +882,209 @@ function renderType(ex) {
 // There's no scoring (browsers have no Nepali speech recognition) — just self-compare —
 // and the whole step is skippable via Continue, with graceful fallback if the mic is
 // unavailable or denied.
-let speakState = null;
+// Shared mic recorder for the speaking steps — the SR-04 lesson step and the SR-08
+// sounds drill both use it. Wraps getUserMedia + MediaRecorder over a record button, a
+// label, and a "play your take" button. No scoring (browsers have no Nepali speech
+// recognition) — record, then compare against the model audio — and it degrades quietly
+// if the mic is denied or unavailable.
+function createRecorder(opts) {
+	const recordBtn = document.getElementById(opts.recordBtn);
+	const recordLabel = document.getElementById(opts.recordLabel);
+	const playBtn = document.getElementById(opts.playBtn);
+	const idle = opts.idleLabel || 'Tap to record';
+	let recorder = null;
+	let chunks = [];
+	let url = null;
+	let recording = false;
+
+	function reset() {
+		if (recording && recorder) {
+			try {
+				recorder.stop();
+			} catch (e) {}
+		}
+		if (url) URL.revokeObjectURL(url);
+		recorder = null;
+		chunks = [];
+		url = null;
+		recording = false;
+		recordBtn.classList.remove('recording');
+		recordLabel.textContent = idle;
+		playBtn.classList.add('hide');
+	}
+
+	async function toggle() {
+		if (recording) {
+			recorder.stop();
+			return;
+		}
+		let stream;
+		try {
+			stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+		} catch (e) {
+			recordLabel.textContent = 'Microphone unavailable';
+			return;
+		}
+		recorder = new MediaRecorder(stream);
+		chunks = [];
+		recorder.ondataavailable = (e) => {
+			if (e.data && e.data.size) chunks.push(e.data);
+		};
+		recorder.onstop = () => {
+			stream.getTracks().forEach((t) => t.stop());
+			recording = false;
+			recordBtn.classList.remove('recording');
+			if (!chunks.length) return;
+			const blob = new Blob(chunks, { type: chunks[0].type || 'audio/webm' });
+			if (url) URL.revokeObjectURL(url);
+			url = URL.createObjectURL(blob);
+			recordLabel.textContent = opts.againLabel || 'Record again';
+			playBtn.classList.remove('hide');
+		};
+		recorder.start();
+		recording = true;
+		recordBtn.classList.add('recording');
+		recordLabel.textContent = opts.recordingLabel || 'Stop recording';
+	}
+
+	function play() {
+		if (url) new Audio(url).play().catch(() => {});
+	}
+
+	return {
+		toggle,
+		reset,
+		play,
+		get recording() {
+			return recording;
+		},
+	};
+}
 
 function renderSpeak(ex) {
 	setPrompt('Say it aloud, then compare', ex.item.np, ex.item.pron, ex.item.id);
-	resetSpeak();
+	speakRecorder.reset();
 }
 
-function resetSpeak() {
-	if (speakState) {
-		if (speakState.recording && speakState.recorder) {
-			try {
-				speakState.recorder.stop();
-			} catch (e) {}
+// --- SR-08: pronunciation coaching ("Sounds of Nepali") ---
+// A listen-and-repeat mode for the contrasts romanization can't show. Each topic
+// (js/sounds.js) is illustrated by real course words found by scanning their Devanagari
+// for the topic's marks, so the audio and Nepali are the ones already shipped in COURSE.
+
+function openSounds() {
+	soundDrill = null;
+	document.getElementById('sounds-list').classList.remove('hide');
+	document.getElementById('sounds-drill').classList.add('hide');
+	renderSoundTopics();
+	showScreen('sounds');
+}
+
+function renderSoundTopics() {
+	const wrap = document.getElementById('sounds-topics');
+	wrap.textContent = '';
+	for (const topic of SOUND_TOPICS) {
+		const examples = soundExamples(topic);
+		if (examples.length === 0) continue; // never offer a contrast with no words to drill
+		const card = document.createElement('div');
+		card.className = 'sounds-topic';
+		card.setAttribute('role', 'button');
+		card.tabIndex = 0;
+		const title = document.createElement('span');
+		title.className = 'sounds-topic-title';
+		title.textContent = topic.title;
+		const sub = document.createElement('span');
+		sub.className = 'sounds-topic-sub';
+		sub.textContent = topic.sub;
+		card.append(title, sub);
+		card.addEventListener('click', () => startSoundDrill(topic, examples));
+		card.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				startSoundDrill(topic, examples);
+			}
+		});
+		wrap.appendChild(card);
+	}
+}
+
+// Real course words that exhibit a contrast: those whose Devanagari contains one of the
+// topic's marks — single words, de-duped, shortest first (clearer), capped at six.
+function soundExamples(topic) {
+	const seen = new Set();
+	const matches = [];
+	for (const unit of COURSE) {
+		for (const item of unit.items) {
+			if (!item.dev || seen.has(item.np) || item.np.split(/\s+/).length > 1) continue;
+			if (topic.marks.some((m) => item.dev.includes(m))) {
+				seen.add(item.np);
+				matches.push(item);
+			}
 		}
-		if (speakState.url) URL.revokeObjectURL(speakState.url);
 	}
-	speakState = { recorder: null, chunks: [], url: null, recording: false };
-	const rec = document.getElementById('speak-record');
-	rec.classList.remove('recording');
-	document.getElementById('speak-record-label').textContent = 'Tap to record';
-	document.getElementById('speak-play-you').classList.add('hide');
+	matches.sort((a, b) => a.dev.length - b.dev.length);
+	return matches.slice(0, 6);
 }
 
-async function speakToggleRecord() {
-	if (speakState.recording) {
-		speakState.recorder.stop();
-		return;
-	}
-	let stream;
-	try {
-		stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-	} catch (e) {
-		document.getElementById('speak-record-label').textContent = 'Microphone unavailable';
-		return;
-	}
-	const recorder = new MediaRecorder(stream);
-	speakState.recorder = recorder;
-	speakState.chunks = [];
-	recorder.ondataavailable = (e) => {
-		if (e.data && e.data.size) speakState.chunks.push(e.data);
-	};
-	recorder.onstop = () => {
-		stream.getTracks().forEach((t) => t.stop());
-		speakState.recording = false;
-		document.getElementById('speak-record').classList.remove('recording');
-		if (!speakState.chunks.length) return;
-		const blob = new Blob(speakState.chunks, { type: speakState.chunks[0].type || 'audio/webm' });
-		if (speakState.url) URL.revokeObjectURL(speakState.url);
-		speakState.url = URL.createObjectURL(blob);
-		document.getElementById('speak-record-label').textContent = 'Record again';
-		document.getElementById('speak-play-you').classList.remove('hide');
-	};
-	recorder.start();
-	speakState.recording = true;
-	document.getElementById('speak-record').classList.add('recording');
-	document.getElementById('speak-record-label').textContent = 'Stop recording';
+function startSoundDrill(topic, examples) {
+	soundDrill = { topic: topic, examples: examples, index: 0 };
+	document.getElementById('sounds-list').classList.add('hide');
+	document.getElementById('sounds-drill').classList.remove('hide');
+	document.getElementById('sounds-drill-title').textContent = topic.title;
+	document.getElementById('sounds-drill-intro').textContent = topic.intro;
+	document.getElementById('sounds-tip').textContent = topic.tip;
+	renderSoundCard();
 }
 
-function speakPlayYou() {
-	if (speakState && speakState.url) new Audio(speakState.url).play().catch(() => {});
+function renderSoundCard() {
+	const topic = soundDrill.topic;
+	const item = soundDrill.examples[soundDrill.index];
+
+	const devEl = document.getElementById('sounds-dev');
+	devEl.textContent = '';
+	for (const node of highlightDev(item.dev, topic.marks)) devEl.appendChild(node);
+	document.getElementById('sounds-roman').textContent = item.np + ' · ' + item.pron;
+	document.getElementById('sounds-en').textContent = item.en;
+
+	soundsRecorder.reset();
+	const n = soundDrill.examples.length;
+	document.getElementById('sounds-progress-fill').style.width = Math.round(((soundDrill.index + 1) / n) * 100) + '%';
+	document.getElementById('sounds-next').textContent = soundDrill.index >= n - 1 ? 'Done' : 'Next sound';
+
+	// Auto-play the model on reveal (within the tap that opened or advanced the card).
+	SanoAudio.play(item.id);
+}
+
+// Break the Devanagari into grapheme clusters and wrap the ones carrying a mark, so the
+// contrast stands out without splitting a base letter from its vowel sign or nasal mark.
+function highlightDev(dev, marks) {
+	const clusters =
+		typeof Intl !== 'undefined' && Intl.Segmenter
+			? [...new Intl.Segmenter('ne', { granularity: 'grapheme' }).segment(dev)].map((seg) => seg.segment)
+			: [...dev];
+	return clusters.map((cluster) => {
+		if (![...cluster].some((ch) => marks.includes(ch))) return document.createTextNode(cluster);
+		const span = document.createElement('span');
+		span.className = 'sounds-mark';
+		span.textContent = cluster;
+		return span;
+	});
+}
+
+function advanceSound() {
+	if (!soundDrill) return;
+	if (soundDrill.index >= soundDrill.examples.length - 1) {
+		closeSoundDrill();
+		return;
+	}
+	soundDrill.index++;
+	renderSoundCard();
+}
+
+function closeSoundDrill() {
+	soundsRecorder.reset();
+	soundDrill = null;
+	document.getElementById('sounds-drill').classList.add('hide');
+	document.getElementById('sounds-list').classList.remove('hide');
 }
 
 function renderMatch(ex) {
