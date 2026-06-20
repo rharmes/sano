@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('lesson-continue').addEventListener('click', continueLesson);
 	document.getElementById('complete-continue').addEventListener('click', goHome);
 
-	document.getElementById('conversation-link').addEventListener('click', () => startDialogue(DIALOGUES[0]));
 	document.getElementById('dialogue-quit').addEventListener('click', goHome);
 	document.getElementById('dialogue-advance').addEventListener('click', advanceDialogue);
 	document.getElementById('dialogue-continue').addEventListener('click', continueDialogue);
@@ -82,6 +81,7 @@ function defaultState() {
 		itemsToday: 0,
 		itemsTotal: 0,
 		items: {}, // item id -> { seen, correct, level, lastSeen, intro }
+		dialoguesDone: {}, // SR-01: which path conversations have been completed
 	};
 }
 
@@ -349,6 +349,12 @@ function renderHome() {
 
 // The Duolingo-style winding path. All geometry is computed here so it can
 // adapt to the container width; CSS handles colors and type.
+// A path conversation unlocks once the unit it follows is complete.
+function dialogueUnlocked(dlg) {
+	const afterUnit = COURSE.find((u) => u.id === dlg.after);
+	return afterUnit ? unitIsComplete(afterUnit) : true;
+}
+
 function renderPath() {
 	const wrap = document.getElementById('path');
 	wrap.textContent = '';
@@ -381,10 +387,64 @@ function renderPath() {
 	let y = 30;
 	const centers = [];
 
-	COURSE.forEach((unit, index) => {
+	// Weave each section's conversation into the path right after the unit it follows.
+	const seq = [];
+	for (const unit of COURSE) {
+		seq.push({ kind: 'unit', unit: unit });
+		const dlg = DIALOGUES.find((d) => d.after === unit.id);
+		if (dlg) seq.push({ kind: 'dialogue', dialogue: dlg });
+	}
+
+	seq.forEach((entry, index) => {
+		const angle = index * WAVE - Math.PI / 2;
+		const x = xAt(index);
+		const onLeft = Math.sin(angle) > 0;
+
+		if (entry.kind === 'dialogue') {
+			const dlg = entry.dialogue;
+			const done = !!(state.dialoguesDone && state.dialoguesDone[dlg.id]);
+			const unlocked = dialogueUnlocked(dlg);
+			const status = done ? 'complete' : unlocked ? 'unlocked' : 'locked';
+
+			const node = document.createElement('button');
+			node.type = 'button';
+			node.className = 'path-node dialogue ' + status;
+			node.style.width = nodeSize + 'px';
+			node.style.height = nodeSize + 'px';
+			node.style.left = x - nodeSize / 2 + 'px';
+			node.style.top = y + 'px';
+			node.title = dlg.title;
+			const icon = document.createElement('span');
+			icon.className = 'icon';
+			const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+			const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+			use.setAttribute('href', '#i-' + (done ? 'check' : unlocked ? 'forum' : 'lock'));
+			svg.appendChild(use);
+			icon.appendChild(svg);
+			node.appendChild(icon);
+			if (unlocked || done) node.addEventListener('click', () => startDialogue(dlg));
+			wrap.appendChild(node);
+
+			const label = document.createElement('div');
+			label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
+			label.style.width = labelWidth + 'px';
+			label.style.top = y + (compact ? 10 : 16) + 'px';
+			label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - labelGap : x + nodeSize / 2 + labelGap) + 'px';
+			const dtitle = document.createElement('div');
+			dtitle.textContent = dlg.title;
+			const dmeta = document.createElement('small');
+			dmeta.textContent = 'Conversation';
+			label.appendChild(dtitle);
+			label.appendChild(dmeta);
+			wrap.appendChild(label);
+
+			y += step;
+			return;
+		}
+
+		const unit = entry.unit;
 		const complete = unitIsComplete(unit);
 		const isCurrent = unit === current;
-		const angle = index * WAVE - Math.PI / 2;
 
 		if (PATH_SECTIONS[unit.id]) {
 			const section = document.createElement('div');
@@ -397,7 +457,6 @@ function renderPath() {
 			if (isCurrent) y += 34;
 		}
 		const status = complete ? 'complete' : isCurrent ? 'current' : 'locked';
-		const x = xAt(index);
 		centers.push({ y: y + nodeSize / 2, complete: complete });
 
 		if (isCurrent) {
@@ -452,7 +511,6 @@ function renderPath() {
 		if (complete || isCurrent) node.addEventListener('click', () => startUnitLesson(unit, complete));
 		wrap.appendChild(node);
 
-		const onLeft = Math.sin(angle) > 0;
 		const label = document.createElement('div');
 		label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
 		label.style.width = labelWidth + 'px';
@@ -1171,6 +1229,9 @@ function continueDialogue() {
 
 function finishDialogue() {
 	const d = dialogueSession.def;
+	if (!state.dialoguesDone) state.dialoguesDone = {};
+	state.dialoguesDone[d.id] = true;
+	saveState();
 	document.getElementById('complete-title').textContent = 'Conversation complete!';
 	document.getElementById('complete-streak').classList.add('hide');
 	document.getElementById('complete-strengthened').classList.add('hide');

@@ -1406,6 +1406,19 @@ table#vocab tbody td:nth-child(3) {
 .path-node.locked .icon {
 	color: color-mix(in srgb, var(--text-color-softer) 60%, var(--background-color));
 }
+/* Change 2: a conversation stop in the path — pennant-gold so it reads as a treat. */
+.path-node.dialogue.unlocked,
+.path-node.dialogue.complete {
+	background: var(--badge-color);
+}
+.path-node.dialogue.unlocked .icon,
+.path-node.dialogue.complete .icon {
+	color: var(--button-primary-color);
+}
+.path-node.dialogue.unlocked:hover,
+.path-node.dialogue.complete:hover {
+	filter: brightness(1.12);
+}
 .path-ring {
 	position: absolute;
 	z-index: 1;

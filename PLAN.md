@@ -75,13 +75,13 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 
 | ✓ | ID | Recommendation | PEDAGOGY | Effort | Depends on |
 |---|----|----------------|----------|--------|------------|
-| ✅ | **SR-01** | Two-character dialogues + comprehension questions *(MVP: a voiced Sano↔Pyaro greeting built from existing phrases + 3 comprehension Qs, launched from home; more dialogues & companion art = follow-up)* | §1–3 | M–H | — (better with SR-02) |
+| ✅ | **SR-01** | Two-character dialogues + comprehension questions *(5 voiced dialogues from existing phrases — one per path section; reveal-one-bubble-at-a-time + autoplay; character heads beside bubbles)* | §1–3 | M–H | — (better with SR-02) |
 | ✅ | **SR-02** | Self-hosted phrase & dialogue audio *(phrase audio shipped — 476 clips, Piper google spk 0; dialogue lines ride on SR-01; per-character voices = TODO)* | §7,§8 | H | — |
 | ✅ | **SR-03** | Listening exercises ("tap/type what you hear") *(audio-only prompt on ~half of recall reviews; choose-meaning + type variants)* | §7,§8 | M | SR-02 |
 | ⬜ | **SR-04** | Speaking practice (speak-before-reveal + record/compare) | §4 | M | SR-02 |
 | ⬜ | **SR-05** | Evolve Leitner → per-item graded scheduler | §6 | M | — |
 | ✅ | **SR-06** | Communicative "can-do" goals & progress framing *(per-unit goals on the home CTA + complete screen; path labels left alone for layout safety; goal strings AI-drafted, Ross to refine)* | §1,§9 | L–M | — |
-| ⬜ | **SR-07** | Bring the 10 companions into the app | §9 | L–M | SR-01 |
+| 🟡 | **SR-07** | Bring the 10 companions into the app *(heads now in dialogue bubbles via js/characters.js + the ported companion palette; full-body / animated section hosts = follow-up)* | §9 | L–M | SR-01 |
 | ⬜ | **SR-08** | Pronunciation coaching for Nepali sounds | §4,§8 | M | SR-02 |
 | ✅ | **SR-09** | Mindful gamification (streak freeze, no guilt) *(forgives one missed day, earns at 5-day milestones; home "freeze ready" notice + complete-screen "freeze used"; existing copy already gentle)* | §7,§9 | L | — |
 | ⬜ | **SR-10** | Placement / skip-ahead for experienced learners | §9 | L | — |

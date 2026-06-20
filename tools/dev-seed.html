@@ -114,10 +114,10 @@
 
 		<div class="card">
 			<span class="tests">SR-01 dialogues</span>
-			<h2>4 · Practice a conversation</h2>
+			<h2>4 · A conversation in the path</h2>
 			<p>
-				Opens the app on home. Tap <b>"Practice a conversation →"</b> (below the lesson path) to play the Sano ↔ Pyaro dialogue — listen
-				to each line, then <b>"Continue to questions"</b> for the comprehension quiz.
+				Foundations is done, so the <b>"Meeting Pyaro"</b> conversation is unlocked in the path — a <b>gold node</b> after
+				Introductions. Tap it to play the dialogue (bubbles reveal one at a time), then answer the comprehension questions.
 			</p>
 			<button onclick="seed('dialogue')">Seed &amp; open</button>
 		</div>
@@ -202,7 +202,9 @@
 					state = midCourse({ streak: 7, streakFreezes: 1, lastActivityDay: day(2) });
 				} else if (which === 'dialogue') {
 					const items = {};
-					COURSE[0].items.slice(0, 6).forEach((it) => (items[it.id] = rec({ level: 1, lastSeen: day(0) })));
+					const done = ['basics', 'numbers', 'pronouns', 'family-people', 'introductions'];
+					for (const u of COURSE)
+						if (done.includes(u.id)) for (const it of u.items) items[it.id] = rec({ level: 3, lastSeen: day(0) });
 					state = {
 						version: 2,
 						name: 'Aastha',
