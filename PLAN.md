@@ -78,7 +78,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 | ✅ | **SR-01** | Two-character dialogues + comprehension questions *(5 voiced dialogues from existing phrases — one per path section; reveal-one-bubble-at-a-time + autoplay; character heads beside bubbles)* | §1–3 | M–H | — (better with SR-02) |
 | ✅ | **SR-02** | Self-hosted phrase & dialogue audio *(phrase audio shipped — 476 clips, Piper google spk 0; dialogue lines ride on SR-01; per-character voices = TODO)* | §7,§8 | H | — |
 | ✅ | **SR-03** | Listening exercises ("tap/type what you hear") *(audio-only prompt on ~half of recall reviews; choose-meaning + type variants)* | §7,§8 | M | SR-02 |
-| ⬜ | **SR-04** | Speaking practice (speak-before-reveal + record/compare) | §4 | M | SR-02 |
+| ✅ | **SR-04** | Speaking practice (speak-before-reveal + record/compare) *(skippable "say it aloud" + record-yourself-and-compare step per new word; no scoring; getUserMedia/MediaRecorder verified headless, full record→playback needs device test)* | §4 | M | SR-02 |
 | ⬜ | **SR-05** | Evolve Leitner → per-item graded scheduler | §6 | M | — |
 | ✅ | **SR-06** | Communicative "can-do" goals & progress framing *(per-unit goals on the home CTA + complete screen; path labels left alone for layout safety; goal strings AI-drafted, Ross to refine)* | §1,§9 | L–M | — |
 | 🟡 | **SR-07** | Bring the 10 companions into the app *(heads now in dialogue bubbles via js/characters.js + the ported companion palette; full-body / animated section hosts = follow-up)* | §9 | L–M | SR-01 |

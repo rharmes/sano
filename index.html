@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=1111f00f" />
+		<link rel="stylesheet" href="css/sano.css?v=c6dca9e9" />
 		<link rel="icon" href="favicon.svg?v=e1facae9" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a0282fd9" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -35,7 +35,7 @@
 		<script src="js/audio.js?v=d32b803b" defer></script>
 		<script src="js/dialogues.js?v=dddb2387" defer></script>
 		<script src="js/characters.js?v=199a4684" defer></script>
-		<script src="js/sano.js?v=59ad2c2b" defer></script>
+		<script src="js/sano.js?v=af89a6e8" defer></script>
 	</head>
 	<body>
 		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
@@ -61,6 +61,11 @@
 					/>
 				</symbol>
 				<symbol id="i-play_arrow" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></symbol>
+				<symbol id="i-mic" viewBox="0 0 24 24">
+					<path
+						d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"
+					/>
+				</symbol>
 				<symbol id="i-forum" viewBox="0 0 24 24">
 					<path
 						d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"
@@ -328,6 +333,22 @@
 						/>
 					</p>
 					<div id="exercise-match" class="hide"></div>
+					<div id="exercise-speak" class="hide">
+						<button id="speak-record" type="button" class="speak-record">
+							<span class="icon"
+								><svg><use href="#i-mic" /></svg
+							></span>
+							<span id="speak-record-label">Tap to record</span>
+						</button>
+						<button id="speak-play-you" type="button" class="btn-secondary hide">
+							<span class="icon"
+								><svg><use href="#i-play_arrow" /></svg
+							></span>
+							Your recording
+						</button>
+						<p id="speak-note">Say it aloud, then compare with the model. There's no grading — just practice.</p>
+						<button id="speak-continue" type="button" class="btn-primary">Continue</button>
+					</div>
 					<button id="exercise-check" class="btn-primary hide">Check</button>
 				</div>
 				<div id="lesson-feedback" class="hide">

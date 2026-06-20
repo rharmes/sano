@@ -37,6 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	for (const choiceEl of exerciseChoiceEls) choiceEl.addEventListener('click', answerExercise);
 
 	document.getElementById('exercise-check').addEventListener('click', checkExercise);
+	document.getElementById('speak-record').addEventListener('click', speakToggleRecord);
+	document.getElementById('speak-play-you').addEventListener('click', speakPlayYou);
+	document.getElementById('speak-continue').addEventListener('click', () => {
+		resetSpeak();
+		continueLesson();
+	});
 	const typeInput = document.getElementById('type-answer');
 	typeInput.addEventListener('input', () => {
 		document.getElementById('exercise-check').disabled = typeInput.value.trim() === '';
@@ -276,6 +282,8 @@ function showScreen(name) {
 
 function goHome() {
 	lesson = null;
+	if (speakState && speakState.recording) resetSpeak(); // stop the mic if quitting mid-record
+
 	// Show the screen first so the path can measure its real width.
 	showScreen('home');
 	renderHome();
@@ -570,7 +578,7 @@ function startLesson(queue) {
 		firstTryCorrect: 0,
 		// A matching exercise covers several items, so stats count items rather than
 		// exercises; the intro warmup is excluded since its words are scored by their drills.
-		statTotal: queue.reduce((n, ex) => n + (ex.items ? (ex.intro ? 0 : ex.items.length) : 1), 0),
+		statTotal: queue.reduce((n, ex) => n + (ex.items ? (ex.intro ? 0 : ex.items.length) : ex.unscored ? 0 : 1), 0),
 		levelAdjusted: {},
 		leveledUp: 0,
 		firstOfDay: state.lastActivityDay !== dayString(new Date()),
@@ -593,6 +601,8 @@ function buildExercises(newItems, reviewItems) {
 	for (const item of newItems) {
 		exercises.push({ item: item, type: 'choice', dir: 'np-en' });
 		exercises.push({ item: item, type: 'choice', dir: 'en-np' });
+		// A skippable "say it aloud" speaking step for each new word (SR-04, unscored).
+		exercises.push({ item: item, type: 'speak', unscored: true });
 	}
 
 	const matchable = reviewItems.filter((item) => item.emoji && itemRecord(item.id).level <= 1);
@@ -674,11 +684,13 @@ function renderExercise() {
 	document.getElementById('exercise-wordbank').classList.toggle('hide', ex.type !== 'wordbank');
 	document.getElementById('exercise-type').classList.toggle('hide', ex.type !== 'type');
 	document.getElementById('exercise-match').classList.toggle('hide', ex.type !== 'match');
+	document.getElementById('exercise-speak').classList.toggle('hide', ex.type !== 'speak');
 	document.getElementById('exercise-check').classList.toggle('hide', ex.type !== 'wordbank' && ex.type !== 'type');
 
 	if (ex.type === 'choice') renderChoice(ex);
 	else if (ex.type === 'wordbank') renderWordbank(ex);
 	else if (ex.type === 'type') renderType(ex);
+	else if (ex.type === 'speak') renderSpeak(ex);
 	else renderMatch(ex);
 }
 
@@ -770,6 +782,72 @@ function renderType(ex) {
 	input.value = '';
 	document.getElementById('exercise-check').disabled = true;
 	input.focus();
+}
+
+// SR-04 speaking practice: record yourself, then play it back against the model audio.
+// There's no scoring (browsers have no Nepali speech recognition) — just self-compare —
+// and the whole step is skippable via Continue, with graceful fallback if the mic is
+// unavailable or denied.
+let speakState = null;
+
+function renderSpeak(ex) {
+	setPrompt('Say it aloud, then compare', ex.item.np, ex.item.pron, ex.item.id);
+	resetSpeak();
+}
+
+function resetSpeak() {
+	if (speakState) {
+		if (speakState.recording && speakState.recorder) {
+			try {
+				speakState.recorder.stop();
+			} catch (e) {}
+		}
+		if (speakState.url) URL.revokeObjectURL(speakState.url);
+	}
+	speakState = { recorder: null, chunks: [], url: null, recording: false };
+	const rec = document.getElementById('speak-record');
+	rec.classList.remove('recording');
+	document.getElementById('speak-record-label').textContent = 'Tap to record';
+	document.getElementById('speak-play-you').classList.add('hide');
+}
+
+async function speakToggleRecord() {
+	if (speakState.recording) {
+		speakState.recorder.stop();
+		return;
+	}
+	let stream;
+	try {
+		stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+	} catch (e) {
+		document.getElementById('speak-record-label').textContent = 'Microphone unavailable';
+		return;
+	}
+	const recorder = new MediaRecorder(stream);
+	speakState.recorder = recorder;
+	speakState.chunks = [];
+	recorder.ondataavailable = (e) => {
+		if (e.data && e.data.size) speakState.chunks.push(e.data);
+	};
+	recorder.onstop = () => {
+		stream.getTracks().forEach((t) => t.stop());
+		speakState.recording = false;
+		document.getElementById('speak-record').classList.remove('recording');
+		if (!speakState.chunks.length) return;
+		const blob = new Blob(speakState.chunks, { type: speakState.chunks[0].type || 'audio/webm' });
+		if (speakState.url) URL.revokeObjectURL(speakState.url);
+		speakState.url = URL.createObjectURL(blob);
+		document.getElementById('speak-record-label').textContent = 'Record again';
+		document.getElementById('speak-play-you').classList.remove('hide');
+	};
+	recorder.start();
+	speakState.recording = true;
+	document.getElementById('speak-record').classList.add('recording');
+	document.getElementById('speak-record-label').textContent = 'Stop recording';
+}
+
+function speakPlayYou() {
+	if (speakState && speakState.url) new Audio(speakState.url).play().catch(() => {});
 }
 
 function renderMatch(ex) {
