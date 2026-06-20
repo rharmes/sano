@@ -1699,7 +1699,7 @@ table#vocab tbody td:nth-child(3) {
 	max-width: 700px;
 	margin: 0 auto;
 	padding-top: 4rem;
-	padding-bottom: 120px;
+	padding-bottom: 4rem;
 }
 #dialogue-top {
 	display: flex;
@@ -1742,6 +1742,7 @@ table#vocab tbody td:nth-child(3) {
 	display: flex;
 	align-items: flex-start;
 	gap: 1rem;
+	scroll-margin-bottom: 11rem;
 }
 .dialogue-line.pyaro {
 	flex-direction: row-reverse;
@@ -1761,10 +1762,28 @@ table#vocab tbody td:nth-child(3) {
 	margin: 0;
 	max-width: calc(100% - 6.6rem);
 }
+/* Conversation Continue: a fixed bottom bar so it stays in reach while the thread
+   scrolls up behind it; the gradient fades the scrolling content out under it. The
+   thread gets bottom padding so the last bubble can clear the bar. */
+#dialogue-convo {
+	padding-bottom: 12rem;
+}
+#dialogue-advance-bar {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 20;
+	display: flex;
+	justify-content: center;
+	padding: 1.4rem 2rem calc(1.4rem + env(safe-area-inset-bottom, 0px));
+	background: linear-gradient(to top, var(--background-color) 72%, transparent);
+}
 #dialogue-advance {
 	display: block;
 	width: 100%;
-	margin-top: 3.5rem;
+	max-width: 660px;
+	margin: 0;
 }
 #dialogue-q-label {
 	font-size: var(--text-label);
@@ -1938,12 +1957,14 @@ table#vocab tbody td:nth-child(3) {
 
 #screen-onboarding:not(.hide) ~ .footer,
 #screen-lesson:not(.hide) ~ .footer,
-#screen-complete:not(.hide) ~ .footer {
+#screen-complete:not(.hide) ~ .footer,
+#screen-dialogue:not(.hide) ~ .footer {
 	display: none;
 }
 #nepali:has(#screen-onboarding:not(.hide)) #header,
 #nepali:has(#screen-lesson:not(.hide)) #header,
-#nepali:has(#screen-complete:not(.hide)) #header {
+#nepali:has(#screen-complete:not(.hide)) #header,
+#nepali:has(#screen-dialogue:not(.hide)) #header {
 	display: none;
 }
 

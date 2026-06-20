@@ -1161,7 +1161,7 @@ function revealNextLine() {
 	document.getElementById('dialogue-progress-fill').style.width = fill + '%';
 	const last = dialogueSession.lineIndex >= d.lines.length - 1;
 	document.getElementById('dialogue-advance').textContent = last ? 'Continue to questions' : 'Continue';
-	if (dialogueSession.lineIndex > 0) bubble.scrollIntoView({ behavior: 'smooth', block: 'center' });
+	if (dialogueSession.lineIndex > 0) bubble.scrollIntoView({ behavior: 'smooth', block: 'end' });
 }
 
 function advanceDialogue() {
