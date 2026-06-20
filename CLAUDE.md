@@ -12,37 +12,53 @@ sprite in `index.html` (`#i-*` symbols, used via `<use href="#i-name">`).
 The only network calls are same-origin `fetch()`es to `api/`.
 
 First-run onboarding (`js/onboarding.js`, `SanoOnboard`) greets brand-new users
-(no saved name) with a scripted Sano conversation that captures their name and
-optionally creates a cloud account / shows the PWA install steps. **The
+(no saved name) with a scripted Sano conversation that captures their name, offers
+experienced learners a **placement / skip-ahead** step (`Sano.placeBefore` /
+`Sano.placementOptions` — picking a path section marks every earlier unit as
+introduced at recall strength), and optionally creates a cloud account / shows the
+PWA install steps. **The
 Romanized-Nepali strings in its `L` object are drafts Ross owns** — don't treat
 them as authoritative or silently "correct" them; flag questions to Ross.
 
 ## Learning model (`js/sano.js` + `js/data.js`)
 
-Course content is `COURSE` in `js/data.js`: 36 units, each `{ id, title, kind, items }`
-where `kind` is `'phrases'` (items have `np`/`pron`/`en`/`usage`) or `'vocab'` (items also
-carry an `emoji`); ~476 items total. `js/sano.js` is the lesson engine, and it is more
-pedagogically built-out than this file used to convey:
+Course content is `COURSE` in `js/data.js`: 36 units, each `{ id, title, kind, goal, items }`
+where `kind` is `'phrases'` (items have `np`/`pron`/`dev`/`en`/`usage`) or `'vocab'` (items
+also carry an `emoji`); ~476 items total. The per-item `dev` (Devanagari) and per-unit
+`goal` strings are AI-drafted and under Ross's review (see the devanagari review tool
+below). `js/sano.js` is the lesson engine, and it is more pedagogically built-out than
+this file used to convey:
 
 - **Home** is a Duolingo-style winding **path** of units that unlock in order
-  (`renderPath`, `currentUnit`); the daily-lesson button mixes new items from the current
-  unit with the most-overdue reviews from anywhere in the course.
-- **Spaced repetition** is a **Leitner** system. Each item record
-  (`state.items[id]` = `seen/correct/level/lastSeen/intro`) climbs a level on a correct
-  lesson answer and drops on a miss; `REVIEW_INTERVALS = [1,1,3,7,14]` days set when each
-  level is due (`isDue`, `dueItems`, `MAX_LEVEL = 4`).
-- **Exercises escalate with level**: `choice` (multiple choice, both np→en and en→np),
+  (`renderPath`, `currentUnit`), with two-character **dialogue** nodes (gold) and
+  **pronunciation** nodes (lavender) woven in after their anchor unit; a completed node
+  shows a checkmark in its own colour. The daily-lesson button mixes new items from the
+  current unit with the most-overdue reviews from anywhere in the course.
+- **Spaced repetition** is an **SM-2-lite** graded scheduler. Each item record
+  (`state.items[id]` = `seen/correct/ease/interval/lastSeen/intro`) carries its own `ease`
+  (≥ 1.3) and `interval` in days; a review is auto-graded from the exercise type (miss →
+  lapse, recognition hit → good, recall/typed/listening hit → easy), which stretches or
+  resets the interval (`scheduleReview`, `reviewInterval`, `isDue`, `dueItems`). Legacy
+  Leitner `level` records migrate to interval/ease on load; the pure scheduler math is
+  unit-tested by `tools/check-scheduler.mjs`.
+- **Exercises escalate with strength**: `choice` (multiple choice, both np→en and en→np),
   `match` (tap-the-pairs, also the new-word warm-up), `wordbank` (assemble a phrase from
   tiles), and `type` (typed recall, romanization-tolerant via edit distance). New items get
-  multiple choice both ways; higher-level reviews get wordbank/type.
-- **Progress**: a day **streak** plus daily/total counters in the header and the
-  lesson-complete screen; a **dictionary** screen lists every item. All progress lives in
-  localStorage `sano.state.v1` (schema version 2) and syncs to the server (below).
+  multiple choice both ways; stronger items (recall strength — interval ≥ 3 days) get
+  wordbank/type, and ~half of recall reviews become audio-only "listen" prompts (SR-03).
+- **Progress**: a day **streak** (with a forgiveness "freeze", SR-09) plus daily/total
+  counters in the header and the lesson-complete screen; a **dictionary** screen lists
+  every item. All progress lives in localStorage `sano.state.v1` (schema version 2 — the
+  per-item records plus `dialoguesDone` / `soundsDone` node completion) and syncs to the
+  server (below).
 
 `PEDAGOGY.md` (committed, not deployed) records the learning-science basis for this design
-and where it is headed; the working roadmap is the gitignored `PLAN.md`. Planned next (per
-PLAN.md): two-character **dialogues** with comprehension questions, and pre-generated
-self-hosted **Nepali TTS audio** (Devanagari-driven, one voice per character).
+and where it is headed; the working roadmap is `PLAN.md` (committed, but excluded from
+the deploy rsync). Two-character **dialogues** with comprehension questions and
+self-hosted **Nepali phrase audio** (Devanagari-driven Piper TTS) have since shipped, along
+with listening/speaking practice and pronunciation coaching; planned next (per PLAN.md):
+full-body / animated companions, one voice per character, and an optional Devanagari
+script track.
 
 ## Server sync (api/)
 

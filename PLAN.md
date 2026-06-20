@@ -284,6 +284,10 @@ Most of the roadmap is built and deployed to namastesano.com. Status by ID:
   while spaced reviews still resurface the "known" material to confirm the placement. Core is
   `Sano.placeBefore` / `Sano.placementOptions`; dev-seed has a one-click scenario. The new
   onboarding Nepali strings are drafts for Ross.
+- **2026-06-20 (later) — node polish:** completed **pronunciation** nodes now show a
+  checkmark in their lavender colour (conversations already did in gold) via
+  `state.soundsDone`; the `.path-badge` due-count flag was tightened (min-width 20px,
+  −2px side padding).
 - **2026-06-20 (later still) — SR-08 built:** a "Sounds of Nepali" listen-and-repeat mode
   (four **lavender path nodes** with Devanagari-glyph icons, woven into the path among the
   lessons — they hide the site chrome and exit like a lesson) covering aspiration,
