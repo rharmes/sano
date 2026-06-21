@@ -1293,18 +1293,23 @@ function advanceSound() {
 	renderSoundCard();
 }
 
-// A celebration screen at the end of the drill, like other lessons. Pronunciation is
-// pure practice (no scoring, no streak/SRS effect), so it simply affirms the work done.
+// A celebration screen at the end of the drill, like other lessons. Pronunciation has
+// no per-word SRS scoring, but completing it counts toward the daily streak.
 function finishSound() {
 	const topic = soundDrill.topic;
 	const count = soundDrill.examples.length;
 	if (!state.soundsDone) state.soundsDone = {};
 	state.soundsDone[topic.id] = true;
+	// Counts toward the daily streak, like other lessons. Capture firstOfDay before
+	// registerActivity() stamps today's date.
+	streakFreezeJustUsed = false;
+	const firstOfDay = state.lastActivityDay !== dayString(new Date());
+	registerActivity();
 	saveState();
 	soundsRecorder.reset();
 	soundDrill = null;
 	document.getElementById('complete-title').textContent = 'Sounds practiced!';
-	document.getElementById('complete-streak').classList.add('hide');
+	showStreakResult(firstOfDay);
 	document.getElementById('complete-strengthened').classList.add('hide');
 	document.getElementById('complete-stats').textContent =
 		'You practiced ' + count + ' ' + (count === 1 ? 'word' : 'words') + ' — ' + topic.title.toLowerCase();
@@ -1365,7 +1370,12 @@ function matchTile(item, side, text) {
 	tile.className = 'match-tile';
 	tile.textContent = text;
 	tile.dataset.id = item.id;
-	tile.addEventListener('click', () => selectMatchTile(tile, side));
+	tile.addEventListener('click', () => {
+		// The left column holds the Nepali word — speak it on every tap (even once
+		// matched) so the sound reinforces the pairing.
+		if (side === 'left') SanoAudio.play(item.id);
+		selectMatchTile(tile, side);
+	});
 	return tile;
 }
 
@@ -1578,20 +1588,26 @@ function continueLesson() {
 	else renderExercise();
 }
 
+// Show the streak line on the complete screen when this was the day's first
+// activity, with one wording shared by every lesson type that extends the streak.
+function showStreakResult(firstOfDay) {
+	const streakEl = document.getElementById('complete-streak');
+	streakEl.classList.toggle('hide', !firstOfDay);
+	if (firstOfDay)
+		document.getElementById('complete-streak-text').textContent = streakFreezeJustUsed
+			? 'Streak freeze used — your ' + state.streak + '-day streak is safe'
+			: state.streak === 1
+				? 'Streak started!'
+				: state.streak + ' day streak!';
+}
+
 function finishLesson() {
 	saveState();
 	// Reset the title in case a dialogue left "Conversation complete!" behind.
 	document.getElementById('complete-title').textContent = 'Lesson complete!';
 	document.getElementById('complete-stats').textContent = lesson.firstTryCorrect + ' of ' + lesson.statTotal + ' correct on the first try';
 
-	const streakEl = document.getElementById('complete-streak');
-	streakEl.classList.toggle('hide', !lesson.firstOfDay);
-	if (lesson.firstOfDay)
-		document.getElementById('complete-streak-text').textContent = streakFreezeJustUsed
-			? 'Streak freeze used — your ' + state.streak + '-day streak is safe'
-			: state.streak === 1
-				? 'Streak started!'
-				: state.streak + ' day streak!';
+	showStreakResult(lesson.firstOfDay);
 
 	const strengthenedEl = document.getElementById('complete-strengthened');
 	strengthenedEl.classList.toggle('hide', lesson.strengthened === 0);
@@ -1767,9 +1783,14 @@ function finishDialogue() {
 	const d = dialogueSession.def;
 	if (!state.dialoguesDone) state.dialoguesDone = {};
 	state.dialoguesDone[d.id] = true;
+	// Completing a conversation counts toward the daily streak, like other lessons.
+	// Capture firstOfDay before registerActivity() stamps today's date.
+	streakFreezeJustUsed = false;
+	const firstOfDay = state.lastActivityDay !== dayString(new Date());
+	registerActivity();
 	saveState();
 	document.getElementById('complete-title').textContent = 'Conversation complete!';
-	document.getElementById('complete-streak').classList.add('hide');
+	showStreakResult(firstOfDay);
 	document.getElementById('complete-strengthened').classList.add('hide');
 	document.getElementById('complete-stats').textContent = dialogueSession.correct + ' of ' + d.questions.length + ' questions correct';
 	const goalEl = document.getElementById('complete-goal');

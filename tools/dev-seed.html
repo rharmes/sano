@@ -114,11 +114,13 @@
 		</div>
 
 		<div class="card">
-			<span class="tests">SR-01 dialogues</span>
+			<span class="tests">SR-01 dialogues · streak</span>
 			<h2>4 · A conversation in the path</h2>
 			<p>
 				Foundations is done, so the <b>"Meeting Pyaro"</b> conversation is unlocked in the path — a <b>gold node</b> after
-				Introductions. Tap it to play the dialogue (bubbles reveal one at a time), then answer the comprehension questions.
+				Introductions. Tap it to play the dialogue (bubbles reveal one at a time), then answer the comprehension questions. You studied
+				<b>yesterday</b> but not yet today, so finishing the conversation <b>extends your streak</b> — the complete screen shows
+				<b>“5 day streak!”</b> and the home counter ticks up.
 			</p>
 			<button onclick="seed('dialogue')">Seed &amp; open</button>
 		</div>
@@ -147,16 +149,27 @@
 		</div>
 
 		<div class="card">
-			<span class="tests">SR-08 pronunciation</span>
+			<span class="tests">SR-08 pronunciation · streak</span>
 			<h2>7 · Sounds of Nepali (pronunciation coaching)</h2>
 			<p>
 				Basics is done, so the lavender <b>ख</b> node — <b>Aspirated consonants</b> — is unlocked in the path, just after Basics. Tap it
 				for a listen-and-repeat drill: the model word auto-plays, <b>“Hear it”</b> replays it, <b>“Record yourself”</b> compares your
 				take, and <b>“Next sound”</b> advances. The highlighted Devanagari shows where the sound sits; the <b>✕</b> (top-left) or
-				finishing returns to the path. Allow the mic the first time.
+				finishing returns to the path. Allow the mic the first time. You studied <b>yesterday</b> but not yet today, so finishing the
+				drill <b>extends your streak</b> — the complete screen shows <b>“5 day streak!”</b>
 			</p>
 			<button onclick="seed('sounds')">Seed &amp; open</button>
 		</div>
+		<div class="card">
+			<span class="tests">SR-02 audio · match</span>
+			<h2>Tap a Nepali word to hear it (matching)</h2>
+			<p>
+				Lands mid-course; tap <b>“Start today's lesson.”</b> The lesson opens on the 5-word <b>“Tap the matching pairs”</b> warm-up —
+				tap any <b>Nepali word on the left</b> and it plays that word's audio (the English column on the right is silent).
+			</p>
+			<button onclick="seed('matchaudio')">Seed &amp; open</button>
+		</div>
+
 		<div class="card">
 			<span class="tests">SR-10</span>
 			<h2>Placement / skip-ahead onboarding</h2>
@@ -271,7 +284,9 @@
 						itemsTotal: 40,
 						items,
 					};
-				} else if (which === 'lesson') {
+				} else if (which === 'lesson' || which === 'matchaudio') {
+					// matchaudio (tap-to-hear): the daily lesson opens on the 5-word warm-up
+					// match, where tapping a Nepali (left) tile plays that word's audio.
 					state = midCourse();
 				} else if (which === 'freeze') {
 					// Missed exactly yesterday with a freeze banked -> home notice now, save on finish.
@@ -287,7 +302,7 @@
 						onboarded: true,
 						streak: 4,
 						streakFreezes: 1,
-						lastActivityDay: day(0),
+						lastActivityDay: day(1),
 						itemsToday: 0,
 						itemsTotal: 30,
 						items,
@@ -396,7 +411,7 @@
 						onboarded: true,
 						streak: 4,
 						streakFreezes: 1,
-						lastActivityDay: day(0),
+						lastActivityDay: day(1),
 						itemsToday: 0,
 						itemsTotal: 40,
 						items,
