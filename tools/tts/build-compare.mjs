@@ -1,7 +1,7 @@
 // Assemble design/tts-compare.html — a phone-friendly A/B page for the Nepali TTS
 // bake-off. One card per phrase (tools/tts/phrases.mjs); inside each card, a play button
 // for every voice: the current Piper voice (audio/default) plus every folder generated
-// under design/_bakeoff/ (e.g. by tools/tts/eleven.mjs). See TTS.md.
+// under design/_bakeoff/ (e.g. by tools/tts/eleven.mjs). See RESEARCH.md.
 //
 //   node tools/tts/build-compare.mjs
 //   php -S 127.0.0.1:8000   # from repo root, then open /design/tts-compare.html

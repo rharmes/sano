@@ -1,5 +1,5 @@
 // Synthesize the bake-off phrases (tools/tts/phrases.mjs) through one ElevenLabs voice,
-// writing one MP3 per phrase. See tools/tts/README.md and TTS.md.
+// writing one MP3 per phrase. See tools/tts/README.md and RESEARCH.md.
 //
 // Cloning is done in the ElevenLabs dashboard (drag a native sample in → copy its
 // voice_id); this script only SYNTHESIZES, so we never touch the cloning API.

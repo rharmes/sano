@@ -1,4 +1,4 @@
-# TTS.md — Upgrading Sano's spoken Nepali
+# RESEARCH.md — Upgrading Sano's spoken Nepali
 
 Research on how to **dramatically improve the quality of Sano's TTS Nepali audio** and
 deliver **11 distinct voices across genders** without paying live voice actors to record

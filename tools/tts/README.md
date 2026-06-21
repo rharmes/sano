@@ -1,6 +1,6 @@
 # tools/tts — Nepali TTS bake-off & generation
 
-Tooling for the audio-quality upgrade described in **`TTS.md`**. Not deployed (lives under
+Tooling for the audio-quality upgrade described in **`RESEARCH.md`**. Not deployed (lives under
 `tools/`). Generates spoken-Nepali clips through a **hosted** TTS API and assembles an A/B
 page for judging quality on the phone.
 
@@ -8,7 +8,7 @@ Per the 2026-06-20 decision: **hosted API only**, **11 voices cloned from real n
 speakers**, **character voices first**. With those constraints the only hosted engine that
 does **Nepali + voice cloning** is **ElevenLabs (Eleven v3)** — so that's what this targets.
 (Sarvam, Resemble's hosted cloning, Fish, and Google don't do Nepali; Azure/Edge have just
-two fixed Nepali voices and no cloning. See TTS.md §3–4.)
+two fixed Nepali voices and no cloning. See RESEARCH.md §3–4.)
 
 ## One-time setup
 
@@ -20,6 +20,56 @@ two fixed Nepali voices and no cloning. See TTS.md §3–4.)
    ```sh
    export ELEVENLABS_API_KEY=sk_…
    ```
+
+## Collecting clone samples
+
+What you give ElevenLabs to clone each voice. We use **Instant Voice Cloning**, so each voice
+needs only a short clip — not the hours a Professional clone wants, and nowhere near reading
+every line.
+
+**Length:** ~**1.5–2 minutes** of clean audio per voice. ElevenLabs says **don't exceed ~3
+minutes** for instant cloning — more gives no gain and can make the clone worse. One clip per
+character → **11 clips**. (For the first bake-off you only need **one** sample to start.)
+
+**Record in Nepali, not English.** A clone carries the _accent and phonetics_ of its source
+audio, so a native speaker reading **Nepali** is what yields an authentic Nepali accent out. An
+English sample bleeds an English accent into the Nepali synthesis.
+
+**Quality matters more than length:**
+
+- One speaker only — no other voices, background noise, music, or echo/reverb.
+- **Consistent energy** the whole clip (animated _or_ calm throughout; mixing destabilises the
+  clone) — hold the persona you want for that character.
+- Decent mic, quiet soft room; **MP3 ≥ 192 kbps or WAV**, mono, levels not clipping.
+
+**What they should say:** natural, conversational Nepali in the character's tone — _not_ a flat
+monotone (unless that character is a narrator), and _not_ the 476 app phrases read back-to-back
+(too choppy; the model wants connected speech). The easiest and best source is **extemporaneous
+speech**: have each speaker talk naturally for ~2 minutes following a few prompts.
+
+**Per character, before recording:** write a one-line persona (gender, age, energy) so the
+sample is performed in the right tone, and keep the **same mic/room/style across all 11** so the
+voices sit together as a cast.
+
+### Optional: a shared prompt script
+
+If you want every speaker covering the same ground (cleaner when A/B-ing voices side by side),
+give them this prompt list rather than a rigid passage — natural delivery clones better than
+stiff reading, and it keeps the Nepali wording in a native speaker's hands (the app's Nepali is
+yours to own, so this README won't hand you unverified Nepali to read verbatim):
+
+1. Greet, say your name, and where you're from.
+2. Say what you do on a normal morning.
+3. Name a few foods and drinks you like.
+4. Describe a place or festival you love.
+5. Count one to five, then say goodbye warmly.
+
+Ask them to **work these words in naturally** so the clip exercises the sounds romanization
+hides: धन्यवाद (dhanyabad), ठीक छ (thik cha), खाना (khana), घर (ghar), दूध (dudh), पाँच
+(paanch), हुँदैन (hudaina), सञ्चै (sanchai). They cover aspirated ध/घ/ख, retroflex ठ, dental द,
+nasalization (हुँ, पाँच), and the ञ ligature. (Want one _verbatim_ identical passage across all
+11 instead? Have a native speaker write ~250 words hitting those same sounds — that keeps the
+wording authoritative.)
 
 ## Run the bake-off
 

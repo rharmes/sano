@@ -1,4 +1,4 @@
-// Bake-off phrase set for evaluating Nepali TTS quality (see TTS.md).
+// Bake-off phrase set for evaluating Nepali TTS quality (see RESEARCH.md).
 //
 // Twelve short utterances drawn from js/data.js (plus one counting line), deliberately
 // weighted toward the sounds romanization hides and that TTS most often botches in
