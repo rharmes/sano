@@ -1137,7 +1137,8 @@ function createRecorder(opts) {
 	const idle = opts.idleLabel || 'Tap to record';
 	let recorder = null;
 	let chunks = [];
-	let url = null;
+	let takeUrl = null; // data: URL of the last take (data:, not blob: — see play())
+	let player = null; // one retained <audio>, reused like SanoAudio's element
 	let recording = false;
 
 	function reset() {
@@ -1146,10 +1147,9 @@ function createRecorder(opts) {
 				recorder.stop();
 			} catch (e) {}
 		}
-		if (url) URL.revokeObjectURL(url);
 		recorder = null;
 		chunks = [];
-		url = null;
+		takeUrl = null;
 		recording = false;
 		recordBtn.classList.remove('recording');
 		recordLabel.textContent = idle;
@@ -1178,11 +1178,20 @@ function createRecorder(opts) {
 			recording = false;
 			recordBtn.classList.remove('recording');
 			if (!chunks.length) return;
-			const blob = new Blob(chunks, { type: chunks[0].type || 'audio/webm' });
-			if (url) URL.revokeObjectURL(url);
-			url = URL.createObjectURL(blob);
-			recordLabel.textContent = opts.againLabel || 'Record again';
-			playBtn.classList.remove('hide');
+			// Tag the take with the format the recorder actually produced. WebKit
+			// records audio/mp4 and can't decode webm, so the old hardcoded webm
+			// fallback left iOS takes silently undecodable.
+			const type = recorder.mimeType || chunks[0].type || '';
+			const blob = new Blob(chunks, type ? { type: type } : undefined);
+			// Play from a data: URL, not a blob: URL — installed iOS PWAs silence
+			// blob: audio. Decode it now so play() (a user gesture) stays instant.
+			const reader = new FileReader();
+			reader.onload = () => {
+				takeUrl = reader.result;
+				recordLabel.textContent = opts.againLabel || 'Record again';
+				playBtn.classList.remove('hide');
+			};
+			reader.readAsDataURL(blob);
 		};
 		recorder.start();
 		recording = true;
@@ -1191,7 +1200,15 @@ function createRecorder(opts) {
 	}
 
 	function play() {
-		if (url) new Audio(url).play().catch(() => {});
+		if (!takeUrl) return;
+		// Reuse one retained element (like SanoAudio): iOS can drop playback from a
+		// throwaway Audio that nothing keeps a reference to.
+		if (!player) player = new Audio();
+		player.src = takeUrl;
+		player.play().catch((err) => {
+			recordLabel.textContent = 'Playback failed — record again';
+			console.warn('recording playback failed', err);
+		});
 	}
 
 	return {
