@@ -81,7 +81,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 | ✅ | **SR-04** | Speaking practice (speak-before-reveal + record/compare) *(skippable "say it aloud" + record-yourself-and-compare step per new word; no scoring; getUserMedia/MediaRecorder verified headless, full record→playback needs device test)* | §4 | M | SR-02 |
 | ✅ | **SR-05** | Evolve Leitner → per-item graded scheduler *(SM-2-lite: each item gets its own `ease`+`interval`; reviews are auto-graded from exercise difficulty — miss = lapse, recognition hit = good, recall/listening hit = easy — so strong items stretch past the old 14-day cap while weak ones reset to daily. Old Leitner `level` records migrate to interval/ease on load; the pure scheduler block is unit-tested by `tools/check-scheduler.mjs`)* | §6 | M | — |
 | ✅ | **SR-06** | Communicative "can-do" goals & progress framing *(per-unit goals on the home CTA + complete screen; path labels left alone for layout safety; goal strings AI-drafted, Ross to refine)* | §1,§9 | L–M | — |
-| 🟡 | **SR-07** | Bring the 10 companions into the app *(heads now in dialogue bubbles via js/characters.js + the ported companion palette; full-body / animated section hosts = follow-up)* | §9 | L–M | SR-01 |
+| 🟡 | **SR-07** | Bring the 10 companions into the app *(heads in dialogue bubbles **and** full-body **decorative companions along the path** — one per wave-turn, ordered Thulo/Pyaro/rest, idling like Sano with a tap-to-headshake, profiles flipped to face the path; art from `CHARACTER_BODIES` in js/characters.js. Active per-section hosts = follow-up)* | §9 | L–M | SR-01 |
 | ✅ | **SR-08** | Pronunciation coaching for Nepali sounds *(a "Sounds of Nepali" listen-and-repeat mode for the contrasts romanization hides — aspiration, retroflex/dental, nasal vowels, vowel length — placed as **four lavender path nodes with Devanagari-glyph icons** woven among the lessons (hiding the site chrome and exiting like a lesson). Each is illustrated by real course words found via their Devanagari `marks`, with the model audio + a record-and-compare step reusing SR-04. First place the app surfaces Devanagari. Intros/tips are drafts; examples ride on the under-review `dev` field)* | §4,§8 | M | SR-02 |
 | ✅ | **SR-09** | Mindful gamification (streak freeze, no guilt) *(forgives one missed day, earns at 5-day milestones; home "freeze ready" notice + complete-screen "freeze used"; existing copy already gentle)* | §7,§9 | L | — |
 | ✅ | **SR-10** | Placement / skip-ahead for experienced learners *(onboarding asks about prior experience after the name; "I already know some" opens a starting-point picker — one option per path section, built from the course — that marks every item before the chosen section as introduced at recall strength, so those units read complete and reviews still resurface them. New onboarding Nepali strings are drafts, Ross's to refine)* | §9 | L | — |
@@ -158,9 +158,12 @@ dialogue *is* a can-do scenario).
 SR-01 dialogue cast and/or per-section hosts (a different friend introduces each topic).
 **Why:** Activates a finished, on-brand asset and adds variety/delight [§9]. Names/meanings
 stay Ross's drafts.
-**Where:** extract the instrumented SVGs (the `design/build-anim-characters.mjs` generator
-pattern already exists) into an app-usable form; render in dialogue bubbles. Mostly
-enabled by SR-01 — a dialogue can launch with just Sano + one companion.
+**Where:** `tools/build-character-heads.mjs` lifts the instrumented SVGs out of
+`design/anim-characters.js` into `js/characters.js` — `CHARACTER_HEADS` (dialogue bubbles)
+and `CHARACTER_BODIES` (the decorative path companions, placed at the wave-turns by
+`renderPath`, styled `.path-buddy`). Mostly enabled by SR-01 — a dialogue can launch with
+just Sano + one companion. **Shipped:** dialogue-bubble heads + decorative path companions.
+**Follow-up:** companions that actively host/introduce a section.
 
 ### SR-08 — Pronunciation coaching for the sounds romanization hides
 **What:** A focused "listen & repeat" mode that flags Nepali contrasts the Latin spelling

@@ -2,7 +2,7 @@
 
 Learn Nepali with short daily lessons. Live at <https://namastesano.com>.
 
-A Duolingo-style course of essential Nepali phrases with Romanized pronunciations: a winding path of units, a daily lesson that mixes new words with spaced-repetition reviews, plus a browsable dictionary. New learners get a short conversational onboarding where Sano introduces the app and captures a display name. Progress lives in localStorage and optionally syncs to the server behind an account — self-service signup, or stay fully local. The app works offline or logged out, installs as an iOS home-screen PWA, and can send an opt-in daily reminder at a time you choose.
+A Duolingo-style course of essential Nepali phrases with Romanized pronunciations: a winding path of units (with Sano's paper-cut animal friends tucked into its pockets), a daily lesson that mixes new words with spaced-repetition reviews, plus a browsable dictionary. New learners get a short conversational onboarding where Sano introduces the app and captures a display name. Progress lives in localStorage and optionally syncs to the server behind an account — self-service signup, or stay fully local. The app works offline or logged out, installs as an iOS home-screen PWA, and can send an opt-in daily reminder at a time you choose.
 
 ## Architecture at a glance
 
@@ -21,6 +21,10 @@ js/
   sync.js         SanoSync: server sync layer + login panel logic
   onboarding.js   SanoOnboard: first-run conversational setup flow
   push.js         SanoPush: daily-reminder subscriptions + setup modal
+  audio.js        SanoAudio: self-hosted phrase-audio playback (pre-rendered MP3s, SR-02)
+  dialogues.js    DIALOGUES: two-character dialogue lessons + comprehension (SR-01)
+  characters.js   CHARACTER_HEADS/_BODIES: generated companion art (SR-07; build-character-heads.mjs)
+  sounds.js       SOUND_TOPICS: pronunciation coaching drills (SR-08)
 api/              PHP endpoints (register, login, logout, state, reminder, push-*) — see "Server sync"
 fonts/            Self-hosted woff2 (Neuton 700; Lato 300/400/700 + italics)
 manifest.json     PWA manifest; sw.js is the service worker; icon-*.png are the app icons
