@@ -48,11 +48,13 @@ this file used to convey:
   Leitner `level` records migrate to interval/ease on load; the pure scheduler math is
   unit-tested by `tools/check-scheduler.mjs`.
 - **Exercises escalate with strength**: `choice` (multiple choice, both np→en and en→np),
-  `match` (tap-the-pairs, also the new-word warm-up), `wordbank` (assemble a phrase from
+  `match` (tap-the-pairs, also the new-word warm-up; tapping a Nepali tile plays its audio),
+  `wordbank` (assemble a phrase from
   tiles), and `type` (typed recall, romanization-tolerant via edit distance). New items get
   multiple choice both ways; stronger items (recall strength — interval ≥ 3 days) get
   wordbank/type, and ~half of recall reviews become audio-only "listen" prompts (SR-03).
-- **Progress**: a day **streak** (with a forgiveness "freeze", SR-09) plus daily/total
+- **Progress**: a day **streak** (with a forgiveness "freeze", SR-09; extended by finishing
+  any lesson, conversation, or pronunciation drill) plus daily/total
   counters in the header and the lesson-complete screen; a **dictionary** screen lists
   every item. All progress lives in localStorage `sano.state.v1` (schema version 2 — the
   per-item records plus `dialoguesDone` / `soundsDone` node completion) and syncs to the
@@ -66,6 +68,14 @@ with listening/speaking practice, pronunciation coaching, and the decorative ful
 **companions** on the path (above); planned next (per PLAN.md): companions that actively
 host/participate in lessons & dialogues, one voice per character, and an optional Devanagari
 script track.
+
+**Recorded-voice playback (SR-04 speaking, SR-08 sounds) goes through the Web Audio API**,
+not an `<audio>` element: the record-and-compare step (`createRecorder` in `js/sano.js`)
+keeps each take's bytes and plays them with `AudioContext.decodeAudioData` → a buffer source.
+iOS records `audio/mp4` it then refuses to decode in a media element (`play()` rejects with
+`NotSupportedError`, for both `blob:` and `data:` sources), so don't "simplify" this back to
+`new Audio(url)`. The model phrase audio (`SanoAudio`, plain `.mp3` files) still uses an
+`<audio>` element — only the live recording needs Web Audio.
 
 ## Server sync (api/)
 
