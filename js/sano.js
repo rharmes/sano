@@ -1137,7 +1137,7 @@ function createRecorder(opts) {
 	const idle = opts.idleLabel || 'Tap to record';
 	let recorder = null;
 	let chunks = [];
-	let takeUrl = null; // data: URL of the last take (data:, not blob: — see play())
+	let takeUrl = null; // blob: object URL of the last take
 	let player = null; // one retained <audio>, reused like SanoAudio's element
 	let recording = false;
 
@@ -1147,6 +1147,7 @@ function createRecorder(opts) {
 				recorder.stop();
 			} catch (e) {}
 		}
+		if (takeUrl) URL.revokeObjectURL(takeUrl);
 		recorder = null;
 		chunks = [];
 		takeUrl = null;
@@ -1183,15 +1184,13 @@ function createRecorder(opts) {
 			// fallback left iOS takes silently undecodable.
 			const type = recorder.mimeType || chunks[0].type || '';
 			const blob = new Blob(chunks, type ? { type: type } : undefined);
-			// Play from a data: URL, not a blob: URL — installed iOS PWAs silence
-			// blob: audio. Decode it now so play() (a user gesture) stays instant.
-			const reader = new FileReader();
-			reader.onload = () => {
-				takeUrl = reader.result;
-				recordLabel.textContent = opts.againLabel || 'Record again';
-				playBtn.classList.remove('hide');
-			};
-			reader.readAsDataURL(blob);
+			// Play via a blob: object URL through the retained <audio> in play().
+			// iOS does NOT support data: URIs for media elements (play() rejects), so
+			// the object URL is what matches the working model-audio path.
+			if (takeUrl) URL.revokeObjectURL(takeUrl);
+			takeUrl = URL.createObjectURL(blob);
+			recordLabel.textContent = opts.againLabel || 'Record again';
+			playBtn.classList.remove('hide');
 		};
 		recorder.start();
 		recording = true;
@@ -1206,7 +1205,7 @@ function createRecorder(opts) {
 		if (!player) player = new Audio();
 		player.src = takeUrl;
 		player.play().catch((err) => {
-			recordLabel.textContent = 'Playback failed — record again';
+			recordLabel.textContent = 'Playback failed: ' + (err && err.name ? err.name : err);
 			console.warn('recording playback failed', err);
 		});
 	}
