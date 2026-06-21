@@ -1137,8 +1137,8 @@ function createRecorder(opts) {
 	const idle = opts.idleLabel || 'Tap to record';
 	let recorder = null;
 	let chunks = [];
-	let takeUrl = null; // blob: object URL of the last take
-	let player = null; // one retained <audio>, reused like SanoAudio's element
+	let takeBuffer = null; // ArrayBuffer of the last take, decoded via Web Audio in play()
+	let audioCtx = null; // one reused AudioContext; see play() for why not an <audio> element
 	let recording = false;
 
 	function reset() {
@@ -1147,10 +1147,9 @@ function createRecorder(opts) {
 				recorder.stop();
 			} catch (e) {}
 		}
-		if (takeUrl) URL.revokeObjectURL(takeUrl);
 		recorder = null;
 		chunks = [];
-		takeUrl = null;
+		takeBuffer = null;
 		recording = false;
 		recordBtn.classList.remove('recording');
 		recordLabel.textContent = idle;
@@ -1179,18 +1178,16 @@ function createRecorder(opts) {
 			recording = false;
 			recordBtn.classList.remove('recording');
 			if (!chunks.length) return;
-			// Tag the take with the format the recorder actually produced. WebKit
-			// records audio/mp4 and can't decode webm, so the old hardcoded webm
-			// fallback left iOS takes silently undecodable.
+			// Keep the take as raw bytes and decode it with the Web Audio API in
+			// play(). iOS records audio (audio/mp4) that it then refuses to play back
+			// through an <audio> element — both data: and blob: sources reject with
+			// NotSupportedError — but AudioContext.decodeAudioData handles it.
 			const type = recorder.mimeType || chunks[0].type || '';
-			const blob = new Blob(chunks, type ? { type: type } : undefined);
-			// Play via a blob: object URL through the retained <audio> in play().
-			// iOS does NOT support data: URIs for media elements (play() rejects), so
-			// the object URL is what matches the working model-audio path.
-			if (takeUrl) URL.revokeObjectURL(takeUrl);
-			takeUrl = URL.createObjectURL(blob);
-			recordLabel.textContent = opts.againLabel || 'Record again';
-			playBtn.classList.remove('hide');
+			new Blob(chunks, type ? { type: type } : undefined).arrayBuffer().then((ab) => {
+				takeBuffer = ab;
+				recordLabel.textContent = opts.againLabel || 'Record again';
+				playBtn.classList.remove('hide');
+			});
 		};
 		recorder.start();
 		recording = true;
@@ -1199,15 +1196,31 @@ function createRecorder(opts) {
 	}
 
 	function play() {
-		if (!takeUrl) return;
-		// Reuse one retained element (like SanoAudio): iOS can drop playback from a
-		// throwaway Audio that nothing keeps a reference to.
-		if (!player) player = new Audio();
-		player.src = takeUrl;
-		player.play().catch((err) => {
-			recordLabel.textContent = 'Playback failed: ' + (err && err.name ? err.name : err);
-			console.warn('recording playback failed', err);
-		});
+		if (!takeBuffer) return;
+		try {
+			const Ctx = window.AudioContext || window.webkitAudioContext;
+			if (!audioCtx) audioCtx = new Ctx();
+			// iOS starts the context suspended; resume it inside this tap (a user
+			// gesture) so the buffer decoded below is audible.
+			if (audioCtx.state === 'suspended') audioCtx.resume();
+			// decodeAudioData detaches its input, so decode a copy to keep replays.
+			audioCtx.decodeAudioData(
+				takeBuffer.slice(0),
+				(buf) => {
+					const src = audioCtx.createBufferSource();
+					src.buffer = buf;
+					src.connect(audioCtx.destination);
+					src.start(0);
+				},
+				(err) => {
+					recordLabel.textContent = 'Playback failed: ' + (err && err.name ? err.name : 'decode');
+					console.warn('decodeAudioData failed', err);
+				},
+			);
+		} catch (e) {
+			recordLabel.textContent = 'Playback failed: ' + (e && e.name ? e.name : e);
+			console.warn('recording playback failed', e);
+		}
 	}
 
 	return {
