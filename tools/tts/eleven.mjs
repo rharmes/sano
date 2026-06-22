@@ -21,15 +21,18 @@ const label = args.label || voice;
 const model = args.model || 'eleven_v3';
 const fmt = args.format || 'mp3_44100_128';
 const outDir = args.out || join('design', '_bakeoff', String(label));
+const only = args.only ? String(args.only) : null; // regenerate just one phrase id
+const phrases = only ? PHRASES.filter((p) => p.id === only) : PHRASES;
 
 if (!apiKey) fail('Set ELEVENLABS_API_KEY in the environment.');
 if (!voice) fail('Pass --voice <voice_id> — create the clone in the ElevenLabs dashboard first.');
+if (only && !phrases.length) fail('No phrase with id "' + only + '" in phrases.mjs.');
 
 mkdirSync(outDir, { recursive: true });
-console.log(`Voice ${voice} (${label}) · model ${model} · ${PHRASES.length} phrases → ${outDir}`);
+console.log(`Voice ${voice} (${label}) · model ${model} · ${phrases.length} phrase(s) → ${outDir}`);
 
 let ok = 0;
-for (const p of PHRASES) {
+for (const p of phrases) {
 	try {
 		writeFileSync(join(outDir, p.id + '.mp3'), await synth(p.dev));
 		ok++;
@@ -39,7 +42,7 @@ for (const p of PHRASES) {
 	}
 	await sleep(350); // gentle on rate limits
 }
-console.log(`Done: ${ok}/${PHRASES.length} clips in ${outDir}`);
+console.log(`Done: ${ok}/${phrases.length} clips in ${outDir}`);
 
 async function synth(text) {
 	const url = `https://api.elevenlabs.io/v1/text-to-speech/${voice}?output_format=${fmt}`;

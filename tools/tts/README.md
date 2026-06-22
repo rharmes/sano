@@ -97,7 +97,8 @@ comma-list sentence — so a weak engine is obvious.
 
 - **`phrases.mjs`** — the 12-phrase bake-off set (Devanagari snapshotted from `js/data.js`).
 - **`eleven.mjs`** — ElevenLabs synthesis CLI (`--voice`, `--label`, `--model` [default
-  `eleven_v3`], `--format` [default `mp3_44100_128`], `--out`).
+  `eleven_v3`], `--format` [default `mp3_44100_128`], `--out`, `--only <phrase-id>` to
+  regenerate a single phrase).
 - **`build-compare.mjs`** — assembles `design/tts-compare.html` from `audio/default/` +
   `design/_bakeoff/*`.
 

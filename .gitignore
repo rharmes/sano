@@ -13,6 +13,9 @@ design/voice-gallery.html
 design/tts-compare.html
 design/_bakeoff/
 
+# Native-speaker voice samples (ElevenLabs clone inputs) — kept locally, never committed.
+tools/tts/voice_samples/
+
 # Native-speaker Devanagari corrections, written by design/devanagari-save.php.
 # Transient working data: review it, merge into js/data.js, then it can be cleared.
 design/devanagari-review.json
