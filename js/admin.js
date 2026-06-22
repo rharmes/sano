@@ -29,12 +29,17 @@
 			else break;
 		}
 		if (complete >= TOTAL_UNITS) return { label: 'Done', sort: TOTAL_UNITS + 1 };
-		return { label: 'Unit ' + (complete + 1) + ' / ' + TOTAL_UNITS, sort: complete + 1 };
+		return { label: String(complete + 1), sort: complete + 1 };
 	}
 
 	function syncedDisplay(ms) {
 		if (ms == null) return { label: 'Never', sort: null };
-		return { label: new Date(ms).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }), sort: ms };
+		const d = new Date(ms);
+		const p = (n) => String(n).padStart(2, '0');
+		const hour = d.getHours() % 12 || 12;
+		const ampm = d.getHours() < 12 ? 'AM' : 'PM';
+		const label = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${hour}:${p(d.getMinutes())} ${ampm}`;
+		return { label, sort: ms };
 	}
 
 	function toRow(u) {
@@ -56,10 +61,10 @@
 	const COLUMNS = [
 		{ key: 'username', label: 'Username', sortable: true },
 		{ key: 'path', label: 'Path', sortable: true },
-		{ key: 'streak', label: 'Streak', sortable: true },
+		{ key: 'streak', label: 'Streak', icon: 'ai-bolt', sortable: true },
 		{ key: 'synced', label: 'Last synced', sortable: true },
-		{ key: 'reset', label: 'Reset password', sortable: false },
-		{ key: 'delete', label: 'Delete', sortable: false },
+		{ key: 'reset', label: '', sortable: false },
+		{ key: 'delete', label: '', sortable: false },
 	];
 
 	function sortRows() {
@@ -115,12 +120,17 @@
 		const htr = document.createElement('tr');
 		for (const col of COLUMNS) {
 			const th = document.createElement('th');
+			// A column may show an icon (the streak bolt) instead of text; `label` is still
+			// its accessible name. Reset/delete have an empty label — their buttons' aria-labels
+			// describe them, so the headers stay blank for density.
+			const heading = col.icon ? '<svg class="admin-th-icon" aria-hidden="true"><use href="#' + col.icon + '" /></svg>' : esc(col.label);
+			if (col.label) th.setAttribute('aria-label', col.label);
 			if (col.sortable) {
 				th.className = 'admin-th-sort';
 				th.tabIndex = 0;
 				th.setAttribute('role', 'button');
 				if (sortKey === col.key) th.setAttribute('aria-sort', sortDir === 'asc' ? 'ascending' : 'descending');
-				th.innerHTML = esc(col.label) + SORT_ARROW;
+				th.innerHTML = heading + SORT_ARROW;
 				th.addEventListener('click', () => onSort(col.key));
 				th.addEventListener('keydown', (e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
@@ -128,6 +138,8 @@
 						onSort(col.key);
 					}
 				});
+			} else if (col.icon) {
+				th.innerHTML = heading;
 			} else {
 				th.textContent = col.label;
 			}

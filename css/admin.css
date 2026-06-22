@@ -148,6 +148,14 @@ body {
 	transform: rotate(180deg);
 }
 
+/* Bolt icon standing in for the "Streak" header. */
+.admin-th-icon {
+	width: 1.6rem;
+	height: 1.6rem;
+	fill: currentColor;
+	vertical-align: -0.25em;
+}
+
 .admin-table td.admin-username {
 	font-weight: 700;
 	color: var(--text-color-richer);
