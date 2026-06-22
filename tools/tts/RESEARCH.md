@@ -185,12 +185,12 @@ _Per the 2026-06-20 decision (hosted-only), the live plan is the **ElevenLabs v3
 - Pyaro the red panda (cTnqh1Daui2JhvWlVQGC): Male. From Kathmandu. Speaks excitedly. Neutral otherwise.
 - Rangin the danphe (Go3hvna9oG9MO8K7MyMQ): Male. Flitting through words. Distracted. Frantic.
 - Bahadur the Bengal tiger (1adWuJ6CHzVMDg1XyhYS): Female. Terai accent, with more Hindu-inflection. Speaks like she's smiling. Mischievous and playful. Languorous.
-- Gyani the Asian elephant (ci0ei6j6LoyKXZ0eHKaL): Female. Older, with a wheezing, trumpeting voice. Speaks at a brisk clip, like she has other things to do.
+- Gyani the Asian elephant (vTgg1b2Eauo5efIcWup5): Female. Older, with a wheezing, trumpeting voice. Speaks at a brisk clip, like she has other things to do.
 - Thulo the one-horned rhinoceros (MW558bGi5hBsE33qo9Rw): Male. Slow and deep. Sounds old but still strong. Thick, gravelly tone with a resonant, theatrical quality.
 - Hiun the snow leopard (AUAZ2heBYCZwa6O95Ays): Female. Curt and cold. Matter of fact. On the quicker side.
 - Shanta the yak (Kk1jouQWkqFRzsjKXdUl): Male. Tibetan, with a mid-to-low tone. Considered pace. Speaks like he isn't used to talking much.
 - Chanchal the gray langur (c4fKke5dQ8qA3djIBGhb): Male. Quick and high-pitched. Younger. Impatient.
-- Lamo the gharial (vTgg1b2Eauo5efIcWup5): Female. Lower-pitched. Middle-aged. Smokers voice.
+- Lamo the gharial (ci0ei6j6LoyKXZ0eHKaL): Female. Lower-pitched. Middle-aged. Smokers voice.
 - Phurtilo the Himalayan tahr: Unused for now; no voice.
 
 ---
