@@ -103,14 +103,42 @@ iOS records `audio/mp4` it then refuses to decode in a media element (`play()` r
   (`signup_attempts`); CSRF header on mutations; CSP + HSTS + nosniff in
   `.htaccess`; and a `set_exception_handler` in `lib.php` that turns any uncaught
   error into a generic JSON 500 (no stack/DSN leak).
-- Schema: `tools/schema.sql` (users, app_state blob + revision, sessions,
-  signup_attempts, login_attempts, push_subscriptions). Reset/seed a password via
+- Schema: `tools/schema.sql` (users [+ an `is_admin` flag, see the admin
+  dashboard below], app_state blob + revision, sessions, signup_attempts,
+  login_attempts, push_subscriptions). Reset/seed a password via
   `scp tools/make-user.php sano-deploy:` then
   `ssh -t sano-deploy 'php make-user.php <user> [--reset-password]'`
   (`tools/` is never deployed to the docroot). **Live-DB schema changes go
   through a one-off idempotent `tools/migrate-*.php` run** (PDO, reads
-  `sano-config.php` like make-user.php; e.g. `migrate-2026-06-reminders.php`) —
-  never re-apply the full `schema.sql` to an existing DB.
+  `sano-config.php` like make-user.php; e.g. `migrate-2026-06-reminders.php`,
+  `migrate-2026-06-admin.php`) — never re-apply the full `schema.sql` to an
+  existing DB.
+
+## Admin dashboard (admin/)
+
+A private, admin-only dashboard at **`/admin/`** (`admin/index.html` + `js/admin.js` +
+`css/admin.css`) listing every account for management. A **standalone page** (not part of the
+`index.html` SPA) that reuses the app's fonts, tokens, and components (`css/sano.css`) so it
+matches the brand; access is enforced entirely server-side.
+
+- **Admin gate:** a `users.is_admin` flag. `api/lib.php` adds `require_admin()` (401 logged
+  out, 403 for a logged-in non-admin) and `is_admin(int)`; `login.php` and `state.php` return an
+  `isAdmin` flag that `js/sync.js` keeps in its `meta` and uses to reveal the **"Admin
+  dashboard"** link at the foot of the account panel (`#admin-link` in `#login-panel`).
+- **Endpoints** (flat names like `push-*.php`; ship via the `api` rsync; admin- + CSRF-guarded):
+  `admin-users.php` (GET — each account's last-sync time, streak, and its set of introduced item
+  ids), `admin-reset-password.php` (POST — argon2id reset reusing make-user's SQL, **and clears
+  that user's sessions**), `admin-delete-user.php` (POST — deletes the user; cascades to
+  app_state/sessions/push_subscriptions; **self-delete blocked**).
+- **Table:** username, path position (**"Unit N / 36"**, derived in `admin.js` from `COURSE`
+  using sano.js's rule that a unit is complete when every item is `intro`-ed), streak, and last
+  synced (`app_state.updated_at`). Headers sort **A–Z then Z–A**; on a phone the table scrolls
+  sideways with a sticky username column. Reset / delete open `<dialog>` modals. **`?demo=1`**
+  renders sample rows with stubbed actions for local UI review (there's no local DB).
+- **Going live:** the page/JS/CSS/endpoints deploy via the normal rsync (`admin` is in the
+  `tools/deploy.sh` allowlist). The `is_admin` column is added by the one-off
+  `tools/migrate-2026-06-admin.php` (adds the column + grants a username) — **run it before
+  deploying the code**, since `login.php`/`state.php` SELECT `is_admin`.
 
 ## PWA + daily reminders
 
