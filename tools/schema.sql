@@ -8,6 +8,8 @@ CREATE TABLE users (
   password_hash VARCHAR(255) NOT NULL,
   failed_logins TINYINT UNSIGNED NOT NULL DEFAULT 0,
   locked_until  DATETIME NULL,
+  -- Admin flag: only an admin account may use the /admin/ dashboard + endpoints.
+  is_admin      TINYINT UNSIGNED NOT NULL DEFAULT 0,
   -- Daily reminder: whole-hour local time (0-23) + IANA zone. NULL = none set.
   reminder_hour TINYINT UNSIGNED NULL,
   reminder_tz   VARCHAR(64) NULL,
@@ -16,6 +18,8 @@ CREATE TABLE users (
 -- Existing DB: ALTER TABLE users
 --   ADD COLUMN reminder_hour TINYINT UNSIGNED NULL,
 --   ADD COLUMN reminder_tz VARCHAR(64) NULL;
+-- Existing DB: ALTER TABLE users ADD COLUMN is_admin TINYINT UNSIGNED NOT NULL DEFAULT 0;
+--   (or run tools/migrate-2026-06-admin.php, which adds it and can grant a username.)
 
 CREATE TABLE app_state (
   user_id    INT UNSIGNED PRIMARY KEY,

@@ -9,7 +9,7 @@ require __DIR__ . '/lib.php';
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'GET') {
 	$userId = require_user();
-	respond(200, state_payload(state_row($userId)));
+	respond(200, ['isAdmin' => is_admin($userId)] + state_payload(state_row($userId)));
 }
 
 if ($method !== 'PUT') {

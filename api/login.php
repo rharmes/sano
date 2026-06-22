@@ -32,7 +32,7 @@ if ((int) $recent->fetchColumn() >= LOGIN_IP_MAX) {
 }
 
 $stmt = $pdo->prepare(
-	'SELECT id, password_hash, failed_logins, locked_until, TIMESTAMPDIFF(SECOND, NOW(), locked_until) AS lock_left FROM users WHERE username = ?',
+	'SELECT id, password_hash, failed_logins, locked_until, TIMESTAMPDIFF(SECOND, NOW(), locked_until) AS lock_left, is_admin FROM users WHERE username = ?',
 );
 $stmt->execute([$username]);
 $user = $stmt->fetch();
@@ -69,4 +69,4 @@ $pdo->prepare('INSERT INTO sessions (token_hash, user_id, expires_at) VALUES (?,
 ]);
 set_session_cookie($token, SESSION_DAYS * 86400);
 
-respond(200, ['ok' => true] + state_payload(state_row((int) $user['id'])));
+respond(200, ['ok' => true, 'isAdmin' => (bool) $user['is_admin']] + state_payload(state_row((int) $user['id'])));

@@ -17,7 +17,7 @@ const SanoSync = (() => {
 			parsed = JSON.parse(localStorage.getItem(SYNC_KEY));
 		} catch (e) {}
 		// username is only a UI hint; the HttpOnly cookie is the credential.
-		return Object.assign({ revision: 0, dirty: false, localModifiedAt: 0, username: null, lastUsername: null }, parsed || {});
+		return Object.assign({ revision: 0, dirty: false, localModifiedAt: 0, username: null, lastUsername: null, isAdmin: false }, parsed || {});
 	}
 
 	function saveMeta() {
@@ -60,7 +60,11 @@ const SanoSync = (() => {
 			return;
 		}
 		if (!res.ok) return;
-		reconcile(await res.json());
+		const server = await res.json();
+		meta.isAdmin = !!server.isAdmin;
+		saveMeta();
+		updateUi();
+		reconcile(server);
 	}
 
 	function reconcile(server) {
@@ -205,6 +209,7 @@ const SanoSync = (() => {
 		if (meta.lastUsername !== username) meta.revision = 0;
 		meta.username = username;
 		meta.lastUsername = username;
+		meta.isAdmin = !!body.isAdmin;
 		saveMeta();
 		updateUi();
 		reconcile(body);
@@ -221,6 +226,7 @@ const SanoSync = (() => {
 
 	function setLoggedOut() {
 		meta.username = null;
+		meta.isAdmin = false;
 		saveMeta();
 		updateUi();
 	}
@@ -232,6 +238,7 @@ const SanoSync = (() => {
 		document.getElementById('login-form').classList.toggle('hide', signedIn);
 		document.getElementById('logout-row').classList.toggle('hide', !signedIn);
 		if (signedIn) document.getElementById('login-status').textContent = 'Signed in as ' + meta.username;
+		document.getElementById('admin-link').classList.toggle('hide', !(signedIn && meta.isAdmin));
 		if (typeof SanoPush !== 'undefined') SanoPush.refresh();
 	}
 

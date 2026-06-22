@@ -780,6 +780,16 @@ ul {
 	border: 0;
 	cursor: pointer;
 }
+/* Admin-only link to the /admin/ dashboard, at the foot of the account panel. */
+#login-panel #admin-link {
+	display: block;
+	margin-top: 1.2rem;
+	padding-top: 1.2rem;
+	border-top: 1px solid var(--border-color-softer);
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: var(--accent);
+}
 
 /* Daily-reminder setup modal (shown on the home screen for an installed,
    signed-in PWA with no reminder configured; also reachable from the panel). */

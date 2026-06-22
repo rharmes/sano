@@ -42,5 +42,5 @@ fi
 exec rsync "${DRY[@]}" --recursive --links --checksum --no-times --compress \
 	--itemize-changes \
 	index.html .htaccess favicon.svg apple-touch-icon.png icon-192.png icon-512.png icon-512-maskable.png \
-	manifest.json sw.js css js fonts audio api \
+	manifest.json sw.js css js fonts audio api admin \
 	"$DEST/"

@@ -110,6 +110,24 @@ function require_user(): int
 	return $userId;
 }
 
+// True when the user holds the admin flag (the /admin/ dashboard gate).
+function is_admin(int $userId): bool
+{
+	$stmt = db()->prepare('SELECT is_admin FROM users WHERE id = ?');
+	$stmt->execute([$userId]);
+	return (bool) $stmt->fetchColumn();
+}
+
+// Like require_user(), but also 403s a logged-in non-admin. Returns the admin id.
+function require_admin(): int
+{
+	$userId = require_user();
+	if (!is_admin($userId)) {
+		respond(403, ['error' => 'forbidden']);
+	}
+	return $userId;
+}
+
 // updated_at (DATETIME(3), server zone) -> epoch milliseconds, via SQL so PHP
 // and MySQL timezone settings can't disagree.
 function state_row(int $userId): ?array

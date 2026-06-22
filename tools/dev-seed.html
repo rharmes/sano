@@ -212,6 +212,17 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">admin dashboard</span>
+			<h2>Admin dashboard (demo data)</h2>
+			<p>
+				Opens <b>/admin/</b> with <b>sample rows</b> (varied path position, streak, and last sync; one “Never synced”; your own row).
+				Click the <b>column headers</b> to sort (A–Z, then Z–A), and try the <b>reset-password</b> and <b>delete</b> modals — actions
+				are stubbed in demo mode. (The real table needs the server DB; this reviews the UI locally.)
+			</p>
+			<button onclick="location.href = '/admin/?demo=1'">Open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>
