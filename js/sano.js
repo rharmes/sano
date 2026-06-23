@@ -1147,27 +1147,39 @@ function renderWordbank(ex) {
 	const tiles = shuffleArray(targetTiles.concat(wordbankDistractors(ex.item, ex.dir)));
 	for (const word of tiles) {
 		// The pool tile stays put when chosen; a matching tile is added to the answer
-		// row above and the pool tile is marked "selected" (request #2).
+		// row above and the pool tile is marked "selected" (request #2). Tapping a
+		// selected tile — or its copy in the answer row — deselects and removes it.
 		const poolTile = document.createElement('button');
 		poolTile.type = 'button';
 		poolTile.className = 'wordbank-tile';
 		poolTile.textContent = word;
-		poolTile.addEventListener('click', () => {
-			if (buildNepali) playTileWord(word); // hear the word (request #1)
-			if (poolTile.classList.contains('selected')) return; // already placed
-			poolTile.classList.add('selected');
+		let answerTile = null;
 
-			const answerTile = document.createElement('button');
+		const deselect = () => {
+			if (answerTile) {
+				answerTile.remove();
+				answerTile = null;
+			}
+			poolTile.classList.remove('selected');
+			refresh();
+		};
+		const select = () => {
+			poolTile.classList.add('selected');
+			answerTile = document.createElement('button');
 			answerTile.type = 'button';
 			answerTile.className = 'wordbank-tile placed';
 			answerTile.textContent = poolTile.textContent;
-			answerTile.addEventListener('click', () => {
-				answerTile.remove();
-				poolTile.classList.remove('selected');
-				refresh();
-			});
+			answerTile.addEventListener('click', deselect);
 			answerEl.appendChild(answerTile);
 			refresh();
+		};
+		poolTile.addEventListener('click', () => {
+			if (poolTile.classList.contains('selected')) {
+				deselect();
+			} else {
+				if (buildNepali) playTileWord(word); // hear the word when placing it (request #1)
+				select();
+			}
 		});
 		poolEl.appendChild(poolTile);
 	}
