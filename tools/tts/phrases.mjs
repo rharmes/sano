@@ -32,7 +32,7 @@ export const PHRASES = [
 	},
 	{ id: 'ma-bolchhu-i-speak-english', np: 'Ma Angreji bolchhu', dev: 'म अङ्ग्रेजी बोल्छु', en: 'I speak English' },
 	{ id: 'maile-bujhina-i-don-t-understand', np: 'Maile bujhina', dev: 'मैले बुझिनँ', en: "I don't understand" },
-	{ id: 'ali-bistari-bolnuhos-please-speak-slowly', np: 'Ali bistari bolnuhos', dev: 'अलि बिस्तारी बोल्नुहोस्', en: 'Please speak slowly' },
+	{ id: 'ali-bistari-bolnuhos-please-speak-slowly', np: 'Ali bistarai bolnuhos', dev: 'अलि बिस्तारै बोल्नुहोस्', en: 'Please speak slowly' },
 	{ id: 'ek-chhin-parkhanus-wait-a-moment-please', np: 'Ek chhin parkhanus', dev: 'एक छिन पर्खनुस्', en: 'Wait a moment, please' },
 	{ id: 'ma-ghar-jaanchu-i-am-going-home', np: 'Ma ghar jaanchu', dev: 'म घर जान्छु', en: 'I am going home' },
 	{

@@ -183,7 +183,7 @@ _Per the 2026-06-20 decision (hosted-only), the live plan is the **ElevenLabs v3
 
 - Sano the mouse (bxXWfqokkbsD3S7PPjUx): Female. Lively, based in Kathmandu. Using live audio clone.
 - Pyaro the red panda (cTnqh1Daui2JhvWlVQGC): Male. From Kathmandu. Speaks excitedly. Neutral otherwise.
-- Rangin the danphe (Go3hvna9oG9MO8K7MyMQ): Male. Flitting through words. Distracted. Frantic.
+- Rangin the danphe (yiYB6wyWboWEOt52vuJ6): Male. Flitting through words. Distracted. Frantic.
 - Bahadur the Bengal tiger (1adWuJ6CHzVMDg1XyhYS): Female. Terai accent, with more Hindu-inflection. Speaks like she's smiling. Mischievous and playful. Languorous.
 - Gyani the Asian elephant (vTgg1b2Eauo5efIcWup5): Female. Older, with a wheezing, trumpeting voice. Speaks at a brisk clip, like she has other things to do.
 - Thulo the one-horned rhinoceros (MW558bGi5hBsE33qo9Rw): Male. Slow and deep. Sounds old but still strong. Thick, gravelly tone with a resonant, theatrical quality.
