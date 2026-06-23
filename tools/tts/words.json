@@ -159,20 +159,20 @@
 			"sutne-bela-bhayo-it-s-bedtime"
 		]
 	},
+	"bhaandaa": {
+		"roman": "bhaandaa",
+		"dev": "भाँडा",
+		"source": "aligned",
+		"phrases": [
+			"ma-bhada-maajhchu-i-ll-wash-the-dishes"
+		]
+	},
 	"bhaat": {
 		"roman": "bhaat",
 		"dev": "भात",
 		"source": "aligned",
 		"phrases": [
 			"bhaat-pakaunus-please-cook-the-rice"
-		]
-	},
-	"bhada": {
-		"roman": "bhada",
-		"dev": "भाँडा",
-		"source": "aligned",
-		"phrases": [
-			"ma-bhada-maajhchu-i-ll-wash-the-dishes"
 		]
 	},
 	"bhannus": {
@@ -230,9 +230,9 @@
 			"malai-biraami-bhayo-i-am-sick"
 		]
 	},
-	"bistari": {
-		"roman": "bistari",
-		"dev": "बिस्तारी",
+	"bistarai": {
+		"roman": "bistarai",
+		"dev": "बिस्तारै",
 		"source": "aligned",
 		"phrases": [
 			"ali-bistari-bolnuhos-please-speak-slowly"
@@ -320,6 +320,7 @@
 			"malai-thaaha-cha-i-know",
 			"mero-kap-kaha-cha-where-is-my-cup",
 			"mitho-cha-it-s-delicious",
+			"pani-pariracha-it-is-raining",
 			"sasto-cha-it-s-cheap",
 			"swagat-cha-you-re-welcome",
 			"tapai-lai-kasto-cha-how-are-you-formal",
@@ -413,8 +414,8 @@
 			"sanchai-chu-i-m-fine"
 		]
 	},
-	"daat": {
-		"roman": "daat",
+	"daant": {
+		"roman": "daant",
 		"dev": "दाँत",
 		"source": "aligned",
 		"phrases": [
@@ -682,7 +683,7 @@
 	},
 	"hosh": {
 		"roman": "hosh",
-		"dev": "होस",
+		"dev": "होश",
 		"source": "aligned",
 		"phrases": [
 			"hosh-garnus-be-careful"
@@ -690,7 +691,7 @@
 	},
 	"hospital": {
 		"roman": "hospital",
-		"dev": "अस्पताल",
+		"dev": "हस्पिटल",
 		"source": "aligned",
 		"phrases": [
 			"hospital-kaha-cha-where-is-the-hospital"
@@ -1238,10 +1239,10 @@
 			"sochna-parcha-need-to-think-let-me-think"
 		]
 	},
-	"pariracha": {
-		"roman": "pariracha",
-		"dev": "परिरहेको छ",
-		"source": "override",
+	"pariraheko": {
+		"roman": "pariraheko",
+		"dev": "परिरहेको",
+		"source": "aligned",
 		"phrases": [
 			"pani-pariracha-it-is-raining"
 		]
@@ -1326,7 +1327,7 @@
 	},
 	"ratri": {
 		"roman": "ratri",
-		"dev": "रात्री",
+		"dev": "रात्रि",
 		"source": "aligned",
 		"phrases": [
 			"subha-ratri-good-night"
@@ -1396,9 +1397,9 @@
 			"sasto-cha-it-s-cheap"
 		]
 	},
-	"sochna": {
-		"roman": "sochna",
-		"dev": "सोच्न",
+	"sochnu": {
+		"roman": "sochnu",
+		"dev": "सोच्नु",
 		"source": "aligned",
 		"phrases": [
 			"sochna-parcha-need-to-think-let-me-think"
@@ -1534,7 +1535,7 @@
 	},
 	"toilet": {
 		"roman": "toilet",
-		"dev": "शौचालय",
+		"dev": "टोइलेट",
 		"source": "aligned",
 		"phrases": [
 			"toilet-kaha-cha-where-is-the-toilet"

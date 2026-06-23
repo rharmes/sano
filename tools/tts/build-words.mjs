@@ -34,8 +34,6 @@ const devClean = (w) => w.replace(/[?।,!.]/g, '').trim();
 // Hand-drafted Devanagari for tile-words that only ever appear fused in the phrase `dev`
 // (postpositions को/लाई/बाट/सँग attach to their host noun; verbs fuse with हुन्छ/भयो), so
 // 1:1 alignment can't recover them. AI drafts — review before rendering audio.
-// NOTE: `pariracha` — source pairs "Pani pariracha" with "पानी परिरहेको छ"; the romanization
-// and Devanagari diverge, so confirm the intended form.
 const OVERRIDES = {
 	ko: 'को',
 	hajur: 'हजुर',
@@ -54,7 +52,6 @@ const OVERRIDES = {
 	lagyo: 'लाग्यो',
 	bujhnubhayo: 'बुझ्नुभयो',
 	bujyau: 'बुझ्यौ',
-	pariracha: 'परिरहेको छ',
 };
 
 // Word-bank tiles come from multi-word phrases only (np has ≥ 2 words).
