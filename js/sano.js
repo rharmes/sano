@@ -1035,19 +1035,29 @@ function setPrompt(label, word, pron, audioId) {
 	document.getElementById('exercise-label').textContent = label;
 	const wordEl = document.getElementById('exercise-word');
 	wordEl.textContent = word;
-	// When the displayed word is the Nepali (only direction where showing audio
-	// doesn't give the answer away), offer a play button beside it.
-	if (audioId) wordEl.appendChild(SanoAudio.button(audioId, { className: 'audio-inline' }));
+	// An audioId is passed only when the headword shown is the Nepali — the one direction
+	// where playing it can't give the answer away. In that case offer a play button beside
+	// it AND auto-play it on load, so a Nepali word at the top always speaks itself. The
+	// English-prompt directions pass no audioId; their Nepali audio lives in the tappable
+	// tiles/choices below instead. renderExercise always runs inside the tap that opened or
+	// advanced the lesson, so this autoplay stays within a user gesture (iOS).
+	if (audioId) {
+		wordEl.appendChild(SanoAudio.button(audioId, { className: 'audio-inline' }));
+		SanoAudio.play(audioId);
+	}
 	document.getElementById('exercise-pronounce').textContent = pron;
 }
 
 // Listening prompt (SR-03): the headword slot becomes a big tap-to-play button and
-// no romanization shows, so the learner has to rely on the audio.
+// no romanization shows, so the learner has to rely on the audio. It also auto-plays on
+// load (like a Nepali headword in setPrompt) so the clip you must identify speaks itself;
+// the button is then there to replay. Same user-gesture chain as setPrompt (iOS).
 function setListenPrompt(label, audioId) {
 	document.getElementById('exercise-label').textContent = label;
 	const wordEl = document.getElementById('exercise-word');
 	wordEl.textContent = '';
 	wordEl.appendChild(SanoAudio.button(audioId, { className: 'audio-prompt' }));
+	SanoAudio.play(audioId);
 	document.getElementById('exercise-pronounce').textContent = '';
 }
 
@@ -1111,9 +1121,8 @@ function renderWordbank(ex) {
 		setPrompt('Build the Nepali from the tiles', promptText(ex.item), '');
 	} else {
 		// Showing/parsing the Nepali is the prompt here, so its audio button doesn't give
-		// the (English) answer away; speak it on load too.
+		// the (English) answer away; setPrompt auto-plays it on load (Nepali headword).
 		setPrompt('Listen and build the English', ex.item.np, '', ex.item.id);
-		SanoAudio.play(ex.item.id);
 	}
 
 	const answerEl = document.getElementById('wordbank-answer');
