@@ -948,7 +948,7 @@ function buildExercises(newItems, reviewItems) {
 	for (const item of reviewItems) {
 		if (matchItems.includes(item)) continue;
 		if (isRecallStrength(itemRecord(item.id))) {
-			if (item.np.split(/\s+/).length >= 2) exercises.push({ item: item, type: 'wordbank' });
+			if (item.np.split(/\s+/).length >= 2) exercises.push({ item: item, type: 'wordbank', dir: Math.random() < 0.5 ? 'en-np' : 'np-en' });
 			// Half of single-word recall reviews become "type what you hear".
 			else exercises.push({ item: item, type: 'type', listen: Math.random() < LISTEN_PROBABILITY });
 		} else if (Math.random() < LISTEN_PROBABILITY) {
@@ -1069,43 +1069,114 @@ function renderChoice(ex) {
 	}
 }
 
+// Tile display text: drop the punctuation (?,.!) and capitalization that would
+// otherwise reveal a word's place in the phrase (first word capitalized, last word
+// carrying the ? / .). Answer-checking runs through normalize() (which already
+// lowercases and strips punctuation), so cleaning the tiles is purely cosmetic.
+function cleanTileText(word) {
+	// Drop the punctuation that gives a word's place away (capital first word, trailing
+	// ? / .) plus parens and slashes from English-meaning parentheticals like "(formal)"
+	// and "Hello / Goodbye". normalize() ignores all of this when grading, so it's cosmetic.
+	return word.replace(/[?,.!।\/()]/g, '').toLowerCase();
+}
+
+// Map a single romanized word to a course item whose own np is exactly that word,
+// so we can reuse its existing clip for per-word tile audio. Built once.
+let wordItemIndex = null;
+function itemIdForWord(word) {
+	if (!wordItemIndex) {
+		wordItemIndex = {};
+		for (const unit of COURSE)
+			for (const item of unit.items) {
+				const key = normalize(item.np);
+				if (key && !key.includes(' ')) wordItemIndex[key] = item.id;
+			}
+	}
+	return wordItemIndex[normalize(word)] || null;
+}
+
+// Play a Nepali word tile's audio (SR-02, request #1): prefer the word's own course-item
+// clip when it is itself an item; otherwise a per-word clip rendered into audio/words/.
+// A word with no clip yet is a silent no-op (SanoAudio swallows the miss).
+function playTileWord(word) {
+	const id = itemIdForWord(word);
+	if (id) SanoAudio.play(id);
+	else SanoAudio.playWord(normalize(word).replace(/\s+/g, '-'));
+}
+
+// Word bank in two directions (request #5):
+//   en-np (default) — English prompt at top, assemble the Nepali from tiles; tapping a
+//                     Nepali tile plays that word (request #1).
+//   np-en           — Nepali phrase shown at top and spoken on load, assemble the English.
 function renderWordbank(ex) {
-	setPrompt('Build the Nepali from the tiles', promptText(ex.item), '');
+	const buildNepali = ex.dir !== 'np-en';
+	const target = buildNepali ? ex.item.np : ex.item.en;
+
+	if (buildNepali) {
+		setPrompt('Build the Nepali from the tiles', promptText(ex.item), '');
+	} else {
+		// Showing/parsing the Nepali is the prompt here, so its audio button doesn't give
+		// the (English) answer away; speak it on load too.
+		setPrompt('Listen and build the English', ex.item.np, '', ex.item.id);
+		SanoAudio.play(ex.item.id);
+	}
 
 	const answerEl = document.getElementById('wordbank-answer');
 	const poolEl = document.getElementById('wordbank-pool');
 	answerEl.textContent = '';
 	poolEl.textContent = '';
+	const checkEl = document.getElementById('exercise-check');
+	const refresh = () => (checkEl.disabled = answerEl.children.length === 0);
 
-	const tiles = shuffleArray(ex.item.np.split(/\s+/).concat(wordbankDistractors(ex.item)));
+	// Tiles are pre-cleaned (lowercase, no punctuation); drop any that clean to empty
+	// (e.g. a stray "/"). The cleaned text still resolves the same per-word audio via
+	// normalize(), and the assembled answer still grades against the raw phrase.
+	const targetTiles = target.split(/\s+/).map(cleanTileText).filter(Boolean);
+	const tiles = shuffleArray(targetTiles.concat(wordbankDistractors(ex.item, ex.dir)));
 	for (const word of tiles) {
-		const tile = document.createElement('button');
-		tile.type = 'button';
-		tile.className = 'wordbank-tile';
-		tile.textContent = word;
-		tile.addEventListener('click', () => {
-			(tile.parentNode === poolEl ? answerEl : poolEl).appendChild(tile);
-			document.getElementById('exercise-check').disabled = answerEl.children.length === 0;
+		// The pool tile stays put when chosen; a matching tile is added to the answer
+		// row above and the pool tile is marked "selected" (request #2).
+		const poolTile = document.createElement('button');
+		poolTile.type = 'button';
+		poolTile.className = 'wordbank-tile';
+		poolTile.textContent = word;
+		poolTile.addEventListener('click', () => {
+			if (buildNepali) playTileWord(word); // hear the word (request #1)
+			if (poolTile.classList.contains('selected')) return; // already placed
+			poolTile.classList.add('selected');
+
+			const answerTile = document.createElement('button');
+			answerTile.type = 'button';
+			answerTile.className = 'wordbank-tile placed';
+			answerTile.textContent = poolTile.textContent;
+			answerTile.addEventListener('click', () => {
+				answerTile.remove();
+				poolTile.classList.remove('selected');
+				refresh();
+			});
+			answerEl.appendChild(answerTile);
+			refresh();
 		});
-		poolEl.appendChild(tile);
+		poolEl.appendChild(poolTile);
 	}
-	document.getElementById('exercise-check').disabled = true;
+	refresh();
 }
 
-// A few extra Nepali words from other phrases, so the answer isn't just "use every tile".
-function wordbankDistractors(item) {
-	const targetWords = item.np.toLowerCase().split(/\s+/);
+// A few extra words (in the same language as the tiles) from other phrases, so the
+// answer isn't just "use every tile". Cleaned + lowercased like the real tiles.
+function wordbankDistractors(item, dir) {
+	const field = dir === 'np-en' ? 'en' : 'np';
+	const targetWords = cleanTileText(item[field]).split(/\s+/);
 	const pool = shuffleArray(COURSE.filter((u) => u.kind === 'phrases').flatMap((u) => u.items));
 
 	const distractors = [];
 	for (const candidate of pool) {
 		if (distractors.length === 3) break;
-		for (const word of candidate.np.split(/\s+/)) {
+		for (const word of candidate[field].split(/\s+/)) {
 			if (distractors.length === 3) break;
-			const cleaned = word.replace(/[?,.!]/g, '');
+			const cleaned = cleanTileText(word);
 			if (cleaned === '' || cleaned === '___' || cleaned === '...') continue;
-			const lower = cleaned.toLowerCase();
-			if (targetWords.includes(lower) || distractors.some((w) => w.toLowerCase() === lower)) continue;
+			if (targetWords.includes(cleaned) || distractors.includes(cleaned)) continue;
 			distractors.push(cleaned);
 		}
 	}
@@ -1534,7 +1605,10 @@ function checkExercise() {
 	} else {
 		given = document.getElementById('type-answer').value;
 	}
-	applyAnswer(ex, lenientEquals(given, ex.item.np, ex.type === 'type'));
+	// Word bank checks against whichever phrase the tiles build (Nepali by default, the
+	// English meaning in the np-en direction); typing always builds the Nepali.
+	const expected = ex.type === 'wordbank' && ex.dir === 'np-en' ? ex.item.en : ex.item.np;
+	applyAnswer(ex, lenientEquals(given, expected, ex.type === 'type'));
 }
 
 function applyAnswer(ex, correct) {

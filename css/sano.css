@@ -2036,6 +2036,18 @@ table#vocab tbody td:nth-child(3) {
 .wordbank-tile:hover {
 	color: var(--text-color-richer);
 }
+/* A chosen pool tile stays in place but is marked selected — a crimson border and
+   faint tint — while its copy is assembled in the answer row above (request #2). */
+.wordbank-tile.selected,
+.wordbank-tile.selected:hover {
+	color: var(--accent);
+	border-color: var(--accent);
+	background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+/* Tiles assembled in the answer row read as the active phrase. */
+.wordbank-tile.placed {
+	color: var(--text-color-richer);
+}
 
 /* Typing exercise */
 

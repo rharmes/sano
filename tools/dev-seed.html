@@ -171,6 +171,19 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">wordbank</span>
+			<h2>Word-bank lesson (assemble the phrase from tiles)</h2>
+			<p>
+				The whole course is reviewed and settled and several <b>multi-word phrases</b> are now due, so <b>“Start today's lesson”</b> is
+				<b>all word-bank</b>. Tiles are lowercased and stripped of <b>?/.</b> so they don't give away order. Tapping a tile
+				<b>plays its word</b> and leaves it in place with a <b>crimson “selected” border</b> while a copy joins the phrase above (tap
+				that copy to remove it). Expect a <b>mix of directions</b>: some show the English and you build the <b>Nepali</b>; others show
+				the <b>Nepali</b> (spoken aloud on load) and you build the <b>English</b>.
+			</p>
+			<button onclick="seed('wordbank')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-10</span>
 			<h2>Placement / skip-ahead onboarding</h2>
 			<p>
@@ -425,6 +438,29 @@
 						lastActivityDay: day(1),
 						itemsToday: 0,
 						itemsTotal: 40,
+						items,
+					};
+				} else if (which === 'wordbank') {
+					// Whole course reviewed and settled (no new words, no current unit), then a few
+					// multi-word phrases pushed past due. buildExercises turns a recall-strength
+					// (interval >= 3) multi-word review into a word-bank drill, so today's lesson is
+					// all "assemble the phrase from tiles."
+					const items = {};
+					for (const u of COURSE) for (const it of u.items) items[it.id] = rec({ interval: 9, ease: 2.5, lastSeen: day(0) });
+					const phrases = COURSE.filter((u) => u.kind === 'phrases')
+						.flatMap((u) => u.items)
+						.filter((it) => it.np && !it.np.includes('_') && it.np.trim().split(/\s+/).length >= 3);
+					for (const it of phrases.slice(0, 6))
+						items[it.id] = rec({ interval: 5, ease: 2.5, seen: 12, correct: 11, lastSeen: day(20) });
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 8,
+						streakFreezes: 1,
+						lastActivityDay: day(1),
+						itemsToday: 0,
+						itemsTotal: 476,
 						items,
 					};
 				}

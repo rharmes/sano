@@ -49,8 +49,12 @@ this file used to convey:
   unit-tested by `tools/check-scheduler.mjs`.
 - **Exercises escalate with strength**: `choice` (multiple choice, both np→en and en→np),
   `match` (tap-the-pairs, also the new-word warm-up; tapping a Nepali tile plays its audio),
-  `wordbank` (assemble a phrase from
-  tiles), and `type` (typed recall, romanization-tolerant via edit distance). New items get
+  `wordbank` (assemble a phrase from tiles — two directions: build the Nepali from an English
+  prompt, or, with the Nepali shown + spoken on load, build the English; a chosen tile stays
+  put with a "selected" border and a copy appears in the answer row; tiles are lowercased and
+  punctuation-stripped so position isn't given away; tapping a Nepali tile plays that word's
+  clip, see `audio/words/` below), and `type` (typed recall, romanization-tolerant via edit
+  distance). New items get
   multiple choice both ways; stronger items (recall strength — interval ≥ 3 days) get
   wordbank/type, and ~half of recall reviews become audio-only "listen" prompts (SR-03).
 - **Progress**: a day **streak** (with a forgiveness "freeze", SR-09; extended by finishing
@@ -76,6 +80,15 @@ iOS records `audio/mp4` it then refuses to decode in a media element (`play()` r
 `NotSupportedError`, for both `blob:` and `data:` sources), so don't "simplify" this back to
 `new Audio(url)`. The model phrase audio (`SanoAudio`, plain `.mp3` files) still uses an
 `<audio>` element — only the live recording needs Web Audio.
+
+`SanoAudio` serves two clip sets: **per-phrase** clips at `audio/<voice>/<id>.mp3`
+(`SanoAudio.play(id)`), and **per-word** word-bank tile clips at `audio/words/<slug>.mp3`
+(`SanoAudio.playWord(slug)`, slug = the romanized word run through `normalize`). A missing
+clip is a silent no-op. The per-word set is **only partly populated**: today the ~26% of
+tile-words that are themselves single-word course items reuse their phrase clip; rendering the
+rest is a pending task (Piper isn't trivially scriptable for isolated words because Nepali
+postpositions fuse in Devanagari — `tapai ko` → तपाईंको — so per-word Devanagari is an
+authoring decision, not a clean auto-split).
 
 ## Server sync (api/)
 

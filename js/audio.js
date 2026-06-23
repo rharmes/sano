@@ -23,19 +23,32 @@ const SanoAudio = (() => {
 
 	const url = (id, voiceId) => `audio/${voiceId || DEFAULT_VOICE}/${id}.mp3?v=${AUDIO_VERSION}`;
 
+	// Per-word clips for the word-bank tiles (one MP3 per distinct romanized word,
+	// rendered by tools/tts/words.mjs into audio/words/<slug>.mp3). Separate from the
+	// per-phrase clips above; a tile with no clip yet just stays silent (see play()).
+	const wordUrl = (slug) => `audio/words/${slug}.mp3?v=${AUDIO_VERSION}`;
+
 	// One reused element: a new clip cancels the previous one, and we never pile up
 	// Audio objects over a long session.
 	let el = null;
-	function play(id, voiceId) {
-		if (!id) return;
+	function playSrc(src) {
 		if (!el) el = new Audio();
 		el.pause();
-		el.src = url(id, voiceId);
+		el.src = src;
 		// play() is only ever called from a tap handler, so autoplay policy is
 		// satisfied; a missing file / decode error rejects — swallow it so a gap in
 		// audio coverage never throws into the UI.
 		const p = el.play();
 		if (p && p.catch) p.catch(() => {});
+	}
+	function play(id, voiceId) {
+		if (!id) return;
+		playSrc(url(id, voiceId));
+	}
+	// Play a per-word tile clip by slug; a missing clip is a silent no-op.
+	function playWord(slug) {
+		if (!slug) return;
+		playSrc(wordUrl(slug));
 	}
 
 	// A tap-to-play speaker button for phrase `id` (optionally in a character's
@@ -56,5 +69,5 @@ const SanoAudio = (() => {
 		return b;
 	}
 
-	return { DEFAULT_VOICE, voiceForCharacter, url, play, button };
+	return { DEFAULT_VOICE, voiceForCharacter, url, play, playWord, button };
 })();
