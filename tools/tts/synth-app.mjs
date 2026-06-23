@@ -10,7 +10,9 @@
 //   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --words     # all words → audio/words/
 //   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --phrases --only <id>   # one clip
 //   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --words --only <slug>
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+//   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --phrases --new   # only clips not yet on disk
+//   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --words --new     # render newly-added words only
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -50,6 +52,15 @@ if (args.sample) {
 if (only) {
 	jobs = jobs.filter((j) => j.label.split(' ')[0] === only);
 	if (!jobs.length) fail(`--only "${only}" matched no job.`);
+}
+
+// Incremental render: skip clips already on disk, so adding course content only synthesizes
+// the new ids/slugs (no credit spend or git churn re-rendering the existing corpus).
+if (args.new) {
+	const before = jobs.length;
+	jobs = jobs.filter((j) => !existsSync(j.out));
+	console.log(`--new: ${before - jobs.length} existing clip(s) skipped, ${jobs.length} to render.`);
+	if (!jobs.length) fail('--new: nothing to render (every clip already exists).');
 }
 
 mkdirSync(outDir, { recursive: true });

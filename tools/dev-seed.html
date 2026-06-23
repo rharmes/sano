@@ -198,6 +198,18 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">verbs · content</span>
+			<h2>Verb units (present &amp; past tense)</h2>
+			<p>
+				Everything up to <b>"Verbs: Present tense"</b> is done, so it's the <b>current unit</b> — tap <b>"Start today's lesson"</b> to
+				learn its conjugation phrases (<b>ma sikchu</b> "I learn," <b>ma herchu</b> "I watch," the polite <b>tapai siknuhunchha?</b>).
+				Finishing it unlocks <b>"Verbs: Past tense"</b> (<b>maile siken</b>, <b>ma gaen</b>) next on the path.
+				<b>Audio is not rendered yet</b>, so clips are silent until the ElevenLabs pass.
+			</p>
+			<button onclick="seed('verbs')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-10</span>
 			<h2>Placement / skip-ahead onboarding</h2>
 			<p>
@@ -496,6 +508,25 @@
 						lastActivityDay: day(1),
 						itemsToday: 0,
 						itemsTotal: 476,
+						items,
+					};
+				} else if (which === 'verbs') {
+					// Units before "Verbs: Present tense" are done, so it's the current unit — today's
+					// lesson introduces its new conjugation phrases (ma sikchu, ma herchu, ...).
+					const items = {};
+					for (const u of COURSE) {
+						if (u.id === 'verbs-present') break;
+						for (const it of u.items) items[it.id] = rec({ interval: 6, ease: 2.5, lastSeen: day(0) });
+					}
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 7,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 260,
 						items,
 					};
 				}
