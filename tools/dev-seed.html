@@ -186,6 +186,18 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">listening match</span>
+			<h2>Listening match (tap the sound, match the romanization)</h2>
+			<p>
+				The whole course is settled and several <b>single-word recall-strength</b> reviews are due, so today's lesson includes a
+				<b>“Match the sound to the word”</b> round: the <b>left tiles are waveforms</b> — tap to <b>hear the clip</b> — and pair each
+				with its <b>romanized Nepali</b> on the right. Every audio tile is <b>equal width</b> (the bars never reveal phrase length) and
+				a tile's waveform is <b>stable on replay</b>. Today's lesson is just this one round, so it opens on it directly.
+			</p>
+			<button onclick="seed('listenmatch')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-10</span>
 			<h2>Placement / skip-ahead onboarding</h2>
 			<p>
@@ -453,6 +465,27 @@
 						.flatMap((u) => u.items)
 						.filter((it) => it.np && !it.np.includes('_') && it.np.trim().split(/\s+/).length >= 3);
 					for (const it of phrases.slice(0, 6))
+						items[it.id] = rec({ interval: 5, ease: 2.5, seen: 12, correct: 11, lastSeen: day(20) });
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 8,
+						streakFreezes: 1,
+						lastActivityDay: day(1),
+						itemsToday: 0,
+						itemsTotal: 476,
+						items,
+					};
+				} else if (which === 'listenmatch') {
+					// Whole course settled, then several single-word recall-strength (interval >= 3)
+					// reviews pushed past due. buildExercises bundles single-word recall reviews into a
+					// "Match the sound to the word" round. Exactly 5 due single-word reviews fill one
+					// round, so today's lesson is just the listening match — it opens on it directly.
+					const items = {};
+					for (const u of COURSE) for (const it of u.items) items[it.id] = rec({ interval: 9, ease: 2.5, lastSeen: day(0) });
+					const singles = COURSE.flatMap((u) => u.items).filter((it) => it.np && it.np.trim().split(/\s+/).length === 1);
+					for (const it of singles.slice(0, 5))
 						items[it.id] = rec({ interval: 5, ease: 2.5, seen: 12, correct: 11, lastSeen: day(20) });
 					state = {
 						version: 2,

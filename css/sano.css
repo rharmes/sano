@@ -2102,6 +2102,33 @@ table#vocab tbody td:nth-child(3) {
 	cursor: default;
 }
 
+/* Listening match (SR-03 sibling): same 2-column grid, but each left tile renders a
+   stylized, id-seeded waveform instead of text and plays the clip on tap. Equal width
+   so the bars never hint at phrase length. */
+#exercise-listen-match {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 16px;
+	row-gap: 12px;
+	margin-top: 3rem;
+}
+.listen-tile .lm-wave {
+	display: block;
+	width: 100%;
+	height: 28px;
+	color: var(--accent); /* bars inherit this via fill: currentColor */
+}
+.listen-tile.selected .lm-wave {
+	color: var(--accent-deep);
+}
+.listen-tile.matched .lm-wave {
+	color: var(--text-complete-color);
+	opacity: 0.7;
+}
+.listen-tile.miss .lm-wave {
+	color: var(--text-incomplete-color);
+}
+
 #exercise-check {
 	margin-top: 2.5rem;
 }

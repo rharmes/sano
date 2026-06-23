@@ -945,8 +945,16 @@ function buildExercises(newItems, reviewItems) {
 	const matchable = reviewItems.filter((item) => item.emoji && !isRecallStrength(itemRecord(item.id)));
 	const matchItems = matchable.length >= 4 ? matchable.slice(0, 5) : [];
 
+	// Listening match (audio -> romanization): bundle single-word recall-strength reviews into a
+	// tap-the-sound round, the ear-only sibling of the recognition match above. Single-word only
+	// keeps the romanization tiles short and leaves multi-word phrases for word bank.
+	const listenable = reviewItems.filter(
+		(item) => item.np.trim().split(/\s+/).length === 1 && isRecallStrength(itemRecord(item.id)) && !matchItems.includes(item),
+	);
+	const listenMatchItems = listenable.length >= 4 ? shuffleArray(listenable.slice()).slice(0, 5) : [];
+
 	for (const item of reviewItems) {
-		if (matchItems.includes(item)) continue;
+		if (matchItems.includes(item) || listenMatchItems.includes(item)) continue;
 		if (isRecallStrength(itemRecord(item.id))) {
 			if (item.np.split(/\s+/).length >= 2) exercises.push({ item: item, type: 'wordbank', dir: Math.random() < 0.5 ? 'en-np' : 'np-en' });
 			// Half of single-word recall reviews become "type what you hear".
@@ -969,6 +977,8 @@ function buildExercises(newItems, reviewItems) {
 	}
 
 	if (matchItems.length > 0) exercises.splice(Math.floor(Math.random() * (exercises.length + 1)), 0, { type: 'match', items: matchItems });
+	if (listenMatchItems.length > 0)
+		exercises.splice(Math.floor(Math.random() * (exercises.length + 1)), 0, { type: 'listenMatch', items: listenMatchItems });
 
 	// Open with a matching round whenever the lesson introduces new words. It's a
 	// pure warmup that previews the words; the drills below do all the SRS scoring,
@@ -1021,6 +1031,7 @@ function renderExercise() {
 	document.getElementById('exercise-wordbank').classList.toggle('hide', ex.type !== 'wordbank');
 	document.getElementById('exercise-type').classList.toggle('hide', ex.type !== 'type');
 	document.getElementById('exercise-match').classList.toggle('hide', ex.type !== 'match');
+	document.getElementById('exercise-listen-match').classList.toggle('hide', ex.type !== 'listenMatch');
 	document.getElementById('exercise-speak').classList.toggle('hide', ex.type !== 'speak');
 	document.getElementById('exercise-check').classList.toggle('hide', ex.type !== 'wordbank' && ex.type !== 'type');
 
@@ -1028,6 +1039,7 @@ function renderExercise() {
 	else if (ex.type === 'wordbank') renderWordbank(ex);
 	else if (ex.type === 'type') renderType(ex);
 	else if (ex.type === 'speak') renderSpeak(ex);
+	else if (ex.type === 'listenMatch') renderListenMatch(ex);
 	else renderMatch(ex);
 }
 
@@ -1480,6 +1492,93 @@ function fitMatchTiles(grid) {
 	}
 }
 
+// Deterministic pseudo-waveform for the listening-match tiles. Bar heights come from a hash
+// of the item id, so a clip's tile looks the same every time it appears (stable on replay)
+// yet unrelated to phrase length — every tile is the same width, so the bars never hint which
+// romanization is the long one.
+function hashId(str) {
+	let h = 0x811c9dc5; // FNV-1a; Math.imul keeps it identical across browsers (no float drift).
+	for (let i = 0; i < str.length; i++) {
+		h ^= str.charCodeAt(i);
+		h = Math.imul(h, 0x01000193);
+	}
+	return h >>> 0;
+}
+
+function waveformSvg(id, bars) {
+	bars = bars || 9;
+	let h = hashId(id) || 1; // avoid a zero seed (xorshift on 0 stays 0 -> flat waveform)
+	const next = () => {
+		// xorshift32 on the seeded hash -> a stable [0,1) sequence per id.
+		h ^= h << 13;
+		h >>>= 0;
+		h ^= h >> 17;
+		h ^= h << 5;
+		h >>>= 0;
+		return h / 0xffffffff;
+	};
+	const W = 100;
+	const H = 40;
+	const gap = 2;
+	const bw = (W - gap * (bars - 1)) / bars;
+	let rects = '';
+	for (let i = 0; i < bars; i++) {
+		const bh = (0.25 + 0.75 * next()) * H; // floor at 25% so every bar still reads as a bar
+		const x = i * (bw + gap);
+		const y = (H - bh) / 2; // centered -> symmetric waveform
+		const r = Math.min(bw / 2, 2).toFixed(2);
+		rects +=
+			'<rect x="' +
+			x.toFixed(2) +
+			'" y="' +
+			y.toFixed(2) +
+			'" width="' +
+			bw.toFixed(2) +
+			'" height="' +
+			bh.toFixed(2) +
+			'" rx="' +
+			r +
+			'" fill="currentColor"/>';
+	}
+	return '<svg class="lm-wave" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + rects + '</svg>';
+}
+
+// A listening-match left tile: a waveform button that plays the clip and selects like a match
+// tile. It carries .match-tile so it inherits the tile border, the selected/miss/matched
+// states, and the reduced-motion handling for free.
+function listenTile(item, n) {
+	const tile = document.createElement('button');
+	tile.type = 'button';
+	tile.className = 'match-tile listen-tile';
+	tile.dataset.id = item.id;
+	tile.innerHTML = waveformSvg(item.id);
+	// No visible text, so give assistive tech a neutral label that never reveals the answer.
+	tile.setAttribute('aria-label', 'Play audio clip ' + (n + 1));
+	tile.addEventListener('click', () => {
+		SanoAudio.play(item.id);
+		selectMatchTile(tile, 'left');
+	});
+	return tile;
+}
+
+function renderListenMatch(ex) {
+	// Pass no audioId to setPrompt so nothing auto-plays — auto-playing one clip on load would
+	// reveal which tile it is. The learner taps each waveform to hear it.
+	setPrompt('Match the sound to the word', '', '');
+	matchState = { remaining: ex.items.length, missed: {}, selected: { left: null, right: null } };
+
+	const grid = document.getElementById('exercise-listen-match');
+	grid.textContent = '';
+	const left = shuffleArray(ex.items.slice()).map((item, i) => listenTile(item, i));
+	const right = shuffleArray(ex.items.slice()).map((item) => matchTile(item, 'right', item.np));
+	for (let i = 0; i < ex.items.length; i++) {
+		grid.appendChild(left[i]);
+		grid.appendChild(right[i]);
+	}
+	fitMatchTiles(grid);
+	if (document.fonts) document.fonts.ready.then(() => fitMatchTiles(grid));
+}
+
 function matchTile(item, side, text) {
 	const tile = document.createElement('button');
 	tile.type = 'button';
@@ -1562,7 +1661,9 @@ function finishMatch() {
 		if (!lesson.scheduled[item.id]) {
 			lesson.scheduled[item.id] = true;
 			const before = record.interval;
-			scheduleReview(record, correct ? GRADE.GOOD : GRADE.LAPSE);
+			// A clean listening-match item is harder retrieval (ear only), so it earns the EASY
+			// bump like the other listening drills; the recognition match stays GOOD.
+			scheduleReview(record, correct ? (ex.type === 'listenMatch' ? GRADE.EASY : GRADE.GOOD) : GRADE.LAPSE);
 			if (record.interval > before) lesson.strengthened++;
 		}
 	}
