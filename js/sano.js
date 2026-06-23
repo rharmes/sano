@@ -1092,28 +1092,11 @@ function stripParens(s) {
 		.trim();
 }
 
-// Map a single romanized word to a course item whose own np is exactly that word,
-// so we can reuse its existing clip for per-word tile audio. Built once.
-let wordItemIndex = null;
-function itemIdForWord(word) {
-	if (!wordItemIndex) {
-		wordItemIndex = {};
-		for (const unit of COURSE)
-			for (const item of unit.items) {
-				const key = normalize(item.np);
-				if (key && !key.includes(' ')) wordItemIndex[key] = item.id;
-			}
-	}
-	return wordItemIndex[normalize(word)] || null;
-}
-
-// Play a Nepali word tile's audio (SR-02, request #1): prefer the word's own course-item
-// clip when it is itself an item; otherwise a per-word clip rendered into audio/words/.
-// A word with no clip yet is a silent no-op (SanoAudio swallows the miss).
+// Play a Nepali word tile's audio (SR-02, request #1). Every tile-word has its own clip
+// at audio/words/<slug>.mp3 (rendered from tools/tts/words.json); the slug matches
+// build-words.mjs. A missing clip is a silent no-op (SanoAudio swallows the miss).
 function playTileWord(word) {
-	const id = itemIdForWord(word);
-	if (id) SanoAudio.play(id);
-	else SanoAudio.playWord(normalize(word).replace(/\s+/g, '-'));
+	SanoAudio.playWord(normalize(word).replace(/\s+/g, '-'));
 }
 
 // Word bank in two directions (request #5):

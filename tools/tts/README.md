@@ -102,9 +102,27 @@ comma-list sentence — so a weak engine is obvious.
 - **`build-compare.mjs`** — assembles `design/tts-compare.html` from `audio/default/` +
   `design/_bakeoff/*`.
 
-## After a winner is picked (production, later)
+## Production audio (the shipped app voice)
 
-Map one cloned `voice_id` to each of the 11 characters, then batch-synthesize each
-character's lines to `audio/<voice>/<id>.mp3`, loudness-normalize, and wire into
-`js/characters.js` / dialogue playback. All audio stays **pre-rendered and self-hosted** —
-the app never calls a TTS service at runtime (CLAUDE.md).
+The shipped audio is rendered through ElevenLabs in **Sano's cloned voice** (RESEARCH.md §9).
+Two tools, run from the repo root with `ELEVENLABS_API_KEY` set:
+
+- **`build-words.mjs`** — writes **`words.json`**, the per-word Devanagari map for word-bank
+  tile audio (one entry per distinct tile-word). ~90% auto-derive from each phrase's `dev` by
+  1:1 alignment; the fused remainder (postpositions/verb-fusions) come from a hand-drafted
+  `OVERRIDES` table in the script. Deterministic — re-run after editing `js/data.js` or the
+  overrides. Reviewable artifact: `words.json` itself.
+- **`synth-app.mjs`** — renders the **real shipped** clips (not the bake-off dir):
+  - `--sample` → a small preview (tricky phrases + single words) into
+    `design/_bakeoff/sano-sample/` with an `index.html`, to judge the voice before a full run.
+  - `--phrases` → every `COURSE` item's `dev` → `audio/default/<id>.mp3` (476).
+  - `--words` → every `words.json` entry → `audio/words/<slug>.mp3` (176).
+  - `--only <id|slug>` (with `--phrases`/`--words`) → regenerate one clip.
+  - Defaults: Sano `--voice`, `eleven_v3`, `mp3_44100_128`.
+
+After (re)rendering, bump **`AUDIO_VERSION`** in `js/audio.js` so caches/clients refetch.
+`audio/` ships via the existing `audio` entry in `tools/deploy.sh`. All audio stays
+**pre-rendered and self-hosted** — the app never calls a TTS service at runtime (CLAUDE.md).
+
+Per-character voices (the PLAN.md follow-up) extend this: render each character's lines to
+`audio/<voice>/<id>.mp3` and widen `voiceForCharacter()` in `js/audio.js`.

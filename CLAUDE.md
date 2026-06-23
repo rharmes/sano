@@ -67,7 +67,7 @@ this file used to convey:
 `PEDAGOGY.md` (committed, not deployed) records the learning-science basis for this design
 and where it is headed; the working roadmap is `PLAN.md` (committed, but excluded from
 the deploy rsync). Two-character **dialogues** with comprehension questions and
-self-hosted **Nepali phrase audio** (Devanagari-driven Piper TTS) have since shipped, along
+self-hosted **Nepali phrase audio** (Devanagari-driven, voiced by Sano's ElevenLabs clone) have since shipped, along
 with listening/speaking practice, pronunciation coaching, and the decorative full-body
 **companions** on the path (above); planned next (per PLAN.md): companions that actively
 host/participate in lessons & dialogues, one voice per character, and an optional Devanagari
@@ -82,13 +82,17 @@ iOS records `audio/mp4` it then refuses to decode in a media element (`play()` r
 `<audio>` element — only the live recording needs Web Audio.
 
 `SanoAudio` serves two clip sets: **per-phrase** clips at `audio/<voice>/<id>.mp3`
-(`SanoAudio.play(id)`), and **per-word** word-bank tile clips at `audio/words/<slug>.mp3`
-(`SanoAudio.playWord(slug)`, slug = the romanized word run through `normalize`). A missing
-clip is a silent no-op. The per-word set is **only partly populated**: today the ~26% of
-tile-words that are themselves single-word course items reuse their phrase clip; rendering the
-rest is a pending task (Piper isn't trivially scriptable for isolated words because Nepali
-postpositions fuse in Devanagari — `tapai ko` → तपाईंको — so per-word Devanagari is an
-authoring decision, not a clean auto-split).
+(`SanoAudio.play(id)`, one per `COURSE` item, 476), and **per-word** word-bank tile clips at
+`audio/words/<slug>.mp3` (`SanoAudio.playWord(slug)`, slug = the romanized word run through
+`normalize`; one per distinct tile-word, 176). A missing clip is a silent no-op. **All audio
+is rendered by `tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice**
+(`eleven_v3`, voice id in RESEARCH.md §9) — pre-rendered and self-hosted, never a runtime call
+(CLAUDE.md network discipline). The per-word Devanagari comes from `tools/tts/words.json`,
+built by `tools/tts/build-words.mjs`: ~90% auto-derived by 1:1 alignment with each phrase's
+`dev`, the rest (postpositions/verb-fusions like `tapai ko` → तपाईंको that don't split in
+writing) from a hand-drafted `OVERRIDES` table in that script (AI-drafted, like all `dev`).
+Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust caches. The earlier baseline was
+Piper `ne_NP-google-medium`; it was fully replaced by the Sano clone.
 
 ## Server sync (api/)
 

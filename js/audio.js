@@ -4,15 +4,16 @@
 // (CLAUDE.md). The service worker caches each file cache-first on first play.
 //
 // Voice architecture: every clip is namespaced by a voiceId so characters can
-// diverge later. Today a single `default` voice (Piper ne_NP-google-medium,
-// speaker 0) backs all phrase audio and every character. Giving each character its
-// own voice (the PLAN.md follow-up) is just: render the new voice folders and widen
+// diverge later. Today a single `default` voice — Sano's ElevenLabs clone
+// (RESEARCH.md §9), rendered by tools/tts/synth-app.mjs — backs all phrase audio,
+// the per-word tile clips, and every character. Giving each character its own voice
+// (the PLAN.md follow-up) is just: render the new voice folders and widen
 // voiceForCharacter() — no caller changes.
 const SanoAudio = (() => {
 	// Bump when clips are re-rendered (corrected Devanagari, new/retuned voices) so
 	// caches and the browser fetch fresh copies. These URLs are built here in JS, so
 	// tools/stamp-version.mjs (which only stamps index.html) can't version them.
-	const AUDIO_VERSION = '1';
+	const AUDIO_VERSION = '2';
 	const DEFAULT_VOICE = 'default';
 
 	// characterId -> voiceId. Empty today: every character resolves to the one

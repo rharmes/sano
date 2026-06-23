@@ -1,0 +1,1568 @@
+{
+	"aaudai": {
+		"roman": "aaudai",
+		"dev": "आउँदै",
+		"source": "aligned",
+		"phrases": [
+			"paahuna-aaudai-chan-guests-are-coming"
+		]
+	},
+	"aaunchu": {
+		"roman": "aaunchu",
+		"dev": "आउँछु",
+		"source": "aligned",
+		"phrases": [
+			"ma-ahile-aaunchu-i-will-be-right-back",
+			"ma-chaadai-aaunchu-i-will-come-back-soon"
+		]
+	},
+	"aaunus": {
+		"roman": "aaunus",
+		"dev": "आउनुस्",
+		"source": "aligned",
+		"phrases": [
+			"bhitra-aaunus-please-come-in"
+		]
+	},
+	"aaye": {
+		"roman": "aaye",
+		"dev": "आएँ",
+		"source": "aligned",
+		"phrases": [
+			"ma-ghar-aaye-i-am-home-i-came-home"
+		]
+	},
+	"aayo": {
+		"roman": "aayo",
+		"dev": "आयो",
+		"source": "aligned",
+		"phrases": [
+			"ramro-basna-aayo-it-smells-good"
+		]
+	},
+	"ahile": {
+		"roman": "ahile",
+		"dev": "अहिले",
+		"source": "aligned",
+		"phrases": [
+			"ma-ahile-aaunchu-i-will-be-right-back"
+		]
+	},
+	"ali": {
+		"roman": "ali",
+		"dev": "अलि",
+		"source": "aligned",
+		"phrases": [
+			"ali-ali-a-little-bit",
+			"ali-bistari-bolnuhos-please-speak-slowly"
+		]
+	},
+	"angreji": {
+		"roman": "angreji",
+		"dev": "अङ्ग्रेजी",
+		"source": "aligned",
+		"phrases": [
+			"ma-bolchhu-i-speak-english",
+			"tapai-bolnu-hunchha-do-you-speak-english"
+		]
+	},
+	"antim": {
+		"roman": "antim",
+		"dev": "अन्तिम",
+		"source": "aligned",
+		"phrases": [
+			"antim-mol-kati-what-s-your-final-price"
+		]
+	},
+	"aru": {
+		"roman": "aru",
+		"dev": "अरु",
+		"source": "aligned",
+		"phrases": [
+			"aru-ke-chaahiyo-what-else-do-you-need",
+			"aru-kehi-chhaina-nothing-else",
+			"aru-nun-chaahiyo-it-needs-more-salt"
+		]
+	},
+	"bajyo": {
+		"roman": "bajyo",
+		"dev": "बज्यो",
+		"source": "aligned",
+		"phrases": [
+			"kati-bajyo-what-time-is-it"
+		]
+	},
+	"balnus": {
+		"roman": "balnus",
+		"dev": "बाल्नुस्",
+		"source": "aligned",
+		"phrases": [
+			"batti-balnus-please-turn-on-the-light"
+		]
+	},
+	"banda": {
+		"roman": "banda",
+		"dev": "बन्द",
+		"source": "aligned",
+		"phrases": [
+			"dhoka-banda-garnu-bhayo-did-you-close-the-door",
+			"dhoka-banda-garnus-please-close-the-door"
+		]
+	},
+	"basna": {
+		"roman": "basna",
+		"dev": "बास्ना",
+		"source": "aligned",
+		"phrases": [
+			"ramro-basna-aayo-it-smells-good"
+		]
+	},
+	"basnu": {
+		"roman": "basnu",
+		"dev": "बस्नु",
+		"source": "override",
+		"phrases": [
+			"kaha-basnu-huncha-where-do-you-live"
+		]
+	},
+	"bata": {
+		"roman": "bata",
+		"dev": "बाट",
+		"source": "override",
+		"phrases": [
+			"tapai-kaha-bata-ho-where-are-you-from"
+		]
+	},
+	"bato": {
+		"roman": "bato",
+		"dev": "बाटो",
+		"source": "aligned",
+		"phrases": [
+			"bato-dekhaunus-please-show-me-the-way"
+		]
+	},
+	"batti": {
+		"roman": "batti",
+		"dev": "बत्ती",
+		"source": "aligned",
+		"phrases": [
+			"batti-balnus-please-turn-on-the-light",
+			"batti-nibhaunus-please-turn-off-the-light"
+		]
+	},
+	"bela": {
+		"roman": "bela",
+		"dev": "बेला",
+		"source": "aligned",
+		"phrases": [
+			"khana-khane-bela-bhayo-it-is-time-to-eat",
+			"sutne-bela-bhayo-it-s-bedtime"
+		]
+	},
+	"bhaat": {
+		"roman": "bhaat",
+		"dev": "भात",
+		"source": "aligned",
+		"phrases": [
+			"bhaat-pakaunus-please-cook-the-rice"
+		]
+	},
+	"bhada": {
+		"roman": "bhada",
+		"dev": "भाँडा",
+		"source": "aligned",
+		"phrases": [
+			"ma-bhada-maajhchu-i-ll-wash-the-dishes"
+		]
+	},
+	"bhannus": {
+		"roman": "bhannus",
+		"dev": "भन्नुस्",
+		"source": "aligned",
+		"phrases": [
+			"pheri-bhannus-can-you-repeat-that"
+		]
+	},
+	"bhayo": {
+		"roman": "bhayo",
+		"dev": "भयो",
+		"source": "aligned",
+		"phrases": [
+			"dhilo-bhayo-it-is-late-i-am-running-late",
+			"dhoka-banda-garnu-bhayo-did-you-close-the-door",
+			"ke-bhayo-what-happened",
+			"khana-khane-bela-bhayo-it-is-time-to-eat",
+			"khana-khanu-bhayo-have-you-eaten",
+			"khana-tayar-bhayo-the-food-is-ready",
+			"malai-biraami-bhayo-i-am-sick",
+			"sutne-bela-bhayo-it-s-bedtime"
+		]
+	},
+	"bhetaula": {
+		"roman": "bhetaula",
+		"dev": "भेटौंला",
+		"source": "aligned",
+		"phrases": [
+			"pheri-bhetaula-see-you-again-let-s-meet-again"
+		]
+	},
+	"bhetda": {
+		"roman": "bhetda",
+		"dev": "भेट्दा",
+		"source": "override",
+		"phrases": [
+			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you"
+		]
+	},
+	"bhitra": {
+		"roman": "bhitra",
+		"dev": "भित्र",
+		"source": "aligned",
+		"phrases": [
+			"bhitra-aaunus-please-come-in"
+		]
+	},
+	"biraami": {
+		"roman": "biraami",
+		"dev": "बिरामी",
+		"source": "aligned",
+		"phrases": [
+			"malai-biraami-bhayo-i-am-sick"
+		]
+	},
+	"bistari": {
+		"roman": "bistari",
+		"dev": "बिस्तारी",
+		"source": "aligned",
+		"phrases": [
+			"ali-bistari-bolnuhos-please-speak-slowly"
+		]
+	},
+	"bolchhu": {
+		"roman": "bolchhu",
+		"dev": "बोल्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-bolchhu-i-speak-english",
+			"ma-nepali-bolchhu-i-speak-nepali"
+		]
+	},
+	"boldina": {
+		"roman": "boldina",
+		"dev": "बोल्दिनँ",
+		"source": "aligned",
+		"phrases": [
+			"ma-nepali-boldina-i-don-t-speak-nepali"
+		]
+	},
+	"bolnu": {
+		"roman": "bolnu",
+		"dev": "बोल्नु",
+		"source": "override",
+		"phrases": [
+			"tapai-bolnu-hunchha-do-you-speak-english",
+			"tapai-nepali-bolnu-hunchha-do-you-speak-nepali"
+		]
+	},
+	"bolnuhos": {
+		"roman": "bolnuhos",
+		"dev": "बोल्नुहोस्",
+		"source": "aligned",
+		"phrases": [
+			"ali-bistari-bolnuhos-please-speak-slowly"
+		]
+	},
+	"bujhe": {
+		"roman": "bujhe",
+		"dev": "बुझेँ",
+		"source": "aligned",
+		"phrases": [
+			"maile-bujhe-i-understand-i-understood"
+		]
+	},
+	"bujhina": {
+		"roman": "bujhina",
+		"dev": "बुझिनँ",
+		"source": "aligned",
+		"phrases": [
+			"maile-bujhina-i-don-t-understand"
+		]
+	},
+	"bujhnubhayo": {
+		"roman": "bujhnubhayo",
+		"dev": "बुझ्नुभयो",
+		"source": "override",
+		"phrases": [
+			"bujhnubhayo-bujyau-do-you-understand"
+		]
+	},
+	"bujyau": {
+		"roman": "bujyau",
+		"dev": "बुझ्यौ",
+		"source": "override",
+		"phrases": [
+			"bujhnubhayo-bujyau-do-you-understand"
+		]
+	},
+	"cha": {
+		"roman": "cha",
+		"dev": "छ",
+		"source": "aligned",
+		"phrases": [
+			"charpi-kaha-cha-where-is-the-bathroom",
+			"dherai-piro-cha-it-is-very-spicy",
+			"garmi-cha-it-s-hot",
+			"hospital-kaha-cha-where-is-the-hospital",
+			"jado-cha-it-s-cold",
+			"kasto-cha-how-is-it",
+			"khana-mitho-cha-the-food-is-delicious",
+			"mahango-cha-it-s-expensive",
+			"malai-thaaha-cha-i-know",
+			"mero-kap-kaha-cha-where-is-my-cup",
+			"mitho-cha-it-s-delicious",
+			"sasto-cha-it-s-cheap",
+			"swagat-cha-you-re-welcome",
+			"tapai-lai-kasto-cha-how-are-you-formal",
+			"tato-cha-it-is-hot-to-the-touch",
+			"thik-cha-it-s-okay-it-s-fine",
+			"toilet-kaha-cha-where-is-the-toilet",
+			"yo-piro-cha-is-this-spicy"
+		]
+	},
+	"chaadai": {
+		"roman": "chaadai",
+		"dev": "चाँडै",
+		"source": "aligned",
+		"phrases": [
+			"ma-chaadai-aaunchu-i-will-come-back-soon"
+		]
+	},
+	"chaahiyo": {
+		"roman": "chaahiyo",
+		"dev": "चाहियो",
+		"source": "aligned",
+		"phrases": [
+			"aru-ke-chaahiyo-what-else-do-you-need",
+			"aru-nun-chaahiyo-it-needs-more-salt",
+			"doctor-chaahiyo-i-need-a-doctor",
+			"maddat-chaahiyo-do-you-need-help",
+			"malai-chiya-chaahiyo-i-need-tea",
+			"pani-chaahiyo-i-need-water"
+		]
+	},
+	"chan": {
+		"roman": "chan",
+		"dev": "छन्",
+		"source": "aligned",
+		"phrases": [
+			"paahuna-aaudai-chan-guests-are-coming"
+		]
+	},
+	"charpi": {
+		"roman": "charpi",
+		"dev": "चर्पी",
+		"source": "aligned",
+		"phrases": [
+			"charpi-kaha-cha-where-is-the-bathroom"
+		]
+	},
+	"chha": {
+		"roman": "chha",
+		"dev": "छ",
+		"source": "aligned",
+		"phrases": [
+			"kasto-chha-hawa-how-s-the-weather"
+		]
+	},
+	"chhaina": {
+		"roman": "chhaina",
+		"dev": "छैन",
+		"source": "aligned",
+		"phrases": [
+			"aru-kehi-chhaina-nothing-else",
+			"kehi-chhaina-nothing-it-s-nothing",
+			"khana-khaeko-chhaina-i-haven-t-eaten",
+			"thaha-chhaina-i-don-t-know"
+		]
+	},
+	"chhin": {
+		"roman": "chhin",
+		"dev": "छिन",
+		"source": "aligned",
+		"phrases": [
+			"ek-chhin-parkhanus-wait-a-moment-please"
+		]
+	},
+	"chiya": {
+		"roman": "chiya",
+		"dev": "चिया",
+		"source": "aligned",
+		"phrases": [
+			"chiya-khaane-will-you-have-tea",
+			"malai-chiya-chaahiyo-i-need-tea"
+		]
+	},
+	"chu": {
+		"roman": "chu",
+		"dev": "छु",
+		"source": "aligned",
+		"phrases": [
+			"khana-khaeko-chu-i-ve-eaten-i-have-eaten",
+			"ma-khana-pakaudai-chu-i-am-cooking-food",
+			"ma-thakeko-chu-i-am-tired",
+			"sanchai-chu-i-m-fine"
+		]
+	},
+	"daat": {
+		"roman": "daat",
+		"dev": "दाँत",
+		"source": "aligned",
+		"phrases": [
+			"ma-daat-maajhchu-i-will-brush-my-teeth"
+		]
+	},
+	"dahi": {
+		"roman": "dahi",
+		"dev": "दही",
+		"source": "aligned",
+		"phrases": [
+			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod",
+			"malai-dahi-man-parcha-i-like-yogurt"
+		]
+	},
+	"dekhaunus": {
+		"roman": "dekhaunus",
+		"dev": "देखाउनुस्",
+		"source": "aligned",
+		"phrases": [
+			"bato-dekhaunus-please-show-me-the-way"
+		]
+	},
+	"dherai": {
+		"roman": "dherai",
+		"dev": "धेरै",
+		"source": "aligned",
+		"phrases": [
+			"dherai-piro-cha-it-is-very-spicy",
+			"dherai-ramro-very-good-excellent"
+		]
+	},
+	"dhilo": {
+		"roman": "dhilo",
+		"dev": "ढिलो",
+		"source": "aligned",
+		"phrases": [
+			"dhilo-bhayo-it-is-late-i-am-running-late"
+		]
+	},
+	"dhoka": {
+		"roman": "dhoka",
+		"dev": "ढोका",
+		"source": "aligned",
+		"phrases": [
+			"dhoka-banda-garnu-bhayo-did-you-close-the-door",
+			"dhoka-banda-garnus-please-close-the-door"
+		]
+	},
+	"dhunchhu": {
+		"roman": "dhunchhu",
+		"dev": "धुन्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-mukh-dhunchhu-i-will-wash-my-face"
+		]
+	},
+	"dhunchu": {
+		"roman": "dhunchu",
+		"dev": "धुन्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-lugaa-dhunchu-i-will-wash-the-clothes"
+		]
+	},
+	"din": {
+		"roman": "din",
+		"dev": "दिन",
+		"source": "aligned",
+		"phrases": [
+			"subha-din-have-a-good-day"
+		]
+	},
+	"dinuhola": {
+		"roman": "dinuhola",
+		"dev": "दिनुहोला",
+		"source": "aligned",
+		"phrases": [
+			"lekhera-dinuhola-can-you-write-that-down"
+		]
+	},
+	"dinus": {
+		"roman": "dinus",
+		"dev": "दिनुस्",
+		"source": "aligned",
+		"phrases": [
+			"nun-dinus-please-pass-the-salt",
+			"paani-dinus-please-give-me-water"
+		]
+	},
+	"doctor": {
+		"roman": "doctor",
+		"dev": "डाक्टर",
+		"source": "aligned",
+		"phrases": [
+			"doctor-chaahiyo-i-need-a-doctor"
+		]
+	},
+	"dudh": {
+		"roman": "dudh",
+		"dev": "दूध",
+		"source": "aligned",
+		"phrases": [
+			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod"
+		]
+	},
+	"dukhyo": {
+		"roman": "dukhyo",
+		"dev": "दुख्यो",
+		"source": "aligned",
+		"phrases": [
+			"tauko-dukhyo-my-head-hurts-headache"
+		]
+	},
+	"ek": {
+		"roman": "ek",
+		"dev": "एक",
+		"source": "aligned",
+		"phrases": [
+			"ek-chhin-parkhanus-wait-a-moment-please"
+		]
+	},
+	"ekdum": {
+		"roman": "ekdum",
+		"dev": "एकदम",
+		"source": "aligned",
+		"phrases": [
+			"ekdum-ramro-very-good-excellent"
+		]
+	},
+	"falchhu": {
+		"roman": "falchhu",
+		"dev": "फाल्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-fohor-falchhu-i-will-take-out-the-trash"
+		]
+	},
+	"fohor": {
+		"roman": "fohor",
+		"dev": "फोहोर",
+		"source": "aligned",
+		"phrases": [
+			"ma-fohor-falchhu-i-will-take-out-the-trash"
+		]
+	},
+	"garchu": {
+		"roman": "garchu",
+		"dev": "गर्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-ghar-safaa-garchu-i-will-clean-the-house",
+			"ma-kaam-garchu-i-am-working-i-will-do-the-work",
+			"ma-maddat-garchu-i-will-help"
+		]
+	},
+	"gardai": {
+		"roman": "gardai",
+		"dev": "गर्दै",
+		"source": "aligned",
+		"phrases": [
+			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite"
+		]
+	},
+	"garmi": {
+		"roman": "garmi",
+		"dev": "गर्मी",
+		"source": "aligned",
+		"phrases": [
+			"garmi-cha-it-s-hot"
+		]
+	},
+	"garna": {
+		"roman": "garna",
+		"dev": "गर्न",
+		"source": "aligned",
+		"phrases": [
+			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything"
+		]
+	},
+	"garnu": {
+		"roman": "garnu",
+		"dev": "गर्नु",
+		"source": "override",
+		"phrases": [
+			"dhoka-banda-garnu-bhayo-did-you-close-the-door"
+		]
+	},
+	"garnuhos": {
+		"roman": "garnuhos",
+		"dev": "गर्नुहोस्",
+		"source": "aligned",
+		"phrases": [
+			"kam-garnuhos-please-reduce-make-it-less",
+			"kripaya-malaai-maddat-garnuhos-please-help-me",
+			"maaf-garnuhos-excuse-me-i-m-sorry",
+			"sahayog-garnuhos-please-cooperate-please-help"
+		]
+	},
+	"garnus": {
+		"roman": "garnus",
+		"dev": "गर्नुस्",
+		"source": "aligned",
+		"phrases": [
+			"dhoka-banda-garnus-please-close-the-door",
+			"hosh-garnus-be-careful",
+			"khadai-garnus-please-eat",
+			"piudai-garnus-please-drink"
+		]
+	},
+	"ghar": {
+		"roman": "ghar",
+		"dev": "घर",
+		"source": "aligned",
+		"phrases": [
+			"ma-ghar-aaye-i-am-home-i-came-home",
+			"ma-ghar-jaanchu-i-am-going-home",
+			"ma-ghar-safaa-garchu-i-will-clean-the-house"
+		]
+	},
+	"ghue": {
+		"roman": "ghue",
+		"dev": "घ्यू",
+		"source": "aligned",
+		"phrases": [
+			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod"
+		]
+	},
+	"hajur": {
+		"roman": "hajur",
+		"dev": "हजुर",
+		"source": "override",
+		"phrases": [
+			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite"
+		]
+	},
+	"haraye": {
+		"roman": "haraye",
+		"dev": "हराएँ",
+		"source": "aligned",
+		"phrases": [
+			"ma-haraye-i-am-lost"
+		]
+	},
+	"hawa": {
+		"roman": "hawa",
+		"dev": "हावा",
+		"source": "aligned",
+		"phrases": [
+			"kasto-chha-hawa-how-s-the-weather"
+		]
+	},
+	"ho": {
+		"roman": "ho",
+		"dev": "हो",
+		"source": "aligned",
+		"phrases": [
+			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
+			"kati-ho-how-much-is-it",
+			"tapai-kaha-bata-ho-where-are-you-from",
+			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
+			"timro-naam-ke-ho-what-is-your-name-informal",
+			"yo-ke-ho-what-is-this"
+		]
+	},
+	"hosh": {
+		"roman": "hosh",
+		"dev": "होस",
+		"source": "aligned",
+		"phrases": [
+			"hosh-garnus-be-careful"
+		]
+	},
+	"hospital": {
+		"roman": "hospital",
+		"dev": "अस्पताल",
+		"source": "aligned",
+		"phrases": [
+			"hospital-kaha-cha-where-is-the-hospital"
+		]
+	},
+	"huncha": {
+		"roman": "huncha",
+		"dev": "हुन्छ",
+		"source": "override",
+		"phrases": [
+			"kaha-basnu-huncha-where-do-you-live"
+		]
+	},
+	"hunchha": {
+		"roman": "hunchha",
+		"dev": "हुन्छ",
+		"source": "override",
+		"phrases": [
+			"tapai-bolnu-hunchha-do-you-speak-english",
+			"tapai-nepali-bolnu-hunchha-do-you-speak-nepali"
+		]
+	},
+	"hunuhunchha": {
+		"roman": "hunuhunchha",
+		"dev": "हुनुहुन्छ",
+		"source": "aligned",
+		"phrases": [
+			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite"
+		]
+	},
+	"jaanchu": {
+		"roman": "jaanchu",
+		"dev": "जान्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-ghar-jaanchu-i-am-going-home",
+			"ma-kaam-jaanchu-i-am-going-to-work"
+		]
+	},
+	"jaane": {
+		"roman": "jaane",
+		"dev": "जाने",
+		"source": "aligned",
+		"phrases": [
+			"ma-sutna-jaane-i-am-going-to-bed"
+		]
+	},
+	"jaanu": {
+		"roman": "jaanu",
+		"dev": "जानु",
+		"source": "aligned",
+		"phrases": [
+			"ramrari-jaanu-go-safely-take-care"
+		]
+	},
+	"jado": {
+		"roman": "jado",
+		"dev": "जाडो",
+		"source": "aligned",
+		"phrases": [
+			"jado-cha-it-s-cold"
+		]
+	},
+	"jane": {
+		"roman": "jane",
+		"dev": "जाने",
+		"source": "aligned",
+		"phrases": [
+			"kaha-jane-where-are-you-going",
+			"ma-nuhaauna-jane-i-m-going-to-bathe"
+		]
+	},
+	"janey": {
+		"roman": "janey",
+		"dev": "जाने",
+		"source": "aligned",
+		"phrases": [
+			"kata-janey-where-to-go"
+		]
+	},
+	"kaam": {
+		"roman": "kaam",
+		"dev": "काम",
+		"source": "aligned",
+		"phrases": [
+			"ma-kaam-garchu-i-am-working-i-will-do-the-work",
+			"ma-kaam-jaanchu-i-am-going-to-work"
+		]
+	},
+	"kaatchu": {
+		"roman": "kaatchu",
+		"dev": "काट्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-tarkari-kaatchu-i-will-cut-the-vegetables"
+		]
+	},
+	"kaha": {
+		"roman": "kaha",
+		"dev": "कहाँ",
+		"source": "aligned",
+		"phrases": [
+			"charpi-kaha-cha-where-is-the-bathroom",
+			"hospital-kaha-cha-where-is-the-hospital",
+			"kaha-basnu-huncha-where-do-you-live",
+			"kaha-jane-where-are-you-going",
+			"mero-kap-kaha-cha-where-is-my-cup",
+			"tapai-kaha-bata-ho-where-are-you-from",
+			"toilet-kaha-cha-where-is-the-toilet"
+		]
+	},
+	"kam": {
+		"roman": "kam",
+		"dev": "कम",
+		"source": "aligned",
+		"phrases": [
+			"kam-garnuhos-please-reduce-make-it-less"
+		]
+	},
+	"kap": {
+		"roman": "kap",
+		"dev": "कप",
+		"source": "aligned",
+		"phrases": [
+			"mero-kap-kaha-cha-where-is-my-cup"
+		]
+	},
+	"kasto": {
+		"roman": "kasto",
+		"dev": "कस्तो",
+		"source": "aligned",
+		"phrases": [
+			"kasto-cha-how-is-it",
+			"kasto-chha-hawa-how-s-the-weather",
+			"tapai-lai-kasto-cha-how-are-you-formal"
+		]
+	},
+	"kata": {
+		"roman": "kata",
+		"dev": "कता",
+		"source": "aligned",
+		"phrases": [
+			"kata-janey-where-to-go"
+		]
+	},
+	"kati": {
+		"roman": "kati",
+		"dev": "कति",
+		"source": "aligned",
+		"phrases": [
+			"antim-mol-kati-what-s-your-final-price",
+			"kati-bajyo-what-time-is-it",
+			"kati-ho-how-much-is-it",
+			"kati-ma-for-how-much"
+		]
+	},
+	"ke": {
+		"roman": "ke",
+		"dev": "के",
+		"source": "aligned",
+		"phrases": [
+			"aru-ke-chaahiyo-what-else-do-you-need",
+			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
+			"ke-bhayo-what-happened",
+			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite",
+			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
+			"timro-naam-ke-ho-what-is-your-name-informal",
+			"yo-ke-ho-what-is-this"
+		]
+	},
+	"kehi": {
+		"roman": "kehi",
+		"dev": "केही",
+		"source": "aligned",
+		"phrases": [
+			"aru-kehi-chhaina-nothing-else",
+			"kehi-chhaina-nothing-it-s-nothing",
+			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything"
+		]
+	},
+	"khaane": {
+		"roman": "khaane",
+		"dev": "खाने",
+		"source": "aligned",
+		"phrases": [
+			"chiya-khaane-will-you-have-tea"
+		]
+	},
+	"khadai": {
+		"roman": "khadai",
+		"dev": "खाँदै",
+		"source": "aligned",
+		"phrases": [
+			"khadai-garnus-please-eat"
+		]
+	},
+	"khadina": {
+		"roman": "khadina",
+		"dev": "खाँदिनँ",
+		"source": "aligned",
+		"phrases": [
+			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod",
+			"ma-machha-maasu-khadina-i-don-t-eat-meat"
+		]
+	},
+	"khaeko": {
+		"roman": "khaeko",
+		"dev": "खाएको",
+		"source": "aligned",
+		"phrases": [
+			"khana-khaeko-chhaina-i-haven-t-eaten",
+			"khana-khaeko-chu-i-ve-eaten-i-have-eaten"
+		]
+	},
+	"khana": {
+		"roman": "khana",
+		"dev": "खाना",
+		"source": "aligned",
+		"phrases": [
+			"khana-khaeko-chhaina-i-haven-t-eaten",
+			"khana-khaeko-chu-i-ve-eaten-i-have-eaten",
+			"khana-khane-bela-bhayo-it-is-time-to-eat",
+			"khana-khanu-bhayo-have-you-eaten",
+			"khana-mitho-cha-the-food-is-delicious",
+			"khana-sakiyo-the-food-is-finished-all-gone",
+			"khana-tayar-bhayo-the-food-is-ready",
+			"ma-khana-pakaudai-chu-i-am-cooking-food"
+		]
+	},
+	"khane": {
+		"roman": "khane",
+		"dev": "खाने",
+		"source": "aligned",
+		"phrases": [
+			"khana-khane-bela-bhayo-it-is-time-to-eat"
+		]
+	},
+	"khanu": {
+		"roman": "khanu",
+		"dev": "खानु",
+		"source": "override",
+		"phrases": [
+			"khana-khanu-bhayo-have-you-eaten"
+		]
+	},
+	"khushi": {
+		"roman": "khushi",
+		"dev": "खुसी",
+		"source": "override",
+		"phrases": [
+			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you"
+		]
+	},
+	"ko": {
+		"roman": "ko",
+		"dev": "को",
+		"source": "override",
+		"phrases": [
+			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
+			"tapai-ko-naam-ke-ho-what-is-your-name-formal"
+		]
+	},
+	"kripaya": {
+		"roman": "kripaya",
+		"dev": "कृपया",
+		"source": "aligned",
+		"phrases": [
+			"kripaya-malaai-maddat-garnuhos-please-help-me"
+		]
+	},
+	"lagyo": {
+		"roman": "lagyo",
+		"dev": "लाग्यो",
+		"source": "override",
+		"phrases": [
+			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you"
+		]
+	},
+	"lai": {
+		"roman": "lai",
+		"dev": "लाई",
+		"source": "override",
+		"phrases": [
+			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you",
+			"tapai-lai-kasto-cha-how-are-you-formal"
+		]
+	},
+	"lekhera": {
+		"roman": "lekhera",
+		"dev": "लेखेर",
+		"source": "aligned",
+		"phrases": [
+			"lekhera-dinuhola-can-you-write-that-down"
+		]
+	},
+	"lugaa": {
+		"roman": "lugaa",
+		"dev": "लुगा",
+		"source": "aligned",
+		"phrases": [
+			"ma-lugaa-dhunchu-i-will-wash-the-clothes"
+		]
+	},
+	"ma": {
+		"roman": "ma",
+		"dev": "म",
+		"source": "aligned",
+		"phrases": [
+			"kati-ma-for-how-much",
+			"ma-ahile-aaunchu-i-will-be-right-back",
+			"ma-bhada-maajhchu-i-ll-wash-the-dishes",
+			"ma-bolchhu-i-speak-english",
+			"ma-chaadai-aaunchu-i-will-come-back-soon",
+			"ma-daat-maajhchu-i-will-brush-my-teeth",
+			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod",
+			"ma-fohor-falchhu-i-will-take-out-the-trash",
+			"ma-ghar-aaye-i-am-home-i-came-home",
+			"ma-ghar-jaanchu-i-am-going-home",
+			"ma-ghar-safaa-garchu-i-will-clean-the-house",
+			"ma-haraye-i-am-lost",
+			"ma-kaam-garchu-i-am-working-i-will-do-the-work",
+			"ma-kaam-jaanchu-i-am-going-to-work",
+			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything",
+			"ma-khana-pakaudai-chu-i-am-cooking-food",
+			"ma-lugaa-dhunchu-i-will-wash-the-clothes",
+			"ma-machha-maasu-khadina-i-don-t-eat-meat",
+			"ma-maddat-garchu-i-will-help",
+			"ma-mukh-dhunchhu-i-will-wash-my-face",
+			"ma-nepali-bolchhu-i-speak-nepali",
+			"ma-nepali-boldina-i-don-t-speak-nepali",
+			"ma-nuhaauna-jane-i-m-going-to-bathe",
+			"ma-sutna-jaane-i-am-going-to-bed",
+			"ma-tarkari-kaatchu-i-will-cut-the-vegetables",
+			"ma-thakeko-chu-i-am-tired",
+			"ma-uthchu-i-get-up-i-will-get-up"
+		]
+	},
+	"maaf": {
+		"roman": "maaf",
+		"dev": "माफ",
+		"source": "aligned",
+		"phrases": [
+			"maaf-garnuhos-excuse-me-i-m-sorry"
+		]
+	},
+	"maajhchu": {
+		"roman": "maajhchu",
+		"dev": "माझ्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-bhada-maajhchu-i-ll-wash-the-dishes",
+			"ma-daat-maajhchu-i-will-brush-my-teeth"
+		]
+	},
+	"machhamaasu": {
+		"roman": "machhamaasu",
+		"dev": "माछामासु",
+		"source": "aligned",
+		"phrases": [
+			"ma-machha-maasu-khadina-i-don-t-eat-meat"
+		]
+	},
+	"maddat": {
+		"roman": "maddat",
+		"dev": "मद्दत",
+		"source": "aligned",
+		"phrases": [
+			"kripaya-malaai-maddat-garnuhos-please-help-me",
+			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything",
+			"ma-maddat-garchu-i-will-help",
+			"maddat-chaahiyo-do-you-need-help"
+		]
+	},
+	"mahango": {
+		"roman": "mahango",
+		"dev": "महँगो",
+		"source": "aligned",
+		"phrases": [
+			"mahango-cha-it-s-expensive"
+		]
+	},
+	"maile": {
+		"roman": "maile",
+		"dev": "मैले",
+		"source": "aligned",
+		"phrases": [
+			"maile-bujhe-i-understand-i-understood",
+			"maile-bujhina-i-don-t-understand"
+		]
+	},
+	"malaai": {
+		"roman": "malaai",
+		"dev": "मलाई",
+		"source": "aligned",
+		"phrases": [
+			"kripaya-malaai-maddat-garnuhos-please-help-me"
+		]
+	},
+	"malai": {
+		"roman": "malai",
+		"dev": "मलाई",
+		"source": "aligned",
+		"phrases": [
+			"malai-biraami-bhayo-i-am-sick",
+			"malai-chiya-chaahiyo-i-need-tea",
+			"malai-dahi-man-parcha-i-like-yogurt",
+			"malai-thaaha-cha-i-know"
+		]
+	},
+	"man": {
+		"roman": "man",
+		"dev": "मन",
+		"source": "aligned",
+		"phrases": [
+			"malai-dahi-man-parcha-i-like-yogurt"
+		]
+	},
+	"mero": {
+		"roman": "mero",
+		"dev": "मेरो",
+		"source": "aligned",
+		"phrases": [
+			"mero-kap-kaha-cha-where-is-my-cup"
+		]
+	},
+	"mitho": {
+		"roman": "mitho",
+		"dev": "मिठो",
+		"source": "aligned",
+		"phrases": [
+			"khana-mitho-cha-the-food-is-delicious",
+			"mitho-cha-it-s-delicious"
+		]
+	},
+	"mol": {
+		"roman": "mol",
+		"dev": "मोल",
+		"source": "aligned",
+		"phrases": [
+			"antim-mol-kati-what-s-your-final-price"
+		]
+	},
+	"mukh": {
+		"roman": "mukh",
+		"dev": "मुख",
+		"source": "aligned",
+		"phrases": [
+			"ma-mukh-dhunchhu-i-will-wash-my-face"
+		]
+	},
+	"naam": {
+		"roman": "naam",
+		"dev": "नाम",
+		"source": "aligned",
+		"phrases": [
+			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
+			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
+			"timro-naam-ke-ho-what-is-your-name-informal"
+		]
+	},
+	"nepali": {
+		"roman": "nepali",
+		"dev": "नेपाली",
+		"source": "aligned",
+		"phrases": [
+			"ma-nepali-bolchhu-i-speak-nepali",
+			"ma-nepali-boldina-i-don-t-speak-nepali",
+			"tapai-nepali-bolnu-hunchha-do-you-speak-nepali"
+		]
+	},
+	"nibhaunus": {
+		"roman": "nibhaunus",
+		"dev": "निभाउनुस्",
+		"source": "aligned",
+		"phrases": [
+			"batti-nibhaunus-please-turn-off-the-light"
+		]
+	},
+	"nuhaauna": {
+		"roman": "nuhaauna",
+		"dev": "नुहाउन",
+		"source": "aligned",
+		"phrases": [
+			"ma-nuhaauna-jane-i-m-going-to-bathe"
+		]
+	},
+	"nun": {
+		"roman": "nun",
+		"dev": "नुन",
+		"source": "aligned",
+		"phrases": [
+			"aru-nun-chaahiyo-it-needs-more-salt",
+			"nun-dinus-please-pass-the-salt",
+			"nun-pugyo-there-is-enough-salt"
+		]
+	},
+	"paahuna": {
+		"roman": "paahuna",
+		"dev": "पाहुना",
+		"source": "aligned",
+		"phrases": [
+			"paahuna-aaudai-chan-guests-are-coming"
+		]
+	},
+	"paani": {
+		"roman": "paani",
+		"dev": "पानी",
+		"source": "aligned",
+		"phrases": [
+			"paani-dinus-please-give-me-water",
+			"paani-umaalnus-please-boil-the-water"
+		]
+	},
+	"pakaudai": {
+		"roman": "pakaudai",
+		"dev": "पकाउँदै",
+		"source": "aligned",
+		"phrases": [
+			"ma-khana-pakaudai-chu-i-am-cooking-food"
+		]
+	},
+	"pakaunus": {
+		"roman": "pakaunus",
+		"dev": "पकाउनुस्",
+		"source": "aligned",
+		"phrases": [
+			"bhaat-pakaunus-please-cook-the-rice"
+		]
+	},
+	"pani": {
+		"roman": "pani",
+		"dev": "पानी",
+		"source": "aligned",
+		"phrases": [
+			"pani-chaahiyo-i-need-water",
+			"pani-pariracha-it-is-raining"
+		]
+	},
+	"parcha": {
+		"roman": "parcha",
+		"dev": "पर्छ",
+		"source": "aligned",
+		"phrases": [
+			"malai-dahi-man-parcha-i-like-yogurt",
+			"sochna-parcha-need-to-think-let-me-think"
+		]
+	},
+	"pariracha": {
+		"roman": "pariracha",
+		"dev": "परिरहेको छ",
+		"source": "override",
+		"phrases": [
+			"pani-pariracha-it-is-raining"
+		]
+	},
+	"parkhanus": {
+		"roman": "parkhanus",
+		"dev": "पर्खनुस्",
+		"source": "aligned",
+		"phrases": [
+			"ek-chhin-parkhanus-wait-a-moment-please"
+		]
+	},
+	"pheri": {
+		"roman": "pheri",
+		"dev": "फेरि",
+		"source": "aligned",
+		"phrases": [
+			"pheri-bhannus-can-you-repeat-that",
+			"pheri-bhetaula-see-you-again-let-s-meet-again"
+		]
+	},
+	"piro": {
+		"roman": "piro",
+		"dev": "पिरो",
+		"source": "aligned",
+		"phrases": [
+			"dherai-piro-cha-it-is-very-spicy",
+			"yo-piro-cha-is-this-spicy"
+		]
+	},
+	"piudai": {
+		"roman": "piudai",
+		"dev": "पिउँदै",
+		"source": "aligned",
+		"phrases": [
+			"piudai-garnus-please-drink"
+		]
+	},
+	"prabhat": {
+		"roman": "prabhat",
+		"dev": "प्रभात",
+		"source": "aligned",
+		"phrases": [
+			"subha-prabhat-good-morning"
+		]
+	},
+	"pugyo": {
+		"roman": "pugyo",
+		"dev": "पुग्यो",
+		"source": "aligned",
+		"phrases": [
+			"nun-pugyo-there-is-enough-salt"
+		]
+	},
+	"ra": {
+		"roman": "ra",
+		"dev": "र",
+		"source": "aligned",
+		"phrases": [
+			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod"
+		]
+	},
+	"ramrari": {
+		"roman": "ramrari",
+		"dev": "राम्ररी",
+		"source": "aligned",
+		"phrases": [
+			"ramrari-jaanu-go-safely-take-care"
+		]
+	},
+	"ramro": {
+		"roman": "ramro",
+		"dev": "राम्रो",
+		"source": "aligned",
+		"phrases": [
+			"dherai-ramro-very-good-excellent",
+			"ekdum-ramro-very-good-excellent",
+			"ramro-basna-aayo-it-smells-good",
+			"ramro-sanga-sutnus-sleep-well",
+			"sarai-ramro-very-good-really-good"
+		]
+	},
+	"ratri": {
+		"roman": "ratri",
+		"dev": "रात्री",
+		"source": "aligned",
+		"phrases": [
+			"subha-ratri-good-night"
+		]
+	},
+	"safaa": {
+		"roman": "safaa",
+		"dev": "सफा",
+		"source": "aligned",
+		"phrases": [
+			"ma-ghar-safaa-garchu-i-will-clean-the-house"
+		]
+	},
+	"sahayog": {
+		"roman": "sahayog",
+		"dev": "सहयोग",
+		"source": "aligned",
+		"phrases": [
+			"sahayog-garnuhos-please-cooperate-please-help"
+		]
+	},
+	"sakchu": {
+		"roman": "sakchu",
+		"dev": "सक्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything"
+		]
+	},
+	"sakiyo": {
+		"roman": "sakiyo",
+		"dev": "सकियो",
+		"source": "aligned",
+		"phrases": [
+			"khana-sakiyo-the-food-is-finished-all-gone"
+		]
+	},
+	"sanchai": {
+		"roman": "sanchai",
+		"dev": "सञ्चै",
+		"source": "aligned",
+		"phrases": [
+			"sanchai-chu-i-m-fine"
+		]
+	},
+	"sanga": {
+		"roman": "sanga",
+		"dev": "सँग",
+		"source": "override",
+		"phrases": [
+			"ramro-sanga-sutnus-sleep-well"
+		]
+	},
+	"sarai": {
+		"roman": "sarai",
+		"dev": "सारै",
+		"source": "aligned",
+		"phrases": [
+			"sarai-ramro-very-good-really-good"
+		]
+	},
+	"sasto": {
+		"roman": "sasto",
+		"dev": "सस्तो",
+		"source": "aligned",
+		"phrases": [
+			"sasto-cha-it-s-cheap"
+		]
+	},
+	"sochna": {
+		"roman": "sochna",
+		"dev": "सोच्न",
+		"source": "aligned",
+		"phrases": [
+			"sochna-parcha-need-to-think-let-me-think"
+		]
+	},
+	"subha": {
+		"roman": "subha",
+		"dev": "शुभ",
+		"source": "aligned",
+		"phrases": [
+			"subha-din-have-a-good-day",
+			"subha-prabhat-good-morning",
+			"subha-ratri-good-night"
+		]
+	},
+	"sutna": {
+		"roman": "sutna",
+		"dev": "सुत्न",
+		"source": "aligned",
+		"phrases": [
+			"ma-sutna-jaane-i-am-going-to-bed"
+		]
+	},
+	"sutne": {
+		"roman": "sutne",
+		"dev": "सुत्ने",
+		"source": "aligned",
+		"phrases": [
+			"sutne-bela-bhayo-it-s-bedtime"
+		]
+	},
+	"sutnus": {
+		"roman": "sutnus",
+		"dev": "सुत्नुस्",
+		"source": "override",
+		"phrases": [
+			"ramro-sanga-sutnus-sleep-well"
+		]
+	},
+	"swagat": {
+		"roman": "swagat",
+		"dev": "स्वागत",
+		"source": "aligned",
+		"phrases": [
+			"swagat-cha-you-re-welcome"
+		]
+	},
+	"tapai": {
+		"roman": "tapai",
+		"dev": "तपाईं",
+		"source": "aligned",
+		"phrases": [
+			"tapai-bolnu-hunchha-do-you-speak-english",
+			"tapai-kaha-bata-ho-where-are-you-from",
+			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite",
+			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
+			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you",
+			"tapai-lai-kasto-cha-how-are-you-formal",
+			"tapai-nepali-bolnu-hunchha-do-you-speak-nepali"
+		]
+	},
+	"tarkari": {
+		"roman": "tarkari",
+		"dev": "तरकारी",
+		"source": "aligned",
+		"phrases": [
+			"ma-tarkari-kaatchu-i-will-cut-the-vegetables"
+		]
+	},
+	"tato": {
+		"roman": "tato",
+		"dev": "तातो",
+		"source": "aligned",
+		"phrases": [
+			"tato-cha-it-is-hot-to-the-touch"
+		]
+	},
+	"tauko": {
+		"roman": "tauko",
+		"dev": "टाउको",
+		"source": "aligned",
+		"phrases": [
+			"tauko-dukhyo-my-head-hurts-headache"
+		]
+	},
+	"tayar": {
+		"roman": "tayar",
+		"dev": "तयार",
+		"source": "aligned",
+		"phrases": [
+			"khana-tayar-bhayo-the-food-is-ready"
+		]
+	},
+	"thaaha": {
+		"roman": "thaaha",
+		"dev": "थाहा",
+		"source": "aligned",
+		"phrases": [
+			"malai-thaaha-cha-i-know"
+		]
+	},
+	"thaha": {
+		"roman": "thaha",
+		"dev": "थाहा",
+		"source": "aligned",
+		"phrases": [
+			"thaha-chhaina-i-don-t-know"
+		]
+	},
+	"thakeko": {
+		"roman": "thakeko",
+		"dev": "थकेको",
+		"source": "aligned",
+		"phrases": [
+			"ma-thakeko-chu-i-am-tired"
+		]
+	},
+	"thik": {
+		"roman": "thik",
+		"dev": "ठीक",
+		"source": "aligned",
+		"phrases": [
+			"thik-cha-it-s-okay-it-s-fine"
+		]
+	},
+	"timro": {
+		"roman": "timro",
+		"dev": "तिम्रो",
+		"source": "aligned",
+		"phrases": [
+			"timro-naam-ke-ho-what-is-your-name-informal"
+		]
+	},
+	"toilet": {
+		"roman": "toilet",
+		"dev": "शौचालय",
+		"source": "aligned",
+		"phrases": [
+			"toilet-kaha-cha-where-is-the-toilet"
+		]
+	},
+	"umaalnus": {
+		"roman": "umaalnus",
+		"dev": "उमाल्नुस्",
+		"source": "aligned",
+		"phrases": [
+			"paani-umaalnus-please-boil-the-water"
+		]
+	},
+	"uthchu": {
+		"roman": "uthchu",
+		"dev": "उठ्छु",
+		"source": "aligned",
+		"phrases": [
+			"ma-uthchu-i-get-up-i-will-get-up"
+		]
+	},
+	"yo": {
+		"roman": "yo",
+		"dev": "यो",
+		"source": "aligned",
+		"phrases": [
+			"yo-ke-ho-what-is-this",
+			"yo-piro-cha-is-this-spicy"
+		]
+	}
+}
