@@ -1075,9 +1075,21 @@ function renderChoice(ex) {
 // lowercases and strips punctuation), so cleaning the tiles is purely cosmetic.
 function cleanTileText(word) {
 	// Drop the punctuation that gives a word's place away (capital first word, trailing
-	// ? / .) plus parens and slashes from English-meaning parentheticals like "(formal)"
-	// and "Hello / Goodbye". normalize() ignores all of this when grading, so it's cosmetic.
+	// ? / .) plus slashes from meanings like "Hello / Goodbye". normalize() ignores all of
+	// this when grading, so it's cosmetic. (Parenthetical asides are removed earlier by
+	// stripParens, before the phrase is split into words.)
 	return word.replace(/[?,.!।\/()]/g, '').toLowerCase();
+}
+
+// Remove parenthetical asides like "(formal)" / "(very polite)" from a phrase before it
+// becomes tiles or a grading target. They annotate the English meaning, aren't part of the
+// spoken answer, and listing them as tiles gives the register away. The matching grading
+// target is stripped the same way (checkExercise), so the answer is still correct without them.
+function stripParens(s) {
+	return s
+		.replace(/\([^)]*\)/g, ' ')
+		.replace(/\s+/g, ' ')
+		.trim();
 }
 
 // Map a single romanized word to a course item whose own np is exactly that word,
@@ -1131,7 +1143,7 @@ function renderWordbank(ex) {
 	// Tiles are pre-cleaned (lowercase, no punctuation); drop any that clean to empty
 	// (e.g. a stray "/"). The cleaned text still resolves the same per-word audio via
 	// normalize(), and the assembled answer still grades against the raw phrase.
-	const targetTiles = target.split(/\s+/).map(cleanTileText).filter(Boolean);
+	const targetTiles = stripParens(target).split(/\s+/).map(cleanTileText).filter(Boolean);
 	const tiles = shuffleArray(targetTiles.concat(wordbankDistractors(ex.item, ex.dir)));
 	for (const word of tiles) {
 		// The pool tile stays put when chosen; a matching tile is added to the answer
@@ -1166,13 +1178,13 @@ function renderWordbank(ex) {
 // answer isn't just "use every tile". Cleaned + lowercased like the real tiles.
 function wordbankDistractors(item, dir) {
 	const field = dir === 'np-en' ? 'en' : 'np';
-	const targetWords = cleanTileText(item[field]).split(/\s+/);
+	const targetWords = cleanTileText(stripParens(item[field])).split(/\s+/);
 	const pool = shuffleArray(COURSE.filter((u) => u.kind === 'phrases').flatMap((u) => u.items));
 
 	const distractors = [];
 	for (const candidate of pool) {
 		if (distractors.length === 3) break;
-		for (const word of candidate[field].split(/\s+/)) {
+		for (const word of stripParens(candidate[field]).split(/\s+/)) {
 			if (distractors.length === 3) break;
 			const cleaned = cleanTileText(word);
 			if (cleaned === '' || cleaned === '___' || cleaned === '...') continue;
@@ -1607,7 +1619,9 @@ function checkExercise() {
 	}
 	// Word bank checks against whichever phrase the tiles build (Nepali by default, the
 	// English meaning in the np-en direction); typing always builds the Nepali.
-	const expected = ex.type === 'wordbank' && ex.dir === 'np-en' ? ex.item.en : ex.item.np;
+	let expected = ex.type === 'wordbank' && ex.dir === 'np-en' ? ex.item.en : ex.item.np;
+	// Parenthetical asides are dropped from the tiles, so they're not required to match.
+	if (ex.type === 'wordbank') expected = stripParens(expected);
 	applyAnswer(ex, lenientEquals(given, expected, ex.type === 'type'));
 }
 
