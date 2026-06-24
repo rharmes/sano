@@ -1890,20 +1890,8 @@ function startDialogue(dialogue) {
 // line as it appears (in its character's voice — one default voice today,
 // per-character voices later).
 function renderDialogueConvo() {
-	const d = dialogueSession.def;
 	document.getElementById('dialogue-convo').classList.remove('hide');
 	document.getElementById('dialogue-quiz').classList.add('hide');
-	document.getElementById('dialogue-goal').textContent = d.goal;
-	// Introduce the lead companion (cast[0]) with a one-line persona so they're memorable.
-	const persona = document.getElementById('dialogue-persona');
-	const lead = (d.cast || [])[0];
-	const blurb = lead && CHARACTER_PERSONAS[lead];
-	if (blurb) {
-		persona.textContent = (CHARACTER_NAMES[lead] || lead) + ' — ' + blurb;
-		persona.classList.remove('hide');
-	} else {
-		persona.classList.add('hide');
-	}
 	document.getElementById('dialogue-thread').textContent = '';
 	dialogueSession.lineIndex = -1;
 	window.scrollTo(0, 0);
