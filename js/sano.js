@@ -1893,58 +1893,46 @@ function renderDialogueConvo() {
 	document.getElementById('dialogue-convo').classList.remove('hide');
 	document.getElementById('dialogue-quiz').classList.add('hide');
 	document.getElementById('dialogue-thread').textContent = '';
+	SanoGloss.closePop();
 	dialogueSession.lineIndex = -1;
 	window.scrollTo(0, 0);
 	revealNextLine();
 }
 
-// Build one story line. Narrator lines render as full-width scene narration; Sano sits on the
-// left, every other speaker (a companion or a one-off prop) on the right. Each line carries
-// its own Nepali/English inline (schema v2) and its own per-voice audio clip.
+// Build one story line. Narrator lines render as full-width scene narration (no bubble);
+// every speaker (Sano or a companion) sits on the LEFT with a head + bubble. The romanized
+// text is built from the line's `gloss` by SanoGloss.renderLine (js/gloss.js): each word /
+// phrase is underlined and tappable to reveal its English — Devanagari and the line-level
+// English subtitle are intentionally not shown. Each line keeps its per-voice audio clip
+// (the inline speaker icon).
 function dialogueBubble(line, index) {
 	const d = dialogueSession.def;
 	const folder = dialogueVoiceFolder(d, line.who);
 	const clipId = dialogueClipId(d, index);
 
+	const np = document.createElement('p');
+	np.className = 'np';
+	np.appendChild(SanoAudio.button(clipId, { className: 'audio-inline', voiceId: folder }));
+	np.appendChild(SanoGloss.renderLine(line));
+
 	if (line.who === 'narrator') {
 		const row = document.createElement('div');
 		row.className = 'dialogue-narration';
-		const np = document.createElement('p');
-		np.className = 'np';
-		np.textContent = line.np;
-		np.appendChild(SanoAudio.button(clipId, { className: 'audio-inline', voiceId: folder }));
-		const en = document.createElement('p');
-		en.className = 'en';
-		en.textContent = line.en;
-		row.append(np, en);
+		row.appendChild(np);
 		return row;
 	}
 
-	const isSano = line.who === 'sano';
 	const row = document.createElement('div');
-	row.className = 'dialogue-line ' + (isSano ? 'sano' : 'pyaro');
+	row.className = 'dialogue-line';
 
 	const head = document.createElement('div');
 	head.className = 'dialogue-head';
 	head.innerHTML = CHARACTER_HEADS[line.who] || '';
 
 	const bubble = document.createElement('div');
-	bubble.className = 'bubble ' + (isSano ? 'sano' : 'user');
+	bubble.className = 'bubble';
+	bubble.appendChild(np);
 
-	const speaker = document.createElement('p');
-	speaker.className = 'speaker';
-	speaker.textContent = CHARACTER_NAMES[line.who] || line.who;
-
-	const np = document.createElement('p');
-	np.className = 'np';
-	np.textContent = line.np;
-	np.appendChild(SanoAudio.button(clipId, { className: 'audio-inline', voiceId: folder }));
-
-	const en = document.createElement('p');
-	en.className = 'en';
-	en.textContent = line.en;
-
-	bubble.append(speaker, np, en);
 	row.append(head, bubble);
 	return row;
 }

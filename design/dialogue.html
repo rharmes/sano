@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		<title>Sano · conversation player mockup</title>
+
+		<!-- Localhost-only design mockup (committed, NEVER deployed): previews the redesigned
+		     in-app story/dialogue player. It pulls the REAL css/sano.css, js/gloss.js,
+		     js/dialogues.js and js/characters.js, so what you see here is what the app renders
+		     in js/sano.js (step 2) — no separate copy of the styles or logic to drift. Serve it
+		     with `php -S 127.0.0.1:8000` and open /design/dialogue.html. -->
+		<!-- Same stylesheet stack and order as index.html, so the rem base (barebones sets the
+		     root to 62.5% = 10px) and every size match the real app exactly. -->
+		<link rel="stylesheet" href="../css/fonts.css" />
+		<link rel="stylesheet" href="../css/normalize.css" />
+		<link rel="stylesheet" href="../css/barebones.css" />
+		<link rel="stylesheet" href="../css/sano.css" />
+		<style>
+			/* Force the chosen theme over css/sano.css's @media (prefers-color-scheme: dark)
+			   block, so the toggle works on any OS. Only the theme-VARIANT tokens are
+			   re-declared here; the character fills (--f-*) and type scale are theme-invariant
+			   and stay as css/sano.css sets them. html.light / html.dark beat the @media :root. */
+			html.light {
+				color-scheme: light;
+				--accent: #dd6470;
+				--accent-deep: #b94f5b;
+				--path-complete-color: #56629e;
+				--text-color-richer: #2e2933;
+				--text-color-normal: #45404c;
+				--text-color-soft: #79705f;
+				--text-color-softer: #b1a795;
+				--badge-color: #d99e3a;
+				--word-color: #c25566;
+				--text-complete-color: #38824a;
+				--text-incomplete-color: #c2403d;
+				--background-color: #fbf5e9;
+				--background-color-softer: #f3ecdb;
+				--border-color: #e0d8c4;
+				--border-color-softer: #e9e2d1;
+			}
+			html.dark {
+				color-scheme: dark;
+				--accent: #e0697a;
+				--accent-deep: #c25462;
+				--path-complete-color: #7384c4;
+				--text-color-richer: #efe9f0;
+				--text-color-normal: #d8d1da;
+				--text-color-soft: #9a91a4;
+				--text-color-softer: #645c70;
+				--badge-color: #d9aa4e;
+				--word-color: #e58794;
+				--text-complete-color: #7fae83;
+				--text-incomplete-color: #e07a72;
+				--background-color: #1b1822;
+				--background-color-softer: #262230;
+				--border-color: #37323f;
+				--border-color-softer: #2e2a38;
+			}
+
+			body {
+				margin: 0;
+				padding: 2.2rem 1.6rem 8rem;
+				background: var(--background-color);
+				color: var(--text-color-normal);
+				font-family: 'Lato', sans-serif;
+				font-weight: 300;
+			}
+			.mock-top {
+				display: flex;
+				align-items: center;
+				gap: 1.6rem;
+				max-width: 700px;
+				margin: 0 auto 0.6rem;
+			}
+			.mock-top h1 {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 3rem;
+				margin: 0;
+				color: var(--text-color-richer);
+			}
+			.theme-toggle {
+				margin-left: auto;
+				font-family: 'Lato', sans-serif;
+				font-size: 1.4rem;
+				padding: 0.5rem 1.1rem;
+				border: 1px solid var(--border-color);
+				border-radius: 999px;
+				background: var(--background-color-softer);
+				color: var(--text-color-soft);
+				cursor: pointer;
+			}
+			.mock-intro {
+				max-width: 700px;
+				margin: 0 auto;
+				font-size: 1.5rem;
+				line-height: 1.5;
+				color: var(--text-color-soft);
+			}
+			.mock-intro code {
+				font-size: 0.92em;
+				color: var(--text-color-normal);
+			}
+			/* Per-conversation header inside the thread (title + goal + cast). */
+			.convo-meta {
+				margin: 3.4rem 0 2rem;
+				padding-top: 2.4rem;
+				border-top: 1px solid var(--border-color);
+			}
+			.convo-meta:first-child {
+				border-top: 0;
+				padding-top: 0;
+			}
+			.convo-meta h2 {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 2.4rem;
+				margin: 0;
+				color: var(--text-color-richer);
+			}
+			.convo-meta p {
+				margin: 0.3rem 0 0;
+				font-size: 1.5rem;
+				color: var(--text-color-soft);
+			}
+			.convo-meta .cast {
+				font-size: 1.3rem;
+				color: var(--text-color-softer);
+			}
+			/* Safety badge: flags any line whose gloss segments don't rejoin to its np. */
+			.mismatch {
+				display: inline-block;
+				margin-top: 0.6rem;
+				font-size: 1.2rem;
+				font-weight: 700;
+				color: var(--text-incomplete-color);
+			}
+		</style>
+
+		<script>
+			// Apply the saved / ?theme= / OS theme before paint so there's no flash. Always set
+			// exactly one of html.light / html.dark (both override css/sano.css's @media block).
+			(function () {
+				var url = new URLSearchParams(location.search).get('theme');
+				var saved = localStorage.getItem('sano-dialogue-theme');
+				var dark = url ? url === 'dark' : saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+				document.documentElement.classList.add(dark ? 'dark' : 'light');
+			})();
+		</script>
+	</head>
+	<body>
+		<!-- Just the volume-up symbol from index.html's sprite, so SanoAudio.button renders. -->
+		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+			<symbol id="i-volume-up" viewBox="0 0 24 24">
+				<path
+					d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
+				/>
+			</symbol>
+		</svg>
+
+		<div class="mock-top">
+			<h1>Conversation player</h1>
+			<button class="theme-toggle" id="theme" type="button">Theme</button>
+		</div>
+		<p class="mock-intro">
+			Redesigned story player: every speaker on the left (head + bubble), romanized Nepali only —
+			<strong>tap any underlined word or phrase</strong> to reveal its English; narrator lines run full-width with no bubble. The English
+			glosses are <strong>AI-drafted and flagged for review</strong>. Audio plays in the app; the speaker icons here are inert.
+		</p>
+
+		<div id="screen-dialogue">
+			<div id="dialogue-thread" class="thread"></div>
+		</div>
+
+		<script src="../js/characters.js"></script>
+		<script src="../js/audio.js"></script>
+		<script src="../js/dialogues.js"></script>
+		<script src="../js/gloss.js"></script>
+		<script>
+			const thread = document.getElementById('dialogue-thread');
+
+			// Build the romanized line: speaker-icon audio button + the glossed, tappable text.
+			function lineText(d, line, index) {
+				const np = document.createElement('p');
+				np.className = 'np';
+				np.appendChild(
+					SanoAudio.button(dialogueClipId(d, index), { className: 'audio-inline', voiceId: dialogueVoiceFolder(d, line.who) }),
+				);
+				np.appendChild(SanoGloss.renderLine(line));
+				return np;
+			}
+
+			// Safety net for the reviewer: flag any line whose gloss doesn't rejoin to its np.
+			function mismatchBadge(line) {
+				if (!line.gloss) return null;
+				if (line.gloss.map((g) => g.np).join(' ') === line.np) return null;
+				const b = document.createElement('span');
+				b.className = 'mismatch';
+				b.textContent = '⚠ gloss segments do not rejoin to np';
+				return b;
+			}
+
+			function buildLine(d, line, index) {
+				const badge = mismatchBadge(line);
+				if (line.who === 'narrator') {
+					const row = document.createElement('div');
+					row.className = 'dialogue-narration';
+					row.appendChild(lineText(d, line, index));
+					if (badge) row.appendChild(badge);
+					return row;
+				}
+				const row = document.createElement('div');
+				row.className = 'dialogue-line';
+				const head = document.createElement('div');
+				head.className = 'dialogue-head';
+				head.innerHTML = CHARACTER_HEADS[line.who] || '';
+				const bubble = document.createElement('div');
+				bubble.className = 'bubble';
+				bubble.appendChild(lineText(d, line, index));
+				if (badge) bubble.appendChild(badge);
+				row.append(head, bubble);
+				return row;
+			}
+
+			DIALOGUES.forEach((d) => {
+				const meta = document.createElement('div');
+				meta.className = 'convo-meta';
+				const cast = (d.cast || []).map((id) => CHARACTER_NAMES[id] || id).join(', ');
+				meta.innerHTML = '<h2>' + d.title + '</h2><p>' + d.goal + '</p>' + (cast ? '<p class="cast">Sano &amp; ' + cast + '</p>' : '');
+				thread.appendChild(meta);
+				d.lines.forEach((line, i) => thread.appendChild(buildLine(d, line, i)));
+			});
+
+			document.getElementById('theme').addEventListener('click', () => {
+				const el = document.documentElement;
+				const dark = !el.classList.contains('dark');
+				el.classList.toggle('dark', dark);
+				el.classList.toggle('light', !dark);
+				localStorage.setItem('sano-dialogue-theme', dark ? 'dark' : 'light');
+			});
+		</script>
+	</body>
+</html>

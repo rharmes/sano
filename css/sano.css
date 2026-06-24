@@ -431,9 +431,8 @@ html {
 
 /* Narrator scene-setting in a story dialogue: full-width, centered, no character head. */
 .dialogue-narration {
-	margin: 1.5rem auto 0.5rem;
-	max-width: 92%;
-	text-align: center;
+	margin: 0;
+	text-align: left;
 }
 .dialogue-narration .np {
 	font-style: italic;
@@ -1907,22 +1906,27 @@ table#vocab tbody td:nth-child(3) {
 }
 #dialogue-thread {
 	margin: 0 auto;
+	/* Tighter than the shared .thread gap (2.6rem) for the conversation. */
+	gap: 1.4rem;
 }
-/* Change 3: a head-only character portrait beside each bubble, on the speaker's side. */
+/* The head is absolutely positioned (not a flex item) so it never inflates the row height:
+   every row is exactly its bubble's height, so the single thread gap spaces ALL lines
+   (bubbles + narration) evenly — even when a tall head sits beside a short bubble. The bubble
+   flows in the padding-left reserved for the head. */
 .dialogue-line {
-	display: flex;
-	align-items: flex-start;
-	gap: 1rem;
+	position: relative;
+	padding-left: 6.4rem;
 	scroll-margin-bottom: 11rem;
 }
-.dialogue-line.pyaro {
-	flex-direction: row-reverse;
-}
+/* New story-player look: every speaker sits on the LEFT (head + bubble); the old
+   Sano-left / others-right split is gone. Lines are romanized-only — tap a word/phrase
+   to reveal its English (.gloss-* below + js/gloss.js). */
 .dialogue-head {
-	flex: none;
+	position: absolute;
+	left: 0;
+	top: 0;
 	width: 5.4rem;
 	height: 5.4rem;
-	margin-top: 0.6rem;
 }
 .dialogue-head svg {
 	display: block;
@@ -1931,7 +1935,118 @@ table#vocab tbody td:nth-child(3) {
 }
 #dialogue-thread .bubble {
 	margin: 0;
-	max-width: calc(100% - 6.6rem);
+	width: fit-content;
+	max-width: 100%;
+	padding: 1rem 1.4rem 1.1rem;
+	border-radius: 8px;
+	text-align: left;
+}
+/* Unify narrator + bubble text (font / weight / size) so a narrator line reads like a
+   speaker line without a bubble (per the reference). Smaller than the lesson-bubble size. */
+#dialogue-thread .np {
+	/* Reset the default <p> margin (barebones only zeros margin-top, leaving a 1em bottom that
+	   made narrator lines bottom-heavy). Spacing between lines is the thread gap alone. */
+	margin: 0;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 1.5rem;
+	line-height: 1.45;
+	color: var(--text-color-richer);
+}
+/* Keep the inline speaker icon from making its line taller than the wrapped lines below it:
+   size it to the line box (height ≤ line-height) and center it, so every line in a bubble or
+   narration has the same height. em units so it tracks the (smaller) dialogue text. */
+#dialogue-thread .np .audio-btn {
+	width: 2rem;
+	height: 2rem;
+	margin: 0 0.4rem 0 0;
+	vertical-align: middle;
+}
+#dialogue-thread .np .audio-btn svg {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+/* A subtle speech-bubble tail on the left, pointing at the head — drawn in the bubble's own
+   border + fill as two stacked triangles, replacing the old accent dot. */
+#dialogue-thread .bubble::before,
+#dialogue-thread .bubble::after {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-radius: 0;
+	background: none;
+	border-style: solid;
+	border-color: transparent;
+}
+/* Tail centered on the head (its center sits 33px below the bubble top). The fill triangle
+   (::after) is offset 1px right AND 1px down from the border triangle (::before) so the border
+   peeks evenly on the top-left, bottom-left, and tip edges — matching the bubble's outline. */
+#dialogue-thread .bubble::before {
+	left: -9px;
+	top: 1.9rem;
+	border-width: 8px 9px 8px 0;
+	border-right-color: var(--border-color);
+}
+#dialogue-thread .bubble::after {
+	left: -8px;
+	top: 2rem;
+	border-width: 7px 8px 7px 0;
+	border-right-color: var(--background-color-softer);
+}
+
+/* A tappable word/phrase inside a glossed line: a dotted underline; tapping reveals its
+   English in the popover below. Tokens carry the dark theme, so no separate dark block. */
+.gloss-word {
+	font: inherit;
+	color: inherit;
+	background: none;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	text-decoration: underline dotted var(--text-color-softer);
+	-webkit-text-decoration: underline dotted var(--text-color-softer);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 0.28em;
+}
+.gloss-word:hover,
+.gloss-word.gloss-open {
+	color: var(--accent);
+	text-decoration-color: var(--accent);
+	-webkit-text-decoration-color: var(--accent);
+}
+/* The translation popover (js/gloss.js): position: fixed, anchored under the tapped word
+   with an arrow pointing up at it; clamped to the viewport so it never overflows. */
+.gloss-pop {
+	position: fixed;
+	z-index: 60;
+	max-width: min(80vw, 320px);
+	padding: 0.8rem 1.2rem;
+	background: var(--background-color-softer);
+	border: 1px solid var(--border-color);
+	border-radius: 10px;
+	box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+	font-family: 'Lato', sans-serif;
+	font-size: 1.6rem;
+	font-style: italic;
+	line-height: 1.35;
+	color: var(--text-color-soft);
+}
+.gloss-pop-arrow {
+	position: absolute;
+	top: -7px;
+	width: 12px;
+	height: 12px;
+	background: var(--background-color-softer);
+	border-top: 1px solid var(--border-color);
+	border-left: 1px solid var(--border-color);
+	transform: translateX(-50%) rotate(45deg);
+}
+.gloss-pop-text {
+	display: block;
+	position: relative;
 }
 /* Conversation Continue: a fixed bottom bar so it stays in reach while the thread
    scrolls up behind it; the gradient fades the scrolling content out under it. The

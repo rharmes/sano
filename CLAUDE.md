@@ -81,16 +81,21 @@ this file used to convey:
 
 `PEDAGOGY.md` (committed, not deployed) records the learning-science basis for this design
 and where it is headed; the working roadmap is `PLAN.md` (committed, but excluded from
-the deploy rsync). Two-character **dialogues** (`DIALOGUES` in `js/dialogues.js` — each a
-scripted exchange built from existing course phrases by `ref` + comprehension questions,
-anchored to a unit via `after`) with comprehension questions and self-hosted **Nepali phrase
-audio** (Devanagari-driven, voiced by Sano's ElevenLabs clone) have since shipped, along
-with listening/speaking practice, pronunciation coaching, and the decorative full-body
-**companions** on the path (above). Each conversation opens with a one-line character
-**persona** (`CHARACTER_PERSONAS` in `dialogues.js`, seeded from the voice descriptors in
-RESEARCH.md §9) so the companion reads as memorable. Planned next (per PLAN.md): companions
-that actively host/participate in lessons & dialogues, one voice per character, and an
-optional Devanagari script track.
+the deploy rsync). **Story dialogues** (`DIALOGUES` in `js/dialogues.js`, schema v2 — each an
+original short story anchored to a unit via `after`, whose lines carry their own
+`{ who, np, dev, en, gloss }` inline) play in a Duolingo-stories-style **player**: every speaker
+sits on the **left** (head from `CHARACTER_HEADS` + a speech bubble), the line shows **romanized
+Nepali only**, and **each word/phrase is underlined and tappable to reveal its English** — the
+per-segment `gloss` (AI-drafted, like all the Nepali), rendered by the shared `js/gloss.js`
+(`SanoGloss.renderLine` + a small tap-to-translate popover); narrator lines run full-width with
+no bubble. Lines reveal one at a time with auto-played per-voice **audio** (Devanagari-driven,
+voiced by Sano's ElevenLabs clone), then a short **comprehension quiz**. `design/dialogue.html`
+is the localhost-only mockup of this player. Listening/speaking practice, pronunciation coaching,
+and the decorative full-body **companions** on the path (above) have also shipped. Each
+conversation opens with a one-line character **persona** (`CHARACTER_PERSONAS` in `dialogues.js`,
+seeded from the voice descriptors in RESEARCH.md §9). Planned next (per PLAN.md): companions that
+actively host/participate in lessons & dialogues, one voice per character, and an optional
+Devanagari script track.
 
 **Recorded-voice playback (SR-04 speaking, SR-08 sounds) goes through the Web Audio API**,
 not an `<audio>` element: the record-and-compare step (`createRecorder` in `js/sano.js`)
