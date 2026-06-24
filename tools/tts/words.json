@@ -199,6 +199,19 @@
 			"ma-bhanchu-i-say"
 		]
 	},
+	"bhanda": {
+		"roman": "bhanda",
+		"dev": "भन्दा",
+		"source": "aligned",
+		"phrases": [
+			"sabai-bhanda-ramro-the-best",
+			"sabai-bhanda-thulo-the-biggest",
+			"yo-tyo-bhanda-mahango-more-expensive",
+			"yo-tyo-bhanda-ramro-better",
+			"yo-tyo-bhanda-sano-smaller",
+			"yo-tyo-bhanda-thulo-bigger"
+		]
+	},
 	"bhanen": {
 		"roman": "bhanen",
 		"dev": "भनेँ",
@@ -360,7 +373,11 @@
 			"tato-cha-it-is-hot-to-the-touch",
 			"thik-cha-it-s-okay-it-s-fine",
 			"toilet-kaha-cha-where-is-the-toilet",
-			"yo-piro-cha-is-this-spicy"
+			"yo-piro-cha-is-this-spicy",
+			"yo-tyo-bhanda-mahango-more-expensive",
+			"yo-tyo-bhanda-ramro-better",
+			"yo-tyo-bhanda-sano-smaller",
+			"yo-tyo-bhanda-thulo-bigger"
 		]
 	},
 	"chaadai": {
@@ -472,6 +489,14 @@
 			"malai-dahi-man-parcha-i-like-yogurt"
 		]
 	},
+	"daktar": {
+		"roman": "daktar",
+		"dev": "डाक्टर",
+		"source": "aligned",
+		"phrases": [
+			"ma-daktar-hu-i-am-a-doctor"
+		]
+	},
 	"dekhaunus": {
 		"roman": "dekhaunus",
 		"dev": "देखाउनुस्",
@@ -571,6 +596,14 @@
 			"doctor-chaahiyo-i-need-a-doctor"
 		]
 	},
+	"draibhar": {
+		"roman": "draibhar",
+		"dev": "ड्राइभर",
+		"source": "aligned",
+		"phrases": [
+			"ma-draibhar-hu-i-am-a-driver"
+		]
+	},
 	"dudh": {
 		"roman": "dudh",
 		"dev": "दूध",
@@ -592,7 +625,8 @@
 		"dev": "एक",
 		"source": "aligned",
 		"phrases": [
-			"ek-chhin-parkhanus-wait-a-moment-please"
+			"ek-chhin-parkhanus-wait-a-moment-please",
+			"ek-ghanta-one-hour"
 		]
 	},
 	"ekdum": {
@@ -666,7 +700,10 @@
 		"dev": "गर्न",
 		"source": "aligned",
 		"phrases": [
-			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything"
+			"ma-garna-sakchu-i-can-do",
+			"ma-garna-sakdina-i-cannot-do",
+			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything",
+			"tapai-garna-saknuhunchha-can-you-do-it"
 		]
 	},
 	"garnu": {
@@ -674,7 +711,9 @@
 		"dev": "गर्नु",
 		"source": "override",
 		"phrases": [
-			"dhoka-banda-garnu-bhayo-did-you-close-the-door"
+			"dhoka-banda-garnu-bhayo-did-you-close-the-door",
+			"ke-garnu-parcha-what-should-i-do",
+			"malai-kaam-garnu-parcha-i-have-to-work"
 		]
 	},
 	"garnuhos": {
@@ -686,6 +725,15 @@
 			"kripaya-malaai-maddat-garnuhos-please-help-me",
 			"maaf-garnuhos-excuse-me-i-m-sorry",
 			"sahayog-garnuhos-please-cooperate-please-help"
+		]
+	},
+	"garnuhunchha": {
+		"roman": "garnuhunchha",
+		"dev": "गर्नुहुन्छ",
+		"source": "aligned",
+		"phrases": [
+			"tapai-kaha-kaam-garnuhunchha-where-do-you-work",
+			"tapai-ke-kaam-garnuhunchha-what-do-you-do"
 		]
 	},
 	"garnus": {
@@ -705,6 +753,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ghaam-laagyo-it-s-sunny"
+		]
+	},
+	"ghanta": {
+		"roman": "ghanta",
+		"dev": "घण्टा",
+		"source": "aligned",
+		"phrases": [
+			"ek-ghanta-one-hour"
 		]
 	},
 	"ghar": {
@@ -811,6 +867,22 @@
 			"hospital-kaha-cha-where-is-the-hospital"
 		]
 	},
+	"hu": {
+		"roman": "hu",
+		"dev": "हुँ",
+		"source": "aligned",
+		"phrases": [
+			"ma-daktar-hu-i-am-a-doctor",
+			"ma-draibhar-hu-i-am-a-driver",
+			"ma-injinier-hu-i-am-an-engineer",
+			"ma-kisaan-hu-i-am-a-farmer",
+			"ma-nars-hu-i-am-a-nurse",
+			"ma-pasale-hu-i-am-a-shopkeeper",
+			"ma-prahari-hu-i-am-a-police-officer",
+			"ma-shikshak-hu-i-am-a-teacher",
+			"ma-vidyarthi-hu-i-am-a-student"
+		]
+	},
 	"huncha": {
 		"roman": "huncha",
 		"dev": "हुन्छ",
@@ -844,6 +916,14 @@
 			"hussu-laagyo-it-s-foggy"
 		]
 	},
+	"injinier": {
+		"roman": "injinier",
+		"dev": "इन्जिनियर",
+		"source": "aligned",
+		"phrases": [
+			"ma-injinier-hu-i-am-an-engineer"
+		]
+	},
 	"jaanchu": {
 		"roman": "jaanchu",
 		"dev": "जान्छु",
@@ -866,6 +946,8 @@
 		"dev": "जानु",
 		"source": "aligned",
 		"phrases": [
+			"malai-jaanu-parcha-i-have-to-go",
+			"malai-jaanu-pardaina-i-dont-have-to-go",
 			"ramrari-jaanu-go-safely-take-care"
 		]
 	},
@@ -875,6 +957,16 @@
 		"source": "aligned",
 		"phrases": [
 			"jado-cha-it-s-cold"
+		]
+	},
+	"jana": {
+		"roman": "jana",
+		"dev": "जान",
+		"source": "aligned",
+		"phrases": [
+			"ma-jana-sakchu-i-can-go",
+			"malai-jana-man-laagcha-i-want-to-go",
+			"malai-man-laagdaina-i-dont-want-to"
 		]
 	},
 	"jane": {
@@ -908,7 +1000,10 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-kaam-garchu-i-am-working-i-will-do-the-work",
-			"ma-kaam-jaanchu-i-am-going-to-work"
+			"ma-kaam-jaanchu-i-am-going-to-work",
+			"malai-kaam-garnu-parcha-i-have-to-work",
+			"tapai-kaha-kaam-garnuhunchha-where-do-you-work",
+			"tapai-ke-kaam-garnuhunchha-what-do-you-do"
 		]
 	},
 	"kaatchu": {
@@ -930,7 +1025,16 @@
 			"kaha-jane-where-are-you-going",
 			"mero-kap-kaha-cha-where-is-my-cup",
 			"tapai-kaha-bata-ho-where-are-you-from",
+			"tapai-kaha-kaam-garnuhunchha-where-do-you-work",
 			"toilet-kaha-cha-where-is-the-toilet"
+		]
+	},
+	"kahile": {
+		"roman": "kahile",
+		"dev": "कहिले",
+		"source": "aligned",
+		"phrases": [
+			"kahile-pani-never"
 		]
 	},
 	"kam": {
@@ -986,7 +1090,9 @@
 			"aru-ke-chaahiyo-what-else-do-you-need",
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 			"ke-bhayo-what-happened",
+			"ke-garnu-parcha-what-should-i-do",
 			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite",
+			"tapai-ke-kaam-garnuhunchha-what-do-you-do",
 			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
 			"timro-naam-ke-ho-what-is-your-name-informal",
 			"yo-ke-ho-what-is-this"
@@ -1056,7 +1162,8 @@
 			"khana-mitho-cha-the-food-is-delicious",
 			"khana-sakiyo-the-food-is-finished-all-gone",
 			"khana-tayar-bhayo-the-food-is-ready",
-			"ma-khana-pakaudai-chu-i-am-cooking-food"
+			"ma-khana-pakaudai-chu-i-am-cooking-food",
+			"malai-khana-man-laagcha-i-want-to-eat"
 		]
 	},
 	"khane": {
@@ -1083,6 +1190,14 @@
 			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you"
 		]
 	},
+	"kisaan": {
+		"roman": "kisaan",
+		"dev": "किसान",
+		"source": "aligned",
+		"phrases": [
+			"ma-kisaan-hu-i-am-a-farmer"
+		]
+	},
 	"ko": {
 		"roman": "ko",
 		"dev": "को",
@@ -1098,6 +1213,23 @@
 		"source": "aligned",
 		"phrases": [
 			"kripaya-malaai-maddat-garnuhos-please-help-me"
+		]
+	},
+	"laagcha": {
+		"roman": "laagcha",
+		"dev": "लाग्छ",
+		"source": "aligned",
+		"phrases": [
+			"malai-jana-man-laagcha-i-want-to-go",
+			"malai-khana-man-laagcha-i-want-to-eat"
+		]
+	},
+	"laagdaina": {
+		"roman": "laagdaina",
+		"dev": "लाग्दैन",
+		"source": "aligned",
+		"phrases": [
+			"malai-man-laagdaina-i-dont-want-to"
 		]
 	},
 	"laagyo": {
@@ -1180,36 +1312,49 @@
 			"ma-bolchhu-i-speak-english",
 			"ma-chaadai-aaunchu-i-will-come-back-soon",
 			"ma-daat-maajhchu-i-will-brush-my-teeth",
+			"ma-daktar-hu-i-am-a-doctor",
 			"ma-dinchu-i-give",
+			"ma-draibhar-hu-i-am-a-driver",
 			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod",
 			"ma-fohor-falchhu-i-will-take-out-the-trash",
 			"ma-gaen-i-went",
+			"ma-garna-sakchu-i-can-do",
+			"ma-garna-sakdina-i-cannot-do",
 			"ma-ghar-aaye-i-am-home-i-came-home",
 			"ma-ghar-jaanchu-i-am-going-home",
 			"ma-ghar-safaa-garchu-i-will-clean-the-house",
 			"ma-haraye-i-am-lost",
 			"ma-herchu-i-watch",
+			"ma-injinier-hu-i-am-an-engineer",
+			"ma-jana-sakchu-i-can-go",
 			"ma-kaam-garchu-i-am-working-i-will-do-the-work",
 			"ma-kaam-jaanchu-i-am-going-to-work",
 			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything",
 			"ma-khana-pakaudai-chu-i-am-cooking-food",
+			"ma-kisaan-hu-i-am-a-farmer",
 			"ma-lekhchu-i-write",
 			"ma-linchu-i-take",
 			"ma-lugaa-dhunchu-i-will-wash-the-clothes",
 			"ma-machha-maasu-khadina-i-don-t-eat-meat",
 			"ma-maddat-garchu-i-will-help",
 			"ma-mukh-dhunchhu-i-will-wash-my-face",
+			"ma-nars-hu-i-am-a-nurse",
 			"ma-nepali-bolchhu-i-speak-nepali",
 			"ma-nepali-boldina-i-don-t-speak-nepali",
 			"ma-nuhaauna-jane-i-m-going-to-bathe",
 			"ma-padhchu-i-read",
+			"ma-pasale-hu-i-am-a-shopkeeper",
 			"ma-piunchu-i-drink",
+			"ma-prahari-hu-i-am-a-police-officer",
+			"ma-sanga-with-me",
+			"ma-shikshak-hu-i-am-a-teacher",
 			"ma-sikchu-i-learn",
 			"ma-sodhchu-i-ask",
 			"ma-sutna-jaane-i-am-going-to-bed",
 			"ma-tarkari-kaatchu-i-will-cut-the-vegetables",
 			"ma-thakeko-chu-i-am-tired",
-			"ma-uthchu-i-get-up-i-will-get-up"
+			"ma-uthchu-i-get-up-i-will-get-up",
+			"ma-vidyarthi-hu-i-am-a-student"
 		]
 	},
 	"maaf": {
@@ -1253,7 +1398,8 @@
 		"dev": "महँगो",
 		"source": "aligned",
 		"phrases": [
-			"mahango-cha-it-s-expensive"
+			"mahango-cha-it-s-expensive",
+			"yo-tyo-bhanda-mahango-more-expensive"
 		]
 	},
 	"maile": {
@@ -1291,6 +1437,12 @@
 			"malai-biraami-bhayo-i-am-sick",
 			"malai-chiya-chaahiyo-i-need-tea",
 			"malai-dahi-man-parcha-i-like-yogurt",
+			"malai-jaanu-parcha-i-have-to-go",
+			"malai-jaanu-pardaina-i-dont-have-to-go",
+			"malai-jana-man-laagcha-i-want-to-go",
+			"malai-kaam-garnu-parcha-i-have-to-work",
+			"malai-khana-man-laagcha-i-want-to-eat",
+			"malai-man-laagdaina-i-dont-want-to",
 			"malai-thaaha-cha-i-know"
 		]
 	},
@@ -1299,7 +1451,10 @@
 		"dev": "मन",
 		"source": "aligned",
 		"phrases": [
-			"malai-dahi-man-parcha-i-like-yogurt"
+			"malai-dahi-man-parcha-i-like-yogurt",
+			"malai-jana-man-laagcha-i-want-to-go",
+			"malai-khana-man-laagcha-i-want-to-eat",
+			"malai-man-laagdaina-i-dont-want-to"
 		]
 	},
 	"mero": {
@@ -1343,6 +1498,14 @@
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
 			"timro-naam-ke-ho-what-is-your-name-informal"
+		]
+	},
+	"nars": {
+		"roman": "nars",
+		"dev": "नर्स",
+		"source": "aligned",
+		"phrases": [
+			"ma-nars-hu-i-am-a-nurse"
 		]
 	},
 	"nepali": {
@@ -1435,6 +1598,7 @@
 		"dev": "पानी",
 		"source": "aligned",
 		"phrases": [
+			"kahile-pani-never",
 			"pani-chaahiyo-i-need-water",
 			"pani-pariracha-it-is-raining"
 		]
@@ -1444,8 +1608,19 @@
 		"dev": "पर्छ",
 		"source": "aligned",
 		"phrases": [
+			"ke-garnu-parcha-what-should-i-do",
 			"malai-dahi-man-parcha-i-like-yogurt",
+			"malai-jaanu-parcha-i-have-to-go",
+			"malai-kaam-garnu-parcha-i-have-to-work",
 			"sochna-parcha-need-to-think-let-me-think"
+		]
+	},
+	"pardaina": {
+		"roman": "pardaina",
+		"dev": "पर्दैन",
+		"source": "aligned",
+		"phrases": [
+			"malai-jaanu-pardaina-i-dont-have-to-go"
 		]
 	},
 	"pariraheko": {
@@ -1463,6 +1638,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ek-chhin-parkhanus-wait-a-moment-please"
+		]
+	},
+	"pasale": {
+		"roman": "pasale",
+		"dev": "पसले",
+		"source": "aligned",
+		"phrases": [
+			"ma-pasale-hu-i-am-a-shopkeeper"
 		]
 	},
 	"pheri": {
@@ -1515,6 +1698,14 @@
 			"subha-prabhat-good-morning"
 		]
 	},
+	"prahari": {
+		"roman": "prahari",
+		"dev": "प्रहरी",
+		"source": "aligned",
+		"phrases": [
+			"ma-prahari-hu-i-am-a-police-officer"
+		]
+	},
 	"pugyo": {
 		"roman": "pugyo",
 		"dev": "पुग्यो",
@@ -1548,7 +1739,9 @@
 			"ekdum-ramro-very-good-excellent",
 			"ramro-basna-aayo-it-smells-good",
 			"ramro-sanga-sutnus-sleep-well",
-			"sarai-ramro-very-good-really-good"
+			"sabai-bhanda-ramro-the-best",
+			"sarai-ramro-very-good-really-good",
+			"yo-tyo-bhanda-ramro-better"
 		]
 	},
 	"ratri": {
@@ -1557,6 +1750,15 @@
 		"source": "aligned",
 		"phrases": [
 			"subha-ratri-good-night"
+		]
+	},
+	"sabai": {
+		"roman": "sabai",
+		"dev": "सबै",
+		"source": "aligned",
+		"phrases": [
+			"sabai-bhanda-ramro-the-best",
+			"sabai-bhanda-thulo-the-biggest"
 		]
 	},
 	"safaa": {
@@ -1580,7 +1782,17 @@
 		"dev": "सक्छु",
 		"source": "aligned",
 		"phrases": [
+			"ma-garna-sakchu-i-can-do",
+			"ma-jana-sakchu-i-can-go",
 			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything"
+		]
+	},
+	"sakdina": {
+		"roman": "sakdina",
+		"dev": "सक्दिनँ",
+		"source": "aligned",
+		"phrases": [
+			"ma-garna-sakdina-i-cannot-do"
 		]
 	},
 	"sakiyo": {
@@ -1589,6 +1801,14 @@
 		"source": "aligned",
 		"phrases": [
 			"khana-sakiyo-the-food-is-finished-all-gone"
+		]
+	},
+	"saknuhunchha": {
+		"roman": "saknuhunchha",
+		"dev": "सक्नुहुन्छ",
+		"source": "aligned",
+		"phrases": [
+			"tapai-garna-saknuhunchha-can-you-do-it"
 		]
 	},
 	"sanchai": {
@@ -1604,7 +1824,16 @@
 		"dev": "सँग",
 		"source": "override",
 		"phrases": [
+			"ma-sanga-with-me",
 			"ramro-sanga-sutnus-sleep-well"
+		]
+	},
+	"sano": {
+		"roman": "sano",
+		"dev": "सानो",
+		"source": "aligned",
+		"phrases": [
+			"yo-tyo-bhanda-sano-smaller"
 		]
 	},
 	"sarai": {
@@ -1621,6 +1850,14 @@
 		"source": "aligned",
 		"phrases": [
 			"sasto-cha-it-s-cheap"
+		]
+	},
+	"shikshak": {
+		"roman": "shikshak",
+		"dev": "शिक्षक",
+		"source": "aligned",
+		"phrases": [
+			"ma-shikshak-hu-i-am-a-teacher"
 		]
 	},
 	"sidhaa": {
@@ -1735,8 +1972,11 @@
 		"source": "aligned",
 		"phrases": [
 			"tapai-bolnu-hunchha-do-you-speak-english",
+			"tapai-garna-saknuhunchha-can-you-do-it",
 			"tapai-kaha-bata-ho-where-are-you-from",
+			"tapai-kaha-kaam-garnuhunchha-where-do-you-work",
 			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite",
+			"tapai-ke-kaam-garnuhunchha-what-do-you-do",
 			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
 			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you",
 			"tapai-lai-kasto-cha-how-are-you-formal",
@@ -1808,6 +2048,15 @@
 			"thik-cha-it-s-okay-it-s-fine"
 		]
 	},
+	"thulo": {
+		"roman": "thulo",
+		"dev": "ठूलो",
+		"source": "aligned",
+		"phrases": [
+			"sabai-bhanda-thulo-the-biggest",
+			"yo-tyo-bhanda-thulo-bigger"
+		]
+	},
 	"timro": {
 		"roman": "timro",
 		"dev": "तिम्रो",
@@ -1822,6 +2071,17 @@
 		"source": "aligned",
 		"phrases": [
 			"toilet-kaha-cha-where-is-the-toilet"
+		]
+	},
+	"tyo": {
+		"roman": "tyo",
+		"dev": "त्यो",
+		"source": "aligned",
+		"phrases": [
+			"yo-tyo-bhanda-mahango-more-expensive",
+			"yo-tyo-bhanda-ramro-better",
+			"yo-tyo-bhanda-sano-smaller",
+			"yo-tyo-bhanda-thulo-bigger"
 		]
 	},
 	"u": {
@@ -1848,13 +2108,25 @@
 			"ma-uthchu-i-get-up-i-will-get-up"
 		]
 	},
+	"vidyarthi": {
+		"roman": "vidyarthi",
+		"dev": "विद्यार्थी",
+		"source": "aligned",
+		"phrases": [
+			"ma-vidyarthi-hu-i-am-a-student"
+		]
+	},
 	"yo": {
 		"roman": "yo",
 		"dev": "यो",
 		"source": "aligned",
 		"phrases": [
 			"yo-ke-ho-what-is-this",
-			"yo-piro-cha-is-this-spicy"
+			"yo-piro-cha-is-this-spicy",
+			"yo-tyo-bhanda-mahango-more-expensive",
+			"yo-tyo-bhanda-ramro-better",
+			"yo-tyo-bhanda-sano-smaller",
+			"yo-tyo-bhanda-thulo-bigger"
 		]
 	}
 }

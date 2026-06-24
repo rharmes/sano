@@ -234,6 +234,25 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">content · intermediate</span>
+			<h2>Intermediate units (modals, comparatives, postpositions, jobs, time)</h2>
+			<p>
+				Five new grammar/vocab units placed by topic. Each button settles everything <i>before</i> that unit so it's the
+				<b>current unit</b> — tap <b>"Start today's lesson"</b> to learn it: <b>Can / Want / Must</b> (<b>ma garna sakchu</b>,
+				<b>malai jana parcha</b>), <b>Comparing Things</b> (<b>yo tyo bhanda thulo</b>), <b>Place &amp; Position</b> (<b>mathi</b>,
+				<b>muni</b>, <b>bhitra</b>), <b>Jobs &amp; Work</b> (<b>ma shikshak hu</b>), and <b>Duration &amp; Frequency</b> (<b>ghanta</b>,
+				<b>haptaa</b>, <b>sadhai</b>). <b>Audio is silent</b> on the new items until the ElevenLabs render.
+			</p>
+			<div style="display: flex; flex-wrap: wrap; gap: 8px">
+				<button onclick="seed('unit:modals-can-want-must')">Can / Want / Must</button>
+				<button onclick="seed('unit:comparing-things')">Comparing Things</button>
+				<button onclick="seed('unit:place-position')">Place &amp; Position</button>
+				<button onclick="seed('unit:jobs-work')">Jobs &amp; Work</button>
+				<button onclick="seed('unit:duration-frequency')">Duration &amp; Frequency</button>
+			</div>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-10</span>
 			<h2>Placement / skip-ahead onboarding</h2>
 			<p>
@@ -600,6 +619,27 @@
 						lastActivityDay: day(0),
 						itemsToday: 0,
 						itemsTotal: 390,
+						items,
+					};
+				} else if (which.startsWith('unit:')) {
+					// Settle every unit BEFORE the target so the target becomes the current unit —
+					// "Start today's lesson" then introduces its new phrases. Used for the scattered
+					// intermediate units (modals, comparatives, postpositions, jobs, duration).
+					const target = which.slice(5);
+					const items = {};
+					for (const u of COURSE) {
+						if (u.id === target) break;
+						for (const it of u.items) items[it.id] = rec({ interval: 6, ease: 2.5, lastSeen: day(0) });
+					}
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 7,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 300,
 						items,
 					};
 				}

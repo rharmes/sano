@@ -22,11 +22,17 @@ them as authoritative or silently "correct" them; flag questions to Ross.
 
 ## Learning model (`js/sano.js` + `js/data.js`)
 
-Course content is `COURSE` in `js/data.js`: 39 units, each `{ id, title, kind, goal, items }`
+Course content is `COURSE` in `js/data.js`: 44 units, each `{ id, title, kind, goal, items }`
 where `kind` is `'phrases'` (items have `np`/`pron`/`dev`/`en`/`usage`) or `'vocab'` (items
-also carry an `emoji`); ~536 items total. Two **verb** units (`verbs-present`, `verbs-past`)
+also carry an `emoji`); ~588 items total. Two **verb** units (`verbs-present`, `verbs-past`)
 teach the present/past conjugation pattern plus high-frequency verbs, and
-`places-getting-around` covers everyday loanword places (hospital, bus, taxi, …). The per-item `dev` (Devanagari) and per-unit
+`places-getting-around` covers everyday loanword places (hospital, bus, taxi, …). Five
+**intermediate** units extend the path by topic (scattered next to what each builds on, no new
+section banner): `modals-can-want-must` (can/want/must — the `-na sak-`, `man laagcha`, and
+`-nu parcha` patterns), `comparing-things` (`bhanda` comparatives + `sabai bhanda` superlatives),
+`place-position` (spatial postpositions: maa/mathi/muni/agadi/pachadi/bhitra/bahira/sanga/samma),
+`jobs-work` ("I am a ___" professions), and `duration-frequency` (minute/hour/week/month/year +
+frequency adverbs). The per-item `dev` (Devanagari) and per-unit
 `goal` strings are AI-drafted and under Ross's review (see the devanagari review tool
 below). `js/sano.js` is the lesson engine, and it is more pedagogically built-out than
 this file used to convey:
@@ -95,9 +101,9 @@ iOS records `audio/mp4` it then refuses to decode in a media element (`play()` r
 `<audio>` element — only the live recording needs Web Audio.
 
 `SanoAudio` serves two clip sets: **per-phrase** clips at `audio/<voice>/<id>.mp3`
-(`SanoAudio.play(id)`, one per `COURSE` item, ~536), and **per-word** word-bank tile clips at
+(`SanoAudio.play(id)`, one per `COURSE` item, ~588), and **per-word** word-bank tile clips at
 `audio/words/<slug>.mp3` (`SanoAudio.playWord(slug)`, slug = the romanized word run through
-`normalize`; one per distinct tile-word, ~209). A missing clip is a silent no-op. **All audio
+`normalize`; one per distinct tile-word, ~233). A missing clip is a silent no-op. **All audio
 is rendered by `tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice**
 (`eleven_v3`, voice id in RESEARCH.md §9) — pre-rendered and self-hosted, never a runtime call
 (CLAUDE.md network discipline). `synth-app.mjs --phrases`/`--words` render the full set; add
@@ -247,7 +253,7 @@ significantly, update CLAUDE.md in the same commit.
     one day/night **pill switch** (light on the left, dark on the right); the theme persists
     per page in localStorage and `?theme=light|dark` deep-links it.
   - `design/devanagari.html` is a **localhost-only review tool** for the native-speaker
-    pass over the AI-drafted Devanagari (`dev`) strings: all 476 course items grouped by
+    pass over the AI-drafted Devanagari (`dev`) strings: all 588 course items grouped by
     unit, each with its English, romanization, a ▶ that plays the `audio/default/<id>.mp3`
     clip, and an editable Devanagari box pre-filled with the current `dev`. Submitting POSTs
     only the changed rows to `design/devanagari-save.php`, which merges them (keyed by item
