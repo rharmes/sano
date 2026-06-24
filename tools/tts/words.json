@@ -92,6 +92,14 @@
 			"aru-nun-chaahiyo-it-needs-more-salt"
 		]
 	},
+	"badal": {
+		"roman": "badal",
+		"dev": "बादल",
+		"source": "aligned",
+		"phrases": [
+			"badal-laagyo-it-s-cloudy"
+		]
+	},
 	"bajyo": {
 		"roman": "bajyo",
 		"dev": "बज्यो",
@@ -336,6 +344,7 @@
 			"charpi-kaha-cha-where-is-the-bathroom",
 			"dherai-piro-cha-it-is-very-spicy",
 			"garmi-cha-it-s-hot",
+			"hiun-pariraheko-cha-it-is-snowing",
 			"hospital-kaha-cha-where-is-the-hospital",
 			"jado-cha-it-s-cold",
 			"kasto-cha-how-is-it",
@@ -373,6 +382,14 @@
 			"maddat-chaahiyo-do-you-need-help",
 			"malai-chiya-chaahiyo-i-need-tea",
 			"pani-chaahiyo-i-need-water"
+		]
+	},
+	"chalyo": {
+		"roman": "chalyo",
+		"dev": "चल्यो",
+		"source": "aligned",
+		"phrases": [
+			"hawa-chalyo-it-s-windy"
 		]
 	},
 	"chan": {
@@ -682,6 +699,14 @@
 			"piudai-garnus-please-drink"
 		]
 	},
+	"ghaam": {
+		"roman": "ghaam",
+		"dev": "घाम",
+		"source": "aligned",
+		"phrases": [
+			"ghaam-laagyo-it-s-sunny"
+		]
+	},
 	"ghar": {
 		"roman": "ghar",
 		"dev": "घर",
@@ -729,6 +754,7 @@
 		"dev": "हावा",
 		"source": "aligned",
 		"phrases": [
+			"hawa-chalyo-it-s-windy",
 			"kasto-chha-hawa-how-s-the-weather"
 		]
 	},
@@ -746,6 +772,14 @@
 		"source": "aligned",
 		"phrases": [
 			"maile-heren-i-watched"
+		]
+	},
+	"hiun": {
+		"roman": "hiun",
+		"dev": "हिउँ",
+		"source": "aligned",
+		"phrases": [
+			"hiun-pariraheko-cha-it-is-snowing"
 		]
 	},
 	"ho": {
@@ -802,6 +836,14 @@
 			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite"
 		]
 	},
+	"hussu": {
+		"roman": "hussu",
+		"dev": "हुस्सु",
+		"source": "aligned",
+		"phrases": [
+			"hussu-laagyo-it-s-foggy"
+		]
+	},
 	"jaanchu": {
 		"roman": "jaanchu",
 		"dev": "जान्छु",
@@ -850,6 +892,14 @@
 		"source": "aligned",
 		"phrases": [
 			"kata-janey-where-to-go"
+		]
+	},
+	"janus": {
+		"roman": "janus",
+		"dev": "जानुस्",
+		"source": "aligned",
+		"phrases": [
+			"sidhaa-janus-go-straight"
 		]
 	},
 	"kaam": {
@@ -1048,6 +1098,16 @@
 		"source": "aligned",
 		"phrases": [
 			"kripaya-malaai-maddat-garnuhos-please-help-me"
+		]
+	},
+	"laagyo": {
+		"roman": "laagyo",
+		"dev": "लाग्यो",
+		"source": "aligned",
+		"phrases": [
+			"badal-laagyo-it-s-cloudy",
+			"ghaam-laagyo-it-s-sunny",
+			"hussu-laagyo-it-s-foggy"
 		]
 	},
 	"lagyo": {
@@ -1393,6 +1453,7 @@
 		"dev": "परिरहेको",
 		"source": "aligned",
 		"phrases": [
+			"hiun-pariraheko-cha-it-is-snowing",
 			"pani-pariracha-it-is-raining"
 		]
 	},
@@ -1560,6 +1621,14 @@
 		"source": "aligned",
 		"phrases": [
 			"sasto-cha-it-s-cheap"
+		]
+	},
+	"sidhaa": {
+		"roman": "sidhaa",
+		"dev": "सीधा",
+		"source": "aligned",
+		"phrases": [
+			"sidhaa-janus-go-straight"
 		]
 	},
 	"sikchu": {

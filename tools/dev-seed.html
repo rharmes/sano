@@ -222,6 +222,18 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">content · directions</span>
+			<h2>New content (directions, weather, "which")</h2>
+			<p>
+				Everything up to <b>Navigation</b> is done, so it's the <b>current unit</b> — tap <b>"Start today's lesson"</b> to meet the new
+				<b>direction words</b> (<b>baayaa</b> left, <b>daayaa</b> right, <b>sidhaa</b> straight, <b>najik/taadhaa</b> near/far,
+				<b>tira</b> that-way). The rounded-out <b>Weather</b> (sunny/cloudy/windy/foggy/snowing) and the new <b>"Kun?"</b> (which?) are
+				browsable in the <b>dictionary</b>. <b>Audio is silent</b> on the new items until the end-of-phases render.
+			</p>
+			<button onclick="seed('directions')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-10</span>
 			<h2>Placement / skip-ahead onboarding</h2>
 			<p>
@@ -555,6 +567,39 @@
 						lastActivityDay: day(1),
 						itemsToday: 0,
 						itemsTotal: 476,
+						items,
+					};
+				} else if (which === 'directions') {
+					// Everything before Navigation is done, and Navigation's original items are intro'd, so
+					// today's lesson teaches just the new directions (baayaa, daayaa, sidhaa, najik, taadhaa, tira).
+					const items = {};
+					const navOriginals = [
+						'kaha-where',
+						'yaha-here',
+						'tyaha-there',
+						'kata-janey-where-to-go',
+						'roknus-please-stop',
+						'bato-dekhaunus-please-show-me-the-way',
+						'toilet-kaha-cha-where-is-the-toilet',
+					];
+					for (const u of COURSE) {
+						if (u.id === 'navigation') {
+							for (const it of u.items)
+								if (navOriginals.includes(it.id))
+									items[it.id] = rec({ interval: 6, ease: 2.5, lastSeen: day(0) });
+							break;
+						}
+						for (const it of u.items) items[it.id] = rec({ interval: 6, ease: 2.5, lastSeen: day(0) });
+					}
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 7,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 390,
 						items,
 					};
 				}

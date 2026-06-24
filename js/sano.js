@@ -933,6 +933,24 @@ const LISTEN_PROBABILITY = 0.5;
 // (single words) once an item is known well enough for recall; half of those recall
 // reviews are delivered instead as "what you hear" listening drills. Vocab that's
 // still being learned is bundled into a single matching exercise when there's enough.
+// Tap-the-pairs grids (match, listenMatch) grade by item id, so two tiles showing the same
+// romanized or English text are ambiguous — a correct-looking pairing could grade as wrong.
+// Keep only the first item for each np/en so a bundle never holds a display-text collision.
+function uniquePairItems(items) {
+	const seenNp = new Set();
+	const seenEn = new Set();
+	const out = [];
+	for (const item of items) {
+		const np = item.np.toLowerCase();
+		const en = item.en.toLowerCase();
+		if (seenNp.has(np) || seenEn.has(en)) continue;
+		seenNp.add(np);
+		seenEn.add(en);
+		out.push(item);
+	}
+	return out;
+}
+
 function buildExercises(newItems, reviewItems) {
 	const exercises = [];
 	for (const item of newItems) {
@@ -942,14 +960,14 @@ function buildExercises(newItems, reviewItems) {
 		exercises.push({ item: item, type: 'speak', unscored: true });
 	}
 
-	const matchable = reviewItems.filter((item) => item.emoji && !isRecallStrength(itemRecord(item.id)));
+	const matchable = uniquePairItems(reviewItems.filter((item) => item.emoji && !isRecallStrength(itemRecord(item.id))));
 	const matchItems = matchable.length >= 4 ? matchable.slice(0, 5) : [];
 
 	// Listening match (audio -> romanization): bundle single-word recall-strength reviews into a
 	// tap-the-sound round, the ear-only sibling of the recognition match above. Single-word only
 	// keeps the romanization tiles short and leaves multi-word phrases for word bank.
-	const listenable = reviewItems.filter(
-		(item) => item.np.trim().split(/\s+/).length === 1 && isRecallStrength(itemRecord(item.id)) && !matchItems.includes(item),
+	const listenable = uniquePairItems(
+		reviewItems.filter((item) => item.np.trim().split(/\s+/).length === 1 && isRecallStrength(itemRecord(item.id)) && !matchItems.includes(item)),
 	);
 	const listenMatchItems = listenable.length >= 4 ? shuffleArray(listenable.slice()).slice(0, 5) : [];
 
@@ -985,7 +1003,7 @@ function buildExercises(newItems, reviewItems) {
 	// so this round must always sit first (after the review match has been placed).
 	const introItems = newItems.filter((item) => !(state.items[item.id] && state.items[item.id].intro));
 	if (introItems.length > 0) {
-		const warmup = warmupItems(introItems);
+		const warmup = uniquePairItems(warmupItems(introItems));
 		if (warmup.length >= 2) exercises.unshift({ type: 'match', items: warmup, intro: true });
 	}
 	return exercises;
