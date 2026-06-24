@@ -22,9 +22,11 @@ them as authoritative or silently "correct" them; flag questions to Ross.
 
 ## Learning model (`js/sano.js` + `js/data.js`)
 
-Course content is `COURSE` in `js/data.js`: 36 units, each `{ id, title, kind, goal, items }`
+Course content is `COURSE` in `js/data.js`: 39 units, each `{ id, title, kind, goal, items }`
 where `kind` is `'phrases'` (items have `np`/`pron`/`dev`/`en`/`usage`) or `'vocab'` (items
-also carry an `emoji`); ~476 items total. The per-item `dev` (Devanagari) and per-unit
+also carry an `emoji`); ~536 items total. Two **verb** units (`verbs-present`, `verbs-past`)
+teach the present/past conjugation pattern plus high-frequency verbs, and
+`places-getting-around` covers everyday loanword places (hospital, bus, taxi, …). The per-item `dev` (Devanagari) and per-unit
 `goal` strings are AI-drafted and under Ross's review (see the devanagari review tool
 below). `js/sano.js` is the lesson engine, and it is more pedagogically built-out than
 this file used to convey:
@@ -49,6 +51,10 @@ this file used to convey:
   unit-tested by `tools/check-scheduler.mjs`.
 - **Exercises escalate with strength**: `choice` (multiple choice, both np→en and en→np),
   `match` (tap-the-pairs, also the new-word warm-up; tapping a Nepali tile plays its audio),
+  `listenMatch` (tap-the-pairs, but the left tiles are audio buttons drawn as a deterministic,
+  id-seeded pseudo-waveform — equal width so phrase length never leaks — paired to the romanized
+  Nepali on the right; bundles single-word recall-strength reviews, a clean item grades EASY,
+  and it reuses the `match` grid/state/grading),
   `wordbank` (assemble a phrase from tiles — two directions: build the Nepali from an English
   prompt, or, with the Nepali shown + spoken on load, build the English; a chosen tile stays
   put with a "selected" border and a copy appears in the answer row; tiles are lowercased and
@@ -56,7 +62,10 @@ this file used to convey:
   clip, see `audio/words/` below), and `type` (typed recall, romanization-tolerant via edit
   distance). New items get
   multiple choice both ways; stronger items (recall strength — interval ≥ 3 days) get
-  wordbank/type, and ~half of recall reviews become audio-only "listen" prompts (SR-03).
+  wordbank/type/listenMatch, and ~half of recall reviews become audio-only "listen" prompts (SR-03).
+  The tap-the-pairs grids dedupe each bundle by display text (`uniquePairItems`) so two items with
+  identical romanized/English text never appear as two tiles (which would let a correct pairing
+  grade as wrong); `choice` guards the same via `getDistractors`' used-text set.
 - **Progress**: a day **streak** (with a forgiveness "freeze", SR-09; extended by finishing
   any lesson, conversation, or pronunciation drill) plus daily/total
   counters in the header and the lesson-complete screen; a **dictionary** screen lists
@@ -66,12 +75,16 @@ this file used to convey:
 
 `PEDAGOGY.md` (committed, not deployed) records the learning-science basis for this design
 and where it is headed; the working roadmap is `PLAN.md` (committed, but excluded from
-the deploy rsync). Two-character **dialogues** with comprehension questions and
-self-hosted **Nepali phrase audio** (Devanagari-driven, voiced by Sano's ElevenLabs clone) have since shipped, along
+the deploy rsync). Two-character **dialogues** (`DIALOGUES` in `js/dialogues.js` — each a
+scripted exchange built from existing course phrases by `ref` + comprehension questions,
+anchored to a unit via `after`) with comprehension questions and self-hosted **Nepali phrase
+audio** (Devanagari-driven, voiced by Sano's ElevenLabs clone) have since shipped, along
 with listening/speaking practice, pronunciation coaching, and the decorative full-body
-**companions** on the path (above); planned next (per PLAN.md): companions that actively
-host/participate in lessons & dialogues, one voice per character, and an optional Devanagari
-script track.
+**companions** on the path (above). Each conversation opens with a one-line character
+**persona** (`CHARACTER_PERSONAS` in `dialogues.js`, seeded from the voice descriptors in
+RESEARCH.md §9) so the companion reads as memorable. Planned next (per PLAN.md): companions
+that actively host/participate in lessons & dialogues, one voice per character, and an
+optional Devanagari script track.
 
 **Recorded-voice playback (SR-04 speaking, SR-08 sounds) goes through the Web Audio API**,
 not an `<audio>` element: the record-and-compare step (`createRecorder` in `js/sano.js`)
@@ -82,13 +95,16 @@ iOS records `audio/mp4` it then refuses to decode in a media element (`play()` r
 `<audio>` element — only the live recording needs Web Audio.
 
 `SanoAudio` serves two clip sets: **per-phrase** clips at `audio/<voice>/<id>.mp3`
-(`SanoAudio.play(id)`, one per `COURSE` item, 476), and **per-word** word-bank tile clips at
+(`SanoAudio.play(id)`, one per `COURSE` item, ~536), and **per-word** word-bank tile clips at
 `audio/words/<slug>.mp3` (`SanoAudio.playWord(slug)`, slug = the romanized word run through
-`normalize`; one per distinct tile-word, 176). A missing clip is a silent no-op. **All audio
+`normalize`; one per distinct tile-word, ~209). A missing clip is a silent no-op. **All audio
 is rendered by `tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice**
 (`eleven_v3`, voice id in RESEARCH.md §9) — pre-rendered and self-hosted, never a runtime call
-(CLAUDE.md network discipline). The per-word Devanagari comes from `tools/tts/words.json`,
-built by `tools/tts/build-words.mjs`: ~90% auto-derived by 1:1 alignment with each phrase's
+(CLAUDE.md network discipline). `synth-app.mjs --phrases`/`--words` render the full set; add
+`--new` to render only clips not yet on disk, so adding course content synthesizes just the
+new ids/slugs (no credit spend or git churn on the existing corpus). The per-word Devanagari
+comes from `tools/tts/words.json`, built by `tools/tts/build-words.mjs` (**phrases-only** — so
+multi-word *vocab* items aren't tiled): ~90% auto-derived by 1:1 alignment with each phrase's
 `dev`, the rest (postpositions/verb-fusions like `tapai ko` → तपाईंको that don't split in
 writing) from a hand-drafted `OVERRIDES` table in that script (AI-drafted, like all `dev`).
 Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust caches. The earlier baseline was
