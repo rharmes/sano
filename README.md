@@ -196,3 +196,42 @@ The PHP dev server needs a dev `sano-config.php` one level above the repo (point
 5. **`npm run check`** — the gate: format check, **stale-stamp check**, `php -l`, `node --check`, and the viewport scenarios. CI re-runs all of this except the browser step on every push.
 6. **Commit** to `main`.
 7. **`npm run deploy`** — pure ship: rsync the committed tree to the server (`npm run deploy:preview` dry-runs first; it refuses a dirty tree). No stamping happens here — steps 4–5 guarantee the committed stamps are already current.
+
+## Regenerating audio
+
+All spoken-Nepali audio is **pre-rendered and self-hosted** — the app never calls a TTS service
+at runtime. Clips are synthesized through the ElevenLabs API in Sano's cloned voice by
+`tools/tts/synth-app.mjs` (which lives under `tools/` and is never deployed); the rendered MP3s
+under `audio/` are committed and ship with the normal deploy. You only run this when course
+content changes or the voice is re-cut.
+
+Everything runs from the repo root with an API key exported:
+
+```sh
+export ELEVENLABS_API_KEY=sk_…
+```
+
+**1. Rebuild the word map** — only if `js/data.js` changed. `tools/tts/words.json` maps each
+word-bank tile-word to its Devanagari (deterministic; re-run after editing course content):
+
+```sh
+node tools/tts/build-words.mjs
+```
+
+**2. Render** the set you need (clips land under `audio/`):
+
+```sh
+node tools/tts/synth-app.mjs --phrases     # one per COURSE item  → audio/default/<id>.mp3   (~588)
+node tools/tts/synth-app.mjs --words       # one per tile-word    → audio/words/<slug>.mp3   (~233)
+node tools/tts/synth-app.mjs --dialogues   # each dialogue line, per character voice → audio/<voice>/<clipId>.mp3
+```
+
+Add `--new` to render only clips not yet on disk (the incremental path after adding content),
+`--only <id|slug>` to redo a single clip, or run `--sample` first to preview the voice into a
+gitignored scratch dir. Defaults: Sano's voice, `eleven_v3`, `mp3_44100_128`.
+
+**3. Bust caches** — bump `AUDIO_VERSION` in `js/audio.js` so clients refetch the new clips.
+
+A missing clip is a silent no-op in the app, so a partial render never breaks the UI. See
+`tools/tts/README.md` for the voice-cloning / bake-off details and `RESEARCH.md` for the engine
+choice.

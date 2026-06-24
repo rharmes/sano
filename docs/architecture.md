@@ -90,6 +90,6 @@ change both) → `css/admin.css` (admin dashboard only).
 | `make-touch-icon.html` | Source for the app-icon PNGs (render at 512 then `sips` downscale). |
 | `build-character-heads.mjs` / `build-anim-characters.mjs` | Generate `js/characters.js` / `design/anim-characters.js` from `design/characters.html`. Re-run after editing character art. |
 | `schema.sql` | Canonical DB schema (see `@docs/data-model.md`). |
-| `tts/synth-app.mjs` | Render all phrase/word clips through the ElevenLabs API in Sano's cloned voice (`--phrases`/`--words`/`--new`). |
+| `tts/synth-app.mjs` | Render phrase / word / dialogue-line clips through the ElevenLabs API in Sano's cloned voice — `--phrases` (→ `audio/default/<id>.mp3`, ~588) / `--words` (→ `audio/words/<slug>.mp3`, ~233) / `--dialogues` (→ `audio/<voice>/<clipId>.mp3`, per speaker). Add `--new` for only clips missing on disk, `--only` for one, `--sample` to preview. Bump `AUDIO_VERSION` (js/audio.js) after. |
 | `tts/build-words.mjs` | Build `tts/words.json` (per-word Devanagari, phrases-only) for the word-bank clips. |
 | `tts/eleven.mjs` / `tts/phrases.mjs` / `tts/build-compare.mjs` | ElevenLabs client + voice mapping + sample-comparison design tool. |

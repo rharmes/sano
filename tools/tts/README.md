@@ -43,7 +43,7 @@ English sample bleeds an English accent into the Nepali synthesis.
 - Decent mic, quiet soft room; **MP3 ≥ 192 kbps or WAV**, mono, levels not clipping.
 
 **What they should say:** natural, conversational Nepali in the character's tone — _not_ a flat
-monotone (unless that character is a narrator), and _not_ the 476 app phrases read back-to-back
+monotone (unless that character is a narrator), and _not_ the ~588 app phrases read back-to-back
 (too choppy; the model wants connected speech). The easiest and best source is **extemporaneous
 speech**: have each speaker talk naturally for ~2 minutes following a few prompts.
 
@@ -112,12 +112,18 @@ Two tools, run from the repo root with `ELEVENLABS_API_KEY` set:
   1:1 alignment; the fused remainder (postpositions/verb-fusions) come from a hand-drafted
   `OVERRIDES` table in the script. Deterministic — re-run after editing `js/data.js` or the
   overrides. Reviewable artifact: `words.json` itself.
-- **`synth-app.mjs`** — renders the **real shipped** clips (not the bake-off dir):
+- **`synth-app.mjs`** — renders the **real shipped** clips (not the bake-off dir). Pass one of
+  `--sample | --phrases | --words | --dialogues`:
   - `--sample` → a small preview (tricky phrases + single words) into
     `design/_bakeoff/sano-sample/` with an `index.html`, to judge the voice before a full run.
-  - `--phrases` → every `COURSE` item's `dev` → `audio/default/<id>.mp3` (476).
-  - `--words` → every `words.json` entry → `audio/words/<slug>.mp3` (176).
-  - `--only <id|slug>` (with `--phrases`/`--words`) → regenerate one clip.
+  - `--phrases` → every `COURSE` item's `dev` → `audio/default/<id>.mp3` (~588).
+  - `--words` → every `words.json` entry → `audio/words/<slug>.mp3` (~233).
+  - `--dialogues` → every `DIALOGUES` line → `audio/<voice>/<clipId>.mp3`, routed to each
+    speaker's voice folder (`sano` → `default`; `narrator`/`thornbush` mapped to a companion
+    voice; a companion → its own id).
+  - `--new` (with `--phrases`/`--words`/`--dialogues`) → render only clips **not yet on disk** —
+    the incremental path after adding course content or a dialogue.
+  - `--only <id|slug>` (with `--phrases`/`--words`) → regenerate a single clip.
   - Defaults: Sano `--voice`, `eleven_v3`, `mp3_44100_128`.
 
 After (re)rendering, bump **`AUDIO_VERSION`** in `js/audio.js` so caches/clients refetch.
