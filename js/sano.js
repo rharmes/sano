@@ -1876,6 +1876,15 @@ function renderDialogueConvo() {
 	document.getElementById('dialogue-convo').classList.remove('hide');
 	document.getElementById('dialogue-quiz').classList.add('hide');
 	document.getElementById('dialogue-goal').textContent = d.goal;
+	// Introduce the companion (cast.B) with a one-line persona so they're memorable.
+	const persona = document.getElementById('dialogue-persona');
+	const blurb = CHARACTER_PERSONAS[d.cast.B];
+	if (blurb) {
+		persona.textContent = (CHARACTER_NAMES[d.cast.B] || d.cast.B) + ' — ' + blurb;
+		persona.classList.remove('hide');
+	} else {
+		persona.classList.add('hide');
+	}
 	document.getElementById('dialogue-thread').textContent = '';
 	dialogueSession.lineIndex = -1;
 	window.scrollTo(0, 0);

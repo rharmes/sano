@@ -420,6 +420,15 @@ html {
 	color: var(--badge-color);
 }
 
+/* One-line companion intro at the top of a conversation (Phase C personas). */
+.dialogue-persona {
+	margin-top: 0.4rem;
+	font-size: var(--text-label);
+	font-style: italic;
+	color: var(--text-color-softer);
+	text-align: center;
+}
+
 /* Streak-freeze reassurance (SR-09): shown on the home screen when a single missed
    day is about to be covered by a banked freeze. Indigo "protected" framing. */
 .streak-freeze-notice {

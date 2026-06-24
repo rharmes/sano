@@ -4,7 +4,7 @@
 // IMPORTANT: every Nepali line is an EXISTING COURSE phrase, referenced by its item id
 // (`ref`) — so the romanized strings stay Ross's and each line already has audio. What
 // is AI-drafted here, and Ross's to refine, is the *composition*: which phrases form
-// the exchange, the cast, and the comprehension questions.
+// the exchange, the cast, the comprehension questions, and the character personas below.
 //
 // A dialogue: { id, title, goal, section, after, cast:{A,B}, lines:[{who,ref}], questions }.
 // `who` 'A' is the left speaker (cast.A), 'B' the right speaker (cast.B). `after` is the
@@ -30,9 +30,17 @@ const DIALOGUES = [
 			{ who: 'A', ref: 'ramrari-jaanu-go-safely-take-care' },
 		],
 		questions: [
-			{ q: 'How does Pyaro say he is doing?', choices: ['Fine', 'Tired', 'Hungry', 'Busy'], answer: 0 },
-			{ q: 'What does Pyaro say he speaks?', choices: ['Nepali', 'Hindi', 'English', 'Newari'], answer: 0 },
-			{ q: 'How do Sano and Pyaro part?', choices: ['See you again / take care', 'Good morning', "I'm sorry", 'Thank you'], answer: 0 },
+			{ q: 'How does Pyaro say he is doing?', choices: ['Just fine', 'Heartbroken', 'Starving', 'Furious'], answer: 0 },
+			{
+				q: 'Pyaro can barely contain himself — how does he react when Sano speaks Nepali?',
+				choices: ['He cheers: "excellent!"', 'He pretends not to hear', 'He answers in English', 'He demands payment'],
+				answer: 0,
+			},
+			{
+				q: 'How do the two new friends part?',
+				choices: ['"See you again — take care!"', 'Good morning', "I'm sorry", 'Without a word'],
+				answer: 0,
+			},
 		],
 	},
 	{
@@ -51,13 +59,23 @@ const DIALOGUES = [
 			{ who: 'A', ref: 'mitho-cha-it-s-delicious' },
 			{ who: 'B', ref: 'pugyo-enough-that-s-sufficient' },
 			{ who: 'A', ref: 'dhanyabad-thank-you' },
+			{ who: 'B', ref: 'ramrari-jaanu-go-safely-take-care' },
 		],
 		questions: [
-			{ q: 'Has Sano eaten yet?', choices: ['Not yet', 'Yes, already', 'Only tea', 'Twice'], answer: 0 },
-			{ q: 'What does Gyani offer to drink?', choices: ['Tea', 'Water', 'Milk', 'Coffee'], answer: 0 },
+			{ q: 'Has Sano eaten yet?', choices: ['Not yet', 'Three times already', 'Only dessert', 'Twice'], answer: 0 },
+			{
+				q: 'Gyani feeds Sano well — and then immediately...',
+				choices: [
+					'hurries off, she has places to be',
+					'settles in for a long nap',
+					'asks Sano to stay all night',
+					'starts cooking again',
+				],
+				answer: 0,
+			},
 			{
 				q: 'What does Sano think of the food?',
-				choices: ["It's delicious", "It's too spicy", "It's cold", 'There is not enough'],
+				choices: ["It's delicious", "It's too spicy", "It's gone cold", 'There was none left'],
 				answer: 0,
 			},
 		],
@@ -78,9 +96,21 @@ const DIALOGUES = [
 			{ who: 'A', ref: 'huncha-okay-it-will-be-done' },
 		],
 		questions: [
-			{ q: 'Why is Shanta busy?', choices: ['Guests are coming', "It's bedtime", 'The food is ready', 'She is sick'], answer: 0 },
-			{ q: 'What does Shanta ask Sano to close?', choices: ['The door', 'The window', 'The book', 'The shop'], answer: 0 },
-			{ q: 'What does Sano offer to do?', choices: ['Clean the house', 'Cook dinner', 'Wash the clothes', 'Leave'], answer: 0 },
+			{
+				q: 'Why is Shanta quietly bustling about?',
+				choices: ['Guests are coming', 'It is the middle of the night', 'He has lost something', 'He is moving out'],
+				answer: 0,
+			},
+			{
+				q: 'Shanta is a yak of few words. What does he ask Sano to close?',
+				choices: ['The door', 'The window', 'The book', 'The shop'],
+				answer: 0,
+			},
+			{
+				q: 'What does eager Sano offer to do?',
+				choices: ['Clean the whole house', 'Cook the dinner', 'Take a nap', 'Invite even more guests'],
+				answer: 0,
+			},
 		],
 	},
 	{
@@ -100,13 +130,17 @@ const DIALOGUES = [
 			{ who: 'A', ref: 'dhanyabad-thank-you' },
 		],
 		questions: [
-			{ q: 'What does Sano ask the shopkeeper?', choices: ['How much it costs', 'Where it is', 'What time it is', 'His name'], answer: 0 },
+			{ q: 'What does Sano want to know first?', choices: ['How much it costs', "The tiger's name", 'The time', 'The way home'], answer: 0 },
 			{
-				q: 'What does Sano say about the price?',
+				q: 'Bahadur swears it is cheap. What does Sano insist?',
 				choices: ["It's too expensive", "It's too cheap", "It's just right", "It's free"],
 				answer: 0,
 			},
-			{ q: 'What does Sano ask Bahadur to do?', choices: ['Lower the price', 'Wrap it up', 'Wait a moment', 'Say it again'], answer: 0 },
+			{
+				q: 'In the end the easygoing tiger agrees to...',
+				choices: ['knock the price down', 'double the price', 'close the shop', 'keep the item'],
+				answer: 0,
+			},
 		],
 	},
 	{
@@ -125,9 +159,56 @@ const DIALOGUES = [
 			{ who: 'A', ref: 'dhanyabad-thank-you' },
 		],
 		questions: [
-			{ q: 'How does Sano feel?', choices: ['Tired', 'Happy', 'Angry', 'Hungry'], answer: 0 },
-			{ q: 'What does Rangin ask?', choices: ['Why', 'Where', 'When', 'How much'], answer: 0 },
-			{ q: 'How does Rangin say goodbye?', choices: ['Take care', 'Good morning', 'Thank you', 'Welcome'], answer: 0 },
+			{ q: 'How is Sano feeling?', choices: ['Tired', 'Over the moon', 'Furious', 'Famished'], answer: 0 },
+			{
+				q: 'Rangin is easily dazzled, but does manage to ask...',
+				choices: ['"why?"', '"how much?"', '"what colour?"', '"where are the snacks?"'],
+				answer: 0,
+			},
+			{ q: 'How does Rangin say goodbye?', choices: ['Take care', 'Good morning', 'Thank you', "You're welcome"], answer: 0 },
+		],
+	},
+	{
+		id: 'recap-thulo',
+		title: "Sano's big day",
+		goal: 'Tell someone what you did, in the past tense',
+		section: 'Looking back',
+		after: 'verbs-past',
+		cast: { A: 'sano', B: 'thulo' },
+		lines: [
+			{ who: 'A', ref: 'namaste-hello-goodbye' },
+			{ who: 'B', ref: 'tapai-lai-kasto-cha-how-are-you-formal' },
+			{ who: 'A', ref: 'ma-gaen-i-went' },
+			{ who: 'B', ref: 'dherai-ramro-very-good-excellent' },
+			{ who: 'A', ref: 'maile-khaen-i-ate' },
+			{ who: 'B', ref: 'ekdum-ramro-very-good-excellent' },
+			{ who: 'A', ref: 'maile-padhen-i-read' },
+			{ who: 'B', ref: 'sarai-ramro-very-good-really-good' },
+			{ who: 'A', ref: 'maile-sunen-i-heard' },
+			{ who: 'B', ref: 'dherai-ramro-very-good-excellent' },
+			{ who: 'A', ref: 'pheri-bhetaula-see-you-again-let-s-meet-again' },
+		],
+		questions: [
+			{
+				q: 'What did Sano actually do today?',
+				choices: [
+					'Ordinary things — went out, ate, read, listened to music',
+					'Climbed a Himalayan peak',
+					'Wrestled a tiger',
+					'Absolutely nothing',
+				],
+				answer: 0,
+			},
+			{
+				q: 'How does Thulo the rhino react to each little thing?',
+				choices: ['He declares every bit magnificent', 'He is thoroughly bored', 'He keeps correcting Sano', 'He dozes off'],
+				answer: 0,
+			},
+			{
+				q: 'Which of these did Sano say they did?',
+				choices: ['Listened to music', 'Flew a kite', 'Baked bread', 'Went swimming'],
+				answer: 0,
+			},
 		],
 	},
 ];
@@ -145,4 +226,22 @@ const CHARACTER_NAMES = {
 	shanta: 'Shanta',
 	rangin: 'Rangin',
 	lamo: 'Lamo',
+};
+
+// One-line personas, surfaced at the top of a conversation so each companion is memorable.
+// Seeded from the per-character voice descriptors in tools/tts/RESEARCH.md §9 (animal +
+// Nepali trait-name) — wholesome, gentle comedy. AI-drafted; Ross's to refine. Phurtilo has
+// no voice yet, so it stays a path companion and isn't cast in dialogues.
+const CHARACTER_PERSONAS = {
+	sano: 'a small, lively mouse from Kathmandu — your guide',
+	pyaro: 'a warm red panda who gets thrilled about the littlest things',
+	gyani: 'a wise elder elephant — full of advice, and always somewhere to be',
+	bahadur: 'an easygoing tiger who runs the corner shop and loves to haggle',
+	shanta: 'a calm, soft-spoken yak who means every word',
+	rangin: 'a dazzling danphe whose mind flits from one shiny thing to the next',
+	hiun: 'a cool, unbothered snow leopard who keeps things short',
+	thulo: 'a grand old rhino who narrates ordinary life like an epic',
+	chanchal: 'a young langur who cannot sit still and hates waiting',
+	lamo: 'a world-weary gharial with a long memory and a longer story',
+	phurtilo: 'a nimble tahr, always darting just out of frame',
 };

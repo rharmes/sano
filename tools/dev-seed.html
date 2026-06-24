@@ -210,6 +210,18 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">SR-01 · personas</span>
+			<h2>Funnier conversations (personas + new dialogue)</h2>
+			<p>
+				The whole course is settled, so <b>every gold conversation node</b> is unlocked — tap any in the path. Each opens with a
+				<b>one-line character intro</b> (e.g. <i>Gyani — a wise elder elephant, always somewhere to be</i>) and ends with
+				<b>character-flavored comprehension questions</b>. New: <b>"Sano's big day"</b> with <b>Thulo</b> (after Verbs: Past), where an
+				ordinary day gets narrated like an epic. <b>New verb-line audio is silent</b> until the end-of-phases render.
+			</p>
+			<button onclick="seed('dialoguefun')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-10</span>
 			<h2>Placement / skip-ahead onboarding</h2>
 			<p>
@@ -527,6 +539,22 @@
 						lastActivityDay: day(0),
 						itemsToday: 0,
 						itemsTotal: 260,
+						items,
+					};
+				} else if (which === 'dialoguefun') {
+					// Whole course settled, so every conversation node (gold) is unlocked — tap any to
+					// review the rewritten dialogues + the new "Sano's big day" with Thulo (after Verbs: Past).
+					const items = {};
+					for (const u of COURSE) for (const it of u.items) items[it.id] = rec({ interval: 8, ease: 2.5, lastSeen: day(0) });
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 9,
+						streakFreezes: 1,
+						lastActivityDay: day(1),
+						itemsToday: 0,
+						itemsTotal: 476,
 						items,
 					};
 				}
