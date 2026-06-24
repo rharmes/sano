@@ -75,7 +75,7 @@ Groundwork that precedes the SR features. Ross wants a solid base to build from.
 
 | ✓ | ID | Recommendation | PEDAGOGY | Effort | Depends on |
 |---|----|----------------|----------|--------|------------|
-| ✅ | **SR-01** | Two-character dialogues + comprehension questions *(5 voiced dialogues from existing phrases — one per path section; reveal-one-bubble-at-a-time + autoplay; character heads beside bubbles)* | §1–3 | M–H | — (better with SR-02) |
+| ✅ | **SR-01** | Story dialogues + comprehension questions *(original voiced short stories, schema v2 — inline np/dev/en/gloss — in a Duolingo-Stories-style player: all speakers on the left (head + bubble), romanized-only with per-word/phrase **tap-to-translate** glosses (js/gloss.js), full-width narrator, reveal-one-at-a-time + autoplay; greet-pyaro live, the rest await Ross's scripts)* | §1–3 | M–H | — (better with SR-02) |
 | ✅ | **SR-02** | Self-hosted phrase & dialogue audio *(476 phrase + 176 word-bank-word clips, voiced by Sano's ElevenLabs clone via `tools/tts/synth-app.mjs`, replacing the original Piper render; dialogue lines ride on SR-01; per-character voices = TODO)* | §7,§8 | H | — |
 | ✅ | **SR-03** | Listening exercises ("tap/type what you hear") *(audio-only prompt on ~half of recall reviews; choose-meaning + type variants)* | §7,§8 | M | SR-02 |
 | ✅ | **SR-04** | Speaking practice (speak-before-reveal + record/compare) *(skippable "say it aloud" + record-yourself-and-compare step per new word; no scoring; getUserMedia/MediaRecorder capture; playback via Web Audio `decodeAudioData` → buffer source, not an `<audio>` element (iOS refuses to decode its own MediaRecorder audio/mp4 in a media element); device-verified on iOS)* | §4 | M | SR-02 |
@@ -266,9 +266,10 @@ Most of the roadmap is built and deployed to namastesano.com. Status by ID:
 - **Live:** F1–F3 (docs); SR-02 (476-clip self-hosted audio); SR-03 (listening / "what
   you hear"); SR-06 (can-do goals on the home CTA + complete screen); SR-09 (streak
   freeze, with a "freeze ready" home notice + "freeze used" on completion); **SR-01**
-  (5 voiced dialogues composed from existing phrases, one per path section, revealed one
-  bubble at a time with autoplay, character heads beside bubbles, fixed bottom Continue
-  that the thread scrolls under); **SR-04** (skippable record-and-compare speaking step
+  (voiced **story** dialogues in the redesigned Stories-style player: all speakers on the
+  left with a head + bubble, romanized-only with each word/phrase **tappable to reveal its
+  English** via the shared js/gloss.js, full-width narrator lines, revealed one at a time with
+  autoplay; greet-pyaro live, the rest await Ross's scripts); **SR-04** (skippable record-and-compare speaking step
   per new word, no scoring); and SR-07's first slice (companion **heads** in the dialogue
   bubbles via the generated `js/characters.js` + the ported companion fill palette).
 - **Dev tooling:** every feature has a one-click scenario in `tools/dev-seed.html`, now a
@@ -300,6 +301,13 @@ Most of the roadmap is built and deployed to namastesano.com. Status by ID:
   `js/sounds.js` (`SOUND_TOPICS`) + a `#screen-sounds`. Verified by headless integration +
   viewport checks. **Not yet deployed — awaiting Ross's localhost review** (esp. the points
   below).
+- **2026-06-24 — dialogue player redesigned + per-word tap-to-translate (live):** the story
+  player now matches Duolingo Stories — every speaker on the left (head + bubble), lines show
+  **romanized Nepali only**, and **each word/phrase is underlined and tappable to reveal its
+  English** (a new per-line `gloss` segmentation rendered by the shared `js/gloss.js`
+  `SanoGloss.renderLine` + a tap-to-translate popover); narrator lines run full-width and the
+  line spacing is uniform. Adds the localhost `design/dialogue.html` mockup. Gloss English is
+  AI-drafted (Ross to review). **Committed and deployed** (local commits not yet pushed).
 - **Pending Ross's review:** the AI-drafted `dev` (Devanagari) strings, the per-unit
   `goal` strings, the dialogue compositions + comprehension questions, picking the 11
   per-character voices from `design/voice-gallery.html`, and **SR-08's drafted contrast
