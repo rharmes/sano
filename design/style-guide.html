@@ -1075,6 +1075,39 @@
 				width: 100%;
 			}
 
+			/* ── Onboarding conversation (mirrors #screen-onboarding): a head-only Sano to the
+			   LEFT of each Sano bubble, the learner's replies on the right with no head. ─── */
+			.sg-onboard .onboard-line {
+				position: relative;
+				padding-left: 6.4rem;
+			}
+			.sg-onboard .onboard-head {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 5.4rem;
+				height: 5.4rem;
+			}
+			.sg-onboard .onboard-head svg {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			.sg-onboard .onboard-line .bubble,
+			.sg-onboard > .bubble.user {
+				width: fit-content;
+				max-width: 100%;
+			}
+			/* Sano's tail anchors at the head's centre (the head sits at the line top). */
+			.sg-onboard .bubble.sano::before {
+				top: 1.9rem;
+				margin-top: 0;
+			}
+			.sg-onboard .bubble.sano::after {
+				top: 2rem;
+				margin-top: 0;
+			}
+
 			/* ── Story conversations (SR-01 dialogue player) — mirrors #dialogue-thread in
 			   css/sano.css. Every speaker sits on the LEFT behind their own head; lines are
 			   Romanized-only (tap a .gloss-word for its English) with a left tail toward the
@@ -1918,53 +1951,56 @@
 				<h2 class="sg">Speech bubbles</h2>
 				<h3 class="sg">Onboarding</h3>
 				<p class="sg-note">
-					The first-run onboarding and the top-of-path intro share one conversation pattern — Sano speaks from the left, the
-					learner replies from the right. Each bubble leads with Romanized Nepali in Neuton 700, English underneath in italic
-					Lato; a border/fill tail points back to the speaker — left for Sano, right for the learner — so the side and tail
-					identify the speaker, no label needed. Re-keyed onto the canonical tokens above so it ports straight into the app.
+					First-run onboarding: Sano speaks from the left with a head-only avatar beside each of its bubbles; the learner's
+					replies sit on the right with no avatar. Each bubble leads with Romanized Nepali in Neuton 700, English underneath in
+					italic Lato, and a tail points back toward the speaker. (The top-of-path intro reuses these same bubbles, but with one
+					full-size Sano beside the pair instead of per-line heads.) Re-keyed onto the canonical tokens above.
 				</p>
-				<div class="scene">
-					<svg class="mascot sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
-						<g>
-							<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
-							<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
-							<g class="sano-tail">
-								<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
-							</g>
-							<g class="sano-head">
-								<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
-								<g class="sano-ear sano-ear-left">
-									<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
-									<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+				<div class="thread sg-onboard">
+					<div class="onboard-line">
+						<span class="onboard-head">
+							<svg viewBox="0 0 200 200" aria-label="Sano face">
+								<g transform="translate(100 100) scale(0.9) translate(-100 -62.5)">
+									<g class="part-head">
+										<path
+											d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+											class="f-indigo"
+										/>
+										<g class="part-ear part-ear-left">
+											<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+											<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+										</g>
+										<g class="part-ear part-ear-right">
+											<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+											<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+										</g>
+										<path
+											d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z"
+											class="f-cream"
+										/>
+										<g class="part-eyes">
+											<circle cx="88" cy="72" r="6" class="f-ink" />
+											<circle cx="112" cy="72" r="6" class="f-ink" />
+										</g>
+										<g class="part-nose">
+											<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+											<path
+												d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+												class="s-whisker"
+											/>
+										</g>
+									</g>
 								</g>
-								<g class="sano-ear sano-ear-right">
-									<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
-									<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
-								</g>
-								<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
-								<g class="sano-eyes">
-									<circle cx="88" cy="72" r="4.4" class="f-ink" />
-									<circle cx="112" cy="72" r="4.4" class="f-ink" />
-								</g>
-								<g class="sano-nose">
-									<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
-									<path
-										d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
-										class="s-whisker"
-									/>
-								</g>
-							</g>
-						</g>
-					</svg>
-					<div class="thread">
+							</svg>
+						</span>
 						<div class="bubble sano">
-							<p class="np">Namaste, mero naam Sano ho.</p>
-							<p class="en">Hello, my name is Sano.</p>
+							<p class="np">Tapaiko naam ke ho?</p>
+							<p class="en">What is your name?</p>
 						</div>
-						<div class="bubble user">
-							<p class="np">Namaste, Sano.</p>
-							<p class="en">Hello, Sano.</p>
-						</div>
+					</div>
+					<div class="bubble user">
+						<p class="np">Mero naam Aastha ho.</p>
+						<p class="en">My name is Aastha.</p>
 					</div>
 				</div>
 

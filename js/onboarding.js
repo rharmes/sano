@@ -69,7 +69,15 @@ const SanoOnboard = (() => {
 			b.appendChild(np);
 		}
 		if (en) b.appendChild(el('p', 'en', en));
-		return b;
+		if (side !== 'sano') return b;
+		// Sano lines carry a head-only avatar to the LEFT of the bubble (like the dialogue
+		// player); the whole-body mascot at the top is gone (kept only for the finish).
+		const lineEl = el('div', 'onboard-line');
+		const head = el('span', 'onboard-head');
+		if (typeof CHARACTER_HEADS !== 'undefined') head.innerHTML = CHARACTER_HEADS.sano;
+		lineEl.appendChild(head);
+		lineEl.appendChild(b);
+		return lineEl;
 	}
 
 	function sano(pair) {

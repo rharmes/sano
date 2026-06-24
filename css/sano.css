@@ -1184,17 +1184,30 @@ table#vocab tbody td:nth-child(3) {
 	border-style: solid;
 	border-color: transparent;
 }
-#screen-home .scene .bubble.sano::before,
-#screen-onboarding .bubble.sano::before {
+/* Home Sano bubble: tail vertically centred (points at the full-size mascot beside the pair). */
+#screen-home .scene .bubble.sano::before {
 	left: -9px;
 	margin-top: -8px;
 	border-width: 8px 9px 8px 0;
 	border-right-color: var(--border-color);
 }
-#screen-home .scene .bubble.sano::after,
-#screen-onboarding .bubble.sano::after {
+#screen-home .scene .bubble.sano::after {
 	left: -8px;
 	margin-top: -7px;
+	border-width: 7px 8px 7px 0;
+	border-right-color: var(--background-color-softer);
+}
+/* Onboarding Sano bubble: tail anchored at the per-line head's centre (the 5.4rem head sits
+   at the line top, so its centre is ~2.7rem down) — same as the dialogue player. */
+#screen-onboarding .bubble.sano::before {
+	left: -9px;
+	top: 1.9rem;
+	border-width: 8px 9px 8px 0;
+	border-right-color: var(--border-color);
+}
+#screen-onboarding .bubble.sano::after {
+	left: -8px;
+	top: 2rem;
 	border-width: 7px 8px 7px 0;
 	border-right-color: var(--background-color-softer);
 }
@@ -1238,22 +1251,36 @@ table#vocab tbody td:nth-child(3) {
 	gap: 1.6rem;
 	margin: 0;
 }
+/* The conversation no longer shows a whole-body Sano at the top — it's hidden here and
+   only revealed (centred) for the finish celebration. Each Sano line carries its own head
+   instead (below). */
 #screen-onboarding .onboard-scene .mascot {
-	width: 110px;
+	display: none;
 }
 #screen-onboarding .thread {
 	width: 100%;
 }
-/* Beside-mascot layout once there's room (matches the home conversation). */
-@media (min-width: 620px) {
-	#screen-onboarding .onboard-scene {
-		grid-template-columns: 160px 1fr;
-		justify-items: stretch;
-		align-items: start;
-	}
-	#screen-onboarding .onboard-scene .mascot {
-		width: 100%;
-	}
+/* Sano speaks: a head-only avatar to the LEFT of each Sano bubble, mirroring the dialogue
+   player's head + bubble line. The bubble shrinks to its content beside the head. */
+#screen-onboarding .onboard-line {
+	position: relative;
+	padding-left: 6.4rem;
+}
+#screen-onboarding .onboard-line .bubble {
+	width: fit-content;
+	max-width: 100%;
+}
+#screen-onboarding .onboard-head {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 5.4rem;
+	height: 5.4rem;
+}
+#screen-onboarding .onboard-head svg {
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 
 /* Inputs that live inside a speech bubble, styled as a fill-in-the-blank. */
@@ -1382,6 +1409,7 @@ table#vocab tbody td:nth-child(3) {
    and wobbles (idle still animates the face), a burst ring + paper-cut confetti fly
    out, and the closing line keeps its staggered reveal. */
 #screen-onboarding.onboard-celebrate .onboard-scene .mascot {
+	display: block;
 	width: 160px;
 	transform-origin: 50% 100%;
 	animation:
@@ -1399,6 +1427,16 @@ table#vocab tbody td:nth-child(3) {
 }
 #screen-onboarding.onboard-celebrate #onboard-controls {
 	align-items: center;
+}
+/* The finish centres the closing line under the popping mascot, so drop that line's
+   per-line head, its head padding, and the bubble tail — the mascot is the focus here. */
+#screen-onboarding.onboard-celebrate .onboard-line {
+	padding-left: 0;
+}
+#screen-onboarding.onboard-celebrate .onboard-head,
+#screen-onboarding.onboard-celebrate .bubble.sano::before,
+#screen-onboarding.onboard-celebrate .bubble.sano::after {
+	display: none;
 }
 /* The flourish layer: a 0×0 anchor over Sano's head; the ring + flecks position
    off it. Hidden until the celebrate class flips it on, which starts the one-shot
