@@ -351,6 +351,134 @@
 				font-size: 1.8rem;
 			}
 
+			/* ── Conversations (read-only context block) ─────────────────────── */
+			.convo-wrap {
+				max-width: 1160px;
+				margin: 0 auto;
+				padding: 0 2.4rem;
+			}
+			.convo-intro {
+				margin-top: 5rem;
+				padding-top: 2.6rem;
+				border-top: 3px solid var(--border-color);
+			}
+			.convo-intro h2 {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 3rem;
+				margin: 0 0 0.6rem;
+				color: var(--text-color-richer);
+			}
+			.convo-intro p {
+				margin: 0;
+				max-width: 72rem;
+				color: var(--text-color-soft);
+				font-size: 1.5rem;
+			}
+			.convo-intro code {
+				font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+				font-size: 1.35rem;
+				background: var(--background-color-softer);
+				padding: 0.1rem 0.5rem;
+				border-radius: 0.4rem;
+			}
+			.convo {
+				margin-top: 3.2rem;
+			}
+			.convo-head {
+				display: flex;
+				align-items: baseline;
+				flex-wrap: wrap;
+				gap: 0.4rem 1.2rem;
+				padding-bottom: 0.8rem;
+				border-bottom: 2px solid var(--border-color);
+			}
+			.convo-head h3 {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 2.2rem;
+				margin: 0;
+				color: var(--text-color-richer);
+			}
+			.convo-meta {
+				font-size: 1.4rem;
+				color: var(--text-color-softer);
+			}
+			.convo-meta b {
+				color: var(--text-color-soft);
+				font-weight: 700;
+			}
+			.cline {
+				display: grid;
+				grid-template-columns: 9rem minmax(0, 1fr) auto;
+				align-items: center;
+				gap: 1.4rem;
+				padding: 1.1rem 0.4rem;
+				border-bottom: 1px solid var(--border-color-softer);
+			}
+			.cspk {
+				font-size: 1.4rem;
+				font-weight: 700;
+				color: var(--accent-deep);
+				text-align: right;
+			}
+			.cbody {
+				display: flex;
+				flex-direction: column;
+				gap: 0.2rem;
+			}
+			.cdev {
+				font-family: var(--dev-font);
+				font-size: 2.4rem;
+				line-height: 1.3;
+				color: var(--text-color-richer);
+			}
+			.crom {
+				font-size: 1.55rem;
+				font-weight: 700;
+				color: var(--text-color-normal);
+			}
+			.cen {
+				font-size: 1.5rem;
+				color: var(--text-color-soft);
+			}
+			/* Narrator lines are scene-setting — quieter and italic. */
+			.who-narrator .cspk {
+				color: var(--text-color-softer);
+				font-weight: 400;
+				font-style: italic;
+			}
+			.who-narrator .cdev {
+				color: var(--text-color-normal);
+			}
+			.who-narrator .crom {
+				font-weight: 400;
+				font-style: italic;
+				color: var(--text-color-soft);
+			}
+			.who-narrator .cen {
+				font-style: italic;
+			}
+			@media (max-width: 720px) {
+				.cline {
+					grid-template-columns: 1fr auto;
+					grid-template-areas:
+						'spk play'
+						'body body';
+					gap: 0.4rem 1.2rem;
+				}
+				.cspk {
+					grid-area: spk;
+					text-align: left;
+				}
+				.cbody {
+					grid-area: body;
+				}
+				.cline .play {
+					grid-area: play;
+				}
+			}
+
 			/* ── Floating Submit ────────────────────────────────────────────── */
 			.submit {
 				position: fixed;
@@ -471,10 +599,13 @@
 		<main id="units"></main>
 		<p class="empty" id="empty" hidden>No matching words.</p>
 
+		<section class="convo-wrap" id="conversations"></section>
+
 		<button class="submit" id="submit" type="button" disabled>No changes</button>
 		<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 		<script src="../js/data.js"></script>
+		<script src="../js/dialogues.js"></script>
 		<script>
 			'use strict';
 
@@ -486,6 +617,9 @@
 			let audioEl = null;
 			let playingBtn = null;
 			function playAudio(id, btn) {
+				playSrc(AUDIO_BASE + encodeURIComponent(id) + '.mp3', btn);
+			}
+			function playSrc(src, btn) {
 				if (!audioEl) {
 					audioEl = new Audio();
 					audioEl.addEventListener('ended', clearPlaying);
@@ -493,7 +627,7 @@
 				}
 				if (playingBtn && playingBtn !== btn) playingBtn.classList.remove('playing');
 				audioEl.pause();
-				audioEl.src = AUDIO_BASE + encodeURIComponent(id) + '.mp3';
+				audioEl.src = src;
 				playingBtn = btn;
 				btn.classList.add('playing');
 				const p = audioEl.play();
@@ -696,6 +830,10 @@
 					anyVisible = anyVisible || visible > 0;
 				}
 				document.getElementById('empty').hidden = anyVisible;
+				// The conversations block is a separate read-only reference — hide it
+				// while the user is searching/filtering the editable rows.
+				const convos = document.getElementById('conversations');
+				if (convos) convos.hidden = !!q || editedOnly;
 			}
 			searchEl.addEventListener('input', applyFilter);
 			editedOnlyEl.addEventListener('change', applyFilter);
@@ -768,8 +906,91 @@
 				localStorage.setItem('sano-devanagari-theme', dark ? 'dark' : 'light');
 			});
 
+			// ── Conversations (read-only context) ─────────────────────────────
+			// The story dialogues (js/dialogues.js) are inline text, not COURSE
+			// items, so they never appear in the editable rows above. Render each
+			// one in full — speaker, Devanagari, romanization, English, audio — so
+			// the reviewer can read it as a flowing conversation and confirm it
+			// coheres. Read-only: these lines live in js/dialogues.js, so any fix
+			// gets flagged to Ross rather than saved through devanagari-save.php.
+			function speakerName(who) {
+				if (who === 'narrator') return 'Narrator';
+				if (who === 'thornbush') return 'Thornbush';
+				return (typeof CHARACTER_NAMES !== 'undefined' && CHARACTER_NAMES[who]) || who;
+			}
+			function buildConversations() {
+				const wrap = document.getElementById('conversations');
+				if (typeof DIALOGUES === 'undefined' || !DIALOGUES.length) {
+					wrap.hidden = true;
+					return;
+				}
+				const intro = document.createElement('div');
+				intro.className = 'convo-intro';
+				intro.innerHTML =
+					'<h2>Conversations</h2><p>The full story dialogues, in order, so they can be read in context and checked for ' +
+					'coherence. <b>Read-only</b> — these lines live in <code>js/dialogues.js</code> (not the rows above), so flag any ' +
+					'wording or Devanagari fixes to Ross. Tap ▶ to hear each line in its character’s voice.</p>';
+				wrap.appendChild(intro);
+
+				for (const d of DIALOGUES) {
+					const card = document.createElement('section');
+					card.className = 'convo';
+					const head = document.createElement('div');
+					head.className = 'convo-head';
+					const names = (d.cast || []).map(speakerName).join(', ');
+					head.innerHTML =
+						'<h3>' +
+						d.title +
+						'</h3><span class="convo-meta">' +
+						(names ? 'Sano &amp; ' + names : 'Sano') +
+						(d.after ? ' · after <b>' + d.after + '</b>' : '') +
+						'</span>';
+					card.appendChild(head);
+
+					d.lines.forEach((ln, i) => {
+						const line = document.createElement('div');
+						line.className = 'cline who-' + ln.who;
+
+						const spk = document.createElement('div');
+						spk.className = 'cspk';
+						spk.textContent = speakerName(ln.who);
+
+						const body = document.createElement('div');
+						body.className = 'cbody';
+						const dev = document.createElement('div');
+						dev.className = 'cdev';
+						dev.lang = 'ne';
+						dev.dir = 'auto';
+						dev.textContent = ln.dev || '';
+						const rom = document.createElement('div');
+						rom.className = 'crom';
+						rom.textContent = ln.np || '';
+						const en = document.createElement('div');
+						en.className = 'cen';
+						en.textContent = ln.en || '';
+						body.append(dev, rom, en);
+
+						const play = document.createElement('button');
+						play.type = 'button';
+						play.className = 'play';
+						play.setAttribute('aria-label', 'Play line ' + (i + 1) + ' (' + speakerName(ln.who) + ')');
+						play.innerHTML = svgVolume();
+						const folder = typeof dialogueVoiceFolder !== 'undefined' ? dialogueVoiceFolder(d, ln.who) : 'default';
+						const clipId =
+							typeof dialogueClipId !== 'undefined' ? dialogueClipId(d, i) : d.id + '-' + String(i).padStart(2, '0');
+						const src = '../audio/' + folder + '/' + encodeURIComponent(clipId) + '.mp3';
+						play.addEventListener('click', () => playSrc(src, play));
+
+						line.append(spk, body, play);
+						card.appendChild(line);
+					});
+					wrap.appendChild(card);
+				}
+			}
+
 			// ── Go ────────────────────────────────────────────────────────────
 			build();
+			buildConversations();
 			loadReview();
 		</script>
 	</body>

@@ -258,7 +258,13 @@ significantly, update CLAUDE.md in the same commit.
     clip, and an editable Devanagari box pre-filled with the current `dev`. Submitting POSTs
     only the changed rows to `design/devanagari-save.php`, which merges them (keyed by item
     id) into the **gitignored** `design/devanagari-review.json` — it does **not** touch
-    `js/data.js`. Reloading restores prior corrections from that file. Uses a minimal theme
+    `js/data.js`. Reloading restores prior corrections from that file. The page builds its
+    rows from `js/data.js` at load (and the dialogues from `js/dialogues.js`), so newly added
+    content appears automatically — no regeneration step. A **read-only "Conversations"
+    section** at the bottom renders each story dialogue in full (speaker, Devanagari,
+    romanization, English, per-voice ▶) so the reviewer can read it in context and confirm it
+    coheres; those lines aren't `COURSE` items, so they're not editable here (flag fixes for
+    `js/dialogues.js`). Uses a minimal theme
     toggle (not the shared pill); serve it with `php -S` from the repo root.
     - **Pending future task: Ross will ask Claude to merge
       `design/devanagari-review.json` into the `dev` fields of `js/data.js`** — done here
