@@ -1894,11 +1894,12 @@ function renderDialogueConvo() {
 	document.getElementById('dialogue-convo').classList.remove('hide');
 	document.getElementById('dialogue-quiz').classList.add('hide');
 	document.getElementById('dialogue-goal').textContent = d.goal;
-	// Introduce the companion (cast.B) with a one-line persona so they're memorable.
+	// Introduce the lead companion (cast[0]) with a one-line persona so they're memorable.
 	const persona = document.getElementById('dialogue-persona');
-	const blurb = CHARACTER_PERSONAS[d.cast.B];
+	const lead = (d.cast || [])[0];
+	const blurb = lead && CHARACTER_PERSONAS[lead];
 	if (blurb) {
-		persona.textContent = (CHARACTER_NAMES[d.cast.B] || d.cast.B) + ' — ' + blurb;
+		persona.textContent = (CHARACTER_NAMES[lead] || lead) + ' — ' + blurb;
 		persona.classList.remove('hide');
 	} else {
 		persona.classList.add('hide');
@@ -1909,35 +1910,51 @@ function renderDialogueConvo() {
 	revealNextLine();
 }
 
-// Build one dialogue line: a head-only character portrait beside a speech bubble
-// (Change 3 / SR-07). Sano sits on the left, the companion mirrored on the right.
-function dialogueBubble(line) {
+// Build one story line. Narrator lines render as full-width scene narration; Sano sits on the
+// left, every other speaker (a companion or a one-off prop) on the right. Each line carries
+// its own Nepali/English inline (schema v2) and its own per-voice audio clip.
+function dialogueBubble(line, index) {
 	const d = dialogueSession.def;
-	const item = courseItem(line.ref);
-	const charId = line.who === 'A' ? d.cast.A : d.cast.B;
+	const folder = dialogueVoiceFolder(d, line.who);
+	const clipId = dialogueClipId(d, index);
 
+	if (line.who === 'narrator') {
+		const row = document.createElement('div');
+		row.className = 'dialogue-narration';
+		const np = document.createElement('p');
+		np.className = 'np';
+		np.textContent = line.np;
+		np.appendChild(SanoAudio.button(clipId, { className: 'audio-inline', voiceId: folder }));
+		const en = document.createElement('p');
+		en.className = 'en';
+		en.textContent = line.en;
+		row.append(np, en);
+		return row;
+	}
+
+	const isSano = line.who === 'sano';
 	const row = document.createElement('div');
-	row.className = 'dialogue-line ' + (line.who === 'A' ? 'sano' : 'pyaro');
+	row.className = 'dialogue-line ' + (isSano ? 'sano' : 'pyaro');
 
 	const head = document.createElement('div');
 	head.className = 'dialogue-head';
-	head.innerHTML = CHARACTER_HEADS[charId] || '';
+	head.innerHTML = CHARACTER_HEADS[line.who] || '';
 
 	const bubble = document.createElement('div');
-	bubble.className = 'bubble ' + (line.who === 'A' ? 'sano' : 'user');
+	bubble.className = 'bubble ' + (isSano ? 'sano' : 'user');
 
 	const speaker = document.createElement('p');
 	speaker.className = 'speaker';
-	speaker.textContent = CHARACTER_NAMES[charId] || charId;
+	speaker.textContent = CHARACTER_NAMES[line.who] || line.who;
 
 	const np = document.createElement('p');
 	np.className = 'np';
-	np.textContent = item.np;
-	np.appendChild(SanoAudio.button(item.id, { className: 'audio-inline', voiceId: SanoAudio.voiceForCharacter(charId) }));
+	np.textContent = line.np;
+	np.appendChild(SanoAudio.button(clipId, { className: 'audio-inline', voiceId: folder }));
 
 	const en = document.createElement('p');
 	en.className = 'en';
-	en.textContent = item.en;
+	en.textContent = line.en;
 
 	bubble.append(speaker, np, en);
 	row.append(head, bubble);
@@ -1950,11 +1967,10 @@ function revealNextLine() {
 	const d = dialogueSession.def;
 	dialogueSession.lineIndex++;
 	const line = d.lines[dialogueSession.lineIndex];
-	const bubble = dialogueBubble(line);
+	const bubble = dialogueBubble(line, dialogueSession.lineIndex);
 	document.getElementById('dialogue-thread').appendChild(bubble);
 
-	const charId = line.who === 'A' ? d.cast.A : d.cast.B;
-	SanoAudio.play(line.ref, SanoAudio.voiceForCharacter(charId));
+	SanoAudio.play(dialogueClipId(d, dialogueSession.lineIndex), dialogueVoiceFolder(d, line.who));
 
 	// The conversation fills the first half of the progress bar; questions fill the rest.
 	const fill = Math.round(((dialogueSession.lineIndex + 1) / d.lines.length) * 50);

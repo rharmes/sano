@@ -12,6 +12,7 @@
 //   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --words --only <slug>
 //   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --phrases --new   # only clips not yet on disk
 //   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --words --new     # render newly-added words only
+//   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --dialogues       # per-voice story-line clips (js/dialogues.js)
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -45,8 +46,38 @@ if (args.sample) {
 	outDir = join(ROOT, 'audio', 'words');
 	const words = JSON.parse(readFileSync(join(HERE, 'words.json'), 'utf8'));
 	jobs = Object.entries(words).map(([slug, w]) => ({ text: w.dev, out: join(outDir, slug + '.mp3'), label: `${slug} «${w.dev}»` }));
+} else if (args.dialogues) {
+	// Story dialogues (js/dialogues.js): one clip per line, each in its speaker's voice.
+	// Voice rules mirror dialogueVoiceFolder() in dialogues.js: narrator -> Thulo (Gyani if
+	// Thulo is in the cast), thornbush -> Rangin, sano -> default clone, else the speaker.
+	outDir = join(ROOT, 'audio');
+	const DIALOGUES = Function(readFileSync(join(ROOT, 'js', 'dialogues.js'), 'utf8') + '; return DIALOGUES;')();
+	const VOICES = {
+		default: SANO_VOICE,
+		pyaro: 'cTnqh1Daui2JhvWlVQGC',
+		gyani: 'vTgg1b2Eauo5efIcWup5',
+		shanta: 'Kk1jouQWkqFRzsjKXdUl',
+		bahadur: '1adWuJ6CHzVMDg1XyhYS',
+		rangin: 'yiYB6wyWboWEOt52vuJ6',
+		thulo: 'MW558bGi5hBsE33qo9Rw',
+	};
+	const folderOf = (d, who) =>
+		who === 'narrator' ? ((d.cast || []).includes('thulo') ? 'gyani' : 'thulo') : who === 'thornbush' ? 'rangin' : who === 'sano' ? 'default' : who;
+	jobs = [];
+	for (const d of DIALOGUES) {
+		d.lines.forEach((ln, i) => {
+			const folder = folderOf(d, ln.who);
+			const clipId = d.id + '-' + String(i).padStart(2, '0');
+			jobs.push({
+				text: ln.dev,
+				out: join(ROOT, 'audio', folder, clipId + '.mp3'),
+				label: `${folder}/${clipId}`,
+				voiceId: VOICES[folder] || SANO_VOICE,
+			});
+		});
+	}
 } else {
-	fail('Pass one of --sample | --phrases | --words.');
+	fail('Pass one of --sample | --phrases | --words | --dialogues.');
 }
 
 if (only) {
@@ -69,8 +100,9 @@ console.log(`Voice ${voice} · model ${model} · ${jobs.length} clip(s) → ${ou
 let ok = 0;
 for (const job of jobs) {
 	try {
-		const buf = await synth(job.text);
+		const buf = await synth(job.text, job.voiceId);
 		if (!buf.length) throw new Error('empty audio');
+		mkdirSync(dirname(job.out), { recursive: true });
 		writeFileSync(job.out, buf);
 		ok++;
 		console.log(`  ✓ ${job.label}`);
@@ -115,8 +147,8 @@ ${rows}`;
 	console.log(`Sample page: design/_bakeoff/sano-sample/index.html`);
 }
 
-async function synth(text) {
-	const url = `https://api.elevenlabs.io/v1/text-to-speech/${voice}?output_format=${fmt}`;
+async function synth(text, voiceId) {
+	const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId || voice}?output_format=${fmt}`;
 	const res = await fetch(url, {
 		method: 'POST',
 		headers: { 'xi-api-key': apiKey, 'content-type': 'application/json', accept: 'audio/mpeg' },

@@ -1,15 +1,21 @@
-// Two-character dialogues with comprehension questions (SR-01), woven into the lesson
-// path so each section has a conversation (Change 2).
+// Two-character (now small-cast) story dialogues with comprehension questions (SR-01),
+// woven into the lesson path so each section has a conversation.
 //
-// IMPORTANT: every Nepali line is an EXISTING COURSE phrase, referenced by its item id
-// (`ref`) — so the romanized strings stay Ross's and each line already has audio. What
-// is AI-drafted here, and Ross's to refine, is the *composition*: which phrases form
-// the exchange, the cast, the comprehension questions, and the character personas below.
+// SCHEMA v2 — the lines are now original Nepali STORIES (funny fables), not remixes of
+// existing course phrases, so each line carries its own text inline:
+//   { id, title, goal, section, after, cast:[companionIds], lines:[{who, np, dev, en}], questions }
+// `who` is a speaker id: 'sano' (left), a companion id (right), 'narrator' (full-width scene
+// narration), or 'thornbush' (a one-off prop). `cast` lists the non-narrator companions (for
+// the head art + the persona intro). `after` is the COURSE unit id the node follows in the
+// path. The Nepali (`np`/`dev`) is AI-DRAFTED and Ross's to refine; the English (`en`) is the
+// subtitle. Each line gets its own audio clip rendered per-voice — see VOICE RULES below and
+// tools/tts/synth-app.mjs --dialogues.
 //
-// A dialogue: { id, title, goal, section, after, cast:{A,B}, lines:[{who,ref}], questions }.
-// `who` 'A' is the left speaker (cast.A), 'B' the right speaker (cast.B). `after` is the
-// COURSE unit id the conversation node follows in the path (it unlocks once that unit is
-// complete). Each question is { q, choices:[...], answer } (answer indexes the choices).
+// VOICE RULES (shared by playback in js/sano.js and the renderer in synth-app.mjs):
+//   - narrator   -> Thulo's voice, but Gyani's if Thulo is in the cast (he can't narrate himself)
+//   - thornbush  -> Rangin's voice
+//   - sano       -> the default clone; every other speaker -> their own voice
+// Clips live at audio/<voiceFolder>/<dialogueId>-<NN>.mp3 (NN = zero-padded line index).
 const DIALOGUES = [
 	{
 		id: 'greet-pyaro',
@@ -17,203 +23,105 @@ const DIALOGUES = [
 		goal: 'Greet someone and make small talk',
 		section: 'Foundations',
 		after: 'introductions',
-		cast: { A: 'sano', B: 'pyaro' },
+		cast: ['pyaro'],
 		lines: [
-			{ who: 'A', ref: 'namaste-hello-goodbye' },
-			{ who: 'B', ref: 'namaste-hello-goodbye' },
-			{ who: 'A', ref: 'tapai-lai-kasto-cha-how-are-you-formal' },
-			{ who: 'B', ref: 'sanchai-chu-i-m-fine' },
-			{ who: 'A', ref: 'tapai-nepali-bolnu-hunchha-do-you-speak-nepali' },
-			{ who: 'B', ref: 'ma-nepali-bolchhu-i-speak-nepali' },
-			{ who: 'A', ref: 'dherai-ramro-very-good-excellent' },
-			{ who: 'B', ref: 'pheri-bhetaula-see-you-again-let-s-meet-again' },
-			{ who: 'A', ref: 'ramrari-jaanu-go-safely-take-care' },
-		],
-		questions: [
-			{ q: 'How does Pyaro say he is doing?', choices: ['Just fine', 'Heartbroken', 'Starving', 'Furious'], answer: 0 },
 			{
-				q: 'Pyaro can barely contain himself — how does he react when Sano speaks Nepali?',
-				choices: ['He cheers: "excellent!"', 'He pretends not to hear', 'He answers in English', 'He demands payment'],
-				answer: 0,
+				who: 'narrator',
+				np: 'Gahiro khochko kinaarma saanghuro baato. Pyaro tala herchha; Sano chheuma aaipugchhe.',
+				dev: 'गहिरो खोँचको किनारमा साँघुरो बाटो। प्यारो तल हेर्छ; सानो छेउमा आइपुग्छे।',
+				en: 'A narrow road along a deep canyon. Pyaro leans over the edge; Sano walks up beside him.',
 			},
 			{
-				q: 'How do the two new friends part?',
-				choices: ['"See you again — take care!"', 'Good morning', "I'm sorry", 'Without a word'],
-				answer: 0,
+				who: 'pyaro',
+				np: 'Tala kasaile malai jiskyaairaheko cha! Sun — taadhaa jaau!',
+				dev: 'तल कसैले मलाई जिस्क्याइरहेको छ! सुन् — टाढा जाऊ!',
+				en: 'Someone down there keeps teasing me! Listen — go away!',
+			},
+			{
+				who: 'narrator',
+				np: 'Khochle bistaarai jawaaf dinchha: taadhaa jaau… jaau…',
+				dev: 'खोँचले बिस्तारै जवाफ दिन्छ: टाढा जाऊ… जाऊ…',
+				en: 'The canyon answers quietly: go away… away…',
+			},
+			{
+				who: 'pyaro',
+				np: 'Dekhyau? Yasle mero gillaa garchha!',
+				dev: 'देख्यौ? यसले मेरो गिल्ला गर्छ!',
+				en: 'See? It mocks me!',
+			},
+			{
+				who: 'sano',
+				np: 'Tyo ta pratidhwani ho. Khochle timrai aawaaj dohoryaaunchha.',
+				dev: 'त्यो त प्रतिध्वनि हो। खोँचले तिम्रै आवाज दोहोर्‍याउँछ।',
+				en: "That's an echo. The canyon repeats your own voice.",
+			},
+			{
+				who: 'pyaro',
+				np: '…Pratidhwani.',
+				dev: '…प्रतिध्वनि।',
+				en: '…An echo.',
+			},
+			{
+				who: 'sano',
+				np: 'Garera her. Kehi raamro bhan.',
+				dev: 'गरेर हेर। केही राम्रो भन।',
+				en: 'Try it. Say something nice.',
+			},
+			{
+				who: 'pyaro',
+				np: 'Ma adbhut chu!',
+				dev: 'म अद्भुत छु!',
+				en: 'I am magnificent!',
+			},
+			{
+				who: 'narrator',
+				np: 'Khochle ghanti jhain charlanga jawaaf dinchha: hoinau.',
+				dev: 'खोँचले घण्टी झैँ छर्लङ्ग जवाफ दिन्छ: होइनौ।',
+				en: "The canyon replies, clear as a bell: no you're not.",
+			},
+			{
+				who: 'pyaro',
+				np: 'Dekhyau? Timi gar.',
+				dev: 'देख्यौ? तिमी गर।',
+				en: 'See? You try.',
+			},
+			{
+				who: 'sano',
+				np: 'Yo khoch ati raamro cha.',
+				dev: 'यो खोँच अति राम्रो छ।',
+				en: 'This canyon is great.',
+			},
+			{
+				who: 'narrator',
+				np: 'Khochle jawaaf dinchha: yo khoch ati raamro cha… raamro…',
+				dev: 'खोँचले जवाफ दिन्छ: यो खोँच अति राम्रो छ… राम्रो…',
+				en: 'The canyon replies: this canyon is great… great…',
+			},
+			{
+				who: 'sano',
+				np: 'Malai ta thikai cha.',
+				dev: 'मलाई त ठीकै छ।',
+				en: 'Works for me.',
 			},
 		],
-	},
-	{
-		id: 'meal-gyani',
-		title: 'Tea with Gyani',
-		goal: 'Offer food and tea, and react to a meal',
-		section: 'Around the table',
-		after: 'meals',
-		cast: { A: 'sano', B: 'gyani' },
-		lines: [
-			{ who: 'B', ref: 'khana-khanu-bhayo-have-you-eaten' },
-			{ who: 'A', ref: 'khana-khaeko-chhaina-i-haven-t-eaten' },
-			{ who: 'B', ref: 'chiya-khaane-will-you-have-tea' },
-			{ who: 'A', ref: 'huncha-okay-it-will-be-done' },
-			{ who: 'B', ref: 'khana-tayar-bhayo-the-food-is-ready' },
-			{ who: 'A', ref: 'mitho-cha-it-s-delicious' },
-			{ who: 'B', ref: 'pugyo-enough-that-s-sufficient' },
-			{ who: 'A', ref: 'dhanyabad-thank-you' },
-			{ who: 'B', ref: 'ramrari-jaanu-go-safely-take-care' },
-		],
 		questions: [
-			{ q: 'Has Sano eaten yet?', choices: ['Not yet', 'Three times already', 'Only dessert', 'Twice'], answer: 0 },
+			{ q: 'What does Pyaro first shout to the canyon?', choices: ['Go away', 'Hello', 'How are you?', 'Echo'], answer: 0 },
 			{
-				q: 'Gyani feeds Sano well — and then immediately...',
+				q: 'Why is Pyaro upset?',
 				choices: [
-					'hurries off, she has places to be',
-					'settles in for a long nap',
-					'asks Sano to stay all night',
-					'starts cooking again',
+					'He thinks someone is mocking him',
+					"He doesn't understand the voice",
+					"He doesn't want to see Sano",
+					'He is scared of heights',
 				],
 				answer: 0,
 			},
-			{
-				q: 'What does Sano think of the food?',
-				choices: ["It's delicious", "It's too spicy", "It's gone cold", 'There was none left'],
-				answer: 0,
-			},
-		],
-	},
-	{
-		id: 'house-shanta',
-		title: 'Helping Shanta',
-		goal: 'Pitch in around the house',
-		section: 'Around the house',
-		after: 'household-living',
-		cast: { A: 'sano', B: 'shanta' },
-		lines: [
-			{ who: 'B', ref: 'paahuna-aaudai-chan-guests-are-coming' },
-			{ who: 'A', ref: 'ma-kehi-maddat-garna-sakchu-can-i-help-with-anything' },
-			{ who: 'B', ref: 'dhoka-banda-garnus-please-close-the-door' },
-			{ who: 'A', ref: 'ma-ghar-safaa-garchu-i-will-clean-the-house' },
-			{ who: 'B', ref: 'batti-balnus-please-turn-on-the-light' },
-			{ who: 'A', ref: 'huncha-okay-it-will-be-done' },
-		],
-		questions: [
-			{
-				q: 'Why is Shanta quietly bustling about?',
-				choices: ['Guests are coming', 'It is the middle of the night', 'He has lost something', 'He is moving out'],
-				answer: 0,
-			},
-			{
-				q: 'Shanta is a yak of few words. What does he ask Sano to close?',
-				choices: ['The door', 'The window', 'The book', 'The shop'],
-				answer: 0,
-			},
-			{
-				q: 'What does eager Sano offer to do?',
-				choices: ['Clean the whole house', 'Cook the dinner', 'Take a nap', 'Invite even more guests'],
-				answer: 0,
-			},
-		],
-	},
-	{
-		id: 'shop-bahadur',
-		title: 'At the shop',
-		goal: 'Ask the price and bargain',
-		section: 'Out and about',
-		after: 'purchasing',
-		cast: { A: 'sano', B: 'bahadur' },
-		lines: [
-			{ who: 'B', ref: 'aru-ke-chaahiyo-what-else-do-you-need' },
-			{ who: 'A', ref: 'kati-ho-how-much-is-it' },
-			{ who: 'B', ref: 'sasto-cha-it-s-cheap' },
-			{ who: 'A', ref: 'mahango-cha-it-s-expensive' },
-			{ who: 'A', ref: 'kam-garnuhos-please-reduce-make-it-less' },
-			{ who: 'B', ref: 'huncha-okay-it-will-be-done' },
-			{ who: 'A', ref: 'dhanyabad-thank-you' },
-		],
-		questions: [
-			{ q: 'What does Sano want to know first?', choices: ['How much it costs', "The tiger's name", 'The time', 'The way home'], answer: 0 },
-			{
-				q: 'Bahadur swears it is cheap. What does Sano insist?',
-				choices: ["It's too expensive", "It's too cheap", "It's just right", "It's free"],
-				answer: 0,
-			},
-			{
-				q: 'In the end the easygoing tiger agrees to...',
-				choices: ['knock the price down', 'double the price', 'close the shop', 'keep the item'],
-				answer: 0,
-			},
-		],
-	},
-	{
-		id: 'feelings-rangin',
-		title: 'How are you, Rangin?',
-		goal: 'Talk about how you feel',
-		section: 'Building vocabulary',
-		after: 'emotions-feelings',
-		cast: { A: 'sano', B: 'rangin' },
-		lines: [
-			{ who: 'B', ref: 'tapai-lai-kasto-cha-how-are-you-formal' },
-			{ who: 'A', ref: 'thakeko-tired' },
-			{ who: 'B', ref: 'kina-why' },
-			{ who: 'A', ref: 'dhilo-bhayo-it-is-late-i-am-running-late' },
-			{ who: 'B', ref: 'ramrari-jaanu-go-safely-take-care' },
-			{ who: 'A', ref: 'dhanyabad-thank-you' },
-		],
-		questions: [
-			{ q: 'How is Sano feeling?', choices: ['Tired', 'Over the moon', 'Furious', 'Famished'], answer: 0 },
-			{
-				q: 'Rangin is easily dazzled, but does manage to ask...',
-				choices: ['"why?"', '"how much?"', '"what colour?"', '"where are the snacks?"'],
-				answer: 0,
-			},
-			{ q: 'How does Rangin say goodbye?', choices: ['Take care', 'Good morning', 'Thank you', "You're welcome"], answer: 0 },
-		],
-	},
-	{
-		id: 'recap-thulo',
-		title: "Sano's big day",
-		goal: 'Tell someone what you did, in the past tense',
-		section: 'Looking back',
-		after: 'verbs-past',
-		cast: { A: 'sano', B: 'thulo' },
-		lines: [
-			{ who: 'A', ref: 'namaste-hello-goodbye' },
-			{ who: 'B', ref: 'tapai-lai-kasto-cha-how-are-you-formal' },
-			{ who: 'A', ref: 'ma-gaen-i-went' },
-			{ who: 'B', ref: 'dherai-ramro-very-good-excellent' },
-			{ who: 'A', ref: 'maile-khaen-i-ate' },
-			{ who: 'B', ref: 'ekdum-ramro-very-good-excellent' },
-			{ who: 'A', ref: 'maile-padhen-i-read' },
-			{ who: 'B', ref: 'sarai-ramro-very-good-really-good' },
-			{ who: 'A', ref: 'maile-sunen-i-heard' },
-			{ who: 'B', ref: 'dherai-ramro-very-good-excellent' },
-			{ who: 'A', ref: 'pheri-bhetaula-see-you-again-let-s-meet-again' },
-		],
-		questions: [
-			{
-				q: 'What did Sano actually do today?',
-				choices: [
-					'Ordinary things — went out, ate, read, listened to music',
-					'Climbed a Himalayan peak',
-					'Wrestled a tiger',
-					'Absolutely nothing',
-				],
-				answer: 0,
-			},
-			{
-				q: 'How does Thulo the rhino react to each little thing?',
-				choices: ['He declares every bit magnificent', 'He is thoroughly bored', 'He keeps correcting Sano', 'He dozes off'],
-				answer: 0,
-			},
-			{
-				q: 'Which of these did Sano say they did?',
-				choices: ['Listened to music', 'Flew a kite', 'Baked bread', 'Went swimming'],
-				answer: 0,
-			},
+			{ q: 'What does Sano call the canyon?', choices: ['Great', 'Tired', 'Pretty', 'Small'], answer: 0 },
 		],
 	},
 ];
 
-// Display names for the cast (Sano + the 10 companions). Names are Ross's drafts.
+// Display names for the cast (Sano + the 10 companions + one-off props). Names are Ross's drafts.
 const CHARACTER_NAMES = {
 	sano: 'Sano',
 	pyaro: 'Pyaro',
@@ -226,12 +134,11 @@ const CHARACTER_NAMES = {
 	shanta: 'Shanta',
 	rangin: 'Rangin',
 	lamo: 'Lamo',
+	thornbush: 'Thornbush',
 };
 
 // One-line personas, surfaced at the top of a conversation so each companion is memorable.
-// Seeded from the per-character voice descriptors in tools/tts/RESEARCH.md §9 (animal +
-// Nepali trait-name) — wholesome, gentle comedy. AI-drafted; Ross's to refine. Phurtilo has
-// no voice yet, so it stays a path companion and isn't cast in dialogues.
+// Seeded from the per-character voice descriptors in tools/tts/RESEARCH.md §9. AI-drafted.
 const CHARACTER_PERSONAS = {
 	sano: 'a small, lively mouse from Kathmandu — your guide',
 	pyaro: 'a warm red panda who gets thrilled about the littlest things',
@@ -245,3 +152,18 @@ const CHARACTER_PERSONAS = {
 	lamo: 'a world-weary gharial with a long memory and a longer story',
 	phurtilo: 'a nimble tahr, always darting just out of frame',
 };
+
+// Per-line voice folder (audio/<folder>/…), shared with tools/tts/synth-app.mjs --dialogues.
+// narrator -> Thulo (or Gyani if Thulo is in the cast); thornbush -> Rangin; sano -> default
+// clone; any other speaker -> their own folder.
+function dialogueVoiceFolder(dialogue, who) {
+	if (who === 'narrator') return (dialogue.cast || []).includes('thulo') ? 'gyani' : 'thulo';
+	if (who === 'thornbush') return 'rangin';
+	if (who === 'sano') return 'default';
+	return who;
+}
+
+// Stable clip id for a line: "<dialogueId>-<NN>" (NN = zero-padded line index).
+function dialogueClipId(dialogue, index) {
+	return dialogue.id + '-' + String(index).padStart(2, '0');
+}

@@ -429,6 +429,24 @@ html {
 	text-align: center;
 }
 
+/* Narrator scene-setting in a story dialogue: full-width, centered, no character head. */
+.dialogue-narration {
+	margin: 1.5rem auto 0.5rem;
+	max-width: 92%;
+	text-align: center;
+}
+.dialogue-narration .np {
+	font-style: italic;
+	font-size: 1.5rem;
+	line-height: 1.45;
+	color: var(--text-color-normal);
+}
+.dialogue-narration .en {
+	margin-top: 0.2rem;
+	font-size: var(--text-label);
+	color: var(--text-color-softer);
+}
+
 /* Streak-freeze reassurance (SR-09): shown on the home screen when a single missed
    day is about to be covered by a banked freeze. Indigo "protected" framing. */
 .streak-freeze-notice {
