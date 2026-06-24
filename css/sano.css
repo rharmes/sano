@@ -433,6 +433,9 @@ html {
 .dialogue-narration {
 	margin: 0;
 	text-align: left;
+	/* Match .dialogue-line so scrollIntoView({ block: 'end' }) on a revealed narrator line
+	   clears the fixed Continue bar, instead of aligning it under the bar (wrong-way scroll). */
+	scroll-margin-bottom: 11rem;
 }
 .dialogue-narration .np {
 	font-style: italic;
