@@ -467,15 +467,6 @@ function renderHome() {
 		dailyButton.disabled = true;
 	}
 
-	// Frame the current unit as a real-world "can-do" objective (SR-06).
-	const goalEl = document.getElementById('home-goal');
-	if (unit && unit.goal) {
-		goalEl.textContent = unit.goal;
-		goalEl.classList.remove('hide');
-	} else {
-		goalEl.classList.add('hide');
-	}
-
 	// SR-09: if exactly one day was missed but a freeze is banked, reassure the user
 	// on the home screen that finishing a lesson will spend it and keep the streak.
 	const freezeEl = document.getElementById('home-streak-freeze');
