@@ -1,0 +1,95 @@
+# Architecture — sano
+
+> File + function map, so a session can skip scanning `js/data.js` (~5k lines),
+> `js/sano.js` (~2.1k), and `css/sano.css` (~2.8k). Load with `@docs/architecture.md`.
+> Data **shapes** and the feature-code glossary live in `@docs/data-model.md`.
+> Internal-only — `tools/deploy.sh` uses an explicit allowlist, so `docs/` never ships.
+
+Plain HTML/CSS/JS, **no build step**. `index.html` is the single SPA shell; screens are
+`#screen-*` divs toggled by `showScreen()`. A small PHP/MySQL sync API lives in `api/`.
+No external requests at runtime (fonts self-hosted, icons an inline SVG sprite, audio
+pre-rendered) — the only network calls are same-origin `fetch()`es to `api/`.
+
+## Scripts (load order) + the global each defines
+
+Classic scripts (not modules), all `defer`, so each defines a global the later ones use.
+Order in `index.html`:
+
+1. `js/data.js` — **`COURSE`**: 44 units / ~588 items — the entire course content (the big file).
+2. `js/sync.js` — **`SanoSync`**: debounced server push, revision-checked conflict detection, last-write-wins. `adoptSession()`. Bookkeeping in localStorage `sano.sync.v1`.
+3. `js/push.js` — **`SanoPush`**: PWA daily-reminder toggle + `pushManager.subscribe`. VAPID public key baked in.
+4. `js/onboarding.js` — **`SanoOnboard`**: first-run scripted Sano conversation (name, placement/skip-ahead, optional account/PWA steps). Per-Sano-bubble heads from `CHARACTER_HEADS`.
+5. `js/audio.js` — **`SanoAudio`**: `play(id)` (phrase clips `audio/<voice>/<id>.mp3`), `playWord(slug)` (`audio/words/<slug>.mp3`), `button(...)`. `AUDIO_VERSION` busts caches.
+6. `js/dialogues.js` — **`DIALOGUES`** (schema v2) + `CHARACTER_PERSONAS`; helpers `dialogueVoiceFolder(d, who)`, `dialogueClipId(d, index)`.
+7. `js/characters.js` — **`CHARACTER_HEADS`** (dialogue/onboarding bubbles, viewBox `0 0 200 200`) + **`CHARACTER_BODIES`** (path companions). **Generated** by `tools/build-character-heads.mjs` — do not hand-edit.
+8. `js/gloss.js` — **`SanoGloss`**: `renderLine(line)` (underlined tappable segments) + a tap-to-translate popover; `closePop()`. Shared by the app and `design/dialogue.html`.
+9. `js/sounds.js` — **`SOUND_TOPICS`**: pronunciation-drill topics (SR-08).
+10. `js/sano.js` — **`window.Sano`**: the lesson engine (functions below). Public API: `state` (getter), `saveState`, `refreshHeader`, `showScreen`, `renderHome`, `applyServerState`, `placeBefore`, `placementOptions`, `resetPathReveal`.
+
+## CSS (load order)
+
+`css/fonts.css` (self-hosted Neuton/Lato woff2) → `css/normalize.css` → `css/barebones.css`
+(**sets the rem base to 10px** via `font-size: 62.5%`; styles bare `<button>` with
+`white-space: nowrap` — the reason gloss/onboarding use `<span role="button">` or override it)
+→ `css/sano.css` (all app styles + theme tokens in a light block and a dark `@media` block —
+change both) → `css/admin.css` (admin dashboard only).
+
+## js/sano.js — function index (grouped)
+
+- **Pure scheduler** (top of file; lifted + unit-tested by `tools/check-scheduler.mjs`): `reviewInterval`, `isRecallStrength`, `scheduleReview`, `exerciseGrade`, `legacyLevelToInterval`.
+- **State:** `defaultState`, `loadState`, `normalizeState`, `saveState`, `migrateV1State`, `migrateLegacyState`, `applyServerState`, `itemRecord`.
+- **Dates / streak:** `dayString`, `daysBetween`, `daysSince`, `isDue`, `overdueDays`, `dueItems`, `registerActivity`.
+- **Home / path:** `renderHome`, `renderPath`, `currentUnit`, `unitNewItems`, `unitDueCount`, `unitIsComplete`, `unitIsUnlocked`, `placeBefore`, `placementOptions`, `dialogueUnlocked`, `soundUnlocked`.
+- **Lesson build / flow:** `startDailyLesson`, `startUnitLesson`, `startLesson`, `buildExercises`, `warmupItems`, `continueLesson`, `finishLesson`, `showStreakResult`.
+- **Exercise renderers:** `renderExercise` (dispatch) → `renderChoice`, `renderMatch`, `renderListenMatch`, `renderWordbank`, `renderType`, `renderSpeak`; helpers `setPrompt`, `setListenPrompt`, `getDistractors`, `wordbankDistractors`, `uniquePairItems`, `fitMatchTiles`, `hashId`/`waveformSvg`/`listenTile`, `playTileWord`, `cleanTileText`, `stripParens`.
+- **Grading:** `answerExercise`, `checkExercise`, `applyAnswer`, `showFeedback`, `selectMatchTile`, `finishMatch`, `normalize`, `lenientEquals`, `editDistance`.
+- **Dedup invariant:** the tap-the-pairs grids and `choice` dedupe each bundle by display text (`uniquePairItems`, plus `getDistractors`' used-text set) so two items with identical romanized/English text never appear as two tiles — which would let a correct pairing grade as wrong.
+- **Dialogue player (SR-01):** `startDialogue`, `renderDialogueConvo`, `dialogueBubble`, `revealNextLine`, `advanceDialogue`, `startDialogueQuiz`, `renderDialogueQuestion`, `answerDialogueQuestion`, `continueDialogue`, `finishDialogue`, `courseItem`.
+- **Sounds (SR-08):** `startSoundDrill`, `renderSoundCard`, `highlightDev`, `advanceSound`, `finishSound`, `soundExamples`.
+- **Recording (SR-04 / SR-08):** `createRecorder` — mic → `MediaRecorder` → **Web Audio `decodeAudioData`** for playback (iOS refuses to decode its own `audio/mp4` in a media element; don't "simplify" to `new Audio()`).
+- **Misc UI:** `openDictionary`, `renderTables`, `toggleWord`, `showScreen`, `goHome`, `refreshHeader`, `saveName`, `shuffleArray`, `itemAccuracy`, `promptText`.
+
+## Control flow (what a session usually needs)
+
+- **Home / path:** `renderHome` → `renderPath` draws the winding path — units in order, with dialogue (gold) and sound (lavender) nodes woven in after their `after` unit, and decorative companions in the pockets (SR-07). `currentUnit` = first unlocked, incomplete unit; **a unit is complete when every item is `intro`-ed**. The daily-lesson button mixes new items from the current unit with the most-overdue reviews.
+- **Lesson:** `startDailyLesson` / `startUnitLesson` → `buildExercises` makes the queue (each new item: 2× `choice` + a `speak`; review items **escalate with strength** — recall-strength = interval ≥ 3 days gets `type`/`wordbank`/`listenMatch`, ~50% of recall reviews audio-only). `renderExercise` dispatches by type → answering routes through `applyAnswer` → `scheduleReview` (auto-graded via `exerciseGrade`) → `registerActivity`. `finishLesson` shows the complete screen.
+- **Dialogue (SR-01):** `startDialogue` → `renderDialogueConvo` reveals lines one at a time (`dialogueBubble` builds a head + bubble for a speaker, or a full-width narrator line; **romanized-only** via `SanoGloss.renderLine`, with autoplayed `SanoAudio`) → `startDialogueQuiz` (comprehension) → `finishDialogue` marks `dialoguesDone`.
+- **Sync:** `saveState` marks the state dirty → `SanoSync` debounces a `PUT api/state.php` (revision-checked, last-write-wins). `applyServerState` adopts a server copy on login. The app is fully usable offline / logged-out (localStorage is the working copy).
+
+## api/ endpoints (PHP + PDO; mutations need CSRF header `X-Sano-Request: 1`)
+
+| File | Purpose |
+| --- | --- |
+| `lib.php` | Shared: PDO connect (reads `sano-config.php` one level above docroot), auth, `require_admin()`/`is_admin()`, JSON 500 exception handler. Not an endpoint. |
+| `register.php` | Open self-service signup (argon2id, auto-login, per-IP hourly throttle via `signup_attempts`). |
+| `login.php` | Username/password login; per-account lockout + per-IP throttle (`login_attempts`); returns state, revision, `isAdmin`. |
+| `logout.php` | Clears the `sano_session` cookie. |
+| `state.php` | `GET` fetch / `PUT` push the app-state blob; revision conflict → 409. Returns `isAdmin`. |
+| `reminder.php` | `GET`/`POST` the per-account `reminder_hour` (0–23) + `reminder_tz` (IANA). |
+| `push-subscribe.php` / `push-unsubscribe.php` | Store / delete a per-device Web Push subscription. |
+| `admin-users.php` | Admin: every account's last-sync, streak, introduced item ids. |
+| `admin-reset-password.php` | Admin: argon2id reset + clears that user's sessions. |
+| `admin-delete-user.php` | Admin: delete a user (cascades app_state/sessions/subscriptions); self-delete blocked. |
+
+## tools/
+
+| File | Purpose |
+| --- | --- |
+| `deploy.sh` | rsync the site to namastesano.com (explicit allowlist; `-n` dry-run). Run only when asked. |
+| `format.sh` | Prettier over HTML/CSS/JS + `@prettier/plugin-php`; `--check` for CI. Part of every change. |
+| `check.sh` | Convenience: runs the preflight checks together. |
+| `stamp-version.mjs` | Rewrites the `?v=` content-hash stamps on local asset URLs in `index.html` + `admin/index.html`. Run after format. |
+| `check-viewports.mjs` | Headless-Chrome layout regression across 9 mobile widths (320–521) via same-origin iframes. |
+| `check-webkit.mjs` | Drives real Safari (safaridriver) to catch WebKit-only animation bugs. Run after mascot/animation CSS. |
+| `check-scheduler.mjs` | Unit-tests the pure SM-2-lite scheduler math from `js/sano.js`. |
+| `screenshot.sh` | Headless-Chrome screenshot wrapper (`<url> <out.png> [WxH] [budget-ms]`). |
+| `dev-seed.html` | Committed dev tool (served, never deployed): seeds `sano.state.v1` and opens the app where a gated feature is visible. Add a scenario for every new feature. |
+| `make-user.php` | CLI account create / `--reset-password` (invite-only; run on the server). |
+| `migrate-2026-06-*.php` | One-off idempotent live-DB migrations (admin flag, login throttle, reminders). Never re-apply `schema.sql`. |
+| `send-reminders.php` | Server-only hourly cron: dispatch Web Push reminders (minishlink/web-push). Not in the rsync. |
+| `make-touch-icon.html` | Source for the app-icon PNGs (render at 512 then `sips` downscale). |
+| `build-character-heads.mjs` / `build-anim-characters.mjs` | Generate `js/characters.js` / `design/anim-characters.js` from `design/characters.html`. Re-run after editing character art. |
+| `schema.sql` | Canonical DB schema (see `@docs/data-model.md`). |
+| `tts/synth-app.mjs` | Render all phrase/word clips through the ElevenLabs API in Sano's cloned voice (`--phrases`/`--words`/`--new`). |
+| `tts/build-words.mjs` | Build `tts/words.json` (per-word Devanagari, phrases-only) for the word-bank clips. |
+| `tts/eleven.mjs` / `tts/phrases.mjs` / `tts/build-compare.mjs` | ElevenLabs client + voice mapping + sample-comparison design tool. |

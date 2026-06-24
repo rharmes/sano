@@ -1,382 +1,168 @@
 # sano — Nepali Study Guide
 
-A web app: essential Nepali phrases with Romanized pronunciations. Plain
-HTML/CSS/JS frontend, no build step: `index.html`, `css/sano.css`, `js/`,
-`fonts/`, `tools/`; plus a small PHP/MySQL sync API in `api/`. Deployed to
-namastesano.com (Apache) with `tools/deploy.sh`; Ross tests on an iPhone
-running iOS 26.
+A web app: essential Nepali phrases with Romanized pronunciations. Plain HTML/CSS/JS
+frontend, **no build step** (`index.html`, `css/`, `js/`, `fonts/`, `tools/`) plus a small
+PHP/MySQL sync API in `api/`. Deployed to namastesano.com (Apache) via `tools/deploy.sh`;
+Ross tests on an iPhone running iOS 26.
 
-No external requests at runtime: fonts (Neuton, Lato) are self-hosted woff2
-files in `fonts/` declared in `css/fonts.css`, and icons are an inline SVG
-sprite in `index.html` (`#i-*` symbols, used via `<use href="#i-name">`).
-The only network calls are same-origin `fetch()`es to `api/`.
+## Reference docs (load with `@` at session start instead of scanning the code)
 
-First-run onboarding (`js/onboarding.js`, `SanoOnboard`) greets brand-new users
-(no saved name) with a scripted Sano conversation that captures their name, offers
-experienced learners a **placement / skip-ahead** step (`Sano.placeBefore` /
-`Sano.placementOptions` — picking a path section marks every earlier unit as
-introduced at recall strength), and optionally creates a cloud account / shows the
-PWA install steps. **The
-Romanized-Nepali strings in its `L` object are drafts Ross owns** — don't treat
-them as authoritative or silently "correct" them; flag questions to Ross.
+- **`@docs/architecture.md`** — file + function map, the global each script defines, control
+  flow (home / lesson / dialogue / sync), and the `api/` + `tools/` tables.
+- **`@docs/data-model.md`** — data shapes (`COURSE`, `DIALOGUES`, the state record), localStorage
+  keys, DB schema, scheduler constants, and the **SR-\* / R\*** feature-code glossary.
+- `PLAN.md` — working roadmap. `PEDAGOGY.md` — learning-science basis. `tools/tts/RESEARCH.md` —
+  voice/TTS. `design/style-guide.html` — visual tokens + components (brand source of truth).
 
-## Learning model (`js/sano.js` + `js/data.js`)
+Those carry the deep detail; this file keeps the summary, the non-obvious constraints, and the
+workflow. **Keep it current:** when architecture/tooling changes significantly, update this file
+(and the relevant `docs/` file) in the same commit.
 
-Course content is `COURSE` in `js/data.js`: 44 units, each `{ id, title, kind, goal, items }`
-where `kind` is `'phrases'` (items have `np`/`pron`/`dev`/`en`/`usage`) or `'vocab'` (items
-also carry an `emoji`); ~588 items total. Two **verb** units (`verbs-present`, `verbs-past`)
-teach the present/past conjugation pattern plus high-frequency verbs, and
-`places-getting-around` covers everyday loanword places (hospital, bus, taxi, …). Five
-**intermediate** units extend the path by topic (scattered next to what each builds on, no new
-section banner): `modals-can-want-must` (can/want/must — the `-na sak-`, `man laagcha`, and
-`-nu parcha` patterns), `comparing-things` (`bhanda` comparatives + `sabai bhanda` superlatives),
-`place-position` (spatial postpositions: maa/mathi/muni/agadi/pachadi/bhitra/bahira/sanga/samma),
-`jobs-work` ("I am a ___" professions), and `duration-frequency` (minute/hour/week/month/year +
-frequency adverbs). The per-item `dev` (Devanagari) and per-unit
-`goal` strings are AI-drafted and under Ross's review (see the devanagari review tool
-below). `js/sano.js` is the lesson engine, and it is more pedagogically built-out than
-this file used to convey:
+## Non-negotiable constraints
 
-- **Home** is a Duolingo-style winding **path** of units that unlock in order
-  (`renderPath`, `currentUnit`), with two-character **dialogue** nodes (gold) and
-  **pronunciation** nodes (lavender) woven in after their anchor unit; a completed node
-  shows a checkmark in its own colour. The daily-lesson button mixes new items from the
-  current unit with the most-overdue reviews from anywhere in the course. On first render
-  the path auto-scrolls to center the in-progress unit. **Decorative companions** (SR-07)
-  sit in the path's empty pockets — full-body friends placed at each turn of the wave
-  (ordered Thulo, Pyaro, then the rest), sized to the pocket; they run the Sano idle
-  animations and do a head-shake when tapped, but are otherwise inert (`aria-hidden`,
-  behind the nodes). Art comes from `CHARACTER_BODIES` in `js/characters.js`; profiles are
-  flipped to face the path.
-- **Spaced repetition** is an **SM-2-lite** graded scheduler. Each item record
-  (`state.items[id]` = `seen/correct/ease/interval/lastSeen/intro`) carries its own `ease`
-  (≥ 1.3) and `interval` in days; a review is auto-graded from the exercise type (miss →
-  lapse, recognition hit → good, recall/typed/listening hit → easy), which stretches or
-  resets the interval (`scheduleReview`, `reviewInterval`, `isDue`, `dueItems`). Legacy
-  Leitner `level` records migrate to interval/ease on load; the pure scheduler math is
-  unit-tested by `tools/check-scheduler.mjs`.
-- **Exercises escalate with strength**: `choice` (multiple choice, both np→en and en→np),
-  `match` (tap-the-pairs, also the new-word warm-up; tapping a Nepali tile plays its audio),
-  `listenMatch` (tap-the-pairs, but the left tiles are audio buttons drawn as a deterministic,
-  id-seeded pseudo-waveform — equal width so phrase length never leaks — paired to the romanized
-  Nepali on the right; bundles single-word recall-strength reviews, a clean item grades EASY,
-  and it reuses the `match` grid/state/grading),
-  `wordbank` (assemble a phrase from tiles — two directions: build the Nepali from an English
-  prompt, or, with the Nepali shown + spoken on load, build the English; a chosen tile stays
-  put with a "selected" border and a copy appears in the answer row; tiles are lowercased and
-  punctuation-stripped so position isn't given away; tapping a Nepali tile plays that word's
-  clip, see `audio/words/` below), and `type` (typed recall, romanization-tolerant via edit
-  distance). New items get
-  multiple choice both ways; stronger items (recall strength — interval ≥ 3 days) get
-  wordbank/type/listenMatch, and ~half of recall reviews become audio-only "listen" prompts (SR-03).
-  The tap-the-pairs grids dedupe each bundle by display text (`uniquePairItems`) so two items with
-  identical romanized/English text never appear as two tiles (which would let a correct pairing
-  grade as wrong); `choice` guards the same via `getDistractors`' used-text set.
-- **Progress**: a day **streak** (with a forgiveness "freeze", SR-09; extended by finishing
-  any lesson, conversation, or pronunciation drill) plus daily/total
-  counters in the header and the lesson-complete screen; a **dictionary** screen lists
-  every item. All progress lives in localStorage `sano.state.v1` (schema version 2 — the
-  per-item records plus `dialoguesDone` / `soundsDone` node completion) and syncs to the
-  server (below).
+- **No external requests at runtime.** Fonts are self-hosted woff2 (`css/fonts.css`); icons are
+  an inline SVG sprite in `index.html` (`#i-*`, used via `<use href="#i-name">`); audio is
+  pre-rendered MP3. The only network calls are same-origin `fetch()`es to `api/`.
+- **AI-drafted strings are Ross's drafts.** Every `np`/`pron`/`dev`, the per-segment dialogue
+  `gloss` English, the per-unit `goal`, and the onboarding `L` strings are AI-drafted and under
+  Ross's review — flag questions, **never silently "correct" them.**
+- **DB / VAPID credentials are never in the repo.** `api/lib.php` reads `sano-config.php` from one
+  level above the docroot (`~/sano-config.php` on the server; one level above the repo for local
+  dev) → `['dsn','user','pass', vapid_*]`.
+- **iOS recording playback must use the Web Audio API.** `createRecorder` (js/sano.js) plays each
+  take via `AudioContext.decodeAudioData` → a buffer source. iOS records `audio/mp4` it then
+  refuses to decode in a media element (`play()` → `NotSupportedError`) — don't "simplify" to
+  `new Audio(url)`. (Model phrase audio, `SanoAudio`, plain `.mp3`, still uses an `<audio>` element.)
+- **Prefer the everyday loanword** in Nepali translations (हस्पिटल, टोइलेट) over the formal native
+  term when that's what people actually say.
 
-`PEDAGOGY.md` (committed, not deployed) records the learning-science basis for this design
-and where it is headed; the working roadmap is `PLAN.md` (committed, but excluded from
-the deploy rsync). **Story dialogues** (`DIALOGUES` in `js/dialogues.js`, schema v2 — each an
-original short story anchored to a unit via `after`, whose lines carry their own
-`{ who, np, dev, en, gloss }` inline) play in a Duolingo-stories-style **player**: every speaker
-sits on the **left** (head from `CHARACTER_HEADS` + a speech bubble), the line shows **romanized
-Nepali only**, and **each word/phrase is underlined and tappable to reveal its English** — the
-per-segment `gloss` (AI-drafted, like all the Nepali), rendered by the shared `js/gloss.js`
-(`SanoGloss.renderLine` + a small tap-to-translate popover); narrator lines run full-width with
-no bubble. Lines reveal one at a time with auto-played per-voice **audio** (Devanagari-driven,
-voiced by Sano's ElevenLabs clone), then a short **comprehension quiz**. `design/dialogue.html`
-is the localhost-only mockup of this player. Listening/speaking practice, pronunciation coaching,
-and the decorative full-body **companions** on the path (above) have also shipped. Each
-conversation opens with a one-line character **persona** (`CHARACTER_PERSONAS` in `dialogues.js`,
-seeded from the voice descriptors in RESEARCH.md §9). Planned next (per PLAN.md): companions that
-actively host/participate in lessons & dialogues, one voice per character, and an optional
-Devanagari script track.
+## What the app is (one level down; functions in `@docs/architecture.md`, shapes in `@docs/data-model.md`)
 
-**Recorded-voice playback (SR-04 speaking, SR-08 sounds) goes through the Web Audio API**,
-not an `<audio>` element: the record-and-compare step (`createRecorder` in `js/sano.js`)
-keeps each take's bytes and plays them with `AudioContext.decodeAudioData` → a buffer source.
-iOS records `audio/mp4` it then refuses to decode in a media element (`play()` rejects with
-`NotSupportedError`, for both `blob:` and `data:` sources), so don't "simplify" this back to
-`new Audio(url)`. The model phrase audio (`SanoAudio`, plain `.mp3` files) still uses an
-`<audio>` element — only the live recording needs Web Audio.
+- **Home** is a Duolingo-style winding **path** (`renderPath`): units unlock in order, with
+  **dialogue** (gold) and **pronunciation** (lavender) nodes woven in after their anchor unit, and
+  decorative **companions** (SR-07) in the pockets. The daily-lesson button mixes new items from the
+  current unit with the most-overdue reviews.
+- **Spaced repetition** is **SM-2-lite** (each item has its own ease + interval, auto-graded from
+  the exercise type). **Exercises escalate with strength**: `choice`/`match` for new items;
+  `type`/`wordbank`/`listenMatch` + audio-only "listen" (SR-03) for recall-strength items
+  (interval ≥ 3 days).
+- **Story dialogues** (SR-01, `DIALOGUES` in `js/dialogues.js`, schema v2) play in a
+  Duolingo-Stories-style player: every speaker on the **left** (head from `CHARACTER_HEADS` +
+  bubble), **romanized-only** lines whose every word is underlined + tappable for its English
+  (`js/gloss.js`, `SanoGloss.renderLine`), narrator full-width, auto-played per-voice audio, then a
+  comprehension quiz. Each opens with a one-line `CHARACTER_PERSONAS` intro. `design/dialogue.html`
+  is the localhost mockup. Only `greet-pyaro` is live.
+- **First-run onboarding** (`SanoOnboard`) greets new users with a scripted Sano conversation (a
+  head-only Sano beside each of Sano's bubbles), captures the name, offers experienced learners a
+  **placement / skip-ahead** (`Sano.placeBefore` marks earlier units introduced at recall strength),
+  and optionally creates a cloud account / shows the PWA install steps.
+- **Progress** (a day **streak** with a forgiveness freeze (SR-09), daily/total counters, a
+  **dictionary**) lives in localStorage `sano.state.v1` (schema v2) and syncs to the server.
 
-`SanoAudio` serves two clip sets: **per-phrase** clips at `audio/<voice>/<id>.mp3`
-(`SanoAudio.play(id)`, one per `COURSE` item, ~588), and **per-word** word-bank tile clips at
-`audio/words/<slug>.mp3` (`SanoAudio.playWord(slug)`, slug = the romanized word run through
-`normalize`; one per distinct tile-word, ~233). A missing clip is a silent no-op. **All audio
-is rendered by `tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice**
-(`eleven_v3`, voice id in RESEARCH.md §9) — pre-rendered and self-hosted, never a runtime call
-(CLAUDE.md network discipline). `synth-app.mjs --phrases`/`--words` render the full set; add
-`--new` to render only clips not yet on disk, so adding course content synthesizes just the
-new ids/slugs (no credit spend or git churn on the existing corpus). The per-word Devanagari
-comes from `tools/tts/words.json`, built by `tools/tts/build-words.mjs` (**phrases-only** — so
-multi-word *vocab* items aren't tiled): ~90% auto-derived by 1:1 alignment with each phrase's
-`dev`, the rest (postpositions/verb-fusions like `tapai ko` → तपाईंको that don't split in
-writing) from a hand-drafted `OVERRIDES` table in that script (AI-drafted, like all `dev`).
-Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust caches. The earlier baseline was
-Piper `ne_NP-google-medium`; it was fully replaced by the Sano clone.
+## Audio (SR-02)
 
-## Server sync (api/)
+`SanoAudio` serves per-phrase clips `audio/<voice>/<id>.mp3` (`play(id)`, ~588) and per-word
+word-bank clips `audio/words/<slug>.mp3` (`playWord(slug)`, ~233; slug = the romanized word run
+through `normalize`). A missing clip is a silent no-op. **All audio is pre-rendered by
+`tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice** (`eleven_v3`, voice id
+in RESEARCH.md §9) — never a runtime call. `synth-app.mjs --phrases`/`--words` render the full set;
+`--new` renders only clips not yet on disk (so adding content doesn't re-spend credits or churn
+git). Per-word Devanagari comes from `tools/tts/words.json` (built by `tools/tts/build-words.mjs`,
+phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust caches.
 
-- Progress lives in localStorage (`sano.state.v1`, the working copy — the
-  app stays fully usable offline/logged-out) and syncs to MySQL through
-  `api/` (PHP + PDO): `register.php`, `login.php`, `logout.php`,
-  `state.php` (GET/PUT), shared `lib.php`. `js/sync.js` (`SanoSync`) does
-  debounced pushes, revision-checked conflict detection, and last-write-wins
-  reconciliation; its bookkeeping lives in localStorage `sano.sync.v1`.
-  `SanoSync.adoptSession(username, body)` adopts a fresh session from either
-  `login.php` or `register.php`.
-- Auth: username/password; DB-backed session tokens in an HttpOnly
-  `sano_session` cookie (90 days). CSRF guard: mutating requests must send
-  `X-Sano-Request: 1`. **Two ways to create an account:** the onboarding
-  flow's self-service `register.php` (open signup — strict username/password
-  validation, argon2id, auto-login; per-IP hourly throttle via
-  `signup_attempts`), and the invite-only `tools/make-user.php` CLI (still
-  used for password resets).
-- **DB credentials are never in the repo.** `api/lib.php` requires
-  `sano-config.php` from one level above the docroot (`~/sano-config.php`
-  on the server; for local dev, one level above the repo). It returns
-  `['dsn' => ..., 'user' => ..., 'pass' => ...]`.
-- Hardening: argon2id hashing; per-account lockout (10 fails → 15min) **and**
-  per-IP login throttle (`login_attempts`); per-IP signup throttle
-  (`signup_attempts`); CSRF header on mutations; CSP + HSTS + nosniff in
-  `.htaccess`; and a `set_exception_handler` in `lib.php` that turns any uncaught
-  error into a generic JSON 500 (no stack/DSN leak).
-- Schema: `tools/schema.sql` (users [+ an `is_admin` flag, see the admin
-  dashboard below], app_state blob + revision, sessions, signup_attempts,
-  login_attempts, push_subscriptions). Reset/seed a password via
-  `scp tools/make-user.php sano-deploy:` then
-  `ssh -t sano-deploy 'php make-user.php <user> [--reset-password]'`
-  (`tools/` is never deployed to the docroot). **Live-DB schema changes go
-  through a one-off idempotent `tools/migrate-*.php` run** (PDO, reads
-  `sano-config.php` like make-user.php; e.g. `migrate-2026-06-reminders.php`,
-  `migrate-2026-06-admin.php`) — never re-apply the full `schema.sql` to an
-  existing DB.
+## Server / admin / PWA (essentials; full detail in `@docs/architecture.md`)
 
-## Admin dashboard (admin/)
-
-A private, admin-only dashboard at **`/admin/`** (`admin/index.html` + `js/admin.js` +
-`css/admin.css`) listing every account for management. A **standalone page** (not part of the
-`index.html` SPA) that reuses the app's fonts, tokens, and components (`css/sano.css`) so it
-matches the brand; access is enforced entirely server-side.
-
-- **Admin gate:** a `users.is_admin` flag. `api/lib.php` adds `require_admin()` (401 logged
-  out, 403 for a logged-in non-admin) and `is_admin(int)`; `login.php` and `state.php` return an
-  `isAdmin` flag that `js/sync.js` keeps in its `meta` and uses to reveal the **"Admin
-  dashboard"** link at the foot of the account panel (`#admin-link` in `#login-panel`).
-- **Endpoints** (flat names like `push-*.php`; ship via the `api` rsync; admin- + CSRF-guarded):
-  `admin-users.php` (GET — each account's last-sync time, streak, and its set of introduced item
-  ids), `admin-reset-password.php` (POST — argon2id reset reusing make-user's SQL, **and clears
-  that user's sessions**), `admin-delete-user.php` (POST — deletes the user; cascades to
-  app_state/sessions/push_subscriptions; **self-delete blocked**).
-- **Table:** username, path position (**"Unit N / 36"**, derived in `admin.js` from `COURSE`
-  using sano.js's rule that a unit is complete when every item is `intro`-ed), streak, and last
-  synced (`app_state.updated_at`). Headers sort **A–Z then Z–A**; on a phone the table scrolls
-  sideways with a sticky username column. Reset / delete open `<dialog>` modals. **`?demo=1`**
-  renders sample rows with stubbed actions for local UI review (there's no local DB).
-- **Going live:** the page/JS/CSS/endpoints deploy via the normal rsync (`admin` is in the
-  `tools/deploy.sh` allowlist). The `is_admin` column is added by the one-off
-  `tools/migrate-2026-06-admin.php` (adds the column + grants a username) — **run it before
-  deploying the code**, since `login.php`/`state.php` SELECT `is_admin`.
-
-## PWA + daily reminders
-
-- Installable as an iOS home-screen app: `manifest.json` + iOS meta tags in
-  `index.html`, plus icons (`icon-192.png`, `icon-512.png`,
-  `icon-512-maskable.png`) generated from `tools/make-touch-icon.html` via
-  `tools/screenshot.sh` (`?safe` query param renders the maskable variant).
-- Service worker `sw.js` caches the shell (HTML network-first, stamped assets
-  cache-first), passes `/api/*` through to the network, and handles `push` /
-  `notificationclick` for reminders.
-- Reminder opt-in: `js/push.js` (`SanoPush`) shows a "Daily reminder" toggle +
-  time label in the login panel when signed in AND running as an installed PWA,
-  and pops a one-time setup modal on the home screen when such a PWA has no
-  reminder configured. A reminder needs two things: a *subscription* (per
-  device, `pushManager.subscribe(VAPID_PUBLIC_KEY)` → `POST
-  /api/push-subscribe.php`) and a *time* (per account: `reminder_hour` 0–23 +
-  `reminder_tz` IANA, GET/POST `/api/reminder.php`). The modal collects a
-  whole-hour time + timezone (defaulted from
-  `Intl.DateTimeFormat().resolvedOptions().timeZone`), subscribes, and saves.
-  iOS only allows push for installed PWAs (iOS 16.4+).
-- VAPID **public** key is baked into `js/push.js` (safe to ship). VAPID
-  **private** key + subject are in `~/sano-config.php` on the server next to
-  the DB creds (`vapid_subject`, `vapid_public_key`, `vapid_private_key`).
-- Dispatch: `tools/send-reminders.php` runs server-side **hourly** via cron
-  (`0 * * * *` — no `CRON_TZ`; each user's zone is handled in PHP). It selects
-  every subscription whose user set `reminder_hour`, and for each one whose
-  chosen hour matches the current hour in their `reminder_tz` and who hasn't
-  studied yet today (local date), sends via minishlink/web-push (Composer dep at
-  `~/sano-vendor/`). 410/404 responses prune the subscription row. Flags:
-  `--dry-run`, `--user <name>`, `--force` (ignore hour + studied-today filters).
-- Deployed files: `manifest.json`, `sw.js`, icon PNGs, all of `api/` (now incl.
-  `register.php`, `reminder.php`, `push-*.php`), and the JS (`js/push.js`,
-  `js/onboarding.js`, …). `tools/send-reminders.php` and the Composer vendor dir
-  are NOT in the rsync — they live on the server only.
-
-**Keep this file current**: when testing tools or architecture change
-significantly, update CLAUDE.md in the same commit.
-
-## Repo facts
-
-- Remote: `git@github.com:rharmes/sano.git`, branch `main`.
-- `.claude/settings.json` sets `worktree.bgIsolation: "none"` — background
-  sessions edit this checkout directly; do not use worktrees.
-- `.claude/settings.json` also configures a status line whose script is
-  gitignored; restore it on a fresh clone with
-  `curl -o .claude/scripts/status-line.sh https://raw.githubusercontent.com/shanraisshan/claude-code-status-line/main/status-line.sh && chmod +x .claude/scripts/status-line.sh`.
-- **Deploy**: `tools/deploy.sh` rsyncs the site to the server (`-n` for a dry
-  run); run it only when Ross asks. Connection details live in the
-  `sano-deploy` alias in `~/.ssh/config` (key auth) — no credentials or
-  hostnames in the repo. On a new machine, recreate the alias (HostName
-  namastesano.com, User + key from Ross).
-- `design/` holds in-repo design artifacts. It is committed but NOT in the
-  deploy rsync allowlist, so nothing under it ships to the live site. Future
-  design files go here too — don't add `design` to `tools/deploy.sh`.
-  - `design/characters.html` ("Sano and friends") is the **source of truth for
-    all eleven characters and their animations** — Sano first, then the 10
-    companions, each a whole-body + head view. Every character's parts are
-    wrapped in `.part-*` groups (head/tail/eyes/ear[-left|-right]/nose) for
-    animation targeting — inert in the gallery itself. The art reaches the app
-    through `js/characters.js` (`CHARACTER_HEADS` for dialogue bubbles +
-    `CHARACTER_BODIES` for the path companions), **generated** by
-    `node tools/build-character-heads.mjs` (from `anim-characters.js`); re-run it
-    after editing character art. The tuner reads the same source.
-  - `design/animations.html` is the **11-character** animation tuner: pick a
-    character up top, both its views mount on the left, and the per-animation
-    cards on the right apply to it (cards for parts a character lacks are
-    auto-hidden). All characters (incl. Sano) come from `design/anim-characters.js`,
-    **generated** from `characters.html` by `node tools/build-anim-characters.mjs`
-    (re-run after editing any character art; the file is `.prettierignore`d).
-    A dark/light toggle (mirrors the app palette) sits in the top bar.
-    `?char=<id>` and `?theme=dark|light` deep-link a character and theme.
-  - All three design pages (`style-guide.html`, `animations.html`, `characters.html`) share
-    one day/night **pill switch** (light on the left, dark on the right); the theme persists
-    per page in localStorage and `?theme=light|dark` deep-links it.
-  - `design/devanagari.html` is a **localhost-only review tool** for the native-speaker
-    pass over the AI-drafted Devanagari (`dev`) strings: all 588 course items grouped by
-    unit, each with its English, romanization, a ▶ that plays the `audio/default/<id>.mp3`
-    clip, and an editable Devanagari box pre-filled with the current `dev`. Submitting POSTs
-    only the changed rows to `design/devanagari-save.php`, which merges them (keyed by item
-    id) into the **gitignored** `design/devanagari-review.json` — it does **not** touch
-    `js/data.js`. Reloading restores prior corrections from that file. The page builds its
-    rows from `js/data.js` at load (and the dialogues from `js/dialogues.js`), so newly added
-    content appears automatically — no regeneration step. A **read-only "Conversations"
-    section** at the bottom renders each story dialogue in full (speaker, Devanagari,
-    romanization, English, per-voice ▶) so the reviewer can read it in context and confirm it
-    coheres; those lines aren't `COURSE` items, so they're not editable here (flag fixes for
-    `js/dialogues.js`). Uses a minimal theme
-    toggle (not the shared pill); serve it with `php -S` from the repo root.
-    - **Pending future task: Ross will ask Claude to merge
-      `design/devanagari-review.json` into the `dev` fields of `js/data.js`** — done here
-      in-session (no merge script), then the review file can be cleared.
-- Recent work: see `git log` — commit messages are descriptive.
+- **Sync:** localStorage is the working copy; `SanoSync` (js/sync.js) does debounced PUTs to
+  `api/state.php` with revision-checked, last-write-wins reconciliation. App stays fully usable
+  offline / logged-out. Auth = username/password; DB-backed session token in an HttpOnly
+  `sano_session` cookie (90 days); mutating requests need CSRF header `X-Sano-Request: 1`. Two ways
+  to make an account: self-service `register.php` (open signup, throttled) and the invite-only
+  `tools/make-user.php` CLI (also used for password resets). Hardening: argon2id, per-account
+  lockout + per-IP throttles, CSP/HSTS/nosniff in `.htaccess`, a generic JSON-500 handler.
+- **Admin dashboard** at `/admin/` (standalone page, server-enforced via a `users.is_admin` flag +
+  `require_admin()`): lists every account (path position, streak, last sync) with reset-password /
+  delete actions. `?demo=1` renders stub rows for local UI review.
+- **PWA + reminders:** installable (manifest + iOS meta + generated icons); `sw.js` caches the
+  shell (HTML network-first, stamped assets cache-first) and handles `push`. A reminder needs a
+  per-device subscription (`js/push.js` → `push-subscribe.php`) **and** a per-account time
+  (`reminder_hour` / `reminder_tz` via `reminder.php`); `tools/send-reminders.php` dispatches hourly
+  via server cron (not in the rsync). VAPID public key is baked into `js/push.js`; the private key
+  is in `sano-config.php`.
+- **Live-DB schema changes** go through a one-off idempotent `tools/migrate-*.php` — **never
+  re-apply `schema.sql`** to an existing DB. A new column that `login.php` / `state.php` SELECT must
+  be migrated **before** deploying the code.
 
 ## Workflow for every code change
 
-1. Make edits, then run `tools/format.sh` — Prettier over all HTML/CSS/JS/PHP
-   (settings in `.prettierrc`, plugin via `@prettier/plugin-php`). On a fresh
-   clone, `npm install` once to fetch the devDeps. Vendored CSS and the SQL
-   schema are excluded via `.prettierignore`.
-2. Run `node tools/stamp-version.mjs` — rewrites the `?v=` content-hash stamps
-   on local asset URLs in index.html. Required for cache busting; never
-   hand-edit the stamps. Must run after formatting (formatter changes hashes).
-3. Run `node tools/check-viewports.mjs` and verify visually with headless
-   Chrome screenshots (see below).
-4. **For any new user-facing feature, add a one-click scenario to
-   `tools/dev-seed.html`** (the committed dev seeding tool, served at
-   `/tools/dev-seed.html`) that seeds `localStorage` and opens the app where the
-   feature is visible — then point Ross at it. Most features are gated behind
-   progress (due reviews, a current unit, a missed day, a completed unit), so a
-   fresh localhost won't show them; the seed is how Ross tests the feature
-   immediately. **Always create a dev-seed scenario for a new feature**; pure bug
-   fixes / refactors with nothing new to demo can skip it.
-5. Serve via `php -S 127.0.0.1:8000` from the repo root (executes `/api`;
-   needs the dev `sano-config.php` one level above the repo) and ask Ross
-   to review at http://127.0.0.1:8000/ BEFORE committing.
-   `python3 -m http.server 8000` still works for frontend-only checks (API
-   calls fail, exercising the app's offline path).
-6. After approval, commit directly to `main` — never leave work on a side
-   branch. Push only when asked.
-7. Commit messages: short imperative summary ending with a period, plus
-   `Co-Authored-By` attribution.
-8. Deploy with `tools/deploy.sh` only when Ross asks; verify with the live
-   cache check below.
+1. Edit, then `tools/format.sh` (Prettier over HTML/CSS/JS/PHP; `npm install` once on a fresh
+   clone). `tools/format.sh --check` is the CI form.
+2. `node tools/stamp-version.mjs` — rewrites the `?v=` content-hash stamps in `index.html` +
+   `admin/index.html`. Run **after** formatting; never hand-edit a stamp.
+3. `node tools/check-viewports.mjs` (9 mobile widths) + verify visually with `tools/screenshot.sh`.
+   Run `node tools/check-scheduler.mjs` after scheduler changes and `node tools/check-webkit.mjs`
+   after animation / mascot-CSS changes.
+4. **Every new user-facing feature gets a one-click scenario in `tools/dev-seed.html`** — most
+   features are gated behind progress, so a fresh localhost won't show them. Pure bug
+   fixes / refactors with nothing to demo can skip it.
+5. Serve `php -S 127.0.0.1:8000` from the repo root (executes `/api`; needs the dev
+   `sano-config.php`) and **ask Ross to review at http://127.0.0.1:8000/ before committing.**
+   (`python3 -m http.server 8000` works for frontend-only checks, exercising the offline path.)
+6. After approval, **commit directly to `main`** (never a side branch). **Push and deploy only when
+   Ross asks.**
+7. Commit message: short imperative summary ending with a period, plus `Co-Authored-By` attribution.
+8. Deploy with `tools/deploy.sh` (`-n` for a dry run) only when asked, then run the live cache check.
 
-## Testing and verification
+## Testing notes (the non-obvious bits)
 
-- **Format check**: `tools/format.sh --check` (non-zero on any drift). The
-  write form (`tools/format.sh`) is part of the per-change workflow above.
-- **Viewport regression**: `node tools/check-viewports.mjs` tests 9 mobile
-  widths (320–521px) in headless Chrome via same-origin iframes (headless
-  Chrome can't open windows narrower than 500px); exits non-zero and writes
-  `/tmp/sano-viewports.png` on failure.
-- **WebKit animations**: `node tools/check-webkit.mjs` drives real Safari via
-  `safaridriver` (everything else here is headless Chrome, which can't catch
-  WebKit-only bugs) and asserts the SVG idle animations run and the eye blink
-  actually moves. Run after animation/mascot-CSS changes. One-time setup:
-  `sudo safaridriver --enable` + Safari > Develop > "Allow Remote Automation".
-  Opens a Safari window; runs without Reduce Motion (full idle set).
-- **Screenshots**: `tools/screenshot.sh <url> <out.png> [WxH] [budget-ms]` —
-  headless-Chrome wrapper with a stable prefix so one permission rule covers
-  all invocations; always use it instead of calling Chrome directly.
-- **App icons**: all PNGs (`apple-touch-icon.png`, `icon-192.png`,
-  `icon-512.png`, `icon-512-maskable.png`) are generated from
-  `tools/make-touch-icon.html`, not hand-edited. Headless Chrome clamps its
-  window to ~500px, so rendering directly at 180/192 yields a cropped top-left
-  zoom — instead render the 512 masters and downscale:
-  `tools/screenshot.sh "file://$PWD/tools/make-touch-icon.html" icon-512.png 512x512`,
-  `... "?safe" icon-512-maskable.png 512x512`, then
-  `sips -z 180 180 icon-512.png --out apple-touch-icon.png` and
-  `sips -z 192 192 icon-512.png --out icon-192.png`. So the full-bleed sizes
-  share identical framing. The generator is self-contained, so `file://` works
-  (no server needed).
-- **Screenshot harness**: write a temp `.shot-harness.html` in the repo root
-  that (a) seeds localStorage key `sano.state.v1` (the stats bar `#progress`
-  only renders with saved progress — copy the representative state from
-  `tools/check-viewports.mjs`), (b) iframes the app at the desired width, and
-  (c) optionally clicks elements inside the iframe to reach lesson /
-  dictionary / flashcard / quiz screens. Delete temp harness files before
-  committing.
-- **Manual feature testing**: `tools/dev-seed.html` (committed dev tool served at
-  `/tools/dev-seed.html`, never deployed) writes a ready-made `sano.state.v1` and opens
-  the app where a given feature is visible — needed because most features are gated
-  behind progress (due reviews, a missed day, a current unit). **Add a one-click
-  scenario for every new feature** so Ross can test it on localhost immediately.
-- **Forcing light mode**: headless Chrome follows the system theme. Strip the
-  dark `@media` blocks into temp copies (`css/.light.css`,
-  `css/.light-barebones.css`) and a `.light.html` that references them.
-- **Animations**: `--virtual-time-budget` screenshots cannot catch animations
-  mid-flight (the compositor finishes them before capture). Instead, sample
-  `getComputedStyle(el).opacity` in a `setTimeout` inside a probe page, write
-  results into the DOM, and read them with `--dump-dom`.
-- **Live cache check**: `curl -sI https://namastesano.com/ | grep -i
-  cache-control` → HTML must be `no-cache` (`.htaccess`); css/js are
-  `max-age=2592000`, busted by the `?v=` stamps; `api/` responses are
-  `no-store` (`api/.htaccess`).
+- **check-viewports** uses same-origin iframes because headless Chrome can't open a window narrower
+  than 500px; it writes `/tmp/sano-viewports*.png` on failure.
+- **check-webkit** drives real Safari via `safaridriver` (one-time: `sudo safaridriver --enable` +
+  Safari ▸ Develop ▸ "Allow Remote Automation") — the only thing that catches WebKit-only animation
+  bugs.
+- **Screenshot harness:** write a temp `.shot-harness.html` in the repo root that seeds
+  `sano.state.v1` and iframes the app at the target width (copy a representative state from
+  `tools/check-viewports.mjs`). **Delete temp harness files before committing.**
+- **Forcing light mode:** headless Chrome follows the system theme — strip the dark `@media` blocks
+  into temp `.light.*` copies. **Animations:** `--virtual-time-budget` finishes animations before
+  capture, so sample `getComputedStyle(...).opacity` in a probe page and read it with `--dump-dom`.
+- **App icons** (`apple-touch-icon.png`, `icon-{192,512}.png`, `icon-512-maskable.png`) are
+  generated from `tools/make-touch-icon.html` (render the 512 masters via `tools/screenshot.sh`,
+  `?safe` for the maskable variant, then `sips` downscale) — not hand-edited.
+- **Live cache check:** `curl -sI https://namastesano.com/ | grep -i cache-control` → HTML must be
+  `no-cache`; css/js are `max-age=2592000` (busted by `?v=`); `api/` responses are `no-store`.
+
+## Repo facts
+
+- Remote `git@github.com:rharmes/sano.git`, branch `main`. `.claude/settings.json` sets
+  `worktree.bgIsolation: "none"` — background sessions edit this checkout directly; **do not use
+  worktrees.** (It also configures a gitignored status-line script; restore it on a fresh clone with
+  `curl -o .claude/scripts/status-line.sh https://raw.githubusercontent.com/shanraisshan/claude-code-status-line/main/status-line.sh && chmod +x .claude/scripts/status-line.sh`.)
+- **Deploy** connection details live in the `sano-deploy` SSH alias (key auth) — no hostnames or
+  credentials in the repo. `tools/deploy.sh` uses an **explicit allowlist**, so `tools/`, `design/`,
+  `docs/`, `PLAN.md`, `PEDAGOGY.md`, and `send-reminders.php` never ship.
+- **`design/`** holds in-repo design artifacts (committed, never deployed). `design/characters.html`
+  is the **source of truth for all 11 characters + their animations**; the app art is **generated**
+  from it into `js/characters.js` (`node tools/build-character-heads.mjs`) and into
+  `design/anim-characters.js` for the tuner (`build-anim-characters.mjs`) — re-run after editing
+  art. `style-guide.html`, `animations.html`, `characters.html` share a day/night pill (`?theme=`);
+  `icons.html` and `dialogue.html` are further artifacts.
+- **`design/devanagari.html`** is a localhost-only review tool for the AI-drafted `dev` strings: all
+  588 items grouped by unit (English, romanization, ▶, an editable Devanagari box) plus a read-only
+  "Conversations" section. It POSTs only changed rows to `design/devanagari-save.php`, which merges
+  them into the **gitignored** `design/devanagari-review.json` — it does **not** touch `js/data.js`.
+  Serve with `php -S`.
+  - **Pending task: Ross will ask Claude to merge `design/devanagari-review.json` into the `dev`
+    fields of `js/data.js`** — done in-session (no merge script), then the review file is cleared.
 
 ## Design direction
 
-- The brand is "Pennant & Paper-cut": softened Nepal-flag crimson + indigo on
-  warm paper and a paper-cut mouse mascot named Sano. Sano's centered head is
-  the favicon and the home-screen app icon (the Nepal pennant that earlier sat
-  behind it was dropped 2026-06-13 — see `design/icons.html`). All theme tokens
-  live at the top of `css/sano.css`
-  (light block + dark `@media` block — change both). The mascot is inline
-  SVG in `index.html`, drawn as flat layered shapes filled via `.f-*`
-  classes (with `.s-whisker` strokes) — no drop-shadow or grain. It appears
-  in the header, the lesson-complete screen, and a head-only footer crop;
-  wherever it appears it runs the idle animations (see `design/animations.html`
-  and `design/style-guide.html`).
-- Prayer-flag section dividers were built and pulled (2026-06-12) — Ross is
-  reconsidering them; don't re-add without him.
-- Respect `prefers-reduced-motion` for any new animation (see the block at
-  the bottom of `css/sano.css`). Under reduce-motion the mascot keeps only the
-  eye blink (a tiny, non-vestibular scale) so Sano still reads as alive; the
-  larger rotational idles (tail wag, head tilt, ear/nose wiggle) are suppressed.
-  iOS Safari honors the OS Reduce Motion setting, so this is what an iPhone with
-  Reduce Motion on will show — not a bug.
+- Brand: **"Pennant & Paper-cut"** — softened Nepal-flag crimson + indigo on warm paper, and a
+  paper-cut mouse mascot named **Sano**. Sano's centered head is the favicon + app icon (the pennant
+  that sat behind it was dropped 2026-06-13). All theme tokens live at the top of `css/sano.css`
+  (a light block + a dark `@media` block — **change both**). The mascot is inline SVG drawn as flat
+  `.f-*`-filled shapes (`.s-whisker` strokes) — no drop-shadow or grain; it runs the idle animations
+  wherever it appears.
+- **Prayer-flag section dividers** were built and pulled (2026-06-12) — don't re-add without Ross.
+- **Respect `prefers-reduced-motion`** (block at the bottom of `css/sano.css`): under reduce-motion
+  the mascot keeps only the eye blink; the larger rotational idles (tail wag, head tilt, ear/nose
+  wiggle) are suppressed. iOS Safari honors the OS Reduce Motion setting — that's expected, not a bug.
