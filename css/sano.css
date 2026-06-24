@@ -1155,19 +1155,25 @@ table#vocab tbody td:nth-child(3) {
 	}
 }
 
-/* Home intro conversation (the .scene at the top of the path): adopt the story-player
-   bubble look — rounded corners and a border/fill triangle tail in place of the accent
-   dot — while Sano stays full-sized. The Sano bubble points left toward the mascot; the
-   user bubble points right, so it reads as coming from the learner. Scoped to #screen-home
-   so onboarding and the reminder modal keep the original .bubble dot. */
-#screen-home .scene .bubble {
+/* Story-player bubble look, shared by the path intro conversation (#screen-home .scene)
+   and the first-run onboarding conversation (#screen-onboarding): rounded corners and a
+   border/fill triangle tail in place of the round accent dot. Sano's tail points left
+   toward the mascot; the user's points right, so it reads as coming from the learner. The
+   reminder modal (R22) keeps the original .bubble dot. */
+#screen-home .scene .bubble,
+#screen-onboarding .bubble {
 	border-radius: 8px;
 }
 /* Two stacked triangles (border + fill) make the tail, replacing the round ::before dot.
    The fill (::after) is 2px shorter and 1px in at the tip, both centred on the bubble, so
-   the 1px outline peeks evenly along the top, bottom, and tip — matching #dialogue-thread. */
+   the 1px outline peeks evenly along the top, bottom, and tip — matching #dialogue-thread.
+   Onboarding's tappable choice buttons are excluded (a vertical option list, handled below). */
 #screen-home .scene .bubble::before,
-#screen-home .scene .bubble::after {
+#screen-home .scene .bubble::after,
+#screen-onboarding .bubble.sano::before,
+#screen-onboarding .bubble.sano::after,
+#screen-onboarding .bubble.user:not(.choice)::before,
+#screen-onboarding .bubble.user:not(.choice)::after {
 	content: '';
 	position: absolute;
 	top: 50%;
@@ -1178,29 +1184,38 @@ table#vocab tbody td:nth-child(3) {
 	border-style: solid;
 	border-color: transparent;
 }
-#screen-home .scene .bubble.sano::before {
+#screen-home .scene .bubble.sano::before,
+#screen-onboarding .bubble.sano::before {
 	left: -9px;
 	margin-top: -8px;
 	border-width: 8px 9px 8px 0;
 	border-right-color: var(--border-color);
 }
-#screen-home .scene .bubble.sano::after {
+#screen-home .scene .bubble.sano::after,
+#screen-onboarding .bubble.sano::after {
 	left: -8px;
 	margin-top: -7px;
 	border-width: 7px 8px 7px 0;
 	border-right-color: var(--background-color-softer);
 }
-#screen-home .scene .bubble.user::before {
+#screen-home .scene .bubble.user::before,
+#screen-onboarding .bubble.user:not(.choice)::before {
 	right: -9px;
 	margin-top: -8px;
 	border-width: 8px 0 8px 9px;
 	border-left-color: var(--border-color);
 }
-#screen-home .scene .bubble.user::after {
+#screen-home .scene .bubble.user::after,
+#screen-onboarding .bubble.user:not(.choice)::after {
 	right: -8px;
 	margin-top: -7px;
 	border-width: 7px 0 7px 8px;
 	border-left-color: var(--background-color-softer);
+}
+/* Onboarding choices are a vertical list of tappable options, not single utterances:
+   keep the rounded box but drop the connector (no dot, no tail). */
+#screen-onboarding .bubble.user.choice::before {
+	display: none;
 }
 
 /* First-run onboarding: a full-screen scripted conversation. Reuses the shared

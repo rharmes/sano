@@ -568,6 +568,10 @@
 				stroke-width: 2;
 				stroke-linecap: round;
 			}
+			/* Companion fill — Pyaro's head in the Conversations example below; mirrors --f-rust in css/sano.css. */
+			.f-rust {
+				fill: #c66a38;
+			}
 
 			/* Idle mascot life — mirrors css/sano.css. Full mascots (.sano-idle)
 			   run all five loops; head crops (.sano-idle-head) run only the three
@@ -993,19 +997,31 @@
 				padding: 1.4rem 1.6rem 1.6rem 2.4rem;
 				background: var(--background-color-softer);
 				border: 1px solid var(--border-color);
-				border-radius: 4px;
+				border-radius: 8px;
 			}
-			.bubble::before {
+			/* Two stacked triangles (border + fill) form the tail, centred on the bubble:
+			   Sano's points left toward the mascot, the learner's points right. */
+			.bubble::before,
+			.bubble::after {
 				content: '';
 				position: absolute;
-				top: 1.6rem;
-				width: 12px;
-				height: 12px;
-				border-radius: 50%;
-				background: var(--accent);
+				top: 50%;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-color: transparent;
 			}
 			.bubble.sano::before {
-				left: -6px;
+				left: -9px;
+				margin-top: -8px;
+				border-width: 8px 9px 8px 0;
+				border-right-color: var(--border-color);
+			}
+			.bubble.sano::after {
+				left: -8px;
+				margin-top: -7px;
+				border-width: 7px 8px 7px 0;
+				border-right-color: var(--background-color-softer);
 			}
 			.bubble.user {
 				margin-left: auto;
@@ -1013,8 +1029,16 @@
 				text-align: right;
 			}
 			.bubble.user::before {
-				right: -6px;
-				background: var(--path-complete-color);
+				right: -9px;
+				margin-top: -8px;
+				border-width: 8px 0 8px 9px;
+				border-left-color: var(--border-color);
+			}
+			.bubble.user::after {
+				right: -8px;
+				margin-top: -7px;
+				border-width: 7px 0 7px 8px;
+				border-left-color: var(--background-color-softer);
 			}
 			.bubble .speaker {
 				font-family: 'Lato', sans-serif;
@@ -1049,6 +1073,105 @@
 			}
 			.scene .mascot {
 				width: 100%;
+			}
+
+			/* ── Story conversations (SR-01 dialogue player) — mirrors #dialogue-thread in
+			   css/sano.css. Every speaker sits on the LEFT behind their own head; lines are
+			   Romanized-only (tap a .gloss-word for its English) with a left tail toward the
+			   head; narrator lines run full-width with no bubble. ───────────────────────── */
+			.sg-convo {
+				display: flex;
+				flex-direction: column;
+				gap: 1.4rem;
+				max-width: 560px;
+			}
+			.sg-convo .dialogue-line {
+				position: relative;
+				padding-left: 6.4rem;
+			}
+			.sg-convo .dialogue-head {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 5.4rem;
+				height: 5.4rem;
+			}
+			.sg-convo .dialogue-head svg {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			.sg-convo .bubble {
+				position: relative;
+				margin: 0;
+				width: fit-content;
+				max-width: 100%;
+				padding: 1rem 1.4rem 1.1rem;
+				text-align: left;
+			}
+			.sg-convo .bubble .np,
+			.sg-convo .dialogue-narration .np {
+				margin: 0;
+				font-family: 'Lato', sans-serif;
+				font-weight: 400;
+				font-size: 1.5rem;
+				line-height: 1.45;
+				color: var(--text-color-richer);
+			}
+			.sg-convo .np .audio-btn {
+				width: 2rem;
+				height: 2rem;
+				margin: 0 0.4rem 0 0;
+				vertical-align: middle;
+			}
+			.sg-convo .np .audio-btn svg {
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+			/* Left tail toward the head (two stacked triangles, top-anchored on the head). */
+			.sg-convo .bubble::before,
+			.sg-convo .bubble::after {
+				content: '';
+				position: absolute;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-color: transparent;
+			}
+			.sg-convo .bubble::before {
+				left: -9px;
+				top: 1.9rem;
+				border-width: 8px 9px 8px 0;
+				border-right-color: var(--border-color);
+			}
+			.sg-convo .bubble::after {
+				left: -8px;
+				top: 2rem;
+				border-width: 7px 8px 7px 0;
+				border-right-color: var(--background-color-softer);
+			}
+			.sg-convo .dialogue-narration {
+				margin: 0;
+			}
+			.sg-convo .dialogue-narration .np {
+				font-style: italic;
+				color: var(--text-color-normal);
+			}
+			/* Tappable word/phrase inside a glossed line (js/gloss.js): a dotted underline. */
+			.gloss-word {
+				font: inherit;
+				color: inherit;
+				background: none;
+				border: 0;
+				padding: 0;
+				cursor: pointer;
+				text-decoration: underline dotted var(--text-color-softer);
+				text-decoration-thickness: 2px;
+				text-underline-offset: 0.28em;
+			}
+			.gloss-word:hover {
+				color: var(--accent);
+				text-decoration-color: var(--accent);
 			}
 
 			/* ── Decisions list ──────────────────────────────────────────── */
@@ -1792,13 +1915,13 @@
 
 			<!-- ── Speech bubbles ─────────────────────────────────────── -->
 			<section id="bubbles">
-				<h2 class="sg">Speech bubbles (conversation)</h2>
+				<h2 class="sg">Speech bubbles</h2>
+				<h3 class="sg">Onboarding</h3>
 				<p class="sg-note">
-					The two-language conversation pattern — Sano speaks from the left, the learner replies from the right. Each bubble leads
-					with Romanized Nepali in Neuton 700, English underneath in italic Lato. Crimson dot = Sano's voice, indigo dot = the
-					learner's. The same <code>.bubble.sano</code> carries Sano's voice through the first-run onboarding and the
-					daily-reminder modal, and it is the pattern the planned two-character dialogues will extend. Re-keyed onto the canonical
-					tokens above so it ports straight into the app.
+					The first-run onboarding and the top-of-path intro share one conversation pattern — Sano speaks from the left, the
+					learner replies from the right. Each bubble leads with Romanized Nepali in Neuton 700, English underneath in italic
+					Lato; a border/fill tail points back to the speaker — left for Sano, right for the learner — so the side and tail
+					identify the speaker, no label needed. Re-keyed onto the canonical tokens above so it ports straight into the app.
 				</p>
 				<div class="scene">
 					<svg class="mascot sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
@@ -1835,14 +1958,155 @@
 					</svg>
 					<div class="thread">
 						<div class="bubble sano">
-							<p class="speaker">Sano</p>
 							<p class="np">Namaste, mero naam Sano ho.</p>
 							<p class="en">Hello, my name is Sano.</p>
 						</div>
 						<div class="bubble user">
-							<p class="speaker">You</p>
 							<p class="np">Namaste, Sano.</p>
 							<p class="en">Hello, Sano.</p>
+						</div>
+					</div>
+				</div>
+
+				<h3 class="sg">Conversations</h3>
+				<p class="sg-note">
+					Story dialogues use a different bubble: every speaker — Sano or a companion — sits on the left behind their own head;
+					lines are Romanized-only in Lato (no English subtitle — tap an underlined word for its gloss), with a left tail pointing
+					at the head. Narrator lines run full-width with no bubble, in italic. Each line auto-plays its audio (the inline speaker
+					icon). Mirrors the dialogue player (<code>#dialogue-thread</code> + <code>js/gloss.js</code>).
+				</p>
+				<div class="sg-convo">
+					<div class="dialogue-line">
+						<span class="dialogue-head">
+							<svg viewBox="0 0 200 200" aria-label="Pyaro face">
+								<g transform="translate(0 12.1)">
+									<g transform="translate(-20 -36) scale(1.2)">
+										<g transform="translate(15 27.6) scale(0.85)">
+											<g class="part-head">
+												<g transform="translate(0 11.76)">
+													<g class="part-ear part-ear-left">
+														<path
+															d="M56 70 L50 46 Q52 38 62 40 Q74 43 82 58 Z"
+															class="f-rust"
+														/>
+														<path
+															d="M60 64 L56 48 Q58 43 65 45 Q72 47 76 57 Z"
+															class="f-cream"
+														/>
+													</g>
+													<g class="part-ear part-ear-right">
+														<path
+															d="M144 70 L150 46 Q148 38 138 40 Q126 43 118 58 Z"
+															class="f-rust"
+														/>
+														<path
+															d="M140 64 L144 48 Q142 43 135 45 Q128 47 124 57 Z"
+															class="f-cream"
+														/>
+													</g>
+												</g>
+												<path
+													d="M100 48 L142 74 L140 108 L100 130 L60 108 L58 74 Z"
+													class="f-rust"
+												/>
+												<path
+													d="M100 90 L123 101 L114 124 L100 130 L86 124 L77 101 Z"
+													class="f-cream"
+												/>
+												<path
+													d="M64 84 L70 81 L77 83 L76 100 L69 104 L63 100 Z"
+													class="f-cream"
+												/>
+												<path
+													d="M136 84 L130 81 L123 83 L124 100 L131 104 L137 100 Z"
+													class="f-cream"
+												/>
+												<g class="part-eyes">
+													<circle cx="84" cy="84" r="5.5" class="f-ink" />
+													<circle cx="116" cy="84" r="5.5" class="f-ink" />
+												</g>
+												<g class="part-nose">
+													<path d="M93 104 L107 104 L100 112 Z" class="f-ink" />
+													<path
+														d="M82 106 L62 102 M82 111 L63 114 M118 106 L138 102 M118 111 L137 114"
+														class="s-whisker"
+													/>
+												</g>
+											</g>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</span>
+						<div class="bubble">
+							<p class="np">
+								<button class="audio-btn audio-inline" type="button" aria-label="Play line">
+									<svg><use href="#i-volume-up" /></svg>
+								</button>
+								<span class="gloss-word">Tala</span> <span class="gloss-word">kasaile</span>
+								<span class="gloss-word">malai</span> <span class="gloss-word">jiskyaairaheko cha!</span>
+								<span class="gloss-word">Sun</span> — <span class="gloss-word">taadhaa</span>
+								<span class="gloss-word">jaau!</span>
+							</p>
+						</div>
+					</div>
+					<div class="dialogue-narration">
+						<p class="np">
+							<button class="audio-btn audio-inline" type="button" aria-label="Play line">
+								<svg><use href="#i-volume-up" /></svg>
+							</button>
+							<span class="gloss-word">Khochle</span> <span class="gloss-word">bistaarai</span>
+							<span class="gloss-word">jawaaf</span> <span class="gloss-word">dinchha:</span>
+							<span class="gloss-word">taadhaa</span> <span class="gloss-word">jaau…</span>
+							<span class="gloss-word">jaau…</span>
+						</p>
+					</div>
+					<div class="dialogue-line">
+						<span class="dialogue-head">
+							<svg viewBox="0 0 200 200" aria-label="Sano face">
+								<g transform="translate(100 100) scale(0.9) translate(-100 -62.5)">
+									<g class="part-head">
+										<path
+											d="M100 11 L144 34 L148 66 L146 94 L118 114 L82 114 L54 94 L52 66 L56 34 Z"
+											class="f-indigo"
+										/>
+										<g class="part-ear part-ear-left">
+											<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+											<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+										</g>
+										<g class="part-ear part-ear-right">
+											<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+											<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+										</g>
+										<path
+											d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z"
+											class="f-cream"
+										/>
+										<g class="part-eyes">
+											<circle cx="88" cy="72" r="6" class="f-ink" />
+											<circle cx="112" cy="72" r="6" class="f-ink" />
+										</g>
+										<g class="part-nose">
+											<path d="M93 88 L107 88 L100 97 Z" class="f-crimson" />
+											<path
+												d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88"
+												class="s-whisker"
+											/>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</span>
+						<div class="bubble">
+							<p class="np">
+								<button class="audio-btn audio-inline" type="button" aria-label="Play line">
+									<svg><use href="#i-volume-up" /></svg>
+								</button>
+								<span class="gloss-word">Tyo</span> <span class="gloss-word">ta</span>
+								<span class="gloss-word">pratidhwani</span> <span class="gloss-word">ho.</span>
+								<span class="gloss-word">Khochle</span> <span class="gloss-word">timrai</span>
+								<span class="gloss-word">aawaaj</span> <span class="gloss-word">dohoryaaunchha.</span>
+							</p>
 						</div>
 					</div>
 				</div>

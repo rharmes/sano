@@ -54,10 +54,11 @@ const SanoOnboard = (() => {
 	}
 
 	// npLines: array of items; each item is a string or an array of (string | node)
-	// pieces, rendered as one `.np` paragraph. en: the English subtitle.
+	// pieces, rendered as one `.np` paragraph. en: the English subtitle. The `speaker`
+	// arg is still passed by callers but no longer rendered — left/right placement plus the
+	// bubble tail identify the speaker, matching the home conversation.
 	function bubble(side, npLines, en, speaker) {
 		const b = el('div', 'bubble ' + side);
-		b.appendChild(el('p', 'speaker', speaker));
 		for (const line of npLines) {
 			const np = el('p', 'np');
 			if (typeof line === 'string') {
