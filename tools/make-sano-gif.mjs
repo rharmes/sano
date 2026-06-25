@@ -12,10 +12,14 @@
 // animation completes a whole number of cycles per loop → the GIF loops seamlessly
 // (the real LCM of the 9/22/4/14/10s periods is ~3.85h, far too long to film).
 //
-// Usage: node tools/make-sano-gif.mjs [out.gif] [size-px] [fps] [seconds] [bg]
-//   defaults: docs/sano-idle.gif  360  12.5  30  transparent  (375 frames @ 80ms → drift-free)
-//   bg: "transparent" (1-bit alpha — reads on light AND dark) or a hex like "fbf5e9"
-//       (a solid matte, e.g. the brand warm-paper).
+// Usage: node tools/make-sano-gif.mjs [out.gif] [size-px] [fps] [seconds] [bg] [padRight]
+//   defaults: docs/sano-idle.gif  360  12.5  30  transparent  0  (375 frames @ 80ms → drift-free)
+//   bg: "transparent" (1-bit alpha — reads on light AND dark) or a hex like "fbf5e9".
+//   padRight: transparent px baked onto the right edge, to separate Sano from the
+//     README's wrap text (GitHub strips CSS margins, so the gap can't live in HTML).
+//   The committed README hero is built with:
+//     node tools/make-sano-gif.mjs docs/sano-idle.gif 360 12.5 30 transparent 42
+//   (42px pad + the README <img width="130"> → a ~110px mascot with a ~20px text gap.)
 // Output is committed but never deployed (docs/ is not in tools/deploy.sh's allowlist).
 import { spawn } from 'node:child_process';
 import { mkdtemp, mkdir, readFile, writeFile, rm, rename, stat } from 'node:fs/promises';
@@ -34,6 +38,7 @@ const N = Math.round(FPS * SECS);
 const STEP = (SECS * 1000) / N; // ms between frames
 const BG = (process.argv[6] || 'transparent').toLowerCase();
 const TRANSPARENT = BG === 'transparent' || BG === 'none';
+const PAD_RIGHT = Number(process.argv[7] || 0); // transparent px baked on the right edge
 const PAGE = 'file://' + join(ROOT, 'design', 'sano-idle.html');
 const CHROME = process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
@@ -219,7 +224,9 @@ try {
 	const paletteuse = TRANSPARENT ? 'paletteuse=dither=none:alpha_threshold=128' : 'paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle';
 	await run('ffmpeg', ['-y', '-i', frames, '-vf', crop ? `${crop},${palettegen}` : palettegen, palette]);
 
-	const chain = crop ? `[0:v]fps=${FPS},${crop}[v]` : `[0:v]fps=${FPS}[v]`;
+	// crop to content, then bake transparent right-padding (the README text gap).
+	const geom = [crop, PAD_RIGHT > 0 ? `format=rgba,pad=iw+${PAD_RIGHT}:ih:0:0:color=black@0.0` : ''].filter(Boolean).join(',');
+	const chain = geom ? `[0:v]fps=${FPS},${geom}[v]` : `[0:v]fps=${FPS}[v]`;
 	const gifArgs = ['-y', '-framerate', String(FPS), '-i', frames, '-i', palette, '-filter_complex', `${chain};[v][1:v]${paletteuse}`];
 	// Full frames for transparency: transdiff would reuse the transparent index for
 	// "unchanged", smearing moving parts over the see-through backdrop.
