@@ -11,10 +11,10 @@
 		-->
 		<link rel="stylesheet" href="../css/sano.css" />
 		<style>
-			/* Pin the LIGHT brand theme. Headless Chrome follows the OS theme, so on a
-			   Mac set to Dark the css/sano.css dark @media would recolor Sano + the
-			   paper. Re-declaring the tokens here (no media query, later in the cascade)
-			   forces the warm-paper look every time. */
+			/* Pin Sano's paper-cut fill colors. Headless Chrome follows the OS theme, so
+			   on a Mac set to Dark the css/sano.css dark @media would recolor the mascot.
+			   Re-declaring the tokens here (no media query, later in the cascade) keeps
+			   Sano's colors fixed every time, independent of the capture backdrop. */
 			html {
 				--path-complete-color: #56629e;
 				--accent: #dd6470;
@@ -34,7 +34,10 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				background: var(--background-color);
+				/* No page background: the GIF is filmed on a transparent backdrop (set by
+				   make-sano-gif.mjs) so it reads on light AND dark. A direct browser view
+				   just falls back to the default white. */
+				background: transparent;
 			}
 			body > .sano-mascot {
 				width: 260px;

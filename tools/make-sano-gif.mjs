@@ -12,11 +12,13 @@
 // animation completes a whole number of cycles per loop → the GIF loops seamlessly
 // (the real LCM of the 9/22/4/14/10s periods is ~3.85h, far too long to film).
 //
-// Usage: node tools/make-sano-gif.mjs [out.gif] [size-px] [fps] [seconds]
-//   defaults: docs/sano-idle.gif  360  12.5  30   (375 frames @ 80ms → drift-free)
+// Usage: node tools/make-sano-gif.mjs [out.gif] [size-px] [fps] [seconds] [bg]
+//   defaults: docs/sano-idle.gif  360  12.5  30  transparent  (375 frames @ 80ms → drift-free)
+//   bg: "transparent" (1-bit alpha — reads on light AND dark) or a hex like "fbf5e9"
+//       (a solid matte, e.g. the brand warm-paper).
 // Output is committed but never deployed (docs/ is not in tools/deploy.sh's allowlist).
 import { spawn } from 'node:child_process';
-import { mkdtemp, mkdir, readFile, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile, rm, rename, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
@@ -30,6 +32,8 @@ const FPS = Number(process.argv[4] || 12.5);
 const SECS = Number(process.argv[5] || 30);
 const N = Math.round(FPS * SECS);
 const STEP = (SECS * 1000) / N; // ms between frames
+const BG = (process.argv[6] || 'transparent').toLowerCase();
+const TRANSPARENT = BG === 'transparent' || BG === 'none';
 const PAGE = 'file://' + join(ROOT, 'design', 'sano-idle.html');
 const CHROME = process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
@@ -131,6 +135,19 @@ try {
 	}
 	if (ready < 5) throw new Error(`Only ${ready}/5 animations registered`);
 
+	// Backdrop painted under the (background-less) page: a=0 → transparent capture, so
+	// the GIF reads on any GitHub theme; otherwise a solid matte from the hex bg.
+	const hex = BG.replace('#', '');
+	const bg = TRANSPARENT
+		? { r: 0, g: 0, b: 0, a: 0 }
+		: {
+				r: parseInt(hex.slice(0, 2), 16),
+				g: parseInt(hex.slice(2, 4), 16),
+				b: parseInt(hex.slice(4, 6), 16),
+				a: 1,
+			};
+	await send('Emulation.setDefaultBackgroundColorOverride', { color: bg });
+
 	// 6. Seek + screenshot every frame in this one session.
 	console.log(`Capturing ${N} frames at ${SIZE}x${SIZE} (${FPS}fps, ${SECS}s loop)…`);
 	for (let k = 0; k < N; k++) {
@@ -153,24 +170,68 @@ try {
 			p.on('exit', (code) => (code === 0 ? res() : rej(new Error(`${cmd} exited ${code}`))));
 			p.on('error', rej);
 		});
+	// gifsicle -O3 collapses the identical rest-frames (ffmpeg must emit full frames to
+	// keep transparency clean) into longer-delay frames via disposal — lossless, ~8×
+	// smaller. Returns false (skipped) if gifsicle isn't installed; the GIF is still valid.
+	const tryGifsicle = (file) =>
+		new Promise((res) => {
+			const tmp = file + '.opt';
+			const p = spawn('gifsicle', ['-O3', file, '-o', tmp], { stdio: 'ignore' });
+			p.on('error', () => res(false));
+			p.on('exit', async (code) => {
+				if (code === 0) {
+					try {
+						await rename(tmp, file);
+						return res(true);
+					} catch {}
+				}
+				await rm(tmp, { force: true });
+				res(false);
+			});
+		});
 	const frames = join(work, 'frame_%04d.png');
 	const palette = join(work, 'palette.png');
-	await run('ffmpeg', ['-y', '-i', frames, '-vf', 'palettegen=stats_mode=full', palette]);
-	await run('ffmpeg', [
-		'-y',
-		'-framerate',
-		String(FPS),
-		'-i',
-		frames,
-		'-i',
-		palette,
-		'-lavfi',
-		`fps=${FPS},paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle`,
-		'-loop',
-		'0',
-		OUT,
-	]);
-	console.log(`Wrote ${OUT}`);
+
+	// Transparent frames are full frames (no transdiff — see below), so a 360² canvas
+	// that's mostly empty is pure waste. Trim to the union bounding box of every
+	// non-transparent pixel across all frames (alphaextract → cumulative cropdetect),
+	// which can never clip a moving part. Falls back to no crop if detection fails.
+	let crop = '';
+	if (TRANSPARENT) {
+		const det = await new Promise((res) => {
+			let buf = '';
+			const p = spawn('ffmpeg', ['-i', frames, '-vf', 'alphaextract,cropdetect=limit=0:round=2:reset=0', '-f', 'null', '-'], {
+				stdio: ['ignore', 'ignore', 'pipe'],
+			});
+			p.stderr.on('data', (d) => (buf += d));
+			p.on('exit', () => res(buf));
+			p.on('error', () => res(buf));
+		});
+		const m = [...det.matchAll(/crop=(\d+:\d+:\d+:\d+)/g)].pop();
+		if (m) crop = `crop=${m[1]}`;
+	}
+
+	// Transparent: reserve a palette slot for transparency and hard-cut the anti-aliased
+	// edges at 50% alpha (1-bit, no paper fringe). Opaque: transdiff for a smaller file.
+	const palettegen = TRANSPARENT ? 'palettegen=stats_mode=full:reserve_transparent=1' : 'palettegen=stats_mode=full';
+	// dither=none for the transparent path: the art is flat color, so dithering only
+	// sprays noise that wrecks LZW run-length compression (≈5× bigger) for no visual gain.
+	const paletteuse = TRANSPARENT ? 'paletteuse=dither=none:alpha_threshold=128' : 'paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle';
+	await run('ffmpeg', ['-y', '-i', frames, '-vf', crop ? `${crop},${palettegen}` : palettegen, palette]);
+
+	const chain = crop ? `[0:v]fps=${FPS},${crop}[v]` : `[0:v]fps=${FPS}[v]`;
+	const gifArgs = ['-y', '-framerate', String(FPS), '-i', frames, '-i', palette, '-filter_complex', `${chain};[v][1:v]${paletteuse}`];
+	// Full frames for transparency: transdiff would reuse the transparent index for
+	// "unchanged", smearing moving parts over the see-through backdrop.
+	if (TRANSPARENT) gifArgs.push('-gifflags', '-transdiff');
+	gifArgs.push('-loop', '0', OUT);
+	await run('ffmpeg', gifArgs);
+	if (crop) console.log(`  cropped to ${crop.slice(5)}`);
+
+	const optimized = await tryGifsicle(OUT);
+	if (!optimized) console.log('  note: install gifsicle (brew install gifsicle) for a much smaller file');
+	const kb = Math.round((await stat(OUT)).size / 1024);
+	console.log(`Wrote ${OUT} (${kb} KB${optimized ? ', gifsicle -O3' : ''})`);
 } finally {
 	await cleanup();
 }

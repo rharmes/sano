@@ -1,8 +1,6 @@
 # sano — Nepali Study Guide
 
-<p align="center">
-  <img src="docs/sano-idle.gif" alt="Sano, the paper-cut mouse mascot, idling" width="240" />
-</p>
+<img src="docs/sano-idle.gif" alt="Sano, the paper-cut mouse mascot, idling" width="220" />
 
 Learn Nepali with short daily lessons. Live at <https://namastesano.com>.
 
