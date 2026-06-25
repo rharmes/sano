@@ -20,3 +20,8 @@ tools/tts/voice_samples/
 # Transient working data: review it, merge into js/data.js, then it can be cleared.
 design/devanagari-review.json
 design/devanagari-review.json.bak
+
+# Playwright test artifacts (regenerated every run; never committed/deployed).
+/test-results/
+/playwright-report/
+/blob-report/

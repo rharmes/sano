@@ -10,13 +10,15 @@
 		"test": "tools/test.sh",
 		"test:unit": "node --test tests/unit/*.test.mjs",
 		"test:data": "node --test tests/data/*.test.mjs",
+		"test:api": "playwright test tests/api",
 		"check": "tools/check.sh",
 		"stamp": "node tools/stamp-version.mjs",
 		"deploy:preview": "tools/deploy.sh -n",
 		"deploy": "tools/deploy.sh"
 	},
 	"devDependencies": {
-		"prettier": "3.8.3",
-		"@prettier/plugin-php": "0.25.0"
+		"@playwright/test": "^1.61.1",
+		"@prettier/plugin-php": "0.25.0",
+		"prettier": "3.8.3"
 	}
 }
