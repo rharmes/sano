@@ -1,5 +1,9 @@
 # sano — Nepali Study Guide
 
+<p align="center">
+  <img src="docs/sano-idle.gif" alt="Sano, the paper-cut mouse mascot, idling" width="240" />
+</p>
+
 Learn Nepali with short daily lessons. Live at <https://namastesano.com>.
 
 A Duolingo-style course of essential Nepali phrases with Romanized pronunciations: a winding path of units (with Sano's paper-cut animal friends tucked into its pockets), a daily lesson that mixes new words with spaced-repetition reviews, plus a browsable dictionary. New learners get a short conversational onboarding where Sano introduces the app and captures a display name. Progress lives in localStorage and optionally syncs to the server behind an account — self-service signup, or stay fully local. The app works offline or logged out, installs as an iOS home-screen PWA, and can send an opt-in daily reminder at a time you choose.

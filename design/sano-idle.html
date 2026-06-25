@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Sano — idle loop (README GIF capture source)</title>
+		<!--
+			Capture source for the README hero GIF (tools/make-sano-gif.sh films this page).
+			Committed design artifact, never deployed. Also a handy standalone view of the
+			full-body mascot running all five idle animations.
+		-->
+		<link rel="stylesheet" href="../css/sano.css" />
+		<style>
+			/* Pin the LIGHT brand theme. Headless Chrome follows the OS theme, so on a
+			   Mac set to Dark the css/sano.css dark @media would recolor Sano + the
+			   paper. Re-declaring the tokens here (no media query, later in the cascade)
+			   forces the warm-paper look every time. */
+			html {
+				--path-complete-color: #56629e;
+				--accent: #dd6470;
+				--paper-petal: #f3c7cd;
+				--paper-cream: #f1e8d6;
+				--paper-cream-deep: #e8ddc6;
+				--paper-ink: #37323c;
+				--paper-whisker: #a59a86;
+				--background-color: #fbf5e9;
+			}
+			html,
+			body {
+				margin: 0;
+				height: 100%;
+			}
+			body {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: var(--background-color);
+			}
+			body > .sano-mascot {
+				width: 260px;
+				height: auto;
+				display: block;
+			}
+			/* Seamless 30s loop: nudge each idle period to a divisor of 30s so every
+			   animation completes a whole number of cycles per loop (the real LCM of
+			   9/22/4/14/10s is ~3.85h, far too long to loop). !important also forces the
+			   idles on under prefers-reduced-motion — this page exists only to film them.
+			   Delays dropped to 0 so the JS seek below maps cleanly: phase = t mod period. */
+			.sano-idle .sano-tail {
+				animation: sano-idle-tail-wag 10s ease-in-out infinite !important;
+			}
+			.sano-idle .sano-head {
+				animation: sano-idle-head-tilt 30s ease-in-out infinite !important;
+			}
+			.sano-idle .sano-eyes {
+				animation: sano-idle-blink 3.75s ease-in-out infinite !important;
+			}
+			.sano-idle .sano-ear {
+				animation: sano-idle-ear-wiggle 15s ease-in-out infinite !important;
+			}
+			.sano-idle .sano-nose {
+				animation: sano-idle-nose-wiggle 10s ease-in-out infinite !important;
+			}
+		</style>
+	</head>
+	<body>
+		<svg class="mascot sano-mascot sano-idle" viewBox="30 10 160 174" aria-hidden="true">
+			<g>
+				<path d="M55 98 L100 30 L145 98 L150 150 L120 178 L80 178 L50 150 Z" class="f-indigo" />
+				<path d="M76 110 L124 110 L142 150 L118 174 L82 174 L58 150 Z" class="f-cream-deep" />
+				<g class="sano-tail">
+					<path d="M140 152 L172 140 L160 158 L176 166 L142 164 Z" class="f-crimson" />
+				</g>
+				<g class="sano-head">
+					<path d="M100 18 L138 38 L142 66 L146 108 L54 108 L58 66 L62 38 Z" class="f-indigo" />
+					<g class="sano-ear sano-ear-left">
+						<path d="M62 18 L88 34 L70 58 L48 42 Z" class="f-crimson" />
+						<path d="M64 26 L80 36 L69 50 L55 40 Z" class="f-petal" />
+					</g>
+					<g class="sano-ear sano-ear-right">
+						<path d="M138 18 L112 34 L130 58 L152 42 Z" class="f-crimson" />
+						<path d="M136 26 L120 36 L131 50 L145 40 Z" class="f-petal" />
+					</g>
+					<path d="M100 30 L134 48 L138 86 L114 108 L86 108 L62 86 L66 48 Z" class="f-cream" />
+					<g class="sano-eyes">
+						<circle cx="88" cy="72" r="4.4" class="f-ink" />
+						<circle cx="112" cy="72" r="4.4" class="f-ink" />
+					</g>
+					<g class="sano-nose">
+						<path d="M94 88 L106 88 L100 96 Z" class="f-crimson" />
+						<path d="M70 80 L56 76 M70 86 L57 88 M130 80 L144 76 M130 86 L143 88" class="s-whisker" />
+					</g>
+				</g>
+			</g>
+		</svg>
+		<script>
+			// Deterministic frame seek for tools/make-sano-gif.sh. This Chrome's headless
+			// virtual-time clock does NOT advance the CSS animation timeline, so instead
+			// of fast-forwarding time we freeze every animation and scrub it to ?t=<ms>.
+			// Each animation's delay is 0, so currentTime = t puts it at phase (t % period).
+			function seekTo(ms) {
+				const anims = document.getAnimations();
+				for (const a of anims) {
+					a.pause();
+					a.currentTime = ms;
+				}
+				document.documentElement.dataset.anims = anims.length;
+			}
+			const t = Number(new URLSearchParams(location.search).get('t')) || 0;
+			// Animations register at first style resolution; seek on load, and once more
+			// on the next frame in case any registered late.
+			addEventListener('load', () => {
+				seekTo(t);
+				requestAnimationFrame(() => seekTo(t));
+			});
+		</script>
+	</body>
+</html>
