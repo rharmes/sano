@@ -10,7 +10,7 @@ const DAILY_REVIEW_ITEMS = 6;
 // sooner. Reviews are graded automatically from how the answer was given: a miss is
 // a lapse, a recognition hit is "good", and recalling the word under a harder drill
 // (typing, word bank, or listening) is "easy". The block is pure (no DOM or shared
-// state) so tools/check-scheduler.mjs can extract and unit-test it.
+// state) so tests/lift.mjs can extract and unit-test it (tests/unit/scheduler.test.mjs).
 const MAX_LEVEL = 4; // only clamps a legacy Leitner level when migrating old records
 const DEFAULT_EASE = 2.5;
 const MIN_EASE = 1.3;
