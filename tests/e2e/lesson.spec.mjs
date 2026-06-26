@@ -10,7 +10,6 @@ async function runToComplete(page) {
 		const t = await stepLesson(page);
 		if (t === 'complete') break;
 		seen.add(t);
-		await page.waitForTimeout(60);
 	}
 	await expect(page.locator('#screen-complete')).toBeVisible();
 	return seen;

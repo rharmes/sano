@@ -68,16 +68,17 @@ export const savedState = (page) =>
 	});
 
 // Drive the currently-shown lesson exercise one step forward. Returns the exercise type
-// handled, or 'complete' when the finish screen is up. Answers needn't be correct — the
-// lesson advances either way; the goal is to exercise every renderer and the grading flow.
+// handled, or 'complete' when the finish screen is up. Uses normal clicks (not force):
+// boot()'s inline animation-freeze makes the in-screen controls stable, so a real click hits
+// the exact target AND waits for it to appear. That matters most for #lesson-continue, which
+// only exists after finishMatch/feedback renders — a forced click could fire while it's still
+// hidden, or land just off a match tile and leave the round (and thus the continue) incomplete.
+// Answers needn't be correct; the lesson advances either way.
 export async function stepLesson(page) {
-	// force: the app animates exercise/feedback transitions (incl. on ::before, which inline
-	// styles can't freeze), so Playwright's actionability "stable" check intermittently times
-	// out in WebKit. The per-test assertions verify the result; force just dodges the wait.
-	const tap = (sel) => page.locator(sel).first().click({ force: true });
+	const click = (sel) => page.locator(sel).first().click();
 	if (await page.locator('#screen-complete').isVisible()) return 'complete';
 	if (await page.locator('#exercise-speak').isVisible()) {
-		await tap('#speak-continue');
+		await click('#speak-continue');
 		return 'speak';
 	}
 	for (const [grid, type] of [
@@ -89,32 +90,32 @@ export async function stepLesson(page) {
 			const ids = await page.locator(`${grid} .match-tile`).evaluateAll((tiles) => [...new Set(tiles.map((t) => t.dataset.id))]);
 			for (const id of ids) {
 				const pair = page.locator(`${grid} .match-tile[data-id="${id}"]`);
-				await pair.nth(0).click({ force: true });
-				await pair.nth(1).click({ force: true });
+				await pair.nth(0).click();
+				await pair.nth(1).click();
 			}
-			await tap('#lesson-continue'); // finishMatch shows feedback + a continue
+			await click('#lesson-continue'); // appears once finishMatch shows feedback
 			return type;
 		}
 	}
 	if (await page.locator('#exercise-choices').isVisible()) {
-		await tap('#exercise-choices button');
-		await tap('#lesson-continue');
+		await click('#exercise-choices button');
+		await click('#lesson-continue');
 		return 'choice';
 	}
 	if (await page.locator('#exercise-wordbank').isVisible()) {
 		for (let k = 0; k < 20; k++) {
 			const tile = page.locator('#wordbank-pool .wordbank-tile:not(.selected)').first();
 			if (!(await tile.count())) break;
-			await tile.click({ force: true });
+			await tile.click();
 		}
-		await tap('#exercise-check');
-		await tap('#lesson-continue');
+		await click('#exercise-check');
+		await click('#lesson-continue');
 		return 'wordbank';
 	}
 	if (await page.locator('#exercise-type').isVisible()) {
 		await page.locator('#type-answer').fill('test');
-		await tap('#exercise-check');
-		await tap('#lesson-continue');
+		await click('#exercise-check');
+		await click('#lesson-continue');
 		return 'type';
 	}
 	throw new Error('stepLesson: no known exercise is visible');

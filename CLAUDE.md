@@ -115,6 +115,12 @@ phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust cache
 
 ## Testing notes (the non-obvious bits)
 
+- **Very low tolerance for flaky tests.** A test that passes only *sometimes* is a defect —
+  in the test or the app — not noise to shrug off. When a test looks non-deterministic, stop
+  and fix the root cause: wait for the real condition instead of a fixed `waitForTimeout`,
+  click-and-verify-with-retry on a flaky control, freeze animations, or surface a genuine app
+  race. CI `retries` are only a backstop for truly unavoidable timing — never the fix, and a
+  test that needs them to pass should be hardened until it doesn't.
 - **Test suite** (`tools/test.sh`, tiers `--static/--unit/--data/--api/--ui`): `node:test` for pure
   logic + data integrity (`tests/unit`, `tests/data`), Playwright for HTTP + browser (`tests/api`,
   `tests/e2e`). Pure helpers are lifted out of the classic scripts by `tests/lift.mjs` (sentinel

@@ -41,20 +41,19 @@ test('the popover never overflows the viewport at 320px', async ({ page }) => {
 
 test('play through the conversation and quiz to the complete screen', async ({ page }) => {
 	await openConversation(page);
-	// Reveal every line, then advance into the quiz. (force — see openConversation.)
+	// Reveal every line, then advance into the quiz. Normal clicks: the in-screen controls are
+	// stable (animations are frozen in boot) and each reveal is synchronous, so no fixed waits.
 	const advance = page.locator('#dialogue-advance');
 	for (let i = 0; i < 30; i++) {
 		if (await page.locator('#dialogue-quiz').isVisible()) break;
-		if (await advance.isVisible()) await advance.click({ force: true });
-		await page.waitForTimeout(120);
+		if (await advance.isVisible()) await advance.click();
 	}
 	await expect(page.locator('#dialogue-quiz')).toBeVisible();
 	// Answer each question correctly until the conversation completes.
 	for (let i = 0; i < 12; i++) {
 		if (await page.locator('#screen-complete').isVisible()) break;
-		await page.locator('#dialogue-choices button[data-correct="true"]').first().click({ force: true });
-		await page.locator('#dialogue-continue').click({ force: true });
-		await page.waitForTimeout(120);
+		await page.locator('#dialogue-choices button[data-correct="true"]').first().click();
+		await page.locator('#dialogue-continue').click();
 	}
 	await expect(page.locator('#screen-complete')).toBeVisible();
 	await expect(page.locator('#complete-title')).toContainText(/conversation complete/i);
