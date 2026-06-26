@@ -23,9 +23,11 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 - **No external requests at runtime.** Fonts are self-hosted woff2 (`css/fonts.css`); icons are
   an inline SVG sprite in `index.html` (`#i-*`, used via `<use href="#i-name">`); audio is
   pre-rendered MP3. The only network calls are same-origin `fetch()`es to `api/`.
-- **AI-drafted strings are Ross's drafts.** Every `np`/`pron`/`dev`, the per-segment dialogue
+- **AI-drafted strings are Ross's drafts.** Every `pron`/`dev`, the per-segment dialogue
   `gloss` English, the per-unit `goal`, and the onboarding `L` strings are AI-drafted and under
-  Ross's review — flag questions, **never silently "correct" them.**
+  Ross's review — flag questions, **never silently "correct" them.** (The COURSE `np` is now
+  **derived** from `dev` at load by `js/romanize.js` — see `docs/romanization.md`; the displayed
+  romanization comes from the algorithm, and the stored `np` in `js/data.js` is the baseline.)
 - **DB / VAPID credentials are never in the repo.** `api/lib.php` reads `sano-config.php` from one
   level above the docroot (`~/sano-config.php` on the server; one level above the repo for local
   dev) → `['dsn','user','pass', vapid_*]`.

@@ -16,15 +16,16 @@ Classic scripts (not modules), all `defer`, so each defines a global the later o
 Order in `index.html`:
 
 1. `js/data.js` — **`COURSE`**: 44 units / ~588 items — the entire course content (the big file).
-2. `js/sync.js` — **`SanoSync`**: debounced server push, revision-checked conflict detection, last-write-wins. `adoptSession()`. Bookkeeping in localStorage `sano.sync.v1`.
-3. `js/push.js` — **`SanoPush`**: PWA daily-reminder toggle + `pushManager.subscribe`. VAPID public key baked in.
-4. `js/onboarding.js` — **`SanoOnboard`**: first-run scripted Sano conversation (name, placement/skip-ahead, optional account/PWA steps). Per-Sano-bubble heads from `CHARACTER_HEADS`.
-5. `js/audio.js` — **`SanoAudio`**: `play(id)` (phrase clips `audio/<voice>/<id>.mp3`), `playWord(slug)` (`audio/words/<slug>.mp3`), `button(...)`. `AUDIO_VERSION` busts caches.
-6. `js/dialogues.js` — **`DIALOGUES`** (schema v2) + `CHARACTER_PERSONAS`; helpers `dialogueVoiceFolder(d, who)`, `dialogueClipId(d, index)`.
-7. `js/characters.js` — **`CHARACTER_HEADS`** (dialogue/onboarding bubbles, viewBox `0 0 200 200`) + **`CHARACTER_BODIES`** (path companions). **Generated** by `tools/build-character-heads.mjs` — do not hand-edit.
-8. `js/gloss.js` — **`SanoGloss`**: `renderLine(line)` (underlined tappable segments) + a tap-to-translate popover; `closePop()`. Shared by the app and `design/dialogue.html`.
-9. `js/sounds.js` — **`SOUND_TOPICS`**: pronunciation-drill topics (SR-08).
-10. `js/sano.js` — **`window.Sano`**: the lesson engine (functions below). Public API: `state` (getter), `saveState`, `refreshHeader`, `showScreen`, `renderHome`, `applyServerState`, `placeBefore`, `placementOptions`, `resetPathReveal`.
+2. `js/romanize.js` — **`SanoRomanize`**: Devanagari→romanization (`romanize(dev)`; spec `docs/romanization.md`). At load it **rewrites each `COURSE` item's `np` to `romanize(item.dev)`** (the hand-drafted `np` in `data.js` stays as the baseline). Pure + classic-script, so the tests lift it.
+3. `js/sync.js` — **`SanoSync`**: debounced server push, revision-checked conflict detection, last-write-wins. `adoptSession()`. Bookkeeping in localStorage `sano.sync.v1`.
+4. `js/push.js` — **`SanoPush`**: PWA daily-reminder toggle + `pushManager.subscribe`. VAPID public key baked in.
+5. `js/onboarding.js` — **`SanoOnboard`**: first-run scripted Sano conversation (name, placement/skip-ahead, optional account/PWA steps). Per-Sano-bubble heads from `CHARACTER_HEADS`.
+6. `js/audio.js` — **`SanoAudio`**: `play(id)` (phrase clips `audio/<voice>/<id>.mp3`), `playWord(slug)` (`audio/words/<slug>.mp3`), `button(...)`. `AUDIO_VERSION` busts caches.
+7. `js/dialogues.js` — **`DIALOGUES`** (schema v2) + `CHARACTER_PERSONAS`; helpers `dialogueVoiceFolder(d, who)`, `dialogueClipId(d, index)`.
+8. `js/characters.js` — **`CHARACTER_HEADS`** (dialogue/onboarding bubbles, viewBox `0 0 200 200`) + **`CHARACTER_BODIES`** (path companions). **Generated** by `tools/build-character-heads.mjs` — do not hand-edit.
+9. `js/gloss.js` — **`SanoGloss`**: `renderLine(line)` (underlined tappable segments) + a tap-to-translate popover; `closePop()`. Shared by the app and `design/dialogue.html`.
+10. `js/sounds.js` — **`SOUND_TOPICS`**: pronunciation-drill topics (SR-08).
+11. `js/sano.js` — **`window.Sano`**: the lesson engine (functions below). Public API: `state` (getter), `saveState`, `refreshHeader`, `showScreen`, `renderHome`, `applyServerState`, `placeBefore`, `placementOptions`, `resetPathReveal`.
 
 ## CSS (load order)
 
@@ -108,8 +109,8 @@ One suite, one entry point (`tools/test.sh`), five tiers. Internal-only (not dep
 | Tier | Runner | What it covers |
 | --- | --- | --- |
 | `--static` | `check.sh` | Prettier, asset stamps, `php -l`, `node --check`. |
-| `--unit` | `node:test` (`tests/unit/*.test.mjs`) | Pure logic lifted from `js/sano.js`: SR-05 scheduler, answer matching, dates/streak/freeze, v1/legacy state migration, exercise dedup. |
-| `--data` | `node:test` (`tests/data/*.test.mjs`) | `COURSE`/`DIALOGUES`/`SOUND_TOPICS` integrity — unique ids, required fields, the gloss-join invariant, sound-mark coverage. |
+| `--unit` | `node:test` (`tests/unit/*.test.mjs`) | Pure logic lifted from `js/sano.js`: SR-05 scheduler, answer matching, dates/streak/freeze, v1/legacy state migration, exercise dedup; + Devanagari→romanization golden cases (`js/romanize.js`). |
+| `--data` | `node:test` (`tests/data/*.test.mjs`) | `COURSE`/`DIALOGUES`/`SOUND_TOPICS` integrity — unique ids, required fields, the gloss-join invariant, sound-mark coverage; + romanization coverage over all 588 `dev` (every codepoint mapped, clean output charset, structure preserved). |
 | `--api` | `@playwright/test` request (`tests/api/`) | Pre-DB guard specs (method/CSRF/JSON/validation, no DB) + a PHP pure-helper test; `integration.spec.mjs` adds the full request cycle, gated on `SANO_TEST_DB`. |
 | `--ui` | `@playwright/test` Chromium + WebKit (`tests/e2e/`) | Onboarding, home/path + 9-width overflow, every lesson exercise type, the dialogue player + tap-gloss, dictionary, reminder modal, admin demo, idle/reduced-motion. |
 

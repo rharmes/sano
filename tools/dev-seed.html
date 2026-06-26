@@ -91,6 +91,19 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">romanization · js/romanize.js</span>
+			<h2>Derived romanization (Devanagari → Lite)</h2>
+			<p>
+				Introduces <b>every</b> course item, so the <b>dictionary</b> (top-bar icon) lists all ~588 words with their
+				<b>derived</b> romanization — e.g. <b>Saano, Khaanaa, Hunchha, Tapaaiko, Hospital</b>. Reviews are also due, so
+				<b>“Start today's lesson”</b> shows the derived romanization on the exercise prompts and tiles. Each word's romanization is
+				computed from its <code>dev</code> by <code>js/romanize.js</code> (spec: <code>docs/romanization.md</code>); the stored
+				<code>np</code> is just the baseline.
+			</p>
+			<button onclick="seed('romanize')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-02 · SR-03 · SR-04 · SR-06</span>
 			<h2>2 · A daily lesson (audio + listening + goal)</h2>
 			<p>
@@ -377,6 +390,22 @@
 						lastActivityDay: day(0),
 						itemsToday: 3,
 						itemsTotal: 40,
+						items,
+					};
+				} else if (which === 'romanize') {
+					// Romanization review: introduce EVERY item so the dictionary lists all ~588
+					// derived np; lastSeen a few days back makes reviews due, so a lesson shows it too.
+					const items = {};
+					for (const u of COURSE) for (const it of u.items) items[it.id] = rec({ level: 1, lastSeen: day(3) });
+					state = {
+						version: 2,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 3,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 588,
 						items,
 					};
 				} else if (which === 'lesson' || which === 'matchaudio') {

@@ -24,6 +24,8 @@ An item (`kind: 'phrases'`):
 ```js
 { id, np, pron, dev, en, usage }
 // np = romanized Nepali, pron = pronunciation guide, dev = Devanagari, usage = dictionary note
+// NOTE: `np` is DERIVED at load — js/romanize.js overwrites it with romanize(dev) (spec:
+// docs/romanization.md). The stored `np` is the hand-drafted baseline; `pron` is still authored.
 ```
 
 An item (`kind: 'vocab'`) — carries an `emoji`, no `usage`:
