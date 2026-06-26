@@ -13,7 +13,9 @@
 declare(strict_types=1);
 require __DIR__ . '/lib.php';
 
-const SIGNUPS_PER_HOUR = 5;
+// Per-IP signups allowed per hour. Overridable via env so the CI integration suite can
+// register many accounts from one IP; it's unset in production, so the default (5) holds.
+$signupsPerHour = (int) (getenv('SANO_SIGNUPS_PER_HOUR') ?: 5);
 
 require_method('POST');
 require_csrf_header();
@@ -38,7 +40,7 @@ $ip = inet_pton($_SERVER['REMOTE_ADDR'] ?? '') ?: str_repeat("\0", 16);
 $pdo->prepare('DELETE FROM signup_attempts WHERE created_at < NOW() - INTERVAL 1 HOUR')->execute();
 $recent = $pdo->prepare('SELECT COUNT(*) FROM signup_attempts WHERE ip = ? AND created_at > NOW() - INTERVAL 1 HOUR');
 $recent->execute([$ip]);
-if ((int) $recent->fetchColumn() >= SIGNUPS_PER_HOUR) {
+if ((int) $recent->fetchColumn() >= $signupsPerHour) {
 	respond(429, ['error' => 'rate_limited', 'retryAfter' => 3600]);
 }
 $pdo->prepare('INSERT INTO signup_attempts (ip) VALUES (?)')->execute([$ip]);

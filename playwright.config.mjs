@@ -35,8 +35,10 @@ export default defineConfig({
 		timeout: 30_000,
 	},
 	projects: [
-		// api/ specs use the request fixture only — no browser needed.
-		{ name: 'api', testDir: './tests/api' },
+		// api/ specs use the request fixture only — no browser needed. They run against a real
+		// DB (in CI) and are deterministic, so no retries — a retry would re-fire registers/
+		// logins and trip the per-IP rate limits.
+		{ name: 'api', testDir: './tests/api', retries: 0 },
 		// e2e specs run in both engines at a phone viewport; iPhone 13 = WebKit, the
 		// closest available engine to the iOS Safari target the app is built for.
 		{ name: 'chromium', testDir: './tests/e2e', use: { ...devices['Pixel 7'] } },

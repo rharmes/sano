@@ -99,4 +99,7 @@ jobs:
       - name: API integration specs
         env:
           SANO_TEST_DB: '1'
+          # The whole suite registers from one IP (127.0.0.1); lift the per-IP signup cap so
+          # the 5/hour throttle doesn't starve later tests of a session. Prod keeps the default.
+          SANO_SIGNUPS_PER_HOUR: '100000'
         run: npx playwright test tests/api
