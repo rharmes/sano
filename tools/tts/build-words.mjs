@@ -16,6 +16,10 @@ import { fileURLToPath } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
 const COURSE = Function(readFileSync(join(ROOT, 'js', 'data.js'), 'utf8') + '; return COURSE;')();
+// `np` is no longer stored — derive it from `dev` with the app's romanizer (js/romanize.js),
+// the same transform sano.js applies at runtime, so these slugs match what the app requests.
+const SanoRomanize = Function(readFileSync(join(ROOT, 'js', 'romanize.js'), 'utf8') + '; return SanoRomanize;')();
+const npOf = (it) => SanoRomanize.romanize(it.dev);
 
 const normalize = (s) =>
 	s
@@ -51,19 +55,19 @@ const OVERRIDES = {
 	khushi: 'खुसी',
 	lagyo: 'लाग्यो',
 	bujhnubhayo: 'बुझ्नुभयो',
-	bujyau: 'बुझ्यौ',
+	bujhyau: 'बुझ्यौ', // slug from derived np (झ = jh); was 'bujyau' under the old hand-drafted np
 };
 
 // Word-bank tiles come from multi-word phrases only (np has ≥ 2 words).
 const phrases = COURSE.filter((u) => u.kind === 'phrases')
 	.flatMap((u) => u.items)
-	.filter((it) => it.np && it.dev && !it.np.includes('_') && it.np.trim().split(/\s+/).length >= 2);
+	.filter((it) => it.dev && !npOf(it).includes('_') && npOf(it).trim().split(/\s+/).length >= 2);
 
 // Distinct tile-words, the romanized display form, and which items they appear in.
 const appears = {}; // slug -> Set(itemId)
 const romanOf = {}; // slug -> normalized roman
 for (const it of phrases) {
-	for (const w of stripParens(it.np).split(/\s+/)) {
+	for (const w of stripParens(npOf(it)).split(/\s+/)) {
 		const s = slugOf(w);
 		if (!s) continue;
 		(appears[s] = appears[s] || new Set()).add(it.id);
@@ -74,7 +78,7 @@ for (const it of phrases) {
 // Auto-derive dev from phrases whose np and dev split into the same number of words.
 const aligned = {}; // slug -> Map(dev -> count)
 for (const it of phrases) {
-	const rw = stripParens(it.np).split(/\s+/).map(slugOf).filter(Boolean);
+	const rw = stripParens(npOf(it)).split(/\s+/).map(slugOf).filter(Boolean);
 	const dw = it.dev.trim().split(/\s+/).map(devClean).filter(Boolean);
 	if (rw.length !== dw.length) continue;
 	for (let i = 0; i < rw.length; i++) {

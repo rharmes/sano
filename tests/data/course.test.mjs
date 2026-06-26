@@ -36,9 +36,11 @@ test('COURSE: all item ids are globally unique', () => {
 	assert.deepEqual(dups, [], `duplicate item ids: ${dups.join(', ')}`);
 });
 
-test('COURSE: every item has non-empty id/np/dev/pron/en', () => {
+test('COURSE: every item has non-empty id/dev/pron/en', () => {
+	// `np` is intentionally absent from the data now — it is derived from `dev` at load by
+	// js/romanize.js (asserted in tests/data/romanize-coverage.test.mjs).
 	for (const it of allItems) {
-		for (const f of ['id', 'np', 'dev', 'pron', 'en']) {
+		for (const f of ['id', 'dev', 'pron', 'en']) {
 			assert.ok(typeof it[f] === 'string' && it[f].trim().length, `${it.id || '?'}: missing ${f}`);
 		}
 	}

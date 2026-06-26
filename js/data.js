@@ -11,7 +11,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'namaste-hello-goodbye',
-				np: 'Namaste',
 				dev: 'नमस्ते',
 				pron: 'nuh-muh-stay',
 				en: 'Hello / Goodbye',
@@ -19,7 +18,6 @@ const COURSE = [
 			},
 			{
 				id: 'namaskaar-hello-formal',
-				np: 'Namaskaar',
 				dev: 'नमस्कार',
 				pron: 'nuh-mus-kaar',
 				en: 'Hello (formal)',
@@ -27,7 +25,6 @@ const COURSE = [
 			},
 			{
 				id: 'hajur-yes-polite-pardon',
-				np: 'Hajur',
 				dev: 'हजुर',
 				pron: 'huh-joor',
 				en: 'Yes (polite) / Pardon?',
@@ -35,7 +32,6 @@ const COURSE = [
 			},
 			{
 				id: 'ho-yes-informal',
-				np: 'Ho',
 				dev: 'हो',
 				pron: 'hoh',
 				en: 'Yes (informal)',
@@ -43,7 +39,6 @@ const COURSE = [
 			},
 			{
 				id: 'hoina-no-informal',
-				np: 'Hoina',
 				dev: 'होइन',
 				pron: 'HOY-nah',
 				en: 'No (informal)',
@@ -51,7 +46,6 @@ const COURSE = [
 			},
 			{
 				id: 'hola-maybe',
-				np: 'Hola',
 				dev: 'होला',
 				pron: 'ho-laa',
 				en: 'Maybe',
@@ -59,7 +53,6 @@ const COURSE = [
 			},
 			{
 				id: 'maaf-garnuhos-excuse-me-i-m-sorry',
-				np: 'Maaf garnuhos',
 				dev: 'माफ गर्नुहोस्',
 				pron: 'maaf gar-noo-hos',
 				en: "Excuse me / I'm sorry",
@@ -67,7 +60,6 @@ const COURSE = [
 			},
 			{
 				id: 'kripaya-please',
-				np: 'Kripaya',
 				dev: 'कृपया',
 				pron: 'kri-puh-yuh',
 				en: 'Please',
@@ -75,7 +67,6 @@ const COURSE = [
 			},
 			{
 				id: 'dhanyabad-thank-you',
-				np: 'Dhanyabad',
 				dev: 'धन्यवाद',
 				pron: 'dhun-ya-baad',
 				en: 'Thank you',
@@ -83,7 +74,6 @@ const COURSE = [
 			},
 			{
 				id: 'swagat-cha-you-re-welcome',
-				np: 'Swagat cha',
 				dev: 'स्वागत छ',
 				pron: 'swaa-gut chuh',
 				en: "You're welcome",
@@ -91,7 +81,6 @@ const COURSE = [
 			},
 			{
 				id: 'subha-prabhat-good-morning',
-				np: 'Subha prabhat',
 				dev: 'शुभ प्रभात',
 				pron: 'shoo-bha pruh-bhaat',
 				en: 'Good morning',
@@ -99,7 +88,6 @@ const COURSE = [
 			},
 			{
 				id: 'subha-ratri-good-night',
-				np: 'Subha ratri',
 				dev: 'शुभ रात्रि',
 				pron: 'shoo-bha raa-tree',
 				en: 'Good night',
@@ -107,7 +95,6 @@ const COURSE = [
 			},
 			{
 				id: 'huncha-okay-it-will-be-done',
-				np: 'Huncha',
 				dev: 'हुन्छ',
 				pron: 'hoon-chuh',
 				en: 'Okay / It will be done',
@@ -115,7 +102,6 @@ const COURSE = [
 			},
 			{
 				id: 'hudaina-not-okay-it-won-t-work',
-				np: 'Hudaina',
 				dev: 'हुँदैन',
 				pron: 'hoo-dye-nuh',
 				en: "Not okay / It won't work",
@@ -123,7 +109,6 @@ const COURSE = [
 			},
 			{
 				id: 'ke-bhayo-what-happened',
-				np: 'Ke bhayo?',
 				dev: 'के भयो?',
 				pron: 'kay bha-yo',
 				en: 'What happened?',
@@ -131,7 +116,6 @@ const COURSE = [
 			},
 			{
 				id: 'kehi-chhaina-nothing-it-s-nothing',
-				np: 'Kehi chhaina',
 				dev: 'केही छैन',
 				pron: 'keh-hi chhai-nuh',
 				en: "Nothing / It's nothing",
@@ -139,7 +123,6 @@ const COURSE = [
 			},
 			{
 				id: 'timi-you-informal',
-				np: 'Timi',
 				dev: 'तिमी',
 				pron: 'ti-mi',
 				en: 'You (informal)',
@@ -147,7 +130,6 @@ const COURSE = [
 			},
 			{
 				id: 'cha-yes-is-has',
-				np: 'Cha',
 				dev: 'छ',
 				pron: 'chuh',
 				en: 'Yes / Is / Has',
@@ -155,7 +137,6 @@ const COURSE = [
 			},
 			{
 				id: 'chhaina-no-is-not-don-t-have',
-				np: 'Chhaina',
 				dev: 'छैन',
 				pron: 'chhai-nuh',
 				en: "No / Is not / Don't have",
@@ -163,7 +144,6 @@ const COURSE = [
 			},
 			{
 				id: 'dherai-ramro-very-good-excellent',
-				np: 'Dherai ramro',
 				dev: 'धेरै राम्रो',
 				pron: 'dheh-rye rum-ro',
 				en: 'Very good / Excellent',
@@ -171,7 +151,6 @@ const COURSE = [
 			},
 			{
 				id: 'ekdum-ramro-very-good-excellent',
-				np: 'Ekdum ramro',
 				dev: 'एकदम राम्रो',
 				pron: 'ek-dum rum-ro',
 				en: 'Very good / Excellent',
@@ -179,7 +158,6 @@ const COURSE = [
 			},
 			{
 				id: 'sarai-ramro-very-good-really-good',
-				np: 'Sarai ramro',
 				dev: 'सारै राम्रो',
 				pron: 'suh-rye rum-ro',
 				en: 'Very good / Really good',
@@ -195,7 +173,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ek-one',
-				np: 'Ek',
 				dev: 'एक',
 				pron: 'ayk',
 				emoji: '1️⃣',
@@ -203,7 +180,6 @@ const COURSE = [
 			},
 			{
 				id: 'dui-two',
-				np: 'Dui',
 				dev: 'दुई',
 				pron: 'dwee',
 				emoji: '2️⃣',
@@ -211,7 +187,6 @@ const COURSE = [
 			},
 			{
 				id: 'tin-three',
-				np: 'Tin',
 				dev: 'तीन',
 				pron: 'teen',
 				emoji: '3️⃣',
@@ -219,7 +194,6 @@ const COURSE = [
 			},
 			{
 				id: 'chaar-four',
-				np: 'Chaar',
 				dev: 'चार',
 				pron: 'chaar',
 				emoji: '4️⃣',
@@ -227,7 +201,6 @@ const COURSE = [
 			},
 			{
 				id: 'paanch-five',
-				np: 'Paanch',
 				dev: 'पाँच',
 				pron: 'paanch',
 				emoji: '5️⃣',
@@ -235,7 +208,6 @@ const COURSE = [
 			},
 			{
 				id: 'chha-six',
-				np: 'Chha',
 				dev: 'छ',
 				pron: 'chhuh',
 				emoji: '6️⃣',
@@ -243,7 +215,6 @@ const COURSE = [
 			},
 			{
 				id: 'saat-seven',
-				np: 'Saat',
 				dev: 'सात',
 				pron: 'saat',
 				emoji: '7️⃣',
@@ -251,7 +222,6 @@ const COURSE = [
 			},
 			{
 				id: 'aath-eight',
-				np: 'Aath',
 				dev: 'आठ',
 				pron: 'aath',
 				emoji: '8️⃣',
@@ -259,7 +229,6 @@ const COURSE = [
 			},
 			{
 				id: 'nau-nine',
-				np: 'Nau',
 				dev: 'नौ',
 				pron: 'now',
 				emoji: '9️⃣',
@@ -267,7 +236,6 @@ const COURSE = [
 			},
 			{
 				id: 'das-ten',
-				np: 'Das',
 				dev: 'दस',
 				pron: 'dus',
 				emoji: '🔟',
@@ -275,7 +243,6 @@ const COURSE = [
 			},
 			{
 				id: 'bis-twenty',
-				np: 'Bis',
 				dev: 'बीस',
 				pron: 'bees',
 				emoji: '🔢',
@@ -283,7 +250,6 @@ const COURSE = [
 			},
 			{
 				id: 'pachaas-fifty',
-				np: 'Pachaas',
 				dev: 'पचास',
 				pron: 'puh-chaas',
 				emoji: '🔢',
@@ -291,7 +257,6 @@ const COURSE = [
 			},
 			{
 				id: 'saya-hundred',
-				np: 'Saya',
 				dev: 'सय',
 				pron: 'suh-yay',
 				emoji: '💯',
@@ -299,7 +264,6 @@ const COURSE = [
 			},
 			{
 				id: 'hajaar-thousand',
-				np: 'Hajaar',
 				dev: 'हजार',
 				pron: 'huh-jaar',
 				emoji: '🔢',
@@ -307,7 +271,6 @@ const COURSE = [
 			},
 			{
 				id: 'aadha-half',
-				np: 'Aadha',
 				dev: 'आधा',
 				pron: 'aa-dhaa',
 				emoji: '🌗',
@@ -323,7 +286,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ma-i-me',
-				np: 'Ma',
 				dev: 'म',
 				pron: 'muh',
 				en: 'I / Me',
@@ -331,7 +293,6 @@ const COURSE = [
 			},
 			{
 				id: 'hami-we-us',
-				np: 'Hami',
 				dev: 'हामी',
 				pron: 'huh-mi',
 				en: 'We / Us',
@@ -339,7 +300,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-you-formal',
-				np: 'Tapai',
 				dev: 'तपाईं',
 				pron: 'tuh-pie',
 				en: 'You (formal)',
@@ -347,7 +307,6 @@ const COURSE = [
 			},
 			{
 				id: 'u-he-she-informal',
-				np: 'U',
 				dev: 'ऊ',
 				pron: 'oo',
 				en: 'He / She (informal)',
@@ -355,7 +314,6 @@ const COURSE = [
 			},
 			{
 				id: 'uhaa-he-she-polite',
-				np: 'Uhaa',
 				dev: 'उहाँ',
 				pron: 'oo-haa',
 				en: 'He / She (polite)',
@@ -363,7 +321,6 @@ const COURSE = [
 			},
 			{
 				id: 'uniharu-they',
-				np: 'Uniharu',
 				dev: 'उनीहरू',
 				pron: 'oo-ni-huh-roo',
 				en: 'They',
@@ -371,7 +328,6 @@ const COURSE = [
 			},
 			{
 				id: 'yo-this',
-				np: 'Yo',
 				dev: 'यो',
 				pron: 'yo',
 				en: 'This',
@@ -379,7 +335,6 @@ const COURSE = [
 			},
 			{
 				id: 'tyo-that',
-				np: 'Tyo',
 				dev: 'त्यो',
 				pron: 'tyo',
 				en: 'That',
@@ -387,7 +342,6 @@ const COURSE = [
 			},
 			{
 				id: 'mero-my-mine',
-				np: 'Mero',
 				dev: 'मेरो',
 				pron: 'meh-ro',
 				en: 'My / Mine',
@@ -395,7 +349,6 @@ const COURSE = [
 			},
 			{
 				id: 'hamro-our-ours',
-				np: 'Hamro',
 				dev: 'हाम्रो',
 				pron: 'hum-ro',
 				en: 'Our / Ours',
@@ -403,7 +356,6 @@ const COURSE = [
 			},
 			{
 				id: 'timro-your-informal',
-				np: 'Timro',
 				dev: 'तिम्रो',
 				pron: 'tim-ro',
 				en: 'Your (informal)',
@@ -411,7 +363,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapaiko-your-formal',
-				np: 'Tapaiko',
 				dev: 'तपाईंको',
 				pron: 'tuh-pie-ko',
 				en: 'Your (formal)',
@@ -419,7 +370,6 @@ const COURSE = [
 			},
 			{
 				id: 'usko-his-her-informal',
-				np: 'Usko',
 				dev: 'उसको',
 				pron: 'oos-ko',
 				en: 'His / Her (informal)',
@@ -435,7 +385,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'aamaa-mother',
-				np: 'Aamaa',
 				dev: 'आमा',
 				pron: 'aa-maa',
 				emoji: '👩',
@@ -443,7 +392,6 @@ const COURSE = [
 			},
 			{
 				id: 'buwa-father',
-				np: 'Buwa',
 				dev: 'बुवा',
 				pron: 'boo-waa',
 				emoji: '👨',
@@ -451,7 +399,6 @@ const COURSE = [
 			},
 			{
 				id: 'didi-older-sister',
-				np: 'Didi',
 				dev: 'दिदी',
 				pron: 'di-di',
 				emoji: '👧',
@@ -459,7 +406,6 @@ const COURSE = [
 			},
 			{
 				id: 'bahini-younger-sister',
-				np: 'Bahini',
 				dev: 'बहिनी',
 				pron: 'buh-hi-ni',
 				emoji: '👧',
@@ -467,7 +413,6 @@ const COURSE = [
 			},
 			{
 				id: 'dai-older-brother',
-				np: 'Dai',
 				dev: 'दाइ',
 				pron: 'dye',
 				emoji: '👦',
@@ -475,7 +420,6 @@ const COURSE = [
 			},
 			{
 				id: 'bhai-younger-brother',
-				np: 'Bhai',
 				dev: 'भाइ',
 				pron: 'bye',
 				emoji: '👦',
@@ -483,7 +427,6 @@ const COURSE = [
 			},
 			{
 				id: 'chhora-son',
-				np: 'Chhora',
 				dev: 'छोरा',
 				pron: 'chho-raa',
 				emoji: '👦',
@@ -491,7 +434,6 @@ const COURSE = [
 			},
 			{
 				id: 'chhori-daughter',
-				np: 'Chhori',
 				dev: 'छोरी',
 				pron: 'chho-ree',
 				emoji: '👧',
@@ -499,7 +441,6 @@ const COURSE = [
 			},
 			{
 				id: 'hajurbuwa-grandfather',
-				np: 'Hajurbuwa',
 				dev: 'हजुरबुवा',
 				pron: 'huh-joor-boo-waa',
 				emoji: '👴',
@@ -507,7 +448,6 @@ const COURSE = [
 			},
 			{
 				id: 'hajuraamaa-grandmother',
-				np: 'Hajuraamaa',
 				dev: 'हजुरआमा',
 				pron: 'huh-joor-aa-maa',
 				emoji: '👵',
@@ -515,7 +455,6 @@ const COURSE = [
 			},
 			{
 				id: 'budha-husband',
-				np: 'Budha',
 				dev: 'बुढा',
 				pron: 'boo-dhaa',
 				emoji: '🤵',
@@ -523,7 +462,6 @@ const COURSE = [
 			},
 			{
 				id: 'budhi-wife',
-				np: 'Budhi',
 				dev: 'बुढी',
 				pron: 'boo-dhi',
 				emoji: '👰',
@@ -531,7 +469,6 @@ const COURSE = [
 			},
 			{
 				id: 'saathi-friend',
-				np: 'Saathi',
 				dev: 'साथी',
 				pron: 'saa-thi',
 				emoji: '🧑‍🤝‍🧑',
@@ -539,7 +476,6 @@ const COURSE = [
 			},
 			{
 				id: 'chhimeki-neighbor',
-				np: 'Chhimeki',
 				dev: 'छिमेकी',
 				pron: 'chhi-meh-ki',
 				emoji: '🏠',
@@ -547,7 +483,6 @@ const COURSE = [
 			},
 			{
 				id: 'manchhe-person',
-				np: 'Manchhe',
 				dev: 'मान्छे',
 				pron: 'maan-chhe',
 				emoji: '🧑',
@@ -555,7 +490,6 @@ const COURSE = [
 			},
 			{
 				id: 'bachcha-child-baby',
-				np: 'Bachcha',
 				dev: 'बच्चा',
 				pron: 'bach-chaa',
 				emoji: '👶',
@@ -571,7 +505,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'tapai-ko-naam-ke-ho-what-is-your-name-formal',
-				np: 'Tapai ko naam ke ho?',
 				dev: 'तपाईंको नाम के हो?',
 				pron: 'tuh-pie-ko naam kay ho',
 				en: 'What is your name? (formal)',
@@ -579,7 +512,6 @@ const COURSE = [
 			},
 			{
 				id: 'hajur-ko-naam-ke-ho-what-is-your-name-very-polite',
-				np: 'Hajur ko naam ke ho?',
 				dev: 'हजुरको नाम के हो?',
 				pron: 'huh-joor ko naam kay ho',
 				en: 'What is your name? (very polite)',
@@ -587,7 +519,6 @@ const COURSE = [
 			},
 			{
 				id: 'timro-naam-ke-ho-what-is-your-name-informal',
-				np: 'Timro naam ke ho?',
 				dev: 'तिम्रो नाम के हो?',
 				pron: 'tim-ro naam kay ho',
 				en: 'What is your name? (informal)',
@@ -595,7 +526,6 @@ const COURSE = [
 			},
 			{
 				id: 'mero-naam-ho-my-name-is',
-				np: 'Mero naam ___ ho',
 				dev: 'मेरो नाम ___ हो',
 				pron: 'meh-ro naam ___ ho',
 				en: 'My name is ___',
@@ -603,7 +533,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you',
-				np: 'Tapai lai bhetda khushi lagyo',
 				dev: 'तपाईंलाई भेट्दा खुसी लाग्यो',
 				pron: 'tuh-pie lie bhet-daa khu-shi lug-yo',
 				en: 'Nice to meet you',
@@ -611,7 +540,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-lai-kasto-cha-how-are-you-formal',
-				np: 'Tapai lai kasto cha?',
 				dev: 'तपाईंलाई कस्तो छ?',
 				pron: 'tuh-pie lie kus-toh chuh',
 				en: 'How are you? (formal)',
@@ -619,7 +547,6 @@ const COURSE = [
 			},
 			{
 				id: 'sanchai-chu-i-m-fine',
-				np: 'Sanchai chu',
 				dev: 'सञ्चै छु',
 				pron: 'sun-chay choo',
 				en: "I'm fine",
@@ -627,7 +554,6 @@ const COURSE = [
 			},
 			{
 				id: 'kaha-jane-where-are-you-going',
-				np: 'Kaha jane?',
 				dev: 'कहाँ जाने?',
 				pron: 'kuh-haa jaa-nay',
 				en: 'Where are you going?',
@@ -635,7 +561,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-nepali-bolnu-hunchha-do-you-speak-nepali',
-				np: 'Tapai Nepali bolnu hunchha?',
 				dev: 'तपाईं नेपाली बोल्नुहुन्छ?',
 				pron: 'tuh-pie nay-paa-li bowl-noo hoon-chuh',
 				en: 'Do you speak Nepali?',
@@ -643,7 +568,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-nepali-bolchhu-i-speak-nepali',
-				np: 'Ma Nepali bolchhu',
 				dev: 'म नेपाली बोल्छु',
 				pron: 'muh nay-paa-li bowl-choo',
 				en: 'I speak Nepali',
@@ -651,7 +575,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-nepali-boldina-i-don-t-speak-nepali',
-				np: 'Ma Nepali boldina',
 				dev: 'म नेपाली बोल्दिनँ',
 				pron: 'muh nay-paa-li bowl-di-nuh',
 				en: "I don't speak Nepali",
@@ -659,7 +582,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-kaha-bata-ho-where-are-you-from',
-				np: 'Tapai kaha bata ho?',
 				dev: 'तपाईं कहाँबाट हो?',
 				pron: 'tuh-pie kuh-haa buh-taa ho',
 				en: 'Where are you from?',
@@ -667,7 +589,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-bata-ho-i-am-from',
-				np: 'Ma ___ bata ho',
 				dev: 'म ___ बाट हो',
 				pron: 'muh ___ buh-taa ho',
 				en: 'I am from ___',
@@ -675,7 +596,6 @@ const COURSE = [
 			},
 			{
 				id: 'kaha-basnu-huncha-where-do-you-live',
-				np: 'Kaha basnu huncha?',
 				dev: 'कहाँ बस्नुहुन्छ?',
 				pron: 'kuh-haa bus-noo hoon-chuh',
 				en: 'Where do you live?',
@@ -683,7 +603,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-ma-baschu-i-live-in',
-				np: 'Ma ___ ma baschu',
 				dev: 'म ___ मा बस्छु',
 				pron: 'muh ___ maa bus-choo',
 				en: 'I live in ___',
@@ -691,7 +610,6 @@ const COURSE = [
 			},
 			{
 				id: 'pheri-bhetaula-see-you-again-let-s-meet-again',
-				np: 'Pheri bhetaula',
 				dev: 'फेरि भेटौंला',
 				pron: 'pheh-ri bheh-tow-laa',
 				en: "See you again / Let's meet again",
@@ -699,7 +617,6 @@ const COURSE = [
 			},
 			{
 				id: 'ramrari-jaanu-go-safely-take-care',
-				np: 'Ramrari jaanu',
 				dev: 'राम्ररी जानु',
 				pron: 'ram-rah-ree jaa-noo',
 				en: 'Go safely / Take care',
@@ -715,7 +632,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'maile-bujhe-i-understand-i-understood',
-				np: 'Maile bujhe',
 				dev: 'मैले बुझेँ',
 				pron: 'moy-lay boo-jhay',
 				en: 'I understand / I understood',
@@ -723,7 +639,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-bujhina-i-don-t-understand',
-				np: 'Maile bujhina',
 				dev: 'मैले बुझिनँ',
 				pron: 'moy-lay boo-jhi-nuh',
 				en: "I don't understand",
@@ -731,7 +646,6 @@ const COURSE = [
 			},
 			{
 				id: 'thaha-chhaina-i-don-t-know',
-				np: 'Thaha chhaina',
 				dev: 'थाहा छैन',
 				pron: 'tuh-haa chhai-nuh',
 				en: "I don't know",
@@ -739,7 +653,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-thaaha-cha-i-know',
-				np: 'Malai thaaha cha',
 				dev: 'मलाई थाहा छ',
 				pron: 'muh-lie tuh-haa chuh',
 				en: 'I know',
@@ -747,7 +660,6 @@ const COURSE = [
 			},
 			{
 				id: 'sochna-parcha-need-to-think-let-me-think',
-				np: 'Sochnu parcha',
 				dev: 'सोच्नु पर्छ',
 				pron: 'soch-noo pur-chuh',
 				en: 'Need to think / Let me think',
@@ -755,7 +667,6 @@ const COURSE = [
 			},
 			{
 				id: 'ali-bistari-bolnuhos-please-speak-slowly',
-				np: 'Ali bistarai bolnuhos',
 				dev: 'अलि बिस्तारै बोल्नुहोस्',
 				pron: 'ah-lee bis-taa-rai bowl-noo-hos',
 				en: 'Please speak slowly',
@@ -763,7 +674,6 @@ const COURSE = [
 			},
 			{
 				id: 'yo-ke-ho-what-is-this',
-				np: 'Yo ke ho?',
 				dev: 'यो के हो?',
 				pron: 'yo kay ho',
 				en: 'What is this?',
@@ -771,7 +681,6 @@ const COURSE = [
 			},
 			{
 				id: 'kasari-how',
-				np: 'Kasari?',
 				dev: 'कसरी?',
 				pron: 'kuh-saa-ri',
 				en: 'How?',
@@ -779,7 +688,6 @@ const COURSE = [
 			},
 			{
 				id: 'kina-why',
-				np: 'Kina?',
 				dev: 'किन?',
 				pron: 'ki-nuh',
 				en: 'Why?',
@@ -787,7 +695,6 @@ const COURSE = [
 			},
 			{
 				id: 'kun-which',
-				np: 'Kun?',
 				dev: 'कुन?',
 				pron: 'koon',
 				en: 'Which?',
@@ -795,7 +702,6 @@ const COURSE = [
 			},
 			{
 				id: 'nepali-ma-lai-ke-bhanchha-how-do-you-say-in-nepali',
-				np: 'Nepali ma ___ lai ke bhanchha?',
 				dev: 'नेपालीमा ___ लाई के भन्छ?',
 				pron: 'nay-paa-li maa ___ lie kay bhaan-chuh',
 				en: 'How do you say ___ in Nepali?',
@@ -803,7 +709,6 @@ const COURSE = [
 			},
 			{
 				id: 'lekhera-dinuhola-can-you-write-that-down',
-				np: 'Lekhera dinuhola?',
 				dev: 'लेखेर दिनुहोला?',
 				pron: 'lay-khay-raa di-noo-ho-laa',
 				en: 'Can you write that down?',
@@ -811,7 +716,6 @@ const COURSE = [
 			},
 			{
 				id: 'pheri-bhannus-can-you-repeat-that',
-				np: 'Pheri bhannus',
 				dev: 'फेरि भन्नुस्',
 				pron: 'pheh-ri bhan-noos',
 				en: 'Can you repeat that?',
@@ -819,7 +723,6 @@ const COURSE = [
 			},
 			{
 				id: 'bujhnubhayo-bujyau-do-you-understand',
-				np: 'Bujhnubhayo? / Bujyau?',
 				dev: 'बुझ्नुभयो? / बुझ्यौ?',
 				pron: 'booj-noo-bha-yo / booj-yoo',
 				en: 'Do you understand?',
@@ -827,7 +730,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-bolnu-hunchha-do-you-speak-english',
-				np: 'Tapai Angreji bolnu hunchha?',
 				dev: 'तपाईं अङ्ग्रेजी बोल्नुहुन्छ?',
 				pron: 'tuh-pie ahng-gray-jee bowl-noo hoon-chuh',
 				en: 'Do you speak English?',
@@ -835,7 +737,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-bolchhu-i-speak-english',
-				np: 'Ma Angreji bolchhu',
 				dev: 'म अङ्ग्रेजी बोल्छु',
 				pron: 'muh ahng-gray-jee bowl-choo',
 				en: 'I speak English',
@@ -851,7 +752,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ra-and',
-				np: 'Ra',
 				dev: 'र',
 				pron: 'ruh',
 				en: 'And',
@@ -859,7 +759,6 @@ const COURSE = [
 			},
 			{
 				id: 'tara-but',
-				np: 'Tara',
 				dev: 'तर',
 				pron: 'tuh-ruh',
 				en: 'But',
@@ -867,7 +766,6 @@ const COURSE = [
 			},
 			{
 				id: 'ani-and-then-also',
-				np: 'Ani',
 				dev: 'अनि',
 				pron: 'uh-ni',
 				en: 'And then / Also',
@@ -875,7 +773,6 @@ const COURSE = [
 			},
 			{
 				id: 'ki-or-in-questions',
-				np: 'Ki',
 				dev: 'कि',
 				pron: 'ki',
 				en: 'Or (in questions)',
@@ -883,7 +780,6 @@ const COURSE = [
 			},
 			{
 				id: 'athawa-or-in-statements',
-				np: 'Athawa',
 				dev: 'अथवा',
 				pron: 'uh-thuh-waa',
 				en: 'Or (in statements)',
@@ -891,7 +787,6 @@ const COURSE = [
 			},
 			{
 				id: 'pani-also-too',
-				np: 'Pani',
 				dev: 'पनि',
 				pron: 'puh-ni',
 				en: 'Also / Too',
@@ -899,7 +794,6 @@ const COURSE = [
 			},
 			{
 				id: 'matra-only-just',
-				np: 'Matra',
 				dev: 'मात्र',
 				pron: 'maa-truh',
 				en: 'Only / Just',
@@ -907,7 +801,6 @@ const COURSE = [
 			},
 			{
 				id: 'ahile-now-right-now',
-				np: 'Ahile',
 				dev: 'अहिले',
 				pron: 'uh-hi-lay',
 				en: 'Now / Right now',
@@ -915,7 +808,6 @@ const COURSE = [
 			},
 			{
 				id: 'pachhi-later-after',
-				np: 'Pachhi',
 				dev: 'पछि',
 				pron: 'puh-chhi',
 				en: 'Later / After',
@@ -923,7 +815,6 @@ const COURSE = [
 			},
 			{
 				id: 'aba-now-next',
-				np: 'Aba',
 				dev: 'अब',
 				pron: 'uh-buh',
 				en: 'Now / Next',
@@ -931,7 +822,6 @@ const COURSE = [
 			},
 			{
 				id: 'pheri-again',
-				np: 'Pheri',
 				dev: 'फेरि',
 				pron: 'pheh-ri',
 				en: 'Again',
@@ -947,7 +837,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'paani-dinus-please-give-me-water',
-				np: 'Paani dinus',
 				dev: 'पानी दिनुस्',
 				pron: 'paa-ni di-noos',
 				en: 'Please give me water',
@@ -955,7 +844,6 @@ const COURSE = [
 			},
 			{
 				id: 'khana-khanu-bhayo-have-you-eaten',
-				np: 'Khana khanu bhayo?',
 				dev: 'खाना खानुभयो?',
 				pron: 'kha-na kha-noo bha-yo',
 				en: 'Have you eaten?',
@@ -963,7 +851,6 @@ const COURSE = [
 			},
 			{
 				id: 'chiya-khaane-will-you-have-tea',
-				np: 'Chiya khaane?',
 				dev: 'चिया खाने?',
 				pron: 'chi-yaa khaa-nay',
 				en: 'Will you have tea?',
@@ -971,7 +858,6 @@ const COURSE = [
 			},
 			{
 				id: 'khana-khaeko-chu-i-ve-eaten-i-have-eaten',
-				np: 'Khana khaeko chu',
 				dev: 'खाना खाएको छु',
 				pron: 'kha-na khaa-ay-ko choo',
 				en: "I've eaten / I have eaten",
@@ -979,7 +865,6 @@ const COURSE = [
 			},
 			{
 				id: 'khana-khaeko-chhaina-i-haven-t-eaten',
-				np: 'Khana khaeko chhaina',
 				dev: 'खाना खाएको छैन',
 				pron: 'kha-na khaa-ay-ko chhai-nuh',
 				en: "I haven't eaten",
@@ -987,7 +872,6 @@ const COURSE = [
 			},
 			{
 				id: 'kasto-cha-how-is-it',
-				np: 'Kasto cha?',
 				dev: 'कस्तो छ?',
 				pron: 'kus-toh chuh',
 				en: 'How is it?',
@@ -995,7 +879,6 @@ const COURSE = [
 			},
 			{
 				id: 'mitho-cha-it-s-delicious',
-				np: 'Mitho cha',
 				dev: 'मिठो छ',
 				pron: 'mi-toh chuh',
 				en: "It's delicious",
@@ -1003,7 +886,6 @@ const COURSE = [
 			},
 			{
 				id: 'pugyo-enough-that-s-sufficient',
-				np: 'Pugyo',
 				dev: 'पुग्यो',
 				pron: 'poog-yo',
 				en: "Enough / That's sufficient",
@@ -1011,7 +893,6 @@ const COURSE = [
 			},
 			{
 				id: 'pardaina-no-need-not-necessary',
-				np: 'Pardaina',
 				dev: 'पर्दैन',
 				pron: 'pur-dye-nuh',
 				en: 'No need / Not necessary',
@@ -1019,7 +900,6 @@ const COURSE = [
 			},
 			{
 				id: 'thik-cha-it-s-okay-it-s-fine',
-				np: 'Thik cha',
 				dev: 'ठीक छ',
 				pron: 'teek chuh',
 				en: "It's okay / It's fine",
@@ -1027,7 +907,6 @@ const COURSE = [
 			},
 			{
 				id: 'khana-mitho-cha-the-food-is-delicious',
-				np: 'Khana mitho cha',
 				dev: 'खाना मिठो छ',
 				pron: 'kha-na mi-toh chuh',
 				en: 'The food is delicious',
@@ -1035,7 +914,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-machha-maasu-khadina-i-don-t-eat-meat',
-				np: 'Ma machha-maasu khadina',
 				dev: 'म माछामासु खाँदिनँ',
 				pron: 'muh maa-chhaa maa-soo kha-di-nuh',
 				en: "I don't eat meat",
@@ -1043,7 +921,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod',
-				np: 'Ma dudh, dahi ra ghue khadina',
 				dev: 'म दूध, दही र घ्यू खाँदिनँ',
 				pron: 'muh doodh, da-hee raa gyoo kha-di-nuh',
 				en: "I don't eat milk and milk products",
@@ -1051,7 +928,6 @@ const COURSE = [
 			},
 			{
 				id: 'khana-tayar-bhayo-the-food-is-ready',
-				np: 'Khana tayar bhayo',
 				dev: 'खाना तयार भयो',
 				pron: 'kha-na tuh-yaar bha-yo',
 				en: 'The food is ready',
@@ -1067,7 +943,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'bhanda-dishes-utensils',
-				np: 'Bhanda',
 				dev: 'भाँडा',
 				pron: 'bhaan-daa',
 				emoji: '🍽️',
@@ -1075,7 +950,6 @@ const COURSE = [
 			},
 			{
 				id: 'thaal-plate',
-				np: 'Thaal',
 				dev: 'थाल',
 				pron: 'thaal',
 				emoji: '🍽️',
@@ -1083,7 +957,6 @@ const COURSE = [
 			},
 			{
 				id: 'kachaura-bowl',
-				np: 'Kachaura',
 				dev: 'कचौरा',
 				pron: 'kuh-chow-raa',
 				emoji: '🥣',
@@ -1091,7 +964,6 @@ const COURSE = [
 			},
 			{
 				id: 'chamcha-spoon',
-				np: 'Chamcha',
 				dev: 'चम्चा',
 				pron: 'chum-chaa',
 				emoji: '🥄',
@@ -1099,7 +971,6 @@ const COURSE = [
 			},
 			{
 				id: 'kaanta-fork',
-				np: 'Kaanta',
 				dev: 'काँटा',
 				pron: 'kaan-taa',
 				emoji: '🍴',
@@ -1107,7 +978,6 @@ const COURSE = [
 			},
 			{
 				id: 'churaa-knife',
-				np: 'Churaa',
 				dev: 'छुरा',
 				pron: 'choo-raa',
 				emoji: '🔪',
@@ -1115,7 +985,6 @@ const COURSE = [
 			},
 			{
 				id: 'glass-glass-cup',
-				np: 'Glass',
 				dev: 'गिलास',
 				pron: 'glass',
 				emoji: '🥤',
@@ -1123,7 +992,6 @@ const COURSE = [
 			},
 			{
 				id: 'kap-cup',
-				np: 'Kap',
 				dev: 'कप',
 				pron: 'cup',
 				emoji: '☕',
@@ -1131,7 +999,6 @@ const COURSE = [
 			},
 			{
 				id: 'dekchi-pot-cooking-pot',
-				np: 'Dekchi',
 				dev: 'डेक्ची',
 				pron: 'dek-chi',
 				emoji: '🍲',
@@ -1139,7 +1006,6 @@ const COURSE = [
 			},
 			{
 				id: 'taawaa-pan-frying-pan',
-				np: 'Taawaa',
 				dev: 'तावा',
 				pron: 'taa-waa',
 				emoji: '🍳',
@@ -1147,7 +1013,6 @@ const COURSE = [
 			},
 			{
 				id: 'chulho-stove',
-				np: 'Chulho',
 				dev: 'चुल्हो',
 				pron: 'chool-ho',
 				emoji: '🔥',
@@ -1155,7 +1020,6 @@ const COURSE = [
 			},
 			{
 				id: 'fridge-refrigerator',
-				np: 'Fridge',
 				dev: 'फ्रिज',
 				pron: 'frij',
 				emoji: '🧊',
@@ -1163,7 +1027,6 @@ const COURSE = [
 			},
 			{
 				id: 'kitli-kettle',
-				np: 'Ketali',
 				dev: 'केतली',
 				pron: 'kay-tuh-lee',
 				emoji: '🫖',
@@ -1171,7 +1034,6 @@ const COURSE = [
 			},
 			{
 				id: 'masala-daani-spice-container',
-				np: 'Masala daani',
 				dev: 'मसलादानी',
 				pron: 'muh-saa-laa daa-ni',
 				emoji: '🧂',
@@ -1187,7 +1049,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'khana-food',
-				np: 'Khana',
 				dev: 'खाना',
 				pron: 'kha-na',
 				emoji: '🍽️',
@@ -1195,7 +1056,6 @@ const COURSE = [
 			},
 			{
 				id: 'bhaat-rice-cooked',
-				np: 'Bhaat',
 				dev: 'भात',
 				pron: 'bhaat',
 				emoji: '🍚',
@@ -1203,7 +1063,6 @@ const COURSE = [
 			},
 			{
 				id: 'daal-lentils',
-				np: 'Daal',
 				dev: 'दाल',
 				pron: 'daal',
 				emoji: '🫘',
@@ -1211,7 +1070,6 @@ const COURSE = [
 			},
 			{
 				id: 'tarkari-vegetables-curry',
-				np: 'Tarkari',
 				dev: 'तरकारी',
 				pron: 'tur-kaa-ri',
 				emoji: '🥗',
@@ -1219,7 +1077,6 @@ const COURSE = [
 			},
 			{
 				id: 'roti-bread-flatbread',
-				np: 'Roti',
 				dev: 'रोटी',
 				pron: 'ro-ti',
 				emoji: '🫓',
@@ -1227,7 +1084,6 @@ const COURSE = [
 			},
 			{
 				id: 'maasu-meat',
-				np: 'Maasu',
 				dev: 'मासु',
 				pron: 'maa-soo',
 				emoji: '🍖',
@@ -1235,7 +1091,6 @@ const COURSE = [
 			},
 			{
 				id: 'machha-fish',
-				np: 'Maachha',
 				dev: 'माछा',
 				pron: 'maa-chhaa',
 				emoji: '🐟',
@@ -1243,7 +1098,6 @@ const COURSE = [
 			},
 			{
 				id: 'kukhura-ko-phul-egg',
-				np: 'Kukhura ko phul',
 				dev: 'कुखुराको फुल',
 				pron: 'koo-khu-raa ko fool',
 				emoji: '🥚',
@@ -1251,7 +1105,6 @@ const COURSE = [
 			},
 			{
 				id: 'dudh-milk',
-				np: 'Dudh',
 				dev: 'दूध',
 				pron: 'doodh',
 				emoji: '🥛',
@@ -1259,7 +1112,6 @@ const COURSE = [
 			},
 			{
 				id: 'dahi-yogurt',
-				np: 'Dahi',
 				dev: 'दही',
 				pron: 'duh-hi',
 				emoji: '🥛',
@@ -1267,7 +1119,6 @@ const COURSE = [
 			},
 			{
 				id: 'chiya-tea',
-				np: 'Chiya',
 				dev: 'चिया',
 				pron: 'chi-yaa',
 				emoji: '🍵',
@@ -1275,7 +1126,6 @@ const COURSE = [
 			},
 			{
 				id: 'paani-water',
-				np: 'Paani',
 				dev: 'पानी',
 				pron: 'paa-ni',
 				emoji: '💧',
@@ -1283,7 +1133,6 @@ const COURSE = [
 			},
 			{
 				id: 'nun-salt',
-				np: 'Nun',
 				dev: 'नुन',
 				pron: 'noon',
 				emoji: '🧂',
@@ -1291,7 +1140,6 @@ const COURSE = [
 			},
 			{
 				id: 'chini-sugar',
-				np: 'Chini',
 				dev: 'चिनी',
 				pron: 'chi-ni',
 				emoji: '🍬',
@@ -1299,7 +1147,6 @@ const COURSE = [
 			},
 			{
 				id: 'tel-oil',
-				np: 'Tel',
 				dev: 'तेल',
 				pron: 'tail',
 				emoji: '🛢️',
@@ -1307,7 +1154,6 @@ const COURSE = [
 			},
 			{
 				id: 'masala-spices',
-				np: 'Masala',
 				dev: 'मसला',
 				pron: 'muh-saa-laa',
 				emoji: '🌶️',
@@ -1315,7 +1161,6 @@ const COURSE = [
 			},
 			{
 				id: 'phal-fruit',
-				np: 'Phal',
 				dev: 'फल',
 				pron: 'ful',
 				emoji: '🍎',
@@ -1323,7 +1168,6 @@ const COURSE = [
 			},
 			{
 				id: 'achar-pickle-chutney',
-				np: 'Achar',
 				dev: 'अचार',
 				pron: 'uh-chaar',
 				emoji: '🫙',
@@ -1331,7 +1175,6 @@ const COURSE = [
 			},
 			{
 				id: 'bhatta-soybean',
-				np: 'Bhatmas',
 				dev: 'भटमास',
 				pron: 'bhut-maas',
 				emoji: '🫘',
@@ -1339,7 +1182,6 @@ const COURSE = [
 			},
 			{
 				id: 'maha-honey',
-				np: 'Maha',
 				dev: 'मह',
 				pron: 'muh-haa',
 				emoji: '🍯',
@@ -1355,7 +1197,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'malai-chaahiyo-i-need',
-				np: 'Malai ___ chaahiyo',
 				dev: 'मलाई ___ चाहियो',
 				pron: 'muh-lie ___ chaa-hi-yo',
 				en: 'I need ___',
@@ -1363,7 +1204,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-chiya-chaahiyo-i-need-tea',
-				np: 'Malai chiya chaahiyo',
 				dev: 'मलाई चिया चाहियो',
 				pron: 'muh-lie chi-yaa chaa-hi-yo',
 				en: 'I need tea',
@@ -1371,7 +1211,6 @@ const COURSE = [
 			},
 			{
 				id: 'dinus-please-give-me',
-				np: '___ dinus',
 				dev: '___ दिनुस्',
 				pron: '___ di-noos',
 				en: 'Please give me ___',
@@ -1379,7 +1218,6 @@ const COURSE = [
 			},
 			{
 				id: 'nun-dinus-please-pass-the-salt',
-				np: 'Nun dinus',
 				dev: 'नुन दिनुस्',
 				pron: 'noon di-noos',
 				en: 'Please pass the salt',
@@ -1387,7 +1225,6 @@ const COURSE = [
 			},
 			{
 				id: 'kaha-cha-where-is',
-				np: '___ kaha cha?',
 				dev: '___ कहाँ छ?',
 				pron: '___ kuh-haa chuh',
 				en: 'Where is ___?',
@@ -1395,7 +1232,6 @@ const COURSE = [
 			},
 			{
 				id: 'mero-kap-kaha-cha-where-is-my-cup',
-				np: 'Mero kap kaha cha?',
 				dev: 'मेरो कप कहाँ छ?',
 				pron: 'meh-ro cup kuh-haa chuh',
 				en: 'Where is my cup?',
@@ -1403,7 +1239,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-khojdai-chu-i-am-looking-for',
-				np: 'Ma ___ khojdai chu',
 				dev: 'म ___ खोज्दै छु',
 				pron: 'muh ___ khoj-dye choo',
 				en: 'I am looking for ___',
@@ -1411,7 +1246,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-man-parcha-i-like',
-				np: 'Malai ___ man parcha',
 				dev: 'मलाई ___ मन पर्छ',
 				pron: 'muh-lie ___ mun pur-chuh',
 				en: 'I like ___',
@@ -1419,7 +1253,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-dahi-man-parcha-i-like-yogurt',
-				np: 'Malai dahi man parcha',
 				dev: 'मलाई दही मन पर्छ',
 				pron: 'muh-lie duh-hi mun pur-chuh',
 				en: 'I like yogurt',
@@ -1427,7 +1260,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-man-pardaina-i-don-t-like',
-				np: 'Malai ___ man pardaina',
 				dev: 'मलाई ___ मन पर्दैन',
 				pron: 'muh-lie ___ mun pur-dye-nuh',
 				en: "I don't like ___",
@@ -1435,7 +1267,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-sanga-cha-do-you-have',
-				np: 'Tapai sanga ___ cha?',
 				dev: 'तपाईंसँग ___ छ?',
 				pron: 'tuh-pie sung-guh ___ chuh',
 				en: 'Do you have ___?',
@@ -1443,7 +1274,6 @@ const COURSE = [
 			},
 			{
 				id: 'arko-dinus-please-give-me-another',
-				np: 'Arko ___ dinus',
 				dev: 'अर्को ___ दिनुस्',
 				pron: 'ur-ko ___ di-noos',
 				en: 'Please give me another ___',
@@ -1459,7 +1289,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'charpi-kaha-cha-where-is-the-bathroom',
-				np: 'Charpi kaha cha?',
 				dev: 'चर्पी कहाँ छ?',
 				pron: 'chur-pi kuh-haa chuh',
 				en: 'Where is the bathroom?',
@@ -1467,7 +1296,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-nuhaauna-jane-i-m-going-to-bathe',
-				np: 'Ma nuhaauna jane',
 				dev: 'म नुहाउन जाने',
 				pron: 'muh noo-hau-nuh jaa-nay',
 				en: "I'm going to bathe",
@@ -1475,7 +1303,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-kehi-maddat-garna-sakchu-can-i-help-with-anything',
-				np: 'Ma kehi maddat garna sakchu?',
 				dev: 'म केही मद्दत गर्न सक्छु?',
 				pron: 'muh keh-hi mud-dut gar-nuh suk-choo',
 				en: 'Can I help with anything?',
@@ -1483,7 +1310,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-bhada-maajhchu-i-ll-wash-the-dishes',
-				np: 'Ma bhaandaa maajhchu',
 				dev: 'म भाँडा माझ्छु',
 				pron: 'muh bhaan-daa maaj-choo',
 				en: "I'll wash the dishes",
@@ -1491,7 +1317,6 @@ const COURSE = [
 			},
 			{
 				id: 'dhoka-banda-garnus-please-close-the-door',
-				np: 'Dhoka banda garnus',
 				dev: 'ढोका बन्द गर्नुस्',
 				pron: 'dho-kaa bun-duh gur-noos',
 				en: 'Please close the door',
@@ -1499,7 +1324,6 @@ const COURSE = [
 			},
 			{
 				id: 'dhoka-banda-garnu-bhayo-did-you-close-the-door',
-				np: 'Dhoka banda garnu bhayo?',
 				dev: 'ढोका बन्द गर्नुभयो?',
 				pron: 'dho-kaa bun-duh gur-noo bhuh-yo',
 				en: 'Did you close the door?',
@@ -1507,7 +1331,6 @@ const COURSE = [
 			},
 			{
 				id: 'batti-balnus-please-turn-on-the-light',
-				np: 'Batti balnus',
 				dev: 'बत्ती बाल्नुस्',
 				pron: 'but-ti baal-noos',
 				en: 'Please turn on the light',
@@ -1515,7 +1338,6 @@ const COURSE = [
 			},
 			{
 				id: 'batti-nibhaunus-please-turn-off-the-light',
-				np: 'Batti nibhaunus',
 				dev: 'बत्ती निभाउनुस्',
 				pron: 'but-ti ni-bhau-noos',
 				en: 'Please turn off the light',
@@ -1523,7 +1345,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-lugaa-dhunchu-i-will-wash-the-clothes',
-				np: 'Ma lugaa dhunchu',
 				dev: 'म लुगा धुन्छु',
 				pron: 'muh loo-gaa dhoon-choo',
 				en: 'I will wash the clothes',
@@ -1531,7 +1352,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-ghar-safaa-garchu-i-will-clean-the-house',
-				np: 'Ma ghar safaa garchu',
 				dev: 'म घर सफा गर्छु',
 				pron: 'muh ghur suh-faa gur-choo',
 				en: 'I will clean the house',
@@ -1539,7 +1359,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-fohor-falchhu-i-will-take-out-the-trash',
-				np: 'Ma fohor falchhu',
 				dev: 'म फोहोर फाल्छु',
 				pron: 'muh fo-hor faal-choo',
 				en: 'I will take out the trash',
@@ -1547,7 +1366,6 @@ const COURSE = [
 			},
 			{
 				id: 'paahuna-aaudai-chan-guests-are-coming',
-				np: 'Paahuna aaudai chan',
 				dev: 'पाहुना आउँदै छन्',
 				pron: 'paa-hoo-naa aau-dye chun',
 				en: 'Guests are coming',
@@ -1555,7 +1373,6 @@ const COURSE = [
 			},
 			{
 				id: 'bhitra-aaunus-please-come-in',
-				np: 'Bhitra aaunus',
 				dev: 'भित्र आउनुस्',
 				pron: 'bhi-truh aau-noos',
 				en: 'Please come in',
@@ -1563,7 +1380,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-maddat-garchu-i-will-help',
-				np: 'Ma maddat garchu',
 				dev: 'म मद्दत गर्छु',
 				pron: 'muh mud-dut gur-choo',
 				en: 'I will help',
@@ -1571,7 +1387,6 @@ const COURSE = [
 			},
 			{
 				id: 'maddat-chaahiyo-do-you-need-help',
-				np: 'Maddat chaahiyo?',
 				dev: 'मद्दत चाहियो?',
 				pron: 'mud-dut chaa-hi-yo',
 				en: 'Do you need help?',
@@ -1579,7 +1394,6 @@ const COURSE = [
 			},
 			{
 				id: 'sutne-bela-bhayo-it-s-bedtime',
-				np: 'Sutne bela bhayo',
 				dev: 'सुत्ने बेला भयो',
 				pron: 'soot-nay bay-laa bhuh-yo',
 				en: "It's bedtime",
@@ -1595,7 +1409,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'kucho-broom',
-				np: 'Kucho',
 				dev: 'कुचो',
 				pron: 'koo-cho',
 				emoji: '🧹',
@@ -1603,7 +1416,6 @@ const COURSE = [
 			},
 			{
 				id: 'pochaa-mop',
-				np: 'Pochaa',
 				dev: 'पोछा',
 				pron: 'po-chaa',
 				emoji: '🧽',
@@ -1611,7 +1423,6 @@ const COURSE = [
 			},
 			{
 				id: 'fohormailaa-garbage-trash',
-				np: 'Fohormailaa',
 				dev: 'फोहोरमैला',
 				pron: 'fo-hor-my-laa',
 				emoji: '🗑️',
@@ -1619,7 +1430,6 @@ const COURSE = [
 			},
 			{
 				id: 'fohormailaa-ko-thungaa-trash-can',
-				np: 'Dustbin',
 				dev: 'डस्टबिन',
 				pron: 'dust-bin',
 				emoji: '🗑️',
@@ -1627,7 +1437,6 @@ const COURSE = [
 			},
 			{
 				id: 'jhaaru-duster-cleaning-cloth',
-				np: 'Duster',
 				dev: 'डस्टर',
 				pron: 'dus-tar',
 				emoji: '🧽',
@@ -1635,7 +1444,6 @@ const COURSE = [
 			},
 			{
 				id: 'spanj-sponge',
-				np: 'Spanj',
 				dev: 'स्पन्ज',
 				pron: 'spunj',
 				emoji: '🧽',
@@ -1643,7 +1451,6 @@ const COURSE = [
 			},
 			{
 				id: 'baalti-bucket',
-				np: 'Baalti',
 				dev: 'बाल्टी',
 				pron: 'baal-ti',
 				emoji: '🪣',
@@ -1651,7 +1458,6 @@ const COURSE = [
 			},
 			{
 				id: 'panja-gloves',
-				np: 'Panja',
 				dev: 'पन्जा',
 				pron: 'pun-jaa',
 				emoji: '🧤',
@@ -1667,7 +1473,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ma-jaanchu-i-am-going-to',
-				np: 'Ma ___ jaanchu',
 				dev: 'म ___ जान्छु',
 				pron: 'muh ___ jaan-choo',
 				en: 'I am going to ___',
@@ -1675,7 +1480,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-ghar-jaanchu-i-am-going-home',
-				np: 'Ma ghar jaanchu',
 				dev: 'म घर जान्छु',
 				pron: 'muh ghur jaan-choo',
 				en: 'I am going home',
@@ -1683,7 +1487,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-garchu-i-will-do',
-				np: 'Ma ___ garchu',
 				dev: 'म ___ गर्छु',
 				pron: 'muh ___ gur-choo',
 				en: 'I will do ___',
@@ -1691,7 +1494,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-kaam-garchu-i-am-working-i-will-do-the-work',
-				np: 'Ma kaam garchu',
 				dev: 'म काम गर्छु',
 				pron: 'muh kaam gur-choo',
 				en: 'I am working / I will do the work',
@@ -1699,7 +1501,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite',
-				np: 'Tapai ke gardai hunuhunchha?',
 				dev: 'तपाईं के गर्दै हुनुहुन्छ?',
 				pron: 'tuh-pie kay gur-dye hoo-noo-hoon-chuh',
 				en: 'What are you doing? (polite)',
@@ -1707,7 +1508,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-khana-pakaudai-chu-i-am-cooking-food',
-				np: 'Ma khana pakaudai chu',
 				dev: 'म खाना पकाउँदै छु',
 				pron: 'muh khaa-naa puh-kow-dye choo',
 				en: 'I am cooking food',
@@ -1715,7 +1515,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-kinchhu-i-will-buy',
-				np: 'Ma ___ kinchhu',
 				dev: 'म ___ किन्छु',
 				pron: 'muh ___ kin-choo',
 				en: 'I will buy ___',
@@ -1723,7 +1522,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-khanu-huncha-will-you-have-polite-offer',
-				np: 'Tapai ___ khanu huncha?',
 				dev: 'तपाईं ___ खानुहुन्छ?',
 				pron: 'tuh-pie ___ khaa-noo hoon-chuh',
 				en: 'Will you have ___? (polite offer)',
@@ -1731,7 +1529,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-khanchu-i-will-have',
-				np: 'Ma ___ khanchu',
 				dev: 'म ___ खान्छु',
 				pron: 'muh ___ khaan-choo',
 				en: 'I will have ___',
@@ -1739,7 +1536,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-sutna-jaane-i-am-going-to-bed',
-				np: 'Ma sutna jaane',
 				dev: 'म सुत्न जाने',
 				pron: 'muh soot-nuh jaa-nay',
 				en: 'I am going to bed',
@@ -1747,7 +1543,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-ahile-aaunchu-i-will-be-right-back',
-				np: 'Ma ahile aaunchu',
 				dev: 'म अहिले आउँछु',
 				pron: 'muh uh-hi-lay aaun-choo',
 				en: 'I will be right back',
@@ -1755,7 +1550,6 @@ const COURSE = [
 			},
 			{
 				id: 'ek-chhin-parkhanus-wait-a-moment-please',
-				np: 'Ek chhin parkhanus',
 				dev: 'एक छिन पर्खनुस्',
 				pron: 'ek chhin purkh-uh-noos',
 				en: 'Wait a moment, please',
@@ -1771,7 +1565,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ma-sikchu-i-learn',
-				np: 'Ma sikchu',
 				dev: 'म सिक्छु',
 				pron: 'muh sik-choo',
 				en: 'I learn / I study',
@@ -1779,7 +1572,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-siknuhunchha-do-you-study-polite',
-				np: 'Tapai siknuhunchha?',
 				dev: 'तपाईं सिक्नुहुन्छ?',
 				pron: 'tuh-pie sik-noo-hoon-chuh',
 				en: 'Do you learn / study? (polite)',
@@ -1787,7 +1579,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-herchu-i-watch',
-				np: 'Ma herchu',
 				dev: 'म हेर्छु',
 				pron: 'muh hair-choo',
 				en: 'I watch / I look',
@@ -1795,7 +1586,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-bhanchu-i-say',
-				np: 'Ma bhanchu',
 				dev: 'म भन्छु',
 				pron: 'muh bhun-choo',
 				en: 'I say / I tell',
@@ -1803,7 +1593,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-sodhchu-i-ask',
-				np: 'Ma sodhchu',
 				dev: 'म सोध्छु',
 				pron: 'muh sodh-choo',
 				en: 'I ask',
@@ -1811,7 +1600,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-padhchu-i-read',
-				np: 'Ma padhchu',
 				dev: 'म पढ्छु',
 				pron: 'muh padh-choo',
 				en: 'I read / I study',
@@ -1819,7 +1607,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-lekhchu-i-write',
-				np: 'Ma lekhchu',
 				dev: 'म लेख्छु',
 				pron: 'muh lekh-choo',
 				en: 'I write',
@@ -1827,7 +1614,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-dinchu-i-give',
-				np: 'Ma dinchu',
 				dev: 'म दिन्छु',
 				pron: 'muh din-choo',
 				en: 'I give',
@@ -1835,7 +1621,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-linchu-i-take',
-				np: 'Ma linchu',
 				dev: 'म लिन्छु',
 				pron: 'muh lin-choo',
 				en: 'I take',
@@ -1843,7 +1628,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-piunchu-i-drink',
-				np: 'Ma piunchu',
 				dev: 'म पिउँछु',
 				pron: 'muh pi-oon-choo',
 				en: 'I drink',
@@ -1851,7 +1635,6 @@ const COURSE = [
 			},
 			{
 				id: 'u-git-sunchha-he-she-listens',
-				np: 'U git sunchha',
 				dev: 'ऊ गीत सुन्छ',
 				pron: 'oo geet soon-chuh',
 				en: 'He / she listens to music (informal)',
@@ -1867,7 +1650,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ma-uthchu-i-get-up-i-will-get-up',
-				np: 'Ma uthchu',
 				dev: 'म उठ्छु',
 				pron: 'muh ooth-choo',
 				en: 'I get up / I will get up',
@@ -1875,7 +1657,6 @@ const COURSE = [
 			},
 			{
 				id: 'uthnus-please-get-up-wake-up',
-				np: 'Uthnus!',
 				dev: 'उठ्नुस्!',
 				pron: 'ooth-noos',
 				en: 'Please get up / Wake up!',
@@ -1883,7 +1664,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-mukh-dhunchhu-i-will-wash-my-face',
-				np: 'Ma mukh dhunchhu',
 				dev: 'म मुख धुन्छु',
 				pron: 'muh mookh dhoon-choo',
 				en: 'I will wash my face',
@@ -1891,7 +1671,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-daat-maajhchu-i-will-brush-my-teeth',
-				np: 'Ma daant maajhchu',
 				dev: 'म दाँत माझ्छु',
 				pron: 'muh daant maaj-choo',
 				en: 'I will brush my teeth',
@@ -1899,7 +1678,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-kaam-jaanchu-i-am-going-to-work',
-				np: 'Ma kaam jaanchu',
 				dev: 'म काम जान्छु',
 				pron: 'muh kaam jaan-choo',
 				en: 'I am going to work',
@@ -1907,7 +1685,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-ghar-aaye-i-am-home-i-came-home',
-				np: 'Ma ghar aaye',
 				dev: 'म घर आएँ',
 				pron: 'muh ghur aa-yay',
 				en: 'I am home / I came home',
@@ -1915,7 +1692,6 @@ const COURSE = [
 			},
 			{
 				id: 'khana-khane-bela-bhayo-it-is-time-to-eat',
-				np: 'Khana khane bela bhayo',
 				dev: 'खाना खाने बेला भयो',
 				pron: 'kha-na khaa-nay bay-laa bhuh-yo',
 				en: 'It is time to eat',
@@ -1923,7 +1699,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-thakeko-chu-i-am-tired',
-				np: 'Ma thakeko chu',
 				dev: 'म थकेको छु',
 				pron: 'muh thuh-kay-ko choo',
 				en: 'I am tired',
@@ -1931,7 +1706,6 @@ const COURSE = [
 			},
 			{
 				id: 'dhilo-bhayo-it-is-late-i-am-running-late',
-				np: 'Dhilo bhayo',
 				dev: 'ढिलो भयो',
 				pron: 'dhi-lo bhuh-yo',
 				en: 'It is late / I am running late',
@@ -1939,7 +1713,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-chaadai-aaunchu-i-will-come-back-soon',
-				np: 'Ma chaadai aaunchu',
 				dev: 'म चाँडै आउँछु',
 				pron: 'muh chaa-dye aaun-choo',
 				en: 'I will come back soon',
@@ -1947,7 +1720,6 @@ const COURSE = [
 			},
 			{
 				id: 'ramro-sanga-sutnus-sleep-well',
-				np: 'Ramro sanga sutnus',
 				dev: 'राम्रोसँग सुत्नुस्',
 				pron: 'rum-ro sung-guh soot-noos',
 				en: 'Sleep well',
@@ -1955,7 +1727,6 @@ const COURSE = [
 			},
 			{
 				id: 'subha-din-have-a-good-day',
-				np: 'Subha din',
 				dev: 'शुभ दिन',
 				pron: 'soo-bhuh din',
 				en: 'Have a good day',
@@ -1971,7 +1742,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'maile-siken-i-learned',
-				np: 'Maile siken',
 				dev: 'मैले सिकेँ',
 				pron: 'my-lay si-ken',
 				en: 'I learned',
@@ -1979,7 +1749,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-gaen-i-went',
-				np: 'Ma gaen',
 				dev: 'म गएँ',
 				pron: 'muh gah-en',
 				en: 'I went',
@@ -1987,7 +1756,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-aaen-i-came',
-				np: 'Ma aaen',
 				dev: 'म आएँ',
 				pron: 'muh aa-en',
 				en: 'I came',
@@ -1995,7 +1763,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-garen-i-did',
-				np: 'Maile garen',
 				dev: 'मैले गरेँ',
 				pron: 'my-lay guh-ren',
 				en: 'I did / I made',
@@ -2003,7 +1770,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-khaen-i-ate',
-				np: 'Maile khaen',
 				dev: 'मैले खाएँ',
 				pron: 'my-lay khah-en',
 				en: 'I ate',
@@ -2011,7 +1777,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-pien-i-drank',
-				np: 'Maile pien',
 				dev: 'मैले पिएँ',
 				pron: 'my-lay pi-en',
 				en: 'I drank',
@@ -2019,7 +1784,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-heren-i-watched',
-				np: 'Maile heren',
 				dev: 'मैले हेरेँ',
 				pron: 'my-lay heh-ren',
 				en: 'I watched / I looked',
@@ -2027,7 +1791,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-sunen-i-heard',
-				np: 'Maile sunen',
 				dev: 'मैले सुनेँ',
 				pron: 'my-lay soo-nen',
 				en: 'I heard / I listened',
@@ -2035,7 +1798,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-bhanen-i-said',
-				np: 'Maile bhanen',
 				dev: 'मैले भनेँ',
 				pron: 'my-lay bhuh-nen',
 				en: 'I said / I told',
@@ -2043,7 +1805,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-padhen-i-read',
-				np: 'Maile padhen',
 				dev: 'मैले पढेँ',
 				pron: 'my-lay padh-en',
 				en: 'I read (past)',
@@ -2051,7 +1812,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-lekhen-i-wrote',
-				np: 'Maile lekhen',
 				dev: 'मैले लेखेँ',
 				pron: 'my-lay leh-khen',
 				en: 'I wrote',
@@ -2059,7 +1819,6 @@ const COURSE = [
 			},
 			{
 				id: 'maile-dien-i-gave',
-				np: 'Maile dien',
 				dev: 'मैले दिएँ',
 				pron: 'my-lay di-en',
 				en: 'I gave',
@@ -2075,7 +1834,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ma-garna-sakchu-i-can-do',
-				np: 'Ma garna sakchu',
 				dev: 'म गर्न सक्छु',
 				pron: 'muh gur-nuh suk-choo',
 				en: 'I can do it',
@@ -2083,7 +1841,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-jana-sakchu-i-can-go',
-				np: 'Ma jana sakchu',
 				dev: 'म जान सक्छु',
 				pron: 'muh jaa-nuh suk-choo',
 				en: 'I can go',
@@ -2091,7 +1848,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-garna-saknuhunchha-can-you-do-it',
-				np: 'Tapai garna saknuhunchha?',
 				dev: 'तपाईं गर्न सक्नुहुन्छ?',
 				pron: 'tuh-pie gur-nuh suk-noo-hoon-chuh',
 				en: 'Can you do it? (polite)',
@@ -2099,7 +1855,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-garna-sakdina-i-cannot-do',
-				np: 'Ma garna sakdina',
 				dev: 'म गर्न सक्दिनँ',
 				pron: 'muh gur-nuh suk-di-nuh',
 				en: 'I cannot do it',
@@ -2107,7 +1862,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-jana-man-laagcha-i-want-to-go',
-				np: 'Malai jana man laagcha',
 				dev: 'मलाई जान मन लाग्छ',
 				pron: 'muh-lie jaa-nuh mun laag-chuh',
 				en: 'I want to go',
@@ -2115,7 +1869,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-khana-man-laagcha-i-want-to-eat',
-				np: 'Malai khana man laagcha',
 				dev: 'मलाई खान मन लाग्छ',
 				pron: 'muh-lie khaa-nuh mun laag-chuh',
 				en: 'I want to eat',
@@ -2123,7 +1876,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-man-laagdaina-i-dont-want-to',
-				np: 'Malai jana man laagdaina',
 				dev: 'मलाई जान मन लाग्दैन',
 				pron: 'muh-lie jaa-nuh mun laag-dye-nuh',
 				en: "I don't want to go",
@@ -2131,7 +1883,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-jaanu-parcha-i-have-to-go',
-				np: 'Malai jaanu parcha',
 				dev: 'मलाई जानु पर्छ',
 				pron: 'muh-lie jaa-noo pur-chuh',
 				en: 'I have to go',
@@ -2139,7 +1890,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-kaam-garnu-parcha-i-have-to-work',
-				np: 'Malai kaam garnu parcha',
 				dev: 'मलाई काम गर्नु पर्छ',
 				pron: 'muh-lie kaam gur-noo pur-chuh',
 				en: 'I have to work',
@@ -2147,7 +1897,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-jaanu-pardaina-i-dont-have-to-go',
-				np: 'Malai jaanu pardaina',
 				dev: 'मलाई जानु पर्दैन',
 				pron: 'muh-lie jaa-noo pur-dye-nuh',
 				en: "I don't have to go",
@@ -2155,7 +1904,6 @@ const COURSE = [
 			},
 			{
 				id: 'ke-garnu-parcha-what-should-i-do',
-				np: 'Ke garnu parcha?',
 				dev: 'के गर्नु पर्छ?',
 				pron: 'kay gur-noo pur-chuh',
 				en: 'What should I do?',
@@ -2171,7 +1919,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ma-tarkari-kaatchu-i-will-cut-the-vegetables',
-				np: 'Ma tarkari kaatchu',
 				dev: 'म तरकारी काट्छु',
 				pron: 'muh tur-kaa-ri kaat-choo',
 				en: 'I will cut the vegetables',
@@ -2179,7 +1926,6 @@ const COURSE = [
 			},
 			{
 				id: 'paani-umaalnus-please-boil-the-water',
-				np: 'Paani umaalnus',
 				dev: 'पानी उमाल्नुस्',
 				pron: 'paa-ni oo-maal-noos',
 				en: 'Please boil the water',
@@ -2187,7 +1933,6 @@ const COURSE = [
 			},
 			{
 				id: 'bhaat-pakaunus-please-cook-the-rice',
-				np: 'Bhaat pakaunus',
 				dev: 'भात पकाउनुस्',
 				pron: 'bhaat puh-kow-noos',
 				en: 'Please cook the rice',
@@ -2195,7 +1940,6 @@ const COURSE = [
 			},
 			{
 				id: 'yo-piro-cha-is-this-spicy',
-				np: 'Yo piro cha?',
 				dev: 'यो पिरो छ?',
 				pron: 'yo pi-ro chuh',
 				en: 'Is this spicy?',
@@ -2203,7 +1947,6 @@ const COURSE = [
 			},
 			{
 				id: 'dherai-piro-cha-it-is-very-spicy',
-				np: 'Dherai piro cha',
 				dev: 'धेरै पिरो छ',
 				pron: 'dheh-rye pi-ro chuh',
 				en: 'It is very spicy',
@@ -2211,7 +1954,6 @@ const COURSE = [
 			},
 			{
 				id: 'nun-pugyo-there-is-enough-salt',
-				np: 'Nun pugyo',
 				dev: 'नुन पुग्यो',
 				pron: 'noon poog-yo',
 				en: 'There is enough salt',
@@ -2219,7 +1961,6 @@ const COURSE = [
 			},
 			{
 				id: 'aru-nun-chaahiyo-it-needs-more-salt',
-				np: 'Aru nun chaahiyo',
 				dev: 'अरु नुन चाहियो',
 				pron: 'uh-roo noon chaa-hi-yo',
 				en: 'It needs more salt',
@@ -2227,7 +1968,6 @@ const COURSE = [
 			},
 			{
 				id: 'chakhnus-please-taste-it',
-				np: 'Chakhnus',
 				dev: 'चाख्नुस्',
 				pron: 'chaakh-noos',
 				en: 'Please taste it',
@@ -2235,7 +1975,6 @@ const COURSE = [
 			},
 			{
 				id: 'tato-cha-it-is-hot-to-the-touch',
-				np: 'Tato cha',
 				dev: 'तातो छ',
 				pron: 'taa-to chuh',
 				en: 'It is hot (to the touch)',
@@ -2243,7 +1982,6 @@ const COURSE = [
 			},
 			{
 				id: 'hosh-garnus-be-careful',
-				np: 'Hosh garnus',
 				dev: 'होश गर्नुस्',
 				pron: 'hosh gur-noos',
 				en: 'Be careful',
@@ -2251,7 +1989,6 @@ const COURSE = [
 			},
 			{
 				id: 'ramro-basna-aayo-it-smells-good',
-				np: 'Ramro basna aayo',
 				dev: 'राम्रो बास्ना आयो',
 				pron: 'rum-ro baas-nuh aa-yo',
 				en: 'It smells good',
@@ -2259,7 +1996,6 @@ const COURSE = [
 			},
 			{
 				id: 'khana-sakiyo-the-food-is-finished-all-gone',
-				np: 'Khana sakiyo',
 				dev: 'खाना सकियो',
 				pron: 'kha-na suh-ki-yo',
 				en: 'The food is finished / all gone',
@@ -2275,7 +2011,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'kati-ho-how-much-is-it',
-				np: 'Kati ho?',
 				dev: 'कति हो?',
 				pron: 'kuh-ti ho',
 				en: 'How much is it?',
@@ -2283,7 +2018,6 @@ const COURSE = [
 			},
 			{
 				id: 'mahango-cha-it-s-expensive',
-				np: 'Mahango cha',
 				dev: 'महँगो छ',
 				pron: 'muh-hun-go chuh',
 				en: "It's expensive",
@@ -2291,7 +2025,6 @@ const COURSE = [
 			},
 			{
 				id: 'sasto-cha-it-s-cheap',
-				np: 'Sasto cha',
 				dev: 'सस्तो छ',
 				pron: 'sus-toh chuh',
 				en: "It's cheap",
@@ -2299,7 +2032,6 @@ const COURSE = [
 			},
 			{
 				id: 'kati-ma-for-how-much',
-				np: 'Kati ma?',
 				dev: 'कतिमा?',
 				pron: 'kuh-ti maa',
 				en: 'For how much?',
@@ -2307,7 +2039,6 @@ const COURSE = [
 			},
 			{
 				id: 'kam-garnuhos-please-reduce-make-it-less',
-				np: 'Kam garnuhos',
 				dev: 'कम गर्नुहोस्',
 				pron: 'kum gar-noo-hos',
 				en: 'Please reduce / Make it less',
@@ -2315,7 +2046,6 @@ const COURSE = [
 			},
 			{
 				id: 'antim-mol-kati-what-s-your-final-price',
-				np: 'Antim mol kati?',
 				dev: 'अन्तिम मोल कति?',
 				pron: 'un-tim mol kuh-ti',
 				en: "What's your final price?",
@@ -2323,7 +2053,6 @@ const COURSE = [
 			},
 			{
 				id: 'aru-ke-chaahiyo-what-else-do-you-need',
-				np: 'Aru ke chaahiyo?',
 				dev: 'अरु के चाहियो?',
 				pron: 'uh-roo kay chaa-hi-yo',
 				en: 'What else do you need?',
@@ -2331,7 +2060,6 @@ const COURSE = [
 			},
 			{
 				id: 'aru-kehi-chhaina-nothing-else',
-				np: 'Aru kehi chhaina',
 				dev: 'अरु केही छैन',
 				pron: 'uh-roo keh-hi chhai-nuh',
 				en: 'Nothing else',
@@ -2347,7 +2075,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'kahile-when',
-				np: 'Kahile?',
 				dev: 'कहिले?',
 				pron: 'kuh-hi-lay',
 				en: 'When?',
@@ -2355,7 +2082,6 @@ const COURSE = [
 			},
 			{
 				id: 'aaja-today',
-				np: 'Aaja',
 				dev: 'आज',
 				pron: 'aa-juh',
 				en: 'Today',
@@ -2363,7 +2089,6 @@ const COURSE = [
 			},
 			{
 				id: 'bholi-tomorrow',
-				np: 'Bholi',
 				dev: 'भोलि',
 				pron: 'bho-li',
 				en: 'Tomorrow',
@@ -2371,7 +2096,6 @@ const COURSE = [
 			},
 			{
 				id: 'hijo-yesterday',
-				np: 'Hijo',
 				dev: 'हिजो',
 				pron: 'hi-jo',
 				en: 'Yesterday',
@@ -2379,7 +2103,6 @@ const COURSE = [
 			},
 			{
 				id: 'bihaana-morning',
-				np: 'Bihaana',
 				dev: 'बिहान',
 				pron: 'bi-haa-nuh',
 				en: 'Morning',
@@ -2387,7 +2110,6 @@ const COURSE = [
 			},
 			{
 				id: 'diuso-afternoon-daytime',
-				np: 'Diuso',
 				dev: 'दिउँसो',
 				pron: 'dyoo-so',
 				en: 'Afternoon / Daytime',
@@ -2395,7 +2117,6 @@ const COURSE = [
 			},
 			{
 				id: 'beluka-evening',
-				np: 'Beluka',
 				dev: 'बेलुका',
 				pron: 'bay-loo-kaa',
 				en: 'Evening',
@@ -2403,7 +2124,6 @@ const COURSE = [
 			},
 			{
 				id: 'raati-night',
-				np: 'Raati',
 				dev: 'राति',
 				pron: 'raa-ti',
 				en: 'Night',
@@ -2411,7 +2131,6 @@ const COURSE = [
 			},
 			{
 				id: 'aaitabaar-sunday',
-				np: 'Aaitabaar',
 				dev: 'आइतबार',
 				pron: 'aai-tuh-baar',
 				en: 'Sunday',
@@ -2419,7 +2138,6 @@ const COURSE = [
 			},
 			{
 				id: 'sombaar-monday',
-				np: 'Sombaar',
 				dev: 'सोमबार',
 				pron: 'som-baar',
 				en: 'Monday',
@@ -2427,7 +2145,6 @@ const COURSE = [
 			},
 			{
 				id: 'mangalbaar-tuesday',
-				np: 'Mangalbaar',
 				dev: 'मङ्गलबार',
 				pron: 'mun-gul-baar',
 				en: 'Tuesday',
@@ -2435,7 +2152,6 @@ const COURSE = [
 			},
 			{
 				id: 'budhabaar-wednesday',
-				np: 'Budhabaar',
 				dev: 'बुधबार',
 				pron: 'boo-dhuh-baar',
 				en: 'Wednesday',
@@ -2443,7 +2159,6 @@ const COURSE = [
 			},
 			{
 				id: 'bihibaar-thursday',
-				np: 'Bihibaar',
 				dev: 'बिहीबार',
 				pron: 'bi-hi-baar',
 				en: 'Thursday',
@@ -2451,7 +2166,6 @@ const COURSE = [
 			},
 			{
 				id: 'sukrabaar-friday',
-				np: 'Sukrabaar',
 				dev: 'शुक्रबार',
 				pron: 'sook-ruh-baar',
 				en: 'Friday',
@@ -2459,7 +2173,6 @@ const COURSE = [
 			},
 			{
 				id: 'sanibaar-saturday',
-				np: 'Sanibaar',
 				dev: 'शनिबार',
 				pron: 'suh-ni-baar',
 				en: 'Saturday',
@@ -2467,7 +2180,6 @@ const COURSE = [
 			},
 			{
 				id: 'kati-bajyo-what-time-is-it',
-				np: 'Kati bajyo?',
 				dev: 'कति बज्यो?',
 				pron: 'kuh-ti buh-jyo',
 				en: 'What time is it?',
@@ -2475,7 +2187,6 @@ const COURSE = [
 			},
 			{
 				id: 'bajyo-it-s-o-clock',
-				np: '___ bajyo',
 				dev: '___ बज्यो',
 				pron: 'buh-jyo',
 				en: "It's ___ o'clock",
@@ -2491,7 +2202,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'kaha-where',
-				np: 'Kaha?',
 				dev: 'कहाँ?',
 				pron: 'kuh-haa',
 				en: 'Where?',
@@ -2499,7 +2209,6 @@ const COURSE = [
 			},
 			{
 				id: 'yaha-here',
-				np: 'Yaha',
 				dev: 'यहाँ',
 				pron: 'yuh-haa',
 				en: 'Here',
@@ -2507,7 +2216,6 @@ const COURSE = [
 			},
 			{
 				id: 'tyaha-there',
-				np: 'Tyaha',
 				dev: 'त्यहाँ',
 				pron: 'tyuh-haa',
 				en: 'There',
@@ -2515,7 +2223,6 @@ const COURSE = [
 			},
 			{
 				id: 'kata-janey-where-to-go',
-				np: 'Kata janey?',
 				dev: 'कता जाने?',
 				pron: 'kuh-taa jaa-nay',
 				en: 'Where to go?',
@@ -2523,7 +2230,6 @@ const COURSE = [
 			},
 			{
 				id: 'roknus-please-stop',
-				np: 'Roknus',
 				dev: 'रोक्नुस्',
 				pron: 'rok-noos',
 				en: 'Please stop',
@@ -2531,7 +2237,6 @@ const COURSE = [
 			},
 			{
 				id: 'bato-dekhaunus-please-show-me-the-way',
-				np: 'Bato dekhaunus',
 				dev: 'बाटो देखाउनुस्',
 				pron: 'baa-toh dekh-ow-noos',
 				en: 'Please show me the way',
@@ -2539,7 +2244,6 @@ const COURSE = [
 			},
 			{
 				id: 'toilet-kaha-cha-where-is-the-toilet',
-				np: 'Toilet kaha cha?',
 				dev: 'टोइलेट कहाँ छ?',
 				pron: 'toy-let kuh-haa chuh',
 				en: 'Where is the toilet?',
@@ -2547,7 +2251,6 @@ const COURSE = [
 			},
 			{
 				id: 'baayaa-left',
-				np: 'Baayaa',
 				dev: 'बायाँ',
 				pron: 'baa-yaa',
 				en: 'Left',
@@ -2555,7 +2258,6 @@ const COURSE = [
 			},
 			{
 				id: 'daayaa-right',
-				np: 'Daayaa',
 				dev: 'दायाँ',
 				pron: 'daa-yaa',
 				en: 'Right',
@@ -2563,7 +2265,6 @@ const COURSE = [
 			},
 			{
 				id: 'sidhaa-janus-go-straight',
-				np: 'Sidhaa janus',
 				dev: 'सीधा जानुस्',
 				pron: 'see-dhaa jaa-noos',
 				en: 'Go straight',
@@ -2571,7 +2272,6 @@ const COURSE = [
 			},
 			{
 				id: 'najik-near',
-				np: 'Najik',
 				dev: 'नजिक',
 				pron: 'nuh-jik',
 				en: 'Near / close',
@@ -2579,7 +2279,6 @@ const COURSE = [
 			},
 			{
 				id: 'taadhaa-far',
-				np: 'Taadhaa',
 				dev: 'टाढा',
 				pron: 'taa-dhaa',
 				en: 'Far',
@@ -2587,7 +2286,6 @@ const COURSE = [
 			},
 			{
 				id: 'tira-toward-that-way',
-				np: 'Tira',
 				dev: 'तिर',
 				pron: 'ti-ra',
 				en: 'Toward / that way',
@@ -2603,7 +2301,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'hospital-hospital',
-				np: 'Hospital',
 				dev: 'हस्पिटल',
 				pron: 'hos-pi-tal',
 				emoji: '🏥',
@@ -2611,7 +2308,6 @@ const COURSE = [
 			},
 			{
 				id: 'skul-school',
-				np: 'Skul',
 				dev: 'स्कुल',
 				pron: 'skool',
 				emoji: '🏫',
@@ -2619,7 +2315,6 @@ const COURSE = [
 			},
 			{
 				id: 'baink-bank',
-				np: 'Baink',
 				dev: 'बैंक',
 				pron: 'baynk',
 				emoji: '🏦',
@@ -2627,7 +2322,6 @@ const COURSE = [
 			},
 			{
 				id: 'aphis-office',
-				np: 'Aphis',
 				dev: 'अफिस',
 				pron: 'uh-phis',
 				emoji: '🏢',
@@ -2635,7 +2329,6 @@ const COURSE = [
 			},
 			{
 				id: 'pasal-shop-store',
-				np: 'Pasal',
 				dev: 'पसल',
 				pron: 'puh-sal',
 				emoji: '🏪',
@@ -2643,7 +2336,6 @@ const COURSE = [
 			},
 			{
 				id: 'bajaar-market',
-				np: 'Bajaar',
 				dev: 'बजार',
 				pron: 'buh-jaar',
 				emoji: '🛒',
@@ -2651,7 +2343,6 @@ const COURSE = [
 			},
 			{
 				id: 'hotel-restaurant-eatery',
-				np: 'Hotel',
 				dev: 'होटल',
 				pron: 'ho-tal',
 				emoji: '🍽️',
@@ -2659,7 +2350,6 @@ const COURSE = [
 			},
 			{
 				id: 'bas-bus',
-				np: 'Bas',
 				dev: 'बस',
 				pron: 'bus',
 				emoji: '🚌',
@@ -2667,7 +2357,6 @@ const COURSE = [
 			},
 			{
 				id: 'tyaksi-taxi',
-				np: 'Tyaksi',
 				dev: 'ट्याक्सी',
 				pron: 'tyaak-see',
 				emoji: '🚕',
@@ -2675,7 +2364,6 @@ const COURSE = [
 			},
 			{
 				id: 'buspark-bus-stop',
-				np: 'Baspark',
 				dev: 'बसपार्क',
 				pron: 'bus-paark',
 				emoji: '🚏',
@@ -2683,7 +2371,6 @@ const COURSE = [
 			},
 			{
 				id: 'eyarport-airport',
-				np: 'Eyarport',
 				dev: 'एयरपोर्ट',
 				pron: 'eh-yar-port',
 				emoji: '✈️',
@@ -2699,7 +2386,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'gharma-at-home-in',
-				np: 'Gharma',
 				dev: 'घरमा',
 				pron: 'ghur-muh',
 				en: 'At home / In the house',
@@ -2707,7 +2393,6 @@ const COURSE = [
 			},
 			{
 				id: 'mathi-on-above',
-				np: 'Mathi',
 				dev: 'माथि',
 				pron: 'maa-thi',
 				en: 'On / Above / Up',
@@ -2715,7 +2400,6 @@ const COURSE = [
 			},
 			{
 				id: 'muni-under-below',
-				np: 'Muni',
 				dev: 'मुनि',
 				pron: 'moo-ni',
 				en: 'Under / Below',
@@ -2723,7 +2407,6 @@ const COURSE = [
 			},
 			{
 				id: 'agadi-in-front-ahead',
-				np: 'Agaadi',
 				dev: 'अगाडि',
 				pron: 'uh-gaa-di',
 				en: 'In front / Ahead',
@@ -2731,7 +2414,6 @@ const COURSE = [
 			},
 			{
 				id: 'pachadi-behind-back',
-				np: 'Pachaadi',
 				dev: 'पछाडि',
 				pron: 'puh-chaa-di',
 				en: 'Behind / At the back',
@@ -2739,7 +2421,6 @@ const COURSE = [
 			},
 			{
 				id: 'bhitra-inside-within',
-				np: 'Bhitra',
 				dev: 'भित्र',
 				pron: 'bhi-truh',
 				en: 'Inside / Within',
@@ -2747,7 +2428,6 @@ const COURSE = [
 			},
 			{
 				id: 'bahira-outside',
-				np: 'Bahira',
 				dev: 'बाहिर',
 				pron: 'baa-hi-ruh',
 				en: 'Outside',
@@ -2755,7 +2435,6 @@ const COURSE = [
 			},
 			{
 				id: 'bichma-between-middle',
-				np: 'Bichma',
 				dev: 'बीचमा',
 				pron: 'beech-muh',
 				en: 'Between / In the middle',
@@ -2763,7 +2442,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-sanga-with-me',
-				np: 'Ma sanga',
 				dev: 'म सँग',
 				pron: 'muh sung-guh',
 				en: 'With me',
@@ -2771,7 +2449,6 @@ const COURSE = [
 			},
 			{
 				id: 'samma-until-up-to',
-				np: 'Samma',
 				dev: 'सम्म',
 				pron: 'sum-muh',
 				en: 'Until / Up to',
@@ -2787,7 +2464,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ramro-good-nice-beautiful',
-				np: 'Ramro',
 				dev: 'राम्रो',
 				pron: 'rum-ro',
 				en: 'Good / Nice / Beautiful',
@@ -2795,7 +2471,6 @@ const COURSE = [
 			},
 			{
 				id: 'naramro-bad-not-good',
-				np: 'Naramro',
 				dev: 'नराम्रो',
 				pron: 'nuh-rum-ro',
 				en: 'Bad / Not good',
@@ -2803,7 +2478,6 @@ const COURSE = [
 			},
 			{
 				id: 'thulo-big-large',
-				np: 'Thulo',
 				dev: 'ठूलो',
 				pron: 'thoo-lo',
 				en: 'Big / Large',
@@ -2811,7 +2485,6 @@ const COURSE = [
 			},
 			{
 				id: 'sano-small-little',
-				np: 'Sano',
 				dev: 'सानो',
 				pron: 'saa-no',
 				en: 'Small / Little',
@@ -2819,7 +2492,6 @@ const COURSE = [
 			},
 			{
 				id: 'dherai-many-much-very',
-				np: 'Dherai',
 				dev: 'धेरै',
 				pron: 'dheh-rye',
 				en: 'Many / Much / Very',
@@ -2827,7 +2499,6 @@ const COURSE = [
 			},
 			{
 				id: 'ali-ali-a-little-bit',
-				np: 'Ali ali',
 				dev: 'अलि अलि',
 				pron: 'uh-li uh-li',
 				en: 'A little bit',
@@ -2835,7 +2506,6 @@ const COURSE = [
 			},
 			{
 				id: 'naya-new',
-				np: 'Naya',
 				dev: 'नयाँ',
 				pron: 'nuh-yaa',
 				en: 'New',
@@ -2843,7 +2513,6 @@ const COURSE = [
 			},
 			{
 				id: 'purano-old',
-				np: 'Purano',
 				dev: 'पुरानो',
 				pron: 'pu-raa-no',
 				en: 'Old (of things)',
@@ -2851,7 +2520,6 @@ const COURSE = [
 			},
 			{
 				id: 'tato-hot-to-touch',
-				np: 'Tato',
 				dev: 'तातो',
 				pron: 'taa-to',
 				en: 'Hot (to the touch)',
@@ -2867,7 +2535,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'rang-color',
-				np: 'Rang',
 				dev: 'रङ',
 				pron: 'rung',
 				emoji: '🎨',
@@ -2875,7 +2542,6 @@ const COURSE = [
 			},
 			{
 				id: 'rato-red',
-				np: 'Rato',
 				dev: 'रातो',
 				pron: 'raa-to',
 				emoji: '🔴',
@@ -2883,7 +2549,6 @@ const COURSE = [
 			},
 			{
 				id: 'nilo-blue',
-				np: 'Nilo',
 				dev: 'निलो',
 				pron: 'ni-lo',
 				emoji: '🔵',
@@ -2891,7 +2556,6 @@ const COURSE = [
 			},
 			{
 				id: 'hariyo-green',
-				np: 'Hariyo',
 				dev: 'हरियो',
 				pron: 'huh-ri-yo',
 				emoji: '🟢',
@@ -2899,7 +2563,6 @@ const COURSE = [
 			},
 			{
 				id: 'pahelo-yellow',
-				np: 'Pahelo',
 				dev: 'पहेँलो',
 				pron: 'puh-hay-lo',
 				emoji: '🟡',
@@ -2907,7 +2570,6 @@ const COURSE = [
 			},
 			{
 				id: 'seto-white',
-				np: 'Seto',
 				dev: 'सेतो',
 				pron: 'say-to',
 				emoji: '⚪',
@@ -2915,7 +2577,6 @@ const COURSE = [
 			},
 			{
 				id: 'kalo-black',
-				np: 'Kalo',
 				dev: 'कालो',
 				pron: 'kaa-lo',
 				emoji: '⚫',
@@ -2923,7 +2584,6 @@ const COURSE = [
 			},
 			{
 				id: 'khairo-brown',
-				np: 'Khairo',
 				dev: 'खैरो',
 				pron: 'khai-ro',
 				emoji: '🟤',
@@ -2931,7 +2591,6 @@ const COURSE = [
 			},
 			{
 				id: 'suntala-rang-orange-color',
-				np: 'Suntala rang',
 				dev: 'सुन्तला रङ',
 				pron: 'soon-tuh-laa rung',
 				emoji: '🟠',
@@ -2939,7 +2598,6 @@ const COURSE = [
 			},
 			{
 				id: 'gulabi-pink',
-				np: 'Gulabi',
 				dev: 'गुलाबी',
 				pron: 'goo-laa-bi',
 				emoji: '🌸',
@@ -2947,7 +2605,6 @@ const COURSE = [
 			},
 			{
 				id: 'pyaji-purple',
-				np: 'Pyaji',
 				dev: 'प्याजी',
 				pron: 'pyaa-ji',
 				emoji: '🟣',
@@ -2963,7 +2620,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'bhanda-than',
-				np: 'Bhanda',
 				dev: 'भन्दा',
 				pron: 'bhun-daa',
 				en: 'Than (for comparing)',
@@ -2971,7 +2627,6 @@ const COURSE = [
 			},
 			{
 				id: 'yo-tyo-bhanda-thulo-bigger',
-				np: 'Yo tyo bhanda thulo cha',
 				dev: 'यो त्यो भन्दा ठूलो छ',
 				pron: 'yo tyo bhun-daa thoo-lo chuh',
 				en: 'This is bigger than that',
@@ -2979,7 +2634,6 @@ const COURSE = [
 			},
 			{
 				id: 'yo-tyo-bhanda-sano-smaller',
-				np: 'Yo tyo bhanda sano cha',
 				dev: 'यो त्यो भन्दा सानो छ',
 				pron: 'yo tyo bhun-daa saa-no chuh',
 				en: 'This is smaller than that',
@@ -2987,7 +2641,6 @@ const COURSE = [
 			},
 			{
 				id: 'yo-tyo-bhanda-ramro-better',
-				np: 'Yo tyo bhanda ramro cha',
 				dev: 'यो त्यो भन्दा राम्रो छ',
 				pron: 'yo tyo bhun-daa rum-ro chuh',
 				en: 'This is better than that',
@@ -2995,7 +2648,6 @@ const COURSE = [
 			},
 			{
 				id: 'yo-tyo-bhanda-mahango-more-expensive',
-				np: 'Yo tyo bhanda mahango cha',
 				dev: 'यो त्यो भन्दा महँगो छ',
 				pron: 'yo tyo bhun-daa muh-hun-go chuh',
 				en: 'This is more expensive than that',
@@ -3003,7 +2655,6 @@ const COURSE = [
 			},
 			{
 				id: 'sabai-bhanda-thulo-the-biggest',
-				np: 'Sabai bhanda thulo',
 				dev: 'सबै भन्दा ठूलो',
 				pron: 'suh-bye bhun-daa thoo-lo',
 				en: 'The biggest',
@@ -3011,7 +2662,6 @@ const COURSE = [
 			},
 			{
 				id: 'sabai-bhanda-ramro-the-best',
-				np: 'Sabai bhanda ramro',
 				dev: 'सबै भन्दा राम्रो',
 				pron: 'suh-bye bhun-daa rum-ro',
 				en: 'The best',
@@ -3019,7 +2669,6 @@ const COURSE = [
 			},
 			{
 				id: 'badhi-more',
-				np: 'Badhi',
 				dev: 'बढी',
 				pron: 'buh-dhee',
 				en: 'More',
@@ -3027,7 +2676,6 @@ const COURSE = [
 			},
 			{
 				id: 'kam-less-few',
-				np: 'Kam',
 				dev: 'कम',
 				pron: 'kum',
 				en: 'Less / Few',
@@ -3035,7 +2683,6 @@ const COURSE = [
 			},
 			{
 				id: 'barabar-equal-same',
-				np: 'Barabar',
 				dev: 'बराबर',
 				pron: 'buh-raa-bur',
 				en: 'Equal / The same',
@@ -3051,7 +2698,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'kasto-chha-hawa-how-s-the-weather',
-				np: 'Kasto chha hawa?',
 				dev: 'कस्तो छ हावा?',
 				pron: 'kus-toh chha huh-waa',
 				en: "How's the weather?",
@@ -3059,7 +2705,6 @@ const COURSE = [
 			},
 			{
 				id: 'pani-pariracha-it-is-raining',
-				np: 'Pani pariraheko cha',
 				dev: 'पानी परिरहेको छ',
 				pron: 'paa-ni puh-ri-ruh-hay-ko chuh',
 				en: 'It is raining',
@@ -3067,7 +2712,6 @@ const COURSE = [
 			},
 			{
 				id: 'garmi-cha-it-s-hot',
-				np: 'Garmi cha',
 				dev: 'गर्मी छ',
 				pron: 'gur-mi chuh',
 				en: "It's hot",
@@ -3075,7 +2719,6 @@ const COURSE = [
 			},
 			{
 				id: 'jado-cha-it-s-cold',
-				np: 'Jado cha',
 				dev: 'जाडो छ',
 				pron: 'jaa-do chuh',
 				en: "It's cold",
@@ -3083,7 +2726,6 @@ const COURSE = [
 			},
 			{
 				id: 'ghaam-laagyo-it-s-sunny',
-				np: 'Ghaam laagyo',
 				dev: 'घाम लाग्यो',
 				pron: 'ghaam laag-yo',
 				en: "It's sunny / the sun is out",
@@ -3091,7 +2733,6 @@ const COURSE = [
 			},
 			{
 				id: 'badal-laagyo-it-s-cloudy',
-				np: 'Badal laagyo',
 				dev: 'बादल लाग्यो',
 				pron: 'buh-dul laag-yo',
 				en: "It's cloudy",
@@ -3099,7 +2740,6 @@ const COURSE = [
 			},
 			{
 				id: 'hawa-chalyo-it-s-windy',
-				np: 'Hawa chalyo',
 				dev: 'हावा चल्यो',
 				pron: 'huh-waa chal-yo',
 				en: "It's windy",
@@ -3107,7 +2747,6 @@ const COURSE = [
 			},
 			{
 				id: 'hussu-laagyo-it-s-foggy',
-				np: 'Hussu laagyo',
 				dev: 'हुस्सु लाग्यो',
 				pron: 'hoo-su laag-yo',
 				en: "It's foggy",
@@ -3115,7 +2754,6 @@ const COURSE = [
 			},
 			{
 				id: 'hiun-pariraheko-cha-it-is-snowing',
-				np: 'Hiun pariraheko cha',
 				dev: 'हिउँ परिरहेको छ',
 				pron: 'hi-un puh-ri-ruh-hay-ko chuh',
 				en: 'It is snowing',
@@ -3131,7 +2769,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'tauko-head',
-				np: 'Tauko',
 				dev: 'टाउको',
 				pron: 'tow-ko',
 				emoji: '👤',
@@ -3139,7 +2776,6 @@ const COURSE = [
 			},
 			{
 				id: 'kapaal-hair',
-				np: 'Kapaal',
 				dev: 'कपाल',
 				pron: 'kuh-paal',
 				emoji: '💇',
@@ -3147,7 +2783,6 @@ const COURSE = [
 			},
 			{
 				id: 'aankha-eye',
-				np: 'Aankha',
 				dev: 'आँखा',
 				pron: 'aan-khaa',
 				emoji: '👁️',
@@ -3155,7 +2790,6 @@ const COURSE = [
 			},
 			{
 				id: 'kaan-ear',
-				np: 'Kaan',
 				dev: 'कान',
 				pron: 'kaan',
 				emoji: '👂',
@@ -3163,7 +2797,6 @@ const COURSE = [
 			},
 			{
 				id: 'naak-nose',
-				np: 'Naak',
 				dev: 'नाक',
 				pron: 'naak',
 				emoji: '👃',
@@ -3171,7 +2804,6 @@ const COURSE = [
 			},
 			{
 				id: 'mukh-mouth-face',
-				np: 'Mukh',
 				dev: 'मुख',
 				pron: 'mookh',
 				emoji: '👄',
@@ -3179,7 +2811,6 @@ const COURSE = [
 			},
 			{
 				id: 'oth-lips',
-				np: 'Oth',
 				dev: 'ओठ',
 				pron: 'oth',
 				emoji: '💋',
@@ -3187,7 +2818,6 @@ const COURSE = [
 			},
 			{
 				id: 'daat-teeth',
-				np: 'Daat',
 				dev: 'दाँत',
 				pron: 'daat',
 				emoji: '🦷',
@@ -3195,7 +2825,6 @@ const COURSE = [
 			},
 			{
 				id: 'ghaati-throat-neck',
-				np: 'Ghaati',
 				dev: 'घाँटी',
 				pron: 'ghaa-ti',
 				emoji: '🗣️',
@@ -3203,7 +2832,6 @@ const COURSE = [
 			},
 			{
 				id: 'haat-hand-arm',
-				np: 'Haat',
 				dev: 'हात',
 				pron: 'haat',
 				emoji: '✋',
@@ -3211,7 +2839,6 @@ const COURSE = [
 			},
 			{
 				id: 'aaulaa-finger',
-				np: 'Aaunlaa',
 				dev: 'औंला',
 				pron: 'ow-laa',
 				emoji: '☝️',
@@ -3219,7 +2846,6 @@ const COURSE = [
 			},
 			{
 				id: 'pet-stomach-belly',
-				np: 'Pet',
 				dev: 'पेट',
 				pron: 'pet',
 				emoji: '🫄',
@@ -3227,7 +2853,6 @@ const COURSE = [
 			},
 			{
 				id: 'dhaad-back',
-				np: 'Dhaad',
 				dev: 'ढाड',
 				pron: 'dhaad',
 				emoji: '🦴',
@@ -3235,7 +2860,6 @@ const COURSE = [
 			},
 			{
 				id: 'khutta-leg-foot',
-				np: 'Khutta',
 				dev: 'खुट्टा',
 				pron: 'khoot-taa',
 				emoji: '🦵',
@@ -3251,7 +2875,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'kripaya-malaai-maddat-garnuhos-please-help-me',
-				np: 'Kripaya malaai maddat garnuhos',
 				dev: 'कृपया मलाई मद्दत गर्नुहोस्',
 				pron: 'kri-puh-yuh muh-lie mud-dut gar-noo-hos',
 				en: 'Please help me',
@@ -3259,7 +2882,6 @@ const COURSE = [
 			},
 			{
 				id: 'sahayog-garnuhos-please-cooperate-please-help',
-				np: 'Sahayog garnuhos',
 				dev: 'सहयोग गर्नुहोस्',
 				pron: 'suh-haa-yog gar-noo-hos',
 				en: 'Please cooperate / Please help',
@@ -3267,7 +2889,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-haraye-i-am-lost',
-				np: 'Ma haraye',
 				dev: 'म हराएँ',
 				pron: 'muh huh-ruh-yay',
 				en: 'I am lost',
@@ -3275,7 +2896,6 @@ const COURSE = [
 			},
 			{
 				id: 'hospital-kaha-cha-where-is-the-hospital',
-				np: 'Hospital kaha cha?',
 				dev: 'हस्पिटल कहाँ छ?',
 				pron: 'hos-pi-taal kuh-haa chuh',
 				en: 'Where is the hospital?',
@@ -3283,7 +2903,6 @@ const COURSE = [
 			},
 			{
 				id: 'malai-biraami-bhayo-i-am-sick',
-				np: 'Malai biraami bhayo',
 				dev: 'मलाई बिरामी भयो',
 				pron: 'muh-lie bi-raa-mi bha-yo',
 				en: 'I am sick',
@@ -3291,7 +2910,6 @@ const COURSE = [
 			},
 			{
 				id: 'doctor-chaahiyo-i-need-a-doctor',
-				np: 'Doctor chaahiyo',
 				dev: 'डाक्टर चाहियो',
 				pron: 'doc-tor chaa-hi-yo',
 				en: 'I need a doctor',
@@ -3299,7 +2917,6 @@ const COURSE = [
 			},
 			{
 				id: 'tauko-dukhyo-my-head-hurts-headache',
-				np: 'Tauko dukhyo',
 				dev: 'टाउको दुख्यो',
 				pron: 'tow-ko dookh-yo',
 				en: 'My head hurts / Headache',
@@ -3307,7 +2924,6 @@ const COURSE = [
 			},
 			{
 				id: 'pani-chaahiyo-i-need-water',
-				np: 'Pani chaahiyo',
 				dev: 'पानी चाहियो',
 				pron: 'paa-ni chaa-hi-yo',
 				en: 'I need water',
@@ -3323,7 +2939,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'bistari-slowly-carefully',
-				np: 'Bistari',
 				dev: 'बिस्तारी',
 				pron: 'bis-taa-ri',
 				en: 'Slowly / Carefully',
@@ -3331,7 +2946,6 @@ const COURSE = [
 			},
 			{
 				id: 'chitto-quickly-fast',
-				np: 'Chitto',
 				dev: 'छिटो',
 				pron: 'chi-toh',
 				en: 'Quickly / Fast',
@@ -3339,7 +2953,6 @@ const COURSE = [
 			},
 			{
 				id: 'aaija-come-here',
-				np: 'Aaija',
 				dev: 'आइज',
 				pron: 'aa-i-juh',
 				en: 'Come here',
@@ -3347,7 +2960,6 @@ const COURSE = [
 			},
 			{
 				id: 'jaau-go-let-s-go',
-				np: 'Jaau',
 				dev: 'जाऊ',
 				pron: 'jaa-oo',
 				en: "Go / Let's go",
@@ -3355,7 +2967,6 @@ const COURSE = [
 			},
 			{
 				id: 'basnus-please-sit',
-				np: 'Basnus',
 				dev: 'बस्नुस्',
 				pron: 'bus-noos',
 				en: 'Please sit',
@@ -3363,7 +2974,6 @@ const COURSE = [
 			},
 			{
 				id: 'khadai-garnus-please-eat',
-				np: 'Khadai garnus',
 				dev: 'खाँदै गर्नुस्',
 				pron: 'kha-dye gar-noos',
 				en: 'Please eat',
@@ -3371,7 +2981,6 @@ const COURSE = [
 			},
 			{
 				id: 'piudai-garnus-please-drink',
-				np: 'Piudai garnus',
 				dev: 'पिउँदै गर्नुस्',
 				pron: 'pee-oo-dye gar-noos',
 				en: 'Please drink',
@@ -3379,7 +2988,6 @@ const COURSE = [
 			},
 			{
 				id: 'aaunus-please-come',
-				np: 'Aaunus',
 				dev: 'आउनुस्',
 				pron: 'aa-u-noos',
 				en: 'Please come',
@@ -3387,7 +2995,6 @@ const COURSE = [
 			},
 			{
 				id: 'hernus-please-look',
-				np: 'Hernus',
 				dev: 'हेर्नुस्',
 				pron: 'hair-noos',
 				en: 'Please look / look here',
@@ -3403,7 +3010,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ochyan-bed',
-				np: 'Ochyan',
 				dev: 'ओछ्यान',
 				pron: 'oh-chyan',
 				emoji: '🛏️',
@@ -3411,7 +3017,6 @@ const COURSE = [
 			},
 			{
 				id: 'sirani-pillow',
-				np: 'Sirani',
 				dev: 'सिरानी',
 				pron: 'si-raa-ni',
 				emoji: '🛋️',
@@ -3419,7 +3024,6 @@ const COURSE = [
 			},
 			{
 				id: 'kambal-blanket',
-				np: 'Kambal',
 				dev: 'कम्बल',
 				pron: 'kum-bul',
 				emoji: '🧺',
@@ -3427,7 +3031,6 @@ const COURSE = [
 			},
 			{
 				id: 'gadda-mattress',
-				np: 'Gadda',
 				dev: 'गद्दा',
 				pron: 'gad-daa',
 				emoji: '🛏️',
@@ -3435,7 +3038,6 @@ const COURSE = [
 			},
 			{
 				id: 'almari-wardrobe-closet',
-				np: 'Almari',
 				dev: 'अलमारी',
 				pron: 'ul-maa-ri',
 				emoji: '🚪',
@@ -3443,7 +3045,6 @@ const COURSE = [
 			},
 			{
 				id: 'aaina-mirror',
-				np: 'Aaina',
 				dev: 'ऐना',
 				pron: 'eye-naa',
 				emoji: '🪞',
@@ -3451,7 +3052,6 @@ const COURSE = [
 			},
 			{
 				id: 'batti-light-lamp',
-				np: 'Batti',
 				dev: 'बत्ती',
 				pron: 'but-ti',
 				emoji: '💡',
@@ -3459,7 +3059,6 @@ const COURSE = [
 			},
 			{
 				id: 'ghaadi-clock-watch',
-				np: 'Ghadi',
 				dev: 'घडी',
 				pron: 'ghuh-dee',
 				emoji: '⏰',
@@ -3467,7 +3066,6 @@ const COURSE = [
 			},
 			{
 				id: 'pankha-fan',
-				np: 'Pankha',
 				dev: 'पंखा',
 				pron: 'pun-khaa',
 				emoji: '🌀',
@@ -3483,7 +3081,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'charpi-toilet',
-				np: 'Charpi',
 				dev: 'चर्पी',
 				pron: 'chur-pi',
 				emoji: '🚽',
@@ -3491,7 +3088,6 @@ const COURSE = [
 			},
 			{
 				id: 'nuhaaune-thaau-shower-bathing-area',
-				np: 'Nuhaaune thaau',
 				dev: 'नुहाउने ठाउँ',
 				pron: 'noo-hau-nay thau',
 				emoji: '🚿',
@@ -3499,7 +3095,6 @@ const COURSE = [
 			},
 			{
 				id: 'sabun-soap',
-				np: 'Sabun',
 				dev: 'साबुन',
 				pron: 'saa-boon',
 				emoji: '🧼',
@@ -3507,7 +3102,6 @@ const COURSE = [
 			},
 			{
 				id: 'taauliya-towel',
-				np: 'Taauliya',
 				dev: 'तौलिया',
 				pron: 'tau-li-yaa',
 				emoji: '🧽',
@@ -3515,7 +3109,6 @@ const COURSE = [
 			},
 			{
 				id: 'brush-toothbrush',
-				np: 'Brush',
 				dev: 'ब्रश',
 				pron: 'brush',
 				emoji: '🪥',
@@ -3523,7 +3116,6 @@ const COURSE = [
 			},
 			{
 				id: 'toothpaste-toothpaste',
-				np: 'Toothpaste',
 				dev: 'टुथपेस्ट',
 				pron: 'tooth-paste',
 				emoji: '🦷',
@@ -3531,7 +3123,6 @@ const COURSE = [
 			},
 			{
 				id: 'shampoo-shampoo',
-				np: 'Shampoo',
 				dev: 'स्याम्पु',
 				pron: 'sham-poo',
 				emoji: '🧴',
@@ -3539,7 +3130,6 @@ const COURSE = [
 			},
 			{
 				id: 'tissue-tissue-paper',
-				np: 'Tissue',
 				dev: 'टिस्यु',
 				pron: 'ti-shoo',
 				emoji: '🧻',
@@ -3547,7 +3137,6 @@ const COURSE = [
 			},
 			{
 				id: 'kaanchi-scissors',
-				np: 'Kainchi',
 				dev: 'कैंची',
 				pron: 'koyin-chi',
 				emoji: '✂️',
@@ -3563,7 +3152,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'kursi-chair',
-				np: 'Kursi',
 				dev: 'कुर्सी',
 				pron: 'koor-si',
 				emoji: '🪑',
@@ -3571,7 +3159,6 @@ const COURSE = [
 			},
 			{
 				id: 'tebul-table',
-				np: 'Tebul',
 				dev: 'टेबल',
 				pron: 'tay-bool',
 				emoji: '🪑',
@@ -3579,7 +3166,6 @@ const COURSE = [
 			},
 			{
 				id: 'sofa-sofa-couch',
-				np: 'Sofa',
 				dev: 'सोफा',
 				pron: 'so-faa',
 				emoji: '🛋️',
@@ -3587,7 +3173,6 @@ const COURSE = [
 			},
 			{
 				id: 'tv-television',
-				np: 'TV',
 				dev: 'टिभी',
 				pron: 'tee-vee',
 				emoji: '📺',
@@ -3595,7 +3180,6 @@ const COURSE = [
 			},
 			{
 				id: 'remote-remote-control',
-				np: 'Remote',
 				dev: 'रिमोट',
 				pron: 'ri-mot',
 				emoji: '📱',
@@ -3603,7 +3187,6 @@ const COURSE = [
 			},
 			{
 				id: 'kitab-book',
-				np: 'Kitab',
 				dev: 'किताब',
 				pron: 'ki-taab',
 				emoji: '📚',
@@ -3611,7 +3194,6 @@ const COURSE = [
 			},
 			{
 				id: 'kaagaj-paper',
-				np: 'Kaagaj',
 				dev: 'कागज',
 				pron: 'kaa-guj',
 				emoji: '📄',
@@ -3619,7 +3201,6 @@ const COURSE = [
 			},
 			{
 				id: 'kalam-pen',
-				np: 'Kalam',
 				dev: 'कलम',
 				pron: 'ku-lum',
 				emoji: '🖊️',
@@ -3627,7 +3208,6 @@ const COURSE = [
 			},
 			{
 				id: 'galaicha-carpet-rug',
-				np: 'Galaicha',
 				dev: 'गलैंचा',
 				pron: 'guh-lye-chaa',
 				emoji: '🧶',
@@ -3635,7 +3215,6 @@ const COURSE = [
 			},
 			{
 				id: 'jhyaal-window',
-				np: 'Jhyaal',
 				dev: 'झ्याल',
 				pron: 'jyaal',
 				emoji: '🪟',
@@ -3643,7 +3222,6 @@ const COURSE = [
 			},
 			{
 				id: 'dhoka-door',
-				np: 'Dhoka',
 				dev: 'ढोका',
 				pron: 'dho-kaa',
 				emoji: '🚪',
@@ -3651,7 +3229,6 @@ const COURSE = [
 			},
 			{
 				id: 'taala-lock',
-				np: 'Taala',
 				dev: 'ताला',
 				pron: 'taa-laa',
 				emoji: '🔒',
@@ -3659,7 +3236,6 @@ const COURSE = [
 			},
 			{
 				id: 'saacho-key',
-				np: 'Saacho',
 				dev: 'साँचो',
 				pron: 'saa-cho',
 				emoji: '🔑',
@@ -3675,7 +3251,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'lugaa-clothes',
-				np: 'Lugaa',
 				dev: 'लुगा',
 				pron: 'loo-gaa',
 				emoji: '👕',
@@ -3683,7 +3258,6 @@ const COURSE = [
 			},
 			{
 				id: 'dhune-sabun-laundry-detergent',
-				np: 'Dhune sabun',
 				dev: 'धुने साबुन',
 				pron: 'dhoo-nay saa-boon',
 				emoji: '🧴',
@@ -3691,7 +3265,6 @@ const COURSE = [
 			},
 			{
 				id: 'lugaa-dhune-machine-washing-machine',
-				np: 'Lugaa dhune mesin',
 				dev: 'लुगा धुने मेसिन',
 				pron: 'loo-gaa dhoo-nay ma-sheen',
 				emoji: '🧺',
@@ -3699,7 +3272,6 @@ const COURSE = [
 			},
 			{
 				id: 'dori-rope-clothesline',
-				np: 'Dori',
 				dev: 'डोरी',
 				pron: 'do-ri',
 				emoji: '🪢',
@@ -3707,7 +3279,6 @@ const COURSE = [
 			},
 			{
 				id: 'chimtaa-clothespin-peg',
-				np: 'Chimtaa',
 				dev: 'चिम्टा',
 				pron: 'chim-taa',
 				emoji: '📎',
@@ -3715,7 +3286,6 @@ const COURSE = [
 			},
 			{
 				id: 'istry-iron-for-clothes',
-				np: 'Istry',
 				dev: 'इस्त्री',
 				pron: 'is-tree',
 				emoji: '🔌',
@@ -3723,7 +3293,6 @@ const COURSE = [
 			},
 			{
 				id: 'topi-hat-cap',
-				np: 'Topi',
 				dev: 'टोपी',
 				pron: 'to-pee',
 				emoji: '🧢',
@@ -3731,7 +3300,6 @@ const COURSE = [
 			},
 			{
 				id: 'kamij-shirt',
-				np: 'Kamij',
 				dev: 'कमिज',
 				pron: 'kuh-mij',
 				emoji: '👕',
@@ -3739,7 +3307,6 @@ const COURSE = [
 			},
 			{
 				id: 'suruwal-trousers-pants',
-				np: 'Suruwal',
 				dev: 'सुरुवाल',
 				pron: 'su-ru-waal',
 				emoji: '👖',
@@ -3755,7 +3322,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'mobile-cell-phone',
-				np: 'Mobile',
 				dev: 'मोबाइल',
 				pron: 'mo-bile',
 				emoji: '📱',
@@ -3763,7 +3329,6 @@ const COURSE = [
 			},
 			{
 				id: 'computer-computer',
-				np: 'Computer',
 				dev: 'कम्प्युटर',
 				pron: 'com-pyu-ter',
 				emoji: '💻',
@@ -3771,7 +3336,6 @@ const COURSE = [
 			},
 			{
 				id: 'laptop-laptop',
-				np: 'Laptop',
 				dev: 'ल्यापटप',
 				pron: 'lap-top',
 				emoji: '💻',
@@ -3779,7 +3343,6 @@ const COURSE = [
 			},
 			{
 				id: 'charger-charger',
-				np: 'Charger',
 				dev: 'चार्जर',
 				pron: 'char-jer',
 				emoji: '🔌',
@@ -3787,7 +3350,6 @@ const COURSE = [
 			},
 			{
 				id: 'wifi-wifi',
-				np: 'WiFi',
 				dev: 'वाइफाइ',
 				pron: 'wai-fai',
 				emoji: '🛜',
@@ -3795,7 +3357,6 @@ const COURSE = [
 			},
 			{
 				id: 'plug-electrical-plug',
-				np: 'Plug',
 				dev: 'प्लग',
 				pron: 'plug',
 				emoji: '🔌',
@@ -3803,7 +3364,6 @@ const COURSE = [
 			},
 			{
 				id: 'switch-light-switch',
-				np: 'Switch',
 				dev: 'स्विच',
 				pron: 'switch',
 				emoji: '🎚️',
@@ -3811,7 +3371,6 @@ const COURSE = [
 			},
 			{
 				id: 'headphone-headphones',
-				np: 'Headphone',
 				dev: 'हेडफोन',
 				pron: 'hed-phone',
 				emoji: '🎧',
@@ -3819,7 +3378,6 @@ const COURSE = [
 			},
 			{
 				id: 'baytri-battery',
-				np: 'Baytri',
 				dev: 'ब्याट्री',
 				pron: 'byaat-ree',
 				emoji: '🔋',
@@ -3835,7 +3393,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'jhola-bag',
-				np: 'Jhola',
 				dev: 'झोला',
 				pron: 'jho-laa',
 				emoji: '👜',
@@ -3843,7 +3400,6 @@ const COURSE = [
 			},
 			{
 				id: 'chashma-glasses-spectacles',
-				np: 'Chashma',
 				dev: 'चश्मा',
 				pron: 'chush-maa',
 				emoji: '👓',
@@ -3851,7 +3407,6 @@ const COURSE = [
 			},
 			{
 				id: 'kapi-notebook',
-				np: 'Kapi',
 				dev: 'कापी',
 				pron: 'kaa-pi',
 				emoji: '📓',
@@ -3859,7 +3414,6 @@ const COURSE = [
 			},
 			{
 				id: 'wallet-wallet',
-				np: 'Wallet',
 				dev: 'वालेट',
 				pron: 'wal-let',
 				emoji: '💳',
@@ -3867,7 +3421,6 @@ const COURSE = [
 			},
 			{
 				id: 'chappal-slippers-sandals',
-				np: 'Chappal',
 				dev: 'चप्पल',
 				pron: 'chup-pul',
 				emoji: '🩴',
@@ -3875,7 +3428,6 @@ const COURSE = [
 			},
 			{
 				id: 'jutta-shoes',
-				np: 'Jutta',
 				dev: 'जुत्ता',
 				pron: 'joo-taa',
 				emoji: '👞',
@@ -3883,7 +3435,6 @@ const COURSE = [
 			},
 			{
 				id: 'chhata-umbrella',
-				np: 'Chhata',
 				dev: 'छाता',
 				pron: 'chhaa-taa',
 				emoji: '☂️',
@@ -3891,7 +3442,6 @@ const COURSE = [
 			},
 			{
 				id: 'ghadi-watch-clock',
-				np: 'Ghadi',
 				dev: 'घडी',
 				pron: 'ghuh-dee',
 				emoji: '⌚',
@@ -3907,7 +3457,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'bottle-bottle',
-				np: 'Bottle',
 				dev: 'बोतल',
 				pron: 'bot-tel',
 				emoji: '🍾',
@@ -3915,7 +3464,6 @@ const COURSE = [
 			},
 			{
 				id: 'box-box',
-				np: 'Box',
 				dev: 'बाकस',
 				pron: 'box',
 				emoji: '📦',
@@ -3923,7 +3471,6 @@ const COURSE = [
 			},
 			{
 				id: 'thailo-bag-cloth-shopping',
-				np: 'Thailo',
 				dev: 'थैलो',
 				pron: 'thye-lo',
 				emoji: '🛍️',
@@ -3931,7 +3478,6 @@ const COURSE = [
 			},
 			{
 				id: 'mombatti-candle',
-				np: 'Mombatti',
 				dev: 'मोमबत्ती',
 				pron: 'mom-but-ti',
 				emoji: '🕯️',
@@ -3939,7 +3485,6 @@ const COURSE = [
 			},
 			{
 				id: 'salai-match-matchstick',
-				np: 'Salai',
 				dev: 'सलाई',
 				pron: 'suh-lye',
 				emoji: '🔥',
@@ -3947,7 +3492,6 @@ const COURSE = [
 			},
 			{
 				id: 'aushadhi-medicine',
-				np: 'Aushadhi',
 				dev: 'औषधि',
 				pron: 'ow-shuh-dhi',
 				emoji: '💊',
@@ -3955,7 +3499,6 @@ const COURSE = [
 			},
 			{
 				id: 'chitthi-letter',
-				np: 'Chitthi',
 				dev: 'चिठ्ठी',
 				pron: 'chit-thi',
 				emoji: '✉️',
@@ -3963,7 +3506,6 @@ const COURSE = [
 			},
 			{
 				id: 'ramailo-fun-entertainment',
-				np: 'Ramailo',
 				dev: 'रमाइलो',
 				pron: 'ruh-my-lo',
 				emoji: '🎉',
@@ -3971,7 +3513,6 @@ const COURSE = [
 			},
 			{
 				id: 'baajaa-musical-instrument',
-				np: 'Baajaa',
 				dev: 'बाजा',
 				pron: 'baa-jaa',
 				emoji: '🎸',
@@ -3987,7 +3528,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'khushi-happy',
-				np: 'Khushi',
 				dev: 'खुसी',
 				pron: 'khu-shi',
 				emoji: '😊',
@@ -3995,7 +3535,6 @@ const COURSE = [
 			},
 			{
 				id: 'dukhi-sad',
-				np: 'Dukhi',
 				dev: 'दुखी',
 				pron: 'doo-khi',
 				emoji: '😢',
@@ -4003,7 +3542,6 @@ const COURSE = [
 			},
 			{
 				id: 'risaeko-angry',
-				np: 'Risaeko',
 				dev: 'रिसाएको',
 				pron: 'ri-saa-ay-ko',
 				emoji: '😠',
@@ -4011,7 +3549,6 @@ const COURSE = [
 			},
 			{
 				id: 'dar-fear-scared',
-				np: 'Dar',
 				dev: 'डर',
 				pron: 'dur',
 				emoji: '😨',
@@ -4019,7 +3556,6 @@ const COURSE = [
 			},
 			{
 				id: 'chinta-worry-anxiety',
-				np: 'Chinta',
 				dev: 'चिन्ता',
 				pron: 'chin-taa',
 				emoji: '😟',
@@ -4027,7 +3563,6 @@ const COURSE = [
 			},
 			{
 				id: 'maya-love',
-				np: 'Maya',
 				dev: 'माया',
 				pron: 'muh-yaa',
 				emoji: '❤️',
@@ -4035,7 +3570,6 @@ const COURSE = [
 			},
 			{
 				id: 'ghamanda-pride-arrogance',
-				np: 'Ghamanda',
 				dev: 'घमण्ड',
 				pron: 'ghuh-mun-daa',
 				emoji: '😤',
@@ -4043,7 +3577,6 @@ const COURSE = [
 			},
 			{
 				id: 'lajja-shame-embarrassment',
-				np: 'Lajja',
 				dev: 'लज्जा',
 				pron: 'luj-jaa',
 				emoji: '😳',
@@ -4051,7 +3584,6 @@ const COURSE = [
 			},
 			{
 				id: 'thakeko-tired',
-				np: 'Thakeko',
 				dev: 'थकेको',
 				pron: 'thaa-kay-ko',
 				emoji: '😴',
@@ -4059,7 +3591,6 @@ const COURSE = [
 			},
 			{
 				id: 'biraami-sick',
-				np: 'Biraami',
 				dev: 'बिरामी',
 				pron: 'bi-raa-mi',
 				emoji: '🤒',
@@ -4067,7 +3598,6 @@ const COURSE = [
 			},
 			{
 				id: 'aascharyya-surprise-wonder',
-				np: 'Aascharyya',
 				dev: 'आश्चर्य',
 				pron: 'aash-chur-yaa',
 				emoji: '😲',
@@ -4075,7 +3605,6 @@ const COURSE = [
 			},
 			{
 				id: 'bore-bored',
-				np: 'Bore',
 				dev: 'बोर',
 				pron: 'bor',
 				emoji: '😑',
@@ -4083,7 +3612,6 @@ const COURSE = [
 			},
 			{
 				id: 'aaramadaayak-comfortable-relaxed',
-				np: 'Aaramadaayak',
 				dev: 'आरामदायक',
 				pron: 'aa-raam-daa-yuk',
 				emoji: '😌',
@@ -4091,7 +3619,6 @@ const COURSE = [
 			},
 			{
 				id: 'uddwignata-stress-tension',
-				np: 'Uddwignata',
 				dev: 'उद्विग्नता',
 				pron: 'ood-wig-nuh-taa',
 				emoji: '😰',
@@ -4099,7 +3626,6 @@ const COURSE = [
 			},
 			{
 				id: 'khijna-frustration-irritation',
-				np: 'Khijne',
 				dev: 'खिज्ने',
 				pron: 'khij-ne',
 				emoji: '😖',
@@ -4107,7 +3633,6 @@ const COURSE = [
 			},
 			{
 				id: 'santushta-content-satisfied',
-				np: 'Santushta',
 				dev: 'सन्तुष्ट',
 				pron: 'sun-toosh-taa',
 				emoji: '😇',
@@ -4115,7 +3640,6 @@ const COURSE = [
 			},
 			{
 				id: 'upekshya-indifferent-neglected',
-				np: 'Upekshya',
 				dev: 'उपेक्षा',
 				pron: 'oo-pek-shyaa',
 				emoji: '😐',
@@ -4123,7 +3647,6 @@ const COURSE = [
 			},
 			{
 				id: 'aakrosh-rage-fury',
-				np: 'Aakrosh',
 				dev: 'आक्रोश',
 				pron: 'aa-krosh',
 				emoji: '😡',
@@ -4131,7 +3654,6 @@ const COURSE = [
 			},
 			{
 				id: 'nirasha-disappointment',
-				np: 'Nirasha',
 				dev: 'निराशा',
 				pron: 'ni-raa-shaa',
 				emoji: '😞',
@@ -4139,7 +3661,6 @@ const COURSE = [
 			},
 			{
 				id: 'asha-hope',
-				np: 'Asha',
 				dev: 'आशा',
 				pron: 'aa-shaa',
 				emoji: '🤞',
@@ -4155,7 +3676,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'kukur-dog',
-				np: 'Kukur',
 				dev: 'कुकुर',
 				pron: 'koo-koor',
 				emoji: '🐕',
@@ -4163,7 +3683,6 @@ const COURSE = [
 			},
 			{
 				id: 'biralo-cat',
-				np: 'Biralo',
 				dev: 'बिरालो',
 				pron: 'bi-raa-lo',
 				emoji: '🐈',
@@ -4171,7 +3690,6 @@ const COURSE = [
 			},
 			{
 				id: 'gai-cow',
-				np: 'Gai',
 				dev: 'गाई',
 				pron: 'gye',
 				emoji: '🐄',
@@ -4179,7 +3697,6 @@ const COURSE = [
 			},
 			{
 				id: 'raangaa-buffalo',
-				np: 'Raangaa',
 				dev: 'राँगा',
 				pron: 'raan-gaa',
 				emoji: '🐃',
@@ -4187,7 +3704,6 @@ const COURSE = [
 			},
 			{
 				id: 'bakhra-goat',
-				np: 'Bakhra',
 				dev: 'बाख्रा',
 				pron: 'buk-raa',
 				emoji: '🐐',
@@ -4195,7 +3711,6 @@ const COURSE = [
 			},
 			{
 				id: 'bhedaa-sheep',
-				np: 'Bhedaa',
 				dev: 'भेडा',
 				pron: 'bhay-daa',
 				emoji: '🐑',
@@ -4203,7 +3718,6 @@ const COURSE = [
 			},
 			{
 				id: 'ghoda-horse',
-				np: 'Ghoda',
 				dev: 'घोडा',
 				pron: 'gho-daa',
 				emoji: '🐴',
@@ -4211,7 +3725,6 @@ const COURSE = [
 			},
 			{
 				id: 'gadha-donkey',
-				np: 'Gadha',
 				dev: 'गधा',
 				pron: 'guh-dhaa',
 				emoji: '🫏',
@@ -4219,7 +3732,6 @@ const COURSE = [
 			},
 			{
 				id: 'sungur-pig',
-				np: 'Sungur',
 				dev: 'सुँगुर',
 				pron: 'soon-goor',
 				emoji: '🐖',
@@ -4227,7 +3739,6 @@ const COURSE = [
 			},
 			{
 				id: 'kukhura-chicken',
-				np: 'Kukhura',
 				dev: 'कुखुरा',
 				pron: 'koo-khu-raa',
 				emoji: '🐔',
@@ -4235,7 +3746,6 @@ const COURSE = [
 			},
 			{
 				id: 'haas-duck',
-				np: 'Haas',
 				dev: 'हाँस',
 				pron: 'haas',
 				emoji: '🦆',
@@ -4243,7 +3753,6 @@ const COURSE = [
 			},
 			{
 				id: 'chaara-bird',
-				np: 'Charaa',
 				dev: 'चरा',
 				pron: 'chuh-raa',
 				emoji: '🐦',
@@ -4251,7 +3760,6 @@ const COURSE = [
 			},
 			{
 				id: 'kaag-crow',
-				np: 'Kaag',
 				dev: 'काग',
 				pron: 'kaag',
 				emoji: '🐦‍⬛',
@@ -4259,7 +3767,6 @@ const COURSE = [
 			},
 			{
 				id: 'mauri-bee',
-				np: 'Mauri',
 				dev: 'मौरी',
 				pron: 'mau-ri',
 				emoji: '🐝',
@@ -4267,7 +3774,6 @@ const COURSE = [
 			},
 			{
 				id: 'putali-butterfly',
-				np: 'Putali',
 				dev: 'पुतली',
 				pron: 'poo-tuh-li',
 				emoji: '🦋',
@@ -4275,7 +3781,6 @@ const COURSE = [
 			},
 			{
 				id: 'phatyangro-cricket-grasshopper',
-				np: 'Phatyangro',
 				dev: 'फट्याङ्ग्रो',
 				pron: 'fuh-tyang-ro',
 				emoji: '🦗',
@@ -4283,7 +3788,6 @@ const COURSE = [
 			},
 			{
 				id: 'saanp-snake',
-				np: 'Saanp',
 				dev: 'साँप',
 				pron: 'saanp',
 				emoji: '🐍',
@@ -4291,7 +3795,6 @@ const COURSE = [
 			},
 			{
 				id: 'kachuwa-turtle-tortoise',
-				np: 'Kachuwa',
 				dev: 'कछुवा',
 				pron: 'kuh-chu-waa',
 				emoji: '🐢',
@@ -4299,7 +3802,6 @@ const COURSE = [
 			},
 			{
 				id: 'bagh-tiger',
-				np: 'Bagh',
 				dev: 'बाघ',
 				pron: 'baagh',
 				emoji: '🐅',
@@ -4307,7 +3809,6 @@ const COURSE = [
 			},
 			{
 				id: 'singha-lion',
-				np: 'Singha',
 				dev: 'सिंह',
 				pron: 'sing-huh',
 				emoji: '🦁',
@@ -4315,7 +3816,6 @@ const COURSE = [
 			},
 			{
 				id: 'hatti-elephant',
-				np: 'Hatti',
 				dev: 'हात्ती',
 				pron: 'hut-ti',
 				emoji: '🐘',
@@ -4323,7 +3823,6 @@ const COURSE = [
 			},
 			{
 				id: 'bandar-monkey',
-				np: 'Bandar',
 				dev: 'बाँदर',
 				pron: 'bun-dur',
 				emoji: '🐒',
@@ -4331,7 +3830,6 @@ const COURSE = [
 			},
 			{
 				id: 'bhalu-bear',
-				np: 'Bhalu',
 				dev: 'भालु',
 				pron: 'bhaa-loo',
 				emoji: '🐻',
@@ -4347,7 +3845,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'syau-apple',
-				np: 'Syau',
 				dev: 'स्याउ',
 				pron: 'syau',
 				emoji: '🍎',
@@ -4355,7 +3852,6 @@ const COURSE = [
 			},
 			{
 				id: 'kera-banana',
-				np: 'Kera',
 				dev: 'केरा',
 				pron: 'kay-raa',
 				emoji: '🍌',
@@ -4363,7 +3859,6 @@ const COURSE = [
 			},
 			{
 				id: 'suntala-orange',
-				np: 'Suntala',
 				dev: 'सुन्तला',
 				pron: 'soon-tuh-laa',
 				emoji: '🍊',
@@ -4371,7 +3866,6 @@ const COURSE = [
 			},
 			{
 				id: 'aaru-peach',
-				np: 'Aaru',
 				dev: 'आरु',
 				pron: 'aa-roo',
 				emoji: '🍑',
@@ -4379,7 +3873,6 @@ const COURSE = [
 			},
 			{
 				id: 'amba-mango',
-				np: 'Aanp',
 				dev: 'आँप',
 				pron: 'aamp',
 				emoji: '🥭',
@@ -4387,7 +3880,6 @@ const COURSE = [
 			},
 			{
 				id: 'angur-grapes',
-				np: 'Angur',
 				dev: 'अंगुर',
 				pron: 'un-goor',
 				emoji: '🍇',
@@ -4395,7 +3887,6 @@ const COURSE = [
 			},
 			{
 				id: 'tarbujo-watermelon',
-				np: 'Tarbujo',
 				dev: 'तरबुजा',
 				pron: 'tur-boo-jo',
 				emoji: '🍉',
@@ -4403,7 +3894,6 @@ const COURSE = [
 			},
 			{
 				id: 'kagati-lemon-lime',
-				np: 'Kagati',
 				dev: 'कागती',
 				pron: 'kaa-guh-ti',
 				emoji: '🍋',
@@ -4411,7 +3901,6 @@ const COURSE = [
 			},
 			{
 				id: 'rukh-kaatahar-pineapple',
-				np: 'Bhuin kaatahar',
 				dev: 'भुइँकटहर',
 				pron: 'bhooin kaa-tuh-hur',
 				emoji: '🍍',
@@ -4419,7 +3908,6 @@ const COURSE = [
 			},
 			{
 				id: 'golbheda-tomato',
-				np: 'Golbheda',
 				dev: 'गोलभेंडा',
 				pron: 'gol-bhay-daa',
 				emoji: '🍅',
@@ -4427,7 +3915,6 @@ const COURSE = [
 			},
 			{
 				id: 'kaankro-cucumber',
-				np: 'Kaankro',
 				dev: 'काँक्रो',
 				pron: 'kaan-kro',
 				emoji: '🥒',
@@ -4435,7 +3922,6 @@ const COURSE = [
 			},
 			{
 				id: 'bandaa-cabbage',
-				np: 'Bandaakobi',
 				dev: 'बन्दाकोबी',
 				pron: 'bun-daa-ko-bee',
 				emoji: '🥬',
@@ -4443,7 +3929,6 @@ const COURSE = [
 			},
 			{
 				id: 'aaalu-potato',
-				np: 'Aalu',
 				dev: 'आलु',
 				pron: 'aa-loo',
 				emoji: '🥔',
@@ -4451,7 +3936,6 @@ const COURSE = [
 			},
 			{
 				id: 'pyaaj-onion',
-				np: 'Pyaaj',
 				dev: 'प्याज',
 				pron: 'pyaaj',
 				emoji: '🧅',
@@ -4459,7 +3943,6 @@ const COURSE = [
 			},
 			{
 				id: 'lasun-garlic',
-				np: 'Lasun',
 				dev: 'लसुन',
 				pron: 'luh-soon',
 				emoji: '🧄',
@@ -4467,7 +3950,6 @@ const COURSE = [
 			},
 			{
 				id: 'khursaani-chili-pepper',
-				np: 'Khursaani',
 				dev: 'खुर्सानी',
 				pron: 'khoor-saa-ni',
 				emoji: '🌶️',
@@ -4475,7 +3957,6 @@ const COURSE = [
 			},
 			{
 				id: 'karela-bitter-gourd',
-				np: 'Karela',
 				dev: 'करेला',
 				pron: 'kuh-ray-laa',
 				emoji: '🥒',
@@ -4483,7 +3964,6 @@ const COURSE = [
 			},
 			{
 				id: 'pharsi-pumpkin',
-				np: 'Pharsi',
 				dev: 'फर्सी',
 				pron: 'fur-si',
 				emoji: '🎃',
@@ -4491,7 +3971,6 @@ const COURSE = [
 			},
 			{
 				id: 'mula-radish-daikon',
-				np: 'Mula',
 				dev: 'मुला',
 				pron: 'moo-laa',
 				emoji: '🥕',
@@ -4499,7 +3978,6 @@ const COURSE = [
 			},
 			{
 				id: 'simi-green-beans',
-				np: 'Simi',
 				dev: 'सिमी',
 				pron: 'si-mi',
 				emoji: '🫛',
@@ -4507,7 +3985,6 @@ const COURSE = [
 			},
 			{
 				id: 'broccoli-broccoli',
-				np: 'Broccoli',
 				dev: 'ब्रोकाउली',
 				pron: 'bro-ko-li',
 				emoji: '🥦',
@@ -4515,7 +3992,6 @@ const COURSE = [
 			},
 			{
 				id: 'dhania-coriander-cilantro',
-				np: 'Dhania',
 				dev: 'धनिया',
 				pron: 'dhuh-ni-yaa',
 				emoji: '🌿',
@@ -4523,7 +3999,6 @@ const COURSE = [
 			},
 			{
 				id: 'chiura-beaten-rice-flattened-rice',
-				np: 'Chiura',
 				dev: 'चिउरा',
 				pron: 'chyu-raa',
 				emoji: '🌾',
@@ -4531,7 +4006,6 @@ const COURSE = [
 			},
 			{
 				id: 'momo-dumplings-momos',
-				np: 'Momo',
 				dev: 'मोमो',
 				pron: 'mo-mo',
 				emoji: '🥟',
@@ -4539,7 +4013,6 @@ const COURSE = [
 			},
 			{
 				id: 'sel-roti-sel-roti-ring-shaped-bread',
-				np: 'Sel roti',
 				dev: 'सेलरोटी',
 				pron: 'sel ro-ti',
 				emoji: '🍩',
@@ -4547,7 +4020,6 @@ const COURSE = [
 			},
 			{
 				id: 'chatamari-nepali-pizza',
-				np: 'Chatamari',
 				dev: 'चटामरी',
 				pron: 'chuh-tuh-muh-ri',
 				emoji: '🍕',
@@ -4555,7 +4027,6 @@ const COURSE = [
 			},
 			{
 				id: 'samosa-samosa',
-				np: 'Samosa',
 				dev: 'समोसा',
 				pron: 'suh-mo-saa',
 				emoji: '🥟',
@@ -4563,7 +4034,6 @@ const COURSE = [
 			},
 			{
 				id: 'pakoda-fritters-pakora',
-				np: 'Pakoda',
 				dev: 'पकौडा',
 				pron: 'puh-ko-daa',
 				emoji: '🍤',
@@ -4571,7 +4041,6 @@ const COURSE = [
 			},
 			{
 				id: 'mithai-sweets-dessert',
-				np: 'Mithai',
 				dev: 'मिठाई',
 				pron: 'mi-thye',
 				emoji: '🍬',
@@ -4579,7 +4048,6 @@ const COURSE = [
 			},
 			{
 				id: 'khaja-snacks',
-				np: 'Khaja',
 				dev: 'खाजा',
 				pron: 'khaa-jaa',
 				emoji: '🍪',
@@ -4587,7 +4055,6 @@ const COURSE = [
 			},
 			{
 				id: 'raksi-traditional-alcohol',
-				np: 'Raksi',
 				dev: 'रक्सी',
 				pron: 'ruk-si',
 				emoji: '🍶',
@@ -4595,7 +4062,6 @@ const COURSE = [
 			},
 			{
 				id: 'lassi-yogurt-drink',
-				np: 'Lassi',
 				dev: 'लस्सी',
 				pron: 'lus-si',
 				emoji: '🥛',
@@ -4603,7 +4069,6 @@ const COURSE = [
 			},
 			{
 				id: 'juice-juice',
-				np: 'Juice',
 				dev: 'जुस',
 				pron: 'joos',
 				emoji: '🧃',
@@ -4611,7 +4076,6 @@ const COURSE = [
 			},
 			{
 				id: 'coffee-coffee',
-				np: 'Coffee',
 				dev: 'कफी',
 				pron: 'ko-fee',
 				emoji: '☕',
@@ -4627,7 +4091,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'ghaam-sun-sunshine',
-				np: 'Ghaam',
 				dev: 'घाम',
 				pron: 'ghaam',
 				emoji: '☀️',
@@ -4635,7 +4098,6 @@ const COURSE = [
 			},
 			{
 				id: 'chandra-moon',
-				np: 'Chandrama',
 				dev: 'चन्द्रमा',
 				pron: 'chun-druh-maa',
 				emoji: '🌙',
@@ -4643,7 +4105,6 @@ const COURSE = [
 			},
 			{
 				id: 'tara-star',
-				np: 'Taaraa',
 				dev: 'तारा',
 				pron: 'taa-raa',
 				emoji: '⭐',
@@ -4651,7 +4112,6 @@ const COURSE = [
 			},
 			{
 				id: 'badal-cloud',
-				np: 'Badal',
 				dev: 'बादल',
 				pron: 'buh-dul',
 				emoji: '☁️',
@@ -4659,7 +4119,6 @@ const COURSE = [
 			},
 			{
 				id: 'pani-rain',
-				np: 'Paani',
 				dev: 'पानी',
 				pron: 'paa-ni',
 				emoji: '🌧️',
@@ -4667,7 +4126,6 @@ const COURSE = [
 			},
 			{
 				id: 'haawaahuri-wind-storm',
-				np: 'Haawaahuri',
 				dev: 'हावाहुरी',
 				pron: 'haa-waa-hoo-ri',
 				emoji: '💨',
@@ -4675,7 +4133,6 @@ const COURSE = [
 			},
 			{
 				id: 'aandhi-storm-windstorm',
-				np: 'Aandhi',
 				dev: 'आँधी',
 				pron: 'aan-dhi',
 				emoji: '🌪️',
@@ -4683,7 +4140,6 @@ const COURSE = [
 			},
 			{
 				id: 'hiune-paani-snow',
-				np: 'Hiun',
 				dev: 'हिउँ',
 				pron: 'hi-oon',
 				emoji: '❄️',
@@ -4691,7 +4147,6 @@ const COURSE = [
 			},
 			{
 				id: 'tuhaaro-fog-mist',
-				np: 'Tuwaalo',
 				dev: 'तुवाँलो',
 				pron: 'too-waa-lo',
 				emoji: '🌫️',
@@ -4699,7 +4154,6 @@ const COURSE = [
 			},
 			{
 				id: 'asina-hail',
-				np: 'Asina',
 				dev: 'असिना',
 				pron: 'uh-si-naa',
 				emoji: '🌨️',
@@ -4707,7 +4161,6 @@ const COURSE = [
 			},
 			{
 				id: 'bijuli-lightning-electricity',
-				np: 'Bijuli',
 				dev: 'बिजुली',
 				pron: 'bi-joo-li',
 				emoji: '⚡',
@@ -4715,7 +4168,6 @@ const COURSE = [
 			},
 			{
 				id: 'megh-garjana-thunder',
-				np: 'Megh garjana',
 				dev: 'मेघ गर्जन',
 				pron: 'maygh gur-juh-naa',
 				emoji: '⛈️',
@@ -4723,7 +4175,6 @@ const COURSE = [
 			},
 			{
 				id: 'indreini-rainbow',
-				np: 'Indreini',
 				dev: 'इन्द्रेणी',
 				pron: 'in-dray-ni',
 				emoji: '🌈',
@@ -4731,7 +4182,6 @@ const COURSE = [
 			},
 			{
 				id: 'garmi-heat-hot-weather',
-				np: 'Garmi',
 				dev: 'गर्मी',
 				pron: 'gur-mi',
 				emoji: '🔥',
@@ -4739,7 +4189,6 @@ const COURSE = [
 			},
 			{
 				id: 'jado-cold-winter',
-				np: 'Jado',
 				dev: 'जाडो',
 				pron: 'jaa-do',
 				emoji: '🧊',
@@ -4747,7 +4196,6 @@ const COURSE = [
 			},
 			{
 				id: 'monsoon-monsoon-season',
-				np: 'Monsoon',
 				dev: 'मनसुन',
 				pron: 'mon-soon',
 				emoji: '🌧️',
@@ -4755,7 +4203,6 @@ const COURSE = [
 			},
 			{
 				id: 'haawa-air-wind',
-				np: 'Haawa',
 				dev: 'हावा',
 				pron: 'haa-waa',
 				emoji: '💨',
@@ -4763,7 +4210,6 @@ const COURSE = [
 			},
 			{
 				id: 'aakaash-sky',
-				np: 'Aakaash',
 				dev: 'आकाश',
 				pron: 'aa-kaash',
 				emoji: '🌌',
@@ -4771,7 +4217,6 @@ const COURSE = [
 			},
 			{
 				id: 'dharti-earth-ground',
-				np: 'Dharti',
 				dev: 'धरती',
 				pron: 'dhur-ti',
 				emoji: '🌍',
@@ -4779,7 +4224,6 @@ const COURSE = [
 			},
 			{
 				id: 'sansar-world',
-				np: 'Sansar',
 				dev: 'संसार',
 				pron: 'sun-saar',
 				emoji: '🌍',
@@ -4787,7 +4231,6 @@ const COURSE = [
 			},
 			{
 				id: 'pahaad-mountain-hill',
-				np: 'Pahaad',
 				dev: 'पहाड',
 				pron: 'puh-haad',
 				emoji: '⛰️',
@@ -4795,7 +4238,6 @@ const COURSE = [
 			},
 			{
 				id: 'nadhi-river',
-				np: 'Nadi',
 				dev: 'नदी',
 				pron: 'nuh-di',
 				emoji: '🏞️',
@@ -4803,7 +4245,6 @@ const COURSE = [
 			},
 			{
 				id: 'taal-lake',
-				np: 'Taal',
 				dev: 'ताल',
 				pron: 'taal',
 				emoji: '🏞️',
@@ -4811,7 +4252,6 @@ const COURSE = [
 			},
 			{
 				id: 'ban-forest',
-				np: 'Ban',
 				dev: 'वन',
 				pron: 'bun',
 				emoji: '🌲',
@@ -4819,7 +4259,6 @@ const COURSE = [
 			},
 			{
 				id: 'rukh-tree',
-				np: 'Rukh',
 				dev: 'रुख',
 				pron: 'rookh',
 				emoji: '🌳',
@@ -4827,7 +4266,6 @@ const COURSE = [
 			},
 			{
 				id: 'phul-flower',
-				np: 'Phul',
 				dev: 'फूल',
 				pron: 'fool',
 				emoji: '🌸',
@@ -4835,7 +4273,6 @@ const COURSE = [
 			},
 			{
 				id: 'ghaas-grass',
-				np: 'Ghaas',
 				dev: 'घाँस',
 				pron: 'ghaas',
 				emoji: '🌱',
@@ -4843,7 +4280,6 @@ const COURSE = [
 			},
 			{
 				id: 'khola-stream-creek',
-				np: 'Khola',
 				dev: 'खोला',
 				pron: 'kho-laa',
 				emoji: '🏞️',
@@ -4851,7 +4287,6 @@ const COURSE = [
 			},
 			{
 				id: 'jharna-waterfall',
-				np: 'Jharna',
 				dev: 'झरना',
 				pron: 'jhar-naa',
 				emoji: '💧',
@@ -4859,7 +4294,6 @@ const COURSE = [
 			},
 			{
 				id: 'bhukampa-earthquake',
-				np: 'Bhukampa',
 				dev: 'भूकम्प',
 				pron: 'bhoo-kum-paa',
 				emoji: '🌋',
@@ -4867,7 +4301,6 @@ const COURSE = [
 			},
 			{
 				id: 'aago-fire',
-				np: 'Aago',
 				dev: 'आगो',
 				pron: 'aa-go',
 				emoji: '🔥',
@@ -4883,7 +4316,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'tapai-ke-kaam-garnuhunchha-what-do-you-do',
-				np: 'Tapai ke kaam garnuhunchha?',
 				dev: 'तपाईं के काम गर्नुहुन्छ?',
 				pron: 'tuh-pie kay kaam gur-noo-hoon-chuh',
 				en: 'What do you do? (your job)',
@@ -4891,7 +4323,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-shikshak-hu-i-am-a-teacher',
-				np: 'Ma shikshak hu',
 				dev: 'म शिक्षक हुँ',
 				pron: 'muh shik-shuk hoon',
 				en: 'I am a teacher',
@@ -4899,7 +4330,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-vidyarthi-hu-i-am-a-student',
-				np: 'Ma vidyarthi hu',
 				dev: 'म विद्यार्थी हुँ',
 				pron: 'muh bid-yaar-thee hoon',
 				en: 'I am a student',
@@ -4907,7 +4337,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-daktar-hu-i-am-a-doctor',
-				np: 'Ma daktar hu',
 				dev: 'म डाक्टर हुँ',
 				pron: 'muh daak-tur hoon',
 				en: 'I am a doctor',
@@ -4915,7 +4344,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-kisaan-hu-i-am-a-farmer',
-				np: 'Ma kisaan hu',
 				dev: 'म किसान हुँ',
 				pron: 'muh ki-saan hoon',
 				en: 'I am a farmer',
@@ -4923,7 +4351,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-pasale-hu-i-am-a-shopkeeper',
-				np: 'Ma pasale hu',
 				dev: 'म पसले हुँ',
 				pron: 'muh puh-suh-lay hoon',
 				en: 'I am a shopkeeper',
@@ -4931,7 +4358,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-draibhar-hu-i-am-a-driver',
-				np: 'Ma draibhar hu',
 				dev: 'म ड्राइभर हुँ',
 				pron: 'muh draai-bhur hoon',
 				en: 'I am a driver',
@@ -4939,7 +4365,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-injinier-hu-i-am-an-engineer',
-				np: 'Ma injinier hu',
 				dev: 'म इन्जिनियर हुँ',
 				pron: 'muh in-ji-ni-yur hoon',
 				en: 'I am an engineer',
@@ -4947,7 +4372,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-nars-hu-i-am-a-nurse',
-				np: 'Ma nars hu',
 				dev: 'म नर्स हुँ',
 				pron: 'muh nurs hoon',
 				en: 'I am a nurse',
@@ -4955,7 +4379,6 @@ const COURSE = [
 			},
 			{
 				id: 'ma-prahari-hu-i-am-a-police-officer',
-				np: 'Ma prahari hu',
 				dev: 'म प्रहरी हुँ',
 				pron: 'muh pruh-huh-ree hoon',
 				en: 'I am a police officer',
@@ -4963,7 +4386,6 @@ const COURSE = [
 			},
 			{
 				id: 'tapai-kaha-kaam-garnuhunchha-where-do-you-work',
-				np: 'Tapai kaha kaam garnuhunchha?',
 				dev: 'तपाईं कहाँ काम गर्नुहुन्छ?',
 				pron: 'tuh-pie kuh-haa kaam gur-noo-hoon-chuh',
 				en: 'Where do you work?',
@@ -4979,7 +4401,6 @@ const COURSE = [
 		items: [
 			{
 				id: 'minet-minute',
-				np: 'Minet',
 				dev: 'मिनेट',
 				pron: 'mi-net',
 				en: 'Minute',
@@ -4987,7 +4408,6 @@ const COURSE = [
 			},
 			{
 				id: 'ek-ghanta-one-hour',
-				np: 'Ek ghanta',
 				dev: 'एक घण्टा',
 				pron: 'ek ghun-taa',
 				en: 'One hour',
@@ -4995,7 +4415,6 @@ const COURSE = [
 			},
 			{
 				id: 'haptaa-week',
-				np: 'Haptaa',
 				dev: 'हप्ता',
 				pron: 'hup-taa',
 				en: 'Week',
@@ -5003,7 +4422,6 @@ const COURSE = [
 			},
 			{
 				id: 'mahina-month',
-				np: 'Mahina',
 				dev: 'महिना',
 				pron: 'muh-hi-naa',
 				en: 'Month',
@@ -5011,7 +4429,6 @@ const COURSE = [
 			},
 			{
 				id: 'barsa-year',
-				np: 'Barsa',
 				dev: 'वर्ष',
 				pron: 'bur-suh',
 				en: 'Year',
@@ -5019,7 +4436,6 @@ const COURSE = [
 			},
 			{
 				id: 'pachi-later-after',
-				np: 'Pachi',
 				dev: 'पछि',
 				pron: 'puh-chi',
 				en: 'Later / After',
@@ -5027,7 +4443,6 @@ const COURSE = [
 			},
 			{
 				id: 'aghi-before-ago',
-				np: 'Aghi',
 				dev: 'अघि',
 				pron: 'uh-ghi',
 				en: 'Before / Ago',
@@ -5035,7 +4450,6 @@ const COURSE = [
 			},
 			{
 				id: 'sadhai-always',
-				np: 'Sadhai',
 				dev: 'सधैं',
 				pron: 'suh-dhye',
 				en: 'Always',
@@ -5043,7 +4457,6 @@ const COURSE = [
 			},
 			{
 				id: 'kahilekaahi-sometimes',
-				np: 'Kahilekaahi',
 				dev: 'कहिलेकाहीं',
 				pron: 'kuh-hi-lay-kaa-hee',
 				en: 'Sometimes',
@@ -5051,7 +4464,6 @@ const COURSE = [
 			},
 			{
 				id: 'kahile-pani-never',
-				np: 'Kahile pani',
 				dev: 'कहिले पनि',
 				pron: 'kuh-hi-lay puh-ni',
 				en: 'Never (with a negative)',
