@@ -11,7 +11,6 @@ require __DIR__ . '/lib.php';
 
 require_method('POST');
 require_csrf_header();
-require_admin();
 
 $body = read_json_body();
 $username = (string) ($body['username'] ?? '');
@@ -22,6 +21,8 @@ if ($username === '') {
 if (strlen($password) < 8 || strlen($password) > 200) {
 	respond(400, ['error' => 'bad_password']);
 }
+
+require_admin();
 
 $pdo = db();
 $stmt = $pdo->prepare('SELECT id FROM users WHERE username = ?');

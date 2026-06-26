@@ -16,10 +16,11 @@ if ($method !== 'PUT') {
 	respond(405, ['error' => 'method']);
 }
 require_csrf_header();
-$userId = require_user();
 
-// Decode to stdClass, not assoc arrays: an assoc round-trip would re-encode
-// empty JSON objects (a fresh state's "items": {}) as [], corrupting the blob.
+// Decode to stdClass, not assoc arrays: an assoc round-trip would re-encode empty
+// JSON objects (a fresh state's "items": {}) as [], corrupting the blob. Parse and
+// validate the payload before authenticating, so a malformed body fails fast and
+// stays testable without a DB (see the guard-order note in lib.php).
 $body = json_decode(file_get_contents('php://input'));
 if (!is_object($body)) {
 	respond(400, ['error' => 'bad_json']);
@@ -33,6 +34,8 @@ if (strlen($stateJson) > MAX_STATE_BYTES) {
 }
 $baseRevision = (int) ($body->baseRevision ?? 0);
 $force = !empty($body->force);
+
+$userId = require_user();
 
 $pdo = db();
 $pdo->beginTransaction();

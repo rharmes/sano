@@ -7,7 +7,6 @@ require __DIR__ . '/lib.php';
 
 require_method('POST');
 require_csrf_header();
-$userId = require_user();
 
 $body = read_json_body();
 $endpoint = (string) ($body['endpoint'] ?? '');
@@ -20,6 +19,8 @@ if ($endpoint === '' || $p256dh === '' || $auth === '') {
 if (strlen($endpoint) > 500) {
 	respond(400, ['error' => 'endpoint_too_long']);
 }
+
+$userId = require_user();
 
 // UPSERT by endpoint: if the same browser re-subscribes (e.g. after the user signs
 // in on a different account), reattach it and reset failure counters.

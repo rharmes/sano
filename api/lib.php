@@ -61,6 +61,15 @@ function read_json_body(): array
 	return $body;
 }
 
+// --- Request guards ---------------------------------------------------------
+// Canonical order for every endpoint: require_method() -> require_csrf_header()
+// (mutating verbs) -> read_json_body() -> stateless field validation ->
+// require_user()/require_admin() -> DB work. Auth runs LAST among the guards so a
+// cheap, stateless check fails fast without opening a DB connection, and so the
+// whole input-validation surface stays testable with no database: session_user()
+// returns null (-> 401) without a cookie, before any db() call (tests/api/guards.spec.mjs).
+// Checks that need a row (user existence, revision conflicts) necessarily follow auth.
+
 function require_method(string $method): void
 {
 	if ($_SERVER['REQUEST_METHOD'] !== $method) {

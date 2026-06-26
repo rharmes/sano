@@ -11,13 +11,14 @@ require __DIR__ . '/lib.php';
 
 require_method('POST');
 require_csrf_header();
-$adminId = require_admin();
 
 $body = read_json_body();
 $username = (string) ($body['username'] ?? '');
 if ($username === '') {
 	respond(400, ['error' => 'missing_fields']);
 }
+
+$adminId = require_admin();
 
 $pdo = db();
 $stmt = $pdo->prepare('SELECT id FROM users WHERE username = ?');

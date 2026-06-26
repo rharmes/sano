@@ -36,7 +36,7 @@ change both) → `css/admin.css` (admin dashboard only).
 
 ## js/sano.js — function index (grouped)
 
-- **Pure scheduler** (top of file; lifted + unit-tested by `tools/check-scheduler.mjs`): `reviewInterval`, `isRecallStrength`, `scheduleReview`, `exerciseGrade`, `legacyLevelToInterval`.
+- **Pure scheduler** (top of file; lifted + unit-tested in `tests/unit/`): `reviewInterval`, `isRecallStrength`, `scheduleReview`, `exerciseGrade`, `legacyLevelToInterval`.
 - **State:** `defaultState`, `loadState`, `normalizeState`, `saveState`, `migrateV1State`, `migrateLegacyState`, `applyServerState`, `itemRecord`.
 - **Dates / streak:** `dayString`, `daysBetween`, `daysSince`, `isDue`, `overdueDays`, `dueItems`, `registerActivity`.
 - **Home / path:** `renderHome`, `renderPath`, `currentUnit`, `unitNewItems`, `unitDueCount`, `unitIsComplete`, `unitIsUnlocked`, `placeBefore`, `placementOptions`, `dialogueUnlocked`, `soundUnlocked`.
@@ -70,6 +70,15 @@ change both) → `css/admin.css` (admin dashboard only).
 | `admin-users.php` | Admin: every account's last-sync, streak, introduced item ids. |
 | `admin-reset-password.php` | Admin: argon2id reset + clears that user's sessions. |
 | `admin-delete-user.php` | Admin: delete a user (cascades app_state/sessions/subscriptions); self-delete blocked. |
+
+Every endpoint follows one **guard order** (documented at the top of the guards in
+`lib.php`): `require_method()` → `require_csrf_header()` (mutating verbs) →
+`read_json_body()` → stateless field validation → `require_user()`/`require_admin()` → DB
+work. Auth runs last among the guards, so a malformed request fails fast before opening a
+DB connection — and the whole method/CSRF/JSON/validation surface is exercised by the no-DB
+`--api` guard specs (`session_user()` returns 401 without a cookie, before any `db()`
+call). Checks that need a row (revision conflict, `no_such_user`, the admin check)
+necessarily follow auth and live in the DB-gated integration specs.
 
 ## tools/
 
@@ -115,3 +124,6 @@ One suite, one entry point (`tools/test.sh`), five tiers. Internal-only (not dep
 - **CI** (`.github/workflows/ci.yml`) — three jobs: static+unit+data+api-guards; e2e
   (Chromium+WebKit); api integration against a `mysql:8` service. Real iOS-device Safari
   stays a manual check.
+- **Deferred:** visual screenshot-diff regression (pixel snapshots layered over the e2e
+  specs) is scoped but **not built** — it needs a pinned-Linux baseline pipeline to stay
+  deterministic. Design + decision log: `docs/visual-regression.md`.

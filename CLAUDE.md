@@ -78,7 +78,8 @@ phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust cache
   `sano_session` cookie (90 days); mutating requests need CSRF header `X-Sano-Request: 1`. Two ways
   to make an account: self-service `register.php` (open signup, throttled) and the invite-only
   `tools/make-user.php` CLI (also used for password resets). Hardening: argon2id, per-account
-  lockout + per-IP throttles, CSP/HSTS/nosniff in `.htaccess`, a generic JSON-500 handler.
+  lockout + per-IP throttles, CSP/HSTS/nosniff in `.htaccess`, a generic JSON-500 handler, and a
+  consistent guard order (stateless method/CSRF/JSON/validation checks run before auth/`db()`).
 - **Admin dashboard** at `/admin/` (standalone page, server-enforced via a `users.is_admin` flag +
   `require_admin()`): lists every account (path position, streak, last sync) with reset-password /
   delete actions. `?demo=1` renders stub rows for local UI review.
