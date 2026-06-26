@@ -1,14 +1,13 @@
 // Story dialogue player (SR-01): open the unlocked "Meeting Pyaro" conversation, exercise
 // the tap-to-translate gloss, then play through to the comprehension quiz and finish.
 import { test, expect } from '@playwright/test';
-import { boot, seed } from './_helpers.mjs';
+import { boot, seed, openScreen } from './_helpers.mjs';
 
 async function openConversation(page) {
 	await boot(page, seed.dialogueReady());
-	// force: path nodes carry an infinite "bob"/idle animation that keeps them moving, so the
-	// actionability "stable" check times out in WebKit. The toBeVisible below confirms the open.
-	await page.locator('#path .path-node.dialogue').first().click({ force: true });
-	await expect(page.locator('#screen-dialogue')).toBeVisible();
+	// Path nodes animate (an infinite "bob"); openScreen clicks-and-verifies with retry so a
+	// click that lands mid-animation can't leave the dialogue unopened.
+	await openScreen(page, page.locator('#path .path-node.dialogue').first(), '#screen-dialogue');
 }
 
 test('lines are romanized with tappable, underlined words', async ({ page }) => {

@@ -1,8 +1,25 @@
 // Shared helpers for the e2e specs. Not a spec itself (no `.spec.` in the name), so
 // Playwright's testMatch ignores it.
+import { expect } from '@playwright/test';
 import * as seed from '../seed.mjs';
 
 export { seed };
+
+// Click a control that should reveal a screen, retrying until the screen appears. The
+// app's animated path nodes / CTAs occasionally swallow the first (forced) click under CI
+// load — clicking the geometric centre can land just off the handler — so verify the
+// outcome and re-click rather than trust a single tap.
+export async function openScreen(page, locator, screenSel) {
+	const screen = page.locator(screenSel);
+	for (let i = 0; i < 4; i++) {
+		await locator.click({ force: true }).catch(() => {});
+		try {
+			await expect(screen).toBeVisible({ timeout: 3000 });
+			return;
+		} catch {}
+	}
+	await expect(screen).toBeVisible(); // final attempt — fail loudly if still closed
+}
 
 // Seed sano.state.v1 BEFORE the app's deferred scripts run, then load and wait for the
 // app global. Pass no state to exercise the first-run (onboarding) path. Set

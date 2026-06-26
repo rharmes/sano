@@ -88,7 +88,7 @@ test('push subscriptions can be stored and removed', async ({ request }) => {
 	await register(request, uniqueName());
 	const sub = { endpoint: `https://push.example/${uniqueName()}`, keys: { p256dh: 'a'.repeat(80), auth: 'b'.repeat(20) } };
 	expect((await request.post('/api/push-subscribe.php', { headers: CSRF, data: sub })).status()).toBe(200);
-	expect((await request.post('/api/push-unsubscribe.php', { headers: CSRF, data: { endpoint: sub.endpoint } })).status()).toBe(200);
+	expect((await request.post('/api/push-unsubscribe.php', { headers: CSRF, data: { endpoint: sub.endpoint } })).status()).toBe(204); // 204 No Content
 });
 
 test('a non-admin is forbidden from the admin endpoints', async ({ request }) => {
