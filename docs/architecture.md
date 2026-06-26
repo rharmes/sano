@@ -77,11 +77,9 @@ change both) → `css/admin.css` (admin dashboard only).
 | --- | --- |
 | `deploy.sh` | rsync the site to namastesano.com (explicit allowlist; `-n` dry-run). Run only when asked. |
 | `format.sh` | Prettier over HTML/CSS/JS + `@prettier/plugin-php`; `--check` for CI. Part of every change. |
-| `check.sh` | Convenience: runs the preflight checks together. |
+| `check.sh` | Static preflight: Prettier, asset stamps, `php -l`, `node --check`. Used by `test.sh --static` and CI's `npm run lint`. |
+| `test.sh` | **Single test-suite entry point** — tiers `--static --unit --data --api --ui` (default = all). See "## Tests". |
 | `stamp-version.mjs` | Rewrites the `?v=` content-hash stamps on local asset URLs in `index.html` + `admin/index.html`. Run after format. |
-| `check-viewports.mjs` | Headless-Chrome layout regression across 9 mobile widths (320–521) via same-origin iframes. |
-| `check-webkit.mjs` | Drives real Safari (safaridriver) to catch WebKit-only animation bugs. Run after mascot/animation CSS. |
-| `check-scheduler.mjs` | Unit-tests the pure SM-2-lite scheduler math from `js/sano.js`. |
 | `screenshot.sh` | Headless-Chrome screenshot wrapper (`<url> <out.png> [WxH] [budget-ms]`). |
 | `dev-seed.html` | Committed dev tool (served, never deployed): seeds `sano.state.v1` and opens the app where a gated feature is visible. Add a scenario for every new feature. |
 | `make-user.php` | CLI account create / `--reset-password` (invite-only; run on the server). |
@@ -93,3 +91,27 @@ change both) → `css/admin.css` (admin dashboard only).
 | `tts/synth-app.mjs` | Render phrase / word / dialogue-line clips through the ElevenLabs API in Sano's cloned voice — `--phrases` (→ `audio/default/<id>.mp3`, ~588) / `--words` (→ `audio/words/<slug>.mp3`, ~233) / `--dialogues` (→ `audio/<voice>/<clipId>.mp3`, per speaker). Add `--new` for only clips missing on disk, `--only` for one, `--sample` to preview. Bump `AUDIO_VERSION` (js/audio.js) after. |
 | `tts/build-words.mjs` | Build `tts/words.json` (per-word Devanagari, phrases-only) for the word-bank clips. |
 | `tts/eleven.mjs` / `tts/phrases.mjs` / `tts/build-compare.mjs` | ElevenLabs client + voice mapping + sample-comparison design tool. |
+
+## Tests
+
+One suite, one entry point (`tools/test.sh`), five tiers. Internal-only (not deployed).
+
+| Tier | Runner | What it covers |
+| --- | --- | --- |
+| `--static` | `check.sh` | Prettier, asset stamps, `php -l`, `node --check`. |
+| `--unit` | `node:test` (`tests/unit/*.test.mjs`) | Pure logic lifted from `js/sano.js`: SR-05 scheduler, answer matching, dates/streak/freeze, v1/legacy state migration, exercise dedup. |
+| `--data` | `node:test` (`tests/data/*.test.mjs`) | `COURSE`/`DIALOGUES`/`SOUND_TOPICS` integrity — unique ids, required fields, the gloss-join invariant, sound-mark coverage. |
+| `--api` | `@playwright/test` request (`tests/api/`) | Pre-DB guard specs (method/CSRF/JSON/validation, no DB) + a PHP pure-helper test; `integration.spec.mjs` adds the full request cycle, gated on `SANO_TEST_DB`. |
+| `--ui` | `@playwright/test` Chromium + WebKit (`tests/e2e/`) | Onboarding, home/path + 9-width overflow, every lesson exercise type, the dialogue player + tap-gloss, dictionary, reminder modal, admin demo, idle/reduced-motion. |
+
+- **`tests/lift.mjs`** — pulls pure declarations out of the classic (non-module) browser
+  scripts without a browser: `liftBlock` (sentinel-delimited), `liftGlobals` (whole pure
+  data file), `liftFns` (by-name function extraction, comment/string-aware) with optional
+  `inject`/`preamble`. No app-code changes were needed to make the logic testable.
+- **`tests/seed.mjs`** — the `sano.state.v1` fixture builders (`midCourse`, `dialogueReady`,
+  the single-exercise `lesson*` seeds, …), the same ones `tools/dev-seed.html` uses.
+- **`tests/e2e/_helpers.mjs`** — `boot()` (seed + load + inline animation-freeze) and
+  `stepLesson()` (drives any exercise renderer, pairing match tiles by `data-id`).
+- **CI** (`.github/workflows/ci.yml`) — three jobs: static+unit+data+api-guards; e2e
+  (Chromium+WebKit); api integration against a `mysql:8` service. Real iOS-device Safari
+  stays a manual check.

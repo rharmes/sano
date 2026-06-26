@@ -1,9 +1,7 @@
 #!/bin/sh
-# Preflight: every static check the project has, in one command. Run before
-# committing/deploying, or in CI.
-#
-#   tools/check.sh                 # everything
-#   tools/check.sh --no-viewports  # skip the headless-Chrome layout check (CI)
+# Static preflight: formatting, asset stamps, and syntax — the fast checks with no browser
+# or DB. The behavior tests (unit / data / api / e2e) live in tools/test.sh. This is what
+# CI's `npm run lint` runs, and what `tools/test.sh --static` calls.
 set -eu
 cd "$(dirname "$0")/.."
 
@@ -14,7 +12,7 @@ echo "==> Asset stamps"
 node tools/stamp-version.mjs --check
 
 echo "==> PHP lint"
-for f in api/*.php tools/*.php; do
+for f in api/*.php tools/*.php tests/api/*.php; do
 	if ! php -l "$f" >/dev/null 2>&1; then
 		php -l "$f" # re-run to surface the error
 		exit 1
@@ -23,15 +21,7 @@ done
 echo "  ok"
 
 echo "==> JS syntax"
-for f in js/*.js tools/*.mjs; do node --check "$f"; done
+for f in js/*.js tools/*.mjs tests/*.mjs tests/*/*.mjs; do node --check "$f"; done
 echo "  ok"
 
-echo "==> Scheduler (SR-05)"
-node tools/check-scheduler.mjs
-
-if [ "${1:-}" != "--no-viewports" ]; then
-	echo "==> Viewport layout"
-	node tools/check-viewports.mjs
-fi
-
-echo "All checks passed."
+echo "Static checks passed."

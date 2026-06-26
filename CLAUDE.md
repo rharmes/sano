@@ -98,9 +98,10 @@ phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust cache
    clone). `tools/format.sh --check` is the CI form.
 2. `node tools/stamp-version.mjs` — rewrites the `?v=` content-hash stamps in `index.html` +
    `admin/index.html`. Run **after** formatting; never hand-edit a stamp.
-3. `node tools/check-viewports.mjs` (9 mobile widths) + verify visually with `tools/screenshot.sh`.
-   Run `node tools/check-scheduler.mjs` after scheduler changes and `node tools/check-webkit.mjs`
-   after animation / mascot-CSS changes.
+3. `tools/test.sh` runs the full suite (static + unit + data + api + e2e); pass a flag
+   (`--unit`/`--data`/`--api`/`--ui`/`--static`) for one tier. Verify visually with
+   `tools/screenshot.sh`. (The old `check-*.mjs` harnesses are gone: scheduler → `tests/unit/`,
+   the 9-width viewport sweep + WebKit animation checks → Playwright e2e in `tests/e2e/`.)
 4. **Every new user-facing feature gets a one-click scenario in `tools/dev-seed.html`** — most
    features are gated behind progress, so a fresh localhost won't show them. Pure bug
    fixes / refactors with nothing to demo can skip it.
@@ -114,14 +115,24 @@ phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust cache
 
 ## Testing notes (the non-obvious bits)
 
-- **check-viewports** uses same-origin iframes because headless Chrome can't open a window narrower
-  than 500px; it writes `/tmp/sano-viewports*.png` on failure.
-- **check-webkit** drives real Safari via `safaridriver` (one-time: `sudo safaridriver --enable` +
-  Safari ▸ Develop ▸ "Allow Remote Automation") — the only thing that catches WebKit-only animation
-  bugs.
+- **Test suite** (`tools/test.sh`, tiers `--static/--unit/--data/--api/--ui`): `node:test` for pure
+  logic + data integrity (`tests/unit`, `tests/data`), Playwright for HTTP + browser (`tests/api`,
+  `tests/e2e`). Pure helpers are lifted out of the classic scripts by `tests/lift.mjs` (sentinel
+  block / whole-file globals / by-name function extraction) — no app-code change needed to test them.
+- **e2e gotchas:** `php -S` is single-threaded, so the Playwright `webServer` sets
+  `PHP_CLI_SERVER_WORKERS` (else parallel browsers starve it and pages never settle). The app's
+  infinite idle animations defeat a stylesheet freeze on specificity, so `boot()` freezes them with
+  inline `!important` and interaction clicks pass `{ force: true }` (pseudo-element animations can't
+  be frozen inline). Seeds come from `tests/seed.mjs` — the same builders `dev-seed.html` uses.
+  `prefers-reduced-motion` is driven with `page.emulateMedia`, not the config option.
+- **Backend tests:** the `tests/api` guard specs run against `php -S` with **no** `sano-config.php`,
+  so they assert only pre-DB guards (method/CSRF/JSON/validation). Full request-cycle integration
+  (`tests/api/integration.spec.mjs`) needs MySQL and runs only when `SANO_TEST_DB` is set — CI's
+  `integration` job provides a `mysql:8` service + a generated config; locally those tests skip.
+  WebKit-only bugs are caught by the e2e `webkit` project in CI; real iOS-device Safari stays manual.
 - **Screenshot harness:** write a temp `.shot-harness.html` in the repo root that seeds
-  `sano.state.v1` and iframes the app at the target width (copy a representative state from
-  `tools/check-viewports.mjs`). **Delete temp harness files before committing.**
+  `sano.state.v1` and iframes the app at the target width (reuse a builder from `tests/seed.mjs`).
+  **Delete temp harness files before committing.**
 - **Forcing light mode:** headless Chrome follows the system theme — strip the dark `@media` blocks
   into temp `.light.*` copies. **Animations:** `--virtual-time-budget` finishes animations before
   capture, so sample `getComputedStyle(...).opacity` in a probe page and read it with `--dump-dom`.
