@@ -66,7 +66,9 @@ tappable chunk); **`gloss.map(g => g.np).join(' ')` must equal `np`**:
 ```
 
 Only `greet-pyaro` is live; its `gloss` English is AI-drafted and awaits review. Per-line
-audio is voiced per character; a head comes from `CHARACTER_HEADS[who]`.
+audio is voiced per character; a head comes from `CHARACTER_HEADS[who]`. The English (story /
+lines / questions) is authored in `tools/tts/dialogue-scripts.md` — the **source of truth** —
+and `DIALOGUES` is hand-built from it (adding the Nepali + clip routing), synced by hand.
 
 ## Pronunciation drills — `SOUND_TOPICS` (js/sounds.js, SR-08)
 

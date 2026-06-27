@@ -137,3 +137,11 @@ After (re)rendering, bump **`AUDIO_VERSION`** in `js/audio.js` so caches/clients
 
 Per-character voices (a planned follow-up) extend this: render each character's lines to
 `audio/<voice>/<id>.mp3` and widen `voiceForCharacter()` in `js/audio.js`.
+
+## Conversation source
+
+The story conversations are authored in English in **`dialogue-scripts.md`** — the **source of
+truth** for the story, comprehension questions, and voice direction. `js/dialogues.js` (what
+`synth-app.mjs --dialogues` renders) is **hand-built** from it, adding the Nepali (`np`/`dev`/per-word
+`gloss`) + clip routing; the two are kept in sync by hand (no generator or drift-check — convention
+only). Voice-direction tags: see **`voice-tags.md`**.

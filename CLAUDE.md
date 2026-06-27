@@ -53,7 +53,10 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   bubble), **romanized-only** lines whose every word is underlined + tappable for its English
   (`js/gloss.js`, `SanoGloss.renderLine`), narrator full-width, auto-played per-voice audio, then a
   comprehension quiz. Each opens with a one-line `CHARACTER_PERSONAS` intro. `design/dialogue.html`
-  is the localhost mockup. Only `greet-pyaro` is live. A line's `dev` may carry inline **ElevenLabs
+  is the localhost mockup. Only `greet-pyaro` is live. The conversations' English **source of truth**
+  is `tools/tts/dialogue-scripts.md`; `js/dialogues.js` is hand-built from it (adding the Nepali +
+  clip routing) and kept in sync **by hand** (no generator/drift-check — convention only). A line's
+  `dev` may carry inline **ElevenLabs
   v3 performance tags** in `[brackets]` (`[whispers]`, `[laughs]`, …) — voice-acting cues passed to
   the audio render verbatim and stripped from all on-screen text (`SanoRomanize.stripTags`); they
   must never appear in `np`/`gloss`/`en` (a data test enforces it). **Pending task: Ross will add

@@ -10,9 +10,19 @@ line wherever you want them — e.g. `PYARO: [shouting] GO AWAY!` or `SANO: [sar
 me.` (tag list: elevenlabs.io/blog/v3-audiotags). I'll carry them into the Nepali line's audio so
 the TTS performs them; they never show in the app or affect the translation.
 
-_Lives in `tools/tts/` (internal-only — not deployed). This English draft is the **source** for
-the story conversations going forward; `js/dialogues.js` is currently hand-built from it during the
-Nepali-mapping pass._
+## Workflow — this file is the source of truth
+
+This MD is **canonical** for the conversations' English: the story, speaker order, the comprehension
+questions, per-dialogue metadata (title / cast / anchor unit / goal), and voice direction (CAPS
+emphasis and `[tags]`). `js/dialogues.js` (the runtime `DIALOGUES`) is **built from it by hand**,
+adding what the MD doesn't carry: the Nepali (`np` / `dev` / per-word `gloss`), audio-clip routing,
+and the path `section`.
+
+**When you edit a line, question, or the order here, re-map the matching `js/dialogues.js` entry and
+re-render any changed audio** (`synth-app.mjs --dialogues --only <clipId>`, then bump
+`AUDIO_VERSION`). Nothing enforces this automatically — keep the two in sync by hand.
+
+_Internal-only — `tools/` is not deployed._
 
 ---
 
