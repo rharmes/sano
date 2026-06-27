@@ -64,13 +64,16 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 ## Audio (SR-02)
 
 `SanoAudio` serves per-phrase clips `audio/<voice>/<id>.mp3` (`play(id)`, ~588) and per-word
-word-bank clips `audio/words/<slug>.mp3` (`playWord(slug)`, ~233; slug = the romanized word run
-through `normalize`). A missing clip is a silent no-op. **All audio is pre-rendered by
+word-bank clips `audio/words/<slug>.mp3` (`playWord(slug)`, ~233; slug = the **derived** romanized
+word — from `js/romanize.js` — run through `normalize`). A missing clip is a silent no-op. **All audio is pre-rendered by
 `tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice** (`eleven_v3`, voice id
 in RESEARCH.md §9) — never a runtime call. `synth-app.mjs --phrases`/`--words` render the full set;
 `--new` renders only clips not yet on disk (so adding content doesn't re-spend credits or churn
 git). Per-word Devanagari comes from `tools/tts/words.json` (built by `tools/tts/build-words.mjs`,
-phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust caches.
+phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust caches. **Word clips are
+currently stale:** the shipped `audio/words/*.mp3` predate the derived `np`, so ~half have new slugs
+and play silently until re-rendered (`build-words.mjs` → `synth-app.mjs --words --new`, then bump
+`AUDIO_VERSION`).
 
 ## Server / admin / PWA (essentials; full detail in `@docs/architecture.md`)
 

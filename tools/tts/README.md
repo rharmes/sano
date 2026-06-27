@@ -108,10 +108,12 @@ The shipped audio is rendered through ElevenLabs in **Sano's cloned voice** (RES
 Two tools, run from the repo root with `ELEVENLABS_API_KEY` set:
 
 - **`build-words.mjs`** — writes **`words.json`**, the per-word Devanagari map for word-bank
-  tile audio (one entry per distinct tile-word). ~90% auto-derive from each phrase's `dev` by
-  1:1 alignment; the fused remainder (postpositions/verb-fusions) come from a hand-drafted
-  `OVERRIDES` table in the script. Deterministic — re-run after editing `js/data.js` or the
-  overrides. Reviewable artifact: `words.json` itself.
+  tile audio (one entry per distinct tile-word). The tile romanization is derived from each
+  phrase's `dev` via `js/romanize.js` (`romanize`), so it aligns 1:1 with the `dev` words by
+  construction; a tiny `OVERRIDES` table covers the few words a non-space separator splits (e.g.
+  `/`). Deterministic — re-run after editing `js/data.js`. Reviewable artifact: `words.json`.
+  **Note:** the shipped `audio/words/*.mp3` predate the derived romanization, so roughly half now
+  have new slugs and are silently absent until a re-render (`synth-app.mjs --words --new`).
 - **`synth-app.mjs`** — renders the **real shipped** clips (not the bake-off dir). Pass one of
   `--sample | --phrases | --words | --dialogues`:
   - `--sample` → a small preview (tricky phrases + single words) into

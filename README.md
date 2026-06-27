@@ -38,7 +38,7 @@ tools/            Dev/ops scripts — see "Tool scripts"
 
 ### Course content (js/data.js)
 
-`COURSE` is an array of units: `{ id, title, kind: 'phrases'|'vocab', items: [...] }`. Each item is `{ id, np, pron, en, usage }` (phrases) or `{ id, np, pron, en, emoji }` (vocab). Item ids are stable slugs (`namaste-hello-goodbye`) — they are the keys for all progress records, so **never rename an id** without writing a state migration.
+`COURSE` is an array of units: `{ id, title, kind: 'phrases'|'vocab', items: [...] }`. Each item is `{ id, dev, en, usage }` (phrases) or `{ id, dev, en, emoji }` (vocab); the Romanized `np` and the pronunciation guide `pron` are **derived from the Devanagari `dev`** at load by `js/romanize.js` (`romanize` / `pronounce`; see `docs/romanization.md`). Item ids are stable slugs (`namaste-hello-goodbye`) — they are the keys for all progress records, so **never rename an id** without writing a state migration.
 
 ### App logic (js/sano.js)
 
