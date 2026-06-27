@@ -250,6 +250,14 @@
 			"bhitra-aaunus-please-come-in"
 		]
 	},
+	"bidyaarthi": {
+		"roman": "bidyaarthi",
+		"dev": "विद्यार्थी",
+		"source": "aligned",
+		"phrases": [
+			"ma-vidyarthi-hu-i-am-a-student"
+		]
+	},
 	"biraami": {
 		"roman": "biraami",
 		"dev": "बिरामी",
@@ -2030,14 +2038,6 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-uthchu-i-get-up-i-will-get-up"
-		]
-	},
-	"widyaarthi": {
-		"roman": "widyaarthi",
-		"dev": "विद्यार्थी",
-		"source": "aligned",
-		"phrases": [
-			"ma-vidyarthi-hu-i-am-a-student"
 		]
 	},
 	"yo": {
