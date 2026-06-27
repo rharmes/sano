@@ -1,32 +1,26 @@
-// js/romanize.js — Devanagari → "Lite" romanization (the spec: docs/romanization.md).
+// js/romanize.js — Devanagari → "Lite" romanization + the English-respelling pronunciation guide.
 //
-// WHY: step one of "store only English + Devanagari, derive everything else by repeatable
-// rules". Loaded right after js/data.js, this rewrites each COURSE item's in-memory `np` to
-// romanize(item.dev), so every existing `item.np` reader (display, grading, dedup in
-// js/sano.js) keeps working unchanged. The hand-drafted `np` stays in js/data.js as the
-// review baseline until the derived output is trusted.
+// Two pure, table-driven derivations from `dev`, sharing one syllable tokenizer:
+//   • romanize(dev) — the "Lite" headword (spec: docs/romanization.md). At load this rewrites
+//     each COURSE item's in-memory `np` to romanize(item.dev); the hand-drafted np was removed.
+//   • pronounce(dev) — the `pron` guide: the same syllables respelled for English intuition
+//     (schwa→"uh", इ/ई→"ee", ओ→"oh", ए/े→"ay", औ→"ow", फ→"f", व→"b"; छ→"chh"), hyphenated by
+//     syllable, all lowercase. Conventions confirmed with Ross. The COURSE rewrite below derives
+//     both np and pron from dev.
 //
-// PURE + classic script: defines the global `SanoRomanize` (like COURSE / SanoAudio / …), so
-// the tests can lift it with no browser (tests/lift.mjs `liftGlobals` → tests/unit/
-// romanize.test.mjs + tests/data/romanize-coverage.test.mjs). The COURSE rewrite at the
-// bottom is guarded by `typeof COURSE` so the file is safe to eval in Node.
+// Classic script defining the global `SanoRomanize` (like COURSE / SanoAudio), so the tests lift
+// it (tests/lift.mjs). The COURSE rewrite at the bottom is guarded by `typeof COURSE`.
 //
-// DELIBERATE DEVIATIONS from the spec (each justified inline below):
-//   • ञ is added to the consonant table — the spec's Stage-1 table omits it, but it occurs in
-//     the corpus (e.g. सञ्चै).
-//   • Nasalization unifies anusvara ं and chandrabindu ँ: → "n" before a consonant in the same
-//     word, dropped word-final. (The spec drops chandrabindu always — which would silence
-//     audible nasals like आउँदै / सँग — and maps anusvara word-final → "n", which doesn't match
-//     the everyday forms तपाईं→tapai, कहाँ→kahaa.)
-//   • "Table wins" over a conflicting worked-example: गर्छ→garchha (छ = chh; final schwa kept
-//     after ch/chh), राम्रो→raamro (ा = aa, the one vowel length we preserve).
+// DELIBERATE DEVIATIONS from docs/romanization.md (justified inline): ञ added to the consonant
+// table; nasalization unifies anusvara ं and chandrabindu ँ (→ "n" before a consonant, dropped
+// word-final); "table wins" over a conflicting worked example (गर्छ→garchha, राम्रो→raamro).
 
 const SanoRomanize = (() => {
 	'use strict';
 
-	// --- Stage 1: consonants (docs/romanization.md §Stage 1). Retroflex/dental merged, all
-	// nasals → n, ष/स → s, श → sh, व → w. `ञ` added (spec omits it). The nukta forms फ़/ज़ and
-	// ड़ are defensive — none occur in the current corpus.
+	// ===== Lite romanization tables (docs/romanization.md) =====
+	// Stage 1: consonants. Retroflex/dental merged, all nasals → n, ष/स → s, श → sh, व → w. `ञ`
+	// added (spec omits it). Nukta forms ड़/फ़/ज़ are defensive — none occur in the corpus.
 	const CONS = {
 		क: 'k',
 		ख: 'kh',
@@ -66,8 +60,8 @@ const SanoRomanize = (() => {
 		ज़: 'z', // ड़ फ़ ज़ (defensive; nukta unused in corpus)
 	};
 
-	// --- Stage 2: vowels. Independent (word-initial) and matra (post-consonant) forms map to
-	// the same output. Only a/aa keeps length (काम "kaam" vs कम "kam"); i and u length dropped.
+	// Stage 2: vowels — independent (word-initial) and matra forms map to the same output. Only
+	// a/aa keeps length (काम "kaam" vs कम "kam"); i and u length dropped.
 	const VOWEL_INDEP = {
 		अ: 'a',
 		आ: 'aa',
@@ -94,12 +88,9 @@ const SanoRomanize = (() => {
 		'ृ': 'ri', // ृ
 	};
 
-	// --- Stage 3: special conjuncts that DON'T fall out of plain concatenation. क्ष is "ksh"
-	// (not क+ष = "ks") and ज्ञ is the spoken "gy" (not "jn"). Matched greedily before the
-	// per-letter walk. (Keys built with an explicit halant ्.) त्र / श्र are deliberately NOT
-	// listed: they already concatenate correctly via the halant path (त्→t, र→r ⇒ "tr"), and
-	// routing them through that path keeps the final-schwa cluster guard working (भित्र→bhitra,
-	// not bhitr).
+	// Stage 3: conjuncts that don't fall out of plain concatenation (क्ष = "ksh" not "ks"; ज्ञ =
+	// "gy"). त्र / श्र are deliberately omitted — they route through the halant path, which keeps
+	// the final-schwa cluster guard working (भित्र→bhitra).
 	const CONJUNCT = {
 		क्ष: 'ksh', // क्ष
 		ज्ञ: 'gy', // ज्ञ
@@ -109,33 +100,61 @@ const SanoRomanize = (() => {
 	const ANUSVARA = 'ं'; // ं
 	const CHANDRA = 'ँ'; // ँ
 
-	// Final inherent 'a' is morphological, not orthographic (कान "kaan" drops it, होइन "hoina"
-	// keeps it — same final न). We DROP by default, but KEEP after ch/chh (the छ-final verb
-	// forms गर्छ→garchha), after the productive negative suffix दैन (…→…daina), and for a small
-	// set of irregular copula/negatives. Seeded here; extend from the review.
+	// ===== Pronunciation tables (English respelling; conventions confirmed with Ross) =====
+	// Consonants follow Lite except फ→"f". Vowels are respelled for English intuition. (व is "w" by
+	// default, like Lite; the few "b" words are handled by VA_AS_B below — for both np and pron.)
+	const PRON_CONS = Object.assign({}, CONS, { फ: 'f' });
+	const PRON_VOWEL_INDEP = {
+		अ: 'uh',
+		आ: 'aa',
+		इ: 'ee',
+		ई: 'ee',
+		उ: 'oo',
+		ऊ: 'oo',
+		ए: 'ay',
+		ऐ: 'ai',
+		ओ: 'oh',
+		औ: 'ow',
+		ऋ: 'ri',
+	};
+	const PRON_VOWEL_MATRA = {
+		'ा': 'aa', // ा
+		'ि': 'ee', // ि
+		'ी': 'ee', // ी
+		'ु': 'oo', // ु
+		'ू': 'oo', // ू
+		'े': 'ay', // े
+		'ै': 'ai', // ै
+		'ो': 'oh', // ो
+		'ौ': 'ow', // ौ
+		'ृ': 'ri', // ृ
+	};
+
+	// Inherent-vowel rendering (schwa) + the table bundle each output uses. tokenize() is
+	// parameterized by one of these, so the syllable logic is shared.
+	const LITE = { INHERENT: 'a', CONS, VOWEL_INDEP, VOWEL_MATRA, CONJUNCT };
+	const PRON = { INHERENT: 'uh', CONS: PRON_CONS, VOWEL_INDEP: PRON_VOWEL_INDEP, VOWEL_MATRA: PRON_VOWEL_MATRA, CONJUNCT };
+
 	const KEEP_FINAL_A_ONSETS = new Set(['ch', 'chh']);
 	const NEG_SUFFIX = 'दैन'; // दैन
 	// Irregular words that keep their final schwa in speech (Nepali retains more finals than
-	// Hindi). The copula/negatives होइन/छैन, plus the short words harvested from Ross's np where
-	// the only difference was a kept final 'a' (सय→saya, तर→tara, आज→aaja, …).
+	// Hindi). The copula/negatives होइन/छैन, plus short words harvested from Ross's np where the
+	// only difference was a kept final 'a' (सय→saya, तर→tara, आज→aaja, …).
 	const LEXICAL_KEEP = new Set(['होइन', 'छैन', 'सय', 'तर', 'अब', 'मह', 'आज', 'बिहान', 'तिर', 'आइज']);
 
 	// Stems whose written nasal is silent in speech, so it must NOT surface as "n" before a
 	// following postposition: तपाईं → तपाई (so तपाईंको → tapaaiko, not tapaainko).
 	const SILENT_NASAL = [['तपाईं', 'तपाई']];
 
-	// --- Stage 6 overrides: whole Devanagari words → exact-cased romanization. Two jobs:
-	// (1) proper nouns the rules would lowercase (नेपाली→Nepali) — auto-harvested from the words
-	//     Ross capitalized mid-phrase in the hand-drafted np; (2) loanwords the rules garble
-	//     (अङ्ग्रेजी→Angreji, फोन→phone). The value is emitted verbatim, so its case survives
-	//     even mid-phrase. The harvested set is shown in the review for confirmation.
+	// व is usually "w" but is realized as "b" in a handful of words (native-speaker confirmed).
+	// Applied in both tracks so np and pron agree: धन्यवाद→Dhanyabaad / dhuhn-yuh-baad.
+	const VA_AS_B = new Set(['धन्यवाद', 'वन', 'विद्यार्थी', 'वर्ष']);
+
+	// Stage-6 overrides for the Lite headword: whole Devanagari words → exact-cased romanization.
+	// Proper nouns (capitalized, harvested from Ross's mid-phrase caps) + English loanwords.
 	const WORD_OVERRIDES = {
-		// Proper nouns (capitalized — harvested from Ross's mid-phrase caps in the old np).
 		नेपाली: 'Nepali',
 		अङ्ग्रेजी: 'Angreji', // also fixes the ङ्ग = "ngg" garble
-		// English loanwords Ross spells in English (lowercase → capitalized at phrase start by
-		// the cleanup step; mid-phrase they read as the common nouns they are). Confirm in the
-		// review — flip any to its phonetic form (e.g. गिलास→"gilaas") if you prefer.
 		हस्पिटल: 'hospital',
 		कम्प्युटर: 'computer',
 		हेडफोन: 'headphone',
@@ -148,41 +167,59 @@ const SanoRomanize = (() => {
 		टिभी: 'TV',
 	};
 
+	// Pronunciation overrides: loanwords the rules respell oddly get an English-friendly form.
+	// Seeded from the review (whole Devanagari word → exact pron, lowercase).
+	const PRON_OVERRIDES = {
+		// English-friendly forms for loanwords the rules respell literally, plus अङ्ग्रेजी (whose
+		// ङ्ग garbles to "ngg"). Lowercase, hyphenated — Ross's hand-drafted pron.
+		हस्पिटल: 'hos-pi-tal',
+		कम्प्युटर: 'com-pyu-ter',
+		हेडफोन: 'hed-phone',
+		डस्टबिन: 'dust-bin',
+		डस्टर: 'dus-tar',
+		गिलास: 'glass',
+		फ्रिज: 'frij',
+		होटल: 'ho-tal',
+		मनसुन: 'mon-soon',
+		टिभी: 'tee-vee',
+		अङ्ग्रेजी: 'ang-gray-jee',
+	};
+
 	const DEV_RANGE = /[ऀ-ॿ]/;
 	const isDev = (ch) => DEV_RANGE.test(ch);
 	const has = (obj, k) => Object.prototype.hasOwnProperty.call(obj, k);
 
-	// Romanize one pure-Devanagari word (no spaces / punctuation): tokenize into syllables,
-	// resolve nasalization + the final schwa, assemble. Output is lowercase; the caller applies
-	// overrides + first-letter capitalization.
-	function romanizeWord(w) {
+	// Shared tokenizer: a pure-Devanagari word → syllable records { onset, vowel, inherentA,
+	// nasalOut }, mapped through the tables `T`. Resolves the final inherent schwa and resolves
+	// nasalization (ं/ँ → "n" before a consonant onset, else dropped).
+	function tokenize(w, T) {
+		// व → "b" for the listed words (else the table's default "w"); applies to whichever table T is.
+		const CONS_T = VA_AS_B.has(w) ? Object.assign({}, T.CONS, { व: 'b' }) : T.CONS;
 		for (const [from, to] of SILENT_NASAL) if (w.includes(from)) w = w.split(from).join(to);
-		// 1. Tokenize into syllable records { onset, vowel, inherentA, nasal }.
 		const syl = [];
 		const last = () => syl[syl.length - 1];
 		let i = 0;
 		while (i < w.length) {
-			// Greedy special-conjunct test (each key is consonant + halant + consonant).
 			let hit = null;
-			for (const key in CONJUNCT) {
+			for (const key in T.CONJUNCT) {
 				if (w.startsWith(key, i)) {
 					hit = key;
 					break;
 				}
 			}
 			if (hit) {
-				syl.push({ onset: CONJUNCT[hit], vowel: 'a', inherentA: true, nasal: false });
+				syl.push({ onset: T.CONJUNCT[hit], vowel: T.INHERENT, inherentA: true, nasal: false });
 				i += hit.length;
 				continue;
 			}
 			const c = w[i];
-			if (has(CONS, c)) {
-				syl.push({ onset: CONS[c], vowel: 'a', inherentA: true, nasal: false });
-			} else if (has(VOWEL_INDEP, c)) {
-				syl.push({ onset: '', vowel: VOWEL_INDEP[c], inherentA: false, nasal: false });
-			} else if (has(VOWEL_MATRA, c)) {
+			if (has(CONS_T, c)) {
+				syl.push({ onset: CONS_T[c], vowel: T.INHERENT, inherentA: true, nasal: false });
+			} else if (has(T.VOWEL_INDEP, c)) {
+				syl.push({ onset: '', vowel: T.VOWEL_INDEP[c], inherentA: false, nasal: false });
+			} else if (has(T.VOWEL_MATRA, c)) {
 				if (syl.length) {
-					last().vowel = VOWEL_MATRA[c];
+					last().vowel = T.VOWEL_MATRA[c];
 					last().inherentA = false;
 				}
 			} else if (c === HALANT) {
@@ -193,56 +230,55 @@ const SanoRomanize = (() => {
 			} else if (c === ANUSVARA || c === CHANDRA) {
 				if (syl.length) last().nasal = true;
 			} else {
-				// Unknown Devanagari — shouldn't happen (the coverage test guards this). Emit it
-				// verbatim so it's visible rather than silently dropped.
+				// Unknown Devanagari — shouldn't happen (the coverage test guards this). Keep it
+				// visible rather than silently dropped.
 				syl.push({ onset: c, vowel: '', inherentA: false, nasal: false });
 			}
 			i++;
 		}
-		if (!syl.length) return '';
+		if (!syl.length) return syl;
 
-		// 2. Final inherent schwa. Drop by default, but KEEP it when: the preceding syllable has
-		// no vowel — dropping would create a final consonant cluster (भित्र→bhitra, सम्म→samma)
-		// or leave a single-syllable word with no vowel at all (म→ma) — per the spec's Stage 5
-		// "keep when dropping would create an unpronounceable cluster"; the syllable is nasalized
-		// (a realized nasal schwa — the 1st-person negative बोल्दिनँ→boldina); the onset is ch/chh
-		// (गर्छ→garchha); the word ends in the negative suffix दैन (हुँदैन→hundaina); or it is a
-		// listed irregular copula/negative (होइन, छैन).
+		// Final inherent schwa: drop by default, but KEEP it when the preceding syllable has no
+		// vowel (would make a final cluster / vowelless word: सम्म, भित्र, म), the syllable is
+		// nasalized (बोल्दिनँ→…dina), the onset is ch/chh (गर्छ→…chha), the word ends in the
+		// negative suffix दैन (हुँदैन→…daina), or it is a listed irregular keep (होइन, छैन, …).
 		const L = last();
 		const prev = syl[syl.length - 2];
 		const prevHasVowel = !!prev && prev.vowel !== '';
-		if (
-			L.inherentA &&
-			L.vowel === 'a' &&
-			!L.nasal &&
-			prevHasVowel &&
-			!KEEP_FINAL_A_ONSETS.has(L.onset) &&
-			!LEXICAL_KEEP.has(w) &&
-			!w.endsWith(NEG_SUFFIX)
-		) {
+		if (L.inherentA && !L.nasal && prevHasVowel && !KEEP_FINAL_A_ONSETS.has(L.onset) && !LEXICAL_KEEP.has(w) && !w.endsWith(NEG_SUFFIX)) {
 			L.vowel = '';
 		}
 
-		// 3. Resolve nasalization + assemble. A nasal becomes "n" iff a later syllable in the
-		// word has a consonant onset; otherwise (word-final / before a vowel) it is dropped.
-		let out = '';
+		// Resolve nasalization: "n" before a consonant onset in the same word, else dropped.
 		for (let k = 0; k < syl.length; k++) {
-			const s = syl[k];
-			out += s.onset + s.vowel;
-			if (s.nasal) {
-				const next = syl[k + 1];
-				if (next && next.onset !== '') out += 'n';
-			}
+			const next = syl[k + 1];
+			syl[k].nasalOut = syl[k].nasal && next && next.onset !== '' ? 'n' : '';
 		}
+		return syl;
+	}
+
+	// Lite: concatenate syllables, no separators.
+	function romanizeWord(w) {
+		let out = '';
+		for (const s of tokenize(w, LITE)) out += s.onset + s.vowel + s.nasalOut;
 		return out;
 	}
 
-	// Romanize a full `dev` string: split into Devanagari-word runs vs everything-else runs
-	// (spaces, ?, _, /, …), romanize the former (whole-word override first), pass the latter
-	// through unchanged, then capitalize the first letter of the phrase. Proper-noun capitals
-	// come from the overrides, so they survive mid-phrase.
-	function romanize(dev) {
-		if (!dev) return dev;
+	// Pron: hyphenate syllables; a vowelless syllable (a halant coda like न्) merges into the
+	// previous syllable rather than becoming its own hyphenated chunk (हुन्छ → hoon-chhuh).
+	function pronounceWord(w) {
+		const parts = [];
+		for (const s of tokenize(w, PRON)) {
+			const str = s.onset + s.vowel + s.nasalOut;
+			if (s.vowel === '' && parts.length) parts[parts.length - 1] += str;
+			else if (str) parts.push(str);
+		}
+		return parts.join('-');
+	}
+
+	// Walk a `dev` string: Devanagari word-runs go through `fn` (whole-word override first);
+	// everything else (spaces, ?, _, /, …) passes through unchanged, preserving position.
+	function mapWords(dev, overrides, fn) {
 		const s = dev.normalize('NFC');
 		let out = '';
 		let i = 0;
@@ -251,29 +287,45 @@ const SanoRomanize = (() => {
 				let j = i;
 				while (j < s.length && isDev(s[j])) j++;
 				const word = s.slice(i, j);
-				out += has(WORD_OVERRIDES, word) ? WORD_OVERRIDES[word] : romanizeWord(word);
+				out += has(overrides, word) ? overrides[word] : fn(word);
 				i = j;
 			} else {
 				out += s[i];
 				i++;
 			}
 		}
-		return out.replace(/[a-zA-Z]/, (c) => c.toUpperCase());
+		return out;
+	}
+
+	function romanize(dev) {
+		if (!dev) return dev;
+		// Capitalize the first letter of the phrase; overrides keep their own case.
+		return mapWords(dev, WORD_OVERRIDES, romanizeWord).replace(/[a-zA-Z]/, (c) => c.toUpperCase());
+	}
+
+	function pronounce(dev) {
+		if (!dev) return dev;
+		// All lowercase by convention (a pronunciation respelling, not a headword).
+		return mapWords(dev, PRON_OVERRIDES, pronounceWord);
 	}
 
 	return {
 		romanize,
+		pronounce,
 		// Exposed for the coverage test (every corpus codepoint must be a known key).
 		_tables: { CONS, VOWEL_INDEP, VOWEL_MATRA, CONJUNCT, HALANT, ANUSVARA, CHANDRA, WORD_OVERRIDES },
 	};
 })();
 
-// Activate in the browser: derive each course item's `np` from its Devanagari `dev`. Guarded
-// so the file is safe to eval in Node (the tests lift SanoRomanize with no COURSE present).
+// Activate in the browser: derive each course item's `np` and `pron` from its Devanagari `dev`.
+// Guarded so the file is safe to eval in Node (the tests lift SanoRomanize with no COURSE present).
 if (typeof COURSE !== 'undefined' && Array.isArray(COURSE)) {
 	for (const unit of COURSE) {
 		for (const item of unit.items) {
-			if (item && item.dev) item.np = SanoRomanize.romanize(item.dev);
+			if (item && item.dev) {
+				item.np = SanoRomanize.romanize(item.dev);
+				item.pron = SanoRomanize.pronounce(item.dev);
+			}
 		}
 	}
 }

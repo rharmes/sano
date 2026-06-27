@@ -23,11 +23,11 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 - **No external requests at runtime.** Fonts are self-hosted woff2 (`css/fonts.css`); icons are
   an inline SVG sprite in `index.html` (`#i-*`, used via `<use href="#i-name">`); audio is
   pre-rendered MP3. The only network calls are same-origin `fetch()`es to `api/`.
-- **AI-drafted strings are Ross's drafts.** Every `pron`/`dev`, the per-segment dialogue
-  `gloss` English, the per-unit `goal`, and the onboarding `L` strings are AI-drafted and under
-  Ross's review — flag questions, **never silently "correct" them.** (The COURSE `np` is now
-  **derived** from `dev` at load by `js/romanize.js` — see `docs/romanization.md`; the displayed
-  romanization comes from the algorithm, and the stored `np` in `js/data.js` is the baseline.)
+- **AI-drafted strings are Ross's drafts.** Every `dev`, the per-segment dialogue `gloss` English,
+  the per-unit `goal`, and the onboarding `L` strings are AI-drafted and under Ross's review — flag
+  questions, **never silently "correct" them.** (The COURSE `np` and `pron` are now **derived**
+  from `dev` at load by `js/romanize.js` — see `docs/romanization.md`; `np` was removed from
+  `js/data.js`, and the stored `pron` is a baseline being phased out.)
 - **DB / VAPID credentials are never in the repo.** `api/lib.php` reads `sano-config.php` from one
   level above the docroot (`~/sano-config.php` on the server; one level above the repo for local
   dev) → `['dsn','user','pass', vapid_*]`.
@@ -149,7 +149,7 @@ phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust cache
   generated from `tools/make-touch-icon.html` (render the 512 masters via `tools/screenshot.sh`,
   `?safe` for the maskable variant, then `sips` downscale) — not hand-edited.
 - **Live cache check:** `curl -sI https://namastesano.com/ | grep -i cache-control` → HTML must be
-  `no-cache`; css/js are `max-age=2592000` (busted by `?v=`); `api/` responses are `no-store`.
+  `no-cache`; css/js are `max-age=31536000, immutable` (busted by `?v=`); `api/` responses are `no-store`.
 
 ## Repo facts
 

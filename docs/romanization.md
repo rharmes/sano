@@ -274,5 +274,24 @@ stays in `js/data.js` as the baseline. Scope is the `COURSE` items only; dialogu
   डस्टबिन→dustbin, डस्टर→duster, हेडफोन→headphone, मनसुन→monsoon).
 - **Postpositions** (को/मा/लाई/…) are written joined in Devanagari and are **kept joined** in the
   romanization (तपाईंको→Tapaaiko, घरमा→Gharamaa) — faithful to the script.
+- **व (w vs b):** rendered `w` by default in **both** tracks (per the spec), but `b` for a small
+  native-speaker-confirmed word set (`VA_AS_B`: धन्यवाद, वन, विद्यार्थी, वर्ष → Dhanyabaad, Ban,
+  Bidyaarthi, Barsa). व is word-dependent in Nepali and not derivable from the script alone.
 - **Medial schwa** deletion is not performed (Nepali pronounces most medial schwas; the corpus's
   clusters come from explicit halant, already handled) — biased to under-delete per the spec.
+
+### `pronounce(dev)` — the English-respelling `pron` guide
+
+`SanoRomanize.pronounce(dev)` reuses the same tokenizer + final-schwa + nasalization logic, but
+respells each syllable for English intuition and hyphenates them. Conventions (confirmed with Ross,
+incl. a native-speaker check on the vowels):
+
+- **Vowels:** schwa→`uh`, आ/ा→`aa`, इ/ई→`ee`, उ/ऊ→`oo`, ए/े→`ay`, ऐ/ै→`ai`, ओ/ो→`oh`, औ/ौ→`ow`.
+- **Consonants:** as Lite except **फ→`f`** (छ→`chh`, as Lite). व uses the same w/b rule as np (`VA_AS_B`).
+- **Syllables** are hyphen-joined; a halant coda merges into the previous syllable (हुन्छ→`hoon-chhuh`,
+  भित्र→`bheet-ruh`). All lowercase (no first-letter capital — it's a respelling, not a headword).
+- **`PRON_OVERRIDES`:** loanwords keep an English-friendly form (हस्पिटल→`hos-pi-tal`, टिभी→`tee-vee`,
+  कम्प्युटर→`com-pyu-ter`, …) plus अङ्ग्रेजी→`ang-gray-jee` (avoids the `ngg` garble).
+
+At load, the COURSE rewrite sets both `np = romanize(dev)` and `pron = pronounce(dev)`. The stored
+`pron` remains as a baseline and is slated for removal (reaching English + Devanagari only).

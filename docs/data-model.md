@@ -22,16 +22,18 @@ A unit:
 An item (`kind: 'phrases'`):
 
 ```js
-{ id, np, pron, dev, en, usage }
-// np = romanized Nepali, pron = pronunciation guide, dev = Devanagari, usage = dictionary note
-// NOTE: `np` is DERIVED at load — js/romanize.js overwrites it with romanize(dev) (spec:
-// docs/romanization.md). The stored `np` is the hand-drafted baseline; `pron` is still authored.
+{ id, pron, dev, en, usage }
+// dev = Devanagari (source of truth), en = English, usage = dictionary note, pron = pron guide
+// NOTE: `np` (romanized) AND `pron` (pronunciation) are DERIVED at load from `dev` by
+// js/romanize.js (romanize / pronounce; spec: docs/romanization.md). `np` was removed from the
+// data; the stored `pron` remains only as a baseline and is overridden at load — it will be
+// removed too, leaving just English + Devanagari.
 ```
 
 An item (`kind: 'vocab'`) — carries an `emoji`, no `usage`:
 
 ```js
-{ id, np, pron, dev, en, emoji }
+{ id, pron, dev, en, emoji } // np derived; pron stored-but-derived (see the note above)
 ```
 
 Two verb units (`verbs-present`, `verbs-past`) and five intermediate units

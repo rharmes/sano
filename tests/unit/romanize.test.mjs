@@ -8,6 +8,7 @@ import { liftGlobals } from '../lift.mjs';
 
 const { SanoRomanize } = liftGlobals('js/romanize.js', ['SanoRomanize']);
 const R = SanoRomanize.romanize;
+const P = SanoRomanize.pronounce;
 
 // [dev, want, why]
 const CASES = [
@@ -15,7 +16,9 @@ const CASES = [
 	['राम्रो', 'Raamro', 'spec example; ा=aa kept'],
 	['गर्छ', 'Garchha', 'spec example; छ=chh, final a kept after ch/chh'],
 	['ठूलो', 'Thulo', 'spec example; ू=u (i/u length dropped)'],
-	['धन्यवाद', 'Dhanyawaad', 'spec example; व=w, final schwa dropped'],
+	['धन्यवाद', 'Dhanyabaad', 'व→b (VA_AS_B exception); final schwa dropped'],
+	['वन', 'Ban', 'व→b (VA_AS_B exception)'],
+	['स्वागत छ', 'Swaagat chha', 'व→w default'],
 	// Basic syllables + final inherent-schwa drop.
 	['नमस्ते', 'Namaste', 'inherent a kept medially, े ends the word'],
 	['घर', 'Ghar', 'final inherent schwa dropped'],
@@ -82,5 +85,48 @@ test('romanize: pure and idempotent', () => {
 		assert.equal(R(dev), R(dev), `not deterministic: ${dev}`);
 		// A second pass sees only Latin/passthrough, so the output is a fixed point.
 		assert.equal(R(R(dev)), R(dev), `not idempotent: ${dev}`);
+	}
+});
+
+// --- pronounce(): the English-respelling `pron` guide (conventions confirmed with Ross) ---
+// schwa→uh, आ→aa, इ/ई→ee, उ/ऊ→oo, ए/े→ay, ऐ→ai, ओ→oh, औ→ow; फ→f, व→b, छ→chh; syllables
+// hyphenated, halant codas merge into the previous syllable; all lowercase.
+const PRON_CASES = [
+	['नमस्ते', 'nuh-muhs-tay', 'schwa→uh, े→ay, coda स् merges'],
+	['हुन्छ', 'hoon-chhuh', 'छ→chh, coda न merges'],
+	['छ', 'chhuh', 'single syllable keeps its vowel'],
+	['छैन', 'chhai-nuh', 'ऐ→ai; lexical-keep final schwa'],
+	['खाना', 'khaa-naa', 'आ/ा→aa'],
+	['किताब', 'kee-taab', 'ि→ee'],
+	['दूध', 'doodh', 'ू→oo'],
+	['एक', 'ayk', 'ए→ay'],
+	['मेरो', 'may-roh', 'े→ay, ो→oh'],
+	['ठूलो', 'thoo-loh', 'ो→oh'],
+	['औषधि', 'ow-suh-dhee', 'औ→ow'],
+	['धन्यवाद', 'dhuhn-yuh-baad', 'व→b (VA_AS_B exception)'],
+	['स्वागत छ', 's-waa-guht chhuh', 'व→w default'],
+	['फूल', 'fool', 'फ→f'],
+	['भित्र', 'bheet-ruh', 'cluster: coda त merges (bheet-ruh)'],
+	['तपाईं', 'tuh-paa-ee', 'तपाईं silent nasal; ई→ee'],
+	['तपाईंको', 'tuh-paa-ee-koh', 'no spurious n before को'],
+	['घर', 'ghuhr', 'final inherent schwa dropped'],
+	['सम्म', 'suhm-muh', 'cluster keep (final schwa retained)'],
+	['के भयो?', 'kay bhuh-yoh?', '? passthrough; all lowercase'],
+	['हस्पिटल', 'hos-pi-tal', 'loanword override'],
+	['टिभी', 'tee-vee', 'loanword override'],
+	['मलाई थाहा छैन', 'muh-laa-ee thaa-haa chhai-nuh', 'multi-word, spaces preserved'],
+];
+
+test('pronounce: golden cases (one per rule + corpus edge cases)', () => {
+	for (const [dev, want, why] of PRON_CASES) {
+		assert.equal(P(dev), want, `${dev} → expected ${want} (${why})`);
+	}
+});
+
+test('pronounce: empty input unchanged; pure and idempotent', () => {
+	assert.equal(P(''), '');
+	for (const [dev] of PRON_CASES) {
+		assert.equal(P(dev), P(dev), `not deterministic: ${dev}`);
+		assert.equal(P(P(dev)), P(dev), `not idempotent: ${dev}`);
 	}
 });

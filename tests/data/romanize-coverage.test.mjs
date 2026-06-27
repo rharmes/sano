@@ -8,6 +8,7 @@ import { liftGlobals } from '../lift.mjs';
 const { SanoRomanize } = liftGlobals('js/romanize.js', ['SanoRomanize']);
 const { COURSE } = liftGlobals('js/data.js', ['COURSE']);
 const R = SanoRomanize.romanize;
+const P = SanoRomanize.pronounce;
 const items = COURSE.flatMap((u) => u.items);
 const isDev = (ch) => /[ऀ-ॿ]/.test(ch);
 
@@ -64,5 +65,39 @@ test('coverage: romanization is pure and idempotent across the corpus', () => {
 	for (const it of items) {
 		assert.equal(R(it.dev), R(it.dev), `${it.id}: not deterministic`);
 		assert.equal(R(R(it.dev)), R(it.dev), `${it.id}: not idempotent`);
+	}
+});
+
+// --- pronounce() coverage: same safety nets for the derived `pron` over all 588 items ---
+
+test('coverage: every derived pron is lowercase Latin + hyphen + the passthrough set', () => {
+	const bad = [];
+	for (const it of items) {
+		const out = P(it.dev);
+		// Lowercase Latin, hyphen (syllable separator), space, and the dev punctuation passthrough.
+		if (!/^[a-z _?,/!-]*$/.test(out)) bad.push(`${it.id}: ${it.dev} → ${out}`);
+	}
+	assert.deepEqual(bad, [], `unexpected characters in derived pron:\n  ${bad.slice(0, 20).join('\n  ')}`);
+});
+
+test('coverage: pron preserves word/placeholder structure; no word vanishes', () => {
+	const issues = [];
+	const count = (s, re) => (s.match(re) || []).length;
+	for (const it of items) {
+		const out = P(it.dev);
+		const dev = it.dev.normalize('NFC');
+		if (dev.trim().split(/\s+/).filter(Boolean).length !== out.trim().split(/\s+/).filter(Boolean).length)
+			issues.push(`${it.id}: word count (${out})`);
+		if (count(dev, /_/g) !== count(out, /_/g)) issues.push(`${it.id}: _ drift (${out})`);
+		if (count(dev, /\?/g) !== count(out, /\?/g)) issues.push(`${it.id}: ? drift (${out})`);
+		if (/[ऀ-ॿ]/.test(dev) && !/[a-z]/.test(out)) issues.push(`${it.id}: no letters (${out})`);
+	}
+	assert.deepEqual(issues, [], `pron structure drift:\n  ${issues.slice(0, 20).join('\n  ')}`);
+});
+
+test('coverage: pron is pure and idempotent across the corpus', () => {
+	for (const it of items) {
+		assert.equal(P(it.dev), P(it.dev), `${it.id}: not deterministic`);
+		assert.equal(P(P(it.dev)), P(it.dev), `${it.id}: not idempotent`);
 	}
 });

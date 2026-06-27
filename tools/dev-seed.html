@@ -92,14 +92,14 @@
 		</div>
 
 		<div class="card">
-			<span class="tests">romanization · js/romanize.js</span>
-			<h2>Derived romanization (Devanagari → Lite)</h2>
+			<span class="tests">romanization + pron · js/romanize.js</span>
+			<h2>Derived romanization &amp; pronunciation (Devanagari → Lite)</h2>
 			<p>
-				Introduces <b>every</b> course item, so the <b>dictionary</b> (top-bar icon) lists all ~588 words with their
-				<b>derived</b> romanization — e.g. <b>Saano, Khaanaa, Hunchha, Tapaaiko, Hospital</b>. Reviews are also due, so
-				<b>“Start today's lesson”</b> shows the derived romanization on the exercise prompts and tiles. Each word's romanization is
-				computed from its <code>dev</code> by <code>js/romanize.js</code> (spec: <code>docs/romanization.md</code>); the stored
-				<code>np</code> is just the baseline.
+				Introduces <b>every</b> course item, so the <b>dictionary</b> (top-bar icon) lists all ~588 words with both their
+				<b>derived romanization</b> (e.g. <b>Saano, Khaanaa, Hunchha, Tapaaiko, Hospital</b>) and <b>derived pronunciation</b> (e.g.
+				<b>saa-noh, khaa-naa, hoon-chhuh, hos-pi-tal</b>). Reviews are also due, so <b>“Start today's lesson”</b> shows the derived
+				romanization on the exercise prompts and tiles. Both are computed from each word's <code>dev</code> by
+				<code>js/romanize.js</code> (<code>romanize</code> / <code>pronounce</code>; spec: <code>docs/romanization.md</code>).
 			</p>
 			<button onclick="seed('romanize')">Seed &amp; open</button>
 		</div>
