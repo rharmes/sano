@@ -130,5 +130,5 @@ After (re)rendering, bump **`AUDIO_VERSION`** in `js/audio.js` so caches/clients
 `audio/` ships via the existing `audio` entry in `tools/deploy.sh`. All audio stays
 **pre-rendered and self-hosted** — the app never calls a TTS service at runtime (CLAUDE.md).
 
-Per-character voices (the PLAN.md follow-up) extend this: render each character's lines to
+Per-character voices (a planned follow-up) extend this: render each character's lines to
 `audio/<voice>/<id>.mp3` and widen `voiceForCharacter()` in `js/audio.js`.

@@ -11,7 +11,7 @@ Ross tests on an iPhone running iOS 26.
   flow (home / lesson / dialogue / sync), and the `api/` + `tools/` tables.
 - **`@docs/data-model.md`** — data shapes (`COURSE`, `DIALOGUES`, the state record), localStorage
   keys, DB schema, scheduler constants, and the **SR-\* / R\*** feature-code glossary.
-- `PLAN.md` — working roadmap. `PEDAGOGY.md` — learning-science basis. `tools/tts/RESEARCH.md` —
+- `docs/pedagogy.md` — learning-science basis. `tools/tts/RESEARCH.md` —
   voice/TTS. `design/style-guide.html` — visual tokens + components (brand source of truth).
 
 Those carry the deep detail; this file keeps the summary, the non-obvious constraints, and the
@@ -159,7 +159,7 @@ phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust cache
   `curl -o .claude/scripts/status-line.sh https://raw.githubusercontent.com/shanraisshan/claude-code-status-line/main/status-line.sh && chmod +x .claude/scripts/status-line.sh`.)
 - **Deploy** connection details live in the `sano-deploy` SSH alias (key auth) — no hostnames or
   credentials in the repo. `tools/deploy.sh` uses an **explicit allowlist**, so `tools/`, `design/`,
-  `docs/`, `PLAN.md`, `PEDAGOGY.md`, and `send-reminders.php` never ship.
+  `docs/`, and `send-reminders.php` never ship.
 - **`design/`** holds in-repo design artifacts (committed, never deployed). `design/characters.html`
   is the **source of truth for all 11 characters + their animations**; the app art is **generated**
   from it into `js/characters.js` (`node tools/build-character-heads.mjs`) and into

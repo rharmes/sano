@@ -7,7 +7,7 @@
 // diverge later. Today a single `default` voice — Sano's ElevenLabs clone
 // (RESEARCH.md §9), rendered by tools/tts/synth-app.mjs — backs all phrase audio,
 // the per-word tile clips, and every character. Giving each character its own voice
-// (the PLAN.md follow-up) is just: render the new voice folders and widen
+// (a planned follow-up) is just: render the new voice folders and widen
 // voiceForCharacter() — no caller changes.
 const SanoAudio = (() => {
 	// Bump when clips are re-rendered (corrected Devanagari, new/retuned voices) so

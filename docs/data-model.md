@@ -154,7 +154,7 @@ recognition hit (`choice`/`match`) ⇒ **GOOD** (interval × ease); recall/typed
 
 ## Feature-code glossary
 
-Codes appear throughout the code/comments and `PLAN.md`. **SR-\*** = the spaced-repetition /
+Codes appear throughout the code/comments. **SR-\*** = the spaced-repetition /
 pedagogy roadmap; **R\*** = earlier UI-revision tags.
 
 | Code | What it is |

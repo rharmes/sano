@@ -1,4 +1,4 @@
-# PEDAGOGY.md — How sano should teach
+# Pedagogy — How sano should teach
 
 A working reference for the learning-science and second-language-acquisition (SLA)
 research behind a phrase-based study app, written specifically for **sano**: an app
