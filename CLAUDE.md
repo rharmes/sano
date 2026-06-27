@@ -56,7 +56,8 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   is the localhost mockup. Only `greet-pyaro` is live. A line's `dev` may carry inline **ElevenLabs
   v3 performance tags** in `[brackets]` (`[whispers]`, `[laughs]`, …) — voice-acting cues passed to
   the audio render verbatim and stripped from all on-screen text (`SanoRomanize.stripTags`); they
-  must never appear in `np`/`gloss`/`en` (a data test enforces it).
+  must never appear in `np`/`gloss`/`en` (a data test enforces it). **Pending task: Ross will add
+  voice directions to the conversation scripts** — tag list + workflow in `tools/tts/voice-tags.md`.
 - **First-run onboarding** (`SanoOnboard`) greets new users with a scripted Sano conversation (a
   head-only Sano beside each of Sano's bubbles), captures the name, offers experienced learners a
   **placement / skip-ahead** (`Sano.placeBefore` marks earlier units introduced at recall strength),
