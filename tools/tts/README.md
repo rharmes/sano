@@ -112,8 +112,9 @@ Two tools, run from the repo root with `ELEVENLABS_API_KEY` set:
   phrase's `dev` via `js/romanize.js` (`romanize`), so it aligns 1:1 with the `dev` words by
   construction; a tiny `OVERRIDES` table covers the few words a non-space separator splits (e.g.
   `/`). Deterministic — re-run after editing `js/data.js`. Reviewable artifact: `words.json`.
-  **Note:** the shipped `audio/words/*.mp3` predate the derived romanization, so roughly half now
-  have new slugs and are silently absent until a re-render (`synth-app.mjs --words --new`).
+  **Note:** the shipped `audio/words/*.mp3` are in sync with the derived slugs (re-rendered
+  2026-06-27); after editing content, render only the new slugs with `synth-app.mjs --words --new`
+  and bump `AUDIO_VERSION`.
 - **`synth-app.mjs`** — renders the **real shipped** clips (not the bake-off dir). Pass one of
   `--sample | --phrases | --words | --dialogues`:
   - `--sample` → a small preview (tricky phrases + single words) into

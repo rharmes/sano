@@ -70,10 +70,10 @@ word — from `js/romanize.js` — run through `normalize`). A missing clip is a
 in RESEARCH.md §9) — never a runtime call. `synth-app.mjs --phrases`/`--words` render the full set;
 `--new` renders only clips not yet on disk (so adding content doesn't re-spend credits or churn
 git). Per-word Devanagari comes from `tools/tts/words.json` (built by `tools/tts/build-words.mjs`,
-phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust caches. **Word clips are
-currently stale:** the shipped `audio/words/*.mp3` predate the derived `np`, so ~half have new slugs
-and play silently until re-rendered (`build-words.mjs` → `synth-app.mjs --words --new`, then bump
-`AUDIO_VERSION`).
+phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust caches. The word clips
+track the **derived** slugs (re-rendered 2026-06-27 at `AUDIO_VERSION` 5, in sync with the data);
+after adding or re-spelling content, regenerate them: `build-words.mjs` → `synth-app.mjs --words
+--new`, then bump `AUDIO_VERSION`.
 
 ## Server / admin / PWA (essentials; full detail in `@docs/architecture.md`)
 
