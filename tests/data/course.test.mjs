@@ -1,5 +1,5 @@
 // COURSE content-integrity checks (js/data.js). Structure only — never the wording of
-// the AI-drafted np/pron/dev/en/usage/goal strings (those are Ross's to review).
+// the AI-drafted dev/en/usage/goal strings (those are Ross's to review; np/pron are derived).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { liftGlobals } from '../lift.mjs';
@@ -36,11 +36,11 @@ test('COURSE: all item ids are globally unique', () => {
 	assert.deepEqual(dups, [], `duplicate item ids: ${dups.join(', ')}`);
 });
 
-test('COURSE: every item has non-empty id/dev/pron/en', () => {
-	// `np` is intentionally absent from the data now — it is derived from `dev` at load by
-	// js/romanize.js (asserted in tests/data/romanize-coverage.test.mjs).
+test('COURSE: every item has non-empty id/dev/en', () => {
+	// `np` and `pron` are intentionally absent from the data now — both are derived from `dev` at
+	// load by js/romanize.js (asserted in tests/data/romanize-coverage.test.mjs).
 	for (const it of allItems) {
-		for (const f of ['id', 'dev', 'pron', 'en']) {
+		for (const f of ['id', 'dev', 'en']) {
 			assert.ok(typeof it[f] === 'string' && it[f].trim().length, `${it.id || '?'}: missing ${f}`);
 		}
 	}

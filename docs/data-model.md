@@ -5,8 +5,8 @@
 > Load with `@docs/data-model.md`. File/function map is in `@docs/architecture.md`.
 > Internal-only (not deployed).
 >
-> **AI-drafted strings are Ross's drafts:** every `np`/`pron`/`dev`/`gloss en` and per-unit
-> `goal` is AI-drafted and under Ross's review — flag questions, never silently "correct" them.
+> **AI-drafted strings are Ross's drafts:** every `dev`/`gloss en` and per-unit `goal` is AI-drafted
+> and under Ross's review — flag questions, never silently "correct" them. (`np`/`pron` are derived.)
 
 ## Course content — `COURSE` (js/data.js)
 
@@ -22,18 +22,17 @@ A unit:
 An item (`kind: 'phrases'`):
 
 ```js
-{ id, pron, dev, en, usage }
-// dev = Devanagari (source of truth), en = English, usage = dictionary note, pron = pron guide
+{ id, dev, en, usage }
+// dev = Devanagari (source of truth), en = English, usage = dictionary note.
 // NOTE: `np` (romanized) AND `pron` (pronunciation) are DERIVED at load from `dev` by
-// js/romanize.js (romanize / pronounce; spec: docs/romanization.md). `np` was removed from the
-// data; the stored `pron` remains only as a baseline and is overridden at load — it will be
-// removed too, leaving just English + Devanagari.
+// js/romanize.js (romanize / pronounce; spec: docs/romanization.md). Both were removed from the
+// data — items now store only English + Devanagari (+ usage/emoji).
 ```
 
 An item (`kind: 'vocab'`) — carries an `emoji`, no `usage`:
 
 ```js
-{ id, pron, dev, en, emoji } // np derived; pron stored-but-derived (see the note above)
+{ id, dev, en, emoji } // np + pron derived at load (see the note above)
 ```
 
 Two verb units (`verbs-present`, `verbs-past`) and five intermediate units

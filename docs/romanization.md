@@ -293,5 +293,5 @@ incl. a native-speaker check on the vowels):
 - **`PRON_OVERRIDES`:** loanwords keep an English-friendly form (हस्पिटल→`hos-pi-tal`, टिभी→`tee-vee`,
   कम्प्युटर→`com-pyu-ter`, …) plus अङ्ग्रेजी→`ang-gray-jee` (avoids the `ngg` garble).
 
-At load, the COURSE rewrite sets both `np = romanize(dev)` and `pron = pronounce(dev)`. The stored
-`pron` remains as a baseline and is slated for removal (reaching English + Devanagari only).
+At load, the COURSE rewrite sets both `np = romanize(dev)` and `pron = pronounce(dev)`. Both stored
+fields have been removed — data items carry only `id`/`dev`/`en` + `usage`/`emoji` (English + Devanagari).

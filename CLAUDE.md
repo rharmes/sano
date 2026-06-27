@@ -26,8 +26,8 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 - **AI-drafted strings are Ross's drafts.** Every `dev`, the per-segment dialogue `gloss` English,
   the per-unit `goal`, and the onboarding `L` strings are AI-drafted and under Ross's review — flag
   questions, **never silently "correct" them.** (The COURSE `np` and `pron` are now **derived**
-  from `dev` at load by `js/romanize.js` — see `docs/romanization.md`; `np` was removed from
-  `js/data.js`, and the stored `pron` is a baseline being phased out.)
+  from `dev` at load by `js/romanize.js` — see `docs/romanization.md`; both were removed from
+  `js/data.js`, so items store only `dev`/`en` + `usage`/`emoji`.)
 - **DB / VAPID credentials are never in the repo.** `api/lib.php` reads `sano-config.php` from one
   level above the docroot (`~/sano-config.php` on the server; one level above the repo for local
   dev) → `['dsn','user','pass', vapid_*]`.
