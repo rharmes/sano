@@ -223,7 +223,7 @@
 
 			.row {
 				display: grid;
-				grid-template-columns: 0.4rem minmax(0, 1.15fr) minmax(0, 1fr) auto minmax(0, 1.35fr) auto;
+				grid-template-columns: 0.4rem minmax(0, 1.15fr) minmax(0, 1fr) auto minmax(0, 1.35fr) minmax(0, 0.9fr) auto;
 				align-items: center;
 				gap: 1.4rem;
 				padding: 1rem 0.8rem 1rem 0;
@@ -309,6 +309,26 @@
 				outline: none;
 				border-color: var(--accent);
 				box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+			}
+			.rec {
+				display: flex;
+				align-items: baseline;
+				gap: 0.5rem;
+				flex-wrap: wrap;
+				font-size: 1.35rem;
+				color: var(--text-color-soft);
+			}
+			.rec-flag {
+				font-size: 1.05rem;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				color: var(--accent);
+				border: 1px solid var(--border-color);
+				border-radius: 0.5rem;
+				padding: 0 0.4rem;
+			}
+			.rec-en {
+				color: var(--text-color-richer);
 			}
 			.row.edited .dev-input {
 				border-color: var(--accent);
@@ -563,6 +583,9 @@
 				.revert {
 					grid-area: revert;
 				}
+				.rec {
+					display: none;
+				}
 			}
 		</style>
 		<script>
@@ -599,14 +622,11 @@
 		<main id="units"></main>
 		<p class="empty" id="empty" hidden>No matching words.</p>
 
-		<section class="convo-wrap" id="conversations"></section>
-
 		<button class="submit" id="submit" type="button" disabled>No changes</button>
 		<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 		<script src="../js/data.js"></script>
 		<script src="../js/romanize.js"></script>
-		<script src="../js/dialogues.js"></script>
 		<script>
 			'use strict';
 
@@ -717,13 +737,16 @@
 						hint.hidden = true;
 						devCell.append(input, hint);
 
+						const rec = document.createElement('div');
+						rec.className = 'rec';
+
 						const revert = document.createElement('button');
 						revert.type = 'button';
 						revert.className = 'revert';
 						revert.title = 'Undo unsaved change';
 						revert.textContent = '↺';
 
-						row.append(bar, en, rom, play, devCell, revert);
+						row.append(bar, en, rom, play, devCell, rec, revert);
 						section.appendChild(row);
 
 						const r = {
@@ -733,6 +756,7 @@
 							input: input,
 							row: row,
 							hint: hint,
+							rec: rec,
 						};
 						input.addEventListener('input', () => {
 							refreshRow(r);
@@ -907,91 +931,56 @@
 				localStorage.setItem('sano-devanagari-theme', dark ? 'dark' : 'light');
 			});
 
-			// ── Conversations (read-only context) ─────────────────────────────
-			// The story dialogues (js/dialogues.js) are inline text, not COURSE
-			// items, so they never appear in the editable rows above. Render each
-			// one in full — speaker, Devanagari, romanization, English, audio — so
-			// the reviewer can read it as a flowing conversation and confirm it
-			// coheres. Read-only: these lines live in js/dialogues.js, so any fix
-			// gets flagged to Ross rather than saved through devanagari-save.php.
-			function speakerName(who) {
-				if (who === 'narrator') return 'Narrator';
-				if (who === 'thornbush') return 'Thornbush';
-				return (typeof CHARACTER_NAMES !== 'undefined' && CHARACTER_NAMES[who]) || who;
-			}
-			function buildConversations() {
-				const wrap = document.getElementById('conversations');
-				if (typeof DIALOGUES === 'undefined' || !DIALOGUES.length) {
-					wrap.hidden = true;
+			// ── Coverage recommendations (tools/dict/coverage-report.md) ───
+			// The ground-truth dictionary flags COURSE translations it disagrees with.
+			// Fetch the report (served by php -S; under file:// it 404s and we skip) and
+			// annotate matching rows with the dict's suggested gloss. Flag-only — the
+			// AI-drafted English stays Ross's to change.
+			async function applyCoverageRecs() {
+				let text;
+				try {
+					const res = await fetch('../tools/dict/coverage-report.md');
+					if (!res.ok) return;
+					text = await res.text();
+				} catch (e) {
 					return;
 				}
-				const intro = document.createElement('div');
-				intro.className = 'convo-intro';
-				intro.innerHTML =
-					'<h2>Conversations</h2><p>The full story dialogues, in order, so they can be read in context and checked for ' +
-					'coherence. <b>Read-only</b> — these lines live in <code>js/dialogues.js</code> (not the rows above), so flag any ' +
-					'wording or Devanagari fixes to Ross. Tap ▶ to hear each line in its character’s voice.</p>';
-				wrap.appendChild(intro);
-
-				for (const d of DIALOGUES) {
-					const card = document.createElement('section');
-					card.className = 'convo';
-					const head = document.createElement('div');
-					head.className = 'convo-head';
-					const names = (d.cast || []).map(speakerName).join(', ');
-					head.innerHTML =
-						'<h3>' +
-						d.title +
-						'</h3><span class="convo-meta">' +
-						(names ? 'Sano &amp; ' + names : 'Sano') +
-						(d.after ? ' · after <b>' + d.after + '</b>' : '') +
-						'</span>';
-					card.appendChild(head);
-
-					d.lines.forEach((ln, i) => {
-						const line = document.createElement('div');
-						line.className = 'cline who-' + ln.who;
-
-						const spk = document.createElement('div');
-						spk.className = 'cspk';
-						spk.textContent = speakerName(ln.who);
-
-						const body = document.createElement('div');
-						body.className = 'cbody';
-						const dev = document.createElement('div');
-						dev.className = 'cdev';
-						dev.lang = 'ne';
-						dev.dir = 'auto';
-						dev.textContent = ln.dev || '';
-						const rom = document.createElement('div');
-						rom.className = 'crom';
-						rom.textContent = ln.np || '';
-						const en = document.createElement('div');
-						en.className = 'cen';
-						en.textContent = ln.en || '';
-						body.append(dev, rom, en);
-
-						const play = document.createElement('button');
-						play.type = 'button';
-						play.className = 'play';
-						play.setAttribute('aria-label', 'Play line ' + (i + 1) + ' (' + speakerName(ln.who) + ')');
-						play.innerHTML = svgVolume();
-						const folder = typeof dialogueVoiceFolder !== 'undefined' ? dialogueVoiceFolder(d, ln.who) : 'default';
-						const clipId =
-							typeof dialogueClipId !== 'undefined' ? dialogueClipId(d, i) : d.id + '-' + String(i).padStart(2, '0');
-						const src = '../audio/' + folder + '/' + encodeURIComponent(clipId) + '.mp3';
-						play.addEventListener('click', () => playSrc(src, play));
-
-						line.append(spk, body, play);
-						card.appendChild(line);
-					});
-					wrap.appendChild(card);
+				const recs = {}; // itemId -> { courseEn, dictEn }
+				let inSection = false;
+				for (const raw of text.split('\n')) {
+					const line = raw.trimEnd();
+					if (line.startsWith('## ')) {
+						inSection = /COURSE translations to review/i.test(line);
+						continue;
+					}
+					if (!inSection) continue;
+					const m = line.match(/^- .+? \(([^)]+)\): COURSE "(.*?)" vs dict "(.*?)"$/);
+					if (!m) continue;
+					const [, ids, courseEn, dictEn] = m;
+					for (const id of ids.split(',').map((s) => s.trim())) if (id) recs[id] = { courseEn, dictEn };
+				}
+				for (const r of rows) {
+					const rec = recs[r.item.id];
+					if (!rec) continue;
+					const flag = document.createElement('span');
+					flag.className = 'rec-flag';
+					flag.textContent = 'dict';
+					const en = document.createElement('span');
+					en.className = 'rec-en';
+					en.textContent = rec.dictEn;
+					r.rec.replaceChildren(flag, en);
+					r.rec.title =
+						'Dictionary disagrees: COURSE “' +
+						rec.courseEn +
+						'” vs dict “' +
+						rec.dictEn +
+						'” (flag only, never auto-applied)';
 				}
 			}
 
 			// ── Go ────────────────────────────────────────────────────────────
 			build();
-			buildConversations();
+			applyCoverageRecs();
 			loadReview();
 		</script>
 	</body>
