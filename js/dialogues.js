@@ -62,14 +62,15 @@ const DIALOGUES = [
 			},
 			{
 				who: 'pyaro',
-				np: 'Tala kasaile malai jiskyaairaheko cha! Sun — taadhaa jaau!',
-				dev: 'तल कसैले मलाई जिस्क्याइरहेको छ! सुन् — टाढा जाऊ!',
-				en: 'Someone down there keeps teasing me! Listen — go away!',
+				np: 'Tala kasaile mero nakkal gariraheko cha! Sun — taadhaa jaau!',
+				dev: 'तल कसैले मेरो नक्कल गरिरहेको छ! सुन् — [shouting] टाढा जाऊ!',
+				en: 'Someone down there keeps copying me! Listen — go away!',
 				gloss: [
 					{ np: 'Tala', en: 'down there' },
 					{ np: 'kasaile', en: 'someone' },
-					{ np: 'malai', en: 'me' },
-					{ np: 'jiskyaairaheko cha!', en: 'keeps teasing' },
+					{ np: 'mero', en: 'my' },
+					{ np: 'nakkal', en: 'imitation' },
+					{ np: 'gariraheko cha!', en: 'keeps doing' },
 					{ np: 'Sun', en: 'listen' },
 					{ np: '—', en: '' },
 					{ np: 'taadhaa', en: 'far away' },
@@ -143,7 +144,7 @@ const DIALOGUES = [
 			{
 				who: 'pyaro',
 				np: 'Ma adbhut chu!',
-				dev: 'म अद्भुत छु!',
+				dev: '[shouting] म अद्भुत छु!',
 				en: 'I am magnificent!',
 				gloss: [
 					{ np: 'Ma', en: 'I' },
@@ -180,7 +181,7 @@ const DIALOGUES = [
 			{
 				who: 'sano',
 				np: 'Yo khoch ati raamro cha.',
-				dev: 'यो खोँच अति राम्रो छ।',
+				dev: '[shouting] यो खोँच अति राम्रो छ।',
 				en: 'This canyon is great.',
 				gloss: [
 					{ np: 'Yo', en: 'this' },
