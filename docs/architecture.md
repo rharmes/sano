@@ -101,6 +101,7 @@ necessarily follow auth and live in the DB-gated integration specs.
 | `tts/synth-app.mjs` | Render phrase / word / dialogue-line clips through the ElevenLabs API in Sano's cloned voice — `--phrases` (→ `audio/default/<id>.mp3`, ~588) / `--words` (→ `audio/words/<slug>.mp3`, ~233) / `--dialogues` (→ `audio/<voice>/<clipId>.mp3`, per speaker). Add `--new` for only clips missing on disk, `--only` for one, `--sample` to preview. Bump `AUDIO_VERSION` (js/audio.js) after. |
 | `tts/build-words.mjs` | Build `tts/words.json` (per-word Devanagari, phrases-only) for the word-bank clips. |
 | `tts/eleven.mjs` / `tts/phrases.mjs` / `tts/build-compare.mjs` | ElevenLabs client + voice mapping + sample-comparison design tool. |
+| `dict/build-dictionary.mjs` | Generate the local-only ground-truth Nepali↔English dictionary (`tools/dict/README.md`): ACQUIRE Leipzig freq list + kaikki Wiktionary → LEMMATIZE/GLOSS via Claude (register-weighted, cross-checked) → MERGE+EMIT `dictionary.json` + `coverage-report.md`. Incremental/cached like synth-app (`--acquire`/`--lemmatize`/`--gloss`/`--report-only`/`--new`). Flags COURSE translation disagreements for review (never auto-corrects). Needs `ANTHROPIC_API_KEY`; `sources/`+`cache/` gitignored. |
 
 ## Tests
 
@@ -109,8 +110,8 @@ One suite, one entry point (`tools/test.sh`), five tiers. Internal-only (not dep
 | Tier | Runner | What it covers |
 | --- | --- | --- |
 | `--static` | `check.sh` | Prettier, asset stamps, `php -l`, `node --check`. |
-| `--unit` | `node:test` (`tests/unit/*.test.mjs`) | Pure logic lifted from `js/sano.js`: SR-05 scheduler, answer matching, dates/streak/freeze, v1/legacy state migration, exercise dedup; + Devanagari→romanization golden cases (`js/romanize.js`). |
-| `--data` | `node:test` (`tests/data/*.test.mjs`) | `COURSE`/`DIALOGUES`/`SOUND_TOPICS` integrity — unique ids, required fields, the gloss-join invariant, sound-mark coverage; + romanization coverage over all 588 `dev` (every codepoint mapped, clean output charset, structure preserved). |
+| `--unit` | `node:test` (`tests/unit/*.test.mjs`) | Pure logic lifted from `js/sano.js`: SR-05 scheduler, answer matching, dates/streak/freeze, v1/legacy state migration, exercise dedup; + Devanagari→romanization golden cases (`js/romanize.js`); + the dictionary tool's Devanagari normalizer/tokenizer (`tools/dict/lib/normalize.mjs`). |
+| `--data` | `node:test` (`tests/data/*.test.mjs`) | `COURSE`/`DIALOGUES`/`SOUND_TOPICS` integrity — unique ids, required fields, the gloss-join invariant, sound-mark coverage; + romanization coverage over all 588 `dev` (every codepoint mapped, clean output charset, structure preserved); + the ground-truth `dictionary.json` (schema + every COURSE word represented; skips until built). |
 | `--api` | `@playwright/test` request (`tests/api/`) | Pre-DB guard specs (method/CSRF/JSON/validation, no DB) + a PHP pure-helper test; `integration.spec.mjs` adds the full request cycle, gated on `SANO_TEST_DB`. |
 | `--ui` | `@playwright/test` Chromium + WebKit (`tests/e2e/`) | Onboarding, home/path + 9-width overflow, every lesson exercise type, the dialogue player + tap-gloss, dictionary, reminder modal, admin demo, idle/reduced-motion. |
 

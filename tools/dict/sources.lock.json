@@ -1,0 +1,20 @@
+{
+	"_comment": "Pinned external sources for build-dictionary.mjs. sha256/downloaded/senses are filled in by `--acquire` on first run (and refreshed by `--refresh`); the builder verifies the on-disk file against the pinned sha256 every run so ranks/glosses stay reproducible.",
+	"leipzig": {
+		"corpus": "IRIIS-RESEARCH/Nepali-Text-Corpus",
+		"url": "https://datasets-server.huggingface.co (rows API)",
+		"file": "leipzig-words.txt",
+		"sha256": "1e5b0be83b243d9d2c53f8c6883d2ba344be74f7cbc45f0bd4625a57f24adee8",
+		"articles": 4000,
+		"words": 92057,
+		"downloaded": "2026-06-27",
+		"license": "see dataset card"
+	},
+	"wiktionary": {
+		"url": "https://kaikki.org/dictionary/Nepali/kaikki.org-dictionary-Nepali.jsonl",
+		"file": "kaikki-nepali.jsonl",
+		"sha256": null,
+		"downloaded": null,
+		"license": "CC-BY-SA-4.0"
+	}
+}

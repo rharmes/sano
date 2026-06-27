@@ -25,3 +25,9 @@ design/devanagari-review.json.bak
 /test-results/
 /playwright-report/
 /blob-report/
+
+# Dictionary tool (tools/dict): raw corpora + Claude response cache stay local.
+# Only the derived dictionary.json / coverage-report.md / sources.lock.json are committed.
+tools/dict/sources/
+tools/dict/cache/
+tools/dict/_sample/

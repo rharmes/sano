@@ -180,6 +180,15 @@ after adding or re-spelling content, regenerate them: `build-words.mjs` → `syn
   Serve with `php -S`.
   - **Pending task: Ross will ask Claude to merge `design/devanagari-review.json` into the `dev`
     fields of `js/data.js`** — done in-session (no merge script), then the review file is cleared.
+- **`tools/dict/`** is a local-only (never-deployed) **ground-truth Nepali↔English dictionary** to
+  cross-check the AI-drafted translations and surface high-frequency words the course is missing
+  (`tools/dict/README.md`, file map in `@docs/architecture.md`). `build-dictionary.mjs` ranks words
+  from a Nepali corpus (register-weighted toward conversational) and uses **Claude** to lemmatize +
+  gloss, cross-checked against the Wiktionary/kaikki extract; it **flags** COURSE translation
+  disagreements for review but **never auto-corrects** them (per the AI-drafts-are-Ross's rule). Needs
+  `ANTHROPIC_API_KEY`; incremental/cached like `synth-app.mjs`; `dictionary.json` is committed,
+  `sources/`+`cache/` are gitignored. Frequency source is pluggable (Leipzig, or `--hf-freq` from a
+  HuggingFace corpus when Leipzig is unreachable). Validated by `tests/data/dictionary.test.mjs`.
 
 ## Design direction
 
