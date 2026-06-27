@@ -123,7 +123,9 @@ Two tools, run from the repo root with `ELEVENLABS_API_KEY` set:
   - `--words` → every `words.json` entry → `audio/words/<slug>.mp3` (~233).
   - `--dialogues` → every `DIALOGUES` line → `audio/<voice>/<clipId>.mp3`, routed to each
     speaker's voice folder (`sano` → `default`; `narrator`/`thornbush` mapped to a companion
-    voice; a companion → its own id).
+    voice; a companion → its own id). A line's `dev` is sent **verbatim**, so inline ElevenLabs v3
+    `[performance tags]` (e.g. `[whispers]`) are heard by the synth; the render log shows which
+    clips carry tags. The tags stay out of the app — see `js/dialogues.js` (AUDIO TAGS).
   - `--new` (with `--phrases`/`--words`/`--dialogues`) → render only clips **not yet on disk** —
     the incremental path after adding course content or a dialogue.
   - `--only <id|slug>` (with `--phrases`/`--words`) → regenerate a single clip.

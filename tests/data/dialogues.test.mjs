@@ -76,6 +76,29 @@ test('DIALOGUES: comprehension questions have ≥2 choices and an in-range answe
 	}
 });
 
+test('DIALOGUES: ElevenLabs audio tags live only in dev — never in display or translation', () => {
+	const TAG = /\[[^\]\n]*\]/; // an ElevenLabs [performance tag], e.g. [whispers]
+	for (const d of DIALOGUES) {
+		d.lines.forEach((ln, i) => {
+			// np (on-screen romanization), en (subtitle), and every gloss segment (display + tap
+			// translation) must be tag-free — tags belong only in dev (the audio-render source).
+			assert.ok(!TAG.test(ln.np), `${d.id} line ${i}: np must not contain an audio tag`);
+			assert.ok(!TAG.test(ln.en), `${d.id} line ${i}: en must not contain an audio tag`);
+			for (const seg of ln.gloss || []) {
+				assert.ok(!TAG.test(seg.np), `${d.id} line ${i}: gloss np must not contain an audio tag`);
+				assert.ok(!TAG.test(seg.en), `${d.id} line ${i}: gloss en must not contain an audio tag`);
+			}
+			// Any tags in dev must be well-formed: stripping [..] leaves no stray bracket.
+			assert.ok(!/[[\]]/.test(ln.dev.replace(/\[[^\]\n]*\]/g, '')), `${d.id} line ${i}: malformed audio tag (stray bracket) in dev`);
+		});
+		// Comprehension questions are pure UI text — no tags.
+		d.questions.forEach((q, i) => {
+			assert.ok(!TAG.test(q.q), `${d.id} q${i}: question must not contain an audio tag`);
+			q.choices.forEach((c, j) => assert.ok(!TAG.test(c), `${d.id} q${i} choice ${j}: must not contain an audio tag`));
+		});
+	}
+});
+
 test('voice helpers: dialogueVoiceFolder follows the VOICE RULES; dialogueClipId zero-pads', () => {
 	const cast = { id: 'x', cast: ['pyaro'] };
 	assert.equal(dialogueVoiceFolder(cast, 'sano'), 'default');

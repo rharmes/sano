@@ -16,7 +16,7 @@ Classic scripts (not modules), all `defer`, so each defines a global the later o
 Order in `index.html`:
 
 1. `js/data.js` — **`COURSE`**: 44 units / ~588 items — the entire course content (the big file).
-2. `js/romanize.js` — **`SanoRomanize`**: derives romanization + pronunciation from Devanagari (`romanize(dev)` / `pronounce(dev)`; spec `docs/romanization.md`). At load it **rewrites each `COURSE` item's `np` and `pron` from `item.dev`** (`np` and `pron` were removed from `data.js`; items store only `dev`/`en` + `usage`/`emoji`). Pure + classic-script, so the tests lift it.
+2. `js/romanize.js` — **`SanoRomanize`**: derives romanization + pronunciation from Devanagari (`romanize(dev)` / `pronounce(dev)`; spec `docs/romanization.md`). At load it **rewrites each `COURSE` item's `np` and `pron` from `item.dev`** (`np` and `pron` were removed from `data.js`; items store only `dev`/`en` + `usage`/`emoji`). Also exposes `stripTags(dev)` — drops inline ElevenLabs `[performance tags]` (used by dialogue `dev`) so they never reach text; `romanize`/`pronounce` strip first. Pure + classic-script, so the tests lift it.
 3. `js/sync.js` — **`SanoSync`**: debounced server push, revision-checked conflict detection, last-write-wins. `adoptSession()`. Bookkeeping in localStorage `sano.sync.v1`.
 4. `js/push.js` — **`SanoPush`**: PWA daily-reminder toggle + `pushManager.subscribe`. VAPID public key baked in.
 5. `js/onboarding.js` — **`SanoOnboard`**: first-run scripted Sano conversation (name, placement/skip-ahead, optional account/PWA steps). Per-Sano-bubble heads from `CHARACTER_HEADS`.

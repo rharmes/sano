@@ -130,3 +130,23 @@ test('pronounce: empty input unchanged; pure and idempotent', () => {
 		assert.equal(P(P(dev)), P(dev), `not idempotent: ${dev}`);
 	}
 });
+
+// --- audio tags: ElevenLabs [bracket] performance cues ride inline in dialogue `dev`, are sent
+// to the synth verbatim (synth-app.mjs), and are stripped everywhere `dev` becomes text. ---
+const S = SanoRomanize.stripTags;
+
+test('stripTags: removes [bracket] tags and tidies the gap they leave', () => {
+	assert.equal(S('[whispers] नमस्ते'), 'नमस्ते', 'leading tag + space');
+	assert.equal(S('म [sighs] खुसी छु'), 'म खुसी छु', 'mid-line tag collapses the double space');
+	assert.equal(S('खुसी [laughs]!'), 'खुसी!', 'tag before punctuation leaves no gap');
+	assert.equal(S('[shouting] टाढा जाऊ!'), 'टाढा जाऊ!', 'leading tag trimmed');
+	assert.equal(S('कुनै ट्याग छैन।'), 'कुनै ट्याग छैन।', 'no tags → unchanged');
+	assert.equal(S(''), '', 'empty unchanged');
+});
+
+test('romanize/pronounce ignore audio tags (the tag is render-only)', () => {
+	assert.equal(R('[whispers] नमस्ते'), R('नमस्ते'));
+	assert.equal(R('म [sighs] खुसी छु'), R('म खुसी छु'));
+	assert.equal(P('[excited] एक'), P('एक'));
+	assert.equal(P('धन्यवाद [warmly]'), P('धन्यवाद'));
+});

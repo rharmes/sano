@@ -52,6 +52,10 @@ A line (inline, schema v2):
 { who, np, dev, en, gloss }
 // who: 'sano' | a companion id | 'narrator' | 'thornbush'
 // gloss: ordered tappable segmentation of the romanized line (optional)
+// dev MAY carry inline ElevenLabs v3 performance tags in [brackets] (e.g. [whispers], [laughs];
+//   elevenlabs.io/blog/v3-audiotags) — sent to the TTS render verbatim, stripped everywhere `dev`
+//   becomes text (SanoRomanize.stripTags). Tags must NOT appear in np/gloss/en (display + tap
+//   translation); a data test enforces this.
 ```
 
 A gloss segment — the player renders romanization from these (each = one underlined,

@@ -97,6 +97,9 @@ if (args.new) {
 mkdirSync(outDir, { recursive: true });
 console.log(`Voice ${voice} · model ${model} · ${jobs.length} clip(s) → ${outDir.replace(ROOT + '/', '')}`);
 
+// Each job's text (a phrase/word/dialogue-line `dev`) is sent to ElevenLabs verbatim, so any
+// inline [performance tags] in a dialogue line (e.g. [whispers]) are heard by the synth. tagsIn()
+// surfaces them in the log so a tagged render is visible at a glance.
 let ok = 0;
 for (const job of jobs) {
 	try {
@@ -105,7 +108,7 @@ for (const job of jobs) {
 		mkdirSync(dirname(job.out), { recursive: true });
 		writeFileSync(job.out, buf);
 		ok++;
-		console.log(`  ✓ ${job.label}`);
+		console.log(`  ✓ ${job.label}${tagsIn(job.text)}`);
 	} catch (e) {
 		console.error(`  ✗ ${job.label}: ${e.message}`);
 	}
@@ -173,4 +176,9 @@ function sleep(ms) {
 function fail(m) {
 	console.error('Error: ' + m);
 	process.exit(1);
+}
+// ElevenLabs v3 performance tags ([whispers], [laughs], …) sent inline; show them in the log.
+function tagsIn(text) {
+	const t = String(text).match(/\[[^\]\n]*\]/g);
+	return t ? `  ${t.join(' ')}` : '';
 }

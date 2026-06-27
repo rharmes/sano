@@ -53,7 +53,10 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   bubble), **romanized-only** lines whose every word is underlined + tappable for its English
   (`js/gloss.js`, `SanoGloss.renderLine`), narrator full-width, auto-played per-voice audio, then a
   comprehension quiz. Each opens with a one-line `CHARACTER_PERSONAS` intro. `design/dialogue.html`
-  is the localhost mockup. Only `greet-pyaro` is live.
+  is the localhost mockup. Only `greet-pyaro` is live. A line's `dev` may carry inline **ElevenLabs
+  v3 performance tags** in `[brackets]` (`[whispers]`, `[laughs]`, …) — voice-acting cues passed to
+  the audio render verbatim and stripped from all on-screen text (`SanoRomanize.stripTags`); they
+  must never appear in `np`/`gloss`/`en` (a data test enforces it).
 - **First-run onboarding** (`SanoOnboard`) greets new users with a scripted Sano conversation (a
   head-only Sano beside each of Sano's bubbles), captures the name, offers experienced learners a
   **placement / skip-ahead** (`Sano.placeBefore` marks earlier units introduced at recall strength),

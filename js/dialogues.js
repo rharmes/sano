@@ -12,6 +12,13 @@
 // subtitle. Each line gets its own audio clip rendered per-voice — see VOICE RULES below and
 // tools/tts/synth-app.mjs --dialogues.
 //
+// AUDIO TAGS — a line's `dev` may carry inline ElevenLabs v3 performance tags in [square
+// brackets] (e.g. [whispers], [laughs], [sighs]; elevenlabs.io/blog/v3-audiotags). They are
+// voice-acting directions for the audio render ONLY: synth-app.mjs sends `dev` verbatim so the
+// TTS hears them. They must NOT appear in `np`/`gloss`/`en` (which drive on-screen display + the
+// tap translation) — SanoRomanize.stripTags() removes them anywhere `dev` becomes text, and a
+// data test enforces that tags live only in `dev`.
+//
 // GLOSS — each line may carry a `gloss`: an ordered [{np, en}] segmentation of the romanized
 // line into tappable word/phrase chunks. The in-app player (js/sano.js + js/gloss.js) renders
 // the romanization FROM these segments, underlining each and revealing its English on tap

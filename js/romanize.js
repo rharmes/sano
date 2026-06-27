@@ -189,6 +189,22 @@ const SanoRomanize = (() => {
 	const isDev = (ch) => DEV_RANGE.test(ch);
 	const has = (obj, k) => Object.prototype.hasOwnProperty.call(obj, k);
 
+	// ElevenLabs v3 performance tags — voice-acting directions in [square brackets], e.g.
+	// [whispers] [laughs] [sighs] (elevenlabs.io/blog/v3-audiotags). They are placed inline in a
+	// dialogue line's `dev` so the audio render hears them (tools/tts/synth-app.mjs sends `dev`
+	// verbatim). They are delivery cues, NOT spoken text, and must never reach the screen, so
+	// stripTags() drops them (and tidies the gap they leave) anywhere `dev` is turned into text:
+	// romanize()/pronounce() strip first, and the future Devanagari track (SR-11) should call this
+	// before showing any dialogue `dev`. A no-op on tag-free input (the whole COURSE corpus).
+	const stripTags = (s) =>
+		typeof s === 'string'
+			? s
+					.replace(/\[[^\]\n]*\]/g, '')
+					.replace(/[ \t]{2,}/g, ' ')
+					.replace(/ ([,.!?;:।])/g, '$1')
+					.trim()
+			: s;
+
 	// Shared tokenizer: a pure-Devanagari word → syllable records { onset, vowel, inherentA,
 	// nasalOut }, mapped through the tables `T`. Resolves the final inherent schwa and resolves
 	// nasalization (ं/ँ → "n" before a consonant onset, else dropped).
@@ -299,12 +315,14 @@ const SanoRomanize = (() => {
 
 	function romanize(dev) {
 		if (!dev) return dev;
+		dev = stripTags(dev); // performance tags ([whispers], …) are render-only — never romanized
 		// Capitalize the first letter of the phrase; overrides keep their own case.
 		return mapWords(dev, WORD_OVERRIDES, romanizeWord).replace(/[a-zA-Z]/, (c) => c.toUpperCase());
 	}
 
 	function pronounce(dev) {
 		if (!dev) return dev;
+		dev = stripTags(dev); // ditto: strip audio tags before the respelling
 		// All lowercase by convention (a pronunciation respelling, not a headword).
 		return mapWords(dev, PRON_OVERRIDES, pronounceWord);
 	}
@@ -312,6 +330,7 @@ const SanoRomanize = (() => {
 	return {
 		romanize,
 		pronounce,
+		stripTags, // remove ElevenLabs [performance tags] from any `dev` before it becomes text
 		// Exposed for the coverage test (every corpus codepoint must be a known key).
 		_tables: { CONS, VOWEL_INDEP, VOWEL_MATRA, CONJUNCT, HALANT, ANUSVARA, CHANDRA, WORD_OVERRIDES },
 	};
