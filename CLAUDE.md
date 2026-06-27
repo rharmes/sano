@@ -59,8 +59,7 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   `dev` may carry inline **ElevenLabs
   v3 performance tags** in `[brackets]` (`[whispers]`, `[laughs]`, …) — voice-acting cues passed to
   the audio render verbatim and stripped from all on-screen text (`SanoRomanize.stripTags`); they
-  must never appear in `np`/`gloss`/`en` (a data test enforces it). **Pending task: Ross will add
-  voice directions to the conversation scripts** — tag list + workflow in `tools/tts/voice-tags.md`.
+  must never appear in `np`/`gloss`/`en` (a data test enforces it).
 - **First-run onboarding** (`SanoOnboard`) greets new users with a scripted Sano conversation (a
   head-only Sano beside each of Sano's bubbles), captures the name, offers experienced learners a
   **placement / skip-ahead** (`Sano.placeBefore` marks earlier units introduced at recall strength),
@@ -181,8 +180,6 @@ after adding or re-spelling content, regenerate them: `build-words.mjs` → `syn
   "Conversations" section. It POSTs only changed rows to `design/devanagari-save.php`, which merges
   them into the **gitignored** `design/devanagari-review.json` — it does **not** touch `js/data.js`.
   Serve with `php -S`.
-  - **Pending task: Ross will ask Claude to merge `design/devanagari-review.json` into the `dev`
-    fields of `js/data.js`** — done in-session (no merge script), then the review file is cleared.
 - **`tools/dict/`** is a local-only (never-deployed) **ground-truth Nepali↔English dictionary** to
   cross-check the AI-drafted translations and surface high-frequency words the course is missing
   (`tools/dict/README.md`, file map in `@docs/architecture.md`). `build-dictionary.mjs` ranks words
@@ -205,3 +202,26 @@ after adding or re-spelling content, regenerate them: `build-words.mjs` → `syn
 - **Respect `prefers-reduced-motion`** (block at the bottom of `css/sano.css`): under reduce-motion
   the mascot keeps only the eye blink; the larger rotational idles (tail wag, head tilt, ear/nose
   wiggle) are suppressed. iOS Safari honors the OS Reduce Motion setting — that's expected, not a bug.
+
+## Pending tasks (Ross's review queue)
+
+Waiting on Ross — not derivable from the code, easy to lose. Clear an item when it's done.
+
+- **Add voice tags to the conversations.** Review the scripts in `tools/tts/dialogue-scripts.md` and
+  add ElevenLabs `[performance tags]` where they sharpen delivery (tag list + how they flow through
+  the pipeline: `tools/tts/voice-tags.md`); then re-map any changed lines into `js/dialogues.js` and
+  re-render their audio.
+- **Review the Nepali↔English dictionary's recommendations** (`tools/dict/`, built by
+  `build-dictionary.mjs`) — both streams are flag-only, never auto-applied (AI-drafts-are-Ross's
+  rule): (a) **corrections to existing strings** — COURSE translations the dictionary disagrees with
+  (`tests/data/dictionary.test.mjs` prints them; the `.review` entries in `dictionary.json`); and
+  (b) **new words to add to future lessons** — high-frequency words the course is missing
+  (`tools/dict/coverage-report.md`).
+- **Re-render the reconciled greet-pyaro audio.** Commit `bbe8024` added the "copying" rewrite +
+  `[shouting]` tags to `js/dialogues.js` but deferred the audio, so `greet-pyaro-01/-07/-10` are
+  behind the text — re-render those three (`synth-app.mjs --dialogues --only greet-pyaro-01` …) and
+  bump `AUDIO_VERSION` once the dialogue edits settle. First confirm the line-1 Nepali
+  (नक्कल गरिरहेको, "copying") with a native speaker.
+- **Merge the Devanagari review.** `design/devanagari-review.json` (gitignored, written by
+  `design/devanagari.html`) → the `dev` fields of `js/data.js`, done in-session (no merge script),
+  then clear the review file.
