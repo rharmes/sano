@@ -11,8 +11,9 @@ Ross tests on an iPhone running iOS 26.
   flow (home / lesson / dialogue / sync), and the `api/` + `tools/` tables.
 - **`@docs/data-model.md`** — data shapes (`COURSE`, `DIALOGUES`, the state record), localStorage
   keys, DB schema, scheduler constants, and the **SR-\* / R\*** feature-code glossary.
-- `docs/pedagogy.md` — learning-science basis. `tools/tts/RESEARCH.md` —
-  voice/TTS. `design/style-guide.html` — visual tokens + components (brand source of truth).
+- `docs/pedagogy.md` — learning-science basis. `docs/testing.md` — visual-capture + screenshot
+  recipes. `tools/tts/RESEARCH.md` — voice/TTS. `design/style-guide.html` — visual tokens +
+  components (brand source of truth).
 
 Those carry the deep detail; this file keeps the summary, the non-obvious constraints, and the
 workflow. **Keep it current:** when architecture/tooling changes significantly, update this file
@@ -41,68 +42,55 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 ## What the app is (one level down; functions in `@docs/architecture.md`, shapes in `@docs/data-model.md`)
 
 - **Home** is a Duolingo-style winding **path** (`renderPath`): units unlock in order, with
-  **dialogue** (gold) and **pronunciation** (lavender) nodes woven in after their anchor unit, and
-  decorative **companions** (SR-07) in the pockets. The daily-lesson button mixes new items from the
-  current unit with the most-overdue reviews.
-- **Spaced repetition** is **SM-2-lite** (each item has its own ease + interval, auto-graded from
-  the exercise type). **Exercises escalate with strength**: `choice`/`match` for new items;
-  `type`/`wordbank`/`listenMatch` + audio-only "listen" (SR-03) for recall-strength items
-  (interval ≥ 3 days).
-- **Story dialogues** (SR-01, `DIALOGUES` in `js/dialogues.js`, schema v2) play in a
-  Duolingo-Stories-style player: every speaker on the **left** (head from `CHARACTER_HEADS` +
-  bubble), **romanized-only** lines whose every word is underlined + tappable for its English
-  (`js/gloss.js`, `SanoGloss.renderLine`), narrator full-width, auto-played per-voice audio, then a
-  comprehension quiz. Each opens with a one-line `CHARACTER_PERSONAS` intro. `design/dialogue.html`
-  is the localhost mockup. Only `greet-pyaro` is live. The conversations' English **source of truth**
-  is `tools/tts/dialogue-scripts.md`; `js/dialogues.js` is hand-built from it (adding the Nepali +
-  clip routing) and kept in sync **by hand** (no generator/drift-check — convention only). A line's
-  `dev` may carry inline **ElevenLabs
-  v3 performance tags** in `[brackets]` (`[whispers]`, `[laughs]`, …) — voice-acting cues passed to
-  the audio render verbatim and stripped from all on-screen text (`SanoRomanize.stripTags`); they
-  must never appear in `np`/`gloss`/`en` (a data test enforces it).
-- **First-run onboarding** (`SanoOnboard`) greets new users with a scripted Sano conversation (a
-  head-only Sano beside each of Sano's bubbles), captures the name, offers experienced learners a
-  **placement / skip-ahead** (`Sano.placeBefore` marks earlier units introduced at recall strength),
-  and optionally creates a cloud account / shows the PWA install steps.
-- **Progress** (a day **streak** with a forgiveness freeze (SR-09), daily/total counters, a
-  **dictionary**) lives in localStorage `sano.state.v1` (schema v2) and syncs to the server.
+  **dialogue** (gold) and **pronunciation** (lavender) nodes woven in after their anchor unit and
+  decorative **companions** (SR-07) in the pockets. A unit is complete when every item is intro'd; the
+  daily-lesson button mixes new items from the current unit with the most-overdue reviews.
+- **Spaced repetition** is **SM-2-lite** (per-item ease + interval, auto-graded from the exercise
+  type). Drills **escalate with strength**: `choice`/`match` when new; `type`/`wordbank`/`listenMatch`
+  + audio-only "listen" (SR-03) once recall-strength (interval ≥ 3 days).
+- **Story dialogues** (SR-01, `DIALOGUES` in `js/dialogues.js`) play in a Duolingo-Stories player —
+  **romanized-only**, every word tappable for its English (`js/gloss.js`); only `greet-pyaro` is live.
+  The English **source of truth** is `tools/tts/dialogue-scripts.md`, hand-mapped into
+  `js/dialogues.js` (no generator — synced by hand); a line's `dev` may carry inline `[performance
+  tags]` for the TTS, stripped from all on-screen text and never allowed in `np`/`gloss`/`en`. (Full
+  schema + the tags rule: `@docs/data-model.md`.)
+- **First-run onboarding** (`SanoOnboard`) greets new users with a scripted Sano conversation,
+  captures the name, and offers experienced learners a **placement / skip-ahead** (`Sano.placeBefore`
+  marks earlier units introduced at recall strength), then optionally an account / PWA install.
+- **Progress** — a day **streak** with a forgiveness freeze (SR-09), daily/total counters, and a
+  **dictionary** — lives in localStorage `sano.state.v1` and syncs to the server.
 
 ## Audio (SR-02)
 
-`SanoAudio` serves per-phrase clips `audio/<voice>/<id>.mp3` (`play(id)`, ~588) and per-word
-word-bank clips `audio/words/<slug>.mp3` (`playWord(slug)`, ~233; slug = the **derived** romanized
-word — from `js/romanize.js` — run through `normalize`). A missing clip is a silent no-op. **All audio is pre-rendered by
-`tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice** (`eleven_v3`, voice id
-in RESEARCH.md §9) — never a runtime call. `synth-app.mjs --phrases`/`--words` render the full set;
-`--new` renders only clips not yet on disk (so adding content doesn't re-spend credits or churn
-git). Per-word Devanagari comes from `tools/tts/words.json` (built by `tools/tts/build-words.mjs`,
-phrases-only). Re-rendering bumps `AUDIO_VERSION` in `js/audio.js` to bust caches. The word clips
-track the **derived** slugs (re-rendered 2026-06-27 at `AUDIO_VERSION` 5, in sync with the data);
-after adding or re-spelling content, regenerate them: `build-words.mjs` → `synth-app.mjs --words
---new`, then bump `AUDIO_VERSION`.
+`SanoAudio` serves pre-rendered per-phrase clips `audio/<voice>/<id>.mp3` (`play(id)`, ~588) and
+per-word `audio/words/<slug>.mp3` (`playWord(slug)`, ~233; slug = the **derived** romanized word —
+from `js/romanize.js` — run through `normalize`); a missing clip is a silent no-op. **All clips are
+pre-rendered by `tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice
+(`eleven_v3`, voice id in RESEARCH.md §9) — never a runtime call.** Per-word Devanagari comes from
+`tools/tts/words.json` (built by `tools/tts/build-words.mjs`, phrases-only). After adding or
+re-spelling content, regenerate the affected clips — `build-words.mjs` → `synth-app.mjs --words
+--new` (`--new` renders only clips missing on disk, so it won't re-spend credits or churn git) — then
+bump `AUDIO_VERSION` in `js/audio.js` to bust caches. Flags + per-voice routing: `tools/tts/README.md`.
 
-## Server / admin / PWA (essentials; full detail in `@docs/architecture.md`)
+## Server / admin / PWA (endpoints + guard order in `@docs/architecture.md`)
 
-- **Sync:** localStorage is the working copy; `SanoSync` (js/sync.js) does debounced PUTs to
-  `api/state.php` with revision-checked, last-write-wins reconciliation. App stays fully usable
-  offline / logged-out. Auth = username/password; DB-backed session token in an HttpOnly
-  `sano_session` cookie (90 days); mutating requests need CSRF header `X-Sano-Request: 1`. Two ways
-  to make an account: self-service `register.php` (open signup, throttled) and the invite-only
-  `tools/make-user.php` CLI (also used for password resets). Hardening: argon2id, per-account
-  lockout + per-IP throttles, CSP/HSTS/nosniff in `.htaccess`, a generic JSON-500 handler, and a
-  consistent guard order (stateless method/CSRF/JSON/validation checks run before auth/`db()`).
-- **Admin dashboard** at `/admin/` (standalone page, server-enforced via a `users.is_admin` flag +
-  `require_admin()`): lists every account (path position, streak, last sync) with reset-password /
-  delete actions. `?demo=1` renders stub rows for local UI review.
-- **PWA + reminders:** installable (manifest + iOS meta + generated icons); `sw.js` caches the
-  shell (HTML network-first, stamped assets cache-first) and handles `push`. A reminder needs a
-  per-device subscription (`js/push.js` → `push-subscribe.php`) **and** a per-account time
-  (`reminder_hour` / `reminder_tz` via `reminder.php`); `tools/send-reminders.php` dispatches hourly
-  via server cron (not in the rsync). VAPID public key is baked into `js/push.js`; the private key
-  is in `sano-config.php`.
-- **Live-DB schema changes** go through a one-off idempotent `tools/migrate-*.php` — **never
-  re-apply `schema.sql`** to an existing DB. A new column that `login.php` / `state.php` SELECT must
-  be migrated **before** deploying the code.
+- **Sync:** localStorage is the working copy; `SanoSync` (js/sync.js) debounces revision-checked,
+  last-write-wins PUTs to `api/state.php`; the app stays fully usable offline / logged-out. Auth is a
+  username/password session token in an HttpOnly `sano_session` cookie (90 days); mutating requests
+  need CSRF header `X-Sano-Request: 1`. Accounts come from self-service `register.php` (throttled) or
+  the invite-only `tools/make-user.php` CLI (also password resets). Hardening: argon2id, per-account
+  lockout + per-IP throttles, CSP/HSTS/nosniff, a JSON-500 handler, and a guard order that runs the
+  stateless method/CSRF/JSON/validation checks before auth/`db()`.
+- **Admin dashboard** `/admin/` (server-enforced via `users.is_admin` + `require_admin()`): lists
+  every account with reset-password / delete actions; `?demo=1` renders stub rows for local UI review.
+- **PWA + reminders:** installable; `sw.js` caches the shell (HTML network-first, stamped assets
+  cache-first) and handles `push`. A reminder needs **both** a per-device subscription (`js/push.js` →
+  `push-subscribe.php`) **and** a per-account time (`reminder_hour` / `reminder_tz` via `reminder.php`);
+  `tools/send-reminders.php` dispatches hourly via server cron (not in the rsync). VAPID public key is
+  baked into `js/push.js`; the private key is in `sano-config.php`.
+- **Live-DB schema changes** go through a one-off idempotent `tools/migrate-*.php` — **never re-apply
+  `schema.sql`** to an existing DB; a new column that `login.php` / `state.php` SELECT must be migrated
+  **before** deploying the code.
 
 ## Workflow for every code change
 
@@ -127,38 +115,26 @@ after adding or re-spelling content, regenerate them: `build-words.mjs` → `syn
 
 ## Testing notes (the non-obvious bits)
 
-- **Very low tolerance for flaky tests.** A test that passes only *sometimes* is a defect —
-  in the test or the app — not noise to shrug off. When a test looks non-deterministic, stop
-  and fix the root cause: wait for the real condition instead of a fixed `waitForTimeout`,
-  click-and-verify-with-retry on a flaky control, freeze animations, or surface a genuine app
-  race. CI `retries` are only a backstop for truly unavoidable timing — never the fix, and a
-  test that needs them to pass should be hardened until it doesn't.
-- **Test suite** (`tools/test.sh`, tiers `--static/--unit/--data/--api/--ui`): `node:test` for pure
-  logic + data integrity (`tests/unit`, `tests/data`), Playwright for HTTP + browser (`tests/api`,
-  `tests/e2e`). Pure helpers are lifted out of the classic scripts by `tests/lift.mjs` (sentinel
-  block / whole-file globals / by-name function extraction) — no app-code change needed to test them.
+- **Very low tolerance for flaky tests.** A test that passes only *sometimes* is a defect — in the
+  test or the app — not noise to shrug off. Fix the root cause: wait for the real condition instead of
+  a fixed `waitForTimeout`, click-and-verify-with-retry on a flaky control, freeze animations, or
+  surface a genuine app race. CI `retries` are a backstop for truly unavoidable timing — never the fix.
+- **Test suite** — one entry point `tools/test.sh` (tiers `--static/--unit/--data/--api/--ui`; tier
+  table in `@docs/architecture.md`): `node:test` for pure logic + data integrity, Playwright for HTTP
+  + browser. Pure helpers are lifted from the classic scripts by `tests/lift.mjs` (no app-code change
+  needed to test them); seeds come from `tests/seed.mjs` — the same builders `dev-seed.html` uses.
 - **e2e gotchas:** `php -S` is single-threaded, so the Playwright `webServer` sets
   `PHP_CLI_SERVER_WORKERS` (else parallel browsers starve it and pages never settle). The app's
-  infinite idle animations defeat a stylesheet freeze on specificity, so `boot()` freezes them with
-  inline `!important` and interaction clicks pass `{ force: true }` (pseudo-element animations can't
-  be frozen inline). Seeds come from `tests/seed.mjs` — the same builders `dev-seed.html` uses.
-  `prefers-reduced-motion` is driven with `page.emulateMedia`, not the config option.
+  infinite idle animations defeat a stylesheet freeze, so `boot()` freezes them with inline
+  `!important` and interaction clicks pass `{ force: true }` (pseudo-element animations can't be frozen
+  inline). `prefers-reduced-motion` is driven with `page.emulateMedia`, not the config option.
 - **Backend tests:** the `tests/api` guard specs run against `php -S` with **no** `sano-config.php`,
-  so they assert only pre-DB guards (method/CSRF/JSON/validation). Full request-cycle integration
-  (`tests/api/integration.spec.mjs`) needs MySQL and runs only when `SANO_TEST_DB` is set — CI's
-  `integration` job provides a `mysql:8` service + a generated config; locally those tests skip.
-  WebKit-only bugs are caught by the e2e `webkit` project in CI; real iOS-device Safari stays manual.
-- **Screenshot harness:** write a temp `.shot-harness.html` in the repo root that seeds
-  `sano.state.v1` and iframes the app at the target width (reuse a builder from `tests/seed.mjs`).
-  **Delete temp harness files before committing.**
-- **Forcing light mode:** headless Chrome follows the system theme — strip the dark `@media` blocks
-  into temp `.light.*` copies. **Animations:** `--virtual-time-budget` finishes animations before
-  capture, so sample `getComputedStyle(...).opacity` in a probe page and read it with `--dump-dom`.
-- **App icons** (`apple-touch-icon.png`, `icon-{192,512}.png`, `icon-512-maskable.png`) are
-  generated from `tools/make-touch-icon.html` (render the 512 masters via `tools/screenshot.sh`,
-  `?safe` for the maskable variant, then `sips` downscale) — not hand-edited.
+  so they assert only pre-DB guards. Full integration (`tests/api/integration.spec.mjs`) needs MySQL
+  and runs only when `SANO_TEST_DB` is set (CI's `integration` job); locally it skips. WebKit-only
+  bugs are caught by the e2e `webkit` project in CI; real iOS-device Safari stays manual.
+- **Capture recipes** — screenshot harness, forcing light mode, app-icon generation: `docs/testing.md`.
 - **Live cache check:** `curl -sI https://namastesano.com/ | grep -i cache-control` → HTML must be
-  `no-cache`; css/js are `max-age=31536000, immutable` (busted by `?v=`); `api/` responses are `no-store`.
+  `no-cache`; css/js are `max-age=…, immutable` (busted by `?v=`); `api/` responses are `no-store`.
 
 ## Repo facts
 
@@ -176,10 +152,10 @@ after adding or re-spelling content, regenerate them: `build-words.mjs` → `syn
   art. `style-guide.html`, `animations.html`, `characters.html` share a day/night pill (`?theme=`);
   `icons.html` and `dialogue.html` are further artifacts.
 - **`design/devanagari.html`** is a localhost-only review tool for the AI-drafted `dev` strings: all
-  588 items grouped by unit (English, romanization, ▶, an editable Devanagari box) plus a read-only
-  "Conversations" section. It POSTs only changed rows to `design/devanagari-save.php`, which merges
-  them into the **gitignored** `design/devanagari-review.json` — it does **not** touch `js/data.js`.
-  Serve with `php -S`.
+  588 items grouped by unit (English, romanization, ▶, an editable Devanagari box, and a flag-only
+  column surfacing any `tools/dict/coverage-report.md` disagreement for that row). It POSTs only
+  changed rows to `design/devanagari-save.php`, which merges them into the **gitignored**
+  `design/devanagari-review.json` — it does **not** touch `js/data.js`. Serve with `php -S`.
 - **`tools/dict/`** is a local-only (never-deployed) **ground-truth Nepali↔English dictionary** to
   cross-check the AI-drafted translations and surface high-frequency words the course is missing
   (`tools/dict/README.md`, file map in `@docs/architecture.md`). `build-dictionary.mjs` ranks words
@@ -193,12 +169,12 @@ after adding or re-spelling content, regenerate them: `build-words.mjs` → `syn
 ## Design direction
 
 - Brand: **"Pennant & Paper-cut"** — softened Nepal-flag crimson + indigo on warm paper, and a
-  paper-cut mouse mascot named **Sano**. Sano's centered head is the favicon + app icon (the pennant
-  that sat behind it was dropped 2026-06-13). All theme tokens live at the top of `css/sano.css`
+  paper-cut mouse mascot named **Sano**. Sano's centered head is the favicon + app icon. All theme
+  tokens live at the top of `css/sano.css`
   (a light block + a dark `@media` block — **change both**). The mascot is inline SVG drawn as flat
   `.f-*`-filled shapes (`.s-whisker` strokes) — no drop-shadow or grain; it runs the idle animations
   wherever it appears.
-- **Prayer-flag section dividers** were built and pulled (2026-06-12) — don't re-add without Ross.
+- **Prayer-flag section dividers** were built and pulled — don't re-add without Ross.
 - **Respect `prefers-reduced-motion`** (block at the bottom of `css/sano.css`): under reduce-motion
   the mascot keeps only the eye blink; the larger rotational idles (tail wag, head tilt, ear/nose
   wiggle) are suppressed. iOS Safari honors the OS Reduce Motion setting — that's expected, not a bug.
@@ -207,21 +183,15 @@ after adding or re-spelling content, regenerate them: `build-words.mjs` → `syn
 
 Waiting on Ross — not derivable from the code, easy to lose. Clear an item when it's done.
 
-- **Add voice tags to the conversations.** Review the scripts in `tools/tts/dialogue-scripts.md` and
-  add ElevenLabs `[performance tags]` where they sharpen delivery (tag list + how they flow through
-  the pipeline: `tools/tts/voice-tags.md`); then re-map any changed lines into `js/dialogues.js` and
-  re-render their audio.
-- **Review the Nepali↔English dictionary's recommendations** (`tools/dict/`, built by
-  `build-dictionary.mjs`) — both streams are flag-only, never auto-applied (AI-drafts-are-Ross's
-  rule): (a) **corrections to existing strings** — COURSE translations the dictionary disagrees with
-  (`tests/data/dictionary.test.mjs` prints them; the `.review` entries in `dictionary.json`); and
-  (b) **new words to add to future lessons** — high-frequency words the course is missing
-  (`tools/dict/coverage-report.md`).
-- **Re-render the reconciled greet-pyaro audio.** Commit `bbe8024` added the "copying" rewrite +
-  `[shouting]` tags to `js/dialogues.js` but deferred the audio, so `greet-pyaro-01/-07/-10` are
-  behind the text — re-render those three (`synth-app.mjs --dialogues --only greet-pyaro-01` …) and
-  bump `AUDIO_VERSION` once the dialogue edits settle. First confirm the line-1 Nepali
-  (नक्कल गरिरहेको, "copying") with a native speaker.
-- **Merge the Devanagari review.** `design/devanagari-review.json` (gitignored, written by
-  `design/devanagari.html`) → the `dev` fields of `js/data.js`, done in-session (no merge script),
-  then clear the review file.
+- **Add voice tags to the conversations** — review `tools/tts/dialogue-scripts.md`, add ElevenLabs
+  `[performance tags]` (list + pipeline: `tools/tts/voice-tags.md`), re-map changed lines into
+  `js/dialogues.js`, and re-render their audio.
+- **Review the dictionary's recommendations** (`tools/dict/`; flag-only, never auto-applied): COURSE
+  translations it disagrees with (`tests/data/dictionary.test.mjs` / the `.review` entries in
+  `dictionary.json`) and high-frequency missing words (`tools/dict/coverage-report.md`).
+- **Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` lag the text after the
+  `[shouting]`/"copying" edits in `bbe8024`; re-render (`synth-app.mjs --dialogues --only greet-pyaro-01` …)
+  + bump `AUDIO_VERSION` once the edits settle. First confirm line-1 नक्कल गरिरहेको ("copying") with a
+  native speaker.
+- **Merge the Devanagari review** — `design/devanagari-review.json` (gitignored) → the `dev` fields of
+  `js/data.js` (in-session, no merge script), then clear the review file.
