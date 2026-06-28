@@ -93,11 +93,10 @@ necessarily follow auth and live in the DB-gated integration specs.
 | `screenshot.sh` | Headless-Chrome screenshot wrapper (`<url> <out.png> [WxH] [budget-ms]`). |
 | `dev-seed.html` | Committed dev tool (served, never deployed): seeds `sano.state.v1` and opens the app where a gated feature is visible. Add a scenario for every new feature. |
 | `make-user.php` | CLI account create / `--reset-password` (invite-only; run on the server). |
-| `migrate-2026-06-*.php` | One-off idempotent live-DB migrations (admin flag, login throttle, reminders). Never re-apply `schema.sql`. |
 | `send-reminders.php` | Server-only hourly cron: dispatch Web Push reminders (minishlink/web-push). Not in the rsync. |
 | `make-touch-icon.html` | Source for the app-icon PNGs (render at 512 then `sips` downscale). |
 | `build-character-heads.mjs` / `build-anim-characters.mjs` | Generate `js/characters.js` / `design/anim-characters.js` from `design/characters.html`. Re-run after editing character art. |
-| `schema.sql` | Canonical DB schema (see `@docs/data-model.md`). |
+| `schema.sql` | Canonical DB schema (see `@docs/data-model.md`). Live changes go through a one-off idempotent `migrate-*.php`, then fold back into this file — never re-apply it to an existing DB. |
 | `tts/synth-app.mjs` | Render phrase / word / dialogue-line clips through the ElevenLabs API in Sano's cloned voice — `--phrases` (→ `audio/default/<id>.mp3`, ~588) / `--words` (→ `audio/words/<slug>.mp3`, ~233) / `--dialogues` (→ `audio/<voice>/<clipId>.mp3`, per speaker). Add `--new` for only clips missing on disk, `--only` for one, `--sample` to preview. Bump `AUDIO_VERSION` (js/audio.js) after. |
 | `tts/build-words.mjs` | Build `tts/words.json` (per-word Devanagari, phrases-only) for the word-bank clips. |
 | `tts/dialogue-scripts.md` | The conversations' English **source of truth** (story / questions / metadata / voice-direction). `js/dialogues.js` is hand-built from it (adds the Nepali + clip routing); `synth-app.mjs --dialogues` then renders audio. Synced by hand — no generator/drift-check. |

@@ -107,7 +107,7 @@ Security model:
 
 Six InnoDB/utf8mb4 tables:
 
-- `users` — id, username (unique), password_hash, failed_logins, locked_until, **reminder_hour** (0–23, null = no reminder), **reminder_tz** (IANA name, null), created_at.
+- `users` — id, username (unique), password_hash, failed_logins, locked_until, **is_admin** (0/1, gates the `/admin/` dashboard + endpoints), **reminder_hour** (0–23, null = no reminder), **reminder_tz** (IANA name, null), created_at.
 - `app_state` — user_id (PK, FK cascade), state (MEDIUMTEXT JSON blob), revision (counter), updated_at (DATETIME(3), auto-updated).
 - `sessions` — token_hash (PK), user_id (FK cascade), created_at, expires_at.
 - `signup_attempts` — ip (VARBINARY(16)), created_at; per-IP signup throttle, pruned to the last hour on each attempt.
@@ -163,8 +163,7 @@ A working reminder needs **two** things, deliberately split:
 - **`screenshot.sh <url> <out.png> [WxH] [budget-ms]`** — headless-Chrome screenshot wrapper with a stable command prefix (so one permission rule covers all invocations). Always use it instead of invoking Chrome directly.
 - **`make-user.php`** — creates or resets (`--reset-password`) an account from the CLI. Self-service `register.php` is the usual signup path now; this is for manual accounts and password resets. Run it _on the server_, where it finds `sano-config.php` next to itself: `scp tools/make-user.php sano-deploy:` then `ssh -t sano-deploy 'php make-user.php <username>; rm make-user.php'`.
 - **`send-reminders.php`** — the hourly reminder dispatcher (see "PWA & daily reminders"). Lives **only on the server** (`~/sano-tools/`), outside the deploy rsync; update it with `scp tools/send-reminders.php sano-deploy:sano-tools/`, and smoke-test with `ssh sano-deploy 'php sano-tools/send-reminders.php --user <name> --force --dry-run'`.
-- **`schema.sql`** — the DDL above; apply on a fresh DB with `ssh sano-deploy 'mysql <flags> sano' < tools/schema.sql`. For incremental changes to a live DB, write a one-off idempotent migration instead — never re-run the full schema.
-- **`migrate-2026-06-reminders.php`** — example of that: an idempotent PDO migration (reads `sano-config.php` like make-user.php) that adds `signup_attempts` and the `users.reminder_*` columns. `scp` it to the server home and run once with `ssh sano-deploy 'php migrate-2026-06-reminders.php'`.
+- **`schema.sql`** — the DDL above; apply on a fresh DB with `ssh sano-deploy 'mysql <flags> sano' < tools/schema.sql`. For incremental changes to a live DB, **never re-run the full schema** — write a one-off idempotent PDO migration instead (read `sano-config.php` like `make-user.php`, guard each change with `IF NOT EXISTS` or an `information_schema` column check, `scp` it to the server, run once), then fold the change back into this file so a fresh DB matches.
 - **`make-touch-icon.html`** — renders Sano's head as the app-icon art. The PNGs (`apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, and the maskable `icon-512-maskable.png` via the `?safe` query) are made by rendering the **512** masters with `screenshot.sh` and downscaling with `sips` — headless Chrome clamps its window to ~500px, so rendering directly at 180/192 crops the top-left. The generator is self-contained (`file://` works); never hand-edit the PNGs.
 
 ## Testing & verification

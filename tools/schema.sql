@@ -1,6 +1,8 @@
 -- Schema for sano server-side persistence. Apply once:
 --   ssh sano-deploy 'mysql <db-flags> < schema.sql'
 -- Connection credentials live in ~/sano-config.php on the server (never in git).
+-- Live changes: write a one-off idempotent migration, run it once, then fold the
+-- change back here so a fresh DB matches — never re-apply this file to an existing DB.
 
 CREATE TABLE users (
   id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -15,11 +17,6 @@ CREATE TABLE users (
   reminder_tz   VARCHAR(64) NULL,
   created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- Existing DB: ALTER TABLE users
---   ADD COLUMN reminder_hour TINYINT UNSIGNED NULL,
---   ADD COLUMN reminder_tz VARCHAR(64) NULL;
--- Existing DB: ALTER TABLE users ADD COLUMN is_admin TINYINT UNSIGNED NOT NULL DEFAULT 0;
---   (or run tools/migrate-2026-06-admin.php, which adds it and can grant a username.)
 
 CREATE TABLE app_state (
   user_id    INT UNSIGNED PRIMARY KEY,
