@@ -11,6 +11,11 @@ fonts/
 # Prettier has no SQL parser; schema.sql stays hand-formatted.
 tools/schema.sql
 
+# Markdown is hand-maintained — tools/format.sh formats only HTML/CSS/JS/PHP, not .md.
+# Keep an editor's Prettier from reflowing prose (e.g. collapsing the per-speaker source
+# lines in tools/tts/dialogue-scripts.md, the conversations' source of truth).
+*.md
+
 # Gitignored / generated.
 node_modules/
 .mockups.html
