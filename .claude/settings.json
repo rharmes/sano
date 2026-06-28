@@ -1,9 +1,5 @@
 {
 	"worktree": {
 		"bgIsolation": "none"
-	},
-	"statusLine": {
-		"type": "command",
-		"command": ".claude/scripts/status-line.sh"
 	}
 }

@@ -140,8 +140,7 @@ bump `AUDIO_VERSION` in `js/audio.js` to bust caches. Flags + per-voice routing:
 
 - Remote `git@github.com:rharmes/sano.git`, branch `main`. `.claude/settings.json` sets
   `worktree.bgIsolation: "none"` — background sessions edit this checkout directly; **do not use
-  worktrees.** (It also configures a gitignored status-line script; restore it on a fresh clone with
-  `curl -o .claude/scripts/status-line.sh https://raw.githubusercontent.com/shanraisshan/claude-code-status-line/main/status-line.sh && chmod +x .claude/scripts/status-line.sh`.)
+  worktrees.**
 - **Deploy** connection details live in the `sano-deploy` SSH alias (key auth) — no hostnames or
   credentials in the repo. `tools/deploy.sh` uses an **explicit allowlist**, so `tools/`, `design/`,
   `docs/`, and `send-reminders.php` never ship.
