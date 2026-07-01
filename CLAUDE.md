@@ -19,6 +19,13 @@ Those carry the deep detail; this file keeps the summary, the non-obvious constr
 workflow. **Keep it current:** when architecture/tooling changes significantly, update this file
 (and the relevant `docs/` file) in the same commit.
 
+## Ask questions, especially when in Planning Mode
+
+- **Interview me about every aspect of a plan until we reach a shared understanding.**  Walk down
+  each branch of the design tree, resolving dependencies between decisions one-by-one. For each
+  question, provide your recommended answer. If a question can be answered by exploring the codebase,
+  explore the codebase instead.
+
 ## Non-negotiable constraints
 
 - **No external requests at runtime.** Fonts are self-hosted woff2 (`css/fonts.css`); icons are
