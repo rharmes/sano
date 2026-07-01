@@ -6,7 +6,8 @@
 		<title>Sano · dev seed</title>
 		<!-- Local testing aid (served by the dev server, never deployed): seeds a ready-made
 		     sano.state.v1 into localStorage and opens the app where a new feature is visible.
-		     Add a scenario for every new feature. Served at /tools/dev-seed.html. -->
+		     Add a scenario for every new feature. Served at /tools/dev-seed.html.
+		     NOTE: states MUST be version 3 — a v2 blob is fresh-started by migrateV2State on load. -->
 		<script src="/js/data.js"></script>
 		<script src="/js/romanize.js"></script>
 		<style>
@@ -82,6 +83,51 @@
 		</p>
 
 		<div class="card">
+			<span class="tests">SR-05 learning steps · mastery</span>
+			<h2>0 · Learning steps &amp; the mastery ring (SR-05)</h2>
+			<p>
+				Lands with <b>Basics mastered</b> and <b>Numbers the current unit</b>, its words at different stages: some brand-new, one
+				already <b>recalled once</b>. Tap <b>“Start today's lesson.”</b> A new word is met with multiple choice, then — still in the
+				same lesson — a gentle <b>tap-to-build word bank</b> recall; on later days it returns until <b>recalled twice</b>. The current
+				unit's node ring fills only as words <b>graduate</b> (are mastered), not merely seen.
+			</p>
+			<button onclick="seed('learning')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
+			<span class="tests">SR-05 adaptive daily loop</span>
+			<h2>0b · Review debt throttles new words (SR-05)</h2>
+			<p>
+				Sets up a <b>big backlog</b> of due reviews on top of a current unit that still has new words. Because review debt is high, the
+				daily loop <b>serves all review and 0 new words</b> — the home button reads <b>“… · N review”</b> with no “new,” so a growing
+				vocabulary can never outrun its reviews. Clear the backlog and new words return.
+			</p>
+			<button onclick="seed('reviewdebt')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
+			<span class="tests">SR-05 mastery gate</span>
+			<h2>0c · Mastery gate: introduced ≠ done (SR-05)</h2>
+			<p>
+				The current unit (<b>Numbers</b>) has <b>every word introduced</b> but <b>two not yet mastered</b>, so the next unit stays
+				<b>locked</b> and the node ring is <b>nearly full</b>. The daily button won't hand out new words; <b>tap the unit's node</b> to
+				drill its weakest stragglers until they graduate and the next unit unlocks.
+			</p>
+			<button onclick="seed('nearmastery')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
+			<span class="tests">SR-05 schema v3 · fresh start</span>
+			<h2>0d · Fresh-start migration (v2 → v3)</h2>
+			<p>
+				Writes an <b>old (v2) save</b> — mid-course progress, a <b>12-day streak</b>, name “Aastha” — then loads the app. On boot it
+				<b>migrates to a fresh start at unit 1</b>: the learning progress resets (the new engine + re-cut units don't map), but your
+				<b>name and streak are kept</b>. You should land on onboarding-complete home at the very start of the path.
+			</p>
+			<button onclick="seed('freshstart')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-02 audio · SR-06 goal</span>
 			<h2>1 · Browse audio in the dictionary</h2>
 			<p>
@@ -147,21 +193,22 @@
 			<span class="tests">SR-04 speaking</span>
 			<h2>5 · Speaking step (record yourself)</h2>
 			<p>
-				Tap the <b>Basics ✓</b> node in the path to start a quick review (no warm-up). Answer the multiple-choice cards — after each
-				word a skippable <b>"Say it aloud"</b> step appears: tap to record, then play <b>"Your recording"</b> against the model. Allow
-				the mic the first time.
+				Basics is mastered, so <b>Numbers</b> is the current unit — tap <b>“Start today's lesson”</b> to learn its new words. After each
+				new word a skippable <b>"Say it aloud"</b> step appears: tap to record, then play <b>"Your recording"</b> against the model.
+				Allow the mic the first time.
 			</p>
 			<button onclick="seed('speak')">Seed &amp; open</button>
 		</div>
 
 		<div class="card">
 			<span class="tests">SR-05 graded scheduler</span>
-			<h2>6 · Graded review scheduler (SM-2-lite)</h2>
+			<h2>6 · Graded review scheduler (SM-2-lite + learning steps)</h2>
 			<p>
-				Lands mid-course with a spread of due reviews. Tap <b>“Start today's lesson.”</b> <b>Stronger</b> words (long intervals) come
-				back as <b>typing / word-bank</b> drills; <b>weaker</b> ones as <b>multiple choice or matching</b>. Answer the strong ones right
-				and finish — the complete screen reports <b>“N words strengthened,”</b> and those items get pushed weeks out, so the
-				<b>review count on home drops</b>. The scheduling math is unit-tested in <code>tests/unit/</code>.
+				Lands with the course settled and a spread of due reviews. Tap <b>“Start today's lesson.”</b> <b>Mastered</b> words come back as
+				the hardest recall — <b>typing</b> (single words) or <b>word bank</b> (phrases); words <b>still learning</b> get a gentler
+				<b>tap-to-build word bank</b> or <b>multiple choice</b>. Answer them right and finish — the complete screen reports
+				<b>“N words strengthened,”</b> and mastered items get pushed weeks out, so the <b>review count on home drops</b>. The scheduling
+				math is unit-tested in <code>tests/unit/</code>.
 			</p>
 			<button onclick="seed('schedule')">Seed &amp; open</button>
 		</div>
@@ -192,7 +239,7 @@
 			<span class="tests">wordbank</span>
 			<h2>Word-bank lesson (assemble the phrase from tiles)</h2>
 			<p>
-				The whole course is reviewed and settled and several <b>multi-word phrases</b> are now due, so <b>“Start today's lesson”</b> is
+				The whole course is mastered and settled and several <b>multi-word phrases</b> are now due, so <b>“Start today's lesson”</b> is
 				<b>all word-bank</b>. Tiles are lowercased and stripped of <b>?/.</b> so they don't give away order. Tapping a tile
 				<b>plays its word</b> and leaves it in place with a <b>crimson “selected” border</b> while a copy joins the phrase above (tap
 				that copy to remove it). Expect a <b>mix of directions</b>: some show the English and you build the <b>Nepali</b>; others show
@@ -217,10 +264,10 @@
 			<span class="tests">verbs · content</span>
 			<h2>Verb units (present &amp; past tense)</h2>
 			<p>
-				Everything up to <b>"Verbs: Present tense"</b> is done, so it's the <b>current unit</b> — tap <b>"Start today's lesson"</b> to
-				learn its conjugation phrases (<b>ma sikchu</b> "I learn," <b>ma herchu</b> "I watch," the polite <b>tapai siknuhunchha?</b>).
-				Finishing it unlocks <b>"Verbs: Past tense"</b> (<b>maile siken</b>, <b>ma gaen</b>) next on the path.
-				<b>Audio is not rendered yet</b>, so clips are silent until the ElevenLabs pass.
+				Everything up to <b>"Verbs: Present tense"</b> is mastered, so it's the <b>current unit</b> — tap
+				<b>"Start today's lesson"</b> to learn its conjugation phrases (<b>ma sikchu</b> "I learn," <b>ma herchu</b> "I watch," the
+				polite <b>tapai siknuhunchha?</b>). Master it to unlock <b>"Verbs: Past tense"</b> (<b>maile siken</b>, <b>ma gaen</b>) next on
+				the path.
 			</p>
 			<button onclick="seed('verbs')">Seed &amp; open</button>
 		</div>
@@ -231,8 +278,7 @@
 			<p>
 				The whole course is settled, so <b>every gold conversation node</b> is unlocked — tap any in the path. Each opens with a
 				<b>one-line character intro</b> (e.g. <i>Gyani — a wise elder elephant, always somewhere to be</i>) and ends with
-				<b>character-flavored comprehension questions</b>. New: <b>"Sano's big day"</b> with <b>Thulo</b> (after Verbs: Past), where an
-				ordinary day gets narrated like an epic. <b>New verb-line audio is silent</b> until the end-of-phases render.
+				<b>character-flavored comprehension questions</b>.
 			</p>
 			<button onclick="seed('dialoguefun')">Seed &amp; open</button>
 		</div>
@@ -241,10 +287,9 @@
 			<span class="tests">content · directions</span>
 			<h2>New content (directions, weather, "which")</h2>
 			<p>
-				Everything up to <b>Navigation</b> is done, so it's the <b>current unit</b> — tap <b>"Start today's lesson"</b> to meet the new
-				<b>direction words</b> (<b>baayaa</b> left, <b>daayaa</b> right, <b>sidhaa</b> straight, <b>najik/taadhaa</b> near/far,
-				<b>tira</b> that-way). The rounded-out <b>Weather</b> (sunny/cloudy/windy/foggy/snowing) and the new <b>"Kun?"</b> (which?) are
-				browsable in the <b>dictionary</b>. <b>Audio is silent</b> on the new items until the end-of-phases render.
+				Everything up to <b>Navigation</b> is mastered, so it's the <b>current unit</b> — tap <b>"Start today's lesson"</b> to meet the
+				new <b>direction words</b> (<b>baayaa</b> left, <b>daayaa</b> right, <b>sidhaa</b> straight, <b>najik/taadhaa</b> near/far,
+				<b>tira</b> that-way). The rounded-out <b>Weather</b> and the new <b>"Kun?"</b> (which?) are browsable in the <b>dictionary</b>.
 			</p>
 			<button onclick="seed('directions')">Seed &amp; open</button>
 		</div>
@@ -253,11 +298,11 @@
 			<span class="tests">content · intermediate</span>
 			<h2>Intermediate units (modals, comparatives, postpositions, jobs, time)</h2>
 			<p>
-				Five new grammar/vocab units placed by topic. Each button settles everything <i>before</i> that unit so it's the
+				Five new grammar/vocab units placed by topic. Each button masters everything <i>before</i> that unit so it's the
 				<b>current unit</b> — tap <b>"Start today's lesson"</b> to learn it: <b>Can / Want / Must</b> (<b>ma garna sakchu</b>,
 				<b>malai jana parcha</b>), <b>Comparing Things</b> (<b>yo tyo bhanda thulo</b>), <b>Place &amp; Position</b> (<b>mathi</b>,
 				<b>muni</b>, <b>bhitra</b>), <b>Jobs &amp; Work</b> (<b>ma shikshak hu</b>), and <b>Duration &amp; Frequency</b> (<b>ghanta</b>,
-				<b>haptaa</b>, <b>sadhai</b>). <b>Audio is silent</b> on the new items until the ElevenLabs render.
+				<b>haptaa</b>, <b>sadhai</b>).
 			</p>
 			<div style="display: flex; flex-wrap: wrap; gap: 8px">
 				<button onclick="seed('unit:modals-can-want-must')">Can / Want / Must</button>
@@ -292,8 +337,8 @@
 			<span class="tests">path</span>
 			<h2>Auto-scroll to the current lesson</h2>
 			<p>
-				Opens home deep in the course (units 0–14 done, <b>unit 15</b> in progress) so the current lesson sits far down the winding path
-				— on load the view should jump to <b>center it</b> in the viewport.
+				Opens home deep in the course (many units mastered, a later unit in progress) so the current lesson sits far down the winding
+				path — on load the view should jump to <b>center it</b> in the viewport.
 			</p>
 			<button onclick="seed('autoscroll')">Seed &amp; open</button>
 		</div>
@@ -332,34 +377,51 @@
 				const d = new Date(Date.now() - n * 864e5);
 				return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 			};
-			const rec = (o) => Object.assign({ seen: 4, correct: 4, level: 2, lastSeen: day(0), intro: true }, o);
+			// v3 records (kept in sync with tests/seed.mjs). `rec` = introduced/learning; `mastered` =
+			// graduated (so its unit counts complete under the SR-05 mastery gate).
+			const rec = (o) => Object.assign({ seen: 4, correct: 4, level: 2, lastSeen: day(0), intro: true, recalls: 0, graduated: false }, o);
+			const mastered = (o) => rec(Object.assign({ recalls: 2, graduated: true, ease: 2.6 }, o));
 
-			// Mark whole units as learned-and-settled (intro'd, not due).
+			// Master whole units (learned-and-settled, not due) by index range or up to an id.
 			function learnUnits(items, from, to, opts) {
-				for (let u = from; u <= to; u++) for (const it of COURSE[u].items) items[it.id] = rec(opts);
+				for (let u = from; u <= to; u++) for (const it of COURSE[u].items) items[it.id] = mastered(opts);
 			}
-			// Make the first `count` items of units [from..to] overdue reviews at mixed levels.
+			function masterBefore(items, id) {
+				for (const u of COURSE) {
+					if (u.id === id) return;
+					for (const it of u.items) items[it.id] = mastered({ lastSeen: day(0) });
+				}
+			}
+			function masterThrough(items, id) {
+				for (const u of COURSE) {
+					for (const it of u.items) items[it.id] = mastered({ lastSeen: day(0) });
+					if (u.id === id) return;
+				}
+			}
+			// Make the first `count` items of units [from..to] overdue reviews — GRADUATED words come
+			// due again (a stale lastSeen), so the units stay complete behind them.
 			function makeDue(items, from, to, count) {
 				let made = 0;
 				for (let u = from; u <= to && made < count; u++)
 					for (const it of COURSE[u].items) {
 						if (made >= count) break;
-						items[it.id] = rec({ level: made % 2 ? 2 : 1, correct: 3, lastSeen: day(12) });
+						items[it.id] = mastered({ interval: made % 2 ? 10 : 6, correct: 3, lastSeen: day(14) });
 						made++;
 					}
 			}
-			// A mid-course state: units 0–2 done, unit 3 the current unit, plenty of due reviews.
+			// Mid-course: units 0–2 mastered, unit 3 current (half introduced), plus due reviews.
 			function midCourse(extra) {
 				const items = {};
-				learnUnits(items, 0, 2, { level: 3, lastSeen: day(0) });
+				learnUnits(items, 0, 2, { lastSeen: day(0) });
 				const cur = COURSE[3];
 				cur.items.forEach((it, i) => {
-					if (i < Math.ceil(cur.items.length / 2)) items[it.id] = rec({ level: 1, lastSeen: day(0) });
+					if (i < Math.ceil(cur.items.length / 2))
+						items[it.id] = rec({ level: 1, interval: 2, graduated: false, lastSeen: day(0) });
 				});
 				makeDue(items, 0, 2, 12);
 				return Object.assign(
 					{
-						version: 2,
+						version: 3,
 						name: 'Aastha',
 						onboarded: true,
 						streak: 5,
@@ -372,6 +434,21 @@
 					extra,
 				);
 			}
+			const wrap = (items, extra) =>
+				Object.assign(
+					{
+						version: 3,
+						name: 'Aastha',
+						onboarded: true,
+						streak: 5,
+						streakFreezes: 1,
+						lastActivityDay: day(0),
+						itemsToday: 0,
+						itemsTotal: 200,
+						items,
+					},
+					extra,
+				);
 
 			function seed(which) {
 				if (which === 'reset' || which === 'placement') {
@@ -379,39 +456,69 @@
 					return (location.href = '/');
 				}
 				let state;
-				if (which === 'dict') {
+				if (which === 'learning') {
+					// SR-05 learning steps: Basics mastered, Numbers current with words at mixed stages —
+					// one recalled once (interval 2, not graduated) returns as a word-bank recall.
 					const items = {};
-					COURSE[0].items.slice(0, 8).forEach((it) => (items[it.id] = rec({ level: 1, lastSeen: day(0) })));
-					state = {
+					learnUnits(items, 0, 1, { lastSeen: day(0) }); // basics + basics-replies mastered
+					const numbers = COURSE.find((u) => u.id === 'numbers');
+					items[numbers.items[0].id] = mastered({ interval: 40, lastSeen: day(0) }); // one already mastered (ring > 0)
+					items[numbers.items[1].id] = rec({ interval: 2, recalls: 1, lastSeen: day(3) }); // learning, one recall, due
+					items[numbers.items[2].id] = rec({ interval: 1, recalls: 0, lastSeen: day(2) }); // learning, due
+					// the rest of Numbers stay new (unintroduced)
+					state = wrap(items, { itemsTotal: 40 });
+				} else if (which === 'reviewdebt') {
+					// SR-05 adaptive loop: a big due backlog throttles new words to zero. Basics +
+					// basics-replies mastered with 20 overdue reviews; Numbers current (new words wait).
+					const items = {};
+					learnUnits(items, 0, 1, { lastSeen: day(0) });
+					makeDue(items, 0, 1, 20);
+					state = wrap(items, { streak: 6, itemsTotal: 120 });
+				} else if (which === 'nearmastery') {
+					// SR-05 mastery gate: Numbers fully introduced but two words not graduated, so the
+					// next unit stays locked and the ring is nearly full.
+					const items = {};
+					learnUnits(items, 0, 1, { lastSeen: day(0) });
+					const numbers = COURSE.find((u) => u.id === 'numbers');
+					numbers.items.forEach((it, i) => {
+						items[it.id] =
+							i < numbers.items.length - 2
+								? mastered({ interval: 30, lastSeen: day(0) })
+								: rec({ interval: 2, recalls: 1, lastSeen: day(3) });
+					});
+					state = wrap(items, { itemsTotal: 60 });
+				} else if (which === 'freshstart') {
+					// Schema v3 migration: write an OLD v2 save; on load migrateV2State fresh-starts it to
+					// unit 1, keeping name + streak. (This is the one scenario that intentionally seeds v2.)
+					const items = {};
+					for (let u = 0; u < 6; u++)
+						for (const it of COURSE[u].items)
+							items[it.id] = { seen: 5, correct: 4, interval: 20, ease: 2.5, lastSeen: day(0), intro: true };
+					const v2 = {
 						version: 2,
 						name: 'Aastha',
 						onboarded: true,
-						streak: 3,
-						streakFreezes: 1,
-						lastActivityDay: day(0),
-						itemsToday: 3,
-						itemsTotal: 40,
-						items,
-					};
-				} else if (which === 'romanize') {
-					// Romanization review: introduce EVERY item so the dictionary lists all ~588
-					// derived np; lastSeen a few days back makes reviews due, so a lesson shows it too.
-					const items = {};
-					for (const u of COURSE) for (const it of u.items) items[it.id] = rec({ level: 1, lastSeen: day(3) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 3,
-						streakFreezes: 1,
+						streak: 12,
+						streakFreezes: 2,
 						lastActivityDay: day(0),
 						itemsToday: 0,
-						itemsTotal: 588,
+						itemsTotal: 300,
 						items,
 					};
+					localStorage.setItem('sano.state.v1', JSON.stringify(v2));
+					return (location.href = '/');
+				} else if (which === 'dict') {
+					const items = {};
+					COURSE[0].items.slice(0, 8).forEach((it) => (items[it.id] = rec({ level: 1, interval: 1, lastSeen: day(0) })));
+					state = wrap(items, { streak: 3, itemsToday: 3, itemsTotal: 40 });
+				} else if (which === 'romanize') {
+					// Romanization review: introduce EVERY item so the dictionary lists all ~588 derived
+					// np; lastSeen a few days back makes reviews due, so a lesson shows it too.
+					const items = {};
+					for (const u of COURSE) for (const it of u.items) items[it.id] = rec({ level: 1, interval: 1, lastSeen: day(3) });
+					state = wrap(items, { streak: 3, itemsTotal: 588 });
 				} else if (which === 'lesson' || which === 'matchaudio') {
-					// matchaudio (tap-to-hear): the daily lesson opens on the 5-word warm-up
-					// match, where tapping a Nepali (left) tile plays that word's audio.
+					// matchaudio (tap-to-hear): the daily lesson opens on the 5-word warm-up match.
 					state = midCourse();
 				} else if (which === 'freeze') {
 					// Missed exactly yesterday with a freeze banked -> home notice now, save on finish.
@@ -420,260 +527,90 @@
 					const items = {};
 					const done = ['basics', 'numbers', 'pronouns', 'family-people', 'introductions'];
 					for (const u of COURSE)
-						if (done.includes(u.id)) for (const it of u.items) items[it.id] = rec({ level: 3, lastSeen: day(0) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 4,
-						streakFreezes: 1,
-						lastActivityDay: day(1),
-						itemsToday: 0,
-						itemsTotal: 30,
-						items,
-					};
+						if (done.includes(u.id)) for (const it of u.items) items[it.id] = mastered({ lastSeen: day(0) });
+					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 30 });
 				} else if (which === 'speak') {
+					// Basics + basics-replies mastered -> Numbers current -> new-word lesson (has the speak step).
 					const items = {};
-					for (const it of COURSE[0].items) items[it.id] = rec({ level: 2, lastSeen: day(0) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 5,
-						streakFreezes: 1,
-						lastActivityDay: day(0),
-						itemsToday: 0,
-						itemsTotal: 60,
-						items,
-					};
+					learnUnits(items, 0, 1, { lastSeen: day(0) });
+					state = wrap(items, { itemsTotal: 60 });
 				} else if (which === 'schedule') {
-					// SR-05: weak -> strong due items so difficulty escalates by strength and
-					// strong items visibly stretch out when answered correctly.
+					// SR-05: course settled, a spread of due reviews so difficulty escalates by maturity —
+					// mastered words come back as typing / word bank, still-learning ones as choice / word bank.
 					const items = {};
-					learnUnits(items, 0, 2, { interval: 9, ease: 2.6, lastSeen: day(0) }); // settled, not due
+					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 30, lastSeen: day(0) });
 					let made = 0;
 					for (const it of COURSE[0].items) {
 						if (made >= 4) break;
-						items[it.id] = rec({ interval: 14, ease: 2.7, seen: 12, correct: 11, lastSeen: day(16) }); // strong, due
+						items[it.id] = mastered({ interval: 14, ease: 2.5, seen: 12, correct: 11, lastSeen: day(20) }); // mastered, due -> type/wordbank
 						made++;
 					}
 					made = 0;
-					for (const it of COURSE[1].items) {
+					for (const it of COURSE[2].items) {
 						if (made >= 4) break;
-						items[it.id] = rec({ interval: 1, ease: 1.3, seen: 6, correct: 2, lastSeen: day(2) }); // weak, due
+						items[it.id] = rec({ interval: 2, recalls: 1, seen: 6, correct: 4, lastSeen: day(4) }); // still learning, due -> word bank
 						made++;
 					}
-					COURSE[3].items.forEach((it, i) => {
-						if (i < 3) items[it.id] = rec({ interval: 2, ease: 2.5, lastSeen: day(0) });
-					});
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 6,
-						streakFreezes: 1,
-						lastActivityDay: day(0),
-						itemsToday: 0,
-						itemsTotal: 180,
-						items,
-					};
+					state = wrap(items, { streak: 6, itemsTotal: 300 });
 				} else if (which === 'nodecheck') {
 					// Completed conversation (gold) + pronunciation (lavender) nodes both show a checkmark.
 					const items = {};
-					learnUnits(items, 0, 4, { interval: 3, ease: 2.5, lastSeen: day(0) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 5,
-						streakFreezes: 1,
-						lastActivityDay: day(0),
-						itemsToday: 0,
-						itemsTotal: 90,
-						items,
-						dialoguesDone: { 'greet-pyaro': true },
-						soundsDone: { aspiration: true },
-					};
+					masterThrough(items, 'introductions');
+					state = wrap(items, { itemsTotal: 90, dialoguesDone: { 'greet-pyaro': true }, soundsDone: { aspiration: true } });
 				} else if (which === 'autoscroll') {
-					// Deep into the course (units 0–14 done, unit 15 current) so the in-progress lesson
+					// Deep into the course (units 0–14 mastered, unit 15 current) so the in-progress lesson
 					// sits far down the path — on load, home should auto-scroll to center it in view.
 					const items = {};
-					learnUnits(items, 0, 14, { interval: 3, ease: 2.5, lastSeen: day(0) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 9,
-						streakFreezes: 1,
-						lastActivityDay: day(0),
-						itemsToday: 0,
-						itemsTotal: 200,
-						items,
-					};
+					learnUnits(items, 0, 14, { lastSeen: day(0) });
+					state = wrap(items, { streak: 9, itemsTotal: 200 });
 				} else if (which === 'buddies') {
-					// SR-07: open near the top of the path (units 0–2 done, unit 3 current) so the
-					// decorative companions are in view — Thulo first, then Pyaro — without scrolling.
+					// SR-07: open near the top (units 0–2 mastered, unit 3 current) so the companions show.
 					const items = {};
-					learnUnits(items, 0, 2, { interval: 3, ease: 2.5, lastSeen: day(0) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 4,
-						streakFreezes: 1,
-						lastActivityDay: day(0),
-						itemsToday: 0,
-						itemsTotal: 40,
-						items,
-					};
+					learnUnits(items, 0, 2, { lastSeen: day(0) });
+					state = wrap(items, { streak: 4, itemsTotal: 40 });
 				} else if (which === 'sounds') {
-					// SR-08: Basics complete -> the aspiration sound node (after Basics) is unlocked in the path.
+					// SR-08: Basics mastered -> the aspiration sound node (after Basics) is unlocked.
 					const items = {};
-					for (const it of COURSE[0].items) items[it.id] = rec({ interval: 3, ease: 2.5, lastSeen: day(0) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 4,
-						streakFreezes: 1,
-						lastActivityDay: day(1),
-						itemsToday: 0,
-						itemsTotal: 40,
-						items,
-					};
+					for (const it of COURSE[0].items) items[it.id] = mastered({ lastSeen: day(0) });
+					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 40 });
 				} else if (which === 'wordbank') {
-					// Whole course reviewed and settled (no new words, no current unit), then a few
-					// multi-word phrases pushed past due. buildExercises turns a recall-strength
-					// (interval >= 3) multi-word review into a word-bank drill, so today's lesson is
-					// all "assemble the phrase from tiles."
+					// Whole course mastered, then a few multi-word phrases pushed past due -> word-bank drills.
 					const items = {};
-					for (const u of COURSE) for (const it of u.items) items[it.id] = rec({ interval: 9, ease: 2.5, lastSeen: day(0) });
+					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 30, lastSeen: day(0) });
 					const phrases = COURSE.filter((u) => u.kind === 'phrases')
 						.flatMap((u) => u.items)
 						.filter((it) => it.np && !it.np.includes('_') && it.np.trim().split(/\s+/).length >= 3);
 					for (const it of phrases.slice(0, 6))
-						items[it.id] = rec({ interval: 5, ease: 2.5, seen: 12, correct: 11, lastSeen: day(20) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 8,
-						streakFreezes: 1,
-						lastActivityDay: day(1),
-						itemsToday: 0,
-						itemsTotal: 476,
-						items,
-					};
+						items[it.id] = mastered({ interval: 8, seen: 12, correct: 11, lastSeen: day(20) });
+					state = wrap(items, { streak: 8, lastActivityDay: day(1), itemsTotal: 476 });
 				} else if (which === 'listenmatch') {
-					// Whole course settled, then several single-word recall-strength (interval >= 3)
-					// reviews pushed past due. buildExercises bundles single-word recall reviews into a
-					// "Match the sound to the word" round. Exactly 5 due single-word reviews fill one
-					// round, so today's lesson is just the listening match — it opens on it directly.
+					// Whole course mastered, then several single-word recall reviews due -> a listening match round.
 					const items = {};
-					for (const u of COURSE) for (const it of u.items) items[it.id] = rec({ interval: 9, ease: 2.5, lastSeen: day(0) });
+					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 30, lastSeen: day(0) });
 					const singles = COURSE.flatMap((u) => u.items).filter((it) => it.np && it.np.trim().split(/\s+/).length === 1);
 					for (const it of singles.slice(0, 5))
-						items[it.id] = rec({ interval: 5, ease: 2.5, seen: 12, correct: 11, lastSeen: day(20) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 8,
-						streakFreezes: 1,
-						lastActivityDay: day(1),
-						itemsToday: 0,
-						itemsTotal: 476,
-						items,
-					};
+						items[it.id] = mastered({ interval: 8, seen: 12, correct: 11, lastSeen: day(20) });
+					state = wrap(items, { streak: 8, lastActivityDay: day(1), itemsTotal: 476 });
 				} else if (which === 'verbs') {
-					// Units before "Verbs: Present tense" are done, so it's the current unit — today's
-					// lesson introduces its new conjugation phrases (ma sikchu, ma herchu, ...).
+					// Everything before "Verbs: Present tense" mastered -> it's the current unit.
 					const items = {};
-					for (const u of COURSE) {
-						if (u.id === 'verbs-present') break;
-						for (const it of u.items) items[it.id] = rec({ interval: 6, ease: 2.5, lastSeen: day(0) });
-					}
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 7,
-						streakFreezes: 1,
-						lastActivityDay: day(0),
-						itemsToday: 0,
-						itemsTotal: 260,
-						items,
-					};
+					masterBefore(items, 'verbs-present');
+					state = wrap(items, { streak: 7, itemsTotal: 260 });
 				} else if (which === 'dialoguefun') {
-					// Whole course settled, so every conversation node (gold) is unlocked — tap any to
-					// review the rewritten dialogues + the new "Sano's big day" with Thulo (after Verbs: Past).
+					// Whole course mastered, so every conversation node (gold) is unlocked.
 					const items = {};
-					for (const u of COURSE) for (const it of u.items) items[it.id] = rec({ interval: 8, ease: 2.5, lastSeen: day(0) });
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 9,
-						streakFreezes: 1,
-						lastActivityDay: day(1),
-						itemsToday: 0,
-						itemsTotal: 476,
-						items,
-					};
+					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 20, lastSeen: day(0) });
+					state = wrap(items, { streak: 9, lastActivityDay: day(1), itemsTotal: 476 });
 				} else if (which === 'directions') {
-					// Everything before Navigation is done, and Navigation's original items are intro'd, so
-					// today's lesson teaches just the new directions (baayaa, daayaa, sidhaa, najik, taadhaa, tira).
+					// Everything before Navigation mastered -> Navigation is the current unit.
 					const items = {};
-					const navOriginals = [
-						'kaha-where',
-						'yaha-here',
-						'tyaha-there',
-						'kata-janey-where-to-go',
-						'roknus-please-stop',
-						'bato-dekhaunus-please-show-me-the-way',
-						'toilet-kaha-cha-where-is-the-toilet',
-					];
-					for (const u of COURSE) {
-						if (u.id === 'navigation') {
-							for (const it of u.items)
-								if (navOriginals.includes(it.id))
-									items[it.id] = rec({ interval: 6, ease: 2.5, lastSeen: day(0) });
-							break;
-						}
-						for (const it of u.items) items[it.id] = rec({ interval: 6, ease: 2.5, lastSeen: day(0) });
-					}
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 7,
-						streakFreezes: 1,
-						lastActivityDay: day(0),
-						itemsToday: 0,
-						itemsTotal: 390,
-						items,
-					};
+					masterBefore(items, 'navigation');
+					state = wrap(items, { streak: 7, itemsTotal: 390 });
 				} else if (which.startsWith('unit:')) {
-					// Settle every unit BEFORE the target so the target becomes the current unit —
-					// "Start today's lesson" then introduces its new phrases. Used for the scattered
-					// intermediate units (modals, comparatives, postpositions, jobs, duration).
-					const target = which.slice(5);
+					// Master every unit BEFORE the target so the target becomes the current unit.
 					const items = {};
-					for (const u of COURSE) {
-						if (u.id === target) break;
-						for (const it of u.items) items[it.id] = rec({ interval: 6, ease: 2.5, lastSeen: day(0) });
-					}
-					state = {
-						version: 2,
-						name: 'Aastha',
-						onboarded: true,
-						streak: 7,
-						streakFreezes: 1,
-						lastActivityDay: day(0),
-						itemsToday: 0,
-						itemsTotal: 300,
-						items,
-					};
+					masterBefore(items, which.slice(5));
+					state = wrap(items, { streak: 7, itemsTotal: 300 });
 				}
 				localStorage.setItem('sano.state.v1', JSON.stringify(state));
 				location.href = '/';

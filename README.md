@@ -44,27 +44,27 @@ tools/            Dev/ops scripts — see "Tool scripts"
 
 One screen at a time (`showScreen`): `onboarding` (first-run only), `home` (the unit path + daily-lesson button), `lesson`, `complete`, `dictionary`.
 
-Lessons are a queue of exercises built by `buildExercises`: each new item gets an intro card then is tested; exercise types are multiple choice, word-bank sentence assembly, free typing (with typo leniency via edit distance), and tile matching. A daily lesson takes up to 4 new items from the current unit plus up to 6 due reviews (`DAILY_NEW_ITEMS`, `DAILY_REVIEW_ITEMS`).
+Lessons are a queue of exercises built by `buildExercises`: each new item gets an intro card, two recognition drills, an in-session tap-based word-bank recall, and a speaking step; exercise types are multiple choice, word-bank sentence assembly, free typing (with typo leniency via edit distance), and tile matching. The **adaptive daily lesson** (`dailyPlan`) is review-dominant: it throttles new words down as review debt grows (`DAILY_NEW_ITEMS`, `DEBT_PER_NEW_DROP`) and fills a ~18–20-exercise session with the most-overdue reviews (`SESSION_REVIEW_TARGET`), carrying the rest.
 
-**Spaced repetition** is an **SM-2-lite** graded scheduler (SR-05). Rather than a shared Leitner table, every item record carries its own review `interval` (in days) and an `ease` factor (default 2.5, clamped to 1.3–2.7), so well-known items stretch out while weak ones come back sooner. Reviews are **auto-graded** from how the answer was given (`exerciseGrade`): a miss is a _lapse_ (interval back to one day, ease nudged down), a recognition hit is _good_ (interval × ease), and recalling the word under a harder drill — typing, word bank, or listening — is _easy_ (a bigger stretch plus an ease bump). `scheduleReview` applies the grade; `isDue` compares `daysSince(lastSeen)` to the item's interval, and once that interval reaches `RECALL_INTERVAL` (3 days) the item is "recall strength" and graduates from recognition to recall/listening drills (`isRecallStrength`). Legacy records that still carry a Leitner `level` 0–4 migrate to interval/ease on load (`legacyLevelToInterval`, via the `[1, 1, 3, 7, 14]`-day ladder), and the pure scheduler math is unit-tested in `tests/unit/` (lifted out of `js/sano.js` by `tests/lift.mjs`). The streak/daily counters live in `registerActivity`, keyed by the client's local date (`dayString`). The learning-science rationale behind these choices lives in `docs/pedagogy.md`.
+**Spaced repetition** is an **SM-2-lite scheduler with learning steps** (SR-05). Every item record carries its own review `interval` (days), an `ease` factor (default 2.0, clamped 1.3–2.5), a `recalls` count, and a `graduated` flag. A **new word climbs a gentle ladder** (1 → 2 → 4 days) and only _graduates_ to the long multiplying schedule once it has been **recalled** — typed, word-banked, or heard — `GRADUATE_RECALLS` (2) times across spaced sessions, not merely recognized. Reviews are **auto-graded** (`exerciseGrade`): a miss is a _lapse_ (interval → 1 day, ease down, but never un-graduated), a recognition hit is _good_, and a recall hit is _easy_ (counts toward graduation, ease up). Difficulty escalates with maturity: recognition while new, a gentle word-bank recall once at recall strength (`RECALL_INTERVAL` = 2) but still learning, and free typing only once graduated. A **mastery gate** (`unitIsComplete`) then holds the learner on a unit until every word has graduated — spacing and retrieval enforced as _progression_. Large units are split into ~8–12-word chunks so the gate stays approachable. The pure scheduler math is unit-tested in `tests/unit/` (lifted out of `js/sano.js` by `tests/lift.mjs`). The streak/daily counters live in `registerActivity`, keyed by the client's local date (`dayString`). The learning-science rationale behind these choices lives in `docs/pedagogy.md`.
 
 **State** is one JSON object, persisted in localStorage under `sano.state.v1`:
 
 ```js
 {
-  version: 2,
+  version: 3,          // v3 = SR-05 relaunch; a v2 blob is fresh-started on load
   name,                // display name (set in onboarding or the panel), or null
   onboarded,           // true once the first-run flow completes
   streak,              // consecutive study days
   lastActivityDay,     // 'YYYY-MM-DD'
   itemsToday, itemsTotal,
   items: {             // item id -> progress record
-    'namaste-hello-goodbye': { seen, correct, ease, interval, lastSeen, intro },
+    'namaste-hello-goodbye': { seen, correct, ease, interval, lastSeen, intro, recalls, graduated },
   },
 }
 ```
 
-`loadState` runs synchronously at boot and funnels everything through `normalizeState`, which fills missing fields and applies migrations (an original multi-key format → v1 → v2 lives in `migrateLegacyState` / `migrateV1State`). `saveState` writes localStorage and notifies the sync layer; it is called after every answered exercise, so saves are frequent and the sync layer must debounce.
+`loadState` runs synchronously at boot and funnels everything through `normalizeState`, which fills missing fields and applies migrations (an original multi-key format → v1 → v2 → v3 lives in `migrateLegacyState` / `migrateV1State` / `migrateV2State`; **v3 is the SR-05 fresh start** — it keeps name/streak but resets learning progress to unit 1). `saveState` writes localStorage and notifies the sync layer; it is called after every answered exercise, so saves are frequent and the sync layer must debounce.
 
 ### First-run onboarding (js/onboarding.js)
 

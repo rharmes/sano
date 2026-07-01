@@ -6,7 +6,9 @@ import { boot, seed, stepLesson, savedState, openScreen } from './_helpers.mjs';
 
 async function runToComplete(page) {
 	const seen = new Set();
-	for (let i = 0; i < 40; i++) {
+	// Lessons are now a uniform ~18 cards (padded), and a missed card re-queues once, so allow
+	// generous headroom before giving up.
+	for (let i = 0; i < 80; i++) {
 		const t = await stepLesson(page);
 		if (t === 'complete') break;
 		seen.add(t);
@@ -26,23 +28,27 @@ test('a recognition (choice) lesson plays to the complete screen and records pro
 });
 
 test('a word-bank (recall) exercise renders and can be completed', async ({ page }) => {
+	// A graduated multi-word phrase is due; the lesson pads to a uniform length, so word bank
+	// appears among the cards (not necessarily first). Step through and assert it rendered.
 	await boot(page, seed.lessonOneReview('maaf-garnuhos-excuse-me-i-m-sorry', 6));
 	await openScreen(page, page.locator('#daily-lesson'), '#screen-lesson');
-	await expect(page.locator('#exercise-wordbank')).toBeVisible();
-	await runToComplete(page);
+	const seen = await runToComplete(page);
+	expect([...seen]).toContain('wordbank');
 });
 
 test('a type-what-you-know (recall) exercise renders and can be completed', async ({ page }) => {
+	// Graduated single words come back as free typing; the padded lesson includes some.
 	await boot(page, seed.lessonOneReview('namaste-hello-goodbye', 6));
 	await openScreen(page, page.locator('#daily-lesson'), '#screen-lesson');
-	await expect(page.locator('#exercise-type')).toBeVisible();
-	await runToComplete(page);
+	const seen = await runToComplete(page);
+	expect([...seen]).toContain('type');
 });
 
 test('a matching round renders and completes by pairing tiles', async ({ page }) => {
+	// Four still-learning vocab words bundle into a matching round; the lesson pads to a uniform
+	// length around it, so match appears among the cards (not necessarily first).
 	await boot(page, seed.lessonMatchOnly());
 	await openScreen(page, page.locator('#daily-lesson'), '#screen-lesson');
-	await expect(page.locator('#exercise-match')).toBeVisible();
 	const seen = await runToComplete(page);
 	expect([...seen]).toContain('match');
 });

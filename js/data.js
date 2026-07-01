@@ -81,6 +81,14 @@ const COURSE = [
 				en: 'Good night',
 				usage: 'Used when saying goodbye at night or before going to sleep. "Subha" means good or auspicious, and "ratri" means night. It\'s a warm way to wish someone well before parting in the evening.',
 			},
+		],
+	},
+	{
+		id: 'basics-replies',
+		title: 'Everyday Replies',
+		kind: 'phrases',
+		goal: 'Say yes or no and react to news',
+		items: [
 			{
 				id: 'huncha-okay-it-will-be-done',
 				dev: 'हुन्छ',
@@ -145,9 +153,9 @@ const COURSE = [
 	},
 	{
 		id: 'numbers',
-		title: 'Numbers & Counting',
+		title: 'Numbers 1–10',
 		kind: 'vocab',
-		goal: 'Count and say numbers',
+		goal: 'Count from one to ten',
 		items: [
 			{
 				id: 'ek-one',
@@ -209,6 +217,14 @@ const COURSE = [
 				emoji: '🔟',
 				en: 'Ten',
 			},
+		],
+	},
+	{
+		id: 'numbers-big',
+		title: 'Bigger Numbers',
+		kind: 'vocab',
+		goal: 'Say tens, hundreds, and thousands',
+		items: [
 			{
 				id: 'bis-twenty',
 				dev: 'बीस',
@@ -329,9 +345,9 @@ const COURSE = [
 	},
 	{
 		id: 'family-people',
-		title: 'Family & People',
+		title: 'Family',
 		kind: 'vocab',
-		goal: 'Talk about family and people',
+		goal: 'Name your close family',
 		items: [
 			{
 				id: 'aamaa-mother',
@@ -381,6 +397,14 @@ const COURSE = [
 				emoji: '👧',
 				en: 'Daughter',
 			},
+		],
+	},
+	{
+		id: 'people-others',
+		title: 'People Around You',
+		kind: 'vocab',
+		goal: 'Name relatives, friends, and neighbors',
+		items: [
 			{
 				id: 'hajurbuwa-grandfather',
 				dev: 'हजुरबुवा',
@@ -491,6 +515,14 @@ const COURSE = [
 				en: 'Do you speak Nepali?',
 				usage: 'A polite way to ask if someone speaks Nepali. "Tapai" is the respectful "you," "bolnu hunchha" means "do you speak." You can replace "Nepali" with "English" (Angreji) or other languages.',
 			},
+		],
+	},
+	{
+		id: 'introductions-origins',
+		title: 'Getting to Know You',
+		kind: 'phrases',
+		goal: 'Talk about language, home, and goodbyes',
+		items: [
 			{
 				id: 'ma-nepali-bolchhu-i-speak-nepali',
 				dev: 'म नेपाली बोल्छु',
@@ -595,6 +627,14 @@ const COURSE = [
 				en: 'How?',
 				usage: "A question word asking about the manner or method of doing something. It's useful when you need instructions or want to understand the process of something. People use it frequently when learning new tasks.",
 			},
+		],
+	},
+	{
+		id: 'comprehension-clarify',
+		title: 'Asking Questions',
+		kind: 'phrases',
+		goal: 'Ask what, why, and how to say things',
+		items: [
 			{
 				id: 'kina-why',
 				dev: 'किन?',
@@ -905,9 +945,9 @@ const COURSE = [
 	},
 	{
 		id: 'food-grocery-items',
-		title: 'Food & Grocery Items',
+		title: 'Staple Foods',
 		kind: 'vocab',
-		goal: 'Name foods and groceries',
+		goal: 'Name everyday staples',
 		items: [
 			{
 				id: 'khana-food',
@@ -969,6 +1009,14 @@ const COURSE = [
 				emoji: '🥛',
 				en: 'Yogurt',
 			},
+		],
+	},
+	{
+		id: 'food-grocery-pantry',
+		title: 'Pantry & Extras',
+		kind: 'vocab',
+		goal: 'Name drinks, seasonings, and pantry items',
+		items: [
 			{
 				id: 'chiya-tea',
 				dev: 'चिया',
@@ -1165,6 +1213,14 @@ const COURSE = [
 				en: 'Please turn off the light',
 				usage: '"Nibhaunu" means to extinguish or switch off — the counterpart of "balnu." Last one out of the room hears this.',
 			},
+		],
+	},
+	{
+		id: 'household-chores',
+		title: 'Helping Out',
+		kind: 'phrases',
+		goal: 'Offer help and pitch in with chores',
+		items: [
 			{
 				id: 'ma-lugaa-dhunchu-i-will-wash-the-clothes',
 				dev: 'म लुगा धुन्छु',
@@ -1797,9 +1853,9 @@ const COURSE = [
 	},
 	{
 		id: 'time',
-		title: 'Time',
+		title: 'Time of Day',
 		kind: 'phrases',
-		goal: 'Talk about time and when things happen',
+		goal: 'Talk about times of day',
 		items: [
 			{
 				id: 'kahile-when',
@@ -1849,6 +1905,14 @@ const COURSE = [
 				en: 'Night',
 				usage: 'Nighttime. You have seen it inside "Subha ratri" (good night). "Raati abela" means late at night.',
 			},
+		],
+	},
+	{
+		id: 'time-week',
+		title: 'Days & the Clock',
+		kind: 'phrases',
+		goal: 'Name the days and tell the time',
+		items: [
 			{
 				id: 'aaitabaar-sunday',
 				dev: 'आइतबार',
@@ -3127,6 +3191,14 @@ const COURSE = [
 				emoji: '🤒',
 				en: 'Sick',
 			},
+		],
+	},
+	{
+		id: 'emotions-more',
+		title: 'More Feelings',
+		kind: 'vocab',
+		goal: 'Describe subtler moods and emotions',
+		items: [
 			{
 				id: 'aascharyya-surprise-wonder',
 				dev: 'आश्चर्य',
@@ -3191,9 +3263,9 @@ const COURSE = [
 	},
 	{
 		id: 'animals',
-		title: 'Animals',
+		title: 'Farm & Home Animals',
 		kind: 'vocab',
-		goal: 'Name animals',
+		goal: 'Name common domestic animals',
 		items: [
 			{
 				id: 'kukur-dog',
@@ -3267,6 +3339,14 @@ const COURSE = [
 				emoji: '🐦',
 				en: 'Bird',
 			},
+		],
+	},
+	{
+		id: 'animals-wild',
+		title: 'Wild Animals & Bugs',
+		kind: 'vocab',
+		goal: 'Name wild animals and insects',
+		items: [
 			{
 				id: 'kaag-crow',
 				dev: 'काग',
@@ -3337,9 +3417,9 @@ const COURSE = [
 	},
 	{
 		id: 'food-drink',
-		title: 'Food & Drink',
+		title: 'Fruit',
 		kind: 'vocab',
-		goal: 'Name fruits, drinks, and dishes',
+		goal: 'Name fruits',
 		items: [
 			{
 				id: 'syau-apple',
@@ -3395,6 +3475,14 @@ const COURSE = [
 				emoji: '🍍',
 				en: 'Pineapple',
 			},
+		],
+	},
+	{
+		id: 'food-veg',
+		title: 'Vegetables',
+		kind: 'vocab',
+		goal: 'Name vegetables',
+		items: [
 			{
 				id: 'golbheda-tomato',
 				dev: 'गोलभेंडा',
@@ -3473,6 +3561,14 @@ const COURSE = [
 				emoji: '🌿',
 				en: 'Coriander / Cilantro',
 			},
+		],
+	},
+	{
+		id: 'food-dishes',
+		title: 'Dishes & Drinks',
+		kind: 'vocab',
+		goal: 'Name Nepali dishes and drinks',
+		items: [
 			{
 				id: 'chiura-beaten-rice-flattened-rice',
 				dev: 'चिउरा',
@@ -3549,9 +3645,9 @@ const COURSE = [
 	},
 	{
 		id: 'weather-nature',
-		title: 'Weather & Nature',
+		title: 'Sky & Storms',
 		kind: 'vocab',
-		goal: 'Name things in nature and the sky',
+		goal: 'Name the sky and weather',
 		items: [
 			{
 				id: 'ghaam-sun-sunshine',
@@ -3625,6 +3721,14 @@ const COURSE = [
 				emoji: '⛈️',
 				en: 'Thunder',
 			},
+		],
+	},
+	{
+		id: 'weather-land',
+		title: 'Weather & Land',
+		kind: 'vocab',
+		goal: 'Name climate and landforms',
+		items: [
 			{
 				id: 'indreini-rainbow',
 				dev: 'इन्द्रेणी',
@@ -3679,6 +3783,14 @@ const COURSE = [
 				emoji: '⛰️',
 				en: 'Mountain / Hill',
 			},
+		],
+	},
+	{
+		id: 'weather-water',
+		title: 'Water & Nature',
+		kind: 'vocab',
+		goal: 'Name rivers, forests, and nature',
+		items: [
 			{
 				id: 'nadhi-river',
 				dev: 'नदी',

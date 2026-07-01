@@ -8,7 +8,7 @@
 //
 // Bump VERSION when the cache strategy changes so existing clients drop their old cache.
 
-const VERSION = 'sano-v1';
+const VERSION = 'sano-v2';
 
 self.addEventListener('install', () => {
 	self.skipWaiting();

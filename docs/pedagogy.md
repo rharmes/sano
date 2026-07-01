@@ -135,6 +135,13 @@ same total study time.
   progress tracking. **Interleave** phrases across topics in review sessions rather
   than always drilling one lesson in a block, and vary the prompt direction. The
   daily reminder (next section) is spacing at the *session* level.
+- **Implemented (SR-05).** The scheduler is SM-2-lite with an explicit **learning phase**:
+  a new word is repeated on a gentle ladder (1 → 2 → 4 days) and re-exposed within its first
+  lesson, and only *graduates* to the long multiplying schedule once it has been **recalled**
+  (not just recognized) a couple of times across sessions. A **mastery gate** then keeps the
+  learner from advancing to the next unit until every word in the current one has graduated —
+  spacing and retrieval enforced as *progression*, not just scheduling. The daily loop stays
+  review-dominant and throttles new words when review debt is high, so nothing is left to rot.
 
 ## 7. Build a small daily habit with a well-timed prompt
 

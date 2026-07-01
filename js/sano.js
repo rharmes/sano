@@ -1,22 +1,39 @@
 // App logic for the Nepali study guide. Course content lives in js/data.js (COURSE).
 
 const STATE_KEY = 'sano.state.v1';
-const LESSON_NEW_ITEMS = 5; // Items per unit lesson; each new item yields two exercises
-const DAILY_NEW_ITEMS = 4;
-const DAILY_REVIEW_ITEMS = 6;
+const LESSON_NEW_ITEMS = 5; // most new words introduced in one unit lesson
+// Adaptive daily loop (SR-05): a medium-length session that stays REVIEW-DOMINANT but is always
+// a UNIFORM length — every lesson fills to ~LESSON_CARDS cards, padding with the weakest
+// already-seen words when there isn't enough new/due work, so a lesson is never a 2-card stub.
+// New words are throttled by review debt (one fewer per DEBT_PER_NEW_DROP due reviews) so a
+// growing vocabulary can't outrun its reviews; the overflow backlog is carried, never dropped.
+const LESSON_CARDS = 18; // target cards per lesson (uniform length)
+const NEW_ITEM_CARDS = 4; // a new word yields ~this many cards (2 choice + word bank + speak)
+const BUNDLE_MIN_REVIEWS = 12; // only bundle reviews into a match/listen-match round in a lesson
+//                                this big, so a small review pool never collapses into one screen
+const DAILY_NEW_ITEMS = 4; // most new words in a daily lesson (only when fully caught up)
+const DEBT_PER_NEW_DROP = 5; // drop one new word for every this-many due reviews
 // --- SR-05 spaced-repetition scheduler (SM-2-lite, pure) -----------------------
-// Each item carries its own review interval (days) and ease factor rather than a
-// shared Leitner table, so well-known items stretch out while weak ones come back
-// sooner. Reviews are graded automatically from how the answer was given: a miss is
-// a lapse, a recognition hit is "good", and recalling the word under a harder drill
-// (typing, word bank, or listening) is "easy". The block is pure (no DOM or shared
-// state) so tests/lift.mjs can extract and unit-test it (tests/unit/scheduler.test.mjs).
+// SM-2-lite plus LEARNING STEPS (see below). Each item carries its own review interval
+// (days), ease factor, a recall counter, and
+// a `graduated` flag. A NEW word climbs a short, GENTLE learning ladder (1 → 2 → 4 days,
+// capped) and only "graduates" to the long multiplying schedule once it has been RECALLED
+// (typed / word bank / listening), not merely recognized, GRADUATE_RECALLS times across
+// spaced sessions. This keeps brand-new words coming back often — and the mastery gate
+// (unitIsComplete) won't let a unit finish until every word has graduated — while
+// well-known words still stretch far out so reviews aren't wasted on them. Reviews are
+// graded automatically: a miss is a lapse, a recognition hit is "good", and recalling the
+// word the hard way is "easy". The block is pure (no DOM or shared state) so tests/lift.mjs
+// can extract and unit-test it (tests/unit/scheduler.test.mjs).
 const MAX_LEVEL = 4; // only clamps a legacy Leitner level when migrating old records
-const DEFAULT_EASE = 2.5;
+const DEFAULT_EASE = 2.0; // gentler than SM-2's 2.5, so a freshly graduated word grows ~2× at first
 const MIN_EASE = 1.3;
-const MAX_EASE = 2.7;
-const EASY_BONUS = 1.3; // extra interval stretch when recalled the hard way
-const RECALL_INTERVAL = 3; // at/above this many days, drill by recall not recognition
+const MAX_EASE = 2.5;
+const EASY_BONUS = 1.15; // extra stretch when recalled the hard way (softened from 1.3)
+const RECALL_INTERVAL = 2; // at/above this interval, drill by recall (word bank/type) not recognition
+const LEARNING_STEPS = [2, 4]; // pre-graduation interval ladder (days): 1 → 2 → 4, then capped at 4
+const GRADUATE_RECALLS = 2; // correct recalls needed to leave the learning ladder…
+const GRADUATE_MIN_INTERVAL = 4; // …and the word must have survived to this interval (a spacing gate)
 const GRADE = { LAPSE: 0, GOOD: 1, EASY: 2 };
 // Fresh interval ladder; also seeds `interval` from a pre-SR-05 Leitner level.
 const LEGACY_LEVEL_INTERVALS = [1, 1, 3, 7, 14];
@@ -26,26 +43,47 @@ function reviewInterval(record) {
 	return record.interval > 0 ? record.interval : 1;
 }
 
-// Difficulty escalation: a short interval means the item is still being learned
-// (recognition / matching); a longer one means it's known well enough for recall.
+// Exercise escalation: below RECALL_INTERVAL a word is still being met (recognition /
+// matching); at or above it, it's drilled by recall — word bank (a gentle tap-to-build)
+// while still learning, and free typing only once graduated. Distinct from `graduated`,
+// which drives the mastery gate and unlocks the hardest (free-type) drills.
 function isRecallStrength(record) {
 	return reviewInterval(record) >= RECALL_INTERVAL;
 }
 
-// Advance an item's schedule by a graded review, mutating interval + ease in place.
+// Has the word been learned well enough to leave its unit behind (the SR-05 mastery gate)?
+// It graduates only by being RECALLED GRADUATE_RECALLS times and reaching the spacing gate.
+function isGraduated(record) {
+	return !!record.graduated;
+}
+
+// The next interval up the gentle learning ladder (capped at its top rung).
+function nextLearningStep(interval) {
+	for (const step of LEARNING_STEPS) if (step > interval) return step;
+	return LEARNING_STEPS[LEARNING_STEPS.length - 1];
+}
+
+// Advance an item's schedule by a graded review, mutating interval / ease / recalls /
+// graduated in place. Learning phase: climb the gentle ladder, counting recalls, until the
+// word has been recalled (and spaced) enough to graduate. Graduated phase: classic SM-2
+// multiply, so a mastered word stretches far out.
 function scheduleReview(record, grade) {
 	if (grade === GRADE.LAPSE) {
 		record.ease = Math.max(MIN_EASE, record.ease - 0.2);
 		record.interval = 1; // back to daily until it sticks again
+		return; // a lapse never un-graduates a word — the mastery gate doesn't step backward
+	}
+	if (grade === GRADE.EASY) {
+		record.recalls = (record.recalls || 0) + 1;
+		record.ease = Math.min(MAX_EASE, record.ease + 0.15);
+	}
+	if (!record.graduated) {
+		record.interval = nextLearningStep(reviewInterval(record));
+		if ((record.recalls || 0) >= GRADUATE_RECALLS && record.interval >= GRADUATE_MIN_INTERVAL) record.graduated = true;
 		return;
 	}
 	const iv = reviewInterval(record);
-	if (grade === GRADE.EASY) {
-		record.ease = Math.min(MAX_EASE, record.ease + 0.15);
-		record.interval = iv <= 1 ? 4 : Math.round(iv * record.ease * EASY_BONUS);
-	} else {
-		record.interval = iv <= 1 ? 2 : Math.round(iv * record.ease); // GOOD
-	}
+	record.interval = grade === GRADE.EASY ? Math.round(iv * record.ease * EASY_BONUS) : Math.round(iv * record.ease);
 }
 
 // Grade an answered exercise: a miss always lapses; a correct answer scores higher
@@ -158,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function defaultState() {
 	return {
-		version: 2,
+		version: 3,
 		name: null,
 		onboarded: false,
 		streak: 0,
@@ -166,7 +204,7 @@ function defaultState() {
 		lastActivityDay: null,
 		itemsToday: 0,
 		itemsTotal: 0,
-		items: {}, // item id -> { seen, correct, ease, interval, lastSeen, intro }
+		items: {}, // item id -> { seen, correct, ease, interval, lastSeen, intro, recalls, graduated }
 		dialoguesDone: {}, // SR-01: which path conversations have been completed
 		soundsDone: {}, // SR-08: which pronunciation drills have been completed
 	};
@@ -190,9 +228,10 @@ function loadState() {
 // Fills in any missing fields (also used on state blobs arriving from the server).
 function normalizeState(parsed) {
 	if (parsed.version === 1) parsed = migrateV1State(parsed);
+	if (parsed.version === 2) parsed = migrateV2State(parsed);
 	const loaded = Object.assign(defaultState(), parsed);
 	for (const id in loaded.items) {
-		const record = Object.assign({ seen: 0, correct: 0, lastSeen: null, intro: false }, loaded.items[id]);
+		const record = Object.assign({ seen: 0, correct: 0, lastSeen: null, intro: false, recalls: 0, graduated: false }, loaded.items[id]);
 		// SR-05: records and dev seeds predating the graded scheduler carry a Leitner
 		// `level`; derive a per-item interval/ease from it once, then drop it.
 		if (typeof record.interval !== 'number') record.interval = legacyLevelToInterval(record.level, record.intro);
@@ -233,6 +272,25 @@ function migrateV1State(old) {
 	localStorage.setItem(STATE_KEY, JSON.stringify(old));
 	console.log('Migrated state to version 2');
 	return old;
+}
+
+// v3 is the SR-05 relaunch: the learning engine (learning steps + mastery gate) and the
+// course structure (units re-cut into smaller pieces) changed enough that old per-item
+// schedules and unit-progress don't map, so everyone relearns from unit 1 on the new engine.
+// A clean "fresh start" — keep IDENTITY and the daily HABIT (name, onboarded, streak, freezes,
+// last activity) and the lifetime counter, but reset all learning progress (per-item records,
+// finished dialogues + sounds, today's count).
+function migrateV2State(old) {
+	const fresh = defaultState();
+	fresh.name = old.name || null;
+	fresh.onboarded = !!old.onboarded;
+	fresh.streak = old.streak || 0;
+	fresh.streakFreezes = typeof old.streakFreezes === 'number' ? old.streakFreezes : 1;
+	fresh.lastActivityDay = old.lastActivityDay || null;
+	fresh.itemsTotal = old.itemsTotal || 0; // keep the lifetime "items completed" tally
+	localStorage.setItem(STATE_KEY, JSON.stringify(fresh));
+	console.log('Migrated state to version 3 (SR-05 fresh start)');
+	return fresh;
 }
 
 function saveState() {
@@ -309,7 +367,8 @@ function registerActivity() {
 }
 
 function itemRecord(id) {
-	if (!Object.hasOwn(state.items, id)) state.items[id] = { seen: 0, correct: 0, ease: DEFAULT_EASE, interval: 0, lastSeen: null, intro: false };
+	if (!Object.hasOwn(state.items, id))
+		state.items[id] = { seen: 0, correct: 0, ease: DEFAULT_EASE, interval: 0, lastSeen: null, intro: false, recalls: 0, graduated: false };
 	return state.items[id];
 }
 
@@ -383,8 +442,22 @@ function goHome() {
 
 // Home screen: a Duolingo-style path of units.
 
+// A unit is COMPLETE — and only then does it unlock the next unit — when every word has
+// GRADUATED (been recalled enough to be mastered, SR-05), not merely introduced. That
+// mastery gate is what keeps the learner reviewing before the path moves on.
+// `unitIsIntroduced` is the weaker "every word has been met at least once", used to tell an
+// in-progress unit still drilling toward mastery from one that still has new words to meet.
 function unitIsComplete(unit) {
+	return unit.items.every((item) => state.items[item.id] && state.items[item.id].graduated);
+}
+
+function unitIsIntroduced(unit) {
 	return unitNewItems(unit).length === 0;
+}
+
+// How many of a unit's words have graduated — drives the current unit's mastery ring.
+function unitMasteredCount(unit) {
+	return unit.items.filter((item) => state.items[item.id] && state.items[item.id].graduated).length;
 }
 
 // Units unlock in course order, as each previous unit is finished.
@@ -408,10 +481,10 @@ const PATH_SECTIONS = {
 };
 
 // SR-10 placement / skip-ahead. An experienced learner can start partway in;
-// `placeBefore` marks every item in the units ahead of `unitId` as already
-// introduced at recall strength, so those units read complete (unlocking the
-// chosen start) while spaced reviews still resurface that "known" material over
-// the next few days to confirm the self-placement.
+// `placeBefore` marks every item in the units ahead of `unitId` as already GRADUATED
+// (mastered), so those units satisfy the mastery gate and read complete (unlocking the
+// chosen start), while spaced reviews still resurface that "known" material over the next
+// few days to confirm the self-placement (a lapse simply pulls the word back into rotation).
 function placeBefore(unitId) {
 	const idx = COURSE.findIndex((u) => u.id === unitId);
 	if (idx <= 0) return; // unknown id, or the first unit — nothing precedes it
@@ -422,7 +495,9 @@ function placeBefore(unitId) {
 			r.intro = true;
 			r.seen = Math.max(r.seen, 1);
 			r.correct = Math.max(r.correct, 1);
-			r.interval = Math.max(r.interval, RECALL_INTERVAL);
+			r.recalls = Math.max(r.recalls || 0, GRADUATE_RECALLS);
+			r.interval = Math.max(r.interval, GRADUATE_MIN_INTERVAL);
+			r.graduated = true;
 			r.ease = DEFAULT_EASE;
 			r.lastSeen = today;
 		}
@@ -453,13 +528,11 @@ function renderHome() {
 	renderPath();
 
 	const dailyButton = document.getElementById('daily-lesson');
-	const unit = currentUnit();
-	const newCount = unit ? Math.min(unitNewItems(unit).length, DAILY_NEW_ITEMS) : 0;
-	const reviewCount = Math.min(dueItems().length, DAILY_REVIEW_ITEMS);
-	if (newCount + reviewCount > 0) {
+	const plan = dailyPlan();
+	if (plan.hasWork) {
 		const parts = [];
-		if (newCount > 0) parts.push(newCount + ' new');
-		if (reviewCount > 0) parts.push(reviewCount + ' review');
+		if (plan.newItems.length > 0) parts.push(plan.newItems.length + ' new');
+		if (plan.reviewItems.length > 0) parts.push(plan.reviewItems.length + ' review');
 		dailyButton.textContent = "Start today's lesson · " + parts.join(' + ');
 		dailyButton.disabled = false;
 	} else {
@@ -700,7 +773,9 @@ function renderPath() {
 
 		if (isCurrent) {
 			const ringSize = nodeSize + 20;
-			const introduced = unit.items.length - unitNewItems(unit).length;
+			// The ring fills as the unit is MASTERED (graduated words), not merely introduced —
+			// so it reads as "how close to unlocking the next unit" (SR-05 mastery gate).
+			const mastered = unitMasteredCount(unit);
 			const ring = document.createElement('div');
 			ring.className = 'path-ring';
 			ring.style.width = ringSize + 'px';
@@ -708,7 +783,7 @@ function renderPath() {
 			ring.style.left = x - ringSize / 2 + 'px';
 			ring.style.top = y + nodeSize / 2 - ringSize / 2 + 'px';
 			ring.style.background =
-				'conic-gradient(var(--accent) ' + Math.round((introduced / unit.items.length) * 100) + '%, var(--border-color) 0)';
+				'conic-gradient(var(--accent) ' + Math.round((mastered / unit.items.length) * 100) + '%, var(--border-color) 0)';
 			const mask = 'radial-gradient(circle, transparent ' + (nodeSize / 2 + 4) + 'px, black ' + (nodeSize / 2 + 5) + 'px)';
 			ring.style.webkitMask = mask;
 			ring.style.mask = mask;
@@ -881,19 +956,65 @@ function renderPath() {
 
 // Lesson engine. A lesson is a queue of exercises; missed ones are re-queued at the end.
 
-// The daily lesson mixes a few new items from the current unit with the most
-// overdue review items from anywhere in the course.
-function startDailyLesson() {
+// The adaptive daily plan (SR-05): a few new words from the current unit — throttled back
+// as review debt grows — plus the most overdue reviews from anywhere in the course, up to a
+// review-dominant session. Shared by the home button (for its label) and startDailyLesson,
+// so the promise and the lesson always match.
+// Every item introduced anywhere in the course (the pool for padding a lesson to length).
+function introducedPool() {
+	return COURSE.flatMap((u) => u.items).filter((item) => state.items[item.id] && state.items[item.id].intro);
+}
+
+// Weakest-first: un-graduated before graduated, then shortest interval, then lowest accuracy —
+// so padding a lesson pulls the words that most need the practice (and pushes them toward mastery).
+function weakestFirst(items) {
+	return items.slice().sort((a, b) => {
+		const ra = itemRecord(a.id);
+		const rb = itemRecord(b.id);
+		return (ra.graduated ? 1 : 0) - (rb.graduated ? 1 : 0) || reviewInterval(ra) - reviewInterval(rb) || itemAccuracy(a) - itemAccuracy(b);
+	});
+}
+
+// Fill a due-review list up to a UNIFORM lesson length: due items first (most overdue), then pad
+// from `pool` (weakest first) with words that aren't already in the lesson — so a lesson is never
+// a tiny 2-card stub, whatever the mix of new/due work. New words cost ~NEW_ITEM_CARDS cards each.
+function fillReviews(newItems, dueReviews, pool) {
+	const newCards = newItems.length ? 1 + NEW_ITEM_CARDS * newItems.length : 0;
+	const want = Math.max(0, LESSON_CARDS - newCards);
+	let reviews = dueReviews.slice(0, want);
+	if (reviews.length < want) {
+		const have = new Set(newItems.concat(reviews).map((it) => it.id));
+		const pad = weakestFirst(pool.filter((it) => !have.has(it.id)));
+		reviews = reviews.concat(pad.slice(0, want - reviews.length));
+	}
+	return reviews;
+}
+
+function dailyPlan() {
 	const unit = currentUnit();
-	const newItems = unit ? unitNewItems(unit).slice(0, DAILY_NEW_ITEMS) : [];
-	const reviewItems = dueItems().slice(0, DAILY_REVIEW_ITEMS);
-	if (newItems.length + reviewItems.length === 0) return;
-	startLesson(buildExercises(newItems, reviewItems));
+	const due = dueItems();
+	const throttledNew = Math.max(0, DAILY_NEW_ITEMS - Math.floor(due.length / DEBT_PER_NEW_DROP));
+	const newItems = unit ? unitNewItems(unit).slice(0, throttledNew) : [];
+	// "Real work" gates the home button ("all caught up" when there's none); a started lesson then
+	// fills to a uniform length with extra practice so it's never a stub.
+	const hasWork = newItems.length + due.length > 0;
+	const reviewItems = hasWork ? fillReviews(newItems, due, introducedPool()) : [];
+	return { newItems: newItems, reviewItems: reviewItems, hasWork: hasWork, due: due.length };
+}
+
+function startDailyLesson() {
+	const plan = dailyPlan();
+	if (!plan.hasWork) return;
+	startLesson(buildExercises(plan.newItems, plan.reviewItems));
 }
 
 function startUnitLesson(unit, review) {
-	const items = review ? shuffleArray(unit.items.slice()).slice(0, LESSON_NEW_ITEMS) : unitNewItems(unit).slice(0, LESSON_NEW_ITEMS);
-	startLesson(buildExercises(items, []));
+	// Introduce the unit's next new words (unless it's a completed unit tapped for review), then
+	// fill to a uniform length with the unit's already-introduced words (weakest first, so
+	// un-graduated words are pushed toward mastery) — a unit tap is never a tiny lesson.
+	const fresh = review ? [] : unitNewItems(unit).slice(0, LESSON_NEW_ITEMS);
+	const pool = unit.items.filter((item) => state.items[item.id] && state.items[item.id].intro && !fresh.includes(item));
+	startLesson(buildExercises(fresh, fillReviews(fresh, [], pool)));
 }
 
 function startLesson(queue) {
@@ -918,12 +1039,15 @@ function startLesson(queue) {
 // an audio-only prompt with no romanization, so the ear does the work.
 const LISTEN_PROBABILITY = 0.5;
 
-// New items are drilled with multiple choice in both directions. Review items get
-// harder types as their interval stretches (isRecallStrength): multiple choice while
-// the interval is still short, then word bank (multi-word phrases) or typing
-// (single words) once an item is known well enough for recall; half of those recall
-// reviews are delivered instead as "what you hear" listening drills. Vocab that's
-// still being learned is bundled into a single matching exercise when there's enough.
+// A new word is met with multiple choice in both directions and then, still within the
+// same lesson, a gentle tap-based word-bank RECALL (SR-05 learning step) so it's retrieved,
+// not just recognized. Review drills then escalate with the word's maturity: recognition
+// (multiple choice) while its interval is still short; a word-bank recall once it reaches
+// recall strength but is still LEARNING (word bank works for single words too — the answer
+// tile sits among distractors); and free TYPING for single words only once GRADUATED
+// (isGraduated), the hardest retrieval. Half of the recall reviews are delivered as
+// "what you hear" listening drills. Vocab that's still being learned is bundled into a
+// single matching exercise when there's enough.
 // Tap-the-pairs grids (match, listenMatch) grade by item id, so two tiles showing the same
 // romanized or English text are ambiguous — a correct-looking pairing could grade as wrong.
 // Keep only the first item for each np/en so a bundle never holds a display-text collision.
@@ -947,12 +1071,22 @@ function buildExercises(newItems, reviewItems) {
 	for (const item of newItems) {
 		exercises.push({ item: item, type: 'choice', dir: 'np-en' });
 		exercises.push({ item: item, type: 'choice', dir: 'en-np' });
+		// In-session recall (SR-05 learning step): a gentle tap-based word bank so a new word is
+		// RETRIEVED, not just recognized, within its first lesson. `newRecall` lets the ordering
+		// pass below keep it after a recognition drill — a new word's schedule is graded once per
+		// lesson by its first exercise, which should be a recognition GOOD, not this recall EASY,
+		// so recalls accrue on later spaced reviews rather than on introduction day.
+		exercises.push({ item: item, type: 'wordbank', dir: 'en-np', newRecall: true });
 		// A skippable "say it aloud" speaking step for each new word (SR-04, unscored).
 		exercises.push({ item: item, type: 'speak', unscored: true });
 	}
 
+	// Only let a tap-the-pairs / listening round bundle several reviews into ONE card when the
+	// lesson is big enough that a healthy number of individual cards remain — otherwise a small
+	// review pool (e.g. a short unit) would collapse into a single screen (SR-05 uniform length).
+	const canBundle = reviewItems.length >= BUNDLE_MIN_REVIEWS;
 	const matchable = uniquePairItems(reviewItems.filter((item) => item.emoji && !isRecallStrength(itemRecord(item.id))));
-	const matchItems = matchable.length >= 4 ? matchable.slice(0, 5) : [];
+	const matchItems = canBundle && matchable.length >= 4 ? matchable.slice(0, 5) : [];
 
 	// Listening match (audio -> romanization): bundle single-word recall-strength reviews into a
 	// tap-the-sound round, the ear-only sibling of the recognition match above. Single-word only
@@ -960,14 +1094,18 @@ function buildExercises(newItems, reviewItems) {
 	const listenable = uniquePairItems(
 		reviewItems.filter((item) => item.np.trim().split(/\s+/).length === 1 && isRecallStrength(itemRecord(item.id)) && !matchItems.includes(item)),
 	);
-	const listenMatchItems = listenable.length >= 4 ? shuffleArray(listenable.slice()).slice(0, 5) : [];
+	const listenMatchItems = canBundle && listenable.length >= 4 ? shuffleArray(listenable.slice()).slice(0, 5) : [];
 
 	for (const item of reviewItems) {
 		if (matchItems.includes(item) || listenMatchItems.includes(item)) continue;
-		if (isRecallStrength(itemRecord(item.id))) {
-			if (item.np.split(/\s+/).length >= 2) exercises.push({ item: item, type: 'wordbank', dir: Math.random() < 0.5 ? 'en-np' : 'np-en' });
-			// Half of single-word recall reviews become "type what you hear".
-			else exercises.push({ item: item, type: 'type', listen: Math.random() < LISTEN_PROBABILITY });
+		const record = itemRecord(item.id);
+		const multiWord = item.np.split(/\s+/).length >= 2;
+		if (isRecallStrength(record)) {
+			// Free typing is the hardest recall — reserve it for GRADUATED single words. A
+			// still-learning word gets a gentle tap-based word bank instead (works for single
+			// words too), which is where its recalls accrue toward graduation.
+			if (isGraduated(record) && !multiWord) exercises.push({ item: item, type: 'type', listen: Math.random() < LISTEN_PROBABILITY });
+			else exercises.push({ item: item, type: 'wordbank', dir: Math.random() < 0.5 ? 'en-np' : 'np-en' });
 		} else if (Math.random() < LISTEN_PROBABILITY) {
 			// "Select what you hear": audio-only prompt, pick the meaning.
 			exercises.push({ item: item, type: 'choice', dir: 'np-en', listen: true });
@@ -983,6 +1121,15 @@ function buildExercises(newItems, reviewItems) {
 			const j = (i + 1) % exercises.length;
 			[exercises[i], exercises[j]] = [exercises[j], exercises[i]];
 		}
+	}
+
+	// Keep each new word's in-session recall AFTER a recognition drill (see `newRecall` above),
+	// so the once-per-lesson schedule step is graded by a recognition GOOD, not a recall EASY.
+	for (const item of newItems) {
+		const recallIdx = exercises.findIndex((ex) => ex.item === item && ex.newRecall);
+		if (recallIdx === -1) continue;
+		const recogIdx = exercises.findIndex((ex) => ex.item === item && ex.type === 'choice');
+		if (recogIdx !== -1 && recallIdx < recogIdx) [exercises[recallIdx], exercises[recogIdx]] = [exercises[recogIdx], exercises[recallIdx]];
 	}
 
 	if (matchItems.length > 0) exercises.splice(Math.floor(Math.random() * (exercises.length + 1)), 0, { type: 'match', items: matchItems });

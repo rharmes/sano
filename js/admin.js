@@ -2,9 +2,10 @@
 // renders a sortable table, and drives the reset-password / delete-user modals.
 //
 // COURSE (js/data.js) is loaded first; path position is derived client-side,
-// mirroring sano.js's unitIsComplete — a unit is complete when every item is
-// introduced, and (units unlock in order) the first incomplete unit is the current
-// position. ?demo=1 renders sample rows with stubbed actions for local UI review,
+// mirroring sano.js's unitIsComplete — a unit is complete when every item has
+// GRADUATED (the SR-05 mastery gate), and (units unlock in order) the first
+// incomplete unit is the current position. The API returns each user's graduated
+// item ids. ?demo=1 renders sample rows with stubbed actions for local UI review,
 // since the real table needs the server DB (there's no local MySQL).
 (function () {
 	'use strict';
@@ -22,10 +23,10 @@
 
 	// ── derived columns ──────────────────────────────────────────────────────
 
-	function pathPosition(introducedSet) {
+	function pathPosition(masteredSet) {
 		let complete = 0;
 		for (const unit of COURSE) {
-			if (unit.items.every((it) => introducedSet.has(it.id))) complete++;
+			if (unit.items.every((it) => masteredSet.has(it.id))) complete++;
 			else break;
 		}
 		if (complete >= TOTAL_UNITS) return { label: 'Done', sort: TOTAL_UNITS + 1 };
@@ -43,7 +44,7 @@
 	}
 
 	function toRow(u) {
-		const path = pathPosition(new Set(u.introduced || []));
+		const path = pathPosition(new Set(u.graduated || []));
 		const synced = syncedDisplay(u.lastSyncedAt);
 		return {
 			username: u.username,
@@ -310,7 +311,7 @@
 
 	// ── demo data (local UI review without a DB) ─────────────────────────────
 
-	function introUpTo(unitCount) {
+	function masterUpTo(unitCount) {
 		const ids = [];
 		for (let i = 0; i < unitCount && i < COURSE.length; i++) for (const it of COURSE[i].items) ids.push(it.id);
 		return ids;
@@ -319,11 +320,11 @@
 	function demoUsers() {
 		const now = Date.now();
 		return [
-			{ username: 'aastha', lastSyncedAt: now - 2 * 3600e3, streak: 12, introduced: introUpTo(2) },
-			{ username: 'bishal', lastSyncedAt: now - 26 * 3600e3, streak: 47, introduced: introUpTo(16) },
-			{ username: 'chandra', lastSyncedAt: now - 9 * 864e5, streak: 0, introduced: introUpTo(5) },
-			{ username: 'naya', lastSyncedAt: null, streak: 0, introduced: [] },
-			{ username: 'ross', lastSyncedAt: now - 5 * 60e3, streak: 103, introduced: introUpTo(COURSE.length) },
+			{ username: 'aastha', lastSyncedAt: now - 2 * 3600e3, streak: 12, graduated: masterUpTo(2) },
+			{ username: 'bishal', lastSyncedAt: now - 26 * 3600e3, streak: 47, graduated: masterUpTo(16) },
+			{ username: 'chandra', lastSyncedAt: now - 9 * 864e5, streak: 0, graduated: masterUpTo(5) },
+			{ username: 'naya', lastSyncedAt: null, streak: 0, graduated: [] },
+			{ username: 'ross', lastSyncedAt: now - 5 * 60e3, streak: 103, graduated: masterUpTo(COURSE.length) },
 		];
 	}
 

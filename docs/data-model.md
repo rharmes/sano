@@ -86,14 +86,14 @@ CHARACTER_BODIES = { [id]: '<svg>…full body…</svg>' }              // decora
 // SVGs use .f-* fill classes (in css/sano.css) + .part-* animation groups
 ```
 
-## Progress state — localStorage `sano.state.v1` (schema version 2)
+## Progress state — localStorage `sano.state.v1` (schema version 3)
 
 The working copy; the app stays usable offline/logged-out, and `SanoSync` mirrors it to the
 server. Written via the `STATE_KEY` constant.
 
 ```js
 {
-  version: 2,
+  version: 3,                       // v3 = SR-05 relaunch; a v2 blob is fresh-started on load
   name, onboarded,
   streak, streakFreezes,            // streakFreezes: forgiveness days, earned at 5-day marks, cap 2 (SR-09)
   lastActivityDay,                  // 'YYYY-MM-DD'
@@ -107,13 +107,16 @@ server. Written via the `STATE_KEY` constant.
 A per-item `record` (SM-2-lite; mutated by `scheduleReview`):
 
 ```js
-{ seen, correct, ease, interval, lastSeen, intro }
-// ease: starts 2.5, clamped [1.3, 2.7]   interval: days (0 = not introduced)
+{ seen, correct, ease, interval, lastSeen, intro, recalls, graduated }
+// ease: starts 2.0, clamped [1.3, 2.5]   interval: days (0 = not introduced)
 // lastSeen: 'YYYY-MM-DD'                  intro: true once seen
+// recalls: correct recall (type/word-bank/listen) answers, spaced across sessions
+// graduated: true once recalled GRADUATE_RECALLS× (mastery gate); a lapse never un-graduates it
 ```
 
 Legacy Leitner `level` records migrate to `interval`/`ease` on load (`migrateLegacyState`,
-`migrateV1State`).
+`migrateV1State`). **v2 → v3 (`migrateV2State`) is the SR-05 fresh start:** keeps name / streak /
+lifetime tally, resets all learning progress (everyone relearns from unit 1 on the new engine).
 
 ## Sync bookkeeping — localStorage `sano.sync.v1` (js/sync.js)
 
@@ -135,18 +138,26 @@ Legacy Leitner `level` records migrate to `interval`/`ease` on load (`migrateLeg
 | Const | Value | Meaning |
 | --- | --- | --- |
 | `LESSON_NEW_ITEMS` | 5 | New items per unit lesson. |
-| `DAILY_NEW_ITEMS` | 4 | Max new items in a daily lesson. |
-| `DAILY_REVIEW_ITEMS` | 6 | Max overdue reviews in a daily lesson. |
-| `DEFAULT_EASE` | 2.5 | New-item ease. |
-| `MIN_EASE` / `MAX_EASE` | 1.3 / 2.7 | Ease clamp. |
-| `EASY_BONUS` | 1.3 | Extra interval stretch on a recall/listen hit. |
-| `RECALL_INTERVAL` | 3 | Interval ≥ 3 days ⇒ "recall strength" ⇒ escalate to type/wordbank/listenMatch. |
+| `DAILY_NEW_ITEMS` | 4 | Max new items in a daily lesson (only when fully caught up). |
+| `SESSION_REVIEW_TARGET` | 16 | Max overdue reviews served in one daily lesson (rest carried). |
+| `DEBT_PER_NEW_DROP` | 5 | Drop one new word per this-many due reviews (adaptive throttle). |
+| `DEFAULT_EASE` | 2.0 | New-item ease (gentler than SM-2's 2.5). |
+| `MIN_EASE` / `MAX_EASE` | 1.3 / 2.5 | Ease clamp. |
+| `EASY_BONUS` | 1.15 | Extra interval stretch on a recall/listen hit (graduated phase). |
+| `RECALL_INTERVAL` | 2 | Interval ≥ 2 ⇒ "recall strength" ⇒ escalate to word bank (still learning) / type (graduated). |
+| `LEARNING_STEPS` | [2, 4] | Gentle pre-graduation interval ladder: 1 → 2 → 4, then capped. |
+| `GRADUATE_RECALLS` | 2 | Correct recalls needed to graduate (leave the learning ladder). |
+| `GRADUATE_MIN_INTERVAL` | 4 | …and the word must have reached this interval (spacing gate). |
 | `LISTEN_PROBABILITY` | 0.5 | Share of recall reviews made audio-only. |
 | `WARMUP_SIZE` | 5 | New-word warm-up padding. |
 
-Grades (`exerciseGrade` → `scheduleReview`): miss ⇒ **LAPSE** (interval→1, ease −0.2);
-recognition hit (`choice`/`match`) ⇒ **GOOD** (interval × ease); recall/typed/listening hit
-(`type`/`wordbank`/`listenMatch`) ⇒ **EASY** (interval × ease × `EASY_BONUS`, ease +0.15).
+Grades (`exerciseGrade` → `scheduleReview`): miss ⇒ **LAPSE** (interval→1, ease −0.2, stays graduated);
+recognition hit (`choice`/`match`) ⇒ **GOOD**; recall/typed/listening hit (`type`/`wordbank`/`listenMatch`)
+⇒ **EASY** (counts a recall, ease +0.15). **Learning phase** (`!graduated`): climb `LEARNING_STEPS`;
+graduate at `GRADUATE_RECALLS` recalls + interval ≥ `GRADUATE_MIN_INTERVAL`. **Graduated phase:** SM-2
+multiply (`interval × ease [× EASY_BONUS]`). A unit is **complete** (unlocks the next) only when every
+word has graduated — the **mastery gate** (`unitIsComplete`); the daily loop (`dailyPlan`) throttles new
+words by review debt and is review-dominant.
 
 ## DB schema (tools/schema.sql; MySQL)
 
@@ -170,7 +181,7 @@ pedagogy roadmap; **R\*** = earlier UI-revision tags.
 | SR-02 | Self-hosted **audio** — ~588 phrase clips + ~233 word-bank clips, ElevenLabs Sano clone, pre-rendered (no runtime TTS). |
 | SR-03 | **Listening** exercises — audio-only prompts on ~half of recall reviews. |
 | SR-04 | **Speaking** practice — skippable record-and-compare (Web Audio playback). |
-| SR-05 | **SM-2-lite scheduler** — per-item ease + interval, auto-graded (replaced Leitner). |
+| SR-05 | **SM-2-lite scheduler + learning steps** — per-item ease/interval, auto-graded; new words climb a gentle ladder and only **graduate** once recalled ~2×; a **mastery gate** (`unitIsComplete`) requires every word graduated before the next unit unlocks; the daily loop (`dailyPlan`) is review-dominant + adaptive. Units >14 items are split into ~8–12-word chunks. |
 | SR-06 | Communicative **can-do goals** — per-unit objective on the home CTA + complete screen. |
 | SR-07 | **Companions** — 10 animal friends: heads in bubbles, full-body decorations along the path. |
 | SR-08 | **Pronunciation** drills for sounds romanization hides (aspiration, retroflex, nasal/length). |

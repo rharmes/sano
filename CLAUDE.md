@@ -52,11 +52,16 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 
 - **Home** is a Duolingo-style winding **path** (`renderPath`): units unlock in order, with
   **dialogue** (gold) and **pronunciation** (lavender) nodes woven in after their anchor unit and
-  decorative **companions** (SR-07) in the pockets. A unit is complete when every item is intro'd; the
-  daily-lesson button mixes new items from the current unit with the most-overdue reviews.
-- **Spaced repetition** is **SM-2-lite** (per-item ease + interval, auto-graded from the exercise
-  type). Drills **escalate with strength**: `choice`/`match` when new; `type`/`wordbank`/`listenMatch`
-  + audio-only "listen" (SR-03) once recall-strength (interval ≥ 3 days).
+  decorative **companions** (SR-07) in the pockets. A unit is complete — and unlocks the next — only
+  when every item has **graduated** (the SR-05 **mastery gate**), not merely been introduced; the
+  current node's ring fills by mastery. The daily-lesson button (`dailyPlan`) is **review-dominant**
+  and throttles new words by review debt (≈18–20 exercises).
+- **Spaced repetition** is **SM-2-lite + learning steps** (per-item ease/interval/recalls, auto-graded
+  from the exercise type). A new word climbs a gentle ladder (1 → 2 → 4 days) and only **graduates**
+  once **recalled** ~2×; drills **escalate with maturity**: `choice`/`match` when new; a gentle
+  `wordbank` recall once recall-strength (interval ≥ 2) while still learning; free `type` for single
+  words only once graduated; + audio-only "listen" (SR-03). Large units are split into ~8–12-word
+  chunks so the gate stays approachable. State schema is **v3** (a v2 blob is fresh-started on load).
 - **Story dialogues** (SR-01, `DIALOGUES` in `js/dialogues.js`) play in a Duolingo-Stories player —
   **romanized-only**, every word tappable for its English (`js/gloss.js`); only `greet-pyaro` is live.
   The English **source of truth** is `tools/tts/dialogue-scripts.md`, hand-mapped into

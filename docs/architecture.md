@@ -15,7 +15,7 @@ pre-rendered) — the only network calls are same-origin `fetch()`es to `api/`.
 Classic scripts (not modules), all `defer`, so each defines a global the later ones use.
 Order in `index.html`:
 
-1. `js/data.js` — **`COURSE`**: 44 units / ~588 items — the entire course content (the big file).
+1. `js/data.js` — **`COURSE`**: 58 units / 588 items — the entire course content (the big file). Units >14 items were split into ~8–12-word chunks for the SR-05 mastery gate; item ids are unchanged.
 2. `js/romanize.js` — **`SanoRomanize`**: derives romanization + pronunciation from Devanagari (`romanize(dev)` / `pronounce(dev)`; spec `docs/romanization.md`). At load it **rewrites each `COURSE` item's `np` and `pron` from `item.dev`** (`np` and `pron` were removed from `data.js`; items store only `dev`/`en` + `usage`/`emoji`). Also exposes `stripTags(dev)` — drops inline ElevenLabs `[performance tags]` (used by dialogue `dev`) so they never reach text; `romanize`/`pronounce` strip first. Pure + classic-script, so the tests lift it.
 3. `js/sync.js` — **`SanoSync`**: debounced server push, revision-checked conflict detection, last-write-wins. `adoptSession()`. Bookkeeping in localStorage `sano.sync.v1`.
 4. `js/push.js` — **`SanoPush`**: PWA daily-reminder toggle + `pushManager.subscribe`. VAPID public key baked in.
@@ -37,11 +37,11 @@ change both) → `css/admin.css` (admin dashboard only).
 
 ## js/sano.js — function index (grouped)
 
-- **Pure scheduler** (top of file; lifted + unit-tested in `tests/unit/`): `reviewInterval`, `isRecallStrength`, `scheduleReview`, `exerciseGrade`, `legacyLevelToInterval`.
-- **State:** `defaultState`, `loadState`, `normalizeState`, `saveState`, `migrateV1State`, `migrateLegacyState`, `applyServerState`, `itemRecord`.
+- **Pure scheduler** (top of file; lifted + unit-tested in `tests/unit/`): `reviewInterval`, `isRecallStrength`, `isGraduated`, `nextLearningStep`, `scheduleReview`, `exerciseGrade`, `legacyLevelToInterval`.
+- **State:** `defaultState`, `loadState`, `normalizeState`, `saveState`, `migrateV1State`, `migrateV2State`, `migrateLegacyState`, `applyServerState`, `itemRecord`.
 - **Dates / streak:** `dayString`, `daysBetween`, `daysSince`, `isDue`, `overdueDays`, `dueItems`, `registerActivity`.
-- **Home / path:** `renderHome`, `renderPath`, `currentUnit`, `unitNewItems`, `unitDueCount`, `unitIsComplete`, `unitIsUnlocked`, `placeBefore`, `placementOptions`, `dialogueUnlocked`, `soundUnlocked`.
-- **Lesson build / flow:** `startDailyLesson`, `startUnitLesson`, `startLesson`, `buildExercises`, `warmupItems`, `continueLesson`, `finishLesson`, `showStreakResult`.
+- **Home / path:** `renderHome`, `renderPath`, `currentUnit`, `unitNewItems`, `unitDueCount`, `unitIsComplete`, `unitIsIntroduced`, `unitMasteredCount`, `unitIsUnlocked`, `placeBefore`, `placementOptions`, `dialogueUnlocked`, `soundUnlocked`.
+- **Lesson build / flow:** `dailyPlan`, `startDailyLesson`, `startUnitLesson`, `startLesson`, `buildExercises`, `warmupItems`, `continueLesson`, `finishLesson`, `showStreakResult`.
 - **Exercise renderers:** `renderExercise` (dispatch) → `renderChoice`, `renderMatch`, `renderListenMatch`, `renderWordbank`, `renderType`, `renderSpeak`; helpers `setPrompt`, `setListenPrompt`, `getDistractors`, `wordbankDistractors`, `uniquePairItems`, `fitMatchTiles`, `hashId`/`waveformSvg`/`listenTile`, `playTileWord`, `cleanTileText`, `stripParens`.
 - **Grading:** `answerExercise`, `checkExercise`, `applyAnswer`, `showFeedback`, `selectMatchTile`, `finishMatch`, `normalize`, `lenientEquals`, `editDistance`.
 - **Dedup invariant:** the tap-the-pairs grids and `choice` dedupe each bundle by display text (`uniquePairItems`, plus `getDistractors`' used-text set) so two items with identical romanized/English text never appear as two tiles — which would let a correct pairing grade as wrong.
@@ -52,8 +52,8 @@ change both) → `css/admin.css` (admin dashboard only).
 
 ## Control flow (what a session usually needs)
 
-- **Home / path:** `renderHome` → `renderPath` draws the winding path — units in order, with dialogue (gold) and sound (lavender) nodes woven in after their `after` unit, and decorative companions in the pockets (SR-07). `currentUnit` = first unlocked, incomplete unit; **a unit is complete when every item is `intro`-ed**. The daily-lesson button mixes new items from the current unit with the most-overdue reviews.
-- **Lesson:** `startDailyLesson` / `startUnitLesson` → `buildExercises` makes the queue (each new item: 2× `choice` + a `speak`; review items **escalate with strength** — recall-strength = interval ≥ 3 days gets `type`/`wordbank`/`listenMatch`, ~50% of recall reviews audio-only). `renderExercise` dispatches by type → answering routes through `applyAnswer` → `scheduleReview` (auto-graded via `exerciseGrade`) → `registerActivity`. `finishLesson` shows the complete screen.
+- **Home / path:** `renderHome` → `renderPath` draws the winding path — units in order, with dialogue (gold) and sound (lavender) nodes woven in after their `after` unit, and decorative companions in the pockets (SR-07). `currentUnit` = first unlocked, incomplete unit; **a unit is complete (unlocks the next) only when every item has `graduated` — the SR-05 mastery gate** (`unitIsIntroduced` = the weaker "all met"; the current node's ring fills by `unitMasteredCount`). The daily-lesson button (`dailyPlan`) is review-dominant and throttles new words by review debt.
+- **Lesson:** `startDailyLesson` (via `dailyPlan`) / `startUnitLesson` → `buildExercises` makes the queue. Each new item: 2× `choice` + an in-session tap-based `wordbank` recall (ordered after a recognition drill) + a `speak`. Review items **escalate with maturity** — recall-strength (interval ≥ `RECALL_INTERVAL` = 2) gets a `wordbank` while still learning and free `type` once `graduated`; ~50% of recall reviews audio-only; `listenMatch`/`match` bundles for eligible vocab. `renderExercise` dispatches by type → answering routes through `applyAnswer` → `scheduleReview` (auto-graded via `exerciseGrade`; EASY grades accrue `recalls` toward graduation) → `registerActivity`. `finishLesson` shows the complete screen.
 - **Dialogue (SR-01):** `startDialogue` → `renderDialogueConvo` reveals lines one at a time (`dialogueBubble` builds a head + bubble for a speaker, or a full-width narrator line; **romanized-only** via `SanoGloss.renderLine`, with autoplayed `SanoAudio`) → `startDialogueQuiz` (comprehension) → `finishDialogue` marks `dialoguesDone`.
 - **Sync:** `saveState` marks the state dirty → `SanoSync` debounces a `PUT api/state.php` (revision-checked, last-write-wins). `applyServerState` adopts a server copy on login. The app is fully usable offline / logged-out (localStorage is the working copy).
 
@@ -68,7 +68,7 @@ change both) → `css/admin.css` (admin dashboard only).
 | `state.php` | `GET` fetch / `PUT` push the app-state blob; revision conflict → 409. Returns `isAdmin`. |
 | `reminder.php` | `GET`/`POST` the per-account `reminder_hour` (0–23) + `reminder_tz` (IANA). |
 | `push-subscribe.php` / `push-unsubscribe.php` | Store / delete a per-device Web Push subscription. |
-| `admin-users.php` | Admin: every account's last-sync, streak, introduced item ids. |
+| `admin-users.php` | Admin: every account's last-sync, streak, graduated item ids (for path position). |
 | `admin-reset-password.php` | Admin: argon2id reset + clears that user's sessions. |
 | `admin-delete-user.php` | Admin: delete a user (cascades app_state/sessions/subscriptions); self-delete blocked. |
 
