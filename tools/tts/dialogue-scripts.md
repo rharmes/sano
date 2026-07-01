@@ -30,36 +30,33 @@ _Internal-only — `tools/` is not deployed._
 _Pyaro: a warm red panda who gets thrilled about the littlest things._  
 Anchored after: **Introductions** · goal: Greet someone and make small talk
 
-NARRATOR: A narrow road along a deep canyon. Pyaro leans over the edge. Sano walks up beside him.
-PYARO: Someone down there keeps copying me! Listen. GO AWAY!
-NARRATOR: The canyon answers quietly — go away... away...
-PYARO: See? It mocks me!
-SANO: That's an echo. The canyon repeats your own voice.
-PYARO: ...An echo.
-SANO: Try it. Say something nice.
-PYARO: I AM MAGNIFICENT!
-NARRATOR: The canyon replies, clear as a bell — no you're not.
-PYARO: See? You try.
-SANO: THIS CANYON IS GREAT.
-NARRATOR: The canyon replies - this canyon is great... great...
-SANO: Works for me.
+NARRATOR: Pyaro is next to a canyon. Sano comes over.
+SANO: What happened?
+PYARO: [angry] Someone down there keeps copying me! Listen. [shouting] PLEASE STOP!
+NARRATOR: A voice says — [quietly] please stop
+PYARO: [angry] They mock me!
+SANO: That's an echo. The canyon repeats what you say. [shouting] HELLO!
+NARRATOR: A voice says — [quietly] hello
+PYARO: [excitedly] I understand! The canyon will say what I say. [shouting] PYARO IS HANDSOME!
+NARRATOR: A voice says — [quietly] no he isn't.
+SANO: [surprised] You're right. [gently] They mock you.
 
 **Questions**
 1. What does Pyaro first shout to the canyon?
-   - Go away  ✓
+   - Please stop  ✓
    - Hello
    - How are you?
-   - Echo
+   - Go away
 2. Why is Pyaro upset?
    - He thinks someone is mocking him  ✓
    - He doesn't understand the voice
    - He doesn't want to see Sano
    - He is scared of heights
-3. What does Sano call the canyon?
-   - Great  ✓
-   - Tired
-   - Pretty
-   - Small
+3. What does Sano first think is happening?
+   - The sounds are echoing  ✓
+   - Someone is mocking Pyaro
+   - The wind is making the sounds
+   - Pyaro hears voices
 
 ---
 

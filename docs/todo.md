@@ -12,7 +12,7 @@ this list. Refer to any task by its ID (e.g. "T3").
 - [ ] **T1 · Add voice tags to the conversations** — review `tools/tts/dialogue-scripts.md`, add
       ElevenLabs `[performance tags]` (list + pipeline: `tools/tts/voice-tags.md`), re-map changed
       lines into `js/dialogues.js`, and re-render their audio.
-- [ ] **T2 · Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` lag the text
+- [x] **T2 · Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` lag the text
       after the `[shouting]`/"copying" edits in `bbe8024`; re-render (`synth-app.mjs --dialogues --only greet-pyaro-01` …)
       + bump `AUDIO_VERSION` once the edits settle. First confirm line-1 नक्कल गरिरहेको ("copying")
       with a native speaker.
