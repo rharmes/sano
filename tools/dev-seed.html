@@ -141,7 +141,7 @@
 			<span class="tests">romanization + pron · js/romanize.js</span>
 			<h2>Derived romanization &amp; pronunciation (Devanagari → Lite)</h2>
 			<p>
-				Introduces <b>every</b> course item, so the <b>dictionary</b> (top-bar icon) lists all ~588 words with both their
+				Introduces <b>every</b> course item, so the <b>dictionary</b> (top-bar icon) lists all ~638 words with both their
 				<b>derived romanization</b> (e.g. <b>Saano, Khaanaa, Hunchha, Tapaaiko, Hospital</b>) and <b>derived pronunciation</b> (e.g.
 				<b>saa-noh, khaa-naa, hoon-chhuh, hos-pi-tal</b>). Reviews are also due, so <b>“Start today's lesson”</b> shows the derived
 				romanization on the exercise prompts and tiles. Both are computed from each word's <code>dev</code> by
@@ -270,6 +270,28 @@
 				the path.
 			</p>
 			<button onclick="seed('verbs')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
+			<span class="tests">T11 · content</span>
+			<h2>New: everyday verbs (T11 batch 1)</h2>
+			<p>
+				Fifty high-frequency everyday verbs, wrapped in short frames, added after the past tense as <b>five new units</b>. Each button
+				masters everything before that unit so it's the <b>current unit</b> — tap <b>"Start today's lesson"</b> to learn it:
+				<b>Reactions &amp; Opinions</b> (<b>ma bujhchu</b> "I understand," <b>malai chaahincha</b> "I need"), <b>Asking for Help</b> (<b
+					>malai saghaaunus</b
+				>, <b>pani lyaaunus</b>), <b>Getting Around</b> (<b>yaha roknus</b>, <b>ek bajyo</b>), <b>Making &amp; Doing</b> (<b
+					>kaam thaalnus</b
+				>, <b>maile paaen</b>), and <b>Everyday Actions</b> (<b>tapailai bhetchu</b>, <b>baccha khelcha</b>). Audio for these renders
+				separately, so clips are silent for now.
+			</p>
+			<div style="display: flex; flex-wrap: wrap; gap: 8px">
+				<button onclick="seed('unit:verbs-reactions')">Reactions &amp; Opinions</button>
+				<button onclick="seed('unit:verbs-requests')">Asking for Help</button>
+				<button onclick="seed('unit:verbs-getting-around')">Getting Around</button>
+				<button onclick="seed('unit:verbs-making-doing')">Making &amp; Doing</button>
+				<button onclick="seed('unit:verbs-everyday-actions')">Everyday Actions</button>
+			</div>
 		</div>
 
 		<div class="card">

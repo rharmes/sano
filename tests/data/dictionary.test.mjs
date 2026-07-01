@@ -13,6 +13,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { liftGlobals } from '../lift.mjs';
 import { tokenize } from '../../tools/dict/lib/normalize.mjs';
+import { selectCandidates, STOP } from '../../tools/dict/select-candidates.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const DICT_PATH = join(ROOT, 'tools', 'dict', 'dictionary.json');
@@ -72,4 +73,28 @@ test('dictionary: coverage-gap signals (low-confidence / Wiktionary-absent)', { 
 	const absent = dict.entries.filter((e) => e.agreement === 'wiktionary-absent').length;
 	console.log(`\n  ${low} low-confidence entries, ${absent} without Wiktionary attestation (coverage-gap signal).`);
 	assert.ok(true);
+});
+
+// --- Expansion candidate selector (tools/dict/select-candidates.mjs) — pure, fixture-driven -----
+// Not gated by `skip`: it exercises the filter/ranking on a fixture, no dictionary.json needed.
+
+const FIXTURE = [
+	{ key: 'a', dev: 'क', pos: 'verb', en: 'x', register: 'everyday', inCourse: false, freqRank: 3, count: 100 },
+	{ key: 'b', dev: 'ख', pos: 'verb', en: 'x', register: 'everyday', inCourse: false, freqRank: 1, count: 500 },
+	{ key: 'c', dev: 'ग', pos: 'verb', en: 'x', register: 'everyday', inCourse: true, freqRank: 2, count: 900 }, // already in course
+	{ key: 'd', dev: 'घ', pos: 'noun', en: 'x', register: 'everyday', inCourse: false, freqRank: 4, count: 900 }, // wrong pos
+	{ key: 'e', dev: 'ङ', pos: 'verb', en: 'x', register: 'formal', inCourse: false, freqRank: 5, count: 900 }, // wrong register
+	{ key: 'f', dev: 'को', pos: 'verb', en: 'x', register: 'everyday', inCourse: false, freqRank: 6, count: 900 }, // stop word
+	{ key: 'g', dev: 'च', pos: 'verb', en: 'x', register: 'everyday', inCourse: false, freqRank: 7, count: 300 },
+];
+
+test('select-candidates: filters to not-in-course, matching pos+register, non-stop', () => {
+	const got = selectCandidates(FIXTURE, { pos: 'verb', register: 'everyday', n: 10 }).map((c) => c.key);
+	assert.deepEqual(got, ['b', 'g', 'a'], 'wrong set/order (expect in-course, wrong-pos, wrong-register, stop all dropped; sorted by count·weight)');
+});
+
+test('select-candidates: honors n and includes the stop set for particles', () => {
+	assert.ok(STOP.has('को'), 'expected को in the stop set');
+	const two = selectCandidates(FIXTURE, { pos: 'verb', register: 'everyday', n: 2 }).map((c) => c.key);
+	assert.deepEqual(two, ['b', 'g'], 'n should cap the pool after ranking');
 });

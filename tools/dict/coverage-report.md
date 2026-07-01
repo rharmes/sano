@@ -1,9 +1,9 @@
 # Dictionary coverage report
 
-Generated 2026-06-27 · 2324 entries · model claude-opus-4-8
+Generated 2026-07-01 · 2371 entries · model claude-opus-4-8
 
-- In COURSE: 565
-- Expansion candidates (high-freq, not yet in COURSE): 1759
+- In COURSE: 616
+- Expansion candidates (high-freq, not yet in COURSE): 1755
 - COURSE gloss-mismatch flags for review: 25
 
 ## Top expansion candidates (frequency rank · lemma · romanization · gloss)

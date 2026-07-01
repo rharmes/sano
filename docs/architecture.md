@@ -15,7 +15,7 @@ pre-rendered) — the only network calls are same-origin `fetch()`es to `api/`.
 Classic scripts (not modules), all `defer`, so each defines a global the later ones use.
 Order in `index.html`:
 
-1. `js/data.js` — **`COURSE`**: 58 units / 588 items — the entire course content (the big file). Units >14 items were split into ~8–12-word chunks for the SR-05 mastery gate; item ids are unchanged.
+1. `js/data.js` — **`COURSE`**: 63 units / 638 items — the entire course content (the big file). Units >14 items were split into ~8–12-word chunks for the SR-05 mastery gate; item ids are unchanged. The T11 vocabulary expansion adds new frequency-sourced units by batch (batch 1: 50 everyday-verb frames as 5 units after `verbs-past`).
 2. `js/romanize.js` — **`SanoRomanize`**: derives romanization + pronunciation from Devanagari (`romanize(dev)` / `pronounce(dev)`; spec `docs/romanization.md`). At load it **rewrites each `COURSE` item's `np` and `pron` from `item.dev`** (`np` and `pron` were removed from `data.js`; items store only `dev`/`en` + `usage`/`emoji`). Also exposes `stripTags(dev)` — drops inline ElevenLabs `[performance tags]` (used by dialogue `dev`) so they never reach text; `romanize`/`pronounce` strip first. Pure + classic-script, so the tests lift it.
 3. `js/sync.js` — **`SanoSync`**: debounced server push, revision-checked conflict detection, last-write-wins. `adoptSession()`. Bookkeeping in localStorage `sano.sync.v1`.
 4. `js/push.js` — **`SanoPush`**: PWA daily-reminder toggle + `pushManager.subscribe`. VAPID public key baked in.
@@ -103,6 +103,7 @@ necessarily follow auth and live in the DB-gated integration specs.
 | `tts/voice-tags.md` | Reference for the ElevenLabs v3 `[bracket]` audio tags + how they flow through the pipeline (inline in dialogue `dev` → synth verbatim → stripped from on-screen text). |
 | `tts/eleven.mjs` / `tts/phrases.mjs` / `tts/build-compare.mjs` | ElevenLabs client + voice mapping + sample-comparison design tool. |
 | `dict/build-dictionary.mjs` | Generate the local-only ground-truth Nepali↔English dictionary (`tools/dict/README.md`): ACQUIRE Leipzig freq list + kaikki Wiktionary → LEMMATIZE/GLOSS via Claude (register-weighted, cross-checked) → MERGE+EMIT `dictionary.json` + `coverage-report.md`. Incremental/cached like synth-app (`--acquire`/`--lemmatize`/`--gloss`/`--report-only`/`--new`). Flags COURSE translation disagreements for review (never auto-corrects). Needs `ANTHROPIC_API_KEY`; `sources/`+`cache/` gitignored. |
+| `dict/select-candidates.mjs` | **T11 expansion pipeline, stage 1** (deterministic, no API): rank the everyday, not-yet-covered words of one part of speech from `dictionary.json` → `design/expansion-candidates.json`. Pure `selectCandidates()` (tested). Then Claude drafts frames → `design/expansion-draft.json`, reviewed in `design/expansion.html` (+ `expansion-save.php` → `expansion-approved.json`), merged into `js/data.js` by hand, and audio rendered (`synth-app --new --words --new`, bump `AUDIO_VERSION`). Staging JSONs gitignored. |
 
 ## Tests
 
@@ -112,7 +113,7 @@ One suite, one entry point (`tools/test.sh`), five tiers. Internal-only (not dep
 | --- | --- | --- |
 | `--static` | `check.sh` | Prettier, asset stamps, `php -l`, `node --check`. |
 | `--unit` | `node:test` (`tests/unit/*.test.mjs`) | Pure logic lifted from `js/sano.js`: SR-05 scheduler, answer matching, dates/streak/freeze, v1/legacy state migration, exercise dedup; + Devanagari→romanization golden cases (`js/romanize.js`); + the dictionary tool's Devanagari normalizer/tokenizer (`tools/dict/lib/normalize.mjs`). |
-| `--data` | `node:test` (`tests/data/*.test.mjs`) | `COURSE`/`DIALOGUES`/`SOUND_TOPICS` integrity — unique ids, required fields, the gloss-join invariant, sound-mark coverage; + romanization coverage over all 588 `dev` (every codepoint mapped, clean output charset, structure preserved); + the ground-truth `dictionary.json` (schema + every COURSE word represented; skips until built). |
+| `--data` | `node:test` (`tests/data/*.test.mjs`) | `COURSE`/`DIALOGUES`/`SOUND_TOPICS` integrity — unique ids, required fields, the gloss-join invariant, sound-mark coverage; + romanization coverage over all 638 `dev` (every codepoint mapped, clean output charset, structure preserved); + the ground-truth `dictionary.json` (schema + every COURSE word represented; skips until built). |
 | `--api` | `@playwright/test` request (`tests/api/`) | Pre-DB guard specs (method/CSRF/JSON/validation, no DB) + a PHP pure-helper test; `integration.spec.mjs` adds the full request cycle, gated on `SANO_TEST_DB`. |
 | `--ui` | `@playwright/test` Chromium + WebKit (`tests/e2e/`) | Onboarding, home/path + 9-width overflow, every lesson exercise type, the dialogue player + tap-gloss, dictionary, reminder modal, admin demo, idle/reduced-motion. |
 

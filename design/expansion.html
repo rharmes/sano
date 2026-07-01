@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		<title>Sano — Expansion Review</title>
+		<link rel="stylesheet" href="../css/fonts.css" />
+		<style>
+			/* ───────────────────────────────────────────────────────────────
+			   A localhost-only review tool for the vocabulary expansion (T11).
+			   It loads the AI-drafted candidate batch (design/expansion-draft.json),
+			   shows each word's English, editable Devanagari with LIVE romanization
+			   (js/romanize.js), emoji, usage, and its source frequency rank, and lets
+			   Ross approve / reject / edit each one. Decisions POST to
+			   expansion-save.php → design/expansion-approved.json. A later merge step
+			   folds the APPROVED rows into js/data.js — this tool never touches it.
+			   Not in the deploy rsync (design/ never ships).
+
+			   Brand tokens copied verbatim from css/sano.css; 1rem = 10px.
+			   ─────────────────────────────────────────────────────────────── */
+			html {
+				font-size: 62.5%;
+				color-scheme: light;
+
+				--accent: #dd6470;
+				--accent-deep: #b94f5b;
+				--path-complete-color: #56629e;
+
+				--text-color-richer: #2e2933;
+				--text-color-normal: #45404c;
+				--text-color-soft: #79705f;
+				--text-color-softer: #b1a795;
+
+				--text-complete-color: #38824a;
+
+				--background-color: #fbf5e9;
+				--background-color-softer: #f3ecdb;
+
+				--border-color: #e0d8c4;
+				--border-color-softer: #e9e2d1;
+
+				--button-primary-color: #fff;
+
+				--dev-font: 'Kohinoor Devanagari', 'Noto Sans Devanagari', 'Devanagari MT', 'Mangal', 'Nirmala UI', sans-serif;
+			}
+			html.dark {
+				color-scheme: dark;
+				--accent: #e0697a;
+				--accent-deep: #c25462;
+				--path-complete-color: #7384c4;
+
+				--text-color-richer: #efe9f0;
+				--text-color-normal: #d8d1da;
+				--text-color-soft: #9a91a4;
+				--text-color-softer: #645c70;
+
+				--text-complete-color: #7fae83;
+
+				--background-color: #1b1822;
+				--background-color-softer: #262230;
+
+				--border-color: #37323f;
+				--border-color-softer: #2e2a38;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				font-family: 'Lato', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 300;
+				font-size: 1.7rem;
+				line-height: 1.5;
+				color: var(--text-color-normal);
+				background: var(--background-color);
+				padding-bottom: 11rem;
+			}
+
+			/* ── Sticky top bar ─────────────────────────────────────────────── */
+			.topbar {
+				position: sticky;
+				top: 0;
+				z-index: 5;
+				background: color-mix(in srgb, var(--background-color) 92%, transparent);
+				backdrop-filter: blur(6px);
+				border-bottom: 1px solid var(--border-color);
+				padding: 1.8rem max(2.4rem, (100vw - 1160px) / 2) 1.4rem;
+			}
+			.topbar-head {
+				display: flex;
+				align-items: baseline;
+				flex-wrap: wrap;
+				gap: 0.6rem 1.6rem;
+			}
+			.topbar h1 {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 3.4rem;
+				line-height: 1;
+				margin: 0;
+				color: var(--text-color-richer);
+			}
+			.topbar .lede {
+				margin: 0;
+				color: var(--text-color-soft);
+				font-size: 1.5rem;
+				flex: 1 1 30rem;
+			}
+			.theme-toggle {
+				margin-left: auto;
+				flex-shrink: 0;
+				appearance: none;
+				border: 1px solid var(--border-color);
+				background: var(--background-color-softer);
+				color: var(--text-color-soft);
+				font: inherit;
+				font-size: 1.5rem;
+				line-height: 1;
+				padding: 0.7rem 1rem;
+				border-radius: 999px;
+				cursor: pointer;
+			}
+			.theme-toggle:hover {
+				border-color: var(--accent);
+				color: var(--text-color-richer);
+			}
+
+			.toolbar {
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 1rem 1.6rem;
+				margin-top: 1.4rem;
+			}
+			.search {
+				flex: 1 1 22rem;
+				max-width: 36rem;
+				appearance: none;
+				font: inherit;
+				font-size: 1.6rem;
+				padding: 0.8rem 1.2rem;
+				color: var(--text-color-richer);
+				background: var(--background-color-softer);
+				border: 1px solid var(--border-color);
+				border-radius: 0.9rem;
+			}
+			.search:focus-visible {
+				outline: none;
+				border-color: var(--accent);
+			}
+			.filter-toggle {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.6rem;
+				font-size: 1.5rem;
+				color: var(--text-color-soft);
+				cursor: pointer;
+				user-select: none;
+			}
+			.filter-toggle input {
+				width: 1.7rem;
+				height: 1.7rem;
+				accent-color: var(--accent);
+			}
+			.counts {
+				margin-left: auto;
+				display: flex;
+				gap: 1.4rem;
+				font-size: 1.45rem;
+				color: var(--text-color-soft);
+			}
+			.counts b {
+				color: var(--text-color-richer);
+				font-weight: 700;
+			}
+			.counts .c-approved b {
+				color: var(--text-complete-color);
+			}
+			.counts .c-rejected b {
+				color: var(--accent);
+			}
+			.counts .c-unsaved b {
+				color: var(--accent-deep);
+			}
+
+			/* ── Units + rows ───────────────────────────────────────────────── */
+			main {
+				max-width: 1160px;
+				margin: 0 auto;
+				padding: 0 2.4rem;
+			}
+			.unit {
+				margin-top: 3.2rem;
+			}
+			.unit-head {
+				display: flex;
+				align-items: baseline;
+				gap: 1rem;
+				padding-bottom: 0.8rem;
+				border-bottom: 2px solid var(--border-color);
+			}
+			.unit-head h2 {
+				font-family: 'Neuton', serif;
+				font-weight: 700;
+				font-size: 2.6rem;
+				margin: 0;
+				color: var(--text-color-richer);
+			}
+			.unit-head .kind {
+				font-size: 1.3rem;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+				color: var(--text-color-softer);
+			}
+			.unit-head .n {
+				margin-left: auto;
+				font-size: 1.4rem;
+				color: var(--text-color-softer);
+			}
+
+			.row {
+				display: grid;
+				grid-template-columns: 0.4rem auto minmax(0, 1fr) minmax(0, 1.2fr) auto;
+				grid-template-areas:
+					'bar emoji en dev decide'
+					'bar . rom rom decide'
+					'bar usage usage usage usage';
+				align-items: center;
+				gap: 0.8rem 1.4rem;
+				padding: 1.4rem 0.8rem 1.4rem 0;
+				border-bottom: 1px solid var(--border-color-softer);
+			}
+			.row .bar {
+				grid-area: bar;
+				align-self: stretch;
+				border-radius: 999px;
+				background: transparent;
+			}
+			.row.approved .bar {
+				background: var(--text-complete-color);
+			}
+			.row.rejected .bar {
+				background: var(--accent);
+			}
+			.row.edited .bar {
+				background: var(--path-complete-color);
+			}
+			.row.rejected {
+				opacity: 0.55;
+			}
+
+			.emoji-cell {
+				grid-area: emoji;
+			}
+			.emoji-input {
+				appearance: none;
+				width: 4.4rem;
+				text-align: center;
+				font-size: 2.2rem;
+				padding: 0.4rem 0.2rem;
+				background: var(--background-color-softer);
+				border: 1px solid var(--border-color);
+				border-radius: 0.8rem;
+				color: var(--text-color-richer);
+			}
+			.en-cell {
+				grid-area: en;
+			}
+			.en-input {
+				appearance: none;
+				width: 100%;
+				font: inherit;
+				font-size: 1.7rem;
+				color: var(--text-color-richer);
+				padding: 0.5rem 0.9rem;
+				background: var(--background-color-softer);
+				border: 1px solid var(--border-color);
+				border-radius: 0.8rem;
+			}
+			.dev-cell {
+				grid-area: dev;
+			}
+			.dev-input {
+				appearance: none;
+				font-family: var(--dev-font);
+				font-size: 2.4rem;
+				line-height: 1.25;
+				width: 100%;
+				padding: 0.4rem 1rem;
+				color: var(--text-color-richer);
+				background: var(--background-color-softer);
+				border: 1px solid var(--border-color);
+				border-radius: 0.8rem;
+			}
+			.dev-input:focus-visible,
+			.en-input:focus-visible,
+			.emoji-input:focus-visible,
+			.usage-input:focus-visible {
+				outline: none;
+				border-color: var(--accent);
+				box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+			}
+
+			.rom {
+				grid-area: rom;
+				display: flex;
+				align-items: baseline;
+				flex-wrap: wrap;
+				gap: 0.3rem 1rem;
+				font-size: 1.4rem;
+				padding-left: 0.4rem;
+			}
+			.rom .np {
+				font-weight: 700;
+				color: var(--text-color-normal);
+			}
+			.rom .pron {
+				color: var(--text-color-softer);
+			}
+			.rom .meta {
+				color: var(--text-color-softer);
+				font-size: 1.25rem;
+			}
+			.rom .meta code {
+				font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+			}
+
+			.usage-cell {
+				grid-area: usage;
+				display: flex;
+				align-items: center;
+				gap: 0.8rem;
+			}
+			.usage-cell label {
+				font-size: 1.2rem;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+				color: var(--text-color-softer);
+				flex-shrink: 0;
+			}
+			.usage-input {
+				appearance: none;
+				width: 100%;
+				font: inherit;
+				font-size: 1.45rem;
+				color: var(--text-color-soft);
+				padding: 0.45rem 0.8rem;
+				background: transparent;
+				border: 1px solid var(--border-color-softer);
+				border-radius: 0.7rem;
+			}
+
+			.decide {
+				grid-area: decide;
+				display: flex;
+				gap: 0.6rem;
+				align-items: center;
+			}
+			.decide button {
+				appearance: none;
+				border: 1px solid var(--border-color);
+				background: var(--background-color-softer);
+				font: inherit;
+				font-size: 1.5rem;
+				line-height: 1;
+				padding: 0.9rem 1rem;
+				border-radius: 0.8rem;
+				cursor: pointer;
+				color: var(--text-color-soft);
+				white-space: nowrap;
+			}
+			.decide .approve:hover {
+				border-color: var(--text-complete-color);
+				color: var(--text-complete-color);
+			}
+			.decide .reject:hover {
+				border-color: var(--accent);
+				color: var(--accent);
+			}
+			.row.approved .approve {
+				border-color: var(--text-complete-color);
+				background: var(--text-complete-color);
+				color: var(--button-primary-color);
+			}
+			.row.rejected .reject {
+				border-color: var(--accent);
+				background: var(--accent);
+				color: var(--button-primary-color);
+			}
+			.revert {
+				appearance: none;
+				border: none;
+				background: transparent;
+				color: var(--text-color-softer);
+				font-size: 1.8rem;
+				line-height: 1;
+				cursor: pointer;
+				padding: 0.4rem;
+				border-radius: 0.6rem;
+			}
+			.revert:hover {
+				color: var(--accent);
+				background: var(--background-color-softer);
+			}
+
+			.empty {
+				margin: 6rem 0;
+				text-align: center;
+				color: var(--text-color-softer);
+				font-size: 1.8rem;
+			}
+
+			/* ── Floating Submit ────────────────────────────────────────────── */
+			.submit {
+				position: fixed;
+				right: 2.4rem;
+				bottom: 2.4rem;
+				z-index: 10;
+				appearance: none;
+				border: none;
+				cursor: pointer;
+				font: inherit;
+				font-weight: 700;
+				font-size: 1.8rem;
+				color: var(--button-primary-color);
+				background: var(--accent);
+				padding: 1.4rem 2.4rem;
+				border-radius: 999px;
+				box-shadow: 0 0.6rem 2rem color-mix(in srgb, var(--accent) 40%, transparent);
+			}
+			.submit:hover {
+				background: var(--accent-deep);
+			}
+			.submit:disabled {
+				cursor: default;
+				color: var(--text-color-softer);
+				background: var(--background-color-softer);
+				border: 1px solid var(--border-color);
+				box-shadow: none;
+			}
+
+			.toast {
+				position: fixed;
+				left: 50%;
+				bottom: 2.4rem;
+				transform: translate(-50%, 1.6rem);
+				z-index: 11;
+				max-width: 90vw;
+				padding: 1.2rem 1.8rem;
+				border-radius: 0.9rem;
+				font-size: 1.55rem;
+				color: var(--button-primary-color);
+				background: var(--path-complete-color);
+				box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.2);
+				opacity: 0;
+				pointer-events: none;
+				transition:
+					opacity 0.2s ease,
+					transform 0.2s ease;
+			}
+			.toast.show {
+				opacity: 1;
+				transform: translate(-50%, 0);
+			}
+			.toast.error {
+				background: var(--accent-deep);
+			}
+
+			@media (max-width: 760px) {
+				.row {
+					grid-template-columns: 0.4rem auto minmax(0, 1fr);
+					grid-template-areas:
+						'bar emoji en'
+						'bar dev dev'
+						'bar rom rom'
+						'bar usage usage'
+						'bar decide decide';
+				}
+			}
+		</style>
+		<script>
+			(function () {
+				var url = new URLSearchParams(location.search).get('theme');
+				var saved = localStorage.getItem('sano-expansion-theme');
+				var dark = url ? url === 'dark' : saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+				document.documentElement.classList.toggle('dark', dark);
+			})();
+		</script>
+	</head>
+	<body>
+		<header class="topbar">
+			<div class="topbar-head">
+				<h1>Expansion Review</h1>
+				<p class="lede">
+					AI-drafted candidate words for the course. Edit the English, Devanagari (romanization updates live), emoji, or usage as
+					needed, then <b>Approve</b> or <b>Reject</b> each. Tap <b>Submit</b> to save your decisions. Approved rows are merged
+					into the course later — nothing changes <code>js/data.js</code> here.
+				</p>
+				<button class="theme-toggle" id="theme" type="button">Theme</button>
+			</div>
+			<div class="toolbar">
+				<input class="search" id="search" type="search" placeholder="Search English / romanized / Devanagari…" />
+				<label class="filter-toggle"><input type="checkbox" id="pending-only" /> Undecided only</label>
+				<div class="counts">
+					<span class="c-total"><b id="n-total">0</b> words</span>
+					<span class="c-approved"><b id="n-approved">0</b> approved</span>
+					<span class="c-rejected"><b id="n-rejected">0</b> rejected</span>
+					<span class="c-unsaved"><b id="n-unsaved">0</b> unsaved</span>
+				</div>
+			</div>
+		</header>
+
+		<main id="units"></main>
+		<p class="empty" id="empty" hidden>No matching words.</p>
+
+		<button class="submit" id="submit" type="button" disabled>No changes</button>
+		<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+		<script src="../js/romanize.js"></script>
+		<script>
+			'use strict';
+
+			const DRAFT_URL = './expansion-draft.json';
+			const APPROVED_URL = './expansion-approved.json';
+			const SAVE_URL = './expansion-save.php';
+
+			// Romanize a dev string for the live preview. The frame may carry a `___` slot — drop it
+			// so the preview reads the spoken words only (mirrors how audio renders the frame).
+			function romanizeDev(dev) {
+				const cleaned = (dev || '').replace(/_+/g, ' ').replace(/\s+/g, ' ').trim();
+				if (!cleaned) return { np: '', pron: '' };
+				try {
+					return { np: SanoRomanize.romanize(cleaned), pron: SanoRomanize.pronounce(cleaned) };
+				} catch (_) {
+					return { np: '', pron: '' };
+				}
+			}
+
+			const rows = [];
+			// A row's baseline is the saved decision/fields if present, else the AI draft with a
+			// 'pending' decision. `dirty` = anything the backend hasn't stored yet.
+			const savedDecision = (r) => (r.saved ? r.saved.decision : 'pending');
+			const field = (r, k) => r.els[k].value.trim();
+			const draftFields = (r) => ({ dev: r.item.dev, en: r.item.en, emoji: r.item.emoji || '', usage: r.item.usage || '' });
+			const baselineFields = (r) =>
+				r.saved ? { dev: r.saved.dev, en: r.saved.en, emoji: r.saved.emoji, usage: r.saved.usage } : draftFields(r);
+
+			function fieldsDiffer(r, base) {
+				return (
+					field(r, 'dev') !== base.dev ||
+					field(r, 'en') !== base.en ||
+					field(r, 'emoji') !== base.emoji ||
+					field(r, 'usage') !== base.usage
+				);
+			}
+			// Submittable: a decided row whose decision or fields changed vs. what's stored, OR a row
+			// reverted to pending that had a stored decision (a removal).
+			function isDirty(r) {
+				if (r.decision === 'pending') return !!r.saved;
+				return r.decision !== savedDecision(r) || fieldsDiffer(r, baselineFields(r));
+			}
+
+			function el(tag, cls, attrs) {
+				const e = document.createElement(tag);
+				if (cls) e.className = cls;
+				if (attrs) for (const k in attrs) e.setAttribute(k, attrs[k]);
+				return e;
+			}
+
+			function build(draft) {
+				const root = document.getElementById('units');
+				const byUnit = new Map();
+				for (const item of draft.items) {
+					if (!byUnit.has(item.unit)) byUnit.set(item.unit, []);
+					byUnit.get(item.unit).push(item);
+				}
+				let total = 0;
+				for (const [unitName, items] of byUnit) {
+					const section = el('section', 'unit');
+					const head = el('div', 'unit-head');
+					const h2 = el('h2');
+					h2.textContent = unitName;
+					const kind = el('span', 'kind');
+					kind.textContent = draft.pos || 'vocab';
+					const n = el('span', 'n');
+					n.textContent = items.length + ' words';
+					head.append(h2, kind, n);
+					section.appendChild(head);
+
+					const unitRows = [];
+					for (const item of items) {
+						total++;
+						const row = el('div', 'row');
+						const bar = el('span', 'bar');
+
+						const emojiCell = el('div', 'emoji-cell');
+						const emoji = el('input', 'emoji-input', { 'aria-label': 'Emoji', maxlength: '4' });
+						emoji.value = item.emoji || '';
+						emojiCell.appendChild(emoji);
+
+						const enCell = el('div', 'en-cell');
+						const en = el('input', 'en-input', { 'aria-label': 'English' });
+						en.value = item.en || '';
+						enCell.appendChild(en);
+
+						const devCell = el('div', 'dev-cell');
+						const dev = el('input', 'dev-input', {
+							lang: 'ne',
+							dir: 'auto',
+							spellcheck: 'false',
+							'aria-label': 'Devanagari',
+						});
+						dev.value = item.dev || '';
+						devCell.appendChild(dev);
+
+						const rom = el('div', 'rom');
+						const np = el('span', 'np');
+						const pron = el('span', 'pron');
+						const meta = el('span', 'meta');
+						meta.innerHTML = 'rank ' + (item.freqRank ?? '—') + ' · ' + (draft.register || '') + ' · <code></code>';
+						meta.querySelector('code').textContent = item.lemma || '';
+						rom.append(np, pron, meta);
+
+						const usageCell = el('div', 'usage-cell');
+						const usageLabel = el('label');
+						usageLabel.textContent = 'usage';
+						const usage = el('input', 'usage-input', { 'aria-label': 'Usage note' });
+						usage.value = item.usage || '';
+						usageCell.append(usageLabel, usage);
+
+						const decide = el('div', 'decide');
+						const approve = el('button', 'approve', { type: 'button' });
+						approve.textContent = '✓ Approve';
+						const reject = el('button', 'reject', { type: 'button' });
+						reject.textContent = '✕ Reject';
+						const revert = el('button', 'revert', { type: 'button', title: 'Reset fields to the AI draft' });
+						revert.textContent = '↺';
+						decide.append(approve, reject, revert);
+
+						row.append(bar, emojiCell, enCell, devCell, rom, usageCell, decide);
+						section.appendChild(row);
+
+						const r = {
+							item,
+							saved: null,
+							decision: 'pending',
+							row,
+							els: { dev, en, emoji, usage, np, pron },
+						};
+						const onEdit = () => {
+							refreshRow(r);
+							refreshCounts();
+						};
+						dev.addEventListener('input', onEdit);
+						en.addEventListener('input', onEdit);
+						emoji.addEventListener('input', onEdit);
+						usage.addEventListener('input', onEdit);
+						approve.addEventListener('click', () => {
+							r.decision = r.decision === 'approved' ? 'pending' : 'approved';
+							onEdit();
+						});
+						reject.addEventListener('click', () => {
+							r.decision = r.decision === 'rejected' ? 'pending' : 'rejected';
+							onEdit();
+						});
+						revert.addEventListener('click', () => {
+							const d = draftFields(r);
+							dev.value = d.dev;
+							en.value = d.en;
+							emoji.value = d.emoji;
+							usage.value = d.usage;
+							onEdit();
+						});
+						rows.push(r);
+						unitRows.push(r);
+					}
+					root.appendChild(section);
+					section._rows = unitRows;
+				}
+				document.getElementById('n-total').textContent = total;
+			}
+
+			function refreshRow(r) {
+				const { np, pron } = romanizeDev(field(r, 'dev'));
+				r.els.np.textContent = np;
+				r.els.pron.textContent = pron ? '· ' + pron : '';
+				r.row.classList.toggle('approved', r.decision === 'approved');
+				r.row.classList.toggle('rejected', r.decision === 'rejected');
+				// Pending but tweaked from the AI draft — a cue Ross edited it without deciding yet.
+				r.row.classList.toggle('edited', r.decision === 'pending' && fieldsDiffer(r, draftFields(r)));
+			}
+
+			const submitBtn = document.getElementById('submit');
+			function refreshCounts() {
+				let approved = 0,
+					rejected = 0,
+					unsaved = 0;
+				for (const r of rows) {
+					if (r.decision === 'approved') approved++;
+					else if (r.decision === 'rejected') rejected++;
+					if (isDirty(r)) unsaved++;
+				}
+				document.getElementById('n-approved').textContent = approved;
+				document.getElementById('n-rejected').textContent = rejected;
+				document.getElementById('n-unsaved').textContent = unsaved;
+				submitBtn.disabled = unsaved === 0;
+				submitBtn.textContent = unsaved === 0 ? 'No changes' : 'Submit ' + unsaved + ' decision' + (unsaved === 1 ? '' : 's');
+			}
+
+			async function loadApproved() {
+				try {
+					const res = await fetch(APPROVED_URL, { cache: 'no-store' });
+					if (res.ok) {
+						const map = await res.json();
+						for (const r of rows) {
+							const e = map && map[r.item.id];
+							if (!e || (e.decision !== 'approved' && e.decision !== 'rejected')) continue;
+							r.saved = {
+								decision: e.decision,
+								dev: e.dev || '',
+								en: e.en || '',
+								emoji: e.emoji || '',
+								usage: e.usage || '',
+							};
+							r.decision = e.decision;
+							r.els.dev.value = r.saved.dev;
+							r.els.en.value = r.saved.en;
+							r.els.emoji.value = r.saved.emoji;
+							r.els.usage.value = r.saved.usage;
+						}
+					}
+				} catch (_) {
+					/* no approved file yet — fine */
+				}
+				for (const r of rows) refreshRow(r);
+				refreshCounts();
+			}
+
+			const searchEl = document.getElementById('search');
+			const pendingOnlyEl = document.getElementById('pending-only');
+			function applyFilter() {
+				const q = searchEl.value.trim().toLowerCase();
+				const pendingOnly = pendingOnlyEl.checked;
+				let anyVisible = false;
+				for (const section of document.querySelectorAll('.unit')) {
+					let visible = 0;
+					for (const r of section._rows) {
+						const hay = (
+							field(r, 'en') +
+							' ' +
+							field(r, 'dev') +
+							' ' +
+							r.els.np.textContent +
+							' ' +
+							(r.item.lemma || '')
+						).toLowerCase();
+						const matchQ = !q || hay.indexOf(q) !== -1;
+						const show = matchQ && (!pendingOnly || r.decision === 'pending');
+						r.row.hidden = !show;
+						if (show) visible++;
+					}
+					section.hidden = visible === 0;
+					anyVisible = anyVisible || visible > 0;
+				}
+				document.getElementById('empty').hidden = anyVisible;
+			}
+			searchEl.addEventListener('input', applyFilter);
+			pendingOnlyEl.addEventListener('change', applyFilter);
+
+			async function submit() {
+				const edits = [];
+				for (const r of rows) {
+					if (!isDirty(r)) continue;
+					if (r.decision === 'pending') {
+						edits.push({ id: r.item.id, remove: true });
+					} else {
+						edits.push({
+							id: r.item.id,
+							decision: r.decision,
+							dev: field(r, 'dev'),
+							en: field(r, 'en'),
+							emoji: field(r, 'emoji'),
+							usage: field(r, 'usage'),
+							unit: r.item.unit || '',
+						});
+					}
+				}
+				if (!edits.length) return;
+				submitBtn.disabled = true;
+				try {
+					const res = await fetch(SAVE_URL, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json', 'X-Sano-Request': '1' },
+						body: JSON.stringify({ edits }),
+					});
+					const data = await res.json().catch(() => ({}));
+					if (!res.ok || !data.ok) throw new Error(data.error || 'HTTP ' + res.status);
+					// Commit new baselines so re-submits only send further changes.
+					for (const r of rows) {
+						if (!isDirty(r)) continue;
+						if (r.decision === 'pending') r.saved = null;
+						else
+							r.saved = {
+								decision: r.decision,
+								dev: field(r, 'dev'),
+								en: field(r, 'en'),
+								emoji: field(r, 'emoji'),
+								usage: field(r, 'usage'),
+							};
+					}
+					for (const r of rows) refreshRow(r);
+					refreshCounts();
+					applyFilter();
+					toast(data.approved + ' approved · ' + data.total + ' decision' + (data.total === 1 ? '' : 's') + ' saved.');
+				} catch (err) {
+					refreshCounts();
+					toast('Could not save: ' + err.message, true);
+				}
+			}
+			submitBtn.addEventListener('click', submit);
+
+			let toastTimer = null;
+			function toast(msg, isError) {
+				const elx = document.getElementById('toast');
+				elx.textContent = msg;
+				elx.classList.toggle('error', !!isError);
+				elx.classList.add('show');
+				clearTimeout(toastTimer);
+				toastTimer = setTimeout(() => elx.classList.remove('show'), 3200);
+			}
+
+			document.getElementById('theme').addEventListener('click', () => {
+				const dark = document.documentElement.classList.toggle('dark');
+				localStorage.setItem('sano-expansion-theme', dark ? 'dark' : 'light');
+			});
+
+			// ── Go ──────────────────────────────────────────────────────────
+			(async function init() {
+				let draft;
+				try {
+					const res = await fetch(DRAFT_URL, { cache: 'no-store' });
+					draft = await res.json();
+				} catch (e) {
+					document.getElementById('empty').hidden = false;
+					document.getElementById('empty').textContent =
+						'Could not load expansion-draft.json (serve with php -S from the repo root).';
+					return;
+				}
+				build(draft);
+				await loadApproved();
+				applyFilter();
+			})();
+		</script>
+	</body>
+</html>

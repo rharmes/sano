@@ -21,6 +21,16 @@ tools/tts/voice_samples/
 design/devanagari-review.json
 design/devanagari-review.json.bak
 
+# Vocabulary-expansion staging (T11), all transient pre-merge working data:
+#   -candidates.json  = mechanical output of tools/dict/select-candidates.mjs
+#   -draft.json       = the AI-drafted batch reviewed in design/expansion.html
+#   -approved.json    = Ross's approve/reject decisions (design/expansion-save.php)
+# Approved rows are merged into js/data.js by hand, then these can be cleared.
+design/expansion-candidates.json
+design/expansion-draft.json
+design/expansion-approved.json
+design/expansion-approved.json.bak
+
 # Playwright test artifacts (regenerated every run; never committed/deployed).
 /test-results/
 /playwright-report/

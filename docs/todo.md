@@ -68,4 +68,19 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
 - [ ] **T11 · Phase 2 — grow vocabulary toward ~2,000 words** — source the highest-frequency missing
       words from the `tools/dict` frequency ranking (ties to **T3**), add as new ~8–12-word
       mastery-gated units by frequency + situation; regenerate audio for the new items only and bump
-      `AUDIO_VERSION`. Deferred until Phase 1 is live. Nepali `dev` AI-drafted → Ross's review.
+      `AUDIO_VERSION`. Nepali `dev` AI-drafted → Ross's review. Multi-batch — driven by the pipeline
+      below (T14); each batch = select → draft → review → merge → audio.
+- [x] **T14 · Build the expansion pipeline** (reusable across all T11 batches) —
+      `tools/dict/select-candidates.mjs` (mechanical: ranks the everyday, not-yet-covered words of a
+      given part of speech from `dictionary.json`), a Claude drafting pass (wraps each word in a
+      usable frame → `design/expansion-draft.json`), and a localhost review tool
+      `design/expansion.html` + `expansion-save.php` (edit / approve / reject → the gitignored
+      `expansion-approved.json`; never touches `js/data.js`). Approved rows are merged by hand, then
+      audio rendered (`build-words.mjs` → `synth-app.mjs --new --words --new`, bump `AUDIO_VERSION`).
+- [x] **T15 · Batch 1 — everyday verbs (~50)** — 50 high-frequency everyday verbs, curated (dropped
+      verbs already taught + advanced passives/causatives) and wrapped in short natural frames.
+      Reviewed + approved, then merged into `js/data.js` as 5 units after `verbs-past` (Reactions &
+      Opinions, Asking for Help, Getting Around, Making & Doing, Everyday Actions); `tools/dict`
+      coverage refreshed, audio rendered (50 phrase + 57 word clips, `AUDIO_VERSION` 7), dev-seed
+      scenario added. Committed 620a0bd. **Still open:** the 5 unit titles + goals are AI-drafted →
+      Ross's refinement; **push/deploy pending Ross's go.**
