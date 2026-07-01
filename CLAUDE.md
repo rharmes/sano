@@ -14,6 +14,8 @@ Ross tests on an iPhone running iOS 26.
 - `docs/pedagogy.md` — learning-science basis. `docs/testing.md` — visual-capture + screenshot
   recipes. `tools/tts/RESEARCH.md` — voice/TTS. `design/style-guide.html` — visual tokens +
   components (brand source of truth).
+- **`docs/todo.md`** — the running task backlog (what's outstanding, mostly waiting on Ross); I keep
+  it current (see **Task list** below).
 
 Those carry the deep detail; this file keeps the summary, the non-obvious constraints, and the
 workflow. **Keep it current:** when architecture/tooling changes significantly, update this file
@@ -185,19 +187,16 @@ bump `AUDIO_VERSION` in `js/audio.js` to bust caches. Flags + per-voice routing:
   the mascot keeps only the eye blink; the larger rotational idles (tail wag, head tilt, ear/nose
   wiggle) are suppressed. iOS Safari honors the OS Reduce Motion setting — that's expected, not a bug.
 
-## Pending tasks (Ross's review queue)
+## Task list (`docs/todo.md`)
 
-Waiting on Ross — not derivable from the code, easy to lose. Clear an item when it's done.
+The backlog lives in **`docs/todo.md`** (checkbox Markdown), not here. Keep it authoritative:
 
-- **Add voice tags to the conversations** — review `tools/tts/dialogue-scripts.md`, add ElevenLabs
-  `[performance tags]` (list + pipeline: `tools/tts/voice-tags.md`), re-map changed lines into
-  `js/dialogues.js`, and re-render their audio.
-- **Review the dictionary's recommendations** (`tools/dict/`; flag-only, never auto-applied): COURSE
-  translations it disagrees with (`tests/data/dictionary.test.mjs` / the `.review` entries in
-  `dictionary.json`) and high-frequency missing words (`tools/dict/coverage-report.md`).
-- **Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` lag the text after the
-  `[shouting]`/"copying" edits in `bbe8024`; re-render (`synth-app.mjs --dialogues --only greet-pyaro-01` …)
-  + bump `AUDIO_VERSION` once the edits settle. First confirm line-1 नक्कल गरिरहेको ("copying") with a
-  native speaker.
-- **Merge the Devanagari review** — `design/devanagari-review.json` (gitignored) → the `dev` fields of
-  `js/data.js` (in-session, no merge script), then clear the review file.
+- **Add every task to it** — features Ross asks for, suggestions Ross agrees to, and anything
+  discovered mid-work (bugs, follow-ups, review items) — as an unchecked box (`- [ ]`).
+- **Give each task a unique ID** — `T<n>`, the next sequential number with no zero-padding (`T1`,
+  `T2`, … `T12`). Assign it once and never reuse it (even after the task is done), so Ross can refer
+  to any task by its ID.
+- **Tick the box in place** (`- [ ]` → `- [x]`) when a task is delivered, rather than deleting it, so
+  the file doubles as a record of what's done.
+- **Check it at the start of a session**, and update it in the **same** change that adds or delivers a
+  task, so the list never drifts from reality.
