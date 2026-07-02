@@ -154,7 +154,9 @@
 				"kati-ho-how-much-is-it",
 				"adj-galat-wrong",
 				"adj-alag-separate",
-				"adj-samanya-ordinary"
+				"adj-samanya-ordinary",
+				"adv-pahilopatak-firsttime",
+				"adv-tyastai-likewise"
 			],
 			"freqRank": 8,
 			"count": 5025,
@@ -274,7 +276,9 @@
 				"ek-chhin-parkhanus-wait-a-moment-please",
 				"ek-bajyo-its-one-oclock",
 				"ek-ghanta-one-hour",
-				"noun-byakti-person"
+				"noun-byakti-person",
+				"adv-kamtima-atleast",
+				"adv-jhandai-almost"
 			],
 			"freqRank": 17,
 			"count": 3234,
@@ -324,7 +328,12 @@
 				"adj-samanya-ordinary",
 				"adj-jaruri-necessary",
 				"adj-sambhav-possible",
-				"noun-kshetra-area"
+				"noun-kshetra-area",
+				"adv-nikai-quite",
+				"adv-pahilopatak-firsttime",
+				"adv-baru-instead",
+				"adv-matrai-only",
+				"adv-jastai-like"
 			],
 			"freqRank": 19,
 			"count": 6087,
@@ -552,7 +561,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"saya-hundred",
-				"noun-rupaiyaan-rupee"
+				"noun-rupaiyaan-rupee",
+				"adv-karib-approximately"
 			],
 			"freqRank": 36,
 			"count": 1635,
@@ -958,7 +968,8 @@
 				"subha-din-have-a-good-day",
 				"adj-lamo-long",
 				"adj-dosro-second",
-				"adj-panchaun-fifth"
+				"adj-panchaun-fifth",
+				"adv-lagataar-continuously"
 			],
 			"freqRank": 60,
 			"count": 1997,
@@ -1404,7 +1415,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"tin-three"
+				"tin-three",
+				"adv-lagataar-continuously"
 			],
 			"freqRank": 89,
 			"count": 1067,
@@ -2300,7 +2312,8 @@
 				"adj-sambhav-possible",
 				"tapai-ke-kaam-garnuhunchha-what-do-you-do",
 				"noun-kaaran-reason",
-				"noun-yojana-plan"
+				"noun-yojana-plan",
+				"adv-tyaspachhi-afterthat"
 			],
 			"freqRank": 144,
 			"count": 687,
@@ -2351,13 +2364,16 @@
 				"merely"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-matrai-only"
+			],
 			"freqRank": 146,
 			"count": 684,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -3222,7 +3238,11 @@
 				"ma-draibhar-hu-i-am-a-driver",
 				"ma-injinier-hu-i-am-an-engineer",
 				"ma-nars-hu-i-am-a-nurse",
-				"ma-prahari-hu-i-am-a-police-officer"
+				"ma-prahari-hu-i-am-a-police-officer",
+				"adv-chhittai-soon",
+				"adv-prayah-usually",
+				"adv-yaspatak-thistime",
+				"adv-eklai-alone"
 			],
 			"freqRank": 196,
 			"count": 1281,
@@ -3397,13 +3417,16 @@
 				"around"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-karib-approximately"
+			],
 			"freqRank": 207,
 			"count": 548,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -3815,7 +3838,11 @@
 				"noun-abasar-opportunity",
 				"noun-sambandha-relationship",
 				"noun-upachaar-treatment",
-				"noun-sewa-service"
+				"noun-sewa-service",
+				"adv-nikai-quite",
+				"adv-ekdamai-extremely",
+				"adv-jhan-evenmore",
+				"adv-sabaibhanda-most"
 			],
 			"freqRank": 236,
 			"count": 564,
@@ -4187,13 +4214,16 @@
 				"like that"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-tyastai-likewise"
+			],
 			"freqRank": 257,
 			"count": 456,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -4210,7 +4240,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"bihaana-morning"
+				"bihaana-morning",
+				"adv-khasgari-especially"
 			],
 			"freqRank": 258,
 			"count": 488,
@@ -5226,13 +5257,16 @@
 				"superlative"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-sabaibhanda-most"
+			],
 			"freqRank": 322,
 			"count": 388,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -5561,13 +5595,16 @@
 				"afterwards"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-tyaspachhi-afterthat"
+			],
 			"freqRank": 345,
 			"count": 363,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -5722,13 +5759,16 @@
 				"that's why"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-tyasaile-therefore"
+			],
 			"freqRank": 354,
 			"count": 356,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -5767,13 +5807,16 @@
 				"considerably"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-nikai-quite"
+			],
 			"freqRank": 356,
 			"count": 352,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -5932,13 +5975,16 @@
 				"further"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-ajhai-yet"
+			],
 			"freqRank": 368,
 			"count": 343,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -7533,13 +7579,16 @@
 				"up to now"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-ahilesamma-sofar"
+			],
 			"freqRank": 475,
 			"count": 272,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -8677,14 +8726,17 @@
 				"first"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-pahile-earlier"
+			],
 			"freqRank": 558,
 			"count": 240,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -11250,14 +11302,17 @@
 				"like this"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-yasari-thisway"
+			],
 			"freqRank": 755,
 			"count": 184,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -12534,13 +12589,16 @@
 				"similar to"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-jastai-like"
+			],
 			"freqRank": 849,
 			"count": 167,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -13618,13 +13676,16 @@
 				"amount"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-jati-asmuchas"
+			],
 			"freqRank": 918,
 			"count": 154,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -13937,13 +13998,16 @@
 				"continually"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-lagataar-continuously"
+			],
 			"freqRank": 939,
 			"count": 152,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -14812,13 +14876,16 @@
 				"over here"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-yata-thisway"
+			],
 			"freqRank": 1004,
 			"count": 141,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -15323,13 +15390,16 @@
 				"minimum"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-kamtima-atleast"
+			],
 			"freqRank": 1036,
 			"count": 136,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -17634,7 +17704,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"ek-ghanta-one-hour"
+				"ek-ghanta-one-hour",
+				"adv-jhandai-almost"
 			],
 			"freqRank": 1231,
 			"count": 202,
@@ -17835,13 +17906,16 @@
 				"slightly"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-thorai-little"
+			],
 			"freqRank": 1246,
 			"count": 114,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -19201,13 +19275,16 @@
 				"about"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-jhandai-almost"
+			],
 			"freqRank": 1361,
 			"count": 104,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -19846,13 +19923,16 @@
 				"alongside"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-sangai-together"
+			],
 			"freqRank": 1418,
 			"count": 100,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -20584,13 +20664,16 @@
 				"at any time"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-kahilyai-never"
+			],
 			"freqRank": 1483,
 			"count": 96,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -21730,13 +21813,16 @@
 				"this round"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-yaspatak-thistime"
+			],
 			"freqRank": 1575,
 			"count": 91,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -22021,13 +22107,16 @@
 				"all the more"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-jhan-evenmore"
+			],
 			"freqRank": 1604,
 			"count": 89,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -22689,13 +22778,16 @@
 				"perhaps"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-katai-somewhere"
+			],
 			"freqRank": 1661,
 			"count": 86,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -24126,7 +24218,9 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"adj-gahro-hard"
+				"adj-gahro-hard",
+				"adv-ati-too",
+				"adv-tyasaile-therefore"
 			],
 			"freqRank": 1772,
 			"count": 80,
@@ -24351,13 +24445,16 @@
 				"distinct"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-chhuttai-separately"
+			],
 			"freqRank": 1798,
 			"count": 79,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -24801,13 +24898,16 @@
 				"shortly"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-chhittai-soon"
+			],
 			"freqRank": 1850,
 			"count": 76,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -25573,13 +25673,16 @@
 				"too much"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-ati-too"
+			],
 			"freqRank": 1923,
 			"count": 73,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -25884,13 +25987,16 @@
 				"for the first time"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-pahilopatak-firsttime"
+			],
 			"freqRank": 1953,
 			"count": 72,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -25926,13 +26032,16 @@
 				"gently"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-bistarai-slowly"
+			],
 			"freqRank": 1957,
 			"count": 72,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -26949,13 +27058,16 @@
 				"single-handedly"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-eklai-alone"
+			],
 			"freqRank": 2050,
 			"count": 68,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -27032,13 +27144,16 @@
 				"really"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-khasai-particularly"
+			],
 			"freqRank": 2057,
 			"count": 68,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -28465,13 +28580,16 @@
 				"fully"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-purai-entirely"
+			],
 			"freqRank": 2174,
 			"count": 64,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -29517,13 +29635,16 @@
 				"preferably"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-baru-instead"
+			],
 			"freqRank": 2262,
 			"count": 61,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -30245,7 +30366,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"thik-cha-it-s-okay-it-s-fine",
-				"tapai-thik-hunuhuncha-are-you-okay"
+				"tapai-thik-hunuhuncha-are-you-okay",
+				"adv-ahilesamma-sofar"
 			],
 			"freqRank": 2331,
 			"count": 59,
@@ -30474,13 +30596,16 @@
 				"absolutely"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-ekdamai-extremely"
+			],
 			"freqRank": 2352,
 			"count": 58,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -30539,13 +30664,16 @@
 				"yonder"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-uta-overthere"
+			],
 			"freqRank": 2364,
 			"count": 58,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -32649,13 +32777,16 @@
 				"just"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-bharkharai-justnow"
+			],
 			"freqRank": 2540,
 			"count": 53,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -34330,13 +34461,16 @@
 				"nightly"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-raati-atnight"
+			],
 			"freqRank": 2715,
 			"count": 50,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -36799,13 +36933,16 @@
 				"there itself"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-tyahin-rightthere"
+			],
 			"freqRank": 2992,
 			"count": 44,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -36914,13 +37051,16 @@
 				"time and again"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-patakpatak-repeatedly"
+			],
 			"freqRank": 3002,
 			"count": 44,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -38330,13 +38470,16 @@
 				"for sure"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-pakkai-surely"
+			],
 			"freqRank": 3115,
 			"count": 42,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -38396,13 +38539,16 @@
 				"generally"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-prayah-usually"
+			],
 			"freqRank": 3122,
 			"count": 42,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -40082,13 +40228,16 @@
 				"one time"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-ekpatak-once"
+			],
 			"freqRank": 3288,
 			"count": 40,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -40324,13 +40473,16 @@
 				"mainly"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-khasgari-especially"
+			],
 			"freqRank": 3326,
 			"count": 39,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -41020,13 +41172,16 @@
 				"at last"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-balla-finally"
+			],
 			"freqRank": 3395,
 			"count": 38,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -41091,13 +41246,16 @@
 				"usually"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-dheraijaso-mostly"
+			],
 			"freqRank": 3403,
 			"count": 38,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -48582,7 +48740,9 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"ma-ahile-aaunchu-i-will-be-right-back",
-				"ma-chaadai-aaunchu-i-will-come-back-soon"
+				"ma-chaadai-aaunchu-i-will-come-back-soon",
+				"adv-chhittai-soon",
+				"adv-pakkai-surely"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -48631,7 +48791,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"bhitra-aaunus-please-come-in",
-				"aaunus-please-come"
+				"aaunus-please-come",
+				"adv-yata-thisway"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -48702,7 +48863,9 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"ramro-basna-aayo-it-smells-good"
+				"ramro-basna-aayo-it-smells-good",
+				"adv-bharkharai-justnow",
+				"adv-balla-finally"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -49786,7 +49949,8 @@
 				"dhoka-banda-garnus-please-close-the-door",
 				"hosh-garnus-be-careful",
 				"khadai-garnus-please-eat",
-				"piudai-garnus-please-drink"
+				"piudai-garnus-please-drink",
+				"adv-yasari-thisway"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -49896,6 +50060,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "घरमै",
+			"dev": "घरमै",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-dheraijaso-mostly"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -50273,7 +50458,12 @@
 				"noun-bishwaas-trust",
 				"noun-sambhaavana-possibility",
 				"noun-yojana-plan",
-				"noun-surakshaa-safety"
+				"noun-surakshaa-safety",
+				"adv-nikai-quite",
+				"adv-ati-too",
+				"adv-ahilesamma-sofar",
+				"adv-tyahin-rightthere",
+				"adv-tyasaile-therefore"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50329,7 +50519,8 @@
 				"ma-khana-pakaudai-chu-i-am-cooking-food",
 				"ma-thakeko-chu-i-am-tired",
 				"adj-kamjor-weak",
-				"adj-byasta-busy"
+				"adj-byasta-busy",
+				"adv-eklai-alone"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50361,7 +50552,10 @@
 				"aru-kehi-chhaina-nothing-else",
 				"adj-pakka-sure",
 				"adj-nishchit-certain",
-				"noun-samay-time"
+				"noun-samay-time",
+				"adv-khasai-particularly",
+				"adv-ajhai-yet",
+				"adv-katai-somewhere"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50422,6 +50616,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "जाऔं",
+			"dev": "जाऔं",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-sangai-together"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "जान",
 			"dev": "जान",
 			"pos": "",
@@ -50458,7 +50673,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"sidhaa-janus-go-straight"
+				"sidhaa-janus-go-straight",
+				"adv-uta-overthere"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50511,7 +50727,9 @@
 			"courseItemIds": [
 				"ma-jaanchu-i-am-going-to",
 				"ma-ghar-jaanchu-i-am-going-home",
-				"ma-kaam-jaanchu-i-am-going-to-work"
+				"ma-kaam-jaanchu-i-am-going-to-work",
+				"adv-prayah-usually",
+				"adv-yaspatak-thistime"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51038,7 +51256,8 @@
 				"paani-dinus-please-give-me-water",
 				"dinus-please-give-me",
 				"nun-dinus-please-pass-the-salt",
-				"arko-dinus-please-give-me-another"
+				"arko-dinus-please-give-me-another",
+				"adv-thorai-little"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -52557,7 +52776,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"bistaarai-bolnus-please-speak-slowly"
+				"bistaarai-bolnus-please-speak-slowly",
+				"adv-bistarai-slowly"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -52670,6 +52890,28 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "भएको",
+			"dev": "भएको",
+			"pos": "verb",
+			"en": "first-person masculine singular affirmative perfect participle of हुनु (hunu)",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-ajhai-yet"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "भनाइमा",
 			"dev": "भनाइमा",
 			"pos": "",
@@ -52775,7 +53017,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"pheri-bhannus-can-you-repeat-that"
+				"pheri-bhannus-can-you-repeat-that",
+				"adv-pahile-earlier"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -52813,7 +53056,9 @@
 				"malai-biraami-bhayo-i-am-sick",
 				"noun-tayari-preparation",
 				"noun-kharcha-expense",
-				"noun-bikri-sale"
+				"noun-bikri-sale",
+				"adv-purai-entirely",
+				"adv-tyaspachhi-afterthat"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53240,7 +53485,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"yo-raakhnus-please-put-this-here"
+				"yo-raakhnus-please-put-this-here",
+				"adv-chhuttai-separately"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53453,6 +53699,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "लिनुस्",
+			"dev": "लिनुस्",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-baru-instead"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -53708,6 +53975,28 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "सक्छ",
+			"dev": "सक्छ",
+			"pos": "verb",
+			"en": "Inflected form of सक्नु (saknu).",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-jati-asmuchas"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "सक्छु",
 			"dev": "सक्छु",
 			"pos": "",
@@ -53921,6 +54210,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "सुत्छु",
+			"dev": "सुत्छु",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"adv-raati-atnight"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -54393,7 +54703,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"hudaina-not-okay-it-won-t-work"
+				"hudaina-not-okay-it-won-t-work",
+				"adv-kahilyai-never"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -54447,7 +54758,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"huncha-okay-it-will-be-done"
+				"huncha-okay-it-will-be-done",
+				"adv-patakpatak-repeatedly"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -54552,7 +54864,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"hernus-please-look"
+				"hernus-please-look",
+				"adv-ekpatak-once"
 			],
 			"freqRank": null,
 			"count": 0,

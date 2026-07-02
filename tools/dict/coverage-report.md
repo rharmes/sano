@@ -1,9 +1,9 @@
 # Dictionary coverage report
 
-Generated 2026-07-02 · 2385 entries · model claude-opus-4-8
+Generated 2026-07-02 · 2391 entries · model claude-opus-4-8
 
-- In COURSE: 728
-- Expansion candidates (high-freq, not yet in COURSE): 1657
+- In COURSE: 778
+- Expansion candidates (high-freq, not yet in COURSE): 1613
 - COURSE gloss-mismatch flags for review: 25
 
 ## Top expansion candidates (frequency rank · lemma · romanization · gloss)
@@ -63,7 +63,6 @@ Generated 2026-07-02 · 2385 entries · model claude-opus-4-8
 135. वटा · Wataa · counter (items) · everyday
 136. प्राप्त · Praapta · obtained / received · formal
 143. सञ्चालन · Sanchaalan · operation · formal
-146. मात्रै · Maatrai · only · everyday
 148. नगरपालिका · Nagarapaalikaa · municipality · formal
 149. राजनीतिक · Raajanitik · political · formal
 158. माग · Maag · demand · everyday
@@ -85,7 +84,6 @@ Generated 2026-07-02 · 2385 entries · model claude-opus-4-8
 203. रु · Ru · rupees · formal
 204. सूचना · Suchanaa · information / notice · formal
 206. आयोजना · Aayojanaa · project / plan · formal
-207. करिब · Karib · approximately / about · everyday
 211. साथै · Saathai · along with · formal
 213. सन् · San · year (AD) · formal
 219. राष्ट्रपति · Raastrapati · president · formal
@@ -104,10 +102,12 @@ Generated 2026-07-02 · 2385 entries · model claude-opus-4-8
 252. केन्द्र · Kendra · center · everyday
 254. अस्पताल · Aspataal · hospital · everyday
 256. साथ · Saath · with / together · everyday
-257. त्यस्तै · Tyastai · likewise / similarly · everyday
 260. अर्ब · Arba · billion · everyday
 264. दर्ता · Dartaa · registration · formal
 265. सम्पन्न · Sampanna · completed / accomplished · formal
+269. यस्तै · Yastai · like this · everyday
+270. यसअघि · Yasaaghi · earlier / before this · formal
+271. हाल · Haal · currently / now · formal
 
 ## COURSE translations to review (dictionary disagrees — flag only, never auto-changed)
 

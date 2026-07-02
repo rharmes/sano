@@ -99,6 +99,7 @@ const SanoRomanize = (() => {
 	const HALANT = '्'; // ्  kills the inherent 'a'
 	const ANUSVARA = 'ं'; // ं
 	const CHANDRA = 'ँ'; // ँ
+	const VISARGA = 'ः'; // ः  visarga → a coda "h" after the vowel (प्रायः → praayah, अतः → atah)
 
 	// ===== Pronunciation tables (English respelling; conventions confirmed with Ross) =====
 	// Consonants follow Lite except फ→"f". Vowels are respelled for English intuition. (व is "w" by
@@ -185,6 +186,7 @@ const SanoRomanize = (() => {
 		टिभी: 'tee-vee',
 		अङ्ग्रेजी: 'ang-gray-jee',
 		व्यस्त: 'byas-ta', // native व→b word (see VA_AS_B); polished so it reads byas-ta, not b-yuhs-tuh
+		प्रायः: 'praa-yah', // visarga is now handled in tokenize() (→ praayah); this just polishes the pron to praa-yah
 	};
 
 	const DEV_RANGE = /[ऀ-ॿ]/;
@@ -247,6 +249,10 @@ const SanoRomanize = (() => {
 				}
 			} else if (c === ANUSVARA || c === CHANDRA) {
 				if (syl.length) last().nasal = true;
+			} else if (c === VISARGA) {
+				// visarga → a coda "h": its own vowelless syllable, so the preceding syllable keeps its
+				// vowel (प्रायः → praa + ya + h → praayah) and in pron the "h" merges onto it.
+				syl.push({ onset: 'h', vowel: '', inherentA: false, nasal: false });
 			} else {
 				// Unknown Devanagari — shouldn't happen (the coverage test guards this). Keep it
 				// visible rather than silently dropped.
@@ -334,7 +340,7 @@ const SanoRomanize = (() => {
 		pronounce,
 		stripTags, // remove ElevenLabs [performance tags] from any `dev` before it becomes text
 		// Exposed for the coverage test (every corpus codepoint must be a known key).
-		_tables: { CONS, VOWEL_INDEP, VOWEL_MATRA, CONJUNCT, HALANT, ANUSVARA, CHANDRA, WORD_OVERRIDES },
+		_tables: { CONS, VOWEL_INDEP, VOWEL_MATRA, CONJUNCT, HALANT, ANUSVARA, CHANDRA, VISARGA, WORD_OVERRIDES },
 	};
 })();
 

@@ -14,7 +14,15 @@ const isDev = (ch) => /[ऀ-ॿ]/.test(ch);
 
 test('coverage: every Devanagari codepoint in the corpus is a known table key', () => {
 	const T = SanoRomanize._tables;
-	const known = new Set([...Object.keys(T.CONS), ...Object.keys(T.VOWEL_INDEP), ...Object.keys(T.VOWEL_MATRA), T.HALANT, T.ANUSVARA, T.CHANDRA]);
+	const known = new Set([
+		...Object.keys(T.CONS),
+		...Object.keys(T.VOWEL_INDEP),
+		...Object.keys(T.VOWEL_MATRA),
+		T.HALANT,
+		T.ANUSVARA,
+		T.CHANDRA,
+		T.VISARGA,
+	]);
 	for (const k of Object.keys(T.CONJUNCT)) for (const ch of k) known.add(ch);
 
 	const missing = new Set();

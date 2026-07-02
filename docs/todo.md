@@ -53,6 +53,14 @@ this list. Refer to any task by its ID (e.g. "T3").
       `*::before { animation: none !important }` loses specificity to the app's class-scoped animation
       rules, so the fix needs either a targeted freeze stylesheet or a stability-tolerant match click.
 
+## Romanization
+
+- [x] **T19 · Handle visarga (ः, U+0903) in the romanizer** — `tokenize()` now maps visarga to a coda
+      "h" (प्रायः → Praayah, अतः → Atah, दुःख → Duhkha); `VISARGA` is exported in `_tables` and added to
+      the romanize-coverage known-set. The प्रायः `WORD_OVERRIDE` was dropped (tokenizer handles it); a
+      `PRON_OVERRIDE` remains only to polish its pron to *praa-yah*. Minor cosmetic left: word-final
+      visarga after an inherent vowel doubles the h in pron (अतः → uh-tuhh); harmless, none in-corpus.
+
 ## Learning engine — SR-05 relaunch (Phase 1)
 
 Restructures the learning plan for mastery-based, high-repetition progression (interviewed +
@@ -106,6 +114,13 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       refreshed, audio rendered (46 phrase + 63 word clips, `AUDIO_VERSION` 9), dev-seed scenario
       added. Unit titles/goals AI-drafted → Ross's refinement. **Merged; push/deploy pending Ross's
       go.**
+- [ ] **T20 · Batch 4 — everyday adverbs (~44)** — 44 high-frequency everyday adverbs (only 1 of the
+      top-70 was already taught), taught as short frames; merged as 5 units **appended at the end of
+      the path** (How Much, Before & After, How Often, How & Where, Linking & Certainty) — 78 units /
+      773 items. Dropped near-duplicate demonstratives. Coverage refreshed, audio rendered (44 phrase +
+      55 word clips, `AUDIO_VERSION` 10), dev-seed scenario added. Also fixed visarga in the romanizer
+      (T19) so प्रायः works. Unit titles/goals AI-drafted → Ross's refinement. **Merged; push/deploy
+      pending Ross's go.**
 - [x] **T16 · Batch 2 — everyday adjectives (~45)** — 45 high-frequency everyday adjectives, curated
       from the top-80 `--pos adj` pool (dropped semantic dupes already taught + news/formal terms) and
       wrapped in short natural frames (phrases-style). Reviewed + approved, then merged into
