@@ -177,6 +177,14 @@ bump `AUDIO_VERSION` in `js/audio.js` to bust caches. Flags + per-voice routing:
   `expansion-save.php` → gitignored `expansion-approved.json`) → approved rows are merged into
   `js/data.js` **by hand** → audio rendered for the new items only (bump `AUDIO_VERSION`). The three
   staging JSONs are gitignored; it does **not** touch `js/data.js`.
+- **`design/frames.html`** is the localhost-only review surface for the **T11 depth pivot** (T31) —
+  the same pipeline for **alternate frames** (extra example sentences that rotate into an item's
+  reviews, T28/T29): Claude drafts candidate frames under their target item
+  (`design/frames-draft.json`, `[{ id, item, itemEn, itemDev, dev, en }]`) → this tool groups them by
+  item and edits/approves/rejects each (live romanization; POSTs to `frames-save.php` → gitignored
+  `frames-approved.json`) → approved frames are merged into the items' `frames: [{dev,en}]` in
+  `js/data.js` **by hand** → audio rendered for the new frame clips only (`<id>-fN`; bump
+  `AUDIO_VERSION`). Both staging JSONs are gitignored; it does **not** touch `js/data.js`.
 - **`tools/dict/`** is a local-only (never-deployed) **ground-truth Nepali↔English dictionary** to
   cross-check the AI-drafted translations and surface high-frequency words the course is missing
   (`tools/dict/README.md`, file map in `@docs/architecture.md`). `build-dictionary.mjs` ranks words

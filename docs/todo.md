@@ -218,10 +218,11 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
       already-known vocabulary (e.g. "how much is this?", "I don't know"). Appended at the path's end;
       Nepali `dev` AI-drafted → Ross's review; audio rendered for the new items only, bump
       `AUDIO_VERSION`.
-- [ ] **T31 · Frames-review tool** — a localhost-only review surface for depth alternate frames
-      (mirrors `design/expansion.html`): lists each candidate frame under its target item (English +
-      the item's canonical `dev`/romanization), live-romanizes the proposed frame `dev`, and lets Ross
-      edit / approve / reject; POSTs changed rows to a save endpoint that merges into a **gitignored**
-      staging JSON (never touches `js/data.js` directly). Approved frames merged into `js/data.js` by
-      hand, then audio rendered — same select→draft→review→merge→audio loop as the T11 batches, so
-      vetting future T29/T30 batches doesn't mean reading raw `dev` inline.
+- [x] **T31 · Frames-review tool** — `design/frames.html` + `design/frames-save.php` (mirrors the
+      `expansion.html` pipeline): groups candidate frames under their target item (English + canonical
+      `dev`/romanization), live-romanizes the editable frame `dev`, and lets Ross edit / approve /
+      reject; POSTs decisions to `frames-save.php` → gitignored `design/frames-approved.json` (never
+      touches `js/data.js`). Draft format `design/frames-draft.json` (gitignored) = `[{ id, item,
+      itemEn, itemDev, dev, en }]`; approved frames merged into the items' `frames: []` by hand, then
+      audio rendered (`<id>-fN`, bump `AUDIO_VERSION`). Seeded with the next batch — **24 past-tense
+      verb frames awaiting Ross's review** (T29 batch 2). Not deployed (`design/` never ships).

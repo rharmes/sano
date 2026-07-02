@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		<title>Sano — Frames Review</title>
+		<link rel="stylesheet" href="../css/fonts.css" />
+		<style>
+			/* ───────────────────────────────────────────────────────────────
+			   A localhost-only review tool for depth ALTERNATE FRAMES (T31).
+			   It loads an AI-drafted candidate batch (design/frames-draft.json),
+			   groups the proposed frames under their target item (the item's
+			   English + canonical Devanagari + LIVE romanization, read-only), and
+			   shows each proposed frame's editable Devanagari with live romanization
+			   (js/romanize.js) + editable English, and lets Ross approve / reject /
+			   edit each one. Decisions POST to frames-save.php →
+			   design/frames-approved.json. A later merge step folds the APPROVED
+			   frames into the items' `frames: [{dev,en}]` in js/data.js — this tool
+			   never touches it. Not in the deploy rsync (design/ never ships).
+
+			   Brand tokens copied verbatim from css/sano.css; 1rem = 10px. Mirrors
+			   design/expansion.html. ─────────────────────────────────────────── */
+			html {
+				font-size: 62.5%;
+				color-scheme: light;
+
+				--accent: #dd6470;
+				--accent-deep: #b94f5b;
+				--path-complete-color: #56629e;
+
+				--text-color-richer: #2e2933;
+				--text-color-normal: #45404c;
+				--text-color-soft: #79705f;
+				--text-color-softer: #b1a795;
+
+				--text-complete-color: #38824a;
+
+				--background-color: #fbf5e9;
+				--background-color-softer: #f3ecdb;
+
+				--border-color: #e0d8c4;
+				--border-color-softer: #e9e2d1;
+
+				--button-primary-color: #fff;
+
+				--dev-font: 'Kohinoor Devanagari', 'Noto Sans Devanagari', 'Devanagari MT', 'Mangal', 'Nirmala UI', sans-serif;
+			}
+			html.dark {
+				color-scheme: dark;
+				--accent: #e0697a;
+				--accent-deep: #c25462;
+				--path-complete-color: #7384c4;
+
+				--text-color-richer: #efe9f0;
+				--text-color-normal: #d8d1da;
+				--text-color-soft: #9a91a4;
+				--text-color-softer: #645c70;
+
+				--text-complete-color: #7fae83;
+
+				--background-color: #1b1822;
+				--background-color-softer: #232030;
+
+				--border-color: #34303f;
+				--border-color-softer: #2a2735;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				background: var(--background-color);
+				color: var(--text-color-normal);
+				font-family: -apple-system, system-ui, sans-serif;
+				font-size: 1.5rem;
+				line-height: 1.5;
+			}
+			header {
+				position: sticky;
+				top: 0;
+				z-index: 5;
+				background: var(--background-color);
+				border-bottom: 1px solid var(--border-color);
+				padding: 1.4rem 2rem;
+			}
+			.bar {
+				display: flex;
+				align-items: center;
+				gap: 1.2rem;
+				flex-wrap: wrap;
+			}
+			h1 {
+				font-size: 1.9rem;
+				margin: 0;
+				color: var(--text-color-richer);
+			}
+			.intro {
+				max-width: 78ch;
+				margin: 0.6rem 0 0;
+				color: var(--text-color-soft);
+				font-size: 1.35rem;
+			}
+			.spacer {
+				flex: 1;
+			}
+			.counts {
+				font-size: 1.3rem;
+				color: var(--text-color-soft);
+			}
+			.counts b {
+				color: var(--text-color-richer);
+			}
+			.counts .ok {
+				color: var(--text-complete-color);
+			}
+			.counts .no {
+				color: var(--accent-deep);
+			}
+			input.search {
+				flex: 1;
+				min-width: 20rem;
+				padding: 0.7rem 1rem;
+				border: 1px solid var(--border-color);
+				border-radius: 0.8rem;
+				background: var(--background-color-softer);
+				color: var(--text-color-normal);
+				font-size: 1.4rem;
+			}
+			label.toggle {
+				font-size: 1.3rem;
+				color: var(--text-color-soft);
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				white-space: nowrap;
+			}
+			button {
+				font-family: inherit;
+				cursor: pointer;
+				border-radius: 0.8rem;
+				border: 1px solid var(--border-color);
+				background: var(--background-color-softer);
+				color: var(--text-color-normal);
+				font-size: 1.35rem;
+				padding: 0.7rem 1.2rem;
+			}
+			button.primary {
+				background: var(--accent);
+				border-color: var(--accent);
+				color: var(--button-primary-color);
+				font-weight: 700;
+			}
+			button.primary:disabled {
+				opacity: 0.5;
+				cursor: default;
+			}
+			main {
+				padding: 1.6rem 2rem 12rem;
+				max-width: 100rem;
+				margin: 0 auto;
+			}
+			.item {
+				margin: 2.2rem 0 0;
+			}
+			.item-head {
+				display: flex;
+				align-items: baseline;
+				gap: 1rem;
+				flex-wrap: wrap;
+				padding: 0.4rem 0 0.8rem;
+				border-bottom: 1px solid var(--border-color-softer);
+			}
+			.item-en {
+				font-size: 1.6rem;
+				font-weight: 700;
+				color: var(--text-color-richer);
+			}
+			.item-dev {
+				font-family: var(--dev-font);
+				font-size: 1.7rem;
+				color: var(--text-color-normal);
+			}
+			.item-np {
+				font-size: 1.3rem;
+				color: var(--text-color-softer);
+			}
+			.item-id {
+				font-size: 1.15rem;
+				color: var(--text-color-softer);
+				font-family: ui-monospace, monospace;
+			}
+			.frame {
+				display: grid;
+				grid-template-columns: 1fr 1fr auto;
+				gap: 1rem;
+				align-items: start;
+				padding: 1rem;
+				margin: 0.8rem 0;
+				border: 1px solid var(--border-color);
+				border-radius: 1rem;
+				background: var(--background-color-softer);
+			}
+			.frame.approved {
+				border-color: var(--text-complete-color);
+				box-shadow: inset 0.3rem 0 0 var(--text-complete-color);
+			}
+			.frame.rejected {
+				opacity: 0.55;
+				border-style: dashed;
+			}
+			.frame.edited .field-label::after {
+				content: ' · edited';
+				color: var(--accent-deep);
+			}
+			.field-label {
+				display: block;
+				font-size: 1.15rem;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				color: var(--text-color-softer);
+				margin: 0 0 0.3rem;
+			}
+			textarea.dev,
+			input.en {
+				width: 100%;
+				padding: 0.6rem 0.8rem;
+				border: 1px solid var(--border-color);
+				border-radius: 0.6rem;
+				background: var(--background-color);
+				color: var(--text-color-normal);
+				font-size: 1.5rem;
+				font-family: inherit;
+				resize: vertical;
+			}
+			textarea.dev {
+				font-family: var(--dev-font);
+				font-size: 1.8rem;
+				min-height: 4.4rem;
+			}
+			.np {
+				margin: 0.4rem 0 0;
+				font-size: 1.3rem;
+				color: var(--text-color-soft);
+			}
+			.np .pron {
+				color: var(--text-color-softer);
+			}
+			.actions {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+			.actions button {
+				min-width: 8.5rem;
+			}
+			button.approve.on {
+				background: var(--text-complete-color);
+				border-color: var(--text-complete-color);
+				color: #fff;
+			}
+			button.reject.on {
+				background: var(--accent-deep);
+				border-color: var(--accent-deep);
+				color: #fff;
+			}
+			.empty {
+				margin: 6rem auto;
+				text-align: center;
+				color: var(--text-color-soft);
+				max-width: 60ch;
+			}
+			.submitbar {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				padding: 1.2rem 2rem;
+				background: var(--background-color);
+				border-top: 1px solid var(--border-color);
+				display: flex;
+				align-items: center;
+				gap: 1.2rem;
+			}
+			#toast {
+				position: fixed;
+				bottom: 8rem;
+				left: 50%;
+				transform: translateX(-50%) translateY(1rem);
+				background: var(--text-color-richer);
+				color: var(--background-color);
+				padding: 1rem 1.6rem;
+				border-radius: 0.8rem;
+				font-size: 1.35rem;
+				opacity: 0;
+				pointer-events: none;
+				transition:
+					opacity 0.2s,
+					transform 0.2s;
+			}
+			#toast.show {
+				opacity: 1;
+				transform: translateX(-50%) translateY(0);
+			}
+			#toast.error {
+				background: var(--accent-deep);
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="bar">
+				<h1>Frames Review</h1>
+				<span class="spacer"></span>
+				<span class="counts" id="counts"></span>
+				<button id="theme" title="Toggle day/night">☾</button>
+			</div>
+			<p class="intro">
+				Depth alternate frames (T31): each proposed sentence rotates into its target word's reviews. Edit the Devanagari (live
+				romanization updates below it) or the English, then <b>Approve</b> or <b>Reject</b>. <b>Submit</b> saves your decisions to
+				<code>frames-approved.json</code>; approved frames are merged into <code>js/data.js</code> by hand. This tool never edits the
+				course data.
+			</p>
+			<div class="bar" style="margin-top: 1rem">
+				<input class="search" id="search" type="search" placeholder="Search English / romanized / Devanagari / item id…" />
+				<label class="toggle"><input type="checkbox" id="pendingOnly" /> Pending only</label>
+			</div>
+		</header>
+
+		<main>
+			<div id="list"></div>
+			<p class="empty" id="empty" hidden></p>
+		</main>
+
+		<div class="submitbar">
+			<span class="counts" id="counts2"></span>
+			<span class="spacer"></span>
+			<button class="primary" id="submit" disabled>No changes</button>
+		</div>
+		<div id="toast"></div>
+
+		<script src="../js/romanize.js"></script>
+		<script>
+			const DRAFT_URL = './frames-draft.json';
+			const APPROVED_URL = './frames-approved.json';
+			const SAVE_URL = './frames-save.php';
+
+			function romanizeDev(dev) {
+				const cleaned = (dev || '').trim();
+				if (!cleaned) return { np: '', pron: '' };
+				try {
+					return { np: SanoRomanize.romanize(cleaned), pron: SanoRomanize.pronounce(cleaned) };
+				} catch (e) {
+					return { np: '⚠ ' + e.message, pron: '' };
+				}
+			}
+
+			const rows = []; // one per candidate frame
+			const el = (tag, cls, props) => Object.assign(document.createElement(tag), cls ? { className: cls } : {}, props || {});
+
+			const savedDecision = (r) => (r.saved ? r.saved.decision : 'pending');
+			const draftFields = (r) => ({ dev: r.c.dev, en: r.c.en });
+			const baselineFields = (r) => (r.saved ? { dev: r.saved.dev, en: r.saved.en } : draftFields(r));
+			const cur = (r) => ({ dev: r.els.dev.value, en: r.els.en.value });
+			const fieldsDiffer = (a, b) => a.dev.trim() !== b.dev.trim() || a.en.trim() !== b.en.trim();
+
+			// Submittable: a decided row whose decision or fields changed vs. what's stored, OR a row
+			// reverted to pending that had a stored decision (a removal).
+			function isDirty(r) {
+				if (r.decision === 'pending') return !!r.saved;
+				return r.decision !== savedDecision(r) || fieldsDiffer(cur(r), baselineFields(r));
+			}
+
+			function build(draft) {
+				const frames = Array.isArray(draft) ? draft : draft.frames || [];
+				const listEl = document.getElementById('list');
+				const groups = new Map(); // item id -> {itemEn,itemDev,frames:[]}
+				for (const c of frames) {
+					if (!groups.has(c.item)) groups.set(c.item, { itemEn: c.itemEn, itemDev: c.itemDev, frames: [] });
+					groups.get(c.item).frames.push(c);
+				}
+				for (const [itemId, g] of groups) {
+					const section = el('section', 'item');
+					const head = el('div', 'item-head');
+					head.appendChild(el('span', 'item-en', { textContent: g.itemEn || '(no gloss)' }));
+					head.appendChild(el('span', 'item-dev', { textContent: g.itemDev || '' }));
+					const { np } = romanizeDev(g.itemDev);
+					head.appendChild(el('span', 'item-np', { textContent: np }));
+					head.appendChild(el('span', 'item-id', { textContent: itemId }));
+					section.appendChild(head);
+					section._rows = [];
+					for (const c of g.frames) section.appendChild(buildFrame(c, section));
+					listEl.appendChild(section);
+				}
+			}
+
+			function buildFrame(c, section) {
+				const row = el('div', 'frame');
+
+				const devWrap = el('div');
+				devWrap.appendChild(el('label', 'field-label', { textContent: 'Devanagari (frame)' }));
+				const dev = el('textarea', 'dev', { value: c.dev, rows: 1, spellcheck: false });
+				devWrap.appendChild(dev);
+				const npEl = el('p', 'np');
+				devWrap.appendChild(npEl);
+
+				const enWrap = el('div');
+				enWrap.appendChild(el('label', 'field-label', { textContent: 'English' }));
+				const en = el('input', 'en', { value: c.en, type: 'text' });
+				enWrap.appendChild(en);
+
+				const actions = el('div', 'actions');
+				const approve = el('button', 'approve', { textContent: 'Approve' });
+				const reject = el('button', 'reject', { textContent: 'Reject' });
+				const revert = el('button', 'revert', { textContent: 'Revert', title: 'Restore the AI draft and clear the decision' });
+				actions.append(approve, reject, revert);
+
+				row.append(devWrap, enWrap, actions);
+
+				const r = { c, row, els: { dev, en, np: npEl }, decision: 'pending', saved: null };
+				rows.push(r);
+				section._rows.push(r);
+
+				const onEdit = () => refreshRow(r);
+				dev.addEventListener('input', onEdit);
+				en.addEventListener('input', onEdit);
+				approve.addEventListener('click', () => {
+					r.decision = r.decision === 'approved' ? 'pending' : 'approved';
+					refreshRow(r);
+					refreshCounts();
+				});
+				reject.addEventListener('click', () => {
+					r.decision = r.decision === 'rejected' ? 'pending' : 'rejected';
+					refreshRow(r);
+					refreshCounts();
+				});
+				revert.addEventListener('click', () => {
+					dev.value = c.dev;
+					en.value = c.en;
+					r.decision = 'pending';
+					refreshRow(r);
+					refreshCounts();
+				});
+				refreshRow(r);
+				return row;
+			}
+
+			function refreshRow(r) {
+				const { np, pron } = romanizeDev(r.els.dev.value);
+				r.els.np.innerHTML = np ? np + (pron ? ' <span class="pron">· ' + pron + '</span>' : '') : '';
+				r.row.classList.toggle('approved', r.decision === 'approved');
+				r.row.classList.toggle('rejected', r.decision === 'rejected');
+				r.row.classList.toggle('edited', fieldsDiffer(cur(r), draftFields(r)));
+				for (const b of r.row.querySelectorAll('.approve')) b.classList.toggle('on', r.decision === 'approved');
+				for (const b of r.row.querySelectorAll('.reject')) b.classList.toggle('on', r.decision === 'rejected');
+				refreshSubmit();
+			}
+
+			function refreshCounts() {
+				let approved = 0,
+					rejected = 0,
+					pending = 0;
+				for (const r of rows) {
+					if (r.decision === 'approved') approved++;
+					else if (r.decision === 'rejected') rejected++;
+					else pending++;
+				}
+				const txt = `<b>${rows.length}</b> frames · <span class="ok">${approved} approved</span> · <span class="no">${rejected} rejected</span> · ${pending} pending`;
+				document.getElementById('counts').innerHTML = txt;
+				document.getElementById('counts2').innerHTML = txt;
+				refreshSubmit();
+			}
+
+			function refreshSubmit() {
+				const unsaved = rows.filter(isDirty).length;
+				const b = document.getElementById('submit');
+				b.disabled = unsaved === 0;
+				b.textContent = unsaved === 0 ? 'No changes' : 'Submit ' + unsaved + ' decision' + (unsaved === 1 ? '' : 's');
+			}
+
+			function applyFilter() {
+				const q = document.getElementById('search').value.trim().toLowerCase();
+				const pendingOnly = document.getElementById('pendingOnly').checked;
+				let anyVisible = false;
+				for (const section of document.querySelectorAll('.item')) {
+					let visible = 0;
+					for (const r of section._rows) {
+						const hay = (
+							r.els.en.value +
+							' ' +
+							r.els.dev.value +
+							' ' +
+							r.els.np.textContent +
+							' ' +
+							r.c.item
+						).toLowerCase();
+						const show = (!q || hay.indexOf(q) !== -1) && (!pendingOnly || r.decision === 'pending');
+						r.row.hidden = !show;
+						if (show) visible++;
+					}
+					section.hidden = visible === 0;
+					anyVisible = anyVisible || visible > 0;
+				}
+				document.getElementById('empty').hidden = anyVisible;
+				if (!anyVisible) document.getElementById('empty').textContent = 'No frames match the filter.';
+			}
+			document.getElementById('search').addEventListener('input', applyFilter);
+			document.getElementById('pendingOnly').addEventListener('change', applyFilter);
+
+			async function submit() {
+				const edits = [];
+				for (const r of rows) {
+					if (!isDirty(r)) continue;
+					if (r.decision === 'pending') edits.push({ id: r.c.id, remove: true });
+					else
+						edits.push({
+							id: r.c.id,
+							decision: r.decision,
+							item: r.c.item,
+							dev: r.els.dev.value.trim(),
+							en: r.els.en.value.trim(),
+						});
+				}
+				if (!edits.length) return;
+				const b = document.getElementById('submit');
+				b.disabled = true;
+				try {
+					const res = await fetch(SAVE_URL, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json', 'X-Sano-Request': '1' },
+						body: JSON.stringify({ edits }),
+					});
+					const data = await res.json().catch(() => ({}));
+					if (!res.ok || !data.ok) throw new Error(data.error || 'HTTP ' + res.status);
+					for (const r of rows) {
+						if (!isDirty(r)) continue;
+						r.saved =
+							r.decision === 'pending'
+								? null
+								: { decision: r.decision, dev: r.els.dev.value.trim(), en: r.els.en.value.trim() };
+					}
+					refreshCounts();
+					toast(data.approved + ' approved · ' + data.total + ' decision' + (data.total === 1 ? '' : 's') + ' saved.');
+				} catch (err) {
+					refreshSubmit();
+					toast('Could not save: ' + err.message, true);
+				}
+			}
+			document.getElementById('submit').addEventListener('click', submit);
+
+			let toastTimer = null;
+			function toast(msg, isError) {
+				const t = document.getElementById('toast');
+				t.textContent = msg;
+				t.classList.toggle('error', !!isError);
+				t.classList.add('show');
+				clearTimeout(toastTimer);
+				toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+			}
+
+			if (localStorage.getItem('sano-frames-theme') === 'dark') document.documentElement.classList.add('dark');
+			document.getElementById('theme').addEventListener('click', () => {
+				const dark = document.documentElement.classList.toggle('dark');
+				localStorage.setItem('sano-frames-theme', dark ? 'dark' : 'light');
+			});
+
+			// Re-apply saved approve/reject decisions on top of the draft.
+			async function loadApproved() {
+				try {
+					const res = await fetch(APPROVED_URL, { cache: 'no-store' });
+					if (!res.ok) return;
+					const store = await res.json();
+					if (!store || typeof store !== 'object') return;
+					const byId = new Map(rows.map((r) => [r.c.id, r]));
+					for (const [id, e] of Object.entries(store)) {
+						const r = byId.get(id);
+						if (!r || !e || (e.decision !== 'approved' && e.decision !== 'rejected')) continue;
+						r.saved = { decision: e.decision, dev: e.dev, en: e.en };
+						r.decision = e.decision;
+						if (typeof e.dev === 'string' && e.dev) r.els.dev.value = e.dev;
+						if (typeof e.en === 'string' && e.en) r.els.en.value = e.en;
+						refreshRow(r);
+					}
+				} catch (e) {
+					/* no approved file yet — fine */
+				}
+			}
+
+			(async function init() {
+				let draft;
+				try {
+					const res = await fetch(DRAFT_URL, { cache: 'no-store' });
+					draft = await res.json();
+				} catch (e) {
+					const empty = document.getElementById('empty');
+					empty.hidden = false;
+					empty.textContent =
+						'Could not load frames-draft.json (serve with php -S from the repo root, and generate a draft batch).';
+					return;
+				}
+				build(draft);
+				await loadApproved();
+				refreshCounts();
+				applyFilter();
+			})();
+		</script>
+	</body>
+</html>

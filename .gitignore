@@ -31,6 +31,14 @@ design/expansion-draft.json
 design/expansion-approved.json
 design/expansion-approved.json.bak
 
+# Depth frames-review staging (T31), transient pre-merge working data:
+#   -draft.json    = the AI-drafted candidate frames reviewed in design/frames.html
+#   -approved.json = Ross's approve/reject decisions (design/frames-save.php)
+# Approved frames are merged into the items' `frames: []` in js/data.js by hand, then cleared.
+design/frames-draft.json
+design/frames-approved.json
+design/frames-approved.json.bak
+
 # Playwright test artifacts (regenerated every run; never committed/deployed).
 /test-results/
 /playwright-report/
