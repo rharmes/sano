@@ -61,6 +61,13 @@ this list. Refer to any task by its ID (e.g. "T3").
       `PRON_OVERRIDE` remains only to polish its pron to *praa-yah*. Minor cosmetic left: word-final
       visarga after an inherent vowel doubles the h in pron (अतः → uh-tuhh); harmless, none in-corpus.
 
+- [ ] **T22 · Generalize व→b for व्य- words in the romanizer** — Nepali realizes व as "b" in the
+      common व्य- cluster (व्यस्त→byasta, व्यक्ति→byakti, व्यापार→byaapaar, व्यवसाय, व्यवहार), but the
+      rules default व→w so these read "wy-". व्यस्त is patched via `VA_AS_B`; व्यक्ति already shipped as
+      "wyakti" (batch 3). Extend `VA_AS_B` (or add a व्य→by rule) to cover the cluster, re-render the
+      affected word slugs (wyakti→byakti, etc.), and bump `AUDIO_VERSION`. Then future व्य- words (e.g.
+      व्यापार, deferred out of batch 6 for this reason) can be added cleanly.
+
 ## Learning engine — SR-05 relaunch (Phase 1)
 
 Restructures the learning plan for mastery-based, high-repetition progression (interviewed +
@@ -129,6 +136,13 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       Coverage refreshed, audio rendered (27 phrase + 30 word clips, `AUDIO_VERSION` 11), dev-seed
       scenario added. Smaller batch — function words are inherently fewer. Unit titles/goals AI-drafted
       → Ross's refinement. **Merged; push/deploy pending Ross's go.**
+- [ ] **T23 · Batch 6 — everyday-life nouns, part 2 (~45)** — a second nouns pass, deeper in the pool
+      with hard curation for genuinely everyday domains (skipping civic/news terms): 45 nouns as short
+      frames, merged as 5 units **appended at the end of the path** (Travel & Transport, City &
+      Country, Money & Commerce, School & Mind, Health & Life) — 88 units / 845 items. Coverage
+      refreshed, audio rendered (45 phrase + 58 word clips, `AUDIO_VERSION` 12), dev-seed scenario
+      added. व्यापार deferred pending T22 (व→b). Unit titles/goals AI-drafted → Ross's refinement.
+      **Merged; push/deploy pending Ross's go.**
 - [x] **T16 · Batch 2 — everyday adjectives (~45)** — 45 high-frequency everyday adjectives, curated
       from the top-80 `--pos adj` pool (dropped semantic dupes already taught + news/formal terms) and
       wrapped in short natural frames (phrases-style). Reviewed + approved, then merged into

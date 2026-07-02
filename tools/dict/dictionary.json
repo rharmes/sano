@@ -95,7 +95,10 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"malai-kaam-garnu-parcha-i-have-to-work",
-				"ke-garnu-parcha-what-should-i-do"
+				"ke-garnu-parcha-what-should-i-do",
+				"noun2-kharid-purchase",
+				"noun2-hisab-account",
+				"noun2-adhyayan-study"
 			],
 			"freqRank": 6,
 			"count": 32629,
@@ -156,7 +159,8 @@
 				"adj-alag-separate",
 				"adj-samanya-ordinary",
 				"adv-pahilopatak-firsttime",
-				"adv-tyastai-likewise"
+				"adv-tyastai-likewise",
+				"noun2-artha-meaning"
 			],
 			"freqRank": 8,
 			"count": 5025,
@@ -458,7 +462,8 @@
 			"courseItemIds": [
 				"tapai-nepali-bolnu-hunchha-do-you-speak-nepali",
 				"ma-nepali-bolchhu-i-speak-nepali",
-				"ma-nepali-boldina-i-don-t-speak-nepali"
+				"ma-nepali-boldina-i-don-t-speak-nepali",
+				"noun2-bhasha-language"
 			],
 			"freqRank": 29,
 			"count": 2290,
@@ -1006,7 +1011,9 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"naya-new"
+				"naya-new",
+				"noun2-motorcycle",
+				"noun2-anubhav-experience"
 			],
 			"freqRank": 61,
 			"count": 1255,
@@ -1307,13 +1314,16 @@
 				"medical"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-swasthya-health"
+			],
 			"freqRank": 82,
 			"count": 1130,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -1384,7 +1394,8 @@
 				"dherai-ramro-very-good-excellent",
 				"dherai-piro-cha-it-is-very-spicy",
 				"dherai-many-much-very",
-				"noun-kharcha-expense"
+				"noun-kharcha-expense",
+				"noun2-gyan-knowledge"
 			],
 			"freqRank": 85,
 			"count": 1126,
@@ -1476,14 +1487,17 @@
 				"to allow"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-pariksha-exam"
+			],
 			"freqRank": 92,
 			"count": 4872,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -2336,7 +2350,9 @@
 				"tapai-ke-kaam-garnuhunchha-what-do-you-do",
 				"noun-kaaran-reason",
 				"noun-yojana-plan",
-				"adv-tyaspachhi-afterthat"
+				"adv-tyaspachhi-afterthat",
+				"noun2-phaida-benefit",
+				"noun2-artha-meaning"
 			],
 			"freqRank": 144,
 			"count": 687,
@@ -3325,7 +3341,12 @@
 				"noun-parivartan-change",
 				"noun-rakam-amount",
 				"noun-kampani-company",
-				"noun-sadak-road"
+				"noun-sadak-road",
+				"noun2-pul-bridge",
+				"noun2-sahar-city",
+				"noun2-durghatana-accident",
+				"noun2-jokhim-risk",
+				"noun2-sudhar-improvement"
 			],
 			"freqRank": 201,
 			"count": 765,
@@ -3352,7 +3373,8 @@
 			"courseItemIds": [
 				"ramrari-jaanu-go-safely-take-care",
 				"malai-jaanu-parcha-i-have-to-go",
-				"malai-jaanu-pardaina-i-dont-have-to-go"
+				"malai-jaanu-pardaina-i-dont-have-to-go",
+				"noun2-videsh-abroad"
 			],
 			"freqRank": 202,
 			"count": 2266,
@@ -3869,7 +3891,14 @@
 				"adv-ekdamai-extremely",
 				"adv-jhan-evenmore",
 				"adv-sabaibhanda-most",
-				"fn-jun-whichthat"
+				"fn-jun-whichthat",
+				"noun2-yatra-journey",
+				"noun2-himal-mountain",
+				"noun2-aamdani-income",
+				"noun2-karobar-business",
+				"noun2-vichar-idea",
+				"noun2-sapana-dream",
+				"noun2-swasthya-health"
 			],
 			"freqRank": 236,
 			"count": 564,
@@ -5178,14 +5207,17 @@
 				"to get"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-rin-loan"
+			],
 			"freqRank": 314,
 			"count": 1827,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -5654,7 +5686,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"noun-upachaar-treatment"
+				"noun-upachaar-treatment",
+				"noun2-rog-disease"
 			],
 			"freqRank": 346,
 			"count": 634,
@@ -5940,7 +5973,9 @@
 				"noun-bhaag-part",
 				"noun-bajet-budget",
 				"noun-pariwaar-family",
-				"noun-desh-country"
+				"noun-desh-country",
+				"noun2-gaun-village",
+				"noun2-sharir-body"
 			],
 			"freqRank": 363,
 			"count": 417,
@@ -6243,7 +6278,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"dhoka-banda-garnus-please-close-the-door",
-				"dhoka-banda-garnu-bhayo-did-you-close-the-door"
+				"dhoka-banda-garnu-bhayo-did-you-close-the-door",
+				"noun2-yatayat-transport"
 			],
 			"freqRank": 386,
 			"count": 326,
@@ -7594,13 +7630,16 @@
 				"reading"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-adhyayan-study"
+			],
 			"freqRank": 474,
 			"count": 272,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -8349,13 +8388,16 @@
 				"dealing"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-karobar-business"
+			],
 			"freqRank": 523,
 			"count": 253,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -8908,13 +8950,16 @@
 				"jab"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-khop-vaccine"
+			],
 			"freqRank": 571,
 			"count": 287,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -9129,13 +9174,16 @@
 				"ride"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-sawari-vehicle"
+			],
 			"freqRank": 590,
 			"count": 229,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -9350,13 +9398,16 @@
 				"hazard"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-jokhim-risk"
+			],
 			"freqRank": 607,
 			"count": 299,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -9762,13 +9813,16 @@
 				"betterment"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-sudhar-improvement"
+			],
 			"freqRank": 632,
 			"count": 261,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -9967,13 +10021,16 @@
 				"procurement"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-kharid-purchase"
+			],
 			"freqRank": 645,
 			"count": 215,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -10257,14 +10314,17 @@
 				"wealth"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-artha-meaning"
+			],
 			"freqRank": 672,
 			"count": 205,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -10681,13 +10741,16 @@
 				"takeoff"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-udaan-flight"
+			],
 			"freqRank": 708,
 			"count": 195,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -10994,14 +11057,17 @@
 				"capital"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-rajdhani-capital"
+			],
 			"freqRank": 727,
 			"count": 229,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -11489,14 +11555,17 @@
 				"playground"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-maidan-field"
+			],
 			"freqRank": 763,
 			"count": 254,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -11880,14 +11949,17 @@
 				"settlement"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-samadhan-solution"
+			],
 			"freqRank": 791,
 			"count": 223,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -12612,13 +12684,16 @@
 				"tour"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-yatra-journey"
+			],
 			"freqRank": 848,
 			"count": 211,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -12667,7 +12742,9 @@
 				"kati-bajyo-what-time-is-it",
 				"adj-sundar-beautiful",
 				"noun-gate-date",
-				"fn-wataa-counter"
+				"fn-wataa-counter",
+				"noun2-jamma-total",
+				"noun2-umer-age"
 			],
 			"freqRank": 850,
 			"count": 169,
@@ -13380,13 +13457,16 @@
 				"boundary"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-sima-border"
+			],
 			"freqRank": 899,
 			"count": 158,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -13468,14 +13548,17 @@
 				"deposit"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-jamma-total"
+			],
 			"freqRank": 905,
 			"count": 157,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -13650,14 +13733,17 @@
 				"trial"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-pariksha-exam"
+			],
 			"freqRank": 914,
 			"count": 203,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -13841,14 +13927,17 @@
 				"to impose"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-khop-vaccine"
+			],
 			"freqRank": 924,
 			"count": 769,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -14475,13 +14564,16 @@
 			"en": "bridge",
 			"altEn": [],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-pul-bridge"
+			],
 			"freqRank": 973,
 			"count": 146,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -14496,7 +14588,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"bas-bus"
+				"bas-bus",
+				"noun2-chalak-driver"
 			],
 			"freqRank": 974,
 			"count": 146,
@@ -14675,14 +14768,17 @@
 				"foreign land"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-videsh-abroad"
+			],
 			"freqRank": 987,
 			"count": 275,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -14726,7 +14822,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"sano-small-little",
-				"yo-tyo-bhanda-sano-smaller"
+				"yo-tyo-bhanda-sano-smaller",
+				"noun2-basti-settlement"
 			],
 			"freqRank": 992,
 			"count": 275,
@@ -15226,13 +15323,16 @@
 				"feeling"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-anubhav-experience"
+			],
 			"freqRank": 1017,
 			"count": 139,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -15270,13 +15370,16 @@
 				"consideration"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-vichar-idea"
+			],
 			"freqRank": 1019,
 			"count": 139,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -15292,13 +15395,16 @@
 				"crash"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-durghatana-accident"
+			],
 			"freqRank": 1021,
 			"count": 266,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -15635,7 +15741,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"noun-pratiyogita-competition"
+				"noun-pratiyogita-competition",
+				"noun2-maidan-field"
 			],
 			"freqRank": 1049,
 			"count": 168,
@@ -15682,7 +15789,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"purano-old"
+				"purano-old",
+				"noun2-mandir-temple"
 			],
 			"freqRank": 1052,
 			"count": 250,
@@ -15727,14 +15835,17 @@
 				"traffic"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-yatayat-transport"
+			],
 			"freqRank": 1056,
 			"count": 134,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -15793,14 +15904,17 @@
 				"reckoning"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-hisab-account"
+			],
 			"freqRank": 1059,
 			"count": 134,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -15815,13 +15929,16 @@
 				"money"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-nagad-cash"
+			],
 			"freqRank": 1060,
 			"count": 134,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -16375,13 +16492,16 @@
 				"shrine"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-mandir-temple"
+			],
 			"freqRank": 1113,
 			"count": 213,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -16659,14 +16779,17 @@
 				"hamlet"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-gaun-village"
+			],
 			"freqRank": 1132,
 			"count": 299,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -17079,14 +17202,17 @@
 				"candidacy nomination"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-tikat-ticket"
+			],
 			"freqRank": 1170,
 			"count": 123,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -18283,13 +18409,16 @@
 				"conductor"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-chalak-driver"
+			],
 			"freqRank": 1273,
 			"count": 112,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -18960,14 +19089,17 @@
 				"orbit"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-kaksha-class"
+			],
 			"freqRank": 1328,
 			"count": 107,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -19202,13 +19334,16 @@
 				"gain"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-phaida-benefit"
+			],
 			"freqRank": 1349,
 			"count": 105,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -20008,13 +20143,16 @@
 				"revenue"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-aamdani-income"
+			],
 			"freqRank": 1420,
 			"count": 100,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -20094,7 +20232,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"adj-panchaun-fifth"
+				"adj-panchaun-fifth",
+				"noun2-kaksha-class"
 			],
 			"freqRank": 1428,
 			"count": 100,
@@ -20274,13 +20413,16 @@
 				"credit"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-rin-loan"
+			],
 			"freqRank": 1443,
 			"count": 99,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -20638,14 +20780,17 @@
 				"years old"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-umer-age"
+			],
 			"freqRank": 1476,
 			"count": 147,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -21043,14 +21188,17 @@
 				"motorbike"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-motorcycle"
+			],
 			"freqRank": 1509,
 			"count": 94,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -21322,13 +21470,16 @@
 			"en": "traffic",
 			"altEn": [],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-traffic"
+			],
 			"freqRank": 1531,
 			"count": 93,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -21652,14 +21803,17 @@
 				"aspiration"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-sapana-dream"
+			],
 			"freqRank": 1559,
 			"count": 92,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -22220,14 +22374,17 @@
 				"Himalaya"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-himal-mountain"
+			],
 			"freqRank": 1606,
 			"count": 89,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -22617,14 +22774,17 @@
 				"wisdom"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-gyan-knowledge"
+			],
 			"freqRank": 1637,
 			"count": 88,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -24109,14 +24269,17 @@
 				"tongue"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-bhasha-language"
+			],
 			"freqRank": 1757,
 			"count": 160,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -24318,14 +24481,17 @@
 				"neighborhood"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-basti-settlement"
+			],
 			"freqRank": 1773,
 			"count": 123,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -28153,14 +28319,17 @@
 				"rental"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-bhada-rent"
+			],
 			"freqRank": 2137,
 			"count": 104,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -29063,14 +29232,17 @@
 				"town"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-sahar-city"
+			],
 			"freqRank": 2203,
 			"count": 96,
 			"confidence": "low",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "disagree",
 			"review": null,
@@ -30473,13 +30645,16 @@
 				"physique"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-sharir-body"
+			],
 			"freqRank": 2335,
 			"count": 104,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -50167,6 +50342,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "घरको",
+			"dev": "घरको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-bhada-rent"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "घरमा",
 			"dev": "घरमा",
 			"pos": "",
@@ -50595,7 +50791,9 @@
 				"fn-kohi-someone",
 				"fn-jun-whichthat",
 				"fn-yadi-if",
-				"fn-kinabhane-because"
+				"fn-kinabhane-because",
+				"noun2-yatayat-transport",
+				"noun2-himal-mountain"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50688,7 +50886,8 @@
 				"adv-khasai-particularly",
 				"adv-ajhai-yet",
 				"adv-katai-somewhere",
-				"fn-kunai-any"
+				"fn-kunai-any",
+				"noun2-nagad-cash"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50873,6 +51072,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "जाम",
+			"dev": "जाम",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-traffic"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -51122,7 +51342,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"tapaiko-your-formal",
-				"tapai-ko-naam-ke-ho-what-is-your-name-formal"
+				"tapai-ko-naam-ke-ho-what-is-your-name-formal",
+				"noun2-umer-age"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51525,6 +51746,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "देशको",
+			"dev": "देशको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-sima-border"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "धरती",
 			"dev": "धरती",
 			"pos": "noun",
@@ -51692,6 +51934,28 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "नेपालको",
+			"dev": "नेपालको",
+			"pos": "noun",
+			"en": "genitive singular of नेपाल (nepāl).",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-rajdhani-capital"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -52451,6 +52715,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "बसको",
+			"dev": "बसको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-tikat-ticket"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "बस्छु",
 			"dev": "बस्छु",
 			"pos": "",
@@ -52644,6 +52929,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "बिहानको",
+			"dev": "बिहानको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-udaan-flight"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -53601,7 +53907,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"noun-bare-about",
-				"noun-prayog-use"
+				"noun-prayog-use",
+				"noun2-artha-meaning"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53719,7 +54026,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"yaha-roknus-please-stop-here",
-				"roknus-please-stop"
+				"roknus-please-stop",
+				"noun2-sawari-vehicle"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53729,6 +54037,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "रोगको",
+			"dev": "रोगको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-rog-disease"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -54274,6 +54603,28 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "समस्याको",
+			"dev": "समस्याको",
+			"pos": "noun",
+			"en": "form of समस्या (samasyā).",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"noun2-samadhan-solution"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
 			"review": null,
 			"cumPct": 0.643
 		},

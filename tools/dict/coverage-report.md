@@ -1,9 +1,9 @@
 # Dictionary coverage report
 
-Generated 2026-07-02 · 2393 entries · model claude-opus-4-8
+Generated 2026-07-02 · 2401 entries · model claude-opus-4-8
 
-- In COURSE: 807
-- Expansion candidates (high-freq, not yet in COURSE): 1586
+- In COURSE: 862
+- Expansion candidates (high-freq, not yet in COURSE): 1539
 - COURSE gloss-mismatch flags for review: 25
 
 ## Top expansion candidates (frequency rank · lemma · romanization · gloss)
@@ -32,11 +32,9 @@ Generated 2026-07-02 · 2393 entries · model claude-opus-4-8
 74. जिल्ला · Jillaa · district · everyday
 77. जनाउनु · Janaaunu · to indicate · formal
 79. निर्माण · Nirmaan · construction · everyday
-82. स्वास्थ्य · Swaasthya · health · everyday
 83. रूप · Rup · form · formal
 87. विभिन्न · Wibhinna · various / different · formal
 91. सुरु · Suru · beginning / start · everyday
-92. दिनु · Dinu · to give · everyday
 93. उक्त · Ukta · aforesaid / said · formal
 94. पार्टी · Paarti · party · everyday
 95. त · Ta · emphatic particle · everyday
@@ -108,6 +106,8 @@ Generated 2026-07-02 · 2393 entries · model claude-opus-4-8
 284. उपलब्ध · Upalabdha · available · formal
 285. बढ्नु · Badhnu · to increase / grow · everyday
 286. भारतीय · Bhaaratiy · Indian · formal
+288. नीति · Niti · policy · formal
+290. मन्त्रालय · Mantraalay · ministry · formal
 
 ## COURSE translations to review (dictionary disagrees — flag only, never auto-changed)
 

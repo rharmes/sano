@@ -24,6 +24,14 @@
 			"noun-karyakram-program"
 		]
 	},
+	"aamdaani": {
+		"roman": "aamdaani",
+		"dev": "आम्दानी",
+		"source": "aligned",
+		"phrases": [
+			"noun2-aamdani-income"
+		]
+	},
 	"aanp": {
 		"roman": "aanp",
 		"dev": "आँप",
@@ -102,6 +110,14 @@
 			"adj-niko-healed"
 		]
 	},
+	"adhyayan": {
+		"roman": "adhyayan",
+		"dev": "अध्ययन",
+		"source": "aligned",
+		"phrases": [
+			"noun2-adhyayan-study"
+		]
+	},
 	"aghillo": {
 		"roman": "aghillo",
 		"dev": "अघिल्लो",
@@ -176,6 +192,14 @@
 			"antim-mol-kati-what-s-your-final-price"
 		]
 	},
+	"anubhaw": {
+		"roman": "anubhaw",
+		"dev": "अनुभव",
+		"source": "aligned",
+		"phrases": [
+			"noun2-anubhav-experience"
+		]
+	},
 	"arba": {
 		"roman": "arba",
 		"dev": "अर्ब",
@@ -191,6 +215,14 @@
 		"phrases": [
 			"noun-bishaya-topic",
 			"noun-saal-year"
+		]
+	},
+	"artha": {
+		"roman": "artha",
+		"dev": "अर्थ",
+		"source": "aligned",
+		"phrases": [
+			"noun2-artha-meaning"
 		]
 	},
 	"aru": {
@@ -380,7 +412,8 @@
 		"source": "aligned",
 		"phrases": [
 			"dhoka-banda-garnu-bhayo-did-you-close-the-door",
-			"dhoka-banda-garnus-please-close-the-door"
+			"dhoka-banda-garnus-please-close-the-door",
+			"noun2-yatayat-transport"
 		]
 	},
 	"baru": {
@@ -389,6 +422,22 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-baru-instead"
+		]
+	},
+	"bas": {
+		"roman": "bas",
+		"dev": "बस",
+		"source": "aligned",
+		"phrases": [
+			"noun2-chalak-driver"
+		]
+	},
+	"basako": {
+		"roman": "basako",
+		"dev": "बसको",
+		"source": "aligned",
+		"phrases": [
+			"noun2-tikat-ticket"
 		]
 	},
 	"basnuhunchha": {
@@ -405,6 +454,14 @@
 		"source": "aligned",
 		"phrases": [
 			"yaha-basnus-please-have-a-seat"
+		]
+	},
+	"basti": {
+		"roman": "basti",
+		"dev": "बस्ती",
+		"source": "aligned",
+		"phrases": [
+			"noun2-basti-settlement"
 		]
 	},
 	"bataaunus": {
@@ -434,6 +491,14 @@
 			"sutne-bela-bhayo-it-s-bedtime"
 		]
 	},
+	"bhaadaa": {
+		"roman": "bhaadaa",
+		"dev": "भाडा",
+		"source": "aligned",
+		"phrases": [
+			"noun2-bhada-rent"
+		]
+	},
 	"bhaag": {
 		"roman": "bhaag",
 		"dev": "भाग",
@@ -456,6 +521,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-bhari-heavy"
+		]
+	},
+	"bhaasaa": {
+		"roman": "bhaasaa",
+		"dev": "भाषा",
+		"source": "aligned",
+		"phrases": [
+			"noun2-bhasha-language"
 		]
 	},
 	"bhaat": {
@@ -598,6 +671,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-khasgari-especially"
+		]
+	},
+	"bihaanako": {
+		"roman": "bihaanako",
+		"dev": "बिहानको",
+		"source": "aligned",
+		"phrases": [
+			"noun2-udaan-flight"
 		]
 	},
 	"bikri": {
@@ -785,6 +866,14 @@
 			"pani-chaahiyo-i-need-water"
 		]
 	},
+	"chaalak": {
+		"roman": "chaalak",
+		"dev": "चालक",
+		"source": "aligned",
+		"phrases": [
+			"noun2-chalak-driver"
+		]
+	},
 	"chaalu": {
 		"roman": "chaalu",
 		"dev": "चालु",
@@ -892,6 +981,8 @@
 			"noun-sambhaavana-possibility",
 			"noun-surakshaa-safety",
 			"noun-yojana-plan",
+			"noun2-himal-mountain",
+			"noun2-yatayat-transport",
 			"pani-pariracha-it-is-raining",
 			"sasto-cha-it-s-cheap",
 			"swagat-cha-you-re-welcome",
@@ -921,6 +1012,7 @@
 			"kehi-chhaina-nothing-it-s-nothing",
 			"khana-khaeko-chhaina-i-haven-t-eaten",
 			"noun-samay-time",
+			"noun2-nagad-cash",
 			"thaha-chhaina-i-don-t-know"
 		]
 	},
@@ -1078,6 +1170,14 @@
 			"noun-desh-country"
 		]
 	},
+	"deshako": {
+		"roman": "deshako",
+		"dev": "देशको",
+		"source": "aligned",
+		"phrases": [
+			"noun2-sima-border"
+		]
+	},
 	"dherai": {
 		"roman": "dherai",
 		"dev": "धेरै",
@@ -1085,7 +1185,8 @@
 		"phrases": [
 			"dherai-piro-cha-it-is-very-spicy",
 			"dherai-ramro-very-good-excellent",
-			"noun-kharcha-expense"
+			"noun-kharcha-expense",
+			"noun2-gyan-knowledge"
 		]
 	},
 	"dheraijaso": {
@@ -1153,6 +1254,14 @@
 			"ma-dinchu-i-give"
 		]
 	},
+	"dinu": {
+		"roman": "dinu",
+		"dev": "दिनु",
+		"source": "aligned",
+		"phrases": [
+			"noun2-pariksha-exam"
+		]
+	},
 	"dinuholaa": {
 		"roman": "dinuholaa",
 		"dev": "दिनुहोला",
@@ -1209,6 +1318,14 @@
 		"source": "aligned",
 		"phrases": [
 			"tauko-dukhyo-my-head-hurts-headache"
+		]
+	},
+	"durghatanaa": {
+		"roman": "durghatanaa",
+		"dev": "दुर्घटना",
+		"source": "aligned",
+		"phrases": [
+			"noun2-durghatana-accident"
 		]
 	},
 	"duwai": {
@@ -1319,6 +1436,14 @@
 			"fn-natra-otherwise"
 		]
 	},
+	"gaau": {
+		"roman": "gaau",
+		"dev": "गाउँ",
+		"source": "aligned",
+		"phrases": [
+			"noun2-gaun-village"
+		]
+	},
 	"gae": {
 		"roman": "gae",
 		"dev": "गएँ",
@@ -1395,7 +1520,10 @@
 		"source": "override",
 		"phrases": [
 			"ke-garnu-parcha-what-should-i-do",
-			"malai-kaam-garnu-parcha-i-have-to-work"
+			"malai-kaam-garnu-parcha-i-have-to-work",
+			"noun2-adhyayan-study",
+			"noun2-hisab-account",
+			"noun2-kharid-purchase"
 		]
 	},
 	"garnubhayo": {
@@ -1476,6 +1604,14 @@
 			"ma-ghar-safaa-garchu-i-will-clean-the-house"
 		]
 	},
+	"gharako": {
+		"roman": "gharako",
+		"dev": "घरको",
+		"source": "aligned",
+		"phrases": [
+			"noun2-bhada-rent"
+		]
+	},
 	"gharamai": {
 		"roman": "gharamai",
 		"dev": "घरमै",
@@ -1522,6 +1658,14 @@
 		"source": "aligned",
 		"phrases": [
 			"u-git-sunchha-he-she-listens"
+		]
+	},
+	"gyaan": {
+		"roman": "gyaan",
+		"dev": "ज्ञान",
+		"source": "aligned",
+		"phrases": [
+			"noun2-gyan-knowledge"
 		]
 	},
 	"haami": {
@@ -1630,6 +1774,22 @@
 			"adv-ekpatak-once"
 		]
 	},
+	"himaal": {
+		"roman": "himaal",
+		"dev": "हिमाल",
+		"source": "aligned",
+		"phrases": [
+			"noun2-himal-mountain"
+		]
+	},
+	"hisaab": {
+		"roman": "hisaab",
+		"dev": "हिसाब",
+		"source": "aligned",
+		"phrases": [
+			"noun2-hisab-account"
+		]
+	},
 	"hiu": {
 		"roman": "hiu",
 		"dev": "हिउँ",
@@ -1650,6 +1810,7 @@
 			"adv-tyastai-likewise",
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 			"kati-ho-how-much-is-it",
+			"noun2-artha-meaning",
 			"tapai-kaha-bata-ho-where-are-you-from",
 			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
 			"timro-naam-ke-ho-what-is-your-name-informal",
@@ -1748,6 +1909,14 @@
 			"jado-cha-it-s-cold"
 		]
 	},
+	"jaam": {
+		"roman": "jaam",
+		"dev": "जाम",
+		"source": "aligned",
+		"phrases": [
+			"noun2-traffic"
+		]
+	},
 	"jaan": {
 		"roman": "jaan",
 		"dev": "जान",
@@ -1796,6 +1965,7 @@
 		"phrases": [
 			"malai-jaanu-parcha-i-have-to-go",
 			"malai-jaanu-pardaina-i-dont-have-to-go",
+			"noun2-videsh-abroad",
 			"ramrari-jaanu-go-safely-take-care"
 		]
 	},
@@ -1822,6 +1992,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-jagga-land"
+		]
+	},
+	"jammaa": {
+		"roman": "jammaa",
+		"dev": "जम्मा",
+		"source": "aligned",
+		"phrases": [
+			"noun2-jamma-total"
 		]
 	},
 	"janaa": {
@@ -1920,6 +2098,14 @@
 			"paisa-jogaaunus-save-money"
 		]
 	},
+	"jokhim": {
+		"roman": "jokhim",
+		"dev": "जोखिम",
+		"source": "aligned",
+		"phrases": [
+			"noun2-jokhim-risk"
+		]
+	},
 	"jun": {
 		"roman": "jun",
 		"dev": "जुन",
@@ -1956,6 +2142,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-kaaran-reason"
+		]
+	},
+	"kaarobaar": {
+		"roman": "kaarobaar",
+		"dev": "कारोबार",
+		"source": "aligned",
+		"phrases": [
+			"noun2-karobar-business"
 		]
 	},
 	"kaaryakram": {
@@ -2018,6 +2212,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-kahilyai-never"
+		]
+	},
+	"kakshaa": {
+		"roman": "kakshaa",
+		"dev": "कक्षा",
+		"source": "aligned",
+		"phrases": [
+			"noun2-kaksha-class"
 		]
 	},
 	"kalam": {
@@ -2121,7 +2323,9 @@
 			"kati-bajyo-what-time-is-it",
 			"kati-bhayo-how-much-was-it",
 			"kati-ho-how-much-is-it",
-			"noun-gate-date"
+			"noun-gate-date",
+			"noun2-jamma-total",
+			"noun2-umer-age"
 		]
 	},
 	"ke": {
@@ -2137,6 +2341,8 @@
 			"ke-garnu-parcha-what-should-i-do",
 			"noun-kaaran-reason",
 			"noun-yojana-plan",
+			"noun2-artha-meaning",
+			"noun2-phaida-benefit",
 			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite",
 			"tapai-ke-kaam-garnuhunchha-what-do-you-do",
 			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
@@ -2271,6 +2477,14 @@
 			"noun-kharcha-expense"
 		]
 	},
+	"kharid": {
+		"roman": "kharid",
+		"dev": "खरिद",
+		"source": "aligned",
+		"phrases": [
+			"noun2-kharid-purchase"
+		]
+	},
 	"khelchha": {
 		"roman": "khelchha",
 		"dev": "खेल्छ",
@@ -2285,6 +2499,14 @@
 		"source": "aligned",
 		"phrases": [
 			"yo-khojnus-please-look-for-this"
+		]
+	},
+	"khop": {
+		"roman": "khop",
+		"dev": "खोप",
+		"source": "aligned",
+		"phrases": [
+			"noun2-khop-vaccine"
 		]
 	},
 	"khulaa": {
@@ -2436,6 +2658,14 @@
 			"adv-lagataar-continuously"
 		]
 	},
+	"lagaaunu": {
+		"roman": "lagaaunu",
+		"dev": "लगाउनु",
+		"source": "aligned",
+		"phrases": [
+			"noun2-khop-vaccine"
+		]
+	},
 	"lagaaunus": {
 		"roman": "lagaaunus",
 		"dev": "लगाउनुस्",
@@ -2482,6 +2712,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-linchu-i-take"
+		]
+	},
+	"linu": {
+		"roman": "linu",
+		"dev": "लिनु",
+		"source": "aligned",
+		"phrases": [
+			"noun2-rin-loan"
 		]
 	},
 	"linus": {
@@ -2660,6 +2898,14 @@
 			"noun-mahila-woman"
 		]
 	},
+	"maidaan": {
+		"roman": "maidaan",
+		"dev": "मैदान",
+		"source": "aligned",
+		"phrases": [
+			"noun2-maidan-field"
+		]
+	},
 	"maile": {
 		"roman": "maile",
 		"dev": "मैले",
@@ -2726,6 +2972,14 @@
 			"chaad-manaaunchaun-we-celebrate-the-festival"
 		]
 	},
+	"mandir": {
+		"roman": "mandir",
+		"dev": "मन्दिर",
+		"source": "aligned",
+		"phrases": [
+			"noun2-mandir-temple"
+		]
+	},
 	"masang": {
 		"roman": "masang",
 		"dev": "मसँग",
@@ -2753,7 +3007,9 @@
 			"noun-desh-country",
 			"noun-nirnaya-decision",
 			"noun-pariwaar-family",
-			"noun-prashna-question"
+			"noun-prashna-question",
+			"noun2-gaun-village",
+			"noun2-sharir-body"
 		]
 	},
 	"milchha": {
@@ -2787,6 +3043,14 @@
 		"source": "aligned",
 		"phrases": [
 			"antim-mol-kati-what-s-your-final-price"
+		]
+	},
+	"motarasaaikal": {
+		"roman": "motarasaaikal",
+		"dev": "मोटरसाइकल",
+		"source": "aligned",
+		"phrases": [
+			"noun2-motorcycle"
 		]
 	},
 	"mukh": {
@@ -2824,6 +3088,14 @@
 			"timro-naam-ke-ho-what-is-your-name-informal"
 		]
 	},
+	"nagad": {
+		"roman": "nagad",
+		"dev": "नगद",
+		"source": "aligned",
+		"phrases": [
+			"noun2-nagad-cash"
+		]
+	},
 	"nambar": {
 		"roman": "nambar",
 		"dev": "नम्बर",
@@ -2848,6 +3120,23 @@
 			"fn-natra-otherwise"
 		]
 	},
+	"nayaa": {
+		"roman": "nayaa",
+		"dev": "नयाँ",
+		"source": "aligned",
+		"phrases": [
+			"noun2-anubhav-experience",
+			"noun2-motorcycle"
+		]
+	},
+	"nepaalako": {
+		"roman": "nepaalako",
+		"dev": "नेपालको",
+		"source": "aligned",
+		"phrases": [
+			"noun2-rajdhani-capital"
+		]
+	},
 	"nepali": {
 		"roman": "nepali",
 		"dev": "नेपाली",
@@ -2855,6 +3144,7 @@
 		"phrases": [
 			"ma-nepali-bolchhu-i-speak-nepali",
 			"ma-nepali-boldina-i-don-t-speak-nepali",
+			"noun2-bhasha-language",
 			"tapai-nepali-bolnu-hunchha-do-you-speak-nepali"
 		]
 	},
@@ -2953,7 +3243,8 @@
 		"dev": "पाँचौं",
 		"source": "aligned",
 		"phrases": [
-			"adj-panchaun-fifth"
+			"adj-panchaun-fifth",
+			"noun2-kaksha-class"
 		]
 	},
 	"paani": {
@@ -3095,6 +3386,14 @@
 			"malai-jaanu-pardaina-i-dont-have-to-go"
 		]
 	},
+	"parikshaa": {
+		"roman": "parikshaa",
+		"dev": "परीक्षा",
+		"source": "aligned",
+		"phrases": [
+			"noun2-pariksha-exam"
+		]
+	},
 	"pariraheko": {
 		"roman": "pariraheko",
 		"dev": "परिरहेको",
@@ -3170,6 +3469,14 @@
 			"yo-pathaaunus-please-send-this"
 		]
 	},
+	"phaaidaa": {
+		"roman": "phaaidaa",
+		"dev": "फाइदा",
+		"source": "aligned",
+		"phrases": [
+			"noun2-phaida-benefit"
+		]
+	},
 	"phaalchhu": {
 		"roman": "phaalchhu",
 		"dev": "फाल्छु",
@@ -3224,7 +3531,8 @@
 		"dev": "फुटबल",
 		"source": "aligned",
 		"phrases": [
-			"noun-pratiyogita-competition"
+			"noun-pratiyogita-competition",
+			"noun2-maidan-field"
 		]
 	},
 	"pie": {
@@ -3340,12 +3648,28 @@
 			"nun-pugyo-there-is-enough-salt"
 		]
 	},
+	"pul": {
+		"roman": "pul",
+		"dev": "पुल",
+		"source": "aligned",
+		"phrases": [
+			"noun2-pul-bridge"
+		]
+	},
 	"puraa": {
 		"roman": "puraa",
 		"dev": "पूरा",
 		"source": "aligned",
 		"phrases": [
 			"adj-pura-complete"
+		]
+	},
+	"puraano": {
+		"roman": "puraano",
+		"dev": "पुरानो",
+		"source": "aligned",
+		"phrases": [
+			"noun2-mandir-temple"
 		]
 	},
 	"purai": {
@@ -3370,6 +3694,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod"
+		]
+	},
+	"raajadhaani": {
+		"roman": "raajadhaani",
+		"dev": "राजधानी",
+		"source": "aligned",
+		"phrases": [
+			"noun2-rajdhani-capital"
 		]
 	},
 	"raakhnus": {
@@ -3405,6 +3737,13 @@
 			"noun-sambandha-relationship",
 			"noun-sewa-service",
 			"noun-upachaar-treatment",
+			"noun2-aamdani-income",
+			"noun2-himal-mountain",
+			"noun2-karobar-business",
+			"noun2-sapana-dream",
+			"noun2-swasthya-health",
+			"noun2-vichar-idea",
+			"noun2-yatra-journey",
 			"ramro-basna-aayo-it-smells-good",
 			"sabai-bhanda-ramro-the-best",
 			"sarai-ramro-very-good-really-good",
@@ -3459,11 +3798,28 @@
 			"ramailo-bhayo-it-was-fun"
 		]
 	},
+	"rin": {
+		"roman": "rin",
+		"dev": "ऋण",
+		"source": "aligned",
+		"phrases": [
+			"noun2-rin-loan"
+		]
+	},
+	"rogako": {
+		"roman": "rogako",
+		"dev": "रोगको",
+		"source": "aligned",
+		"phrases": [
+			"noun2-rog-disease"
+		]
+	},
 	"roknus": {
 		"roman": "roknus",
 		"dev": "रोक्नुस्",
 		"source": "aligned",
 		"phrases": [
+			"noun2-sawari-vehicle",
 			"yaha-roknus-please-stop-here"
 		]
 	},
@@ -3504,6 +3860,7 @@
 		"dev": "सानो",
 		"source": "aligned",
 		"phrases": [
+			"noun2-basti-settlement",
 			"yo-tyo-bhanda-sano-smaller"
 		]
 	},
@@ -3563,6 +3920,14 @@
 		"source": "aligned",
 		"phrases": [
 			"malai-saghaaunus-please-help-me"
+		]
+	},
+	"sahar": {
+		"roman": "sahar",
+		"dev": "सहर",
+		"source": "aligned",
+		"phrases": [
+			"noun2-sahar-city"
 		]
 	},
 	"sahayog": {
@@ -3631,6 +3996,14 @@
 			"tapai-garna-saknuhunchha-can-you-do-it"
 		]
 	},
+	"samaadhaan": {
+		"roman": "samaadhaan",
+		"dev": "समाधान",
+		"source": "aligned",
+		"phrases": [
+			"noun2-samadhan-solution"
+		]
+	},
 	"samaan": {
 		"roman": "samaan",
 		"dev": "समान",
@@ -3646,6 +4019,14 @@
 		"phrases": [
 			"fn-kunai-any",
 			"noun-samasya-problem"
+		]
+	},
+	"samasyaako": {
+		"roman": "samasyaako",
+		"dev": "समस्याको",
+		"source": "aligned",
+		"phrases": [
+			"noun2-samadhan-solution"
 		]
 	},
 	"samay": {
@@ -3714,6 +4095,14 @@
 			"adv-sangai-together"
 		]
 	},
+	"sapanaa": {
+		"roman": "sapanaa",
+		"dev": "सपना",
+		"source": "aligned",
+		"phrases": [
+			"noun2-sapana-dream"
+		]
+	},
 	"saphaa": {
 		"roman": "saphaa",
 		"dev": "सफा",
@@ -3736,6 +4125,14 @@
 		"source": "aligned",
 		"phrases": [
 			"sasto-cha-it-s-cheap"
+		]
+	},
+	"sawaari": {
+		"roman": "sawaari",
+		"dev": "सवारी",
+		"source": "aligned",
+		"phrases": [
+			"noun2-sawari-vehicle"
 		]
 	},
 	"saya": {
@@ -3769,6 +4166,14 @@
 		"source": "aligned",
 		"phrases": [
 			"shaanta-rahanus-please-stay-calm"
+		]
+	},
+	"sharir": {
+		"roman": "sharir",
+		"dev": "शरीर",
+		"source": "aligned",
+		"phrases": [
+			"noun2-sharir-body"
 		]
 	},
 	"shikshak": {
@@ -3821,6 +4226,14 @@
 			"tapai-siknuhunchha-do-you-study-polite"
 		]
 	},
+	"simaa": {
+		"roman": "simaa",
+		"dev": "सीमा",
+		"source": "aligned",
+		"phrases": [
+			"noun2-sima-border"
+		]
+	},
 	"sochnu": {
 		"roman": "sochnu",
 		"dev": "सोच्नु",
@@ -3835,6 +4248,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-sodhchu-i-ask"
+		]
+	},
+	"sudhaar": {
+		"roman": "sudhaar",
+		"dev": "सुधार",
+		"source": "aligned",
+		"phrases": [
+			"noun2-sudhar-improvement"
 		]
 	},
 	"sunchha": {
@@ -3917,6 +4338,14 @@
 			"swagat-cha-you-re-welcome"
 		]
 	},
+	"swaasthya": {
+		"roman": "swaasthya",
+		"dev": "स्वास्थ्य",
+		"source": "aligned",
+		"phrases": [
+			"noun2-swasthya-health"
+		]
+	},
 	"taato": {
 		"roman": "taato",
 		"dev": "तातो",
@@ -3963,6 +4392,7 @@
 		"dev": "तपाईंको",
 		"source": "aligned",
 		"phrases": [
+			"noun2-umer-age",
 			"tapai-ko-naam-ke-ho-what-is-your-name-formal"
 		]
 	},
@@ -4070,6 +4500,11 @@
 			"noun-rakam-amount",
 			"noun-sadak-road",
 			"noun-samasya-problem",
+			"noun2-durghatana-accident",
+			"noun2-jokhim-risk",
+			"noun2-pul-bridge",
+			"noun2-sahar-city",
+			"noun2-sudhar-improvement",
 			"sabai-bhanda-thulo-the-biggest",
 			"yo-tyo-bhanda-thulo-bigger"
 		]
@@ -4080,6 +4515,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-thuprai-many"
+		]
+	},
+	"tikat": {
+		"roman": "tikat",
+		"dev": "टिकट",
+		"source": "aligned",
+		"phrases": [
+			"noun2-tikat-ticket"
 		]
 	},
 	"timro": {
@@ -4129,6 +4572,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-sadasya-member"
+		]
+	},
+	"traaphik": {
+		"roman": "traaphik",
+		"dev": "ट्राफिक",
+		"source": "aligned",
+		"phrases": [
+			"noun2-traffic"
 		]
 	},
 	"tyahi": {
@@ -4185,6 +4636,14 @@
 			"u-git-sunchha-he-she-listens"
 		]
 	},
+	"udaan": {
+		"roman": "udaan",
+		"dev": "उडान",
+		"source": "aligned",
+		"phrases": [
+			"noun2-udaan-flight"
+		]
+	},
 	"uhaanko": {
 		"roman": "uhaanko",
 		"dev": "उहाँको",
@@ -4209,12 +4668,21 @@
 			"paani-umaalnus-please-boil-the-water"
 		]
 	},
+	"umer": {
+		"roman": "umer",
+		"dev": "उमेर",
+		"source": "aligned",
+		"phrases": [
+			"noun2-umer-age"
+		]
+	},
 	"upachaar": {
 		"roman": "upachaar",
 		"dev": "उपचार",
 		"source": "aligned",
 		"phrases": [
-			"noun-upachaar-treatment"
+			"noun-upachaar-treatment",
+			"noun2-rog-disease"
 		]
 	},
 	"utaa": {
@@ -4247,6 +4715,22 @@
 		"source": "aligned",
 		"phrases": [
 			"fn-wataa-counter"
+		]
+	},
+	"wichaar": {
+		"roman": "wichaar",
+		"dev": "विचार",
+		"source": "aligned",
+		"phrases": [
+			"noun2-vichar-idea"
+		]
+	},
+	"widesh": {
+		"roman": "widesh",
+		"dev": "विदेश",
+		"source": "aligned",
+		"phrases": [
+			"noun2-videsh-abroad"
 		]
 	},
 	"wisay": {
@@ -4282,6 +4766,22 @@
 			"noun-byakti-person"
 		]
 	},
+	"yaataayaat": {
+		"roman": "yaataayaat",
+		"dev": "यातायात",
+		"source": "aligned",
+		"phrases": [
+			"noun2-yatayat-transport"
+		]
+	},
+	"yaatraa": {
+		"roman": "yaatraa",
+		"dev": "यात्रा",
+		"source": "aligned",
+		"phrases": [
+			"noun2-yatra-journey"
+		]
+	},
 	"yadi": {
 		"roman": "yadi",
 		"dev": "यदि",
@@ -4306,7 +4806,8 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-bare-about",
-			"noun-prayog-use"
+			"noun-prayog-use",
+			"noun2-artha-meaning"
 		]
 	},
 	"yasapatak": {
