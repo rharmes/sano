@@ -187,3 +187,29 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       `tools/dict` coverage refreshed, audio rendered (45 phrase + 58 word clips, `AUDIO_VERSION` 8),
       dev-seed scenario added. **Still open:** the 5 unit titles + goals are AI-drafted → Ross's
       refinement; **push/deploy pending Ross's go.**
+
+## Learning engine — T11 depth pivot (Phase 3)
+
+The breadth expansion (T11 batches 1–9) picked the everyday-frequency pool clean, so T11 pivots from
+**breadth → depth**: more frames/phrases around words already known, rather than new vocabulary.
+Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **real expressions** +
+**everyday contexts**.
+
+- [ ] **T28 · Rotating-frames mechanism** — an item may carry optional `frames: [{dev,en}]`; reviews
+      rotate through them so a known word is practiced in varied contexts **without adding path
+      units** (the SR record stays keyed by item id — one record, many sentences). Frame 0 is the
+      item's own `dev`/`en` (audio id `<id>`); extras get `<id>-f1`, `<id>-f2`, … `js/romanize.js`
+      derives `np`/`pron` per frame; `itemFrames`/`frameForSeen`/`pickFrame` + `ex.frame` threaded
+      through the render/grade sites (`js/sano.js`); `synth-app.mjs` + `build-words.mjs` expand frames
+      so `--new` renders only the new clips. Unit test + data validation + dev-seed scenario. Nepali
+      `dev` for the demo frames AI-drafted → Ross's review. Audio render deferred until Ross approves
+      the content (spends credits, bump `AUDIO_VERSION`).
+- [ ] **T29 · Depth content — everyday-context alternate frames** — populate `frames` on a curated
+      set of already-taught items with everyday-context variety, so each word stops being tied to one
+      memorized sentence. Nepali `dev` AI-drafted → Ross's review; audio rendered for the new frame
+      clips only, bump `AUDIO_VERSION`.
+- [ ] **T30 · Depth content — new "real expression" units** — via the existing expansion pipeline
+      (T14), add a few new mastery-gated units of short, high-utility whole utterances built from
+      already-known vocabulary (e.g. "how much is this?", "I don't know"). Appended at the path's end;
+      Nepali `dev` AI-drafted → Ross's review; audio rendered for the new items only, bump
+      `AUDIO_VERSION`.

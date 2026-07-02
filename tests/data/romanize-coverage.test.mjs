@@ -9,7 +9,10 @@ const { SanoRomanize } = liftGlobals('js/romanize.js', ['SanoRomanize']);
 const { COURSE } = liftGlobals('js/data.js', ['COURSE']);
 const R = SanoRomanize.romanize;
 const P = SanoRomanize.pronounce;
-const items = COURSE.flatMap((u) => u.items);
+// Depth alternate frames (T28) are romanized at load exactly like an item's own `dev`, so
+// fold each into the coverage sweep as a pseudo-item (`<id>-fN`) — an unmapped glyph or a
+// vanishing word in a rotating sentence must fail the same nets.
+const items = COURSE.flatMap((u) => u.items).flatMap((it) => [it, ...(it.frames || []).map((f, i) => ({ id: `${it.id}-f${i + 1}`, dev: f.dev }))]);
 const isDev = (ch) => /[ऀ-ॿ]/.test(ch);
 
 test('coverage: every Devanagari codepoint in the corpus is a known table key', () => {

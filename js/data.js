@@ -6269,12 +6269,23 @@ const COURSE = [
 				dev: 'म पानी माग्छु',
 				en: 'I ask for water',
 				usage: '"To ask for / request (a thing)" — different from "sodhnu" (to ask a question). "Paani maagnu" = to ask for water.',
+				// Depth (T28): everyday-context alternate frames for the same verb, rotated into
+				// reviews so the word isn't tied to one sentence. AI-drafted → Ross's review.
+				frames: [
+					{ dev: 'उसले पैसा माग्यो', en: 'He asked for money' },
+					{ dev: 'मद्दत माग्नुस्', en: 'Please ask for help' },
+				],
 			},
 			{
 				id: 'v9-samjhanu',
 				dev: 'म तिमीलाई सम्झन्छु',
 				en: 'I remember you',
 				usage: '"To remember / recall" — also "to miss someone." The opposite of "birsanu."',
+				// Depth (T28): AI-drafted → Ross's review.
+				frames: [
+					{ dev: 'मलाई सम्झनुस्', en: 'Remember me' },
+					{ dev: 'म घर सम्झन्छु', en: 'I miss home' },
+				],
 			},
 			{
 				id: 'v9-birsanu',
@@ -6331,6 +6342,11 @@ const COURSE = [
 				dev: 'मेरो छेउमा बस्नुस्',
 				en: 'Sit beside me',
 				usage: '"Beside / next to / edge." "Mero chheu-maa" = "next to me" — a close, at-your-side near (vs. "najik," nearby).',
+				// Depth (T28): AI-drafted → Ross's review.
+				frames: [
+					{ dev: 'ऊ मेरो छेउमा छ', en: 'He is beside me' },
+					{ dev: 'बाटोको छेउमा', en: 'Beside the road' },
+				],
 			},
 			{
 				id: 'oe-waari',

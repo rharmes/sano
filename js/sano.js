@@ -1078,6 +1078,40 @@ function uniquePairItems(items) {
 	return out;
 }
 
+// --- SR-05 depth: alternate frames (pure) ---
+// "Depth, not breadth" (T28): an item may carry extra example sentences in `frames`
+// ([{dev,en}], with np/pron derived at load like the item's own). Reviews rotate through
+// them so a known word is practiced in varied everyday contexts / real expressions WITHOUT
+// adding new path units — the spaced-repetition record stays keyed by the item id (one
+// record, many sentences). Frame 0 is always the item's own dev/en (the pre-rendered clip,
+// audio id = item.id); each extra frame gets audio id `<id>-f1`, `<id>-f2`, … A frame is a
+// plain display/grade unit: { dev, np, pron, en, emoji, audioId }. Only the canonical frame
+// carries the item's emoji — an alternate sentence's meaning may not match it.
+function itemFrames(item) {
+	const base = { dev: item.dev, np: item.np, pron: item.pron, en: item.en, emoji: item.emoji, audioId: item.id };
+	if (!item.frames || !item.frames.length) return [base];
+	return [base].concat(
+		item.frames.map((f, i) => ({ dev: f.dev, np: f.np, pron: f.pron, en: f.en, emoji: undefined, audioId: item.id + '-f' + (i + 1) })),
+	);
+}
+
+// Which frame to show given how many times the item has been seen: frame 0 on the very
+// first exposure (seen 0 — a new word's introduction lesson stays on the canonical
+// sentence), then one sentence per subsequent review so contexts vary across lessons.
+function frameForSeen(item, seen) {
+	const frames = itemFrames(item);
+	return frames[seen % frames.length];
+}
+// --- end SR-05 depth ---
+
+// The frame to show for this item right now, keyed off its live review count. Read-only:
+// a not-yet-seen item defaults to seen 0 without creating a record (itemRecord does that
+// when the answer is applied).
+function pickFrame(item) {
+	const record = state.items[item.id];
+	return frameForSeen(item, record ? record.seen : 0);
+}
+
 function buildExercises(newItems, reviewItems) {
 	const exercises = [];
 	for (const item of newItems) {
@@ -1156,6 +1190,13 @@ function buildExercises(newItems, reviewItems) {
 		const warmup = uniquePairItems(warmupItems(introItems));
 		if (warmup.length >= 2) exercises.unshift({ type: 'match', items: warmup, intro: true });
 	}
+
+	// Attach the chosen alternate frame (T28) to every single-item exercise, so its prompt,
+	// tiles, audio, and grading all read the same sentence. Picked once here (not per render)
+	// so an item shows ONE consistent sentence for the whole lesson; requeued misses clone the
+	// exercise and keep its frame. Bundled grids (match/listenMatch) have no single `item` and
+	// always render each item's canonical frame.
+	for (const ex of exercises) if (ex.item) ex.frame = pickFrame(ex.item);
 	return exercises;
 }
 
@@ -1242,9 +1283,10 @@ function setListenPrompt(label, audioId) {
 }
 
 function renderChoice(ex) {
-	if (ex.listen) setListenPrompt('Select what you hear', ex.item.id);
-	else if (ex.dir === 'np-en') setPrompt('Select the correct meaning', ex.item.np, ex.item.pron, ex.item.id);
-	else setPrompt('Select the Nepali', promptText(ex.item), '');
+	const f = ex.frame;
+	if (ex.listen) setListenPrompt('Select what you hear', f.audioId);
+	else if (ex.dir === 'np-en') setPrompt('Select the correct meaning', f.np, f.pron, f.audioId);
+	else setPrompt('Select the Nepali', promptText(f), '');
 
 	const choiceText = ex.dir === 'np-en' ? (item) => item.en : (item) => item.np;
 	const choices = shuffleArray([ex.item].concat(getDistractors(ex.item, choiceText)));
@@ -1252,8 +1294,12 @@ function renderChoice(ex) {
 	const choiceEls = document.getElementById('exercise-choices').getElementsByTagName('button');
 	let index = 0;
 	for (const choiceEl of choiceEls) {
-		choiceEl.textContent = choiceText(choices[index]);
-		choiceEl.dataset.status = choices[index].id === ex.item.id ? 'correct' : 'incorrect';
+		const choice = choices[index];
+		const correct = choice.id === ex.item.id;
+		// The correct choice must show THIS exercise's frame text (the prompt shows the frame,
+		// not the item's canonical sentence); distractors keep their own canonical text.
+		choiceEl.textContent = correct ? (ex.dir === 'np-en' ? f.en : f.np) : choiceText(choice);
+		choiceEl.dataset.status = correct ? 'correct' : 'incorrect';
 		choiceEl.className = '';
 		index++;
 	}
@@ -1294,15 +1340,16 @@ function playTileWord(word) {
 //                     Nepali tile plays that word (request #1).
 //   np-en           — Nepali phrase shown at top and spoken on load, assemble the English.
 function renderWordbank(ex) {
+	const f = ex.frame;
 	const buildNepali = ex.dir !== 'np-en';
-	const target = buildNepali ? ex.item.np : ex.item.en;
+	const target = buildNepali ? f.np : f.en;
 
 	if (buildNepali) {
-		setPrompt('Build the Nepali from the tiles', promptText(ex.item), '');
+		setPrompt('Build the Nepali from the tiles', promptText(f), '');
 	} else {
 		// Showing/parsing the Nepali is the prompt here, so its audio button doesn't give
 		// the (English) answer away; setPrompt auto-plays it on load (Nepali headword).
-		setPrompt('Listen and build the English', ex.item.np, '', ex.item.id);
+		setPrompt('Listen and build the English', f.np, '', f.audioId);
 	}
 
 	const answerEl = document.getElementById('wordbank-answer');
@@ -1316,7 +1363,7 @@ function renderWordbank(ex) {
 	// (e.g. a stray "/"). The cleaned text still resolves the same per-word audio via
 	// normalize(), and the assembled answer still grades against the raw phrase.
 	const targetTiles = stripParens(target).split(/\s+/).map(cleanTileText).filter(Boolean);
-	const tiles = shuffleArray(targetTiles.concat(wordbankDistractors(ex.item, ex.dir)));
+	const tiles = shuffleArray(targetTiles.concat(wordbankDistractors(f, ex.dir)));
 	for (const word of tiles) {
 		// The pool tile stays put when chosen; a matching tile is added to the answer
 		// row above and the pool tile is marked "selected" (request #2). Tapping a
@@ -1380,8 +1427,9 @@ function wordbankDistractors(item, dir) {
 }
 
 function renderType(ex) {
-	if (ex.listen) setListenPrompt('Type what you hear', ex.item.id);
-	else setPrompt('Type the Nepali', promptText(ex.item), '');
+	const f = ex.frame;
+	if (ex.listen) setListenPrompt('Type what you hear', f.audioId);
+	else setPrompt('Type the Nepali', promptText(f), '');
 	const input = document.getElementById('type-answer');
 	input.value = '';
 	document.getElementById('exercise-check').disabled = true;
@@ -1501,7 +1549,8 @@ function createRecorder(opts) {
 }
 
 function renderSpeak(ex) {
-	setPrompt('Say it aloud, then compare', ex.item.np, ex.item.pron, ex.item.id);
+	const f = ex.frame;
+	setPrompt('Say it aloud, then compare', f.np, f.pron, f.audioId);
 	speakRecorder.reset();
 }
 
@@ -1892,7 +1941,7 @@ function checkExercise() {
 	}
 	// Word bank checks against whichever phrase the tiles build (Nepali by default, the
 	// English meaning in the np-en direction); typing always builds the Nepali.
-	let expected = ex.type === 'wordbank' && ex.dir === 'np-en' ? ex.item.en : ex.item.np;
+	let expected = ex.type === 'wordbank' && ex.dir === 'np-en' ? ex.frame.en : ex.frame.np;
 	// Parenthetical asides are dropped from the tiles, so they're not required to match.
 	if (ex.type === 'wordbank') expected = stripParens(expected);
 	applyAnswer(ex, lenientEquals(given, expected, ex.type === 'type'));
@@ -1928,7 +1977,8 @@ function applyAnswer(ex, correct) {
 	// Always show the full answer for recall and listening exercises; for plain
 	// multiple choice only on a miss.
 	const showAnswer = !correct || ex.type === 'wordbank' || ex.type === 'type' || ex.listen;
-	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? ex.item.np + ' = ' + promptText(ex.item) : '', ex.item.id);
+	const f = ex.frame;
+	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? f.np + ' = ' + promptText(f) : '', f.audioId);
 
 	saveState();
 	refreshHeader();

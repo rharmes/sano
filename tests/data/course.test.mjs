@@ -54,3 +54,22 @@ test('COURSE: phrases items carry a usage note; vocab items carry an emoji', () 
 		}
 	}
 });
+
+test('COURSE: depth alternate frames are well-formed and their clip ids stay unique', () => {
+	// Optional `frames: [{dev, en}]` (T28) rotate over an item's own review record. Each frame's
+	// pre-rendered clip is `<id>-fN`, so those ids must not collide with any real item id or with
+	// one another (the wording of dev/en is Ross's, not asserted here).
+	const clipIds = new Set(allItems.map((it) => it.id));
+	for (const it of allItems) {
+		if (it.frames === undefined) continue;
+		assert.ok(Array.isArray(it.frames) && it.frames.length, `${it.id}: frames must be a non-empty array`);
+		it.frames.forEach((f, i) => {
+			for (const field of ['dev', 'en']) {
+				assert.ok(typeof f[field] === 'string' && f[field].trim().length, `${it.id} frame ${i + 1}: missing ${field}`);
+			}
+			const clip = `${it.id}-f${i + 1}`;
+			assert.ok(!clipIds.has(clip), `${it.id} frame ${i + 1}: clip id ${clip} collides with an item or another frame`);
+			clipIds.add(clip);
+		});
+	}
+});

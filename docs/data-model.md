@@ -22,11 +22,17 @@ A unit:
 An item (`kind: 'phrases'`):
 
 ```js
-{ id, dev, en, usage }
+{ id, dev, en, usage, frames? }
 // dev = Devanagari (source of truth), en = English, usage = dictionary note.
 // NOTE: `np` (romanized) AND `pron` (pronunciation) are DERIVED at load from `dev` by
 // js/romanize.js (romanize / pronounce; spec: docs/romanization.md). Both were removed from the
 // data — items now store only English + Devanagari (+ usage/emoji).
+// frames? = optional depth (T28): extra example sentences [{ dev, en }] (np/pron derived like
+//   the item's own). Reviews ROTATE through them over the SAME spaced-repetition record (keyed
+//   by item id — one record, many sentences), so a known word is practiced in varied contexts
+//   without adding path units. Frame 0 is the item's own dev/en (clip id = item.id); each extra
+//   frame's clip is `<id>-f1`, `<id>-f2`, … The runtime frame model (itemFrames / frameForSeen /
+//   pickFrame → ex.frame) lives in js/sano.js. dev is AI-drafted → Ross's review, like every dev.
 ```
 
 An item (`kind: 'vocab'`) — carries an `emoji`, no `usage`:
@@ -181,7 +187,7 @@ pedagogy roadmap; **R\*** = earlier UI-revision tags.
 | SR-02 | Self-hosted **audio** — ~588 phrase clips + ~233 word-bank clips, ElevenLabs Sano clone, pre-rendered (no runtime TTS). |
 | SR-03 | **Listening** exercises — audio-only prompts on ~half of recall reviews. |
 | SR-04 | **Speaking** practice — skippable record-and-compare (Web Audio playback). |
-| SR-05 | **SM-2-lite scheduler + learning steps** — per-item ease/interval, auto-graded; new words climb a gentle ladder and only **graduate** once recalled ~2×; a **mastery gate** (`unitIsComplete`) requires every word graduated before the next unit unlocks; the daily loop (`dailyPlan`) is review-dominant + adaptive. Units >14 items are split into ~8–12-word chunks. |
+| SR-05 | **SM-2-lite scheduler + learning steps** — per-item ease/interval, auto-graded; new words climb a gentle ladder and only **graduate** once recalled ~2×; a **mastery gate** (`unitIsComplete`) requires every word graduated before the next unit unlocks; the daily loop (`dailyPlan`) is review-dominant + adaptive. Units >14 items are split into ~8–12-word chunks. **Depth (T28):** an item may carry `frames` (alternate example sentences); reviews rotate through them over the same record so known words are practiced in varied contexts without growing the path. |
 | SR-06 | Communicative **can-do goals** — per-unit objective on the home CTA + complete screen. |
 | SR-07 | **Companions** — 10 animal friends: heads in bubbles, full-body decorations along the path. |
 | SR-08 | **Pronunciation** drills for sounds romanization hides (aspiration, retroflex, nasal/length). |

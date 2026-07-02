@@ -355,6 +355,16 @@ if (typeof COURSE !== 'undefined' && Array.isArray(COURSE)) {
 				item.np = SanoRomanize.romanize(item.dev);
 				item.pron = SanoRomanize.pronounce(item.dev);
 			}
+			// Depth (T28): derive np/pron for each alternate frame the same way, so a rotating
+			// review sentence renders and grades exactly like the item's own `dev`.
+			if (item && item.frames) {
+				for (const f of item.frames) {
+					if (f && f.dev) {
+						f.np = SanoRomanize.romanize(f.dev);
+						f.pron = SanoRomanize.pronounce(f.dev);
+					}
+				}
+			}
 		}
 	}
 }

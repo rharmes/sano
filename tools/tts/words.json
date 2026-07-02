@@ -376,6 +376,14 @@
 			"bato-dekhaunus-please-show-me-the-way"
 		]
 	},
+	"baatoko": {
+		"roman": "baatoko",
+		"dev": "बाटोको",
+		"source": "aligned",
+		"phrases": [
+			"oe-chheu"
+		]
+	},
 	"bachchaa": {
 		"roman": "bachchaa",
 		"dev": "बच्चा",
@@ -1129,6 +1137,7 @@
 			"noun-yojana-plan",
 			"noun2-himal-mountain",
 			"noun2-yatayat-transport",
+			"oe-chheu",
 			"pani-pariracha-it-is-raining",
 			"sasto-cha-it-s-cheap",
 			"swagat-cha-you-re-welcome",
@@ -1840,7 +1849,8 @@
 			"ma-ghar-aaye-i-am-home-i-came-home",
 			"ma-ghar-jaanchu-i-am-going-home",
 			"ma-ghar-pugen-i-reached-home",
-			"ma-ghar-safaa-garchu-i-will-clean-the-house"
+			"ma-ghar-safaa-garchu-i-will-clean-the-house",
+			"v9-samjhanu"
 		]
 	},
 	"gharako": {
@@ -3308,6 +3318,22 @@
 			"cal-magh"
 		]
 	},
+	"maagnus": {
+		"roman": "maagnus",
+		"dev": "माग्नुस्",
+		"source": "aligned",
+		"phrases": [
+			"v9-maagnu"
+		]
+	},
+	"maagyo": {
+		"roman": "maagyo",
+		"dev": "माग्यो",
+		"source": "aligned",
+		"phrases": [
+			"v9-maagnu"
+		]
+	},
 	"maajhchhu": {
 		"roman": "maajhchhu",
 		"dev": "माझ्छु",
@@ -3368,7 +3394,8 @@
 			"kripaya-malaai-maddat-garnuhos-please-help-me",
 			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything",
 			"ma-maddat-garchu-i-will-help",
-			"maddat-chaahiyo-do-you-need-help"
+			"maddat-chaahiyo-do-you-need-help",
+			"v9-maagnu"
 		]
 	},
 	"mahango": {
@@ -3464,7 +3491,8 @@
 			"malai-man-paryo-i-liked-it",
 			"malai-saghaaunus-please-help-me",
 			"malai-thaaha-cha-i-know",
-			"noun-bishwaas-trust"
+			"noun-bishwaas-trust",
+			"v9-samjhanu"
 		]
 	},
 	"man": {
@@ -3972,7 +4000,8 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-baki-remaining",
-			"paisa-jogaaunus-save-money"
+			"paisa-jogaaunus-save-money",
+			"v9-maagnu"
 		]
 	},
 	"pakaaundai": {
@@ -4862,6 +4891,14 @@
 			"v9-samjhanu"
 		]
 	},
+	"samjhanus": {
+		"roman": "samjhanus",
+		"dev": "सम्झनुस्",
+		"source": "aligned",
+		"phrases": [
+			"v9-samjhanu"
+		]
+	},
 	"samuh": {
 		"roman": "samuh",
 		"dev": "समूह",
@@ -5530,6 +5567,7 @@
 			"adj-bahadur-brave",
 			"adj-baliyo-strong",
 			"adj-saphal-successful",
+			"oe-chheu",
 			"u-git-sunchha-he-she-listens"
 		]
 	},
@@ -5604,6 +5642,14 @@
 		"source": "aligned",
 		"phrases": [
 			"feel-ghamanda-arrogance"
+		]
+	},
+	"usale": {
+		"roman": "usale",
+		"dev": "उसले",
+		"source": "aligned",
+		"phrases": [
+			"v9-maagnu"
 		]
 	},
 	"utaa": {

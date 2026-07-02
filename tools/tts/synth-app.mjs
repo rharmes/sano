@@ -32,6 +32,14 @@ if (!apiKey) fail('Set ELEVENLABS_API_KEY in the environment.');
 
 const COURSE = Function(readFileSync(join(ROOT, 'js', 'data.js'), 'utf8') + '; return COURSE;')();
 const items = COURSE.flatMap((u) => u.items).filter((it) => it.dev);
+// Expand each item into its clips: the item's own `dev` (audio id = item.id) plus any
+// depth alternate frames (T28), whose ids are `<id>-f1`, `<id>-f2`, … — matching the
+// app's itemFrames() naming. With --new these render only when missing, so adding frames
+// costs credits for just the new sentences.
+const clips = items.flatMap((it) => [
+	{ id: it.id, dev: it.dev },
+	...(it.frames || []).map((f, i) => ({ id: it.id + '-f' + (i + 1), dev: f.dev })).filter((c) => c.dev),
+]);
 
 // Resolve the job list: { text (Devanagari), out (mp3 path), label }.
 let jobs;
@@ -41,7 +49,7 @@ if (args.sample) {
 	jobs = sampleJobs(outDir);
 } else if (args.phrases) {
 	outDir = join(ROOT, 'audio', 'default');
-	jobs = items.map((it) => ({ text: it.dev, out: join(outDir, it.id + '.mp3'), label: it.id }));
+	jobs = clips.map((c) => ({ text: c.dev, out: join(outDir, c.id + '.mp3'), label: c.id }));
 } else if (args.words) {
 	outDir = join(ROOT, 'audio', 'words');
 	const words = JSON.parse(readFileSync(join(HERE, 'words.json'), 'utf8'));
