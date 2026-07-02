@@ -1418,6 +1418,11 @@ const COURSE = [
 				dev: 'म सिक्छु',
 				en: 'I learn / I study',
 				usage: 'The present tense is the verb plus an ending that says who is doing it. "-chu" always means "I," so "ma sikchu" (I learn, from "siknu"). Every "Ma ___chu" below is built the same way — "I" plus the verb.',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'म नेपाली सिक्छु', en: 'I learn Nepali' },
+					{ dev: 'म नयाँ कुरा सिक्छु', en: 'I learn new things' },
+				],
 			},
 			{
 				id: 'tapai-siknuhunchha-do-you-study-polite',
@@ -1430,54 +1435,99 @@ const COURSE = [
 				dev: 'म हेर्छु',
 				en: 'I watch / I look',
 				usage: 'From "hernu" (to see, watch, look). "Ma TV herchu" (I watch TV). Same "-chu" = "I" ending as every verb in this unit.',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'म टिभी हेर्छु', en: 'I watch TV' },
+					{ dev: 'म फिल्म हेर्छु', en: 'I watch a movie' },
+				],
 			},
 			{
 				id: 'ma-bhanchu-i-say',
 				dev: 'म भन्छु',
 				en: 'I say / I tell',
 				usage: 'From "bhannu" (to say, tell). "Ma pheri bhanchu" (I\'ll say it again). Its polite command form "bhannus" (please say it) may already be familiar.',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'बिस्तारै भन्नुस्', en: 'Please say it slowly' },
+					{ dev: 'फेरि भन्नुस्', en: 'Please say it again' },
+				],
 			},
 			{
 				id: 'ma-sodhchu-i-ask',
 				dev: 'म सोध्छु',
 				en: 'I ask',
 				usage: 'From "sodhnu" (to ask a question). "Ma sodhchu" (I\'ll ask). Pairs naturally with question words like "ke" (what) and "kahaa" (where).',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'म बाटो सोध्छु', en: 'I ask for directions' },
+					{ dev: 'म प्रश्न सोध्छु', en: 'I ask a question' },
+				],
 			},
 			{
 				id: 'ma-padhchu-i-read',
 				dev: 'म पढ्छु',
 				en: 'I read / I study',
 				usage: 'From "padhnu" (to read, study). "Ma kitaab padhchu" (I read a book — "kitaab" is book). Nepali uses one verb for both reading and studying.',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'म किताब पढ्छु', en: 'I read a book' },
+					{ dev: 'म समाचार पढ्छु', en: 'I read the news' },
+				],
 			},
 			{
 				id: 'ma-lekhchu-i-write',
 				dev: 'म लेख्छु',
 				en: 'I write',
 				usage: 'From "lekhnu" (to write). "Ma lekhchu" (I write / I\'ll write it down). You saw the root in "lekhera dinuhola" (please write it down).',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'म चिठी लेख्छु', en: 'I write a letter' },
+					{ dev: 'म नाम लेख्छु', en: 'I write my name' },
+				],
 			},
 			{
 				id: 'ma-dinchu-i-give',
 				dev: 'म दिन्छु',
 				en: 'I give',
 				usage: 'From "dinu" (to give). A vowel-ending root slips an "n" in before the ending: "din-chu." "Ma dinchu" (I\'ll give it). Its command form is "dinus" (please give).',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'म उपहार दिन्छु', en: 'I give a gift' },
+					{ dev: 'मलाई पानी दिनुस्', en: 'Please give me water' },
+				],
 			},
 			{
 				id: 'ma-linchu-i-take',
 				dev: 'म लिन्छु',
 				en: 'I take',
 				usage: 'From "linu" (to take), the natural partner of "dinu" (give): "ma linchu" (I\'ll take it). Like "din-chu," the vowel root adds an "n": "lin-chu."',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'म फोटो लिन्छु', en: 'I take a photo' },
+					{ dev: 'यो लिनुस्', en: 'Please take this' },
+				],
 			},
 			{
 				id: 'ma-piunchu-i-drink',
 				dev: 'म पिउँछु',
 				en: 'I drink',
 				usage: 'From "piunu" (to drink). "Ma paani piunchu" (I drink water). Note: Nepali "eats" tea and other warm drinks ("chiya khanchu"), but "piunu" covers drinking in general.',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'म पानी पिउँछु', en: 'I drink water' },
+					{ dev: 'म चिया पिउँछु', en: 'I drink tea' },
+				],
 			},
 			{
 				id: 'u-git-sunchha-he-she-listens',
 				dev: 'ऊ गीत सुन्छ',
 				en: 'He / she listens to music (informal)',
 				usage: 'For "he/she" (informal "u") the ending is "-cha / -chha": "u git sunchha" (he listens to songs — "git" is a song), from "sunnu" (to hear, listen). So "-chu" = I, "-nuhunchha" = you (polite), "-cha" = he/she.',
+				// T29 depth (AI-drafted → Ross's review):
+				frames: [
+					{ dev: 'ऊ रेडियो सुन्छ', en: 'He listens to the radio' },
+					{ dev: 'ऊ समाचार सुन्छ', en: 'He listens to the news' },
+				],
 			},
 		],
 	},

@@ -208,9 +208,20 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
 - [ ] **T29 · Depth content — everyday-context alternate frames** — populate `frames` on a curated
       set of already-taught items with everyday-context variety, so each word stops being tied to one
       memorized sentence. Nepali `dev` AI-drafted → Ross's review; audio rendered for the new frame
-      clips only, bump `AUDIO_VERSION`.
+      clips only, bump `AUDIO_VERSION`. Multi-batch, by part of speech.
+  - [x] **Batch 1 — core present-tense verbs (10 items · 20 frames)** — everyday-context + real-expression
+        frames on the `verbs-present` unit (herchu → "I watch a movie," dinchu → "Please give me water,"
+        padhchu → "I read the news," …). Approved by Ross; audio rendered (20 phrase + 8 word clips,
+        `AUDIO_VERSION` 17); dev-seed 0f extended. Next batches: past-tense verbs, then nouns / adjectives.
 - [ ] **T30 · Depth content — new "real expression" units** — via the existing expansion pipeline
       (T14), add a few new mastery-gated units of short, high-utility whole utterances built from
       already-known vocabulary (e.g. "how much is this?", "I don't know"). Appended at the path's end;
       Nepali `dev` AI-drafted → Ross's review; audio rendered for the new items only, bump
       `AUDIO_VERSION`.
+- [ ] **T31 · Frames-review tool** — a localhost-only review surface for depth alternate frames
+      (mirrors `design/expansion.html`): lists each candidate frame under its target item (English +
+      the item's canonical `dev`/romanization), live-romanizes the proposed frame `dev`, and lets Ross
+      edit / approve / reject; POSTs changed rows to a save endpoint that merges into a **gitignored**
+      staging JSON (never touches `js/data.js` directly). Approved frames merged into `js/data.js` by
+      hand, then audio rendered — same select→draft→review→merge→audio loop as the T11 batches, so
+      vetting future T29/T30 batches doesn't mean reading raw `dev` inline.

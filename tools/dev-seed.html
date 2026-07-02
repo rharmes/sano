@@ -130,14 +130,15 @@
 		</div>
 
 		<div class="card">
-			<span class="tests">SR-05 depth · T28</span>
-			<h2>0f · Rotating frames — depth, not breadth (T28)</h2>
+			<span class="tests">SR-05 depth · T28 / T29</span>
+			<h2>0f · Rotating frames — depth, not breadth (T28 / T29)</h2>
 			<p>
-				The whole course is <b>mastered and settled</b>, and three already-known words — <b>“ask for,” “remember,” “beside”</b> — are
-				<b>due for review</b>, but each comes back in a <b>fresh sentence</b>, not the one it was taught with. That's the depth pivot:
-				an item carries alternate <code>frames</code> that rotate through its reviews (same review card, new context each lesson), so a
-				known word stops being tied to one memorized phrase and the path never has to grow. Alternate-frame audio is silent until its
-				clip is rendered.
+				The whole course is <b>mastered and settled</b>, and a batch of already-known words — the pilot verbs plus the
+				<b>core present-tense verbs</b> (watch, read, give, ask, drink…) — are <b>due for review</b>, but each comes back in a
+				<b>fresh sentence</b> (“I watch a movie,” “Please give me water,” “I read the news”), not the bare one it was taught with.
+				That's the depth pivot: an item carries alternate <code>frames</code> that rotate through its reviews (same review card, new
+				context each lesson), so a known word stops being tied to one memorized phrase and the path never has to grow. Alternate-frame
+				audio is silent until its clip is rendered.
 			</p>
 			<button onclick="seed('depth')">Seed &amp; open</button>
 		</div>
@@ -715,17 +716,28 @@
 					});
 					state = wrap(items, { itemsTotal: 8, streak: 2 });
 				} else if (which === 'depth') {
-					// SR-05 depth (T28): whole course mastered & settled, then three FRAMED items pushed
-					// due with `seen` counts that select an ALTERNATE frame (seen % nFrames != 0), so the
-					// review lesson practices known words with fresh sentences — maagnu → frame 1,
-					// samjhanu → frame 2, chheu → frame 1. Alternate-frame audio is a silent no-op until
-					// its clip is rendered.
+					// SR-05 depth (T28/T29): whole course mastered & settled, then the FRAMED items are
+					// pushed due with `seen` counts that select an ALTERNATE frame (seen % nFrames != 0),
+					// so the review lesson practices known words with fresh sentences instead of the ones
+					// they were taught with — the T28 pilot verbs (maagnu/samjhanu/chheu) plus the T29
+					// everyday-context batch on the core present-tense verbs (herchu → "I watch a movie,"
+					// dinchu → "Please give me water," …). Alternate-frame audio is silent until rendered.
 					const items = {};
 					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 30, lastSeen: day(0) });
 					[
 						['v9-maagnu', 4],
 						['v9-samjhanu', 5],
 						['oe-chheu', 4],
+						['ma-sikchu-i-learn', 4],
+						['ma-herchu-i-watch', 5],
+						['ma-bhanchu-i-say', 4],
+						['ma-sodhchu-i-ask', 5],
+						['ma-padhchu-i-read', 4],
+						['ma-lekhchu-i-write', 5],
+						['ma-dinchu-i-give', 4],
+						['ma-linchu-i-take', 5],
+						['ma-piunchu-i-drink', 4],
+						['u-git-sunchha-he-she-listens', 5],
 					].forEach(([id, seen]) => (items[id] = mastered({ interval: 8, seen, correct: seen, lastSeen: day(20) })));
 					state = wrap(items, { itemsTotal: 900 });
 				} else if (which === 'freshstart') {
