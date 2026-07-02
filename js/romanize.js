@@ -157,6 +157,7 @@ const SanoRomanize = (() => {
 	const WORD_OVERRIDES = {
 		नेपाली: 'Nepali',
 		अङ्ग्रेजी: 'Angreji', // also fixes the ङ्ग = "ngg" garble
+		दशैं: 'Dashain', // festival proper noun; keep the word-final nasal the Lite scheme would drop (→ "Dashai")
 		हस्पिटल: 'hospital',
 		कम्प्युटर: 'computer',
 		हेडफोन: 'headphone',
@@ -186,6 +187,7 @@ const SanoRomanize = (() => {
 		टिभी: 'tee-vee',
 		अङ्ग्रेजी: 'ang-gray-jee',
 		व्यस्त: 'byas-ta', // native व→b word (see VA_AS_B); polished so it reads byas-ta, not b-yuhs-tuh
+		दशैं: 'duh-shain', // keep the word-final nasal (Lite drops it → duh-shai); matches the WORD_OVERRIDE "Dashain"
 		प्रायः: 'praa-yah', // visarga is now handled in tokenize() (→ praayah); this just polishes the pron to praa-yah
 	};
 

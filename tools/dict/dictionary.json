@@ -98,7 +98,8 @@
 				"ke-garnu-parcha-what-should-i-do",
 				"noun2-kharid-purchase",
 				"noun2-hisab-account",
-				"noun2-adhyayan-study"
+				"noun2-adhyayan-study",
+				"fest-puja"
 			],
 			"freqRank": 6,
 			"count": 32629,
@@ -835,14 +836,17 @@
 				"fourth Nepali month"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-saun"
+			],
 			"freqRank": 53,
 			"count": 1387,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -2603,7 +2607,8 @@
 				"ma-ghar-jaanchu-i-am-going-home",
 				"ma-ghar-aaye-i-am-home-i-came-home",
 				"ma-ghar-pugen-i-reached-home",
-				"fn-aaphno-ones-own"
+				"fn-aaphno-ones-own",
+				"dir-waripari"
 			],
 			"freqRank": 157,
 			"count": 1079,
@@ -3351,7 +3356,8 @@
 				"noun2-sahar-city",
 				"noun2-durghatana-accident",
 				"noun2-jokhim-risk",
-				"noun2-sudhar-improvement"
+				"noun2-sudhar-improvement",
+				"fest-parva"
 			],
 			"freqRank": 201,
 			"count": 765,
@@ -3379,7 +3385,8 @@
 				"ramrari-jaanu-go-safely-take-care",
 				"malai-jaanu-parcha-i-have-to-go",
 				"malai-jaanu-pardaina-i-dont-have-to-go",
-				"noun2-videsh-abroad"
+				"noun2-videsh-abroad",
+				"fest-mela"
 			],
 			"freqRank": 202,
 			"count": 2266,
@@ -5780,13 +5787,16 @@
 				"June-July month"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-asar"
+			],
 			"freqRank": 351,
 			"count": 357,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -7890,14 +7900,17 @@
 				"senior"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-jeth"
+			],
 			"freqRank": 488,
 			"count": 267,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -7959,7 +7972,19 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"mahina-month"
+				"mahina-month",
+				"cal-baishakh",
+				"cal-jeth",
+				"cal-asar",
+				"cal-saun",
+				"cal-bhadau",
+				"cal-asoj",
+				"cal-kattik",
+				"cal-mangsir",
+				"cal-pus",
+				"cal-magh",
+				"cal-phagun",
+				"cal-chait"
 			],
 			"freqRank": 491,
 			"count": 662,
@@ -9844,14 +9869,17 @@
 				"tenth Nepali month"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-magh"
+			],
 			"freqRank": 633,
 			"count": 217,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -10637,14 +10665,17 @@
 				"ninth Nepali month"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-pus"
+			],
 			"freqRank": 698,
 			"count": 197,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -12072,14 +12103,17 @@
 				"eleventh Nepali month"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-phagun"
+			],
 			"freqRank": 802,
 			"count": 174,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -12314,13 +12348,16 @@
 				"eighth Nepali month"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-mangsir"
+			],
 			"freqRank": 821,
 			"count": 171,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -12926,14 +12963,17 @@
 				"twelfth Nepali month"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-chait"
+			],
 			"freqRank": 864,
 			"count": 164,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -13244,14 +13284,17 @@
 				"August–September"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-bhadau"
+			],
 			"freqRank": 885,
 			"count": 161,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -14363,14 +14406,17 @@
 				"Sept-Oct"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-asoj"
+			],
 			"freqRank": 958,
 			"count": 148,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -16257,7 +16303,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"kun-which"
+				"kun-which",
+				"dir-disha"
 			],
 			"freqRank": 1089,
 			"count": 130,
@@ -16477,14 +16524,17 @@
 				"to see"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-jatra"
+			],
 			"freqRank": 1111,
 			"count": 413,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -17827,14 +17877,17 @@
 				"seventh Nepali month"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-kattik"
+			],
 			"freqRank": 1224,
 			"count": 117,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -20910,13 +20963,16 @@
 				"ritual"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-puja"
+			],
 			"freqRank": 1487,
 			"count": 96,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -25489,13 +25545,16 @@
 				"occasion"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-parva"
+			],
 			"freqRank": 1882,
 			"count": 75,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -35288,7 +35347,8 @@
 				"batti-balnus-please-turn-on-the-light",
 				"batti-nibhaunus-please-turn-off-the-light",
 				"adj-chalu-on",
-				"batti-light-lamp"
+				"batti-light-lamp",
+				"fest-tihar"
 			],
 			"freqRank": 2787,
 			"count": 48,
@@ -35356,14 +35416,17 @@
 				"defecation"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"dir-disha"
+			],
 			"freqRank": 2790,
 			"count": 48,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -39870,13 +39933,16 @@
 				"first month"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"cal-baishakh"
+			],
 			"freqRank": 3222,
 			"count": 41,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -41807,14 +41873,17 @@
 				"performance"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-teej"
+			],
 			"freqRank": 3452,
 			"count": 38,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -42861,14 +42930,17 @@
 				"dasain"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-dashain"
+			],
 			"freqRank": 3660,
 			"count": 35,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -43442,13 +43514,16 @@
 				"celebration"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-jatra"
+			],
 			"freqRank": 3789,
 			"count": 34,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -44342,13 +44417,16 @@
 				"nearby"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"dir-waripari"
+			],
 			"freqRank": 3966,
 			"count": 31,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -49231,7 +49309,8 @@
 			"courseItemIds": [
 				"ramro-basna-aayo-it-smells-good",
 				"adv-bharkharai-justnow",
-				"adv-balla-finally"
+				"adv-balla-finally",
+				"fest-dashain"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -49360,6 +49439,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "उत्तरतिर",
+			"dev": "उत्तरतिर",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"dir-uttar"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -51907,6 +52007,48 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "तिहारको",
+			"dev": "तिहारको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-tihar"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "तीजको",
+			"dev": "तीजको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-teej"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "तुवांलो",
 			"dev": "तुवाँलो",
 			"pos": "noun",
@@ -52018,6 +52160,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "दक्षिणतिर",
+			"dev": "दक्षिणतिर",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"dir-dakshin"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -52293,6 +52456,30 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "नक्सा",
+			"dev": "नक्सा",
+			"pos": "noun",
+			"en": "map",
+			"altEn": [
+				"picture, sketch"
+			],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"dir-naksa"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "नङ",
 			"dev": "नङ",
 			"pos": "noun",
@@ -52460,7 +52647,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"noun2-rajdhani-capital"
+				"noun2-rajdhani-capital",
+				"dir-naksa"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -52815,6 +53003,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "पश्चिमतिर",
+			"dev": "पश्चिमतिर",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"dir-paschim"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "पाएं",
 			"dev": "पाएं",
 			"pos": "",
@@ -53004,6 +53213,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"ghar-samma-puryaaunus-please-deliver"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "पूर्वतिर",
+			"dev": "पूर्वतिर",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"dir-purba"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -54503,6 +54733,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "मेलामा",
+			"dev": "मेलामा",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-mela"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "मैले",
 			"dev": "मैले",
 			"pos": "pron",
@@ -54634,6 +54885,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "रङको",
+			"dev": "रङको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-holi"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -56281,6 +56553,28 @@
 				"course"
 			],
 			"agreement": "agree",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "होली",
+			"dev": "होली",
+			"pos": "name",
+			"en": "Holi",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"fest-holi"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
 			"review": null,
 			"cumPct": 0.643
 		},

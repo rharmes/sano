@@ -1,9 +1,9 @@
 # Dictionary coverage report
 
-Generated 2026-07-02 · 2439 entries · model claude-opus-4-8
+Generated 2026-07-02 · 2449 entries · model claude-opus-4-8
 
-- In COURSE: 909
-- Expansion candidates (high-freq, not yet in COURSE): 1530
+- In COURSE: 939
+- Expansion candidates (high-freq, not yet in COURSE): 1510
 - COURSE gloss-mismatch flags for review: 25
 
 ## Top expansion candidates (frequency rank · lemma · romanization · gloss)
@@ -22,7 +22,6 @@ Generated 2026-07-02 · 2439 entries · model claude-opus-4-8
 49. कारण · Kaaran · reason / cause · everyday
 51. प्रमुख · Pramukh · chief / main · formal
 52. प्रदेश · Pradesh · province · formal
-53. साउन · Saaun · Saun (month) · everyday
 54. सरकार · Sarakaar · government · formal
 59. प्रधानमन्त्री · Pradhaanamantri · prime minister · formal
 62. स्थानीय · Sthaaniy · local · formal
@@ -108,6 +107,7 @@ Generated 2026-07-02 · 2439 entries · model claude-opus-4-8
 286. भारतीय · Bhaaratiy · Indian · formal
 288. नीति · Niti · policy · formal
 290. मन्त्रालय · Mantraalay · ministry · formal
+291. बन्नु · Bannu · to become · everyday
 
 ## COURSE translations to review (dictionary disagrees — flag only, never auto-changed)
 

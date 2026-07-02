@@ -157,6 +157,15 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       match the course's no-terminal-punctuation frame convention. Coverage refreshed, audio rendered
       (33 phrase + 52 word clips, `AUDIO_VERSION` 13), dev-seed scenario added. Unit titles/goals +
       the `मलाई ___ लाग्यो` frame repetition AI-drafted → Ross's refinement.
+- [x] **T26 · Batch 8 — calendar, festivals & directions (~27)** — second hand-curated themed pocket:
+      the 12 Bikram Sambat months (colloquial spellings — बैशाख not वैशाख, साउन not श्रावण), major
+      festivals, and cardinal directions (`-तिर` pattern) — all verified 0-coverage gaps. 27 frames
+      merged as **3 units appended at the end of the path** (Nepali Calendar, Festivals & Celebrations,
+      Directions & Places) — 95 units / 905 items. **दशैं forced to "Dashain"** (whole-word
+      WORD_OVERRIDE + PRON_OVERRIDE in `js/romanize.js`, keeping the word-final nasal the Lite scheme
+      drops) — Ross-requested. व्रत dropped (romanizes "Wrat" not "Brat"; see T22) → used पूजा. Coverage
+      refreshed, audio rendered (27 phrase + 28 word clips, `AUDIO_VERSION` 14), dev-seed scenario
+      added. Unit titles/goals AI-drafted → Ross's refinement.
 - [x] **T16 · Batch 2 — everyday adjectives (~45)** — 45 high-frequency everyday adjectives, curated
       from the top-80 `--pos adj` pool (dropped semantic dupes already taught + news/formal terms) and
       wrapped in short natural frames (phrases-style). Reviewed + approved, then merged into

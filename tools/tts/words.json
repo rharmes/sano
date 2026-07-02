@@ -99,6 +99,7 @@
 		"phrases": [
 			"adv-balla-finally",
 			"adv-bharkharai-justnow",
+			"fest-dashain",
 			"ramro-basna-aayo-it-smells-good"
 		]
 	},
@@ -244,6 +245,22 @@
 			"aru-nun-chaahiyo-it-needs-more-salt"
 		]
 	},
+	"asaar": {
+		"roman": "asaar",
+		"dev": "असार",
+		"source": "aligned",
+		"phrases": [
+			"cal-asar"
+		]
+	},
+	"asoj": {
+		"roman": "asoj",
+		"dev": "असोज",
+		"source": "aligned",
+		"phrases": [
+			"cal-asoj"
+		]
+	},
 	"ati": {
 		"roman": "ati",
 		"dev": "अति",
@@ -363,6 +380,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-bahadur-brave"
+		]
+	},
+	"baishaakh": {
+		"roman": "baishaakh",
+		"dev": "बैशाख",
+		"source": "aligned",
+		"phrases": [
+			"cal-baishakh"
 		]
 	},
 	"baithak": {
@@ -495,7 +520,8 @@
 		"phrases": [
 			"adj-chalu-on",
 			"batti-balnus-please-turn-on-the-light",
-			"batti-nibhaunus-please-turn-off-the-light"
+			"batti-nibhaunus-please-turn-off-the-light",
+			"fest-tihar"
 		]
 	},
 	"belaa": {
@@ -569,6 +595,14 @@
 		"source": "aligned",
 		"phrases": [
 			"food2-ghiu-ghee"
+		]
+	},
+	"bhadau": {
+		"roman": "bhadau",
+		"dev": "भदौ",
+		"source": "aligned",
+		"phrases": [
+			"cal-bhadau"
 		]
 	},
 	"bhaeko": {
@@ -939,6 +973,14 @@
 			"ma-chaadai-aaunchu-i-will-come-back-soon"
 		]
 	},
+	"chait": {
+		"roman": "chait",
+		"dev": "चैत",
+		"source": "aligned",
+		"phrases": [
+			"cal-chait"
+		]
+	},
 	"chalaaunus": {
 		"roman": "chalaaunus",
 		"dev": "चलाउनुस्",
@@ -1205,6 +1247,14 @@
 			"noun-pratishat-percent"
 		]
 	},
+	"dashain": {
+		"roman": "dashain",
+		"dev": "दशैं",
+		"source": "aligned",
+		"phrases": [
+			"fest-dashain"
+		]
+	},
 	"dedh": {
 		"roman": "dedh",
 		"dev": "डेढ",
@@ -1347,6 +1397,14 @@
 			"adv-thorai-little",
 			"nun-dinus-please-pass-the-salt",
 			"paani-dinus-please-give-me-water"
+		]
+	},
+	"dishaa": {
+		"roman": "dishaa",
+		"dev": "दिशा",
+		"source": "aligned",
+		"phrases": [
+			"dir-disha"
 		]
 	},
 	"dosro": {
@@ -1622,6 +1680,7 @@
 		"dev": "गर्नु",
 		"source": "override",
 		"phrases": [
+			"fest-puja",
 			"ke-garnu-parcha-what-should-i-do",
 			"malai-kaam-garnu-parcha-i-have-to-work",
 			"noun2-adhyayan-study",
@@ -1716,6 +1775,7 @@
 		"dev": "घर",
 		"source": "aligned",
 		"phrases": [
+			"dir-waripari",
 			"fn-aaphno-ones-own",
 			"ma-ghar-aaye-i-am-home-i-came-home",
 			"ma-ghar-jaanchu-i-am-going-home",
@@ -1925,6 +1985,14 @@
 			"maile-heren-i-watched"
 		]
 	},
+	"hernu": {
+		"roman": "hernu",
+		"dev": "हेर्नु",
+		"source": "aligned",
+		"phrases": [
+			"fest-jatra"
+		]
+	},
 	"hernus": {
 		"roman": "hernus",
 		"dev": "हेर्नुस्",
@@ -1974,6 +2042,14 @@
 			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
 			"timro-naam-ke-ho-what-is-your-name-informal",
 			"yo-ke-ho-what-is-this"
+		]
+	},
+	"holi": {
+		"roman": "holi",
+		"dev": "होली",
+		"source": "aligned",
+		"phrases": [
+			"fest-holi"
 		]
 	},
 	"hosh": {
@@ -2122,6 +2198,7 @@
 		"dev": "जानु",
 		"source": "aligned",
 		"phrases": [
+			"fest-mela",
 			"malai-jaanu-parcha-i-have-to-go",
 			"malai-jaanu-pardaina-i-dont-have-to-go",
 			"noun2-videsh-abroad",
@@ -2135,6 +2212,14 @@
 		"phrases": [
 			"adv-uta-overthere",
 			"sidhaa-janus-go-straight"
+		]
+	},
+	"jaatraa": {
+		"roman": "jaatraa",
+		"dev": "जात्रा",
+		"source": "aligned",
+		"phrases": [
+			"fest-jatra"
 		]
 	},
 	"jab": {
@@ -2191,6 +2276,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-jati-asmuchas"
+		]
+	},
+	"jeth": {
+		"roman": "jeth",
+		"dev": "जेठ",
+		"source": "aligned",
+		"phrases": [
+			"cal-jeth"
 		]
 	},
 	"jhai": {
@@ -2357,6 +2450,14 @@
 		"source": "aligned",
 		"phrases": [
 			"body-nang-nail"
+		]
+	},
+	"kaattik": {
+		"roman": "kaattik",
+		"dev": "कात्तिक",
+		"source": "aligned",
+		"phrases": [
+			"cal-kattik"
 		]
 	},
 	"kadaa": {
@@ -2812,6 +2913,14 @@
 			"noun-kshetra-area"
 		]
 	},
+	"kun": {
+		"roman": "kun",
+		"dev": "कुन",
+		"source": "aligned",
+		"phrases": [
+			"dir-disha"
+		]
+	},
 	"kunai": {
 		"roman": "kunai",
 		"dev": "कुनै",
@@ -3072,6 +3181,14 @@
 			"ma-machha-maasu-khadina-i-don-t-eat-meat"
 		]
 	},
+	"maagh": {
+		"roman": "maagh",
+		"dev": "माघ",
+		"source": "aligned",
+		"phrases": [
+			"cal-magh"
+		]
+	},
 	"maajhchhu": {
 		"roman": "maajhchhu",
 		"dev": "माझ्छु",
@@ -3150,6 +3267,25 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-mahila-woman"
+		]
+	},
+	"mahinaa": {
+		"roman": "mahinaa",
+		"dev": "महिना",
+		"source": "aligned",
+		"phrases": [
+			"cal-asar",
+			"cal-asoj",
+			"cal-baishakh",
+			"cal-bhadau",
+			"cal-chait",
+			"cal-jeth",
+			"cal-kattik",
+			"cal-magh",
+			"cal-mangsir",
+			"cal-phagun",
+			"cal-pus",
+			"cal-saun"
 		]
 	},
 	"maidaan": {
@@ -3240,6 +3376,14 @@
 			"noun2-mandir-temple"
 		]
 	},
+	"mansir": {
+		"roman": "mansir",
+		"dev": "मंसिर",
+		"source": "aligned",
+		"phrases": [
+			"cal-mangsir"
+		]
+	},
 	"masang": {
 		"roman": "masang",
 		"dev": "मसँग",
@@ -3254,6 +3398,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-kharab-bad"
+		]
+	},
+	"melaamaa": {
+		"roman": "melaamaa",
+		"dev": "मेलामा",
+		"source": "aligned",
+		"phrases": [
+			"fest-mela"
 		]
 	},
 	"mero": {
@@ -3348,6 +3500,14 @@
 			"muulya-ghatyo-the-price-went-down"
 		]
 	},
+	"naacha": {
+		"roman": "naacha",
+		"dev": "नाच",
+		"source": "aligned",
+		"phrases": [
+			"fest-teej"
+		]
+	},
 	"naam": {
 		"roman": "naam",
 		"dev": "नाम",
@@ -3364,6 +3524,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun2-nagad-cash"
+		]
+	},
+	"naksaa": {
+		"roman": "naksaa",
+		"dev": "नक्सा",
+		"source": "aligned",
+		"phrases": [
+			"dir-naksa"
 		]
 	},
 	"nambar": {
@@ -3421,6 +3589,7 @@
 		"dev": "नेपालको",
 		"source": "aligned",
 		"phrases": [
+			"dir-naksa",
 			"noun2-rajdhani-capital"
 		]
 	},
@@ -3754,6 +3923,14 @@
 			"ek-chhin-parkhanus-wait-a-moment-please"
 		]
 	},
+	"parwa": {
+		"roman": "parwa",
+		"dev": "पर्व",
+		"source": "aligned",
+		"phrases": [
+			"fest-parva"
+		]
+	},
 	"paryo": {
 		"roman": "paryo",
 		"dev": "पर्यो",
@@ -3794,6 +3971,14 @@
 		"source": "aligned",
 		"phrases": [
 			"yo-pathaaunus-please-send-this"
+		]
+	},
+	"phaagun": {
+		"roman": "phaagun",
+		"dev": "फागुन",
+		"source": "aligned",
+		"phrases": [
+			"cal-phagun"
 		]
 	},
 	"phaaidaa": {
@@ -3991,6 +4176,14 @@
 			"nun-pugyo-there-is-enough-salt"
 		]
 	},
+	"pujaa": {
+		"roman": "pujaa",
+		"dev": "पूजा",
+		"source": "aligned",
+		"phrases": [
+			"fest-puja"
+		]
+	},
 	"pul": {
 		"roman": "pul",
 		"dev": "पुल",
@@ -4029,6 +4222,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ghar-samma-puryaaunus-please-deliver"
+		]
+	},
+	"pus": {
+		"roman": "pus",
+		"dev": "पुस",
+		"source": "aligned",
+		"phrases": [
+			"cal-pus"
 		]
 	},
 	"ra": {
@@ -4159,6 +4360,14 @@
 			"ramailo-bhayo-it-was-fun"
 		]
 	},
+	"rangako": {
+		"roman": "rangako",
+		"dev": "रङको",
+		"source": "aligned",
+		"phrases": [
+			"fest-holi"
+		]
+	},
 	"rin": {
 		"roman": "rin",
 		"dev": "ऋण",
@@ -4263,6 +4472,14 @@
 		"source": "aligned",
 		"phrases": [
 			"saathi-bolaaunus-please-call-your-friend"
+		]
+	},
+	"saaun": {
+		"roman": "saaun",
+		"dev": "साउन",
+		"source": "aligned",
+		"phrases": [
+			"cal-saun"
 		]
 	},
 	"sabai": {
@@ -4912,6 +5129,7 @@
 		"dev": "ठूलो",
 		"source": "aligned",
 		"phrases": [
+			"fest-parva",
 			"noun-ghatana-event",
 			"noun-kampani-company",
 			"noun-parivartan-change",
@@ -4933,6 +5151,22 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-thuprai-many"
+		]
+	},
+	"tihaarako": {
+		"roman": "tihaarako",
+		"dev": "तिहारको",
+		"source": "aligned",
+		"phrases": [
+			"fest-tihar"
+		]
+	},
+	"tijako": {
+		"roman": "tijako",
+		"dev": "तीजको",
+		"source": "aligned",
+		"phrases": [
+			"fest-teej"
 		]
 	},
 	"tikat": {
@@ -5149,6 +5383,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-uthchu-i-get-up-i-will-get-up"
+		]
+	},
+	"waripari": {
+		"roman": "waripari",
+		"dev": "वरिपरि",
+		"source": "aligned",
+		"phrases": [
+			"dir-waripari"
 		]
 	},
 	"wataa": {
