@@ -134,21 +134,29 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       55 word clips, `AUDIO_VERSION` 10), dev-seed scenario added. Also fixed visarga in the romanizer
       (T19) so प्रायः works. Unit titles/goals AI-drafted → Ross's refinement. **Merged; push/deploy
       pending Ross's go.**
-- [ ] **T21 · Batch 5 — essential function words (~27)** — 27 high-leverage function words
+- [x] **T21 · Batch 5 — essential function words (~27)** — 27 high-leverage function words
       (pronouns, conjunctions, counters, big numbers, particles/postpositions) — the grammatical glue.
       Only genuinely untaught items (course already has basic pronouns, connectors, numbers to 1000);
       taught as short frames; merged as 5 units **appended at the end of the path** (Pronouns & Self,
       If/When & Because, Counting Things, Big Numbers, Little Connecting Words) — 83 units / 800 items.
       Coverage refreshed, audio rendered (27 phrase + 30 word clips, `AUDIO_VERSION` 11), dev-seed
       scenario added. Smaller batch — function words are inherently fewer. Unit titles/goals AI-drafted
-      → Ross's refinement. **Merged; push/deploy pending Ross's go.**
-- [ ] **T23 · Batch 6 — everyday-life nouns, part 2 (~45)** — a second nouns pass, deeper in the pool
+      → Ross's refinement. **Shipped** (commit e7194aa).
+- [x] **T23 · Batch 6 — everyday-life nouns, part 2 (~45)** — a second nouns pass, deeper in the pool
       with hard curation for genuinely everyday domains (skipping civic/news terms): 45 nouns as short
       frames, merged as 5 units **appended at the end of the path** (Travel & Transport, City &
       Country, Money & Commerce, School & Mind, Health & Life) — 88 units / 845 items. Coverage
       refreshed, audio rendered (45 phrase + 58 word clips, `AUDIO_VERSION` 12), dev-seed scenario
       added. व्यापार deferred pending T22 (व→b). Unit titles/goals AI-drafted → Ross's refinement.
-      **Merged; push/deploy pending Ross's go.**
+      **Shipped** (commit f0f5e94).
+- [x] **T25 · Batch 7 — feelings & everyday things (~33)** — raw-frequency everyday pool exhausted
+      (remaining top words are civic/news nouns or already-taught verbs), so a **hand-curated themed
+      pocket** of verified gaps: emotions, body parts, clothes, food/kitchen — 33 frames merged as
+      **4 units appended at the end of the path** (Feelings & States, More Body Parts, Clothes &
+      Accessories, More Groceries) — 92 units / 878 items. Dropped the sentence-final danda (।) to
+      match the course's no-terminal-punctuation frame convention. Coverage refreshed, audio rendered
+      (33 phrase + 52 word clips, `AUDIO_VERSION` 13), dev-seed scenario added. Unit titles/goals +
+      the `मलाई ___ लाग्यो` frame repetition AI-drafted → Ross's refinement.
 - [x] **T16 · Batch 2 — everyday adjectives (~45)** — 45 high-frequency everyday adjectives, curated
       from the top-80 `--pos adj` pool (dropped semantic dupes already taught + news/formal terms) and
       wrapped in short natural frames (phrases-style). Reviewed + approved, then merged into

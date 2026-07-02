@@ -285,7 +285,8 @@
 				"adv-jhandai-almost",
 				"fn-laakh-lakh",
 				"fn-karod-crore",
-				"fn-arba-billion"
+				"fn-arba-billion",
+				"food2-chaamal-rice"
 			],
 			"freqRank": 17,
 			"count": 3234,
@@ -1013,7 +1014,8 @@
 			"courseItemIds": [
 				"naya-new",
 				"noun2-motorcycle",
-				"noun2-anubhav-experience"
+				"noun2-anubhav-experience",
+				"wear-mojaa-socks"
 			],
 			"freqRank": 61,
 			"count": 1255,
@@ -1395,7 +1397,8 @@
 				"dherai-piro-cha-it-is-very-spicy",
 				"dherai-many-much-very",
 				"noun-kharcha-expense",
-				"noun2-gyan-knowledge"
+				"noun2-gyan-knowledge",
+				"feel-khusi-happy"
 			],
 			"freqRank": 85,
 			"count": 1126,
@@ -3284,7 +3287,9 @@
 				"adv-yaspatak-thistime",
 				"adv-eklai-alone",
 				"fn-aaphain-oneself",
-				"fn-chahin-asfor"
+				"fn-chahin-asfor",
+				"feel-khusi-happy",
+				"feel-eklo-lonely"
 			],
 			"freqRank": 196,
 			"count": 1281,
@@ -5975,7 +5980,9 @@
 				"noun-pariwaar-family",
 				"noun-desh-country",
 				"noun2-gaun-village",
-				"noun2-sharir-body"
+				"noun2-sharir-body",
+				"body-jibro-tongue",
+				"body-ghunda-knee"
 			],
 			"freqRank": 363,
 			"count": 417,
@@ -16621,14 +16628,17 @@
 				"to drink"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-gedagudi-legumes"
+			],
 			"freqRank": 1121,
 			"count": 308,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -19782,14 +19792,17 @@
 				"grief"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-dukha-sadness"
+			],
 			"freqRank": 1386,
 			"count": 102,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -21238,7 +21251,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"ma-ghar-safaa-garchu-i-will-clean-the-house"
+				"ma-ghar-safaa-garchu-i-will-clean-the-house",
+				"wear-rumaal-handkerchief"
 			],
 			"freqRank": 1511,
 			"count": 94,
@@ -26703,14 +26717,17 @@
 			"en": "blood",
 			"altEn": [],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"body-ragat-blood"
+			],
 			"freqRank": 1999,
 			"count": 70,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -27141,7 +27158,10 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"rato-red"
+				"rato-red",
+				"body-gaalaa-cheek",
+				"body-ragat-blood",
+				"wear-saadi-sari"
 			],
 			"freqRank": 2034,
 			"count": 69,
@@ -27913,13 +27933,16 @@
 				"kilo"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-chaamal-rice"
+			],
 			"freqRank": 2099,
 			"count": 67,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -28271,14 +28294,17 @@
 				"glad"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-khusi-happy"
+			],
 			"freqRank": 2130,
 			"count": 65,
 			"confidence": "low",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "disagree",
 			"review": null,
@@ -31640,7 +31666,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"kalo-black"
+				"kalo-black",
+				"wear-chasmaa-glasses"
 			],
 			"freqRank": 2422,
 			"count": 56,
@@ -31959,13 +31986,16 @@
 				"extensive"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"body-nidhaar-forehead"
+			],
 			"freqRank": 2450,
 			"count": 56,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -34080,14 +34110,17 @@
 				"fruit"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-phalphul-fruit"
+			],
 			"freqRank": 2650,
 			"count": 51,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -35670,13 +35703,16 @@
 				"uncooked rice"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-chaamal-rice"
+			],
 			"freqRank": 2830,
 			"count": 48,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -42648,14 +42684,17 @@
 				"to chop"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"body-nang-nail"
+			],
 			"freqRank": 3620,
 			"count": 35,
 			"confidence": "high",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "agree",
 			"review": null,
@@ -44186,7 +44225,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"hariyo-green"
+				"hariyo-green",
+				"food2-saagpaat-greens"
 			],
 			"freqRank": 3944,
 			"count": 32,
@@ -44512,7 +44552,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"maasu-meat"
+				"maasu-meat",
+				"food2-khasi-mutton"
 			],
 			"freqRank": 4116,
 			"count": 30,
@@ -46303,7 +46344,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"golbheda-tomato"
+				"golbheda-tomato",
+				"food2-golbheda-tomato"
 			],
 			"freqRank": 9433,
 			"count": 11,
@@ -48912,6 +48954,28 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "अन्डा",
+			"dev": "अन्डा",
+			"pos": "noun",
+			"en": "alternative spelling of अण्डा (aṇḍā)",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-andaa-egg"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "अफिस",
 			"dev": "अफिस",
 			"pos": "",
@@ -49329,6 +49393,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "उमालेको",
+			"dev": "उमालेको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-andaa-egg"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "उमाल्नुस्",
 			"dev": "उमाल्नुस्",
 			"pos": "",
@@ -49378,6 +49463,28 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "उसलाई",
+			"dev": "उसलाई",
+			"pos": "pron",
+			"en": "accusative of ऊ (ū)",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-ghamanda-arrogance"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "उहांको",
 			"dev": "उहांको",
 			"pos": "",
@@ -49408,6 +49515,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"noun-mahila-woman"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "एक्लो",
+			"dev": "एक्लो",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-eklo-lonely"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -49657,6 +49785,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "कुर्ता",
+			"dev": "कुर्ता",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-kurtaa-kurta"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "कृपया",
 			"dev": "कृपया",
 			"pos": "adv",
@@ -49703,6 +49852,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "खसीको",
+			"dev": "खसीको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-khasi-mutton"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -50089,6 +50259,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "गम्छा",
+			"dev": "गम्छा",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-gamchhaa-scarf"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "गरें",
 			"dev": "गरें",
 			"pos": "",
@@ -50321,6 +50512,48 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "गाला",
+			"dev": "गाला",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"body-gaalaa-cheek"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "गेडागुडी",
+			"dev": "गेडागुडी",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-gedagudi-legumes"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "घट्यो",
 			"dev": "घट्यो",
 			"pos": "",
@@ -50330,6 +50563,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"muulya-ghatyo-the-price-went-down"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "घमन्ड",
+			"dev": "घमन्ड",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-ghamanda-arrogance"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50418,6 +50672,48 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"ghar-samma-puryaaunus-please-deliver"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "घिउ",
+			"dev": "घिउ",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-ghiu-ghee"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "घुंडा",
+			"dev": "घुंडा",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"body-ghunda-knee"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50523,6 +50819,28 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "चस्मा",
+			"dev": "चस्मा",
+			"pos": "noun",
+			"en": "alternative spelling of चश्मा (caśmā)",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-chasmaa-glasses"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -50793,7 +51111,8 @@
 				"fn-yadi-if",
 				"fn-kinabhane-because",
 				"noun2-yatayat-transport",
-				"noun2-himal-mountain"
+				"noun2-himal-mountain",
+				"feel-ghamanda-arrogance"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50833,6 +51152,28 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "छाला",
+			"dev": "छाला",
+			"pos": "noun",
+			"en": "skin",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"body-chhaalaa-skin"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "छु",
 			"dev": "छु",
 			"pos": "",
@@ -50850,7 +51191,9 @@
 				"ma-thakeko-chu-i-am-tired",
 				"adj-kamjor-weak",
 				"adj-byasta-busy",
-				"adv-eklai-alone"
+				"adv-eklai-alone",
+				"feel-khusi-happy",
+				"feel-eklo-lonely"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51118,6 +51461,28 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "जिब्रो",
+			"dev": "जिब्रो",
+			"pos": "noun",
+			"en": "tongue",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"body-jibro-tongue"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "जोगाउनुस्",
 			"dev": "जोगाउनुस्",
 			"pos": "",
@@ -51148,6 +51513,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"yo-jodnus-please-join-these"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "ज्याकेट",
+			"dev": "ज्याकेट",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-jyaaket-jacket"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51454,6 +51840,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "ताजा",
+			"dev": "ताजा",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-phalphul-fruit"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "तावा",
 			"dev": "तावा",
 			"pos": "noun",
@@ -51479,6 +51886,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "तिर्खा",
+			"dev": "तिर्खा",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-tirkha-thirst"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "तुवांलो",
 			"dev": "तुवाँलो",
 			"pos": "noun",
@@ -51499,6 +51927,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "थकाइ",
+			"dev": "थकाइ",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-thakai-tired"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -51686,7 +52135,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"tauko-dukhyo-my-head-hurts-headache"
+				"tauko-dukhyo-my-head-hurts-headache",
+				"body-ghunda-knee"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51843,6 +52293,49 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "नङ",
+			"dev": "नङ",
+			"pos": "noun",
+			"en": "nail, fingernail, toenail",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"body-nang-nail"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "नरम",
+			"dev": "नरम",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"body-chhaalaa-skin"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "निकाल्नुस्",
 			"dev": "निकाल्नुस्",
 			"pos": "",
@@ -51852,6 +52345,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"yo-nikaalnus-please-take-this-out"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "निधार",
+			"dev": "निधार",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"body-nidhaar-forehead"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51984,6 +52498,31 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "न्यानो",
+			"dev": "न्यानो",
+			"pos": "adj",
+			"en": "warm",
+			"altEn": [
+				"cozy",
+				"cordial"
+			],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-jyaaket-jacket"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "पकाउंदै",
 			"dev": "पकाउंदै",
 			"pos": "",
@@ -52053,6 +52592,27 @@
 				"course"
 			],
 			"agreement": "partial",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "पछुतो",
+			"dev": "पछुतो",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-pachhuto-regret"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -52264,6 +52824,48 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"maile-paaen-i-got-it"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "पाकेको",
+			"dev": "पाकेको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-golbheda-tomato"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "पातलो",
+			"dev": "पातलो",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-gamchhaa-scarf"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -52808,6 +53410,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "बाक्लो",
+			"dev": "बाक्लो",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-switar-sweater"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -53523,7 +54146,8 @@
 				"noun-kharcha-expense",
 				"noun-bikri-sale",
 				"adv-purai-entirely",
-				"adv-tyaspachhi-afterthat"
+				"adv-tyaspachhi-afterthat",
+				"feel-pachhuto-regret"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53533,6 +54157,48 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "भांचियो",
+			"dev": "भांचियो",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"body-haddi-bone"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "भातमा",
+			"dev": "भातमा",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-ghiu-ghee"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -53629,6 +54295,28 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "भोक",
+			"dev": "भोक",
+			"pos": "noun",
+			"en": "hunger",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-bhok-hunger"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "मनाउंछौं",
 			"dev": "मनाउंछौं",
 			"pos": "",
@@ -53681,7 +54369,13 @@
 				"adj-pakka-sure",
 				"kripaya-malaai-maddat-garnuhos-please-help-me",
 				"malai-biraami-bhayo-i-am-sick",
-				"noun-bishwaas-trust"
+				"noun-bishwaas-trust",
+				"feel-laaj-shame",
+				"feel-dukha-sadness",
+				"feel-pachhuto-regret",
+				"feel-bhok-hunger",
+				"feel-tirkha-thirst",
+				"feel-thakai-tired"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53843,6 +54537,28 @@
 				"course"
 			],
 			"agreement": "disagree",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "मोजा",
+			"dev": "मोजा",
+			"pos": "noun",
+			"en": "sock(s)",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-mojaa-socks"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -54014,6 +54730,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "रुमाल",
+			"dev": "रुमाल",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-rumaal-handkerchief"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "रोक्नुस्",
 			"dev": "रोक्नुस्",
 			"pos": "",
@@ -54177,7 +54914,12 @@
 				"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you",
 				"ghaam-laagyo-it-s-sunny",
 				"badal-laagyo-it-s-cloudy",
-				"hussu-laagyo-it-s-foggy"
+				"hussu-laagyo-it-s-foggy",
+				"feel-laaj-shame",
+				"feel-dukha-sadness",
+				"feel-bhok-hunger",
+				"feel-tirkha-thirst",
+				"feel-thakai-tired"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -54187,6 +54929,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "लाज",
+			"dev": "लाज",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"feel-laaj-shame"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -54629,6 +55392,48 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "सागपात",
+			"dev": "सागपात",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"food2-saagpaat-greens"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "साडी",
+			"dev": "साडी",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-saadi-sari"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "सांप",
 			"dev": "साँप",
 			"pos": "noun",
@@ -54720,6 +55525,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "सुती",
+			"dev": "सुती",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-kurtaa-kurta"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -55030,6 +55856,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "स्विटर",
+			"dev": "स्विटर",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"wear-switar-sweater"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "हजुरको",
 			"dev": "हजुरको",
 			"pos": "",
@@ -55086,6 +55933,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"yo-hataaunus-please-remove-this"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "हड्डी",
+			"dev": "हड्डी",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"body-haddi-bone"
 			],
 			"freqRank": null,
 			"count": 0,
