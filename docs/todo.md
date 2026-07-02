@@ -195,15 +195,16 @@ The breadth expansion (T11 batches 1–9) picked the everyday-frequency pool cle
 Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **real expressions** +
 **everyday contexts**.
 
-- [ ] **T28 · Rotating-frames mechanism** — an item may carry optional `frames: [{dev,en}]`; reviews
+- [x] **T28 · Rotating-frames mechanism** — an item may carry optional `frames: [{dev,en}]`; reviews
       rotate through them so a known word is practiced in varied contexts **without adding path
       units** (the SR record stays keyed by item id — one record, many sentences). Frame 0 is the
       item's own `dev`/`en` (audio id `<id>`); extras get `<id>-f1`, `<id>-f2`, … `js/romanize.js`
       derives `np`/`pron` per frame; `itemFrames`/`frameForSeen`/`pickFrame` + `ex.frame` threaded
       through the render/grade sites (`js/sano.js`); `synth-app.mjs` + `build-words.mjs` expand frames
-      so `--new` renders only the new clips. Unit test + data validation + dev-seed scenario. Nepali
-      `dev` for the demo frames AI-drafted → Ross's review. Audio render deferred until Ross approves
-      the content (spends credits, bump `AUDIO_VERSION`).
+      so `--new` renders only the new clips. Unit test + data validation + dev-seed scenario (0f).
+      Committed `3fea017`; 3 pilot items (maagnu/samjhanu/chheu) got demo frames, audio rendered
+      (6 phrase + 5 word clips, `AUDIO_VERSION` 16). **Still open:** the pilot frame `dev` is
+      AI-drafted → Ross's review; **push/deploy pending Ross's go.** Bulk content is T29/T30.
 - [ ] **T29 · Depth content — everyday-context alternate frames** — populate `frames` on a curated
       set of already-taught items with everyday-context variety, so each word stops being tied to one
       memorized sentence. Nepali `dev` AI-drafted → Ross's review; audio rendered for the new frame
