@@ -4,6 +4,7 @@
 html {
 	--accent: #dd6470; /* paper crimson: CTAs, current node, links */
 	--accent-deep: #b94f5b; /* hover / pressed */
+	--accent-soft: #eec3c8; /* faint crimson: the "introduced" arc behind the mastery ring */
 	--path-complete-color: #56629e; /* paper indigo: completed nodes */
 
 	--text-color-richer: #2e2933;
@@ -49,6 +50,7 @@ html {
 	html {
 		--accent: #e0697a;
 		--accent-deep: #c25462;
+		--accent-soft: #74484f; /* faint crimson (dark): the "introduced" arc behind the mastery ring */
 		--path-complete-color: #7384c4;
 
 		--text-color-richer: #efe9f0;

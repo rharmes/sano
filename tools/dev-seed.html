@@ -89,7 +89,8 @@
 				Lands with <b>Basics mastered</b> and <b>Numbers the current unit</b>, its words at different stages: some brand-new, one
 				already <b>recalled once</b>. Tap <b>“Start today's lesson.”</b> A new word is met with multiple choice, then — still in the
 				same lesson — a gentle <b>tap-to-build word bank</b> recall; on later days it returns until <b>recalled twice</b>. The current
-				unit's node ring fills only as words <b>graduate</b> (are mastered), not merely seen.
+				unit's node ring is <b>two-tone</b>: a faint arc tracks words <b>introduced</b> (so it moves the moment you practice) and a
+				solid accent arc the words <b>mastered</b> (graduated) — full only when the unit unlocks.
 			</p>
 			<button onclick="seed('learning')">Seed &amp; open</button>
 		</div>
@@ -114,6 +115,18 @@
 				drill its weakest stragglers until they graduate and the next unit unlocks.
 			</p>
 			<button onclick="seed('nearmastery')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
+			<span class="tests">SR-05 two-tone ring</span>
+			<h2>0e · Early progress shows on the ring (SR-05)</h2>
+			<p>
+				The reported case: a fresh restart <b>two lessons in</b> — <b>Basics is the current unit</b> with a handful of words
+				<b>introduced but none mastered yet</b>. The node ring shows a <b>faint “introduced” arc</b> that moves the moment you practice;
+				the <b>solid “mastered” arc</b> stays empty until words graduate (~4 days out). Before the fix this ring read as
+				<b>0% — no progress at all</b> for a unit's first several days.
+			</p>
+			<button onclick="seed('earlyring')">Seed &amp; open</button>
 		</div>
 
 		<div class="card">
@@ -620,6 +633,15 @@
 								: rec({ interval: 2, recalls: 1, lastSeen: day(3) });
 					});
 					state = wrap(items, { itemsTotal: 60 });
+				} else if (which === 'earlyring') {
+					// The reported case: Basics is current with the first four words introduced but none
+					// graduated — the two-tone ring's faint "introduced" arc shows progress the solid
+					// "mastered" arc can't yet (graduation needs the interval to reach ~4 days).
+					const items = {};
+					COURSE[0].items.slice(0, 4).forEach((it, i) => {
+						items[it.id] = rec({ interval: i < 2 ? 2 : 1, recalls: i < 2 ? 1 : 0, lastSeen: day(i < 2 ? 1 : 0) });
+					});
+					state = wrap(items, { itemsTotal: 8, streak: 2 });
 				} else if (which === 'freshstart') {
 					// Schema v3 migration: write an OLD v2 save; on load migrateV2State fresh-starts it to
 					// unit 1, keeping name + streak. (This is the one scenario that intentionally seeds v2.)

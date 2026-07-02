@@ -773,21 +773,33 @@ function renderPath() {
 
 		if (isCurrent) {
 			const ringSize = nodeSize + 20;
-			// The ring fills as the unit is MASTERED (graduated words), not merely introduced —
-			// so it reads as "how close to unlocking the next unit" (SR-05 mastery gate).
+			// A two-tone mastery ring. A faint arc tracks how many of the unit's words have been
+			// INTRODUCED — it moves the moment you practice — and a solid accent arc how many have
+			// MASTERED (graduated), the SR-05 gate that actually unlocks the next unit. Mastered is
+			// always a subset of introduced, so the two arcs share the 12-o'clock origin and the
+			// solid one paints on top of the faint one; the remaining sweep is the empty track.
+			// (Mastery alone left the ring at 0% for a unit's first ~4 days, reading as no progress.)
+			const total = unit.items.length;
+			const introduced = total - unitNewItems(unit).length;
 			const mastered = unitMasteredCount(unit);
-			const ring = document.createElement('div');
-			ring.className = 'path-ring';
-			ring.style.width = ringSize + 'px';
-			ring.style.height = ringSize + 'px';
-			ring.style.left = x - ringSize / 2 + 'px';
-			ring.style.top = y + nodeSize / 2 - ringSize / 2 + 'px';
-			ring.style.background =
-				'conic-gradient(var(--accent) ' + Math.round((mastered / unit.items.length) * 100) + '%, var(--border-color) 0)';
 			const mask = 'radial-gradient(circle, transparent ' + (nodeSize / 2 + 4) + 'px, black ' + (nodeSize / 2 + 5) + 'px)';
-			ring.style.webkitMask = mask;
-			ring.style.mask = mask;
-			wrap.appendChild(ring);
+			const pct = (n) => Math.round((n / total) * 100);
+			const makeRing = (bg) => {
+				const ring = document.createElement('div');
+				ring.className = 'path-ring';
+				ring.style.width = ringSize + 'px';
+				ring.style.height = ringSize + 'px';
+				ring.style.left = x - ringSize / 2 + 'px';
+				ring.style.top = y + nodeSize / 2 - ringSize / 2 + 'px';
+				ring.style.background = bg;
+				ring.style.webkitMask = mask;
+				ring.style.mask = mask;
+				wrap.appendChild(ring);
+			};
+			// Faint (introduced) behind, with the empty track filling the rest…
+			makeRing('conic-gradient(var(--accent-soft) ' + pct(introduced) + '%, var(--border-color) 0)');
+			// …then the solid (mastered) arc on top, transparent past it so the faint arc shows through.
+			makeRing('conic-gradient(var(--accent) ' + pct(mastered) + '%, transparent 0)');
 
 			const start = document.createElement('div');
 			start.className = 'path-start';

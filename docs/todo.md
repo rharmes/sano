@@ -82,6 +82,12 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       graduated (not merely introduced); the current node's ring now fills by *mastery*; tapping an
       all-introduced-but-unmastered unit drills its weakest words. (`unitIsComplete`, `renderPath`,
       `startUnitLesson`, `placeBefore`.)
+- [x] **T24 · Two-tone ring so early progress shows** — the T7 mastery-only ring sat at 0% for a
+      unit's first ~4 days (nothing graduates that fast), reading as "no progress" after a couple of
+      lessons (Ross-reported). `renderPath` now layers a faint `--accent-soft` "introduced" arc under
+      the solid `--accent` "mastered" arc, so the ring moves the moment you practice yet still fills
+      only at unlock. New `--accent-soft` token (both themes); dev-seed `earlyring` scenario (0e).
+      (`js/sano.js` ring block, `css/sano.css`, `tools/dev-seed.html`.)
 - [x] **T8 · Adaptive, review-dominant daily loop** — `dailyPlan()` throttles new words by review
       debt and sizes reviews to a ~18–20 exercise session, carrying the backlog. (`startDailyLesson`,
       `renderHome`.)

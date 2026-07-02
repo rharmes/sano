@@ -54,7 +54,8 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   **dialogue** (gold) and **pronunciation** (lavender) nodes woven in after their anchor unit and
   decorative **companions** (SR-07) in the pockets. A unit is complete — and unlocks the next — only
   when every item has **graduated** (the SR-05 **mastery gate**), not merely been introduced; the
-  current node's ring fills by mastery. The daily-lesson button (`dailyPlan`) is **review-dominant**
+  current node's ring is **two-tone** — a faint arc for words *introduced* under a solid arc for words
+  *mastered*, so it moves as you practice but fills only at unlock. The daily-lesson button (`dailyPlan`) is **review-dominant**
   and throttles new words by review debt (≈18–20 exercises).
 - **Spaced repetition** is **SM-2-lite + learning steps** (per-item ease/interval/recalls, auto-graded
   from the exercise type). A new word climbs a gentle ladder (1 → 2 → 4 days) and only **graduates**
