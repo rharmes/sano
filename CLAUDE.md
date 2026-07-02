@@ -166,7 +166,7 @@ bump `AUDIO_VERSION` in `js/audio.js` to bust caches. Flags + per-voice routing:
   art. `style-guide.html`, `animations.html`, `characters.html` share a day/night pill (`?theme=`);
   `icons.html` and `dialogue.html` are further artifacts.
 - **`design/devanagari.html`** is a localhost-only review tool for the AI-drafted `dev` strings: all
-  905 items grouped by unit (English, romanization, ▶, an editable Devanagari box, and a flag-only
+  927 items grouped by unit (English, romanization, ▶, an editable Devanagari box, and a flag-only
   column surfacing any `tools/dict/coverage-report.md` disagreement for that row). It POSTs only
   changed rows to `design/devanagari-save.php`, which merges them into the **gitignored**
   `design/devanagari-review.json` — it does **not** touch `js/data.js`. Serve with `php -S`.

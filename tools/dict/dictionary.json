@@ -161,7 +161,9 @@
 				"adj-samanya-ordinary",
 				"adv-pahilopatak-firsttime",
 				"adv-tyastai-likewise",
-				"noun2-artha-meaning"
+				"noun2-artha-meaning",
+				"oe-aadhunik",
+				"oe-saajhaa"
 			],
 			"freqRank": 8,
 			"count": 5025,
@@ -343,7 +345,10 @@
 				"adv-baru-instead",
 				"adv-matrai-only",
 				"adv-jastai-like",
-				"fn-baahek-except"
+				"fn-baahek-except",
+				"link-jasto",
+				"oe-aadhunik",
+				"oe-saajhaa"
 			],
 			"freqRank": 19,
 			"count": 6087,
@@ -465,7 +470,8 @@
 				"tapai-nepali-bolnu-hunchha-do-you-speak-nepali",
 				"ma-nepali-bolchhu-i-speak-nepali",
 				"ma-nepali-boldina-i-don-t-speak-nepali",
-				"noun2-bhasha-language"
+				"noun2-bhasha-language",
+				"v9-padhaaunu"
 			],
 			"freqRank": 29,
 			"count": 2290,
@@ -2386,7 +2392,8 @@
 			"courseItemIds": [
 				"hami-we-us",
 				"haami-jitchaun-we-will-win",
-				"adj-saman-equal"
+				"adj-saman-equal",
+				"v9-naachnu"
 			],
 			"freqRank": 145,
 			"count": 1640,
@@ -2959,7 +2966,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"noun-samuha-group"
+				"noun-samuha-group",
+				"v9-rojnu"
 			],
 			"freqRank": 175,
 			"count": 613,
@@ -3294,7 +3302,12 @@
 				"fn-aaphain-oneself",
 				"fn-chahin-asfor",
 				"feel-khusi-happy",
-				"feel-eklo-lonely"
+				"feel-eklo-lonely",
+				"link-avashya",
+				"link-jasari",
+				"link-jabasamma",
+				"v9-maagnu",
+				"v9-samjhanu"
 			],
 			"freqRank": 196,
 			"count": 1281,
@@ -4171,7 +4184,8 @@
 			"courseItemIds": [
 				"arko-dinus-please-give-me-another",
 				"noun-saal-year",
-				"noun-bishaya-topic"
+				"noun-bishaya-topic",
+				"link-jasto"
 			],
 			"freqRank": 250,
 			"count": 637,
@@ -5386,7 +5400,11 @@
 				"pani-pariracha-it-is-raining",
 				"pani-chaahiyo-i-need-water",
 				"pani-rain",
-				"fn-jhain-likeas"
+				"fn-jhain-likeas",
+				"link-shaayad",
+				"link-alikati",
+				"link-jabasamma",
+				"v9-maagnu"
 			],
 			"freqRank": 326,
 			"count": 464,
@@ -5504,7 +5522,8 @@
 				"tapai-ko-naam-ke-ho-what-is-your-name-formal",
 				"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 				"timro-naam-ke-ho-what-is-your-name-informal",
-				"mero-naam-ho-my-name-is"
+				"mero-naam-ho-my-name-is",
+				"v9-birsanu"
 			],
 			"freqRank": 336,
 			"count": 580,
@@ -5992,7 +6011,9 @@
 				"noun2-gaun-village",
 				"noun2-sharir-body",
 				"body-jibro-tongue",
-				"body-ghunda-knee"
+				"body-ghunda-knee",
+				"v9-haasnu",
+				"oe-chheu"
 			],
 			"freqRank": 363,
 			"count": 417,
@@ -8259,13 +8280,16 @@
 				"kind of"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"link-jasto"
+			],
 			"freqRank": 509,
 			"count": 471,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -8453,7 +8477,8 @@
 				"malai-man-paryo-i-liked-it",
 				"malai-jana-man-laagcha-i-want-to-go",
 				"malai-khana-man-laagcha-i-want-to-eat",
-				"malai-man-laagdaina-i-dont-want-to"
+				"malai-man-laagdaina-i-dont-want-to",
+				"link-jahaan"
 			],
 			"freqRank": 525,
 			"count": 317,
@@ -8522,7 +8547,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"tyaha-there"
+				"tyaha-there",
+				"link-jahaan"
 			],
 			"freqRank": 529,
 			"count": 386,
@@ -17834,13 +17860,16 @@
 				"joint"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"oe-saajhaa"
+			],
 			"freqRank": 1220,
 			"count": 117,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -18449,14 +18478,17 @@
 				"wherever"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"link-jahaan"
+			],
 			"freqRank": 1272,
 			"count": 112,
 			"confidence": "medium",
 			"sources": [
 				"claude",
-				"wiktionary"
+				"wiktionary",
+				"course"
 			],
 			"agreement": "partial",
 			"review": null,
@@ -23305,13 +23337,16 @@
 				"just as"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"link-jasari"
+			],
 			"freqRank": 1677,
 			"count": 85,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -24527,7 +24562,8 @@
 				"adv-ati-too",
 				"adv-tyasaile-therefore",
 				"fn-kinabhane-because",
-				"fn-natra-otherwise"
+				"fn-natra-otherwise",
+				"link-taipani"
 			],
 			"freqRank": 1772,
 			"count": 80,
@@ -25165,7 +25201,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"bachcha-child-baby",
-				"baccha-khelcha-the-child-plays"
+				"baccha-khelcha-the-child-plays",
+				"v9-runu"
 			],
 			"freqRank": 1847,
 			"count": 77,
@@ -26035,13 +26072,16 @@
 				"contemporary"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"oe-aadhunik"
+			],
 			"freqRank": 1931,
 			"count": 73,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -29319,7 +29359,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"noun2-sahar-city"
+				"noun2-sahar-city",
+				"oe-aadhunik"
 			],
 			"freqRank": 2203,
 			"count": 96,
@@ -30364,7 +30405,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"adj-khali-empty"
+				"adj-khali-empty",
+				"oe-saajhaa"
 			],
 			"freqRank": 2296,
 			"count": 114,
@@ -33154,7 +33196,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"saathi-friend",
-				"saathi-bolaaunus-please-call-your-friend"
+				"saathi-bolaaunus-please-call-your-friend",
+				"v9-haasnu"
 			],
 			"freqRank": 2541,
 			"count": 53,
@@ -40043,13 +40086,16 @@
 				"like that"
 			],
 			"register": "everyday",
-			"inCourse": false,
-			"courseItemIds": [],
+			"inCourse": true,
+			"courseItemIds": [
+				"link-jasari"
+			],
 			"freqRank": 3232,
 			"count": 41,
 			"confidence": "medium",
 			"sources": [
-				"claude"
+				"claude",
+				"course"
 			],
 			"agreement": "wiktionary-absent",
 			"review": null,
@@ -49107,6 +49153,49 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "अलिकति",
+			"dev": "अलिकति",
+			"pos": "adj",
+			"en": "a little",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"link-alikati"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "अवश्य",
+			"dev": "अवश्य",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"link-avashya"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "अहिलेको",
 			"dev": "अहिलेको",
 			"pos": "",
@@ -49165,7 +49254,8 @@
 				"ma-ahile-aaunchu-i-will-be-right-back",
 				"ma-chaadai-aaunchu-i-will-come-back-soon",
 				"adv-chhittai-soon",
-				"adv-pakkai-surely"
+				"adv-pakkai-surely",
+				"link-avashya"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -49594,6 +49684,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"noun-bhanai-opinion"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "उहांले",
+			"dev": "उहांले",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-padhaaunu"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50439,7 +50550,9 @@
 				"ma-maddat-garchu-i-will-help",
 				"ma-garchu-i-will-do",
 				"ma-kaam-garchu-i-am-working-i-will-do-the-work",
-				"fn-aaphain-oneself"
+				"fn-aaphain-oneself",
+				"link-taipani",
+				"link-jasari"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -50544,7 +50657,8 @@
 				"hosh-garnus-be-careful",
 				"khadai-garnus-please-eat",
 				"piudai-garnus-please-drink",
-				"adv-yasari-thisway"
+				"adv-yasari-thisway",
+				"link-jasari"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51212,7 +51326,9 @@
 				"fn-kinabhane-because",
 				"noun2-yatayat-transport",
 				"noun2-himal-mountain",
-				"feel-ghamanda-arrogance"
+				"feel-ghamanda-arrogance",
+				"link-taipani",
+				"link-jasto"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51307,6 +51423,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "छेउमा",
+			"dev": "छेउमा",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"oe-chheu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "छैन",
 			"dev": "छैन",
 			"pos": "verb",
@@ -51354,6 +51491,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"adj-saman-equal"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "जबसम्म",
+			"dev": "जबसम्म",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"link-jabasamma"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51449,7 +51607,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"sidhaa-janus-go-straight",
-				"adv-uta-overthere"
+				"adv-uta-overthere",
+				"link-jahaan"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -51986,6 +52145,28 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "तिमीलाई",
+			"dev": "तिमीलाई",
+			"pos": "pron",
+			"en": "dative of तिमी (timī)",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-samjhanu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "medium",
+			"sources": [
+				"wiktionary",
+				"course"
+			],
+			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "तिर्खा",
 			"dev": "तिर्खा",
 			"pos": "",
@@ -52069,6 +52250,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "तैपनि",
+			"dev": "तैपनि",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"link-taipani"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -52224,7 +52426,8 @@
 				"dinus-please-give-me",
 				"nun-dinus-please-pass-the-salt",
 				"arko-dinus-please-give-me-another",
-				"adv-thorai-little"
+				"adv-thorai-little",
+				"link-alikati"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -52502,6 +52705,49 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "नछुनुस्",
+			"dev": "नछुनुस्",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-chhunu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "नदीको",
+			"dev": "नदीको",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"oe-waari",
+				"oe-paari"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "नरम",
 			"dev": "नरम",
 			"pos": "",
@@ -52511,6 +52757,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"body-chhaalaa-skin"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "नाच्यौं",
+			"dev": "नाच्यौं",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-naachnu"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -52826,6 +53093,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "पढाउनुहुन्छ",
+			"dev": "पढाउनुहुन्छ",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-padhaaunu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "पढें",
 			"dev": "पढें",
 			"pos": "",
@@ -52941,7 +53229,9 @@
 				"malai-dahi-man-parcha-i-like-yogurt",
 				"malai-jaanu-parcha-i-have-to-go",
 				"malai-kaam-garnu-parcha-i-have-to-work",
-				"ke-garnu-parcha-what-should-i-do"
+				"ke-garnu-parcha-what-should-i-do",
+				"link-shaayad",
+				"link-jabasamma"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53075,6 +53365,27 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"wear-gamchhaa-scarf"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "पारि",
+			"dev": "पारि",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"oe-paari"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53579,7 +53890,8 @@
 			"register": "everyday",
 			"inCourse": true,
 			"courseItemIds": [
-				"ma-ma-baschu-i-live-in"
+				"ma-ma-baschu-i-live-in",
+				"link-jabasamma"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53605,7 +53917,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"yaha-basnus-please-have-a-seat",
-				"basnus-please-sit"
+				"basnus-please-sit",
+				"oe-chheu"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -53757,6 +54070,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "बिर्सें",
+			"dev": "बिर्सें",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-birsanu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -54666,6 +55000,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "माग्छु",
+			"dev": "माग्छु",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-maagnu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "माझ्छु",
 			"dev": "माझ्छु",
 			"pos": "",
@@ -55071,6 +55426,48 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "रोज्नुस्",
+			"dev": "रोज्नुस्",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-rojnu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "रोयो",
+			"dev": "रोयो",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-runu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "लगाउनुस्",
 			"dev": "लगाउनुस्",
 			"pos": "",
@@ -55133,7 +55530,8 @@
 			"inCourse": true,
 			"courseItemIds": [
 				"malai-jana-man-laagcha-i-want-to-go",
-				"malai-khana-man-laagcha-i-want-to-eat"
+				"malai-khana-man-laagcha-i-want-to-eat",
+				"link-jahaan"
 			],
 			"freqRank": null,
 			"count": 0,
@@ -55428,6 +55826,27 @@
 			"cumPct": 0.643
 		},
 		{
+			"key": "वारि",
+			"dev": "वारि",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"oe-waari"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
 			"key": "वालेट",
 			"dev": "वालेट",
 			"pos": "",
@@ -55468,6 +55887,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "शायद",
+			"dev": "शायद",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"link-shaayad"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -55660,6 +56100,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-only",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "सम्झन्छु",
+			"dev": "सम्झन्छु",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-samjhanu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},
@@ -56305,6 +56766,27 @@
 				"course"
 			],
 			"agreement": "wiktionary-absent",
+			"review": null,
+			"cumPct": 0.643
+		},
+		{
+			"key": "हांस्यो",
+			"dev": "हांस्यो",
+			"pos": "",
+			"en": "",
+			"altEn": [],
+			"register": "everyday",
+			"inCourse": true,
+			"courseItemIds": [
+				"v9-haasnu"
+			],
+			"freqRank": null,
+			"count": 0,
+			"confidence": "low",
+			"sources": [
+				"course"
+			],
+			"agreement": "none",
 			"review": null,
 			"cumPct": 0.643
 		},

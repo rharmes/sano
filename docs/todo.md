@@ -166,6 +166,19 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       drops) — Ross-requested. व्रत dropped (romanizes "Wrat" not "Brat"; see T22) → used पूजा. Coverage
       refreshed, audio rendered (27 phrase + 28 word clips, `AUDIO_VERSION` 14), dev-seed scenario
       added. Unit titles/goals AI-drafted → Ross's refinement.
+- [x] **T27 · Batch 9 — linking words, more verbs & odds (~22) — FINAL breadth batch** — an honest
+      assessment (verified spot-checks: ~all top "everyday not covered" dictionary rows are false gaps
+      already taught in a conjugated/spelling variant, plus news-register noise) found the everyday pool
+      effectively picked clean. So a last hand-curated pass of the highest-value genuine gaps: linking
+      words (शायद, तैपनि, अवश्य, जहाँ, जसरी, जबसम्म, जस्तो, अलिकति), more everyday verbs (माग्नु, सम्झनु,
+      बिर्सनु, रोज्नु, पढाउनु, हाँस्नु, रुनु, नाच्नु, छुनु), and odds & ends (छेउ, वारि, पारि, आधुनिक, साझा) —
+      22 frames merged as **3 units appended at the end of the path** (Linking Words, More Everyday Verbs,
+      Odds & Ends) — 98 units / 927 items. **Five drafted frames dropped mid-merge as spelling-variant
+      dups** the initial grep missed (अरू≈अरु "else", कम्तिमा≈कम्तीमा "at least", and सोध्नु/फर्कनु/फाल्नु
+      already taught as म सोध्छु / म फर्किन्छु / म फोहोर फाल्छु). Coverage refreshed, audio rendered (22
+      phrase + 27 word clips, `AUDIO_VERSION` 15), dev-seed scenario added. Unit titles/goals AI-drafted
+      → Ross's refinement. **After this, T11 pivots from breadth to depth** — more frames/phrases around
+      words already known (a new task when Ross starts it).
 - [x] **T16 · Batch 2 — everyday adjectives (~45)** — 45 high-frequency everyday adjectives, curated
       from the top-80 `--pos adj` pool (dropped semantic dupes already taught + news/formal terms) and
       wrapped in short natural frames (phrases-style). Reviewed + approved, then merged into
