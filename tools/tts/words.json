@@ -24,6 +24,30 @@
 			"noun-karyakram-program"
 		]
 	},
+	"aanp": {
+		"roman": "aanp",
+		"dev": "आँप",
+		"source": "aligned",
+		"phrases": [
+			"fn-tinwataa-threeitems"
+		]
+	},
+	"aaphai": {
+		"roman": "aaphai",
+		"dev": "आफैं",
+		"source": "aligned",
+		"phrases": [
+			"fn-aaphain-oneself"
+		]
+	},
+	"aaphno": {
+		"roman": "aaphno",
+		"dev": "आफ्नो",
+		"source": "aligned",
+		"phrases": [
+			"fn-aaphno-ones-own"
+		]
+	},
 	"aaunchhu": {
 		"roman": "aaunchhu",
 		"dev": "आउँछु",
@@ -152,6 +176,14 @@
 			"antim-mol-kati-what-s-your-final-price"
 		]
 	},
+	"arba": {
+		"roman": "arba",
+		"dev": "अर्ब",
+		"source": "aligned",
+		"phrases": [
+			"fn-arba-billion"
+		]
+	},
 	"arko": {
 		"roman": "arko",
 		"dev": "अर्को",
@@ -202,6 +234,14 @@
 		"source": "aligned",
 		"phrases": [
 			"badal-laagyo-it-s-cloudy"
+		]
+	},
+	"baahek": {
+		"roman": "baahek",
+		"dev": "बाहेक",
+		"source": "aligned",
+		"phrases": [
+			"fn-baahek-except"
 		]
 	},
 	"baalnus": {
@@ -283,6 +323,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-baithak-meeting"
+		]
+	},
+	"baje": {
+		"roman": "baje",
+		"dev": "बजे",
+		"source": "aligned",
+		"phrases": [
+			"fn-saadhe-andahalf"
 		]
 	},
 	"bajet": {
@@ -460,6 +508,7 @@
 		"dev": "भनेँ",
 		"source": "aligned",
 		"phrases": [
+			"fn-yadi-if",
 			"maile-bhanen-i-said"
 		]
 	},
@@ -715,6 +764,14 @@
 			"ma-chaahanchu-i-want"
 		]
 	},
+	"chaahi": {
+		"roman": "chaahi",
+		"dev": "चाहिँ",
+		"source": "aligned",
+		"phrases": [
+			"fn-chahin-asfor"
+		]
+	},
 	"chaahiyo": {
 		"roman": "chaahiyo",
 		"dev": "चाहियो",
@@ -814,6 +871,10 @@
 			"adv-tyasaile-therefore",
 			"charpi-kaha-cha-where-is-the-bathroom",
 			"dherai-piro-cha-it-is-very-spicy",
+			"fn-jun-whichthat",
+			"fn-kinabhane-because",
+			"fn-kohi-someone",
+			"fn-yadi-if",
 			"garmi-cha-it-s-hot",
 			"hiun-pariraheko-cha-it-is-snowing",
 			"hospital-kaha-cha-where-is-the-hospital",
@@ -856,6 +917,7 @@
 			"adv-katai-somewhere",
 			"adv-khasai-particularly",
 			"aru-kehi-chhaina-nothing-else",
+			"fn-kunai-any",
 			"kehi-chhaina-nothing-it-s-nothing",
 			"khana-khaeko-chhaina-i-haven-t-eaten",
 			"noun-samay-time",
@@ -983,6 +1045,14 @@
 			"noun-pratishat-percent"
 		]
 	},
+	"dedh": {
+		"roman": "dedh",
+		"dev": "डेढ",
+		"source": "aligned",
+		"phrases": [
+			"fn-dedh-onehalf"
+		]
+	},
 	"dekhaaunus": {
 		"roman": "dekhaaunus",
 		"dev": "देखाउनुस्",
@@ -1071,6 +1141,7 @@
 			"adj-lamo-long",
 			"adj-panchaun-fifth",
 			"adv-lagataar-continuously",
+			"fn-harek-each",
 			"subha-din-have-a-good-day"
 		]
 	},
@@ -1124,6 +1195,14 @@
 			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod"
 		]
 	},
+	"duiwataa": {
+		"roman": "duiwataa",
+		"dev": "दुईवटा",
+		"source": "aligned",
+		"phrases": [
+			"fn-duiwataa-twoitems"
+		]
+	},
 	"dukhyo": {
 		"roman": "dukhyo",
 		"dev": "दुख्यो",
@@ -1150,6 +1229,9 @@
 			"ek-bajyo-its-one-oclock",
 			"ek-chhin-parkhanus-wait-a-moment-please",
 			"ek-ghanta-one-hour",
+			"fn-arba-billion",
+			"fn-karod-crore",
+			"fn-laakh-lakh",
 			"noun-byakti-person"
 		]
 	},
@@ -1167,6 +1249,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-ekdamai-extremely"
+		]
+	},
+	"ekajanaa": {
+		"roman": "ekajanaa",
+		"dev": "एकजना",
+		"source": "aligned",
+		"phrases": [
+			"fn-ekjana-oneperson"
 		]
 	},
 	"ekapatak": {
@@ -1224,7 +1314,9 @@
 		"phrases": [
 			"adj-gahro-hard",
 			"adv-ati-too",
-			"adv-tyasaile-therefore"
+			"adv-tyasaile-therefore",
+			"fn-kinabhane-because",
+			"fn-natra-otherwise"
 		]
 	},
 	"gae": {
@@ -1256,6 +1348,7 @@
 		"dev": "गर्छु",
 		"source": "aligned",
 		"phrases": [
+			"fn-aaphain-oneself",
 			"ma-ghar-safaa-garchu-i-will-clean-the-house",
 			"ma-kaam-garchu-i-am-working-i-will-do-the-work",
 			"ma-maddat-garchu-i-will-help"
@@ -1367,7 +1460,8 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-jhandai-almost",
-			"ek-ghanta-one-hour"
+			"ek-ghanta-one-hour",
+			"fn-dedh-onehalf"
 		]
 	},
 	"ghar": {
@@ -1375,6 +1469,7 @@
 		"dev": "घर",
 		"source": "aligned",
 		"phrases": [
+			"fn-aaphno-ones-own",
 			"ma-ghar-aaye-i-am-home-i-came-home",
 			"ma-ghar-jaanchu-i-am-going-home",
 			"ma-ghar-pugen-i-reached-home",
@@ -1495,6 +1590,14 @@
 			"chaabi-haraayo-i-lost-the-key"
 		]
 	},
+	"harek": {
+		"roman": "harek",
+		"dev": "हरेक",
+		"source": "aligned",
+		"phrases": [
+			"fn-harek-each"
+		]
+	},
 	"hataaunus": {
 		"roman": "hataaunus",
 		"dev": "हटाउनुस्",
@@ -1590,7 +1693,9 @@
 		"dev": "हुन्छ",
 		"source": "override",
 		"phrases": [
-			"adv-patakpatak-repeatedly"
+			"adv-patakpatak-repeatedly",
+			"fn-jaba-when",
+			"fn-natra-otherwise"
 		]
 	},
 	"hundaina": {
@@ -1668,6 +1773,7 @@
 		"phrases": [
 			"adv-prayah-usually",
 			"adv-yaspatak-thistime",
+			"fn-chahin-asfor",
 			"ma-ghar-jaanchu-i-am-going-home",
 			"ma-kaam-jaanchu-i-am-going-to-work"
 		]
@@ -1700,6 +1806,14 @@
 		"phrases": [
 			"adv-uta-overthere",
 			"sidhaa-janus-go-straight"
+		]
+	},
+	"jab": {
+		"roman": "jab",
+		"dev": "जब",
+		"source": "aligned",
+		"phrases": [
+			"fn-jaba-when"
 		]
 	},
 	"jaggaa": {
@@ -1740,6 +1854,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-jati-asmuchas"
+		]
+	},
+	"jhai": {
+		"roman": "jhai",
+		"dev": "झैं",
+		"source": "aligned",
+		"phrases": [
+			"fn-jhain-likeas"
 		]
 	},
 	"jhan": {
@@ -1796,6 +1918,14 @@
 		"source": "aligned",
 		"phrases": [
 			"paisa-jogaaunus-save-money"
+		]
+	},
+	"jun": {
+		"roman": "jun",
+		"dev": "जुन",
+		"source": "aligned",
+		"phrases": [
+			"fn-jun-whichthat"
 		]
 	},
 	"juttaa": {
@@ -1890,6 +2020,14 @@
 			"adv-kahilyai-never"
 		]
 	},
+	"kalam": {
+		"roman": "kalam",
+		"dev": "कलम",
+		"source": "aligned",
+		"phrases": [
+			"fn-duiwataa-twoitems"
+		]
+	},
 	"kam": {
 		"roman": "kam",
 		"dev": "कम",
@@ -1938,6 +2076,14 @@
 			"adv-karib-approximately"
 		]
 	},
+	"karod": {
+		"roman": "karod",
+		"dev": "करोड",
+		"source": "aligned",
+		"phrases": [
+			"fn-karod-crore"
+		]
+	},
 	"kasto": {
 		"roman": "kasto",
 		"dev": "कस्तो",
@@ -1971,6 +2117,7 @@
 		"phrases": [
 			"adj-sundar-beautiful",
 			"antim-mol-kati-what-s-your-final-price",
+			"fn-wataa-counter",
 			"kati-bajyo-what-time-is-it",
 			"kati-bhayo-how-much-was-it",
 			"kati-ho-how-much-is-it",
@@ -2164,6 +2311,14 @@
 			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you"
 		]
 	},
+	"kinabhane": {
+		"roman": "kinabhane",
+		"dev": "किनभने",
+		"source": "aligned",
+		"phrases": [
+			"fn-kinabhane-because"
+		]
+	},
 	"kinnu": {
 		"roman": "kinnu",
 		"dev": "किन्नु",
@@ -2178,6 +2333,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-kisaan-hu-i-am-a-farmer"
+		]
+	},
+	"kohi": {
+		"roman": "kohi",
+		"dev": "कोही",
+		"source": "aligned",
+		"phrases": [
+			"fn-kohi-someone"
 		]
 	},
 	"kothaa": {
@@ -2202,6 +2365,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-kshetra-area"
+		]
+	},
+	"kunai": {
+		"roman": "kunai",
+		"dev": "कुनै",
+		"source": "aligned",
+		"phrases": [
+			"fn-kunai-any"
 		]
 	},
 	"kuraa": {
@@ -2239,6 +2410,14 @@
 			"ghaam-laagyo-it-s-sunny",
 			"hussu-laagyo-it-s-foggy",
 			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you"
+		]
+	},
+	"laakh": {
+		"roman": "laakh",
+		"dev": "लाख",
+		"source": "aligned",
+		"phrases": [
+			"fn-laakh-lakh"
 		]
 	},
 	"laamo": {
@@ -2340,6 +2519,8 @@
 			"adv-eklai-alone",
 			"adv-prayah-usually",
 			"adv-yaspatak-thistime",
+			"fn-aaphain-oneself",
+			"fn-chahin-asfor",
 			"ma-aaen-i-came",
 			"ma-ahile-aaunchu-i-will-be-right-back",
 			"ma-bhada-maajhchu-i-ll-wash-the-dishes",
@@ -2421,7 +2602,10 @@
 		"dev": "मान्छे",
 		"source": "aligned",
 		"phrases": [
-			"adj-thuprai-many"
+			"adj-thuprai-many",
+			"fn-ekjana-oneperson",
+			"fn-sayaun-hundreds",
+			"fn-uhi-samesone"
 		]
 	},
 	"maanchhu": {
@@ -2580,6 +2764,14 @@
 			"sabai-milcha-it-all-works-out"
 		]
 	},
+	"minet": {
+		"roman": "minet",
+		"dev": "मिनेट",
+		"source": "aligned",
+		"phrases": [
+			"fn-pandhra-fifteen"
+		]
+	},
 	"mitho": {
 		"roman": "mitho",
 		"dev": "मिठो",
@@ -2646,6 +2838,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-nars-hu-i-am-a-nurse"
+		]
+	},
+	"natra": {
+		"roman": "natra",
+		"dev": "नत्र",
+		"source": "aligned",
+		"phrases": [
+			"fn-natra-otherwise"
 		]
 	},
 	"nepali": {
@@ -2762,6 +2962,7 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-chiso-cold",
+			"fn-jhain-likeas",
 			"paani-dinus-please-give-me-water",
 			"paani-umaalnus-please-boil-the-water",
 			"pani-chaahiyo-i-need-water",
@@ -2856,6 +3057,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-pakkai-surely"
+		]
+	},
+	"pandhra": {
+		"roman": "pandhra",
+		"dev": "पन्ध्र",
+		"source": "aligned",
+		"phrases": [
+			"fn-pandhra-fifteen"
 		]
 	},
 	"pani": {
@@ -3099,6 +3308,14 @@
 			"noun-pratiyogita-competition"
 		]
 	},
+	"pratyek": {
+		"roman": "pratyek",
+		"dev": "प्रत्येक",
+		"source": "aligned",
+		"phrases": [
+			"fn-pratyek-every"
+		]
+	},
 	"prayog": {
 		"roman": "prayog",
 		"dev": "प्रयोग",
@@ -3183,6 +3400,7 @@
 			"adv-sabaibhanda-most",
 			"dherai-ramro-very-good-excellent",
 			"ekdum-ramro-very-good-excellent",
+			"fn-jun-whichthat",
 			"noun-abasar-opportunity",
 			"noun-sambandha-relationship",
 			"noun-sewa-service",
@@ -3255,6 +3473,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-rupaiyaan-rupee"
+		]
+	},
+	"saadhe": {
+		"roman": "saadhe",
+		"dev": "साढे",
+		"source": "aligned",
+		"phrases": [
+			"fn-saadhe-andahalf"
 		]
 	},
 	"saal": {
@@ -3418,6 +3644,7 @@
 		"dev": "समस्या",
 		"source": "aligned",
 		"phrases": [
+			"fn-kunai-any",
 			"noun-samasya-problem"
 		]
 	},
@@ -3426,6 +3653,7 @@
 		"dev": "समय",
 		"source": "aligned",
 		"phrases": [
+			"fn-jaba-when",
 			"noun-samay-time"
 		]
 	},
@@ -3450,7 +3678,8 @@
 		"dev": "सम्भव",
 		"source": "aligned",
 		"phrases": [
-			"adj-sambhav-possible"
+			"adj-sambhav-possible",
+			"fn-yadi-if"
 		]
 	},
 	"samuh": {
@@ -3516,6 +3745,14 @@
 		"phrases": [
 			"adv-karib-approximately",
 			"noun-rupaiyaan-rupee"
+		]
+	},
+	"sayau": {
+		"roman": "sayau",
+		"dev": "सयौं",
+		"source": "aligned",
+		"phrases": [
+			"fn-sayaun-hundreds"
 		]
 	},
 	"sewaa": {
@@ -3858,7 +4095,16 @@
 		"dev": "तीन",
 		"source": "aligned",
 		"phrases": [
-			"adv-lagataar-continuously"
+			"adv-lagataar-continuously",
+			"fn-saadhe-andahalf"
+		]
+	},
+	"tinawataa": {
+		"roman": "tinawataa",
+		"dev": "तीनवटा",
+		"source": "aligned",
+		"phrases": [
+			"fn-tinwataa-threeitems"
 		]
 	},
 	"toilet": {
@@ -3947,6 +4193,14 @@
 			"noun-bhanai-opinion"
 		]
 	},
+	"uhi": {
+		"roman": "uhi",
+		"dev": "उही",
+		"source": "aligned",
+		"phrases": [
+			"fn-uhi-samesone"
+		]
+	},
 	"umaalnus": {
 		"roman": "umaalnus",
 		"dev": "उमाल्नुस्",
@@ -3987,6 +4241,14 @@
 			"ma-uthchu-i-get-up-i-will-get-up"
 		]
 	},
+	"wataa": {
+		"roman": "wataa",
+		"dev": "वटा",
+		"source": "aligned",
+		"phrases": [
+			"fn-wataa-counter"
+		]
+	},
 	"wisay": {
 		"roman": "wisay",
 		"dev": "विषय",
@@ -4016,7 +4278,16 @@
 		"dev": "व्यक्ति",
 		"source": "aligned",
 		"phrases": [
+			"fn-pratyek-every",
 			"noun-byakti-person"
+		]
+	},
+	"yadi": {
+		"roman": "yadi",
+		"dev": "यदि",
+		"source": "aligned",
+		"phrases": [
+			"fn-yadi-if"
 		]
 	},
 	"yahaa": {
@@ -4081,6 +4352,7 @@
 			"adv-matrai-only",
 			"adv-nikai-quite",
 			"adv-pahilopatak-firsttime",
+			"fn-baahek-except",
 			"noun-kshetra-area",
 			"yo-chaldaina-this-isnt-working",
 			"yo-hataaunus-please-remove-this",

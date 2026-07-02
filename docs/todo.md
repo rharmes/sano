@@ -121,6 +121,14 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       55 word clips, `AUDIO_VERSION` 10), dev-seed scenario added. Also fixed visarga in the romanizer
       (T19) so प्रायः works. Unit titles/goals AI-drafted → Ross's refinement. **Merged; push/deploy
       pending Ross's go.**
+- [ ] **T21 · Batch 5 — essential function words (~27)** — 27 high-leverage function words
+      (pronouns, conjunctions, counters, big numbers, particles/postpositions) — the grammatical glue.
+      Only genuinely untaught items (course already has basic pronouns, connectors, numbers to 1000);
+      taught as short frames; merged as 5 units **appended at the end of the path** (Pronouns & Self,
+      If/When & Because, Counting Things, Big Numbers, Little Connecting Words) — 83 units / 800 items.
+      Coverage refreshed, audio rendered (27 phrase + 30 word clips, `AUDIO_VERSION` 11), dev-seed
+      scenario added. Smaller batch — function words are inherently fewer. Unit titles/goals AI-drafted
+      → Ross's refinement. **Merged; push/deploy pending Ross's go.**
 - [x] **T16 · Batch 2 — everyday adjectives (~45)** — 45 high-frequency everyday adjectives, curated
       from the top-80 `--pos adj` pool (dropped semantic dupes already taught + news/formal terms) and
       wrapped in short natural frames (phrases-style). Reviewed + approved, then merged into

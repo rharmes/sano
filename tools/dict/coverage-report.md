@@ -1,9 +1,9 @@
 # Dictionary coverage report
 
-Generated 2026-07-02 · 2391 entries · model claude-opus-4-8
+Generated 2026-07-02 · 2393 entries · model claude-opus-4-8
 
-- In COURSE: 778
-- Expansion candidates (high-freq, not yet in COURSE): 1613
+- In COURSE: 807
+- Expansion candidates (high-freq, not yet in COURSE): 1586
 - COURSE gloss-mismatch flags for review: 25
 
 ## Top expansion candidates (frequency rank · lemma · romanization · gloss)
@@ -16,7 +16,6 @@ Generated 2026-07-02 · 2391 entries · model claude-opus-4-8
 16. रहनु · Rahanu · to remain / stay · everyday
 21. नै · Nai · indeed / emphasis particle · everyday
 26. बताउनु · Bataaunu · to tell / inform · everyday
-41. लाख · Laakh · hundred thousand · everyday
 42. को · Ko · of (genitive) · everyday
 47. अनुसार · Anusaar · according to · everyday
 48. अध्यक्ष · Adhyaksh · chairman / president · formal
@@ -25,13 +24,11 @@ Generated 2026-07-02 · 2391 entries · model claude-opus-4-8
 52. प्रदेश · Pradesh · province · formal
 53. साउन · Saaun · Saun (month) · everyday
 54. सरकार · Sarakaar · government · formal
-55. आफ्नो · Aaphno · one's own · everyday
 59. प्रधानमन्त्री · Pradhaanamantri · prime minister · formal
 62. स्थानीय · Sthaaniy · local · formal
 68. राष्ट्रिय · Raastriy · national · formal
 69. आउनु · Aaunu · to come · everyday
 70. समेत · Samet · including / even · formal
-72. कुनै · Kunai · any / some · everyday
 74. जिल्ला · Jillaa · district · everyday
 77. जनाउनु · Janaaunu · to indicate · formal
 79. निर्माण · Nirmaan · construction · everyday
@@ -49,7 +46,6 @@ Generated 2026-07-02 · 2391 entries · model claude-opus-4-8
 113. नेता · Netaa · leader · everyday
 115. मृत्यु · Mrityu · death · formal
 116. कोरोना · Koronaa · corona / covid · everyday
-117. करोड · Karod · ten million · everyday
 118. सो · So · that / the said · formal
 119. अन्य · Anya · other · formal
 121. व्यवस्था · Wyawasthaa · system / arrangement · formal
@@ -60,7 +56,6 @@ Generated 2026-07-02 · 2391 entries · model claude-opus-4-8
 130. जारी · Jaari · ongoing / issued · formal
 133. नेपाल · Nepaal · Nepal · everyday
 134. निर्वाचन · Nirwaachan · election · formal
-135. वटा · Wataa · counter (items) · everyday
 136. प्राप्त · Praapta · obtained / received · formal
 143. सञ्चालन · Sanchaalan · operation · formal
 148. नगरपालिका · Nagarapaalikaa · municipality · formal
@@ -102,12 +97,17 @@ Generated 2026-07-02 · 2391 entries · model claude-opus-4-8
 252. केन्द्र · Kendra · center · everyday
 254. अस्पताल · Aspataal · hospital · everyday
 256. साथ · Saath · with / together · everyday
-260. अर्ब · Arba · billion · everyday
 264. दर्ता · Dartaa · registration · formal
 265. सम्पन्न · Sampanna · completed / accomplished · formal
 269. यस्तै · Yastai · like this · everyday
 270. यसअघि · Yasaaghi · earlier / before this · formal
 271. हाल · Haal · currently / now · formal
+273. सहभागी · Sahabhaagi · participant · formal
+277. वडा · Wadaa · ward · formal
+280. सांसद · Saansad · member of parliament · formal
+284. उपलब्ध · Upalabdha · available · formal
+285. बढ्नु · Badhnu · to increase / grow · everyday
+286. भारतीय · Bhaaratiy · Indian · formal
 
 ## COURSE translations to review (dictionary disagrees — flag only, never auto-changed)
 
