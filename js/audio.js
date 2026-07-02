@@ -13,7 +13,7 @@ const SanoAudio = (() => {
 	// Bump when clips are re-rendered (corrected Devanagari, new/retuned voices) so
 	// caches and the browser fetch fresh copies. These URLs are built here in JS, so
 	// tools/stamp-version.mjs (which only stamps index.html) can't version them.
-	const AUDIO_VERSION = '8';
+	const AUDIO_VERSION = '9';
 	const DEFAULT_VOICE = 'default';
 
 	// characterId -> voiceId. Empty today: every character resolves to the one

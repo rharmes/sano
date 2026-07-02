@@ -75,11 +75,15 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       (`js/data.js`.)
 - [x] **T10 · Schema v3 migration (fresh start)** — `migrateV2State` keeps name/streak/lifetime
       tally, resets learning progress, restarts at unit 1. (`tests/unit/migration.test.mjs`.)
-- [ ] **T11 · Phase 2 — grow vocabulary toward ~2,000 words** — source the highest-frequency missing
-      words from the `tools/dict` frequency ranking (ties to **T3**), add as new ~8–12-word
-      mastery-gated units by frequency + situation; regenerate audio for the new items only and bump
-      `AUDIO_VERSION`. Nepali `dev` AI-drafted → Ross's review. Multi-batch — driven by the pipeline
-      below (T14); each batch = select → draft → review → merge → audio.
+- [ ] **T11 · Phase 2 — grow vocabulary toward ~1,550 words (the everyday tier)** — source the
+      highest-frequency missing words from the `tools/dict` frequency ranking (ties to **T3**), add as
+      new ~8–12-word mastery-gated units by frequency + situation; regenerate audio for the new items
+      only and bump `AUDIO_VERSION`. Nepali `dev` AI-drafted → Ross's review. Multi-batch — driven by
+      the pipeline below (T14); each batch = select → draft → review → merge → audio. **Target
+      ~1,550** — the everyday-register candidates the dictionary surfaces (873 remaining as of batch 3
+      start, atop 683 taught); reaching the older ~2,000 goal would mean dipping into the formal
+      register. Done: batch 1 (verbs, T15), batch 2 (adjectives, T16). Next: nouns (batch 3+, ~557
+      candidates — the biggest well), then adverbs (~84) and function words (~40).
 - [x] **T14 · Build the expansion pipeline** (reusable across all T11 batches) —
       `tools/dict/select-candidates.mjs` (mechanical: ranks the everyday, not-yet-covered words of a
       given part of speech from `dictionary.json`), a Claude drafting pass (wraps each word in a
@@ -94,6 +98,14 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       coverage refreshed, audio rendered (50 phrase + 57 word clips, `AUDIO_VERSION` 7), dev-seed
       scenario added. Committed 620a0bd, shipped ea07f30. **Still open:** the 5 unit titles + goals are
       AI-drafted → Ross's refinement.
+- [ ] **T18 · Batch 3 — everyday nouns (~46)** — 46 high-frequency everyday nouns, curated from the
+      top-90 `--pos noun` pool (concrete nouns are already taught, so this is the abstract/everyday-life
+      gap: reasons, decisions, plans, money, relationships). Taught as short frames (they don't emoji);
+      merged as 5 units **appended at the end of the path** (Time & Events, Ideas & Conversation,
+      Problems & Solutions, Money & Business, People & Places) — 73 units / 729 items. Coverage
+      refreshed, audio rendered (46 phrase + 63 word clips, `AUDIO_VERSION` 9), dev-seed scenario
+      added. Unit titles/goals AI-drafted → Ross's refinement. **Merged; push/deploy pending Ross's
+      go.**
 - [x] **T16 · Batch 2 — everyday adjectives (~45)** — 45 high-frequency everyday adjectives, curated
       from the top-80 `--pos adj` pool (dropped semantic dupes already taught + news/formal terms) and
       wrapped in short natural frames (phrases-style). Reviewed + approved, then merged into

@@ -1,9 +1,9 @@
 # Dictionary coverage report
 
-Generated 2026-07-01 · 2373 entries · model claude-opus-4-8
+Generated 2026-07-02 · 2385 entries · model claude-opus-4-8
 
-- In COURSE: 671
-- Expansion candidates (high-freq, not yet in COURSE): 1702
+- In COURSE: 728
+- Expansion candidates (high-freq, not yet in COURSE): 1657
 - COURSE gloss-mismatch flags for review: 25
 
 ## Top expansion candidates (frequency rank · lemma · romanization · gloss)
@@ -43,40 +43,29 @@ Generated 2026-07-01 · 2373 entries · model claude-opus-4-8
 93. उक्त · Ukta · aforesaid / said · formal
 94. पार्टी · Paarti · party · everyday
 95. त · Ta · emphatic particle · everyday
-97. गते · Gate · date (of month) · everyday
 98. आर्थिक · Aarthik · economic · formal
-103. निर्णय · Nirnay · decision · everyday
 105. विकास · Wikaas · development · everyday
-107. समय · Samay · time · everyday
 108. वा · Waa · or · everyday
-110. सेवा · Sewaa · service · everyday
 113. नेता · Netaa · leader · everyday
-114. क्षेत्र · Kshetra · area / region · everyday
 115. मृत्यु · Mrityu · death · formal
 116. कोरोना · Koronaa · corona / covid · everyday
 117. करोड · Karod · ten million · everyday
 118. सो · So · that / the said · formal
 119. अन्य · Anya · other · formal
-120. समस्या · Samasyaa · problem · everyday
 121. व्यवस्था · Wyawasthaa · system / arrangement · formal
 123. सार्वजनिक · Saarwajanik · public · formal
 124. कार्यालय · Kaaryaalay · office · formal
 126. क्रम · Kram · order / sequence · formal
 129. गत · Gat · last / past · formal
 130. जारी · Jaari · ongoing / issued · formal
-132. प्रतिशत · Pratishat · percent · everyday
 133. नेपाल · Nepaal · Nepal · everyday
 134. निर्वाचन · Nirwaachan · election · formal
 135. वटा · Wataa · counter (items) · everyday
 136. प्राप्त · Praapta · obtained / received · formal
-137. सदस्य · Sadasya · member · everyday
 143. सञ्चालन · Sanchaalan · operation · formal
 146. मात्रै · Maatrai · only · everyday
 148. नगरपालिका · Nagarapaalikaa · municipality · formal
 149. राजनीतिक · Raajanitik · political · formal
-150. रुपैयाँ · Rupaiyaa · rupee · everyday
-151. अवस्था · Awasthaa · condition / situation · everyday
-156. कार्यक्रम · Kaaryakram · program / event · everyday
 158. माग · Maag · demand · everyday
 161. पक्राउ · Pakraau · arrest · everyday
 162. आवश्यक · Aawashyak · necessary · everyday
@@ -86,14 +75,10 @@ Generated 2026-07-01 · 2373 entries · model claude-opus-4-8
 168. उल्लेख · Ullekh · mention · formal
 171. पर्नु · Parnu · to have to · everyday
 172. पुग्नु · Pugnu · to arrive · everyday
-174. विषय · Wisay · topic / subject · everyday
-175. एउटा · Eutaa · one / a · everyday
-176. सडक · Sadak · road · everyday
 177. एवं · Ewa · and / as well as · formal
 180. खेल · Khel · game / sport · everyday
 181. मन्त्री · Mantri · minister · formal
 185. सामाजिक · Saamaajik · social · formal
-189. प्रयोग · Prayog · use / usage · everyday
 193. लाग्नु · Laagnu · to feel · everyday
 194. देखि · Dekhi · from / since · everyday
 197. बनाउनु · Banaaunu · to make / build · everyday
@@ -101,13 +86,28 @@ Generated 2026-07-01 · 2373 entries · model claude-opus-4-8
 204. सूचना · Suchanaa · information / notice · formal
 206. आयोजना · Aayojanaa · project / plan · formal
 207. करिब · Karib · approximately / about · everyday
-209. महिला · Mahilaa · woman · everyday
 211. साथै · Saathai · along with · formal
 213. सन् · San · year (AD) · formal
-216. छलफल · Chhalaphal · discussion · everyday
 219. राष्ट्रपति · Raastrapati · president · formal
 221. स्थान · Sthaan · place · everyday
 222. गाउँपालिका · Gaaunpaalikaa · rural municipality · formal
+229. देखिनु · Dekhinu · to appear / be seen · everyday
+230. उत्पादन · Utpaadan · production / product · everyday
+231. अन्तर्राष्ट्रिय · Antarraastriy · international · formal
+233. यस्तो · Yasto · such · everyday
+237. ती · Ti · those · everyday
+238. वर्षीय · Warsiy · years old / yearly · formal
+242. केन्द्रीय · Kendriy · central · formal
+245. अनुसन्धान · Anusandhaan · research / investigation · formal
+246. सरकारी · Sarakaari · governmental / official · formal
+249. सक्नु · Saknu · to be able · everyday
+252. केन्द्र · Kendra · center · everyday
+254. अस्पताल · Aspataal · hospital · everyday
+256. साथ · Saath · with / together · everyday
+257. त्यस्तै · Tyastai · likewise / similarly · everyday
+260. अर्ब · Arba · billion · everyday
+264. दर्ता · Dartaa · registration · formal
+265. सम्पन्न · Sampanna · completed / accomplished · formal
 
 ## COURSE translations to review (dictionary disagrees — flag only, never auto-changed)
 
