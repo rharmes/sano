@@ -43,6 +43,16 @@ this list. Refer to any task by its ID (e.g. "T3").
       all one voice (the dialogue player already routes per character via `synth-app.mjs`'s voice map —
       reuse those voice ids). Bump `AUDIO_VERSION` after rendering.
 
+## Testing
+
+- [ ] **T17 · Fix the flaky WebKit match-lesson e2e** — `tests/e2e/lesson.spec.mjs` match rounds
+      intermittently time out under WebKit: `stepLesson` (`tests/e2e/_helpers.mjs`) clicks match tiles
+      with normal (non-force) clicks and relies on `boot()`'s inline animation-freeze, but that can't
+      kill **pseudo-element** (`::before`/`::after`) animations — so a tile stays "unstable" and the
+      click times out. Pre-existing (reproduces on clean `main`, both before and after T16). A blanket
+      `*::before { animation: none !important }` loses specificity to the app's class-scoped animation
+      rules, so the fix needs either a targeted freeze stylesheet or a stability-tolerant match click.
+
 ## Learning engine — SR-05 relaunch (Phase 1)
 
 Restructures the learning plan for mastery-based, high-repetition progression (interviewed +
@@ -82,5 +92,13 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       Reviewed + approved, then merged into `js/data.js` as 5 units after `verbs-past` (Reactions &
       Opinions, Asking for Help, Getting Around, Making & Doing, Everyday Actions); `tools/dict`
       coverage refreshed, audio rendered (50 phrase + 57 word clips, `AUDIO_VERSION` 7), dev-seed
-      scenario added. Committed 620a0bd. **Still open:** the 5 unit titles + goals are AI-drafted →
-      Ross's refinement; **push/deploy pending Ross's go.**
+      scenario added. Committed 620a0bd, shipped ea07f30. **Still open:** the 5 unit titles + goals are
+      AI-drafted → Ross's refinement.
+- [x] **T16 · Batch 2 — everyday adjectives (~45)** — 45 high-frequency everyday adjectives, curated
+      from the top-80 `--pos adj` pool (dropped semantic dupes already taught + news/formal terms) and
+      wrapped in short natural frames (phrases-style). Reviewed + approved, then merged into
+      `js/data.js` as 5 units after `comparing-things` (Size & Feel, Good/Bad & Right, Order &
+      Sequence, Same or Different, States & Conditions); aligned अरू→अरु to the course's spelling;
+      `tools/dict` coverage refreshed, audio rendered (45 phrase + 58 word clips, `AUDIO_VERSION` 8),
+      dev-seed scenario added. **Still open:** the 5 unit titles + goals are AI-drafted → Ross's
+      refinement; **push/deploy pending Ross's go.**

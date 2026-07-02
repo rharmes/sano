@@ -1,9 +1,9 @@
 # Dictionary coverage report
 
-Generated 2026-07-01 · 2371 entries · model claude-opus-4-8
+Generated 2026-07-01 · 2373 entries · model claude-opus-4-8
 
-- In COURSE: 616
-- Expansion candidates (high-freq, not yet in COURSE): 1755
+- In COURSE: 671
+- Expansion candidates (high-freq, not yet in COURSE): 1702
 - COURSE gloss-mismatch flags for review: 25
 
 ## Top expansion candidates (frequency rank · lemma · romanization · gloss)
@@ -16,7 +16,6 @@ Generated 2026-07-01 · 2371 entries · model claude-opus-4-8
 16. रहनु · Rahanu · to remain / stay · everyday
 21. नै · Nai · indeed / emphasis particle · everyday
 26. बताउनु · Bataaunu · to tell / inform · everyday
-38. जानकारी · Jaanakaari · information · everyday
 41. लाख · Laakh · hundred thousand · everyday
 42. को · Ko · of (genitive) · everyday
 47. अनुसार · Anusaar · according to · everyday
@@ -27,10 +26,8 @@ Generated 2026-07-01 · 2371 entries · model claude-opus-4-8
 53. साउन · Saaun · Saun (month) · everyday
 54. सरकार · Sarakaar · government · formal
 55. आफ्नो · Aaphno · one's own · everyday
-58. जना · Janaa · persons (counter) · everyday
 59. प्रधानमन्त्री · Pradhaanamantri · prime minister · formal
 62. स्थानीय · Sthaaniy · local · formal
-65. पहिलो · Pahilo · first · everyday
 68. राष्ट्रिय · Raastriy · national · formal
 69. आउनु · Aaunu · to come · everyday
 70. समेत · Samet · including / even · formal
@@ -48,7 +45,6 @@ Generated 2026-07-01 · 2371 entries · model claude-opus-4-8
 95. त · Ta · emphatic particle · everyday
 97. गते · Gate · date (of month) · everyday
 98. आर्थिक · Aarthik · economic · formal
-102. कुरा · Kuraa · matter / talk · everyday
 103. निर्णय · Nirnay · decision · everyday
 105. विकास · Wikaas · development · everyday
 107. समय · Samay · time · everyday
@@ -82,17 +78,14 @@ Generated 2026-07-01 · 2371 entries · model claude-opus-4-8
 151. अवस्था · Awasthaa · condition / situation · everyday
 156. कार्यक्रम · Kaaryakram · program / event · everyday
 158. माग · Maag · demand · everyday
-160. थप · Thap · additional · everyday
 161. पक्राउ · Pakraau · arrest · everyday
 162. आवश्यक · Aawashyak · necessary · everyday
 163. मत · Mat · vote · formal
-164. पटक · Patak · time (instance) · everyday
 166. माओवादी · Maaowaadi · Maoist · formal
 167. भनाइ · Bhanaai · saying · everyday
 168. उल्लेख · Ullekh · mention · formal
 171. पर्नु · Parnu · to have to · everyday
 172. पुग्नु · Pugnu · to arrive · everyday
-173. दोस्रो · Dosro · second · everyday
 174. विषय · Wisay · topic / subject · everyday
 175. एउटा · Eutaa · one / a · everyday
 176. सडक · Sadak · road · everyday
@@ -108,6 +101,13 @@ Generated 2026-07-01 · 2371 entries · model claude-opus-4-8
 204. सूचना · Suchanaa · information / notice · formal
 206. आयोजना · Aayojanaa · project / plan · formal
 207. करिब · Karib · approximately / about · everyday
+209. महिला · Mahilaa · woman · everyday
+211. साथै · Saathai · along with · formal
+213. सन् · San · year (AD) · formal
+216. छलफल · Chhalaphal · discussion · everyday
+219. राष्ट्रपति · Raastrapati · president · formal
+221. स्थान · Sthaan · place · everyday
+222. गाउँपालिका · Gaaunpaalikaa · rural municipality · formal
 
 ## COURSE translations to review (dictionary disagrees — flag only, never auto-changed)
 

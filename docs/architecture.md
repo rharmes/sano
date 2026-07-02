@@ -15,7 +15,7 @@ pre-rendered) — the only network calls are same-origin `fetch()`es to `api/`.
 Classic scripts (not modules), all `defer`, so each defines a global the later ones use.
 Order in `index.html`:
 
-1. `js/data.js` — **`COURSE`**: 63 units / 638 items — the entire course content (the big file). Units >14 items were split into ~8–12-word chunks for the SR-05 mastery gate; item ids are unchanged. The T11 vocabulary expansion adds new frequency-sourced units by batch (batch 1: 50 everyday-verb frames as 5 units after `verbs-past`).
+1. `js/data.js` — **`COURSE`**: 68 units / 683 items — the entire course content (the big file). Units >14 items were split into ~8–12-word chunks for the SR-05 mastery gate; item ids are unchanged. The T11 vocabulary expansion adds new frequency-sourced units by batch (batch 1: 50 everyday-verb frames as 5 units after `verbs-past`; batch 2: 45 everyday-adjective frames as 5 units after `comparing-things`).
 2. `js/romanize.js` — **`SanoRomanize`**: derives romanization + pronunciation from Devanagari (`romanize(dev)` / `pronounce(dev)`; spec `docs/romanization.md`). At load it **rewrites each `COURSE` item's `np` and `pron` from `item.dev`** (`np` and `pron` were removed from `data.js`; items store only `dev`/`en` + `usage`/`emoji`). Also exposes `stripTags(dev)` — drops inline ElevenLabs `[performance tags]` (used by dialogue `dev`) so they never reach text; `romanize`/`pronounce` strip first. Pure + classic-script, so the tests lift it.
 3. `js/sync.js` — **`SanoSync`**: debounced server push, revision-checked conflict detection, last-write-wins. `adoptSession()`. Bookkeeping in localStorage `sano.sync.v1`.
 4. `js/push.js` — **`SanoPush`**: PWA daily-reminder toggle + `pushManager.subscribe`. VAPID public key baked in.

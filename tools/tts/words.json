@@ -49,12 +49,36 @@
 			"ramro-basna-aayo-it-smells-good"
 		]
 	},
+	"aba": {
+		"roman": "aba",
+		"dev": "अब",
+		"source": "aligned",
+		"phrases": [
+			"adj-niko-healed"
+		]
+	},
+	"aghillo": {
+		"roman": "aghillo",
+		"dev": "अघिल्लो",
+		"source": "aligned",
+		"phrases": [
+			"adj-aghillo-previous"
+		]
+	},
 	"ahile": {
 		"roman": "ahile",
 		"dev": "अहिले",
 		"source": "aligned",
 		"phrases": [
 			"ma-ahile-aaunchu-i-will-be-right-back"
+		]
+	},
+	"alag": {
+		"roman": "alag",
+		"dev": "अलग",
+		"source": "aligned",
+		"phrases": [
+			"adj-alag-separate"
 		]
 	},
 	"ali": {
@@ -88,6 +112,7 @@
 		"dev": "अरु",
 		"source": "aligned",
 		"phrases": [
+			"adj-aru-other",
 			"aru-ke-chaahiyo-what-else-do-you-need",
 			"aru-kehi-chhaina-nothing-else",
 			"aru-nun-chaahiyo-it-needs-more-salt"
@@ -109,6 +134,14 @@
 			"batti-balnus-please-turn-on-the-light"
 		]
 	},
+	"baanki": {
+		"roman": "baanki",
+		"dev": "बाँकी",
+		"source": "aligned",
+		"phrases": [
+			"adj-baki-remaining"
+		]
+	},
 	"baasnaa": {
 		"roman": "baasnaa",
 		"dev": "बास्ना",
@@ -122,6 +155,7 @@
 		"dev": "बाटो",
 		"source": "aligned",
 		"phrases": [
+			"adj-mukhya-main",
 			"bato-dekhaunus-please-show-me-the-way"
 		]
 	},
@@ -149,6 +183,14 @@
 			"muulya-badhyo-the-price-went-up"
 		]
 	},
+	"bahaadur": {
+		"roman": "bahaadur",
+		"dev": "बहादुर",
+		"source": "aligned",
+		"phrases": [
+			"adj-bahadur-brave"
+		]
+	},
 	"bajyo": {
 		"roman": "bajyo",
 		"dev": "बज्यो",
@@ -156,6 +198,14 @@
 		"phrases": [
 			"ek-bajyo-its-one-oclock",
 			"kati-bajyo-what-time-is-it"
+		]
+	},
+	"baliyo": {
+		"roman": "baliyo",
+		"dev": "बलियो",
+		"source": "aligned",
+		"phrases": [
+			"adj-baliyo-strong"
 		]
 	},
 	"banaaunchhu": {
@@ -204,6 +254,7 @@
 		"dev": "बत्ती",
 		"source": "aligned",
 		"phrases": [
+			"adj-chalu-on",
 			"batti-balnus-please-turn-on-the-light",
 			"batti-nibhaunus-please-turn-off-the-light"
 		]
@@ -223,6 +274,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-bhada-maajhchu-i-ll-wash-the-dishes"
+		]
+	},
+	"bhaari": {
+		"roman": "bhaari",
+		"dev": "भारी",
+		"source": "aligned",
+		"phrases": [
+			"adj-bhari-heavy"
 		]
 	},
 	"bhaat": {
@@ -275,6 +334,9 @@
 		"dev": "भयो",
 		"source": "aligned",
 		"phrases": [
+			"adj-niko-healed",
+			"adj-pura-complete",
+			"adj-saphal-successful",
 			"dhilo-bhayo-it-is-late-i-am-running-late",
 			"kati-bhayo-how-much-was-it",
 			"ke-bhayo-what-happened",
@@ -448,6 +510,14 @@
 			"bujhnubhayo-bujyau-do-you-understand"
 		]
 	},
+	"byasta": {
+		"roman": "byasta",
+		"dev": "व्यस्त",
+		"source": "aligned",
+		"phrases": [
+			"adj-byasta-busy"
+		]
+	},
 	"chaabi": {
 		"roman": "chaabi",
 		"dev": "चाबी",
@@ -483,6 +553,14 @@
 			"maddat-chaahiyo-do-you-need-help",
 			"malai-chiya-chaahiyo-i-need-tea",
 			"pani-chaahiyo-i-need-water"
+		]
+	},
+	"chaalu": {
+		"roman": "chaalu",
+		"dev": "चालु",
+		"source": "aligned",
+		"phrases": [
+			"adj-chalu-on"
 		]
 	},
 	"chaandai": {
@@ -525,11 +603,37 @@
 			"charpi-kaha-cha-where-is-the-bathroom"
 		]
 	},
+	"chautho": {
+		"roman": "chautho",
+		"dev": "चौथो",
+		"source": "aligned",
+		"phrases": [
+			"adj-chautho-fourth"
+		]
+	},
 	"chha": {
 		"roman": "chha",
 		"dev": "छ",
 		"source": "aligned",
 		"phrases": [
+			"adj-bahadur-brave",
+			"adj-baliyo-strong",
+			"adj-bhari-heavy",
+			"adj-chalu-on",
+			"adj-chiso-cold",
+			"adj-farak-different",
+			"adj-gahro-hard",
+			"adj-halka-light",
+			"adj-jaruri-necessary",
+			"adj-kada-strict",
+			"adj-khali-empty",
+			"adj-kharab-bad",
+			"adj-khula-open",
+			"adj-lamo-long",
+			"adj-sajilo-easy",
+			"adj-sambhav-possible",
+			"adj-sundar-beautiful",
+			"adj-surakshit-safe",
 			"charpi-kaha-cha-where-is-the-bathroom",
 			"dherai-piro-cha-it-is-very-spicy",
 			"garmi-cha-it-s-hot",
@@ -562,6 +666,8 @@
 		"dev": "छैन",
 		"source": "aligned",
 		"phrases": [
+			"adj-nishchit-certain",
+			"adj-pakka-sure",
 			"aru-kehi-chhaina-nothing-else",
 			"kehi-chhaina-nothing-it-s-nothing",
 			"khana-khaeko-chhaina-i-haven-t-eaten",
@@ -574,6 +680,14 @@
 		"source": "aligned",
 		"phrases": [
 			"paahuna-aaudai-chan-guests-are-coming"
+		]
+	},
+	"chhau": {
+		"roman": "chhau",
+		"dev": "छौं",
+		"source": "aligned",
+		"phrases": [
+			"adj-saman-equal"
 		]
 	},
 	"chhin": {
@@ -589,10 +703,20 @@
 		"dev": "छु",
 		"source": "aligned",
 		"phrases": [
+			"adj-byasta-busy",
+			"adj-kamjor-weak",
 			"khana-khaeko-chu-i-ve-eaten-i-have-eaten",
 			"ma-khana-pakaudai-chu-i-am-cooking-food",
 			"ma-thakeko-chu-i-am-tired",
 			"sanchai-chu-i-m-fine"
+		]
+	},
+	"chiso": {
+		"roman": "chiso",
+		"dev": "चिसो",
+		"source": "aligned",
+		"phrases": [
+			"adj-chiso-cold"
 		]
 	},
 	"chiyaa": {
@@ -628,6 +752,14 @@
 		"phrases": [
 			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod",
 			"malai-dahi-man-parcha-i-like-yogurt"
+		]
+	},
+	"dainik": {
+		"roman": "dainik",
+		"dev": "दैनिक",
+		"source": "aligned",
+		"phrases": [
+			"adj-dainik-daily"
 		]
 	},
 	"dekhaaunus": {
@@ -669,6 +801,7 @@
 		"dev": "ढोका",
 		"source": "aligned",
 		"phrases": [
+			"adj-khula-open",
 			"dhoka-banda-garnu-bhayo-did-you-close-the-door",
 			"dhoka-banda-garnus-please-close-the-door",
 			"dhoka-khulcha-the-door-opens"
@@ -696,6 +829,9 @@
 		"dev": "दिन",
 		"source": "aligned",
 		"phrases": [
+			"adj-dosro-second",
+			"adj-lamo-long",
+			"adj-panchaun-fifth",
 			"subha-din-have-a-good-day"
 		]
 	},
@@ -724,6 +860,14 @@
 			"paani-dinus-please-give-me-water"
 		]
 	},
+	"dosro": {
+		"roman": "dosro",
+		"dev": "दोस्रो",
+		"source": "aligned",
+		"phrases": [
+			"adj-dosro-second"
+		]
+	},
 	"draaibhar": {
 		"roman": "draaibhar",
 		"dev": "ड्राइभर",
@@ -748,6 +892,14 @@
 			"tauko-dukhyo-my-head-hurts-headache"
 		]
 	},
+	"duwai": {
+		"roman": "duwai",
+		"dev": "दुवै",
+		"source": "aligned",
+		"phrases": [
+			"adj-duwai-both"
+		]
+	},
 	"ek": {
 		"roman": "ek",
 		"dev": "एक",
@@ -766,6 +918,14 @@
 			"ekdum-ramro-very-good-excellent"
 		]
 	},
+	"eutai": {
+		"roman": "eutai",
+		"dev": "एउटै",
+		"source": "aligned",
+		"phrases": [
+			"adj-eutai-same"
+		]
+	},
 	"gaadi": {
 		"roman": "gaadi",
 		"dev": "गाडी",
@@ -774,12 +934,28 @@
 			"gaadi-chalaaunus-please-drive-the-car"
 		]
 	},
+	"gaahro": {
+		"roman": "gaahro",
+		"dev": "गाह्रो",
+		"source": "aligned",
+		"phrases": [
+			"adj-gahro-hard"
+		]
+	},
 	"gae": {
 		"roman": "gae",
 		"dev": "गएँ",
 		"source": "aligned",
 		"phrases": [
 			"ma-gaen-i-went"
+		]
+	},
+	"galat": {
+		"roman": "galat",
+		"dev": "गलत",
+		"source": "aligned",
+		"phrases": [
+			"adj-galat-wrong"
 		]
 	},
 	"garchhu": {
@@ -939,6 +1115,7 @@
 		"dev": "हामी",
 		"source": "aligned",
 		"phrases": [
+			"adj-saman-equal",
 			"haami-jitchaun-we-will-win"
 		]
 	},
@@ -957,6 +1134,22 @@
 		"source": "aligned",
 		"phrases": [
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite"
+		]
+	},
+	"halkaa": {
+		"roman": "halkaa",
+		"dev": "हल्का",
+		"source": "aligned",
+		"phrases": [
+			"adj-halka-light"
+		]
+	},
+	"haptaa": {
+		"roman": "haptaa",
+		"dev": "हप्ता",
+		"source": "aligned",
+		"phrases": [
+			"adj-aghillo-previous"
 		]
 	},
 	"haraae": {
@@ -1012,6 +1205,9 @@
 		"dev": "हो",
 		"source": "aligned",
 		"phrases": [
+			"adj-alag-separate",
+			"adj-galat-wrong",
+			"adj-samanya-ordinary",
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 			"kati-ho-how-much-is-it",
 			"tapai-kaha-bata-ho-where-are-you-from",
@@ -1057,6 +1253,7 @@
 		"dev": "हुनुहुन्छ",
 		"source": "aligned",
 		"phrases": [
+			"adj-sahi-correct",
 			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite",
 			"tapai-thik-hunuhuncha-are-you-okay"
 		]
@@ -1093,6 +1290,14 @@
 			"ma-jana-sakchu-i-can-go",
 			"malai-jana-man-laagcha-i-want-to-go",
 			"malai-man-laagdaina-i-dont-want-to"
+		]
+	},
+	"jaanakaari": {
+		"roman": "jaanakaari",
+		"dev": "जानकारी",
+		"source": "aligned",
+		"phrases": [
+			"adj-thap-additional"
 		]
 	},
 	"jaanchhu": {
@@ -1133,12 +1338,44 @@
 			"sidhaa-janus-go-straight"
 		]
 	},
+	"janaa": {
+		"roman": "janaa",
+		"dev": "जना",
+		"source": "aligned",
+		"phrases": [
+			"adj-duwai-both"
+		]
+	},
+	"jaruri": {
+		"roman": "jaruri",
+		"dev": "जरुरी",
+		"source": "aligned",
+		"phrases": [
+			"adj-jaruri-necessary"
+		]
+	},
+	"jholaa": {
+		"roman": "jholaa",
+		"dev": "झोला",
+		"source": "aligned",
+		"phrases": [
+			"adj-bhari-heavy"
+		]
+	},
 	"jitchhau": {
 		"roman": "jitchhau",
 		"dev": "जित्छौं",
 		"source": "aligned",
 		"phrases": [
 			"haami-jitchaun-we-will-win"
+		]
+	},
+	"jiwan": {
+		"roman": "jiwan",
+		"dev": "जीवन",
+		"source": "aligned",
+		"phrases": [
+			"adj-dainik-daily"
 		]
 	},
 	"jodnus": {
@@ -1170,6 +1407,7 @@
 		"dev": "काम",
 		"source": "aligned",
 		"phrases": [
+			"adj-pura-complete",
 			"kaam-thaalnus-please-begin-the-work",
 			"ma-kaam-garchu-i-am-working-i-will-do-the-work",
 			"ma-kaam-jaanchu-i-am-going-to-work",
@@ -1184,6 +1422,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-tarkari-kaatchu-i-will-cut-the-vegetables"
+		]
+	},
+	"kadaa": {
+		"roman": "kadaa",
+		"dev": "कडा",
+		"source": "aligned",
+		"phrases": [
+			"adj-kada-strict"
 		]
 	},
 	"kahaa": {
@@ -1224,6 +1470,14 @@
 			"kam-garnuhos-please-reduce-make-it-less"
 		]
 	},
+	"kamajor": {
+		"roman": "kamajor",
+		"dev": "कमजोर",
+		"source": "aligned",
+		"phrases": [
+			"adj-kamjor-weak"
+		]
+	},
 	"kap": {
 		"roman": "kap",
 		"dev": "कप",
@@ -1255,6 +1509,7 @@
 		"dev": "कति",
 		"source": "aligned",
 		"phrases": [
+			"adj-sundar-beautiful",
 			"antim-mol-kati-what-s-your-final-price",
 			"kati-bajyo-what-time-is-it",
 			"kati-bhayo-how-much-was-it",
@@ -1266,6 +1521,7 @@
 		"dev": "के",
 		"source": "aligned",
 		"phrases": [
+			"adj-sambhav-possible",
 			"aru-ke-chaahiyo-what-else-do-you-need",
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 			"ke-bhayo-what-happened",
@@ -1282,6 +1538,8 @@
 		"dev": "केही",
 		"source": "aligned",
 		"phrases": [
+			"adj-aru-other",
+			"adj-nishchit-certain",
 			"aru-kehi-chhaina-nothing-else",
 			"kehi-chhaina-nothing-it-s-nothing",
 			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything"
@@ -1302,6 +1560,14 @@
 		"phrases": [
 			"khana-khaeko-chhaina-i-haven-t-eaten",
 			"khana-khaeko-chu-i-ve-eaten-i-have-eaten"
+		]
+	},
+	"khaali": {
+		"roman": "khaali",
+		"dev": "खाली",
+		"source": "aligned",
+		"phrases": [
+			"adj-khali-empty"
 		]
 	},
 	"khaan": {
@@ -1362,6 +1628,14 @@
 			"khana-khanu-bhayo-have-you-eaten"
 		]
 	},
+	"kharaab": {
+		"roman": "kharaab",
+		"dev": "खराब",
+		"source": "aligned",
+		"phrases": [
+			"adj-kharab-bad"
+		]
+	},
 	"khelchha": {
 		"roman": "khelchha",
 		"dev": "खेल्छ",
@@ -1376,6 +1650,14 @@
 		"source": "aligned",
 		"phrases": [
 			"yo-khojnus-please-look-for-this"
+		]
+	},
+	"khulaa": {
+		"roman": "khulaa",
+		"dev": "खुला",
+		"source": "aligned",
+		"phrases": [
+			"adj-khula-open"
 		]
 	},
 	"khulchha": {
@@ -1402,12 +1684,29 @@
 			"ma-kisaan-hu-i-am-a-farmer"
 		]
 	},
+	"kothaa": {
+		"roman": "kothaa",
+		"dev": "कोठा",
+		"source": "aligned",
+		"phrases": [
+			"adj-khali-empty"
+		]
+	},
 	"kripayaa": {
 		"roman": "kripayaa",
 		"dev": "कृपया",
 		"source": "aligned",
 		"phrases": [
 			"kripaya-malaai-maddat-garnuhos-please-help-me"
+		]
+	},
+	"kuraa": {
+		"roman": "kuraa",
+		"dev": "कुरा",
+		"source": "aligned",
+		"phrases": [
+			"adj-eutai-same",
+			"adj-samanya-ordinary"
 		]
 	},
 	"laagchha": {
@@ -1436,6 +1735,14 @@
 			"ghaam-laagyo-it-s-sunny",
 			"hussu-laagyo-it-s-foggy",
 			"tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you"
+		]
+	},
+	"laamo": {
+		"roman": "laamo",
+		"dev": "लामो",
+		"source": "aligned",
+		"phrases": [
+			"adj-lamo-long"
 		]
 	},
 	"lagaaunus": {
@@ -1507,6 +1814,8 @@
 		"dev": "म",
 		"source": "aligned",
 		"phrases": [
+			"adj-byasta-busy",
+			"adj-kamjor-weak",
 			"ma-aaen-i-came",
 			"ma-ahile-aaunchu-i-will-be-right-back",
 			"ma-bhada-maajhchu-i-ll-wash-the-dishes",
@@ -1583,6 +1892,14 @@
 			"ma-daat-maajhchu-i-will-brush-my-teeth"
 		]
 	},
+	"maanchhe": {
+		"roman": "maanchhe",
+		"dev": "मान्छे",
+		"source": "aligned",
+		"phrases": [
+			"adj-thuprai-many"
+		]
+	},
 	"maanchhu": {
 		"roman": "maanchhu",
 		"dev": "मान्छु",
@@ -1645,6 +1962,7 @@
 		"dev": "मलाई",
 		"source": "aligned",
 		"phrases": [
+			"adj-pakka-sure",
 			"kripaya-malaai-maddat-garnuhos-please-help-me",
 			"malai-bataaunus-please-tell-me",
 			"malai-biraami-bhayo-i-am-sick",
@@ -1681,6 +1999,14 @@
 		"source": "aligned",
 		"phrases": [
 			"chaad-manaaunchaun-we-celebrate-the-festival"
+		]
+	},
+	"mausam": {
+		"roman": "mausam",
+		"dev": "मौसम",
+		"source": "aligned",
+		"phrases": [
+			"adj-kharab-bad"
 		]
 	},
 	"mero": {
@@ -1722,6 +2048,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-mukh-dhunchhu-i-will-wash-my-face"
+		]
+	},
+	"mukhya": {
+		"roman": "mukhya",
+		"dev": "मुख्य",
+		"source": "aligned",
+		"phrases": [
+			"adj-mukhya-main"
 		]
 	},
 	"mulya": {
@@ -1777,6 +2111,30 @@
 			"yo-nikaalnus-please-take-this-out"
 		]
 	},
+	"niko": {
+		"roman": "niko",
+		"dev": "निको",
+		"source": "aligned",
+		"phrases": [
+			"adj-niko-healed"
+		]
+	},
+	"nishchit": {
+		"roman": "nishchit",
+		"dev": "निश्चित",
+		"source": "aligned",
+		"phrases": [
+			"adj-nishchit-certain"
+		]
+	},
+	"niyam": {
+		"roman": "niyam",
+		"dev": "नियम",
+		"source": "aligned",
+		"phrases": [
+			"adj-kada-strict"
+		]
+	},
 	"nuhaaun": {
 		"roman": "nuhaaun",
 		"dev": "नुहाउन",
@@ -1811,16 +2169,33 @@
 			"paahuna-aaudai-chan-guests-are-coming"
 		]
 	},
+	"paanchau": {
+		"roman": "paanchau",
+		"dev": "पाँचौं",
+		"source": "aligned",
+		"phrases": [
+			"adj-panchaun-fifth"
+		]
+	},
 	"paani": {
 		"roman": "paani",
 		"dev": "पानी",
 		"source": "aligned",
 		"phrases": [
+			"adj-chiso-cold",
 			"paani-dinus-please-give-me-water",
 			"paani-umaalnus-please-boil-the-water",
 			"pani-chaahiyo-i-need-water",
 			"pani-lyaaunus-please-bring-water",
 			"pani-pariracha-it-is-raining"
+		]
+	},
+	"pachhillo": {
+		"roman": "pachhillo",
+		"dev": "पछिल्लो",
+		"source": "aligned",
+		"phrases": [
+			"adj-pachhillo-recent"
 		]
 	},
 	"padhchhu": {
@@ -1839,11 +2214,20 @@
 			"maile-padhen-i-read"
 		]
 	},
+	"pahilo": {
+		"roman": "pahilo",
+		"dev": "पहिलो",
+		"source": "aligned",
+		"phrases": [
+			"adj-pahilo-first"
+		]
+	},
 	"paisaa": {
 		"roman": "paisaa",
 		"dev": "पैसा",
 		"source": "aligned",
 		"phrases": [
+			"adj-baki-remaining",
 			"paisa-jogaaunus-save-money"
 		]
 	},
@@ -1861,6 +2245,14 @@
 		"source": "aligned",
 		"phrases": [
 			"bhaat-pakaunus-please-cook-the-rice"
+		]
+	},
+	"pakkaa": {
+		"roman": "pakkaa",
+		"dev": "पक्का",
+		"source": "aligned",
+		"phrases": [
+			"adj-pakka-sure"
 		]
 	},
 	"pani": {
@@ -1924,6 +2316,16 @@
 			"ma-pasale-hu-i-am-a-shopkeeper"
 		]
 	},
+	"patak": {
+		"roman": "patak",
+		"dev": "पटक",
+		"source": "aligned",
+		"phrases": [
+			"adj-pachhillo-recent",
+			"adj-pahilo-first",
+			"adj-tesro-third"
+		]
+	},
 	"pathaaunus": {
 		"roman": "pathaaunus",
 		"dev": "पठाउनुस्",
@@ -1938,6 +2340,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-fohor-falchhu-i-will-take-out-the-trash"
+		]
+	},
+	"pharak": {
+		"roman": "pharak",
+		"dev": "फरक",
+		"source": "aligned",
+		"phrases": [
+			"adj-farak-different"
 		]
 	},
 	"pharkinchhu": {
@@ -2030,6 +2440,14 @@
 			"nun-pugyo-there-is-enough-salt"
 		]
 	},
+	"puraa": {
+		"roman": "puraa",
+		"dev": "पूरा",
+		"source": "aligned",
+		"phrases": [
+			"adj-pura-complete"
+		]
+	},
 	"puryaaunus": {
 		"roman": "puryaaunus",
 		"dev": "पुर्याउनुस्",
@@ -2115,6 +2533,14 @@
 			"yaha-roknus-please-stop-here"
 		]
 	},
+	"saamaanya": {
+		"roman": "saamaanya",
+		"dev": "सामान्य",
+		"source": "aligned",
+		"phrases": [
+			"adj-samanya-ordinary"
+		]
+	},
 	"saano": {
 		"roman": "saano",
 		"dev": "सानो",
@@ -2165,6 +2591,22 @@
 			"sahayog-garnuhos-please-cooperate-please-help"
 		]
 	},
+	"sahi": {
+		"roman": "sahi",
+		"dev": "सही",
+		"source": "aligned",
+		"phrases": [
+			"adj-sahi-correct"
+		]
+	},
+	"sajilo": {
+		"roman": "sajilo",
+		"dev": "सजिलो",
+		"source": "aligned",
+		"phrases": [
+			"adj-sajilo-easy"
+		]
+	},
 	"sakchhu": {
 		"roman": "sakchhu",
 		"dev": "सक्छु",
@@ -2199,6 +2641,22 @@
 			"tapai-garna-saknuhunchha-can-you-do-it"
 		]
 	},
+	"samaan": {
+		"roman": "samaan",
+		"dev": "समान",
+		"source": "aligned",
+		"phrases": [
+			"adj-saman-equal"
+		]
+	},
+	"sambhaw": {
+		"roman": "sambhaw",
+		"dev": "सम्भव",
+		"source": "aligned",
+		"phrases": [
+			"adj-sambhav-possible"
+		]
+	},
 	"sanchai": {
 		"roman": "sanchai",
 		"dev": "सञ्चै",
@@ -2221,6 +2679,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-ghar-safaa-garchu-i-will-clean-the-house"
+		]
+	},
+	"saphal": {
+		"roman": "saphal",
+		"dev": "सफल",
+		"source": "aligned",
+		"phrases": [
+			"adj-saphal-successful"
 		]
 	},
 	"sasto": {
@@ -2313,12 +2779,28 @@
 			"u-git-sunchha-he-she-listens"
 		]
 	},
+	"sundar": {
+		"roman": "sundar",
+		"dev": "सुन्दर",
+		"source": "aligned",
+		"phrases": [
+			"adj-sundar-beautiful"
+		]
+	},
 	"sune": {
 		"roman": "sune",
 		"dev": "सुनेँ",
 		"source": "aligned",
 		"phrases": [
 			"maile-sunen-i-heard"
+		]
+	},
+	"surakshit": {
+		"roman": "surakshit",
+		"dev": "सुरक्षित",
+		"source": "aligned",
+		"phrases": [
+			"adj-surakshit-safe"
 		]
 	},
 	"sutna": {
@@ -2369,11 +2851,20 @@
 			"tauko-dukhyo-my-head-hurts-headache"
 		]
 	},
+	"talaa": {
+		"roman": "talaa",
+		"dev": "तला",
+		"source": "aligned",
+		"phrases": [
+			"adj-chautho-fourth"
+		]
+	},
 	"tapaai": {
 		"roman": "tapaai",
 		"dev": "तपाईं",
 		"source": "aligned",
 		"phrases": [
+			"adj-sahi-correct",
 			"tapai-bolnu-hunchha-do-you-speak-english",
 			"tapai-garna-saknuhunchha-can-you-do-it",
 			"tapai-kaha-bata-ho-where-are-you-from",
@@ -2419,6 +2910,14 @@
 			"khana-tayar-bhayo-the-food-is-ready"
 		]
 	},
+	"tesro": {
+		"roman": "tesro",
+		"dev": "तेस्रो",
+		"source": "aligned",
+		"phrases": [
+			"adj-tesro-third"
+		]
+	},
 	"thaahaa": {
 		"roman": "thaahaa",
 		"dev": "थाहा",
@@ -2444,6 +2943,14 @@
 			"ma-thakeko-chu-i-am-tired"
 		]
 	},
+	"thap": {
+		"roman": "thap",
+		"dev": "थप",
+		"source": "aligned",
+		"phrases": [
+			"adj-thap-additional"
+		]
+	},
 	"thik": {
 		"roman": "thik",
 		"dev": "ठीक",
@@ -2460,6 +2967,14 @@
 		"phrases": [
 			"sabai-bhanda-thulo-the-biggest",
 			"yo-tyo-bhanda-thulo-bigger"
+		]
+	},
+	"thuprai": {
+		"roman": "thuprai",
+		"dev": "थुप्रै",
+		"source": "aligned",
+		"phrases": [
+			"adj-thuprai-many"
 		]
 	},
 	"timro": {
@@ -2494,6 +3009,9 @@
 		"dev": "ऊ",
 		"source": "aligned",
 		"phrases": [
+			"adj-bahadur-brave",
+			"adj-baliyo-strong",
+			"adj-saphal-successful",
 			"u-git-sunchha-he-she-listens"
 		]
 	},
@@ -2526,6 +3044,7 @@
 		"dev": "यहाँ",
 		"source": "aligned",
 		"phrases": [
+			"adj-surakshit-safe",
 			"yaha-basnus-please-have-a-seat",
 			"yaha-roknus-please-stop-here"
 		]
@@ -2535,6 +3054,15 @@
 		"dev": "यो",
 		"source": "aligned",
 		"phrases": [
+			"adj-alag-separate",
+			"adj-farak-different",
+			"adj-gahro-hard",
+			"adj-galat-wrong",
+			"adj-halka-light",
+			"adj-jaruri-necessary",
+			"adj-sajilo-easy",
+			"adj-samanya-ordinary",
+			"adj-sambhav-possible",
 			"yo-chaldaina-this-isnt-working",
 			"yo-hataaunus-please-remove-this",
 			"yo-jodnus-please-join-these",

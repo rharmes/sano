@@ -147,8 +147,9 @@ const SanoRomanize = (() => {
 	const SILENT_NASAL = [['तपाईं', 'तपाई']];
 
 	// व is usually "w" but is realized as "b" in a handful of words (native-speaker confirmed).
-	// Applied in both tracks so np and pron agree: धन्यवाद→Dhanyabaad / dhuhn-yuh-baad.
-	const VA_AS_B = new Set(['धन्यवाद', 'वन', 'विद्यार्थी', 'वर्ष']);
+	// Applied in both tracks so np and pron agree: धन्यवाद→Dhanyabaad / dhuhn-yuh-baad. (व्यस्त
+	// "busy" → Byasta; its pron is polished in PRON_OVERRIDES so the initial व्य reads "byas-" not "b-y".)
+	const VA_AS_B = new Set(['धन्यवाद', 'वन', 'विद्यार्थी', 'वर्ष', 'व्यस्त']);
 
 	// Stage-6 overrides for the Lite headword: whole Devanagari words → exact-cased romanization.
 	// Proper nouns (capitalized, harvested from Ross's mid-phrase caps) + English loanwords.
@@ -183,6 +184,7 @@ const SanoRomanize = (() => {
 		मनसुन: 'mon-soon',
 		टिभी: 'tee-vee',
 		अङ्ग्रेजी: 'ang-gray-jee',
+		व्यस्त: 'byas-ta', // native व→b word (see VA_AS_B); polished so it reads byas-ta, not b-yuhs-tuh
 	};
 
 	const DEV_RANGE = /[ऀ-ॿ]/;
