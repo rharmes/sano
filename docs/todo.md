@@ -246,11 +246,23 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
       phrase) instead of free-typing the whole sentence. No-op for items whose canonical is already
       multi-word (all prior batches). Verified headlessly (एक → type at its word, word-bank with a
       multi-word frame); full suite green. Unlocks the large single-word noun pool for depth (T29 batch 6+).
-- [ ] **T30 · Depth content — new "real expression" units** — via the existing expansion pipeline
+- [x] **T30 · Depth content — new "real expression" units** — via the existing expansion pipeline
       (T14), add a few new mastery-gated units of short, high-utility whole utterances built from
-      already-known vocabulary (e.g. "how much is this?", "I don't know"). Appended at the path's end;
-      Nepali `dev` AI-drafted → Ross's review; audio rendered for the new items only, bump
-      `AUDIO_VERSION`.
+      already-known vocabulary. Appended at the path's end; Nepali `dev` AI-drafted → Ross's review;
+      audio rendered for the new items only, bump `AUDIO_VERSION`.
+  - [x] **Batch 1 — four themed units (32 utterances)** — drafted into the T14 expansion tool
+        (`design/expansion.html`), blanket-approved by Ross, merged as four new `kind:'phrases'` units
+        appended at the path's end (`COURSE` now 102 units / 959 items): **Sounding Natural** (saanchai
+        "really?!", chhodnus "never mind", ke garne "oh well"), **On the Move** (yahin roknus "stop
+        here", kati taadha cha "how far?", baayaa/daayaa jaanus "turn left/right"), **Being a Guest**
+        (ma aghaaen "I'm full", piro nahaalnus "no spice", ma shaakaahaari hu "I'm vegetarian",
+        khanako lagi dhanyabaad "thanks for the food"), **At the Shop** (dherai mahango bhayo "too
+        expensive", chhut dinus "give a discount", sabai kati bhayo "how much for everything?"). Every
+        `dev` dedup-checked against the course; one guest phrase swapped off an eyelash-ra (ZWJ) spelling
+        for a clean one. Audio rendered (32 phrase + 19 word clips, `AUDIO_VERSION` 21); dev-seed card
+        added (four `seed('unit:…')` buttons). (Minor: words.json flags 3 cosmetic slug conflicts —
+        `mitho` मिठो/मीठो, `sidhaa` सिधा/सीधा, pre-existing `bhane` भने/भनेँ — audibly identical, tile
+        clip plays a correct pronunciation either way; easy to align spelling later if wanted.)
 - [x] **T31 · Frames-review tool** — `design/frames.html` + `design/frames-save.php` (mirrors the
       `expansion.html` pipeline): groups candidate frames under their target item (English + canonical
       `dev`/romanization), live-romanizes the editable frame `dev`, and lets Ross edit / approve /

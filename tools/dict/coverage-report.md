@@ -1,15 +1,14 @@
 # Dictionary coverage report
 
-Generated 2026-07-02 · 2469 entries · model claude-opus-4-8
+Generated 2026-07-03 · 2471 entries · model claude-opus-4-8
 
-- In COURSE: 965
-- Expansion candidates (high-freq, not yet in COURSE): 1504
-- COURSE gloss-mismatch flags for review: 25
+- In COURSE: 987
+- Expansion candidates (high-freq, not yet in COURSE): 1484
+- COURSE gloss-mismatch flags for review: 26
 
 ## Top expansion candidates (frequency rank · lemma · romanization · gloss)
 
 1. हुनु · Hunu · to be · everyday
-7. लागि · Laagi · for / for the sake of · everyday
 9. भन्नु · Bhannu · to say · everyday
 10. तथा · Tathaa · and · formal
 14. उनी · Uni · he / she · everyday
@@ -108,6 +107,7 @@ Generated 2026-07-02 · 2469 entries · model claude-opus-4-8
 288. नीति · Niti · policy · formal
 290. मन्त्रालय · Mantraalay · ministry · formal
 291. बन्नु · Bannu · to become · everyday
+292. दाबी · Daabi · claim · formal
 
 ## COURSE translations to review (dictionary disagrees — flag only, never auto-changed)
 
@@ -130,6 +130,7 @@ Generated 2026-07-02 · 2469 entries · model claude-opus-4-8
 - खिज्ने (khijna-frustration-irritation): COURSE "Frustration / Irritation" vs dict "to tease"
 - चटामरी (chatamari-nepali-pizza): COURSE "Nepali pizza" vs dict "chatamari"
 - चिम्टा (chimtaa-clothespin-peg): COURSE "Clothespin / Peg" vs dict "tongs"
+- छोड्नुस् (chhodnus-never-mind): COURSE "Never mind / forget it" vs dict "please leave"
 - डस्टबिन (fohormailaa-ko-thungaa-trash-can): COURSE "Trash can" vs dict "dustbin"
 - प्याजी (pyaji-purple): COURSE "Purple" vs dict "light pink"
 - ब्रश (brush-toothbrush): COURSE "Toothbrush" vs dict "brush"

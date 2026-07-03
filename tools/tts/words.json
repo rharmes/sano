@@ -157,6 +157,14 @@
 			"agadi-in-front-ahead"
 		]
 	},
+	"aghaae": {
+		"roman": "aghaae",
+		"dev": "अघाएँ",
+		"source": "aligned",
+		"phrases": [
+			"ma-aghaen-im-full"
+		]
+	},
 	"aghi": {
 		"roman": "aghi",
 		"dev": "अघि",
@@ -198,6 +206,14 @@
 			"adv-ahilesamma-sofar"
 		]
 	},
+	"ajh": {
+		"roman": "ajh",
+		"dev": "अझ",
+		"source": "aligned",
+		"phrases": [
+			"ajha-alikati-a-little-more"
+		]
+	},
 	"ajhai": {
 		"roman": "ajhai",
 		"dev": "अझै",
@@ -220,7 +236,8 @@
 		"source": "aligned",
 		"phrases": [
 			"ali-ali-a-little-bit",
-			"ali-bistari-bolnuhos-please-speak-slowly"
+			"ali-bistari-bolnuhos-please-speak-slowly",
+			"ali-sasto-garnus-make-it-cheaper"
 		]
 	},
 	"alikati": {
@@ -228,6 +245,8 @@
 		"dev": "अलिकति",
 		"source": "aligned",
 		"phrases": [
+			"ajha-alikati-a-little-more",
+			"alikati-matra-just-a-little",
 			"link-alikati"
 		]
 	},
@@ -428,7 +447,8 @@
 			"adj-mukhya-main",
 			"adj-surakshit-safe",
 			"bato-dekhaunus-please-show-me-the-way",
-			"ma-sodhchu-i-ask"
+			"ma-sodhchu-i-ask",
+			"yo-bato-ho-is-this-the-way"
 		]
 	},
 	"baatoko": {
@@ -437,6 +457,14 @@
 		"source": "aligned",
 		"phrases": [
 			"oe-chheu"
+		]
+	},
+	"baayaa": {
+		"roman": "baayaa",
+		"dev": "बायाँ",
+		"source": "aligned",
+		"phrases": [
+			"baayan-janus-turn-left"
 		]
 	},
 	"bachchaa": {
@@ -804,6 +832,8 @@
 			"adj-saphal-successful",
 			"adv-purai-entirely",
 			"adv-tyaspachhi-afterthat",
+			"dherai-bhayo-thats-plenty",
+			"dherai-mahango-too-expensive",
 			"dhilo-bhayo-it-is-late-i-am-running-late",
 			"feel-pachhuto-regret",
 			"kati-bhayo-how-much-was-it",
@@ -815,6 +845,7 @@
 			"noun-kharcha-expense",
 			"noun-tayari-preparation",
 			"ramailo-bhayo-it-was-fun",
+			"sabai-kati-bhayo-how-much-total",
 			"sutne-bela-bhayo-it-s-bedtime"
 		]
 	},
@@ -1089,6 +1120,14 @@
 			"fn-chahin-asfor"
 		]
 	},
+	"chaahindaina": {
+		"roman": "chaahindaina",
+		"dev": "चाहिँदैन",
+		"source": "aligned",
+		"phrases": [
+			"malai-chahidaina-i-dont-need-it"
+		]
+	},
 	"chaahiyo": {
 		"roman": "chaahiyo",
 		"dev": "चाहियो",
@@ -1232,6 +1271,7 @@
 			"jado-cha-it-s-cold",
 			"kasto-cha-how-is-it",
 			"kasto-chha-hawa-how-s-the-weather",
+			"kati-tadha-how-far",
 			"khana-mitho-cha-the-food-is-delicious",
 			"link-jasto",
 			"link-taipani",
@@ -1241,6 +1281,7 @@
 			"mero-kap-kaha-cha-where-is-my-cup",
 			"mitho-cha-it-s-delicious",
 			"muni-under-below",
+			"najikai-cha-its-nearby",
 			"noun-baithak-meeting",
 			"noun-bishwaas-trust",
 			"noun-prashna-question",
@@ -1251,6 +1292,7 @@
 			"noun2-yatayat-transport",
 			"oe-chheu",
 			"pani-pariracha-it-is-raining",
+			"sano-size-cha-smaller-size",
 			"sasto-cha-it-s-cheap",
 			"swagat-cha-you-re-welcome",
 			"tapai-lai-kasto-cha-how-are-you-formal",
@@ -1364,6 +1406,14 @@
 			"sanchai-chu-i-m-fine"
 		]
 	},
+	"chhut": {
+		"roman": "chhut",
+		"dev": "छुट",
+		"source": "aligned",
+		"phrases": [
+			"chhut-dinus-give-a-discount"
+		]
+	},
 	"chhuttai": {
 		"roman": "chhuttai",
 		"dev": "छुट्टै",
@@ -1417,6 +1467,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-daat-maajhchu-i-will-brush-my-teeth"
+		]
+	},
+	"daayaa": {
+		"roman": "daayaa",
+		"dev": "दायाँ",
+		"source": "aligned",
+		"phrases": [
+			"daayan-janus-turn-right"
 		]
 	},
 	"dahi": {
@@ -1498,6 +1556,7 @@
 		"dev": "धन्यवाद",
 		"source": "aligned",
 		"phrases": [
+			"khanako-lagi-dhanyabaad-thank-you-for-the-food",
 			"maile-bhanen-i-said"
 		]
 	},
@@ -1512,6 +1571,8 @@
 			"adj-halka-light",
 			"adj-jaruri-necessary",
 			"aghi-before-ago",
+			"dherai-bhayo-thats-plenty",
+			"dherai-mahango-too-expensive",
 			"dherai-piro-cha-it-is-very-spicy",
 			"dherai-ramro-very-good-excellent",
 			"feel-khusi-happy",
@@ -1609,10 +1670,12 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-thorai-little",
+			"chhut-dinus-give-a-discount",
 			"link-alikati",
 			"ma-dinchu-i-give",
 			"nun-dinus-please-pass-the-salt",
-			"paani-dinus-please-give-me-water"
+			"paani-dinus-please-give-me-water",
+			"paisa-firta-dinus-give-me-change"
 		]
 	},
 	"dishaa": {
@@ -1906,6 +1969,14 @@
 			"tapai-garna-saknuhunchha-can-you-do-it"
 		]
 	},
+	"garne": {
+		"roman": "garne",
+		"dev": "गर्ने",
+		"source": "aligned",
+		"phrases": [
+			"ke-garne-oh-well"
+		]
+	},
 	"garnu": {
 		"roman": "garnu",
 		"dev": "गर्नु",
@@ -1953,6 +2024,7 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-yasari-thisway",
+			"ali-sasto-garnus-make-it-cheaper",
 			"dhoka-banda-garnus-please-close-the-door",
 			"hosh-garnus-be-careful",
 			"khadai-garnus-please-eat",
@@ -2311,6 +2383,7 @@
 			"tapai-kaha-bata-ho-where-are-you-from",
 			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
 			"timro-naam-ke-ho-what-is-your-name-informal",
+			"yo-bato-ho-is-this-the-way",
 			"yo-ke-ho-what-is-this"
 		]
 	},
@@ -2350,6 +2423,7 @@
 			"ma-nars-hu-i-am-a-nurse",
 			"ma-pasale-hu-i-am-a-shopkeeper",
 			"ma-prahari-hu-i-am-a-police-officer",
+			"ma-shakahari-hu-im-vegetarian",
 			"ma-shikshak-hu-i-am-a-teacher",
 			"ma-vidyarthi-hu-i-am-a-student"
 		]
@@ -2495,8 +2569,11 @@
 		"phrases": [
 			"adv-uta-overthere",
 			"agadi-in-front-ahead",
+			"baayan-janus-turn-left",
+			"daayan-janus-turn-right",
 			"link-jahaan",
 			"mathi-on-above",
+			"sidha-janus-go-straight",
 			"sidhaa-janus-go-straight"
 		]
 	},
@@ -2917,6 +2994,14 @@
 			"fn-karod-crore"
 		]
 	},
+	"kasalaai": {
+		"roman": "kasalaai",
+		"dev": "कसलाई",
+		"source": "aligned",
+		"phrases": [
+			"kaslai-thaha-who-knows"
+		]
+	},
 	"kasto": {
 		"roman": "kasto",
 		"dev": "कस्तो",
@@ -2924,6 +3009,7 @@
 		"phrases": [
 			"kasto-cha-how-is-it",
 			"kasto-chha-hawa-how-s-the-weather",
+			"kasto-ramro-how-nice",
 			"tapai-lai-kasto-cha-how-are-you-formal"
 		]
 	},
@@ -2954,9 +3040,11 @@
 			"kati-bajyo-what-time-is-it",
 			"kati-bhayo-how-much-was-it",
 			"kati-ho-how-much-is-it",
+			"kati-tadha-how-far",
 			"noun-gate-date",
 			"noun2-jamma-total",
-			"noun2-umer-age"
+			"noun2-umer-age",
+			"sabai-kati-bhayo-how-much-total"
 		]
 	},
 	"ke": {
@@ -2970,6 +3058,7 @@
 			"aru-ke-chaahiyo-what-else-do-you-need",
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 			"ke-bhayo-what-happened",
+			"ke-garne-oh-well",
 			"ke-garnu-parcha-what-should-i-do",
 			"noun-kaaran-reason",
 			"noun-yojana-plan",
@@ -3038,11 +3127,20 @@
 			"khana-khane-bela-bhayo-it-is-time-to-eat",
 			"khana-khanu-bhayo-have-you-eaten",
 			"khana-mitho-cha-the-food-is-delicious",
+			"khana-mitho-thiyo-food-was-delicious",
 			"khana-sakiyo-the-food-is-finished-all-gone",
 			"khana-tayar-bhayo-the-food-is-ready",
 			"ma-khaana-banaaunchu-i-cook",
 			"ma-khana-pakaudai-chu-i-am-cooking-food",
 			"pachi-later-after"
+		]
+	},
+	"khaanaako": {
+		"roman": "khaanaako",
+		"dev": "खानाको",
+		"source": "aligned",
+		"phrases": [
+			"khanako-lagi-dhanyabaad-thank-you-for-the-food"
 		]
 	},
 	"khaandai": {
@@ -3329,6 +3427,14 @@
 			"malai-man-laagdaina-i-dont-want-to"
 		]
 	},
+	"laagi": {
+		"roman": "laagi",
+		"dev": "लागि",
+		"source": "aligned",
+		"phrases": [
+			"khanako-lagi-dhanyabaad-thank-you-for-the-food"
+		]
+	},
 	"laagyo": {
 		"roman": "laagyo",
 		"dev": "लाग्यो",
@@ -3430,7 +3536,8 @@
 		"dev": "लिन्छु",
 		"source": "aligned",
 		"phrases": [
-			"ma-linchu-i-take"
+			"ma-linchu-i-take",
+			"ma-yo-linchu-ill-take-this"
 		]
 	},
 	"linu": {
@@ -3487,6 +3594,7 @@
 			"link-jabasamma",
 			"link-jasari",
 			"ma-aaen-i-came",
+			"ma-aghaen-im-full",
 			"ma-ahile-aaunchu-i-will-be-right-back",
 			"ma-bhada-maajhchu-i-ll-wash-the-dishes",
 			"ma-bhanchu-i-say",
@@ -3535,6 +3643,7 @@
 			"ma-piunchu-i-drink",
 			"ma-prahari-hu-i-am-a-police-officer",
 			"ma-sanga-with-me",
+			"ma-shakahari-hu-im-vegetarian",
 			"ma-shikshak-hu-i-am-a-teacher",
 			"ma-sikchu-i-learn",
 			"ma-sodhchu-i-ask",
@@ -3543,6 +3652,7 @@
 			"ma-thakeko-chu-i-am-tired",
 			"ma-uthchu-i-get-up-i-will-get-up",
 			"ma-vidyarthi-hu-i-am-a-student",
+			"ma-yo-linchu-ill-take-this",
 			"pachi-later-after",
 			"sadhai-always",
 			"v9-maagnu",
@@ -3644,6 +3754,14 @@
 			"mathi-on-above"
 		]
 	},
+	"maatra": {
+		"roman": "maatra",
+		"dev": "मात्र",
+		"source": "aligned",
+		"phrases": [
+			"alikati-matra-just-a-little"
+		]
+	},
 	"maatrai": {
 		"roman": "maatrai",
 		"dev": "मात्रै",
@@ -3669,6 +3787,7 @@
 		"dev": "महँगो",
 		"source": "aligned",
 		"phrases": [
+			"dherai-mahango-too-expensive",
 			"mahango-cha-it-s-expensive",
 			"yo-tyo-bhanda-mahango-more-expensive"
 		]
@@ -3747,6 +3866,7 @@
 			"malai-bataaunus-please-tell-me",
 			"malai-biraami-bhayo-i-am-sick",
 			"malai-bujhaaunus-please-explain-to-me",
+			"malai-chahidaina-i-dont-need-it",
 			"malai-chiya-chaahiyo-i-need-tea",
 			"malai-dahi-man-parcha-i-like-yogurt",
 			"malai-dekhaaunus-please-show-me",
@@ -3757,6 +3877,7 @@
 			"malai-khana-man-laagcha-i-want-to-eat",
 			"malai-man-laagdaina-i-dont-want-to",
 			"malai-man-paryo-i-liked-it",
+			"malai-parkhanus-wait-for-me",
 			"malai-saghaaunus-please-help-me",
 			"malai-thaaha-cha-i-know",
 			"noun-bishwaas-trust",
@@ -3869,6 +3990,7 @@
 		"source": "aligned",
 		"phrases": [
 			"khana-mitho-cha-the-food-is-delicious",
+			"khana-mitho-thiyo-food-was-delicious",
 			"mitho-cha-it-s-delicious"
 		]
 	},
@@ -3965,6 +4087,22 @@
 		"source": "aligned",
 		"phrases": [
 			"noun2-nagad-cash"
+		]
+	},
+	"nahaalnus": {
+		"roman": "nahaalnus",
+		"dev": "नहाल्नुस्",
+		"source": "aligned",
+		"phrases": [
+			"piro-nahalnus-no-spice"
+		]
+	},
+	"najikai": {
+		"roman": "najikai",
+		"dev": "नजिकै",
+		"source": "aligned",
+		"phrases": [
+			"najikai-cha-its-nearby"
 		]
 	},
 	"naksaa": {
@@ -4329,6 +4467,7 @@
 		"phrases": [
 			"adj-baki-remaining",
 			"maile-dien-i-gave",
+			"paisa-firta-dinus-give-me-change",
 			"paisa-jogaaunus-save-money",
 			"v9-maagnu"
 		]
@@ -4442,6 +4581,7 @@
 		"source": "aligned",
 		"phrases": [
 			"ek-chhin-parkhanus-wait-a-moment-please",
+			"malai-parkhanus-wait-for-me",
 			"minet-minute"
 		]
 	},
@@ -4579,6 +4719,14 @@
 			"maile-heren-i-watched"
 		]
 	},
+	"phirtaa": {
+		"roman": "phirtaa",
+		"dev": "फिर्ता",
+		"source": "aligned",
+		"phrases": [
+			"paisa-firta-dinus-give-me-change"
+		]
+	},
 	"phohor": {
 		"roman": "phohor",
 		"dev": "फोहोर",
@@ -4626,6 +4774,7 @@
 		"source": "aligned",
 		"phrases": [
 			"dherai-piro-cha-it-is-very-spicy",
+			"piro-nahalnus-no-spice",
 			"yo-piro-cha-is-this-spicy"
 		]
 	},
@@ -4836,6 +4985,7 @@
 			"dherai-ramro-very-good-excellent",
 			"ekdum-ramro-very-good-excellent",
 			"fn-jun-whichthat",
+			"kasto-ramro-how-nice",
 			"noun-abasar-opportunity",
 			"noun-sambandha-relationship",
 			"noun-sewa-service",
@@ -4965,7 +5115,8 @@
 		"source": "aligned",
 		"phrases": [
 			"noun2-sawari-vehicle",
-			"yaha-roknus-please-stop-here"
+			"yaha-roknus-please-stop-here",
+			"yahin-roknus-stop-here"
 		]
 	},
 	"royo": {
@@ -5016,6 +5167,14 @@
 			"food2-saagpaat-greens"
 		]
 	},
+	"saaij": {
+		"roman": "saaij",
+		"dev": "साइज",
+		"source": "aligned",
+		"phrases": [
+			"sano-size-cha-smaller-size"
+		]
+	},
 	"saajhaa": {
 		"roman": "saajhaa",
 		"dev": "साझा",
@@ -5046,6 +5205,7 @@
 		"source": "aligned",
 		"phrases": [
 			"noun2-basti-settlement",
+			"sano-size-cha-smaller-size",
 			"yo-tyo-bhanda-sano-smaller"
 		]
 	},
@@ -5081,6 +5241,7 @@
 		"phrases": [
 			"sabai-bhanda-ramro-the-best",
 			"sabai-bhanda-thulo-the-biggest",
+			"sabai-kati-bhayo-how-much-total",
 			"sabai-milcha-it-all-works-out"
 		]
 	},
@@ -5356,6 +5517,7 @@
 		"dev": "सस्तो",
 		"source": "aligned",
 		"phrases": [
+			"ali-sasto-garnus-make-it-cheaper",
 			"sasto-cha-it-s-cheap"
 		]
 	},
@@ -5390,6 +5552,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-sewa-service"
+		]
+	},
+	"shaakaahaari": {
+		"roman": "shaakaahaari",
+		"dev": "शाकाहारी",
+		"source": "aligned",
+		"phrases": [
+			"ma-shakahari-hu-im-vegetarian"
 		]
 	},
 	"shaanta": {
@@ -5439,6 +5609,7 @@
 		"dev": "सीधा",
 		"source": "aligned",
 		"phrases": [
+			"sidha-janus-go-straight",
 			"sidhaa-janus-go-straight"
 		]
 	},
@@ -5619,6 +5790,14 @@
 			"wear-switar-sweater"
 		]
 	},
+	"taadhaa": {
+		"roman": "taadhaa",
+		"dev": "टाढा",
+		"source": "aligned",
+		"phrases": [
+			"kati-tadha-how-far"
+		]
+	},
 	"taajaa": {
 		"roman": "taajaa",
 		"dev": "ताजा",
@@ -5750,6 +5929,7 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-pakka-sure",
+			"kaslai-thaha-who-knows",
 			"malai-thaaha-cha-i-know",
 			"thaha-chhaina-i-don-t-know"
 		]
@@ -5804,6 +5984,14 @@
 			"adv-ahilesamma-sofar",
 			"tapai-thik-hunuhuncha-are-you-okay",
 			"thik-cha-it-s-okay-it-s-fine"
+		]
+	},
+	"thiyo": {
+		"roman": "thiyo",
+		"dev": "थियो",
+		"source": "aligned",
+		"phrases": [
+			"khana-mitho-thiyo-food-was-delicious"
 		]
 	},
 	"thorai": {
@@ -6244,6 +6432,14 @@
 			"yaha-roknus-please-stop-here"
 		]
 	},
+	"yahi": {
+		"roman": "yahi",
+		"dev": "यहीँ",
+		"source": "aligned",
+		"phrases": [
+			"yahin-roknus-stop-here"
+		]
+	},
 	"yasako": {
 		"roman": "yasako",
 		"dev": "यसको",
@@ -6305,10 +6501,12 @@
 			"haptaa-week",
 			"link-jasto",
 			"ma-linchu-i-take",
+			"ma-yo-linchu-ill-take-this",
 			"mahina-month",
 			"noun-kshetra-area",
 			"oe-aadhunik",
 			"oe-saajhaa",
+			"yo-bato-ho-is-this-the-way",
 			"yo-chaldaina-this-isnt-working",
 			"yo-hataaunus-please-remove-this",
 			"yo-jodnus-please-join-these",
