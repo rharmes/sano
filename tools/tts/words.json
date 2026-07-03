@@ -21,6 +21,9 @@
 		"dev": "आज",
 		"source": "aligned",
 		"phrases": [
+			"adj-byasta-busy",
+			"adj-chiso-cold",
+			"adj-kharab-bad",
 			"noun-gate-date"
 		]
 	},
@@ -372,7 +375,12 @@
 		"dev": "बाटो",
 		"source": "aligned",
 		"phrases": [
+			"adj-byasta-busy",
+			"adj-galat-wrong",
+			"adj-khula-open",
+			"adj-lamo-long",
 			"adj-mukhya-main",
+			"adj-surakshit-safe",
 			"bato-dekhaunus-please-show-me-the-way",
 			"ma-sodhchu-i-ask"
 		]
@@ -904,6 +912,22 @@
 			"bistaarai-bolnus-please-speak-slowly"
 		]
 	},
+	"botal": {
+		"roman": "botal",
+		"dev": "बोतल",
+		"source": "aligned",
+		"phrases": [
+			"adj-khali-empty"
+		]
+	},
+	"bubaa": {
+		"roman": "bubaa",
+		"dev": "बुबा",
+		"source": "aligned",
+		"phrases": [
+			"adj-kada-strict"
+		]
+	},
 	"bujhaaunus": {
 		"roman": "bujhaaunus",
 		"dev": "बुझाउनुस्",
@@ -1231,6 +1255,14 @@
 			"ek-chhin-parkhanus-wait-a-moment-please"
 		]
 	},
+	"chhito": {
+		"roman": "chhito",
+		"dev": "छिटो",
+		"source": "aligned",
+		"phrases": [
+			"adj-niko-healed"
+		]
+	},
 	"chhittai": {
 		"roman": "chhittai",
 		"dev": "छिट्टै",
@@ -1246,6 +1278,7 @@
 		"phrases": [
 			"adj-byasta-busy",
 			"adj-kamjor-weak",
+			"adj-niko-healed",
 			"adv-eklai-alone",
 			"feel-eklo-lonely",
 			"feel-khusi-happy",
@@ -1285,6 +1318,7 @@
 		"dev": "चिया",
 		"source": "aligned",
 		"phrases": [
+			"adj-baliyo-strong",
 			"chiya-khaane-will-you-have-tea",
 			"ma-piunchu-i-drink",
 			"maile-pien-i-drank",
@@ -1395,6 +1429,11 @@
 		"dev": "धेरै",
 		"source": "aligned",
 		"phrases": [
+			"adj-bahadur-brave",
+			"adj-bhari-heavy",
+			"adj-byasta-busy",
+			"adj-halka-light",
+			"adj-jaruri-necessary",
 			"dherai-piro-cha-it-is-very-spicy",
 			"dherai-ramro-very-good-excellent",
 			"feel-khusi-happy",
@@ -2163,6 +2202,7 @@
 		"phrases": [
 			"adj-alag-separate",
 			"adj-galat-wrong",
+			"adj-sahi-correct",
 			"adj-samanya-ordinary",
 			"adv-pahilopatak-firsttime",
 			"adv-tyastai-likewise",
@@ -2235,11 +2275,21 @@
 			"adv-kahilyai-never"
 		]
 	},
+	"hunuhos": {
+		"roman": "hunuhos",
+		"dev": "हुनुहोस्",
+		"source": "aligned",
+		"phrases": [
+			"adj-niko-healed"
+		]
+	},
 	"hunuhunchha": {
 		"roman": "hunuhunchha",
 		"dev": "हुनुहुन्छ",
 		"source": "aligned",
 		"phrases": [
+			"adj-kada-strict",
+			"adj-pakka-sure",
 			"adj-sahi-correct",
 			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite",
 			"tapai-thik-hunuhuncha-are-you-okay"
@@ -2481,7 +2531,8 @@
 		"dev": "झोला",
 		"source": "aligned",
 		"phrases": [
-			"adj-bhari-heavy"
+			"adj-bhari-heavy",
+			"adj-halka-light"
 		]
 	},
 	"jibro": {
@@ -2569,7 +2620,10 @@
 		"dev": "काम",
 		"source": "aligned",
 		"phrases": [
+			"adj-gahro-hard",
+			"adj-jaruri-necessary",
 			"adj-pura-complete",
+			"adj-sajilo-easy",
 			"kaam-thaalnus-please-begin-the-work",
 			"ma-kaam-garchu-i-am-working-i-will-do-the-work",
 			"ma-kaam-jaanchu-i-am-going-to-work",
@@ -2729,6 +2783,14 @@
 			"mero-kap-kaha-cha-where-is-my-cup"
 		]
 	},
+	"kapaal": {
+		"roman": "kapaal",
+		"dev": "कपाल",
+		"source": "aligned",
+		"phrases": [
+			"adj-lamo-long"
+		]
+	},
 	"karib": {
 		"roman": "karib",
 		"dev": "करिब",
@@ -2792,6 +2854,7 @@
 		"dev": "के",
 		"source": "aligned",
 		"phrases": [
+			"adj-pakka-sure",
 			"adj-sambhav-possible",
 			"adv-tyaspachhi-afterthat",
 			"aru-ke-chaahiyo-what-else-do-you-need",
@@ -3053,6 +3116,7 @@
 		"dev": "किताब",
 		"source": "aligned",
 		"phrases": [
+			"adj-bhari-heavy",
 			"ma-padhchu-i-read",
 			"maile-padhen-i-read"
 		]
@@ -3286,6 +3350,7 @@
 		"phrases": [
 			"adj-byasta-busy",
 			"adj-kamjor-weak",
+			"adj-niko-healed",
 			"adv-chhittai-soon",
 			"adv-eklai-alone",
 			"adv-prayah-usually",
@@ -3412,6 +3477,9 @@
 		"dev": "मान्छे",
 		"source": "aligned",
 		"phrases": [
+			"adj-bahadur-brave",
+			"adj-baliyo-strong",
+			"adj-kharab-bad",
 			"adj-thuprai-many",
 			"fn-ekjana-oneperson",
 			"fn-sayaun-hundreds",
@@ -3626,6 +3694,8 @@
 		"dev": "मेरो",
 		"source": "aligned",
 		"phrases": [
+			"adj-kada-strict",
+			"adj-lamo-long",
 			"body-ghunda-knee",
 			"body-jibro-tongue",
 			"mero-kap-kaha-cha-where-is-my-cup",
@@ -3820,6 +3890,14 @@
 			"wear-mojaa-socks"
 		]
 	},
+	"nepaal": {
+		"roman": "nepaal",
+		"dev": "नेपाल",
+		"source": "aligned",
+		"phrases": [
+			"adj-sundar-beautiful"
+		]
+	},
 	"nepaalako": {
 		"roman": "nepaalako",
 		"dev": "नेपालको",
@@ -3834,6 +3912,7 @@
 		"dev": "नेपाली",
 		"source": "aligned",
 		"phrases": [
+			"adj-sajilo-easy",
 			"ma-nepali-bolchhu-i-speak-nepali",
 			"ma-nepali-boldina-i-don-t-speak-nepali",
 			"ma-sikchu-i-learn",
@@ -4205,6 +4284,14 @@
 			"malai-man-paryo-i-liked-it"
 		]
 	},
+	"pasal": {
+		"roman": "pasal",
+		"dev": "पसल",
+		"source": "aligned",
+		"phrases": [
+			"adj-khula-open"
+		]
+	},
 	"pasale": {
 		"roman": "pasale",
 		"dev": "पसले",
@@ -4410,6 +4497,7 @@
 		"dev": "प्रश्न",
 		"source": "aligned",
 		"phrases": [
+			"adj-gahro-hard",
 			"ma-sodhchu-i-ask",
 			"noun-prashna-question"
 		]
@@ -4967,6 +5055,7 @@
 		"dev": "समय",
 		"source": "aligned",
 		"phrases": [
+			"adj-sahi-correct",
 			"fn-jaba-when",
 			"noun-samay-time"
 		]
@@ -5373,6 +5462,7 @@
 		"dev": "तपाईं",
 		"source": "aligned",
 		"phrases": [
+			"adj-pakka-sure",
 			"adj-sahi-correct",
 			"tapai-bolnu-hunchha-do-you-speak-english",
 			"tapai-garna-saknuhunchha-can-you-do-it",
@@ -5441,6 +5531,7 @@
 		"dev": "थाहा",
 		"source": "aligned",
 		"phrases": [
+			"adj-pakka-sure",
 			"malai-thaaha-cha-i-know",
 			"thaha-chhaina-i-don-t-know"
 		]
@@ -5451,6 +5542,16 @@
 		"source": "aligned",
 		"phrases": [
 			"kaam-thaalnus-please-begin-the-work"
+		]
+	},
+	"thaau": {
+		"roman": "thaau",
+		"dev": "ठाउँ",
+		"source": "aligned",
+		"phrases": [
+			"adj-khali-empty",
+			"adj-sundar-beautiful",
+			"adj-surakshit-safe"
 		]
 	},
 	"thakaai": {
@@ -5962,14 +6063,17 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-alag-separate",
+			"adj-bhari-heavy",
 			"adj-farak-different",
 			"adj-gahro-hard",
 			"adj-galat-wrong",
 			"adj-halka-light",
 			"adj-jaruri-necessary",
+			"adj-sahi-correct",
 			"adj-sajilo-easy",
 			"adj-samanya-ordinary",
 			"adj-sambhav-possible",
+			"adj-surakshit-safe",
 			"adv-baru-instead",
 			"adv-jastai-like",
 			"adv-matrai-only",

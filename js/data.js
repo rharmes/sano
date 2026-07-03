@@ -2864,24 +2864,44 @@ const COURSE = [
 				dev: 'दिन लामो छ',
 				en: 'The day is long',
 				usage: "लामो = long (or 'tall' for a person).",
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो कपाल लामो छ', en: 'My hair is long' },
+					{ dev: 'लामो बाटो', en: 'A long road' },
+				],
 			},
 			{
 				id: 'adj-bhari-heavy',
 				dev: 'झोला भारी छ',
 				en: 'The bag is heavy',
 				usage: 'भारी = heavy. झोला = bag.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'भारी किताब', en: 'A heavy book' },
+					{ dev: 'यो धेरै भारी छ', en: 'This is very heavy' },
+				],
 			},
 			{
 				id: 'adj-halka-light',
 				dev: 'यो हल्का छ',
 				en: 'This is light',
 				usage: "हल्का = light (in weight); also 'mild', 'slight'.",
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'हल्का झोला', en: 'A light bag' },
+					{ dev: 'यो धेरै हल्का छ', en: 'This is very light' },
+				],
 			},
 			{
 				id: 'adj-baliyo-strong',
 				dev: 'ऊ बलियो छ',
 				en: 'He is strong',
 				usage: 'बलियो = strong / sturdy.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'बलियो मान्छे', en: 'A strong person' },
+					{ dev: 'चिया बलियो छ', en: 'The tea is strong' },
+				],
 			},
 			{
 				id: 'adj-kamjor-weak',
@@ -2894,12 +2914,22 @@ const COURSE = [
 				dev: 'पानी चिसो छ',
 				en: 'The water is cold',
 				usage: "चिसो = cold (to the touch) — the pair of तातो 'hot'.",
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'चिसो पानी', en: 'Cold water' },
+					{ dev: 'आज चिसो छ', en: 'It is cold today' },
+				],
 			},
 			{
 				id: 'adj-khali-empty',
 				dev: 'कोठा खाली छ',
 				en: 'The room is empty',
 				usage: "खाली = empty / vacant (also 'free', as in free time).",
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'बोतल खाली छ', en: 'The bottle is empty' },
+					{ dev: 'खाली ठाउँ', en: 'An empty space' },
+				],
 			},
 			{
 				id: 'adj-pura-complete',
@@ -2912,6 +2942,11 @@ const COURSE = [
 				dev: 'ढोका खुला छ',
 				en: 'The door is open',
 				usage: "खुला = open; opposite of बन्द 'closed'.",
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'पसल खुला छ', en: 'The shop is open' },
+					{ dev: 'बाटो खुला छ', en: 'The road is open' },
+				],
 			},
 		],
 	},
@@ -2926,30 +2961,55 @@ const COURSE = [
 				dev: 'यो सजिलो छ',
 				en: 'This is easy',
 				usage: 'सजिलो = easy / simple / convenient.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'नेपाली सजिलो छ', en: 'Nepali is easy' },
+					{ dev: 'सजिलो काम', en: 'An easy job' },
+				],
 			},
 			{
 				id: 'adj-gahro-hard',
 				dev: 'यो गाह्रो छ',
 				en: 'This is hard',
 				usage: 'गाह्रो = difficult / hard (of a task or situation).',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'यो प्रश्न गाह्रो छ', en: 'This question is hard' },
+					{ dev: 'गाह्रो काम', en: 'Hard work' },
+				],
 			},
 			{
 				id: 'adj-sahi-correct',
 				dev: 'तपाईं सही हुनुहुन्छ',
 				en: 'You are right',
 				usage: 'सही = correct / right / accurate.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'यो सही हो', en: 'This is correct' },
+					{ dev: 'सही समय', en: 'The right time' },
+				],
 			},
 			{
 				id: 'adj-galat-wrong',
 				dev: 'यो गलत हो',
 				en: 'This is wrong',
 				usage: 'गलत = wrong / incorrect / mistaken.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'गलत बाटो', en: 'The wrong road' },
+					{ dev: 'यो गलत हो', en: 'This is wrong' },
+				],
 			},
 			{
 				id: 'adj-kharab-bad',
 				dev: 'मौसम खराब छ',
 				en: 'The weather is bad',
 				usage: 'खराब = bad / spoiled (blunter than नराम्रो). मौसम = weather.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'खराब मान्छे', en: 'A bad person' },
+					{ dev: 'आज मौसम खराब छ', en: 'The weather is bad today' },
+				],
 			},
 			{
 				id: 'adj-saphal-successful',
@@ -2962,18 +3022,33 @@ const COURSE = [
 				dev: 'कति सुन्दर छ!',
 				en: 'How beautiful!',
 				usage: 'सुन्दर = beautiful / lovely (a step up from राम्रो).',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'सुन्दर ठाउँ', en: 'A beautiful place' },
+					{ dev: 'नेपाल सुन्दर छ', en: 'Nepal is beautiful' },
+				],
 			},
 			{
 				id: 'adj-bahadur-brave',
 				dev: 'ऊ बहादुर छ',
 				en: 'He is brave',
 				usage: 'बहादुर = brave / courageous (also a common Nepali name).',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'बहादुर मान्छे', en: 'A brave person' },
+					{ dev: 'ऊ धेरै बहादुर छ', en: 'He is very brave' },
+				],
 			},
 			{
 				id: 'adj-kada-strict',
 				dev: 'नियम कडा छ',
 				en: 'The rule is strict',
 				usage: 'कडा = strict / tough / hard. नियम = rule.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'कडा नियम', en: 'A strict rule' },
+					{ dev: 'मेरो बुबा कडा हुनुहुन्छ', en: 'My father is strict' },
+				],
 			},
 		],
 	},
@@ -3112,12 +3187,22 @@ const COURSE = [
 				dev: 'म व्यस्त छु',
 				en: 'I am busy',
 				usage: 'व्यस्त = busy / occupied.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'आज म धेरै व्यस्त छु', en: 'I am very busy today' },
+					{ dev: 'व्यस्त बाटो', en: 'A busy road' },
+				],
 			},
 			{
 				id: 'adj-jaruri-necessary',
 				dev: 'यो जरुरी छ',
 				en: 'This is important',
 				usage: 'जरुरी = necessary / important / urgent.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'जरुरी काम', en: 'Important work' },
+					{ dev: 'यो धेरै जरुरी छ', en: 'This is very important' },
+				],
 			},
 			{
 				id: 'adj-sambhav-possible',
@@ -3130,12 +3215,22 @@ const COURSE = [
 				dev: 'मलाई पक्का छैन',
 				en: "I'm not sure",
 				usage: "पक्का = sure / certain (also 'solid', 'firm').",
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'के तपाईं पक्का हुनुहुन्छ?', en: 'Are you sure?' },
+					{ dev: 'मलाई पक्का थाहा छैन', en: 'I am not sure' },
+				],
 			},
 			{
 				id: 'adj-niko-healed',
 				dev: 'अब निको भयो',
 				en: "Now it's better",
 				usage: 'निको = healed / cured / recovered (of health, or a problem). अब = now.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'म अब निको छु', en: 'I am better now' },
+					{ dev: 'छिटो निको हुनुहोस्', en: 'Get well soon' },
+				],
 			},
 			{
 				id: 'adj-chalu-on',
@@ -3154,6 +3249,11 @@ const COURSE = [
 				dev: 'यहाँ सुरक्षित छ',
 				en: "It's safe here",
 				usage: 'सुरक्षित = safe / secure. यहाँ = here.',
+				// T29 batch 3 (descriptive adjectives; AI-drafted, approved):
+				frames: [
+					{ dev: 'सुरक्षित ठाउँ', en: 'A safe place' },
+					{ dev: 'यो बाटो सुरक्षित छ', en: 'This road is safe' },
+				],
 			},
 			{
 				id: 'adj-dainik-daily',

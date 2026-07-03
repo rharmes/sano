@@ -216,9 +216,16 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
   - [x] **Batch 2 — core past-tense verbs (12 items · 24 frames)** — everyday-context frames on the
         `verbs-past` unit (khaen → "I ate rice," gaen → "I went to the market," heren → "I watched a
         movie," …). Drafted into the T31 tool, approved by Ross, merged; audio rendered (24 phrase +
-        5 word clips, `AUDIO_VERSION` 18); dev-seed 0f extended. Next batches: nouns / adjectives.
+        5 word clips, `AUDIO_VERSION` 18); dev-seed 0f extended.
         (Minor: `maile-pien` f1 "मैले चिया पिएँ" uses पिउनु for tea, which the item's own note says
         colloquially takes खानु — kept as approved; easy to swap later.)
+  - [x] **Batch 3 — descriptive adjectives (20 items · 40 frames)** — attributive + fresh-predicate
+        frames on the `adj-*` units (lamo/chiso/baliyo/khali/khula/sajilo/gahro/kharab/sundar/byasta/
+        jaruri/surakshit/halka/bhari/sahi/galat/kada/pakka/bahadur/niko): "my hair is long," "a busy
+        road," "this road is safe." Drafted into the T31 tool, approved by Ross, merged; audio rendered
+        (40 phrase + 8 word clips, `AUDIO_VERSION` 19); dev-seed 0f now derives its framed set from
+        COURSE. Next batches: common nouns, position/time words. (Merge caught a scanner bug —
+        double-quoted `en` strings; fixed + re-verified all 20 match the draft exactly.)
 - [ ] **T30 · Depth content — new "real expression" units** — via the existing expansion pipeline
       (T14), add a few new mastery-gated units of short, high-utility whole utterances built from
       already-known vocabulary (e.g. "how much is this?", "I don't know"). Appended at the path's end;

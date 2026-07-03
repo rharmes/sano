@@ -716,41 +716,21 @@
 					});
 					state = wrap(items, { itemsTotal: 8, streak: 2 });
 				} else if (which === 'depth') {
-					// SR-05 depth (T28/T29): whole course mastered & settled, then the FRAMED items are
-					// pushed due with `seen` counts that select an ALTERNATE frame (seen % nFrames != 0),
-					// so the review lesson practices known words with fresh sentences instead of the ones
-					// they were taught with — the T28 pilot verbs (maagnu/samjhanu/chheu) plus the T29
-					// everyday-context batch on the core present-tense verbs (herchu → "I watch a movie,"
-					// dinchu → "Please give me water," …). Alternate-frame audio is silent until rendered.
+					// SR-05 depth (T28/T29): whole course mastered & settled, then every item that carries
+					// alternate frames is pushed due with a `seen` count that lands on an ALTERNATE frame
+					// (seen % nFrames != 0), so the review lesson practices known words with fresh sentences
+					// instead of the ones they were taught with — the T28 pilot verbs plus the T29 batches
+					// (present + past verbs, descriptive adjectives). Derived from COURSE, so future depth
+					// batches show up here automatically. Alternate-frame audio is silent until rendered.
 					const items = {};
 					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 30, lastSeen: day(0) });
-					[
-						['v9-maagnu', 4],
-						['v9-samjhanu', 5],
-						['oe-chheu', 4],
-						['ma-sikchu-i-learn', 4],
-						['ma-herchu-i-watch', 5],
-						['ma-bhanchu-i-say', 4],
-						['ma-sodhchu-i-ask', 5],
-						['ma-padhchu-i-read', 4],
-						['ma-lekhchu-i-write', 5],
-						['ma-dinchu-i-give', 4],
-						['ma-linchu-i-take', 5],
-						['ma-piunchu-i-drink', 4],
-						['u-git-sunchha-he-she-listens', 5],
-						['maile-siken-i-learned', 4],
-						['ma-gaen-i-went', 5],
-						['ma-aaen-i-came', 4],
-						['maile-garen-i-did', 5],
-						['maile-khaen-i-ate', 4],
-						['maile-pien-i-drank', 5],
-						['maile-heren-i-watched', 4],
-						['maile-sunen-i-heard', 5],
-						['maile-bhanen-i-said', 4],
-						['maile-padhen-i-read', 5],
-						['maile-lekhen-i-wrote', 4],
-						['maile-dien-i-gave', 5],
-					].forEach(([id, seen]) => (items[id] = mastered({ interval: 8, seen, correct: seen, lastSeen: day(20) })));
+					let n = 0;
+					for (const u of COURSE)
+						for (const it of u.items) {
+							if (!it.frames || !it.frames.length) continue;
+							const seen = 4 + (n++ % 2); // 4 → frame 1, 5 → frame 2 (both alternates: 3 frames each)
+							items[it.id] = mastered({ interval: 8, seen, correct: seen, lastSeen: day(20) });
+						}
 					state = wrap(items, { itemsTotal: 900 });
 				} else if (which === 'freshstart') {
 					// Schema v3 migration: write an OLD v2 save; on load migrateV2State fresh-starts it to
