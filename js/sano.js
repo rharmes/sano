@@ -1145,11 +1145,15 @@ function buildExercises(newItems, reviewItems) {
 	for (const item of reviewItems) {
 		if (matchItems.includes(item) || listenMatchItems.includes(item)) continue;
 		const record = itemRecord(item.id);
-		const multiWord = item.np.split(/\s+/).length >= 2;
+		// Route by the sentence actually shown (the chosen depth frame), not the item's canonical
+		// word: a single-word `vocab` noun whose review lands on a multi-word alternate frame is a
+		// phrase to assemble, not a word to type. pickFrame is deterministic, so the later ex.frame
+		// pass resolves to this same frame.
+		const multiWord = pickFrame(item).np.split(/\s+/).length >= 2;
 		if (isRecallStrength(record)) {
-			// Free typing is the hardest recall — reserve it for GRADUATED single words. A
-			// still-learning word gets a gentle tap-based word bank instead (works for single
-			// words too), which is where its recalls accrue toward graduation.
+			// Free typing is the hardest recall — reserve it for a GRADUATED word shown as a single
+			// word. A still-learning word (or one shown as a multi-word frame) gets a gentle tap-based
+			// word bank instead (works for single words too), where its recalls accrue toward graduation.
 			if (isGraduated(record) && !multiWord) exercises.push({ item: item, type: 'type', listen: Math.random() < LISTEN_PROBABILITY });
 			else exercises.push({ item: item, type: 'wordbank', dir: Math.random() < 0.5 ? 'en-np' : 'np-en' });
 		} else if (Math.random() < LISTEN_PROBABILITY) {

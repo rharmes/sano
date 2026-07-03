@@ -354,18 +354,33 @@ const COURSE = [
 				dev: 'आमा',
 				emoji: '👩',
 				en: 'Mother',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरी आमा घरमा हुनुहुन्छ', en: 'My mother is at home' },
+					{ dev: 'म आमालाई सम्झन्छु', en: 'I miss my mother' },
+				],
 			},
 			{
 				id: 'buwa-father',
 				dev: 'बुवा',
 				emoji: '👨',
 				en: 'Father',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो बुवा अफिस जानुहुन्छ', en: 'My father goes to the office' },
+					{ dev: 'बुवा काम गर्नुहुन्छ', en: 'Father works' },
+				],
 			},
 			{
 				id: 'didi-older-sister',
 				dev: 'दिदी',
 				emoji: '👧',
 				en: 'Older sister',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरी दिदी बजार जानुहुन्छ', en: 'My older sister goes to the market' },
+					{ dev: 'दिदी घरमा हुनुहुन्छ', en: 'Older sister is at home' },
+				],
 			},
 			{
 				id: 'bahini-younger-sister',
@@ -390,6 +405,11 @@ const COURSE = [
 				dev: 'छोरा',
 				emoji: '👦',
 				en: 'Son',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो छोरा सानो छ', en: 'My son is small' },
+					{ dev: 'छोरा स्कुल जान्छ', en: 'The son goes to school' },
+				],
 			},
 			{
 				id: 'chhori-daughter',
@@ -954,18 +974,33 @@ const COURSE = [
 				dev: 'खाना',
 				emoji: '🍽️',
 				en: 'Food',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म खाना खान्छु', en: 'I eat food' },
+					{ dev: 'खाना मीठो छ', en: 'The food is delicious' },
+				],
 			},
 			{
 				id: 'bhaat-rice-cooked',
 				dev: 'भात',
 				emoji: '🍚',
 				en: 'Rice (cooked)',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'भात तातो छ', en: 'The rice is hot' },
+					{ dev: 'मलाई भात मन पर्छ', en: 'I like rice' },
+				],
 			},
 			{
 				id: 'daal-lentils',
 				dev: 'दाल',
 				emoji: '🫘',
 				en: 'Lentils',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म दाल खान्छु', en: 'I eat lentils' },
+					{ dev: 'दाल मीठो छ', en: 'The lentils are tasty' },
+				],
 			},
 			{
 				id: 'tarkari-vegetables-curry',
@@ -990,6 +1025,11 @@ const COURSE = [
 				dev: 'माछा',
 				emoji: '🐟',
 				en: 'Fish',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई माछा मन पर्छ', en: 'I like fish' },
+					{ dev: 'माछा पानीमा छ', en: 'The fish is in the water' },
+				],
 			},
 			{
 				id: 'kukhura-ko-phul-egg',
@@ -1002,6 +1042,11 @@ const COURSE = [
 				dev: 'दूध',
 				emoji: '🥛',
 				en: 'Milk',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म दूध पिउँछु', en: 'I drink milk' },
+					{ dev: 'दूध चिसो छ', en: 'The milk is cold' },
+				],
 			},
 			{
 				id: 'dahi-yogurt',
@@ -2103,12 +2148,22 @@ const COURSE = [
 				dev: 'म गर्न सक्छु',
 				en: 'I can do it',
 				usage: 'The "can" pattern: take the verb, add "-na," then "sakchu" (I am able). "Garnu" (to do) becomes "garna sakchu" (I can do). This "verb + na sak-" frame works with every verb you know.',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म पढ्न सक्छु', en: 'I can read' },
+					{ dev: 'म खान सक्छु', en: 'I can eat' },
+				],
 			},
 			{
 				id: 'ma-jana-sakchu-i-can-go',
 				dev: 'म जान सक्छु',
 				en: 'I can go',
 				usage: 'From "jaanu" (to go): "jana sakchu" (I can go). Same "-na sak-" pattern as "garna sakchu." Add a place: "ma bajaar jana sakchu" (I can go to the market).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म आउन सक्छु', en: 'I can come' },
+					{ dev: 'म बस्न सक्छु', en: 'I can stay' },
+				],
 			},
 			{
 				id: 'tapai-garna-saknuhunchha-can-you-do-it',
@@ -2127,12 +2182,22 @@ const COURSE = [
 				dev: 'मलाई जान मन लाग्छ',
 				en: 'I want to go',
 				usage: 'The "want to" pattern: "verb + na" then "man laagcha" (literally "the mind feels"). The subject is "malai" (to me), not "ma": "malai jana man laagcha" (I feel like going).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई सुत्न मन लाग्छ', en: 'I want to sleep' },
+					{ dev: 'मलाई घर जान मन लाग्छ', en: 'I want to go home' },
+				],
 			},
 			{
 				id: 'malai-khana-man-laagcha-i-want-to-eat',
 				dev: 'मलाई खान मन लाग्छ',
 				en: 'I want to eat',
 				usage: 'From "khanu" (to eat): "khana man laagcha" (I want to eat). Swap the verb to want anything: "malai sutna man laagcha" (I want to sleep).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई चिया पिउन मन लाग्छ', en: 'I want to drink tea' },
+					{ dev: 'मलाई हेर्न मन लाग्छ', en: 'I want to watch' },
+				],
 			},
 			{
 				id: 'malai-man-laagdaina-i-dont-want-to',
@@ -2145,12 +2210,22 @@ const COURSE = [
 				dev: 'मलाई जानु पर्छ',
 				en: 'I have to go',
 				usage: 'The "must / have to" pattern: the full "-nu" verb then "parcha" (it is required). You met it in "sochnu parcha" (I have to think). Like "want," it takes "malai": "malai jaanu parcha" (I have to go).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई पढ्नु पर्छ', en: 'I have to study' },
+					{ dev: 'मलाई अहिले जानु पर्छ', en: 'I have to go now' },
+				],
 			},
 			{
 				id: 'malai-kaam-garnu-parcha-i-have-to-work',
 				dev: 'मलाई काम गर्नु पर्छ',
 				en: 'I have to work',
 				usage: 'From "garnu" (to do): "kaam garnu parcha" (I have to do the work). The obligation pattern uses the "-nu" form, the same one in "sochnu parcha."',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई किन्नु पर्छ', en: 'I have to buy it' },
+					{ dev: 'मलाई सिक्नु पर्छ', en: 'I have to learn' },
+				],
 			},
 			{
 				id: 'malai-jaanu-pardaina-i-dont-have-to-go',
@@ -2517,12 +2592,22 @@ const COURSE = [
 				dev: 'हस्पिटल',
 				emoji: '🏥',
 				en: 'Hospital',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म हस्पिटल जान्छु', en: 'I go to the hospital' },
+					{ dev: 'हस्पिटल नजिक छ', en: 'The hospital is near' },
+				],
 			},
 			{
 				id: 'skul-school',
 				dev: 'स्कुल',
 				emoji: '🏫',
 				en: 'School',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म स्कुल जान्छु', en: 'I go to school' },
+					{ dev: 'स्कुल ठूलो छ', en: 'The school is big' },
+				],
 			},
 			{
 				id: 'baink-bank',
@@ -2541,6 +2626,11 @@ const COURSE = [
 				dev: 'पसल',
 				emoji: '🏪',
 				en: 'Shop / store',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म पसल जान्छु', en: 'I go to the shop' },
+					{ dev: 'पसल बन्द छ', en: 'The shop is closed' },
+				],
 			},
 			{
 				id: 'bajaar-market',
@@ -2559,6 +2649,11 @@ const COURSE = [
 				dev: 'बस',
 				emoji: '🚌',
 				en: 'Bus',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'बस आयो', en: 'The bus came' },
+					{ dev: 'म बसमा जान्छु', en: 'I go by bus' },
+				],
 			},
 			{
 				id: 'tyaksi-taxi',
@@ -2597,36 +2692,66 @@ const COURSE = [
 				dev: 'माथि',
 				en: 'On / Above / Up',
 				usage: '"Mathi" means on top of or above. It follows the noun: "tebul mathi" (on the table), "ghar mathi" (above the house). Alone, "mathi" means "up" or "upstairs."',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'किताब टेबलमाथि छ', en: 'The book is on the table' },
+					{ dev: 'माथि जानुस्', en: 'Go up' },
+				],
 			},
 			{
 				id: 'muni-under-below',
 				dev: 'मुनि',
 				en: 'Under / Below',
 				usage: 'The opposite of "mathi." "Tebul muni" (under the table), "rukh muni" (under the tree). Alone, "muni" means "below" or "underneath."',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'बिरालो टेबलमुनि छ', en: 'The cat is under the table' },
+					{ dev: 'कुर्सीमुनि हेर्नुस्', en: 'Look under the chair' },
+				],
 			},
 			{
 				id: 'agadi-in-front-ahead',
 				dev: 'अगाडि',
 				en: 'In front / Ahead',
 				usage: '"Agaadi" means in front of or ahead. "Ghar agaadi" (in front of the house). It also means "forward" or "earlier": "agaadi janus" (go ahead).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'घर अगाडि', en: 'In front of the house' },
+					{ dev: 'अगाडि जानुस्', en: 'Go ahead' },
+				],
 			},
 			{
 				id: 'pachadi-behind-back',
 				dev: 'पछाडि',
 				en: 'Behind / At the back',
 				usage: 'The opposite of "agaadi." "Ghar pachaadi" (behind the house). It also means "afterward" or "at the back": "pachaadi basnus" (sit at the back).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'घर पछाडि', en: 'Behind the house' },
+					{ dev: 'पछाडि हेर्नुस्', en: 'Look behind' },
+				],
 			},
 			{
 				id: 'bhitra-inside-within',
 				dev: 'भित्र',
 				en: 'Inside / Within',
 				usage: '"Bhitra" means inside. "Ghar bhitra" (inside the house). You met it in "bhitra aaunus" (please come in).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'भित्र आउनुस्', en: 'Come inside' },
+					{ dev: 'कोठा भित्र', en: 'Inside the room' },
+				],
 			},
 			{
 				id: 'bahira-outside',
 				dev: 'बाहिर',
 				en: 'Outside',
 				usage: 'The opposite of "bhitra." "Ghar bahira" (outside the house), "bahira janus" (go outside). You may hear it for "out": "u bahira cha" (he is out).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'बाहिर जाऔं', en: 'Let us go outside' },
+					{ dev: 'ऊ बाहिर छ', en: 'He is outside' },
+				],
 			},
 			{
 				id: 'bichma-between-middle',
@@ -3336,6 +3461,11 @@ const COURSE = [
 				dev: 'टाउको',
 				emoji: '👤',
 				en: 'Head',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो टाउको दुख्छ', en: 'My head hurts' },
+					{ dev: 'उसको टाउको ठूलो छ', en: 'His head is big' },
+				],
 			},
 			{
 				id: 'kapaal-hair',
@@ -3348,6 +3478,11 @@ const COURSE = [
 				dev: 'आँखा',
 				emoji: '👁️',
 				en: 'Eye',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो आँखा रातो छ', en: 'My eye is red' },
+					{ dev: 'आँखा बन्द गर्नुस्', en: 'Close your eyes' },
+				],
 			},
 			{
 				id: 'kaan-ear',
@@ -3390,6 +3525,11 @@ const COURSE = [
 				dev: 'हात',
 				emoji: '✋',
 				en: 'Hand / Arm',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'हात धुनुस्', en: 'Wash your hands' },
+					{ dev: 'मेरो हात चिसो छ', en: 'My hand is cold' },
+				],
 			},
 			{
 				id: 'aaulaa-finger',
@@ -3402,6 +3542,11 @@ const COURSE = [
 				dev: 'पेट',
 				emoji: '🫄',
 				en: 'Stomach / Belly',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई पेट दुख्यो', en: 'My stomach hurts' },
+					{ dev: 'पेट खाली छ', en: 'The stomach is empty' },
+				],
 			},
 			{
 				id: 'dhaad-back',
@@ -4134,18 +4279,33 @@ const COURSE = [
 				dev: 'कुकुर',
 				emoji: '🐕',
 				en: 'Dog',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'कुकुर घरमा छ', en: 'The dog is at home' },
+					{ dev: 'मेरो कुकुर सानो छ', en: 'My dog is small' },
+				],
 			},
 			{
 				id: 'biralo-cat',
 				dev: 'बिरालो',
 				emoji: '🐈',
 				en: 'Cat',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'बिरालो दूध पिउँछ', en: 'The cat drinks milk' },
+					{ dev: 'बिरालो सानो छ', en: 'The cat is small' },
+				],
 			},
 			{
 				id: 'gai-cow',
 				dev: 'गाई',
 				emoji: '🐄',
 				en: 'Cow',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'गाई दूध दिन्छ', en: 'The cow gives milk' },
+					{ dev: 'गाई ठूलो छ', en: 'The cow is big' },
+				],
 			},
 			{
 				id: 'raangaa-buffalo',
@@ -4800,6 +4960,11 @@ const COURSE = [
 				dev: 'मिनेट',
 				en: 'Minute',
 				usage: 'The borrowed word "minet" (minute). "Ek minet" (one minute), "paach minet" (five minutes). "Ek minet parkhanus" (please wait a minute) is the everyday use.',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'पाँच मिनेट', en: 'Five minutes' },
+					{ dev: 'एक मिनेट पर्खनुस्', en: 'Wait a minute' },
+				],
 			},
 			{
 				id: 'ek-ghanta-one-hour',
@@ -4812,42 +4977,77 @@ const COURSE = [
 				dev: 'हप्ता',
 				en: 'Week',
 				usage: '"Haptaa" means a week. "Yo haptaa" (this week), "aaune haptaa" (next week), "gaeko haptaa" (last week).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'अर्को हप्ता', en: 'Next week' },
+					{ dev: 'यो हप्ता', en: 'This week' },
+				],
 			},
 			{
 				id: 'mahina-month',
 				dev: 'महिना',
 				en: 'Month',
 				usage: '"Mahina" means a month. "Yo mahina" (this month), "aaune mahina" (next month), "ek mahina" (one month).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'अर्को महिना', en: 'Next month' },
+					{ dev: 'यो महिना', en: 'This month' },
+				],
 			},
 			{
 				id: 'barsa-year',
 				dev: 'वर्ष',
 				en: 'Year',
 				usage: '"Barsa" means a year (you may also hear "saal"). "Yo barsa" (this year), "aghillo barsa" (last year). It also appears in "Naya barsa" (New Year).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'यो वर्ष', en: 'This year' },
+					{ dev: 'अर्को वर्ष', en: 'Next year' },
+				],
 			},
 			{
 				id: 'pachi-later-after',
 				dev: 'पछि',
 				en: 'Later / After',
 				usage: '"Pachi" means later or after. "Pachi bhetaula" (see you later), "ek ghanta pachi" (after one hour). The opposite is "aghi" (before / ago).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म पछि आउँछु', en: 'I will come later' },
+					{ dev: 'खाना पछि', en: 'After the meal' },
+				],
 			},
 			{
 				id: 'aghi-before-ago',
 				dev: 'अघि',
 				en: 'Before / Ago',
 				usage: '"Aghi" means before or ago. "Ek ghanta aghi" (an hour ago), "aghi nai" (already / beforehand). Pairs with "pachi" (after).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'एक घण्टा अघि', en: 'An hour ago' },
+					{ dev: 'धेरै अघि', en: 'Long ago' },
+				],
 			},
 			{
 				id: 'sadhai-always',
 				dev: 'सधैं',
 				en: 'Always',
 				usage: '"Sadhai" means always. For frequency it sits before the verb: "u sadhai aaunchha" (he always comes), "ma sadhai bihaana hidchu" (I always walk in the morning).',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म सधैं बिहान उठ्छु', en: 'I always get up in the morning' },
+					{ dev: 'ऊ सधैं ढिलो आउँछ', en: 'He always comes late' },
+				],
 			},
 			{
 				id: 'kahilekaahi-sometimes',
 				dev: 'कहिलेकाहीं',
 				en: 'Sometimes',
 				usage: '"Kahilekaahi" means sometimes or occasionally. "Ma kahilekaahi maasu khanchu" (I sometimes eat meat). It is built from "kahile" (when) doubled.',
+				// T29 depth frames (AI-drafted, approved):
+				frames: [
+					{ dev: 'म कहिलेकाहीं बजार जान्छु', en: 'I sometimes go to the market' },
+					{ dev: 'कहिलेकाहीं गाह्रो हुन्छ', en: 'Sometimes it is hard' },
+				],
 			},
 			{
 				id: 'kahile-pani-never',

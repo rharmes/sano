@@ -67,6 +67,22 @@
 			"fn-aaphno-ones-own"
 		]
 	},
+	"aaun": {
+		"roman": "aaun",
+		"dev": "आउन",
+		"source": "aligned",
+		"phrases": [
+			"ma-jana-sakchu-i-can-go"
+		]
+	},
+	"aaunchha": {
+		"roman": "aaunchha",
+		"dev": "आउँछ",
+		"source": "aligned",
+		"phrases": [
+			"sadhai-always"
+		]
+	},
 	"aaunchhu": {
 		"roman": "aaunchhu",
 		"dev": "आउँछु",
@@ -76,7 +92,8 @@
 			"adv-pakkai-surely",
 			"link-avashya",
 			"ma-ahile-aaunchu-i-will-be-right-back",
-			"ma-chaadai-aaunchu-i-will-come-back-soon"
+			"ma-chaadai-aaunchu-i-will-come-back-soon",
+			"pachi-later-after"
 		]
 	},
 	"aaundai": {
@@ -93,7 +110,8 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-yata-thisway",
-			"bhitra-aaunus-please-come-in"
+			"bhitra-aaunus-please-come-in",
+			"bhitra-inside-within"
 		]
 	},
 	"aawaaj": {
@@ -131,6 +149,22 @@
 			"noun2-adhyayan-study"
 		]
 	},
+	"agaadi": {
+		"roman": "agaadi",
+		"dev": "अगाडि",
+		"source": "aligned",
+		"phrases": [
+			"agadi-in-front-ahead"
+		]
+	},
+	"aghi": {
+		"roman": "aghi",
+		"dev": "अघि",
+		"source": "aligned",
+		"phrases": [
+			"aghi-before-ago"
+		]
+	},
 	"aghillo": {
 		"roman": "aghillo",
 		"dev": "अघिल्लो",
@@ -144,7 +178,8 @@
 		"dev": "अहिले",
 		"source": "aligned",
 		"phrases": [
-			"ma-ahile-aaunchu-i-will-be-right-back"
+			"ma-ahile-aaunchu-i-will-be-right-back",
+			"malai-jaanu-parcha-i-have-to-go"
 		]
 	},
 	"ahileko": {
@@ -242,7 +277,10 @@
 		"dev": "अर्को",
 		"source": "aligned",
 		"phrases": [
+			"barsa-year",
+			"haptaa-week",
 			"link-jasto",
+			"mahina-month",
 			"noun-bishaya-topic",
 			"noun-saal-year"
 		]
@@ -328,6 +366,14 @@
 		"source": "aligned",
 		"phrases": [
 			"fn-baahek-except"
+		]
+	},
+	"baahir": {
+		"roman": "baahir",
+		"dev": "बाहिर",
+		"source": "aligned",
+		"phrases": [
+			"bahira-outside"
 		]
 	},
 	"baaklo": {
@@ -447,6 +493,7 @@
 		"dev": "बजार",
 		"source": "aligned",
 		"phrases": [
+			"kahilekaahi-sometimes",
 			"ma-gaen-i-went"
 		]
 	},
@@ -509,6 +556,14 @@
 			"noun2-yatayat-transport"
 		]
 	},
+	"barsa": {
+		"roman": "barsa",
+		"dev": "वर्ष",
+		"source": "aligned",
+		"phrases": [
+			"barsa-year"
+		]
+	},
 	"baru": {
 		"roman": "baru",
 		"dev": "बरु",
@@ -539,6 +594,14 @@
 		"source": "aligned",
 		"phrases": [
 			"link-jabasamma"
+		]
+	},
+	"basna": {
+		"roman": "basna",
+		"dev": "बस्न",
+		"source": "aligned",
+		"phrases": [
+			"ma-jana-sakchu-i-can-go"
 		]
 	},
 	"basnuhunchha": {
@@ -784,7 +847,8 @@
 		"dev": "भित्र",
 		"source": "aligned",
 		"phrases": [
-			"bhitra-aaunus-please-come-in"
+			"bhitra-aaunus-please-come-in",
+			"bhitra-inside-within"
 		]
 	},
 	"bhok": {
@@ -808,7 +872,8 @@
 		"dev": "बिहान",
 		"source": "aligned",
 		"phrases": [
-			"adv-khasgari-especially"
+			"adv-khasgari-especially",
+			"sadhai-always"
 		]
 	},
 	"bihaanako": {
@@ -825,6 +890,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-bikri-sale"
+		]
+	},
+	"biraalo": {
+		"roman": "biraalo",
+		"dev": "बिरालो",
+		"source": "aligned",
+		"phrases": [
+			"muni-under-below"
 		]
 	},
 	"biraami": {
@@ -1145,6 +1218,7 @@
 			"adv-nikai-quite",
 			"adv-tyahin-rightthere",
 			"adv-tyasaile-therefore",
+			"bahira-outside",
 			"charpi-kaha-cha-where-is-the-bathroom",
 			"dherai-piro-cha-it-is-very-spicy",
 			"feel-ghamanda-arrogance",
@@ -1163,8 +1237,10 @@
 			"link-taipani",
 			"mahango-cha-it-s-expensive",
 			"malai-thaaha-cha-i-know",
+			"mathi-on-above",
 			"mero-kap-kaha-cha-where-is-my-cup",
 			"mitho-cha-it-s-delicious",
+			"muni-under-below",
 			"noun-baithak-meeting",
 			"noun-bishwaas-trust",
 			"noun-prashna-question",
@@ -1322,7 +1398,8 @@
 			"chiya-khaane-will-you-have-tea",
 			"ma-piunchu-i-drink",
 			"maile-pien-i-drank",
-			"malai-chiya-chaahiyo-i-need-tea"
+			"malai-chiya-chaahiyo-i-need-tea",
+			"malai-khana-man-laagcha-i-want-to-eat"
 		]
 	},
 	"daaktar": {
@@ -1434,6 +1511,7 @@
 			"adj-byasta-busy",
 			"adj-halka-light",
 			"adj-jaruri-necessary",
+			"aghi-before-ago",
 			"dherai-piro-cha-it-is-very-spicy",
 			"dherai-ramro-very-good-excellent",
 			"feel-khusi-happy",
@@ -1456,7 +1534,8 @@
 		"dev": "ढिलो",
 		"source": "aligned",
 		"phrases": [
-			"dhilo-bhayo-it-is-late-i-am-running-late"
+			"dhilo-bhayo-it-is-late-i-am-running-late",
+			"sadhai-always"
 		]
 	},
 	"dhokaa": {
@@ -1616,6 +1695,7 @@
 		"phrases": [
 			"adv-jhandai-almost",
 			"adv-kamtima-atleast",
+			"aghi-before-ago",
 			"ek-bajyo-its-one-oclock",
 			"ek-chhin-parkhanus-wait-a-moment-please",
 			"ek-ghanta-one-hour",
@@ -1623,6 +1703,7 @@
 			"fn-karod-crore",
 			"fn-laakh-lakh",
 			"food2-chaamal-rice",
+			"minet-minute",
 			"noun-byakti-person"
 		]
 	},
@@ -1717,6 +1798,7 @@
 			"adv-tyasaile-therefore",
 			"fn-kinabhane-because",
 			"fn-natra-otherwise",
+			"kahilekaahi-sometimes",
 			"link-taipani"
 		]
 	},
@@ -1916,6 +1998,7 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-jhandai-almost",
+			"aghi-before-ago",
 			"ek-ghanta-one-hour",
 			"fn-dedh-onehalf"
 		]
@@ -1925,6 +2008,7 @@
 		"dev": "घर",
 		"source": "aligned",
 		"phrases": [
+			"agadi-in-front-ahead",
 			"dir-waripari",
 			"fn-aaphno-ones-own",
 			"ma-aaen-i-came",
@@ -1932,6 +2016,8 @@
 			"ma-ghar-jaanchu-i-am-going-home",
 			"ma-ghar-pugen-i-reached-home",
 			"ma-ghar-safaa-garchu-i-will-clean-the-house",
+			"malai-jana-man-laagcha-i-want-to-go",
+			"pachadi-behind-back",
 			"v9-samjhanu"
 		]
 	},
@@ -2088,7 +2174,8 @@
 		"dev": "हप्ता",
 		"source": "aligned",
 		"phrases": [
-			"adj-aghillo-previous"
+			"adj-aghillo-previous",
+			"haptaa-week"
 		]
 	},
 	"haraae": {
@@ -2147,6 +2234,14 @@
 			"maile-heren-i-watched"
 		]
 	},
+	"herna": {
+		"roman": "herna",
+		"dev": "हेर्न",
+		"source": "aligned",
+		"phrases": [
+			"malai-khana-man-laagcha-i-want-to-eat"
+		]
+	},
 	"hernu": {
 		"roman": "hernu",
 		"dev": "हेर्नु",
@@ -2160,7 +2255,9 @@
 		"dev": "हेर्नुस्",
 		"source": "aligned",
 		"phrases": [
-			"adv-ekpatak-once"
+			"adv-ekpatak-once",
+			"muni-under-below",
+			"pachadi-behind-back"
 		]
 	},
 	"hijo": {
@@ -2264,7 +2361,8 @@
 		"phrases": [
 			"adv-patakpatak-repeatedly",
 			"fn-jaba-when",
-			"fn-natra-otherwise"
+			"fn-natra-otherwise",
+			"kahilekaahi-sometimes"
 		]
 	},
 	"hundaina": {
@@ -2316,7 +2414,8 @@
 		"dev": "जाऔं",
 		"source": "aligned",
 		"phrases": [
-			"adv-sangai-together"
+			"adv-sangai-together",
+			"bahira-outside"
 		]
 	},
 	"jaado": {
@@ -2361,6 +2460,7 @@
 			"adv-prayah-usually",
 			"adv-yaspatak-thistime",
 			"fn-chahin-asfor",
+			"kahilekaahi-sometimes",
 			"ma-ghar-jaanchu-i-am-going-home",
 			"ma-kaam-jaanchu-i-am-going-to-work"
 		]
@@ -2394,7 +2494,9 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-uta-overthere",
+			"agadi-in-front-ahead",
 			"link-jahaan",
+			"mathi-on-above",
 			"sidhaa-janus-go-straight"
 		]
 	},
@@ -2719,6 +2821,14 @@
 			"kahile-pani-never"
 		]
 	},
+	"kahilekaahi": {
+		"roman": "kahilekaahi",
+		"dev": "कहिलेकाहीं",
+		"source": "aligned",
+		"phrases": [
+			"kahilekaahi-sometimes"
+		]
+	},
 	"kahilyai": {
 		"roman": "kahilyai",
 		"dev": "कहिल्यै",
@@ -2914,6 +3024,7 @@
 		"dev": "खान",
 		"source": "aligned",
 		"phrases": [
+			"ma-garna-sakchu-i-can-do",
 			"malai-khana-man-laagcha-i-want-to-eat"
 		]
 	},
@@ -2930,7 +3041,8 @@
 			"khana-sakiyo-the-food-is-finished-all-gone",
 			"khana-tayar-bhayo-the-food-is-ready",
 			"ma-khaana-banaaunchu-i-cook",
-			"ma-khana-pakaudai-chu-i-am-cooking-food"
+			"ma-khana-pakaudai-chu-i-am-cooking-food",
+			"pachi-later-after"
 		]
 	},
 	"khaandai": {
@@ -3100,6 +3212,7 @@
 		"dev": "किन्नु",
 		"source": "aligned",
 		"phrases": [
+			"malai-kaam-garnu-parcha-i-have-to-work",
 			"noun-jagga-land"
 		]
 	},
@@ -3118,7 +3231,8 @@
 		"phrases": [
 			"adj-bhari-heavy",
 			"ma-padhchu-i-read",
-			"maile-padhen-i-read"
+			"maile-padhen-i-read",
+			"mathi-on-above"
 		]
 	},
 	"kohi": {
@@ -3135,6 +3249,7 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-khali-empty",
+			"bhitra-inside-within",
 			"oe-saajhaa"
 		]
 	},
@@ -3178,6 +3293,14 @@
 			"adj-eutai-same",
 			"adj-samanya-ordinary",
 			"ma-sikchu-i-learn"
+		]
+	},
+	"kursimuni": {
+		"roman": "kursimuni",
+		"dev": "कुर्सीमुनि",
+		"source": "aligned",
+		"phrases": [
+			"muni-under-below"
 		]
 	},
 	"kurtaa": {
@@ -3359,6 +3482,7 @@
 			"feel-khusi-happy",
 			"fn-aaphain-oneself",
 			"fn-chahin-asfor",
+			"kahilekaahi-sometimes",
 			"link-avashya",
 			"link-jabasamma",
 			"link-jasari",
@@ -3419,6 +3543,8 @@
 			"ma-thakeko-chu-i-am-tired",
 			"ma-uthchu-i-get-up-i-will-get-up",
 			"ma-vidyarthi-hu-i-am-a-student",
+			"pachi-later-after",
+			"sadhai-always",
 			"v9-maagnu",
 			"v9-samjhanu"
 		]
@@ -3510,6 +3636,14 @@
 			"food2-khasi-mutton"
 		]
 	},
+	"maathi": {
+		"roman": "maathi",
+		"dev": "माथि",
+		"source": "aligned",
+		"phrases": [
+			"mathi-on-above"
+		]
+	},
 	"maatrai": {
 		"roman": "maatrai",
 		"dev": "मात्रै",
@@ -3563,7 +3697,8 @@
 			"cal-mangsir",
 			"cal-phagun",
 			"cal-pus",
-			"cal-saun"
+			"cal-saun",
+			"mahina-month"
 		]
 	},
 	"maidaan": {
@@ -3724,7 +3859,8 @@
 		"dev": "मिनेट",
 		"source": "aligned",
 		"phrases": [
-			"fn-pandhra-fifteen"
+			"fn-pandhra-fifteen",
+			"minet-minute"
 		]
 	},
 	"mitho": {
@@ -4036,6 +4172,14 @@
 			"food2-golbheda-tomato"
 		]
 	},
+	"paancha": {
+		"roman": "paancha",
+		"dev": "पाँच",
+		"source": "aligned",
+		"phrases": [
+			"minet-minute"
+		]
+	},
 	"paanchau": {
 		"roman": "paanchau",
 		"dev": "पाँचौं",
@@ -4082,6 +4226,22 @@
 			"wear-gamchhaa-scarf"
 		]
 	},
+	"pachhaadi": {
+		"roman": "pachhaadi",
+		"dev": "पछाडि",
+		"source": "aligned",
+		"phrases": [
+			"pachadi-behind-back"
+		]
+	},
+	"pachhi": {
+		"roman": "pachhi",
+		"dev": "पछि",
+		"source": "aligned",
+		"phrases": [
+			"pachi-later-after"
+		]
+	},
 	"pachhillo": {
 		"roman": "pachhillo",
 		"dev": "पछिल्लो",
@@ -4120,6 +4280,22 @@
 		"source": "aligned",
 		"phrases": [
 			"maile-padhen-i-read"
+		]
+	},
+	"padhna": {
+		"roman": "padhna",
+		"dev": "पढ्न",
+		"source": "aligned",
+		"phrases": [
+			"ma-garna-sakchu-i-can-do"
+		]
+	},
+	"padhnu": {
+		"roman": "padhnu",
+		"dev": "पढ्नु",
+		"source": "aligned",
+		"phrases": [
+			"malai-jaanu-parcha-i-have-to-go"
 		]
 	},
 	"pahile": {
@@ -4265,7 +4441,8 @@
 		"dev": "पर्खनुस्",
 		"source": "aligned",
 		"phrases": [
-			"ek-chhin-parkhanus-wait-a-moment-please"
+			"ek-chhin-parkhanus-wait-a-moment-please",
+			"minet-minute"
 		]
 	},
 	"parwa": {
@@ -4450,6 +4627,14 @@
 		"phrases": [
 			"dherai-piro-cha-it-is-very-spicy",
 			"yo-piro-cha-is-this-spicy"
+		]
+	},
+	"piun": {
+		"roman": "piun",
+		"dev": "पिउन",
+		"source": "aligned",
+		"phrases": [
+			"malai-khana-man-laagcha-i-want-to-eat"
 		]
 	},
 	"piunchhu": {
@@ -4923,6 +5108,14 @@
 			"noun-sadasya-member"
 		]
 	},
+	"sadhai": {
+		"roman": "sadhai",
+		"dev": "सधैं",
+		"source": "aligned",
+		"phrases": [
+			"sadhai-always"
+		]
+	},
 	"saghaaunus": {
 		"roman": "saghaaunus",
 		"dev": "सघाउनुस्",
@@ -5265,6 +5458,14 @@
 			"maile-siken-i-learned"
 		]
 	},
+	"siknu": {
+		"roman": "siknu",
+		"dev": "सिक्नु",
+		"source": "aligned",
+		"phrases": [
+			"malai-kaam-garnu-parcha-i-have-to-work"
+		]
+	},
 	"siknuhunchha": {
 		"roman": "siknuhunchha",
 		"dev": "सिक्नुहुन्छ",
@@ -5374,7 +5575,8 @@
 		"dev": "सुत्न",
 		"source": "aligned",
 		"phrases": [
-			"ma-sutna-jaane-i-am-going-to-bed"
+			"ma-sutna-jaane-i-am-going-to-bed",
+			"malai-jana-man-laagcha-i-want-to-go"
 		]
 	},
 	"sutne": {
@@ -5516,6 +5718,22 @@
 		"source": "aligned",
 		"phrases": [
 			"noun-tayari-preparation"
+		]
+	},
+	"tebalamaathi": {
+		"roman": "tebalamaathi",
+		"dev": "टेबलमाथि",
+		"source": "aligned",
+		"phrases": [
+			"mathi-on-above"
+		]
+	},
+	"tebalamuni": {
+		"roman": "tebalamuni",
+		"dev": "टेबलमुनि",
+		"source": "aligned",
+		"phrases": [
+			"muni-under-below"
 		]
 	},
 	"tesro": {
@@ -5798,7 +6016,9 @@
 			"adj-bahadur-brave",
 			"adj-baliyo-strong",
 			"adj-saphal-successful",
+			"bahira-outside",
 			"oe-chheu",
+			"sadhai-always",
 			"u-git-sunchha-he-she-listens"
 		]
 	},
@@ -5913,7 +6133,8 @@
 		"dev": "उठ्छु",
 		"source": "aligned",
 		"phrases": [
-			"ma-uthchu-i-get-up-i-will-get-up"
+			"ma-uthchu-i-get-up-i-will-get-up",
+			"sadhai-always"
 		]
 	},
 	"waari": {
@@ -6079,9 +6300,12 @@
 			"adv-matrai-only",
 			"adv-nikai-quite",
 			"adv-pahilopatak-firsttime",
+			"barsa-year",
 			"fn-baahek-except",
+			"haptaa-week",
 			"link-jasto",
 			"ma-linchu-i-take",
+			"mahina-month",
 			"noun-kshetra-area",
 			"oe-aadhunik",
 			"oe-saajhaa",

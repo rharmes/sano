@@ -224,8 +224,28 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
         jaruri/surakshit/halka/bhari/sahi/galat/kada/pakka/bahadur/niko): "my hair is long," "a busy
         road," "this road is safe." Drafted into the T31 tool, approved by Ross, merged; audio rendered
         (40 phrase + 8 word clips, `AUDIO_VERSION` 19); dev-seed 0f now derives its framed set from
-        COURSE. Next batches: common nouns, position/time words. (Merge caught a scanner bug —
-        double-quoted `en` strings; fixed + re-verified all 20 match the draft exactly.)
+        COURSE. (Merge caught a scanner bug — double-quoted `en` strings; fixed + re-verified all 20
+        match the draft exactly.)
+  - [x] **Batch 4 — position + time/frequency (14 items · 28 frames)** — everyday-context frames on
+        `place-position` + `duration-frequency` bare words (माथि/मुनि/अगाडि/पछाडि/भित्र/बाहिर,
+        हप्ता/महिना/वर्ष/सधैं/कहिलेकाहीं/पछि/अघि/मिनेट): "next week," "I always get up in the morning,"
+        "an hour ago." Approved by Ross, merged; audio in the combined render below.
+  - [x] **Batch 5 — modal patterns (6 items · 12 frames)** — the can/want/must constructions
+        (`modals-can-want-must`) with a different **known verb** swapped in (म पढ्न सक्छु "I can read,"
+        मलाई सुत्न मन लाग्छ "I want to sleep," मलाई पढ्नु पर्छ "I have to study"), so the pattern
+        generalizes. Approved by Ross, merged.
+  - [x] **Batch 6 — common nouns (20 items · 40 frames)** — first depth batch on single-word `vocab`
+        items (family/places/food/body/animals: आमा/बुवा/दिदी/छोरा, हस्पिटल/स्कुल/पसल/बस,
+        खाना/भात/दाल/दूध/माछा, टाउको/आँखा/हात/पेट, कुकुर/बिरालो/गाई): "the dog is at home," "my eye is
+        red," "the cow gives milk." Needed the **T32 routing tweak** (below) so a noun shown as a
+        multi-word frame becomes a word-bank, not a type-the-sentence. Approved by Ross, merged.
+        Batches 4–6 rendered together: 80 phrase + 22 word clips, `AUDIO_VERSION` 20.
+- [x] **T32 · Depth mechanism — route by the shown frame, not the canonical word** — `buildExercises`
+      (`js/sano.js`) now computes `multiWord` from `pickFrame(item).np`, so a single-word `vocab` item
+      whose review lands on a multi-word alternate frame is drilled as a word-bank (assemble the
+      phrase) instead of free-typing the whole sentence. No-op for items whose canonical is already
+      multi-word (all prior batches). Verified headlessly (एक → type at its word, word-bank with a
+      multi-word frame); full suite green. Unlocks the large single-word noun pool for depth (T29 batch 6+).
 - [ ] **T30 · Depth content — new "real expression" units** — via the existing expansion pipeline
       (T14), add a few new mastery-gated units of short, high-utility whole utterances built from
       already-known vocabulary (e.g. "how much is this?", "I don't know"). Appended at the path's end;
