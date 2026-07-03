@@ -212,7 +212,13 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
   - [x] **Batch 1 — core present-tense verbs (10 items · 20 frames)** — everyday-context + real-expression
         frames on the `verbs-present` unit (herchu → "I watch a movie," dinchu → "Please give me water,"
         padhchu → "I read the news," …). Approved by Ross; audio rendered (20 phrase + 8 word clips,
-        `AUDIO_VERSION` 17); dev-seed 0f extended. Next batches: past-tense verbs, then nouns / adjectives.
+        `AUDIO_VERSION` 17); dev-seed 0f extended.
+  - [x] **Batch 2 — core past-tense verbs (12 items · 24 frames)** — everyday-context frames on the
+        `verbs-past` unit (khaen → "I ate rice," gaen → "I went to the market," heren → "I watched a
+        movie," …). Drafted into the T31 tool, approved by Ross, merged; audio rendered (24 phrase +
+        5 word clips, `AUDIO_VERSION` 18); dev-seed 0f extended. Next batches: nouns / adjectives.
+        (Minor: `maile-pien` f1 "मैले चिया पिएँ" uses पिउनु for tea, which the item's own note says
+        colloquially takes खानु — kept as approved; easy to swap later.)
 - [ ] **T30 · Depth content — new "real expression" units** — via the existing expansion pipeline
       (T14), add a few new mastery-gated units of short, high-utility whole utterances built from
       already-known vocabulary (e.g. "how much is this?", "I don't know"). Appended at the path's end;

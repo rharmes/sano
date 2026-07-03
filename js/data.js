@@ -1622,72 +1622,132 @@ const COURSE = [
 				dev: 'मैले सिकेँ',
 				en: 'I learned',
 				usage: 'The past tense. For most verbs (the ones that take an object), "I" becomes "maile" — not "ma" — and the verb ends in "-en," a nasal "eh": "maile siken" (I learned, from "siknu"). That "maile" subject is the big shift from the present.',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले नेपाली सिकेँ', en: 'I learned Nepali' },
+					{ dev: 'मैले धेरै सिकेँ', en: 'I learned a lot' },
+				],
 			},
 			{
 				id: 'ma-gaen-i-went',
 				dev: 'म गएँ',
 				en: 'I went',
 				usage: 'From "jaanu" (to go) — but the past stem is irregular: "ga-." Verbs of motion keep plain "ma" (no "maile"): "ma gaen" (I went), "ma bajaar gaen" (I went to the market).',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'म बजार गएँ', en: 'I went to the market' },
+					{ dev: 'म स्कूल गएँ', en: 'I went to school' },
+				],
 			},
 			{
 				id: 'ma-aaen-i-came',
 				dev: 'म आएँ',
 				en: 'I came',
 				usage: 'From "aaunu" (to come), the partner of "go." Like "gaen," it keeps "ma": "ma aaen" (I came / I got back). Its present was "ma ahile aaunchu" (I\'ll be right back).',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'म हिजो आएँ', en: 'I came yesterday' },
+					{ dev: 'म घर आएँ', en: 'I came home' },
+				],
 			},
 			{
 				id: 'maile-garen-i-did',
 				dev: 'मैले गरेँ',
 				en: 'I did / I made',
 				usage: 'From "garnu" (to do), the verb you reach for everywhere. "Maile kaam garen" (I did the work). Back to "maile" + "-en," because "do" takes an object.',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले काम गरेँ', en: 'I did the work' },
+					{ dev: 'मैले गल्ती गरेँ', en: 'I made a mistake' },
+				],
 			},
 			{
 				id: 'maile-khaen-i-ate',
 				dev: 'मैले खाएँ',
 				en: 'I ate',
 				usage: 'From "khanu" (to eat). "Maile khana khaen" (I ate a meal). Compare the present "ma khanchu" (I eat) — the past adds "maile" and the "-en" ending.',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले भात खाएँ', en: 'I ate rice' },
+					{ dev: 'मैले धेरै खाएँ', en: 'I ate a lot' },
+				],
 			},
 			{
 				id: 'maile-pien-i-drank',
 				dev: 'मैले पिएँ',
 				en: 'I drank',
 				usage: 'From "piunu" (to drink). "Maile paani pien" (I drank water). For warm drinks Nepali still "eats": "maile chiya khaen" (I had tea).',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले चिया पिएँ', en: 'I drank tea' },
+					{ dev: 'मैले पानी पिएँ', en: 'I drank water' },
+				],
 			},
 			{
 				id: 'maile-heren-i-watched',
 				dev: 'मैले हेरेँ',
 				en: 'I watched / I looked',
 				usage: 'From "hernu" (to watch, look). "Maile TV heren" (I watched TV). Present "ma herchu" becomes past "maile heren."',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले फिल्म हेरेँ', en: 'I watched a movie' },
+					{ dev: 'मैले टिभी हेरेँ', en: 'I watched TV' },
+				],
 			},
 			{
 				id: 'maile-sunen-i-heard',
 				dev: 'मैले सुनेँ',
 				en: 'I heard / I listened',
 				usage: 'From "sunnu" (to hear, listen). "Maile git sunen" (I listened to a song). The "-en" ending is nasal — the Devanagari marks it with the candrabindu (ँ).',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले गीत सुनेँ', en: 'I heard a song' },
+					{ dev: 'मैले समाचार सुनेँ', en: 'I heard the news' },
+				],
 			},
 			{
 				id: 'maile-bhanen-i-said',
 				dev: 'मैले भनेँ',
 				en: 'I said / I told',
 				usage: 'From "bhannu" (to say, tell). "Maile bhanen" (I said it / I told them) — a handy way to report what you already mentioned.',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले धन्यवाद भनेँ', en: 'I said thank you' },
+					{ dev: 'मैले फेरि भनेँ', en: 'I said it again' },
+				],
 			},
 			{
 				id: 'maile-padhen-i-read',
 				dev: 'मैले पढेँ',
 				en: 'I read (past)',
 				usage: 'From "padhnu" (to read, study). "Maile kitaab padhen" (I read a book). The same verb also gives "I studied."',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले किताब पढेँ', en: 'I read a book' },
+					{ dev: 'मैले समाचार पढेँ', en: 'I read the news' },
+				],
 			},
 			{
 				id: 'maile-lekhen-i-wrote',
 				dev: 'मैले लेखेँ',
 				en: 'I wrote',
 				usage: 'From "lekhnu" (to write). "Maile lekhen" (I wrote it down). Present "ma lekhchu" becomes past "maile lekhen."',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले चिठी लेखेँ', en: 'I wrote a letter' },
+					{ dev: 'मैले नाम लेखेँ', en: 'I wrote my name' },
+				],
 			},
 			{
 				id: 'maile-dien-i-gave',
 				dev: 'मैले दिएँ',
 				en: 'I gave',
 				usage: 'From "dinu" (to give). "Maile dien" (I gave it). Its partner "linu" (take) works the same way: "maile linen" (I took).',
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				frames: [
+					{ dev: 'मैले पैसा दिएँ', en: 'I gave money' },
+					{ dev: 'मैले उपहार दिएँ', en: 'I gave a gift' },
+				],
 			},
 		],
 	},

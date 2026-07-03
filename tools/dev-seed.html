@@ -738,6 +738,18 @@
 						['ma-linchu-i-take', 5],
 						['ma-piunchu-i-drink', 4],
 						['u-git-sunchha-he-she-listens', 5],
+						['maile-siken-i-learned', 4],
+						['ma-gaen-i-went', 5],
+						['ma-aaen-i-came', 4],
+						['maile-garen-i-did', 5],
+						['maile-khaen-i-ate', 4],
+						['maile-pien-i-drank', 5],
+						['maile-heren-i-watched', 4],
+						['maile-sunen-i-heard', 5],
+						['maile-bhanen-i-said', 4],
+						['maile-padhen-i-read', 5],
+						['maile-lekhen-i-wrote', 4],
+						['maile-dien-i-gave', 5],
 					].forEach(([id, seen]) => (items[id] = mastered({ interval: 8, seen, correct: seen, lastSeen: day(20) })));
 					state = wrap(items, { itemsTotal: 900 });
 				} else if (which === 'freshstart') {

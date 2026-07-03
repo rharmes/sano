@@ -434,6 +434,14 @@
 			"noun-baithak-meeting"
 		]
 	},
+	"bajaar": {
+		"roman": "bajaar",
+		"dev": "बजार",
+		"source": "aligned",
+		"phrases": [
+			"ma-gaen-i-went"
+		]
+	},
 	"baje": {
 		"roman": "baje",
 		"dev": "बजे",
@@ -631,7 +639,8 @@
 		"dev": "भात",
 		"source": "aligned",
 		"phrases": [
-			"bhaat-pakaunus-please-cook-the-rice"
+			"bhaat-pakaunus-please-cook-the-rice",
+			"maile-khaen-i-ate"
 		]
 	},
 	"bhaatamaa": {
@@ -1267,7 +1276,8 @@
 		"dev": "चिठी",
 		"source": "aligned",
 		"phrases": [
-			"ma-lekhchu-i-write"
+			"ma-lekhchu-i-write",
+			"maile-lekhen-i-wrote"
 		]
 	},
 	"chiyaa": {
@@ -1277,6 +1287,7 @@
 		"phrases": [
 			"chiya-khaane-will-you-have-tea",
 			"ma-piunchu-i-drink",
+			"maile-pien-i-drank",
 			"malai-chiya-chaahiyo-i-need-tea"
 		]
 	},
@@ -1371,6 +1382,14 @@
 			"noun2-sima-border"
 		]
 	},
+	"dhanyabaad": {
+		"roman": "dhanyabaad",
+		"dev": "धन्यवाद",
+		"source": "aligned",
+		"phrases": [
+			"maile-bhanen-i-said"
+		]
+	},
 	"dherai": {
 		"roman": "dherai",
 		"dev": "धेरै",
@@ -1379,6 +1398,8 @@
 			"dherai-piro-cha-it-is-very-spicy",
 			"dherai-ramro-very-good-excellent",
 			"feel-khusi-happy",
+			"maile-khaen-i-ate",
+			"maile-siken-i-learned",
 			"noun-kharcha-expense",
 			"noun2-gyan-knowledge"
 		]
@@ -1692,6 +1713,14 @@
 			"adj-galat-wrong"
 		]
 	},
+	"galti": {
+		"roman": "galti",
+		"dev": "गल्ती",
+		"source": "aligned",
+		"phrases": [
+			"maile-garen-i-did"
+		]
+	},
 	"gamchhaa": {
 		"roman": "gamchhaa",
 		"dev": "गम्छा",
@@ -1859,6 +1888,7 @@
 		"phrases": [
 			"dir-waripari",
 			"fn-aaphno-ones-own",
+			"ma-aaen-i-came",
 			"ma-ghar-aaye-i-am-home-i-came-home",
 			"ma-ghar-jaanchu-i-am-going-home",
 			"ma-ghar-pugen-i-reached-home",
@@ -1935,6 +1965,7 @@
 		"dev": "गीत",
 		"source": "aligned",
 		"phrases": [
+			"maile-sunen-i-heard",
 			"u-git-sunchha-he-she-listens"
 		]
 	},
@@ -2091,6 +2122,14 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-ekpatak-once"
+		]
+	},
+	"hijo": {
+		"roman": "hijo",
+		"dev": "हिजो",
+		"source": "aligned",
+		"phrases": [
+			"ma-aaen-i-came"
 		]
 	},
 	"himaal": {
@@ -2534,6 +2573,7 @@
 			"kaam-thaalnus-please-begin-the-work",
 			"ma-kaam-garchu-i-am-working-i-will-do-the-work",
 			"ma-kaam-jaanchu-i-am-going-to-work",
+			"maile-garen-i-did",
 			"malai-kaam-garnu-parcha-i-have-to-work",
 			"tapai-kaha-kaam-garnuhunchha-where-do-you-work",
 			"tapai-ke-kaam-garnuhunchha-what-do-you-do"
@@ -3013,7 +3053,8 @@
 		"dev": "किताब",
 		"source": "aligned",
 		"phrases": [
-			"ma-padhchu-i-read"
+			"ma-padhchu-i-read",
+			"maile-padhen-i-read"
 		]
 	},
 	"kohi": {
@@ -3697,6 +3738,7 @@
 		"phrases": [
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 			"ma-lekhchu-i-write",
+			"maile-lekhen-i-wrote",
 			"tapai-ko-naam-ke-ho-what-is-your-name-formal",
 			"timro-naam-ke-ho-what-is-your-name-informal",
 			"v9-birsanu"
@@ -3795,6 +3837,7 @@
 			"ma-nepali-bolchhu-i-speak-nepali",
 			"ma-nepali-boldina-i-don-t-speak-nepali",
 			"ma-sikchu-i-learn",
+			"maile-siken-i-learned",
 			"noun2-bhasha-language",
 			"tapai-nepali-bolnu-hunchha-do-you-speak-nepali",
 			"v9-padhaaunu"
@@ -3935,6 +3978,7 @@
 			"link-shaayad",
 			"ma-dinchu-i-give",
 			"ma-piunchu-i-drink",
+			"maile-pien-i-drank",
 			"paani-dinus-please-give-me-water",
 			"paani-umaalnus-please-boil-the-water",
 			"pani-chaahiyo-i-need-water",
@@ -4029,6 +4073,7 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-baki-remaining",
+			"maile-dien-i-gave",
 			"paisa-jogaaunus-save-money",
 			"v9-maagnu"
 		]
@@ -4256,6 +4301,7 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-bhanchu-i-say",
+			"maile-bhanen-i-said",
 			"pheri-bhannus-can-you-repeat-that",
 			"pheri-bhetaula-see-you-again-let-s-meet-again"
 		]
@@ -4265,7 +4311,8 @@
 		"dev": "फिल्म",
 		"source": "aligned",
 		"phrases": [
-			"ma-herchu-i-watch"
+			"ma-herchu-i-watch",
+			"maile-heren-i-watched"
 		]
 	},
 	"phohor": {
@@ -4877,6 +4924,8 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-padhchu-i-read",
+			"maile-padhen-i-read",
+			"maile-sunen-i-heard",
 			"u-git-sunchha-he-she-listens"
 		]
 	},
@@ -5141,6 +5190,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun2-sima-border"
+		]
+	},
+	"skul": {
+		"roman": "skul",
+		"dev": "स्कूल",
+		"source": "aligned",
+		"phrases": [
+			"ma-gaen-i-went"
 		]
 	},
 	"sochnu": {
@@ -5569,7 +5626,8 @@
 		"dev": "टिभी",
 		"source": "aligned",
 		"phrases": [
-			"ma-herchu-i-watch"
+			"ma-herchu-i-watch",
+			"maile-heren-i-watched"
 		]
 	},
 	"tyahaa": {
@@ -5713,7 +5771,8 @@
 		"dev": "उपहार",
 		"source": "aligned",
 		"phrases": [
-			"ma-dinchu-i-give"
+			"ma-dinchu-i-give",
+			"maile-dien-i-gave"
 		]
 	},
 	"usalaai": {
