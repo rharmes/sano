@@ -271,3 +271,18 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
       itemEn, itemDev, dev, en }]`; approved frames merged into the items' `frames: []` by hand, then
       audio rendered (`<id>-fN`, bump `AUDIO_VERSION`). Seeded with the next batch — **24 past-tense
       verb frames awaiting Ross's review** (T29 batch 2). Not deployed (`design/` never ships).
+- [ ] **T33 · Accept either gloss for multi-English phrases** — many items carry two English
+      glosses in `en` (`"Excuse me / I'm sorry"`, `"Enough / That's sufficient"`, …). Where the
+      **English is the graded answer**, only the full both-glosses string is accepted today, so
+      producing one gloss grades wrong. Concretely: the **`wordbank` np-en** direction
+      (`js/sano.js` `renderWordbank`, target `f.en`) forces the user to assemble *all* the words of
+      *both* glosses; **`choice` np-en** shows the whole `"A / B"` as a single option (works but
+      clunky). The **en-np** directions are fine (one Nepali answer) but display both glosses in the
+      prompt. Fix: split `en` on ` / ` and accept **any one** alternative when grading an
+      English answer (and only tile/offer one gloss's words in np-en word-bank), leaving the
+      display/prompt choice to review. **149 candidate items** enumerated for Ross in
+      `docs/multi-english-review.md` (grouped by unit, checkbox-per-item) — a few are pronoun/register
+      slashes ("He / She (informal)") that are one meaning, not accept-either; the review sorts true
+      alternates from near-synonyms ("Vegetables / Curry") from those better trimmed to one gloss.
+      Regenerate the list with the T33 script if data changes. Needs a dev-seed scenario + a unit test
+      on the split-and-accept-either grader.
