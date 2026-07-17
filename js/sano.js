@@ -1343,10 +1343,26 @@ function playTileWord(word) {
 //   en-np (default) — English prompt at top, assemble the Nepali from tiles; tapping a
 //                     Nepali tile plays that word (request #1).
 //   np-en           — Nepali phrase shown at top and spoken on load, assemble the English.
+// Accepted English answers for a "build/​type the English" (np-en) exercise. A phrase with
+// two interchangeable meanings ("Excuse me / I'm sorry") accepts EITHER gloss (T33): items
+// opt in with `enEither` (split their `en` on " / ") or an explicit `enAlt` list (for meanings
+// whose slash sits mid-phrase, e.g. "Do you learn / study?"). Parenthetical asides are dropped
+// to match the tiles. Only the item's own meaning expands — an active alternate frame (T28)
+// carries its own single `en`, so it grades against just that.
+function acceptedEnglish(ex) {
+	const en = stripParens(ex.frame.en);
+	if (ex.frame.en !== ex.item.en) return [en];
+	if (Array.isArray(ex.item.enAlt)) return ex.item.enAlt.map(stripParens);
+	if (ex.item.enEither) return en.split(' / ').map((s) => s.trim());
+	return [en];
+}
+
 function renderWordbank(ex) {
 	const f = ex.frame;
 	const buildNepali = ex.dir !== 'np-en';
-	const target = buildNepali ? f.np : f.en;
+	// Building the English: tile just the first accepted gloss (the grader still accepts any),
+	// so a two-meaning phrase isn't an un-buildable "excuse me i'm sorry" pile of tiles.
+	const target = buildNepali ? f.np : acceptedEnglish(ex)[0];
 
 	if (buildNepali) {
 		setPrompt('Build the Nepali from the tiles', promptText(f), '');
@@ -1944,11 +1960,17 @@ function checkExercise() {
 		given = document.getElementById('type-answer').value;
 	}
 	// Word bank checks against whichever phrase the tiles build (Nepali by default, the
-	// English meaning in the np-en direction); typing always builds the Nepali.
-	let expected = ex.type === 'wordbank' && ex.dir === 'np-en' ? ex.frame.en : ex.frame.np;
-	// Parenthetical asides are dropped from the tiles, so they're not required to match.
-	if (ex.type === 'wordbank') expected = stripParens(expected);
-	applyAnswer(ex, lenientEquals(given, expected, ex.type === 'type'));
+	// English meaning in the np-en direction); typing always builds the Nepali. When building
+	// the English, a two-meaning phrase accepts EITHER gloss (T33, acceptedEnglish).
+	let correct;
+	if (ex.type === 'wordbank' && ex.dir === 'np-en') {
+		correct = acceptedEnglish(ex).some((answer) => lenientEquals(given, answer, false));
+	} else {
+		// Parenthetical asides are dropped from the tiles, so they're not required to match.
+		let expected = ex.type === 'wordbank' ? stripParens(ex.frame.np) : ex.frame.np;
+		correct = lenientEquals(given, expected, ex.type === 'type');
+	}
+	applyAnswer(ex, correct);
 }
 
 function applyAnswer(ex, correct) {

@@ -13,6 +13,7 @@ const COURSE = [
 				id: 'namaste-hello-goodbye',
 				dev: 'नमस्ते',
 				en: 'Hello / Goodbye',
+				enEither: true,
 				usage: 'This is the most common greeting in Nepal, used at any time of day. It\'s accompanied by pressing your palms together in front of your chest. The word literally means "I bow to the divine in you" and is appropriate in both formal and informal settings.',
 			},
 			{
@@ -24,7 +25,8 @@ const COURSE = [
 			{
 				id: 'hajur-yes-polite-pardon',
 				dev: 'हजुर',
-				en: 'Yes (polite) / Pardon?',
+				en: 'Yes (polite)',
+				enAlt: ['Yes', 'You', 'Pardon'],
 				usage: 'This versatile word shows respect and can mean "yes," "I agree," or "pardon me?" depending on context and tone. It\'s considered more polite than simply saying "cha" (yes) and is commonly used when speaking to elders or in formal situations.',
 			},
 			{
@@ -49,6 +51,7 @@ const COURSE = [
 				id: 'maaf-garnuhos-excuse-me-i-m-sorry',
 				dev: 'माफ गर्नुहोस्',
 				en: "Excuse me / I'm sorry",
+				enEither: true,
 				usage: "This phrase is used to apologize or to get someone's attention politely. It's appropriate in both casual and formal settings. You can use it when you need to pass by someone, when you've made a mistake, or when you need someone's attention.",
 			},
 			{
@@ -92,13 +95,15 @@ const COURSE = [
 			{
 				id: 'huncha-okay-it-will-be-done',
 				dev: 'हुन्छ',
-				en: 'Okay / It will be done',
+				en: 'Yes',
+				enAlt: ['Yes', 'Okay', 'It will be done'],
 				usage: 'This is one of the most useful words in Nepali, expressing agreement, acceptance, or acknowledgment. You\'ll hear it constantly in everyday conversation. It can mean "okay," "alright," "it\'s possible," or "it will happen."',
 			},
 			{
 				id: 'hudaina-not-okay-it-won-t-work',
 				dev: 'हुँदैन',
-				en: "Not okay / It won't work",
+				en: 'No',
+				enAlt: ['No', "It won't work"],
 				usage: 'This is the negative form of "huncha," used to express that something is not acceptable, not possible, or won\'t work. It\'s a polite way to decline or say no without being too direct.',
 			},
 			{
@@ -110,7 +115,7 @@ const COURSE = [
 			{
 				id: 'kehi-chhaina-nothing-it-s-nothing',
 				dev: 'केही छैन',
-				en: "Nothing / It's nothing",
+				en: "It's nothing",
 				usage: 'A polite response when asked what\'s wrong or if you need anything. "Kehi" means something/anything, and "chhaina" means "is not." It\'s a way to reassure someone that everything is fine.',
 			},
 			{
@@ -123,30 +128,32 @@ const COURSE = [
 				id: 'cha-yes-is-has',
 				dev: 'छ',
 				en: 'Yes / Is / Has',
+				enEither: true,
 				usage: 'A simple affirmative word meaning "yes" or serving as the verb "to be" or "to have." It\'s one of the most frequently used words in Nepali. For example, "ramro cha" (it is good) or "paisa cha?" (do you have money?).',
 			},
 			{
 				id: 'chhaina-no-is-not-don-t-have',
 				dev: 'छैन',
 				en: "No / Is not / Don't have",
+				enEither: true,
 				usage: 'The negative form of "cha." It means "no," "is not," or "don\'t have." Used frequently in daily conversation. For example, "paisa chhaina" means "I don\'t have money" or "there is no money."',
 			},
 			{
 				id: 'dherai-ramro-very-good-excellent',
 				dev: 'धेरै राम्रो',
-				en: 'Very good / Excellent',
+				en: 'Very good',
 				usage: 'An emphatic way to say something is very good or excellent. "Dherai" intensifies "ramro." Use this to express strong approval or satisfaction with food, experiences, or outcomes.',
 			},
 			{
 				id: 'ekdum-ramro-very-good-excellent',
 				dev: 'एकदम राम्रो',
-				en: 'Very good / Excellent',
+				en: 'Very good',
 				usage: 'Strong expression of approval or satisfaction. "Ekdum" is an intensifier meaning "very" or "extremely." More emphatic than just "ramro" alone.',
 			},
 			{
 				id: 'sarai-ramro-very-good-really-good',
 				dev: 'सारै राम्रो',
-				en: 'Very good / Really good',
+				en: 'Very good',
 				usage: 'Another way to emphasize something is very good. "Sarai" means "very" or "really." Interchangeable with "ekdum ramro" to express strong positive feelings.',
 			},
 		],
@@ -267,12 +274,14 @@ const COURSE = [
 				id: 'ma-i-me',
 				dev: 'म',
 				en: 'I / Me',
+				enEither: true,
 				usage: 'The first-person pronoun. You have already seen it in phrases like "Ma Nepali bolchhu" (I speak Nepali). Nepali usually drops pronouns when the meaning is clear from the verb, so "ma" is often optional in casual speech.',
 			},
 			{
 				id: 'hami-we-us',
 				dev: 'हामी',
 				en: 'We / Us',
+				enEither: true,
 				usage: 'The plural "we." You may also hear "hamiharu," which adds the plural marker "-haru" for emphasis. Used the same way in formal and informal speech.',
 			},
 			{
@@ -285,12 +294,14 @@ const COURSE = [
 				id: 'u-he-she-informal',
 				dev: 'ऊ',
 				en: 'He / She (informal)',
+				enEither: true,
 				usage: 'Informal third person, used for friends, children, or people younger than you. Like "timi," avoid it for elders or people you respect — use "uhaa" instead.',
 			},
 			{
 				id: 'uhaa-he-she-polite',
 				dev: 'उहाँ',
 				en: 'He / She (polite)',
+				enEither: true,
 				usage: 'The respectful way to say "he" or "she." Use it for elders, in-laws, teachers, or anyone you would address as "tapai." Using the polite third person shows the same respect as polite "you."',
 			},
 			{
@@ -315,12 +326,14 @@ const COURSE = [
 				id: 'mero-my-mine',
 				dev: 'मेरो',
 				en: 'My / Mine',
+				enEither: true,
 				usage: 'First-person possessive, as in "Mero naam" (my name). Possessives agree with what is owned, but "mero" works in almost all everyday cases.',
 			},
 			{
 				id: 'hamro-our-ours',
 				dev: 'हाम्रो',
 				en: 'Our / Ours',
+				enEither: true,
 				usage: 'The possessive of "hami." "Hamro ghar" means "our house." Very common in family settings since the household is usually talked about as shared.',
 			},
 			{
@@ -339,6 +352,7 @@ const COURSE = [
 				id: 'usko-his-her-informal',
 				dev: 'उसको',
 				en: 'His / Her (informal)',
+				enEither: true,
 				usage: 'The possessive of "u." For the polite version use "uhaako" (his/her, respectful), following the same pattern of adding "ko."',
 			},
 		],
@@ -471,7 +485,7 @@ const COURSE = [
 				id: 'bachcha-child-baby',
 				dev: 'बच्चा',
 				emoji: '👶',
-				en: 'Child / Baby',
+				en: 'Child',
 			},
 		],
 	},
@@ -582,13 +596,13 @@ const COURSE = [
 			{
 				id: 'pheri-bhetaula-see-you-again-let-s-meet-again',
 				dev: 'फेरि भेटौंला',
-				en: "See you again / Let's meet again",
+				en: 'See you again',
 				usage: 'A friendly way to say goodbye with the expectation of meeting again. "Pheri" means again, and "bhetaula" means "let\'s meet." It\'s warmer than a simple goodbye and shows you value the relationship.',
 			},
 			{
 				id: 'ramrari-jaanu-go-safely-take-care',
 				dev: 'राम्ररी जानु',
-				en: 'Go safely / Take care',
+				en: 'Go safely',
 				usage: 'A caring farewell wishing someone a safe journey or safe travels. "Sanchai" means safe/well, and "jaanu" means to go. Shows concern for someone\'s wellbeing.',
 			},
 		],
@@ -602,7 +616,7 @@ const COURSE = [
 			{
 				id: 'maile-bujhe-i-understand-i-understood',
 				dev: 'मैले बुझेँ',
-				en: 'I understand / I understood',
+				en: 'I understand',
 				usage: 'This phrase indicates that you\'ve understood what someone said. "Bujhe" is the past tense form meaning "understood." You can also say "ma bujhchu" (I understand - present tense) for ongoing understanding. This is very useful when someone is explaining something to you and you want to confirm your comprehension.',
 			},
 			{
@@ -626,7 +640,7 @@ const COURSE = [
 			{
 				id: 'sochna-parcha-need-to-think-let-me-think',
 				dev: 'सोच्नु पर्छ',
-				en: 'Need to think / Let me think',
+				en: 'Let me think',
 				usage: 'Indicates you need time to consider something. "Sochna" means "to think," and "parcha" means "is needed." A polite way to delay giving an immediate answer.',
 			},
 			{
@@ -726,7 +740,7 @@ const COURSE = [
 			{
 				id: 'ani-and-then-also',
 				dev: 'अनि',
-				en: 'And then / Also',
+				en: 'And then',
 				usage: 'A conversational connector for continuing a story or list: "ani ke bhayo?" (and then what happened?). You will hear it constantly in spoken Nepali.',
 			},
 			{
@@ -745,30 +759,33 @@ const COURSE = [
 				id: 'pani-also-too',
 				dev: 'पनि',
 				en: 'Also / Too',
+				enEither: true,
 				usage: 'Means "also" or "even": "ma pani" (me too). Note the short vowel — "paani" with a long aa means water. Context and length tell them apart.',
 			},
 			{
 				id: 'matra-only-just',
 				dev: 'मात्र',
-				en: 'Only / Just',
+				en: 'Only',
 				usage: 'Restricts to "only": "ek matra" (only one), "herna matra" (just looking — useful in shops!). It follows the word it limits.',
 			},
 			{
 				id: 'ahile-now-right-now',
 				dev: 'अहिले',
-				en: 'Now / Right now',
+				en: 'Now',
 				usage: 'Refers to the present moment: "ahile aaunus" (come now). "Ahile nai" makes it stronger — "right this moment."',
 			},
 			{
 				id: 'pachhi-later-after',
 				dev: 'पछि',
 				en: 'Later / After',
+				enEither: true,
 				usage: 'Means "later" on its own ("pachhi bhetaula" — see you later) or "after" following another word: "khana pachhi" (after the meal).',
 			},
 			{
 				id: 'aba-now-next',
 				dev: 'अब',
 				en: 'Now / Next',
+				enEither: true,
 				usage: 'Marks a transition to what happens next: "aba ke garne?" (now what shall we do?). Slightly different from "ahile" — "aba" is about sequence, "ahile" about the present moment.',
 			},
 			{
@@ -806,7 +823,7 @@ const COURSE = [
 			{
 				id: 'khana-khaeko-chu-i-ve-eaten-i-have-eaten',
 				dev: 'खाना खाएको छु',
-				en: "I've eaten / I have eaten",
+				en: 'I have eaten',
 				usage: 'Past tense statement indicating you\'ve already eaten. "Khaeko" is the past participle of "to eat," and "chu" means "I am/have." Use this when someone asks if you\'ve eaten or offers you food when you\'ve already had a meal. It\'s a polite way to decline additional food.',
 			},
 			{
@@ -830,19 +847,19 @@ const COURSE = [
 			{
 				id: 'pugyo-enough-that-s-sufficient',
 				dev: 'पुग्यो',
-				en: "Enough / That's sufficient",
+				en: 'Enough',
 				usage: "This word indicates you've had enough, whether it's food being served, items being poured, or any other quantity. It's polite but firm. In restaurants, servers might keep offering more food, and this word stops them.",
 			},
 			{
 				id: 'pardaina-no-need-not-necessary',
 				dev: 'पर्दैन',
-				en: 'No need / Not necessary',
+				en: 'Not necessary',
 				usage: 'Politely declines something or indicates something isn\'t necessary. Less direct than saying "no." For example, when someone offers something you don\'t need, you can say "pardaina, dhanyabad."',
 			},
 			{
 				id: 'thik-cha-it-s-okay-it-s-fine',
 				dev: 'ठीक छ',
-				en: "It's okay / It's fine",
+				en: "It's okay",
 				usage: 'A versatile phrase expressing that something is acceptable, correct, or fine. "Thik" means right, correct, or okay. You can use it to agree with someone, to say something is acceptable, or to indicate you\'re doing fine.',
 			},
 			{
@@ -881,7 +898,7 @@ const COURSE = [
 				id: 'bhanda-dishes-utensils',
 				dev: 'भाँडा',
 				emoji: '🍽️',
-				en: 'Dishes / Utensils',
+				en: 'Dishes',
 			},
 			{
 				id: 'thaal-plate',
@@ -917,7 +934,7 @@ const COURSE = [
 				id: 'glass-glass-cup',
 				dev: 'गिलास',
 				emoji: '🥤',
-				en: 'Glass / Cup',
+				en: 'Glass',
 			},
 			{
 				id: 'kap-cup',
@@ -929,13 +946,13 @@ const COURSE = [
 				id: 'dekchi-pot-cooking-pot',
 				dev: 'डेक्ची',
 				emoji: '🍲',
-				en: 'Pot / Cooking pot',
+				en: 'Pot',
 			},
 			{
 				id: 'taawaa-pan-frying-pan',
 				dev: 'तावा',
 				emoji: '🍳',
-				en: 'Pan / Frying pan',
+				en: 'Pan',
 			},
 			{
 				id: 'chulho-stove',
@@ -1007,12 +1024,13 @@ const COURSE = [
 				dev: 'तरकारी',
 				emoji: '🥗',
 				en: 'Vegetables / Curry',
+				enEither: true,
 			},
 			{
 				id: 'roti-bread-flatbread',
 				dev: 'रोटी',
 				emoji: '🫓',
-				en: 'Bread / Flatbread',
+				en: 'Flatbread',
 			},
 			{
 				id: 'maasu-meat',
@@ -1108,7 +1126,7 @@ const COURSE = [
 				id: 'achar-pickle-chutney',
 				dev: 'अचार',
 				emoji: '🫙',
-				en: 'Pickle / Chutney',
+				en: 'Chutney',
 			},
 			{
 				id: 'bhatta-soybean',
@@ -1338,7 +1356,7 @@ const COURSE = [
 				id: 'fohormailaa-garbage-trash',
 				dev: 'फोहोरमैला',
 				emoji: '🗑️',
-				en: 'Garbage / Trash',
+				en: 'Garbage',
 			},
 			{
 				id: 'fohormailaa-ko-thungaa-trash-can',
@@ -1350,7 +1368,7 @@ const COURSE = [
 				id: 'jhaaru-duster-cleaning-cloth',
 				dev: 'डस्टर',
 				emoji: '🧽',
-				en: 'Duster / Cleaning cloth',
+				en: 'Duster',
 			},
 			{
 				id: 'spanj-sponge',
@@ -1399,7 +1417,7 @@ const COURSE = [
 			{
 				id: 'ma-kaam-garchu-i-am-working-i-will-do-the-work',
 				dev: 'म काम गर्छु',
-				en: 'I am working / I will do the work',
+				en: 'I work',
 				usage: '"Kaam" means work or task — both a job and household chores. "Kaam cha" (there is work / I\'m busy) is a phrase you will hear constantly.',
 			},
 			{
@@ -1461,7 +1479,7 @@ const COURSE = [
 			{
 				id: 'ma-sikchu-i-learn',
 				dev: 'म सिक्छु',
-				en: 'I learn / I study',
+				en: 'I learn',
 				usage: 'The present tense is the verb plus an ending that says who is doing it. "-chu" always means "I," so "ma sikchu" (I learn, from "siknu"). Every "Ma ___chu" below is built the same way — "I" plus the verb.',
 				// T29 depth (AI-drafted → Ross's review):
 				frames: [
@@ -1472,13 +1490,14 @@ const COURSE = [
 			{
 				id: 'tapai-siknuhunchha-do-you-study-polite',
 				dev: 'तपाईं सिक्नुहुन्छ?',
-				en: 'Do you learn / study? (polite)',
+				en: 'Do you learn? (polite)',
 				usage: 'The polite "you" ending is "-nuhunchha." Use it to ask about someone respectfully: "tapai nepali siknuhunchha?" (are you learning Nepali?). It is the same shape you met in "tapai ke gardai hunuhunchha?"',
 			},
 			{
 				id: 'ma-herchu-i-watch',
 				dev: 'म हेर्छु',
 				en: 'I watch / I look',
+				enEither: true,
 				usage: 'From "hernu" (to see, watch, look). "Ma TV herchu" (I watch TV). Same "-chu" = "I" ending as every verb in this unit.',
 				// T29 depth (AI-drafted → Ross's review):
 				frames: [
@@ -1489,7 +1508,7 @@ const COURSE = [
 			{
 				id: 'ma-bhanchu-i-say',
 				dev: 'म भन्छु',
-				en: 'I say / I tell',
+				en: 'I say',
 				usage: 'From "bhannu" (to say, tell). "Ma pheri bhanchu" (I\'ll say it again). Its polite command form "bhannus" (please say it) may already be familiar.',
 				// T29 depth (AI-drafted → Ross's review):
 				frames: [
@@ -1511,7 +1530,7 @@ const COURSE = [
 			{
 				id: 'ma-padhchu-i-read',
 				dev: 'म पढ्छु',
-				en: 'I read / I study',
+				en: 'I read',
 				usage: 'From "padhnu" (to read, study). "Ma kitaab padhchu" (I read a book — "kitaab" is book). Nepali uses one verb for both reading and studying.',
 				// T29 depth (AI-drafted → Ross's review):
 				frames: [
@@ -1567,6 +1586,7 @@ const COURSE = [
 				id: 'u-git-sunchha-he-she-listens',
 				dev: 'ऊ गीत सुन्छ',
 				en: 'He / she listens to music (informal)',
+				enAlt: ['He listens to music', 'She listens to music'],
 				usage: 'For "he/she" (informal "u") the ending is "-cha / -chha": "u git sunchha" (he listens to songs — "git" is a song), from "sunnu" (to hear, listen). So "-chu" = I, "-nuhunchha" = you (polite), "-cha" = he/she.',
 				// T29 depth (AI-drafted → Ross's review):
 				frames: [
@@ -1586,12 +1606,14 @@ const COURSE = [
 				id: 'ma-uthchu-i-get-up-i-will-get-up',
 				dev: 'म उठ्छु',
 				en: 'I get up / I will get up',
+				enEither: true,
 				usage: '"Uthnu" means to rise or get up. "Ma bihaana sabere uthchu" — I get up early in the morning.',
 			},
 			{
 				id: 'uthnus-please-get-up-wake-up',
 				dev: 'उठ्नुस्!',
-				en: 'Please get up / Wake up!',
+				en: 'Get up / Wake up',
+				enEither: true,
 				usage: 'The polite wake-up call. For family you might hear the informal "utha!" instead.',
 			},
 			{
@@ -1615,7 +1637,7 @@ const COURSE = [
 			{
 				id: 'ma-ghar-aaye-i-am-home-i-came-home',
 				dev: 'म घर आएँ',
-				en: 'I am home / I came home',
+				en: 'I came home',
 				usage: '"Aaye" is the past tense of "aaunu" (to come). Announce yourself at the door with this.',
 			},
 			{
@@ -1633,7 +1655,7 @@ const COURSE = [
 			{
 				id: 'dhilo-bhayo-it-is-late-i-am-running-late',
 				dev: 'ढिलो भयो',
-				en: 'It is late / I am running late',
+				en: 'It is late',
 				usage: '"Dhilo" means late. Works for the hour ("it has gotten late") and for yourself when rushing out the door.',
 			},
 			{
@@ -1698,7 +1720,7 @@ const COURSE = [
 			{
 				id: 'maile-garen-i-did',
 				dev: 'मैले गरेँ',
-				en: 'I did / I made',
+				en: 'I did',
 				usage: 'From "garnu" (to do), the verb you reach for everywhere. "Maile kaam garen" (I did the work). Back to "maile" + "-en," because "do" takes an object.',
 				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
 				frames: [
@@ -1731,7 +1753,7 @@ const COURSE = [
 			{
 				id: 'maile-heren-i-watched',
 				dev: 'मैले हेरेँ',
-				en: 'I watched / I looked',
+				en: 'I looked',
 				usage: 'From "hernu" (to watch, look). "Maile TV heren" (I watched TV). Present "ma herchu" becomes past "maile heren."',
 				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
 				frames: [
@@ -1742,7 +1764,7 @@ const COURSE = [
 			{
 				id: 'maile-sunen-i-heard',
 				dev: 'मैले सुनेँ',
-				en: 'I heard / I listened',
+				en: 'I heard',
 				usage: 'From "sunnu" (to hear, listen). "Maile git sunen" (I listened to a song). The "-en" ending is nasal — the Devanagari marks it with the candrabindu (ँ).',
 				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
 				frames: [
@@ -1753,7 +1775,7 @@ const COURSE = [
 			{
 				id: 'maile-bhanen-i-said',
 				dev: 'मैले भनेँ',
-				en: 'I said / I told',
+				en: 'I said',
 				usage: 'From "bhannu" (to say, tell). "Maile bhanen" (I said it / I told them) — a handy way to report what you already mentioned.',
 				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
 				frames: [
@@ -1818,7 +1840,7 @@ const COURSE = [
 			{
 				id: 'ma-maanchu-i-agree',
 				dev: 'म मान्छु',
-				en: 'I agree / I accept',
+				en: 'I accept',
 				usage: 'मान्नु = to accept / agree / believe.',
 			},
 			{
@@ -2010,7 +2032,7 @@ const COURSE = [
 			{
 				id: 'ma-khaana-banaaunchu-i-cook',
 				dev: 'म खाना बनाउँछु',
-				en: 'I make food / I cook',
+				en: 'I make food',
 				usage: 'बनाउनु = to make / build / prepare.',
 			},
 			{
@@ -2034,7 +2056,7 @@ const COURSE = [
 			{
 				id: 'maile-paaen-i-got-it',
 				dev: 'मैले पाएँ',
-				en: 'I got it / I received it',
+				en: 'I received it',
 				usage: "पाउनु = to get / receive / obtain (also 'to be allowed').",
 			},
 			{
@@ -2078,7 +2100,7 @@ const COURSE = [
 			{
 				id: 'tapailai-bhetchu-see-you',
 				dev: 'तपाईंलाई भेट्छु',
-				en: "I'll meet you / See you",
+				en: "I'll meet you",
 				usage: 'भेट्नु = to meet.',
 			},
 			{
@@ -2316,7 +2338,7 @@ const COURSE = [
 			{
 				id: 'khana-sakiyo-the-food-is-finished-all-gone',
 				dev: 'खाना सकियो',
-				en: 'The food is finished / all gone',
+				en: 'The food is finished',
 				usage: '"Sakinu" means to be finished or used up. Works for the pot being empty and for declaring the meal over.',
 			},
 		],
@@ -2354,7 +2376,7 @@ const COURSE = [
 			{
 				id: 'kam-garnuhos-please-reduce-make-it-less',
 				dev: 'कम गर्नुहोस्',
-				en: 'Please reduce / Make it less',
+				en: 'Please reduce',
 				usage: 'Used when bargaining to ask for a lower price. "Kam" means less or reduce. Bargaining is common in Nepali markets, and sellers often expect some negotiation.',
 			},
 			{
@@ -2417,6 +2439,7 @@ const COURSE = [
 				id: 'diuso-afternoon-daytime',
 				dev: 'दिउँसो',
 				en: 'Afternoon / Daytime',
+				enEither: true,
 				usage: 'The middle of the day, roughly late morning through afternoon. "Diuso khana" can refer to a midday meal or snack.',
 			},
 			{
@@ -2565,6 +2588,7 @@ const COURSE = [
 				id: 'najik-near',
 				dev: 'नजिक',
 				en: 'Near / close',
+				enEither: true,
 				usage: 'Says something is close by: "najikai cha" (it\'s nearby). The opposite is "taadhaa" (far).',
 			},
 			{
@@ -2577,6 +2601,7 @@ const COURSE = [
 				id: 'tira-toward-that-way',
 				dev: 'तिर',
 				en: 'Toward / that way',
+				enEither: true,
 				usage: 'Points a direction without naming the exact spot: "ghar tira" (toward home), "tyaha tira" (that way). Nepalis often just point and say "tira."',
 			},
 		],
@@ -2625,7 +2650,7 @@ const COURSE = [
 				id: 'pasal-shop-store',
 				dev: 'पसल',
 				emoji: '🏪',
-				en: 'Shop / store',
+				en: 'Shop',
 				// T29 depth frames (AI-drafted, approved):
 				frames: [
 					{ dev: 'म पसल जान्छु', en: 'I go to the shop' },
@@ -2642,7 +2667,7 @@ const COURSE = [
 				id: 'hotel-restaurant-eatery',
 				dev: 'होटल',
 				emoji: '🍽️',
-				en: 'Restaurant / eatery',
+				en: 'Hotel',
 			},
 			{
 				id: 'bas-bus',
@@ -2665,7 +2690,7 @@ const COURSE = [
 				id: 'buspark-bus-stop',
 				dev: 'बसपार्क',
 				emoji: '🚏',
-				en: 'Bus stop / bus park',
+				en: 'Bus stop',
 			},
 			{
 				id: 'eyarport-airport',

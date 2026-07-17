@@ -286,3 +286,20 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
       alternates from near-synonyms ("Vegetables / Curry") from those better trimmed to one gloss.
       Regenerate the list with the T33 script if data changes. Needs a dev-seed scenario + a unit test
       on the split-and-accept-either grader.
+  - [x] **Mechanism (grader + data model)** — `acceptedEnglish(ex)` in `js/sano.js` returns the
+        accepted glosses for a "build/type the English" (np-en) exercise: an item opts in with
+        `enEither: true` (split its `en` on ` / `) or an explicit `enAlt: [...]` (for a slash that
+        sits mid-phrase, e.g. `ऊ गीत सुन्छ`). `checkExercise` accepts the answer if it matches ANY
+        gloss; the np-en word-bank tiles only the FIRST gloss (so it's buildable). Unflagged items
+        are byte-identical to before. Unit test `tests/unit/accept-english.test.mjs` (10 cases);
+        full suite green.
+  - [x] **Batch 1 — top-of-course through *Places & Getting Around*** (69 items). Ross's per-item
+        call is encoded in the review doc: **kept the slash → accept-either** (22 items: `enEither`,
+        or `enAlt` for the one mid-phrase `ऊ गीत सुन्छ`); **trimmed to one gloss → single `en`, no
+        flag** (47 items, e.g. रोटी `Bread / Flatbread`→`Flatbread`, होटल `Restaurant / eatery`→`Hotel`,
+        हजुर→`Yes (polite)`). English-only edits → no audio re-render. Those sections removed from
+        `docs/multi-english-review.md` (80 items remain). हजुर/हुन्छ/हुँदैन keep their trimmed display
+        `en` but gained `enAlt` for the extra senses Ross noted (hajur `['Yes','You','Pardon']`, huncha
+        `['Yes','Okay','It will be done']`, hudaina `['No',"It won't work"]`).
+  - [ ] **Remaining batches** — 80 items still to review (Place & Position → At the Shop) + a
+        dev-seed scenario once the review settles.

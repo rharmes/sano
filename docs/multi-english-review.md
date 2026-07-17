@@ -1,131 +1,14 @@
 # Multi-English phrases — review (T33)
 
-Every COURSE item whose `en` carries two-or-more English glosses separated by `/`.
+COURSE items whose `en` carries two-or-more English glosses separated by `/`.
 Point-in-time snapshot; regenerate with the T33 script if the data changes.
 
-**Legend** — tick a box once decided.
-- ⟡ = pronoun/register slash ("he / she", "(polite)") — usually **one** meaning, likely *not* an accept-either case.
-- Otherwise: decide **accept-either** (both glosses gradeable) vs **trim to one** gloss.
+**How Ross marks a decision (applied by the reconcile script):**
+- Keep the slash (`Vegetables / Curry`) → the item **accepts either** gloss when the learner builds/types the English.
+- Trim to one gloss (`Bread / Flatbread` → `Flatbread`) → that single meaning replaces `en`; no accept-either.
+- ⟡ = a pronoun/register slash ("he / she") — one meaning, decide as usual.
 
-**Total: 149 items** across the course.
-
-
-### Basics `basics`
-- [ ] नमस्ते — **Hello / Goodbye**  `namaste-hello-goodbye`
-- [ ] हजुर — **Yes (polite) / Pardon?**  `hajur-yes-polite-pardon`
-- [ ] माफ गर्नुहोस् — **Excuse me / I'm sorry**  `maaf-garnuhos-excuse-me-i-m-sorry`
-
-### Everyday Replies `basics-replies`
-- [ ] हुन्छ — **Okay / It will be done**  `huncha-okay-it-will-be-done`
-- [ ] हुँदैन — **Not okay / It won't work**  `hudaina-not-okay-it-won-t-work`
-- [ ] केही छैन — **Nothing / It's nothing**  `kehi-chhaina-nothing-it-s-nothing`
-- [ ] छ — **Yes / Is / Has**  `cha-yes-is-has`
-- [ ] छैन — **No / Is not / Don't have**  `chhaina-no-is-not-don-t-have`
-- [ ] धेरै राम्रो — **Very good / Excellent**  `dherai-ramro-very-good-excellent`
-- [ ] एकदम राम्रो — **Very good / Excellent**  `ekdum-ramro-very-good-excellent`
-- [ ] सारै राम्रो — **Very good / Really good**  `sarai-ramro-very-good-really-good`
-
-### Pronouns & Possessives `pronouns`
-- [ ] म — **I / Me**  `ma-i-me`
-- [ ] हामी — **We / Us**  `hami-we-us`
-- [ ] ऊ — **He / She (informal)** ⟡  `u-he-she-informal`
-- [ ] उहाँ — **He / She (polite)** ⟡  `uhaa-he-she-polite`
-- [ ] मेरो — **My / Mine**  `mero-my-mine`
-- [ ] हाम्रो — **Our / Ours**  `hamro-our-ours`
-- [ ] उसको — **His / Her (informal)** ⟡  `usko-his-her-informal`
-
-### People Around You `people-others`
-- [ ] बच्चा — **Child / Baby**  `bachcha-child-baby`
-
-### Getting to Know You `introductions-origins`
-- [ ] फेरि भेटौंला — **See you again / Let's meet again**  `pheri-bhetaula-see-you-again-let-s-meet-again`
-- [ ] राम्ररी जानु — **Go safely / Take care**  `ramrari-jaanu-go-safely-take-care`
-
-### Comprehension `comprehension`
-- [ ] मैले बुझेँ — **I understand / I understood**  `maile-bujhe-i-understand-i-understood`
-- [ ] सोच्नु पर्छ — **Need to think / Let me think**  `sochna-parcha-need-to-think-let-me-think`
-
-### Connectors & Fillers `connectors`
-- [ ] अनि — **And then / Also**  `ani-and-then-also`
-- [ ] पनि — **Also / Too**  `pani-also-too`
-- [ ] मात्र — **Only / Just**  `matra-only-just`
-- [ ] अहिले — **Now / Right now**  `ahile-now-right-now`
-- [ ] पछि — **Later / After**  `pachhi-later-after`
-- [ ] अब — **Now / Next**  `aba-now-next`
-
-### Meals `meals`
-- [ ] खाना खाएको छु — **I've eaten / I have eaten**  `khana-khaeko-chu-i-ve-eaten-i-have-eaten`
-- [ ] पुग्यो — **Enough / That's sufficient**  `pugyo-enough-that-s-sufficient`
-- [ ] पर्दैन — **No need / Not necessary**  `pardaina-no-need-not-necessary`
-- [ ] ठीक छ — **It's okay / It's fine**  `thik-cha-it-s-okay-it-s-fine`
-
-### Kitchen Items `kitchen-items`
-- [ ] भाँडा — **Dishes / Utensils**  `bhanda-dishes-utensils`
-- [ ] गिलास — **Glass / Cup**  `glass-glass-cup`
-- [ ] डेक्ची — **Pot / Cooking pot**  `dekchi-pot-cooking-pot`
-- [ ] तावा — **Pan / Frying pan**  `taawaa-pan-frying-pan`
-
-### Staple Foods `food-grocery-items`
-- [ ] तरकारी — **Vegetables / Curry**  `tarkari-vegetables-curry`
-- [ ] रोटी — **Bread / Flatbread**  `roti-bread-flatbread`
-
-### Pantry & Extras `food-grocery-pantry`
-- [ ] अचार — **Pickle / Chutney**  `achar-pickle-chutney`
-
-### Cleaning Items `cleaning-items`
-- [ ] फोहोरमैला — **Garbage / Trash**  `fohormailaa-garbage-trash`
-- [ ] डस्टर — **Duster / Cleaning cloth**  `jhaaru-duster-cleaning-cloth`
-
-### Patterns: Doing & Going `patterns-doing`
-- [ ] म काम गर्छु — **I am working / I will do the work**  `ma-kaam-garchu-i-am-working-i-will-do-the-work`
-
-### Verbs: Present tense `verbs-present`
-- [ ] म सिक्छु — **I learn / I study**  `ma-sikchu-i-learn`
-- [ ] तपाईं सिक्नुहुन्छ? — **Do you learn / study? (polite)**  `tapai-siknuhunchha-do-you-study-polite`
-- [ ] म हेर्छु — **I watch / I look**  `ma-herchu-i-watch`
-- [ ] म भन्छु — **I say / I tell**  `ma-bhanchu-i-say`
-- [ ] म पढ्छु — **I read / I study**  `ma-padhchu-i-read`
-- [ ] ऊ गीत सुन्छ — **He / she listens to music (informal)** ⟡  `u-git-sunchha-he-she-listens`
-
-### Daily Routine `daily-routine`
-- [ ] म उठ्छु — **I get up / I will get up**  `ma-uthchu-i-get-up-i-will-get-up`
-- [ ] उठ्नुस्! — **Please get up / Wake up!**  `uthnus-please-get-up-wake-up`
-- [ ] म घर आएँ — **I am home / I came home**  `ma-ghar-aaye-i-am-home-i-came-home`
-- [ ] ढिलो भयो — **It is late / I am running late**  `dhilo-bhayo-it-is-late-i-am-running-late`
-
-### Verbs: Past tense `verbs-past`
-- [ ] मैले गरेँ — **I did / I made**  `maile-garen-i-did`
-- [ ] मैले हेरेँ — **I watched / I looked**  `maile-heren-i-watched`
-- [ ] मैले सुनेँ — **I heard / I listened**  `maile-sunen-i-heard`
-- [ ] मैले भनेँ — **I said / I told**  `maile-bhanen-i-said`
-
-### Reactions & Opinions `verbs-reactions`
-- [ ] म मान्छु — **I agree / I accept**  `ma-maanchu-i-agree`
-
-### Making & Doing `verbs-making-doing`
-- [ ] म खाना बनाउँछु — **I make food / I cook**  `ma-khaana-banaaunchu-i-cook`
-- [ ] मैले पाएँ — **I got it / I received it**  `maile-paaen-i-got-it`
-
-### Everyday Actions `verbs-everyday-actions`
-- [ ] तपाईंलाई भेट्छु — **I'll meet you / See you**  `tapailai-bhetchu-see-you`
-
-### Cooking Together `cooking`
-- [ ] खाना सकियो — **The food is finished / all gone**  `khana-sakiyo-the-food-is-finished-all-gone`
-
-### Purchasing `purchasing`
-- [ ] कम गर्नुहोस् — **Please reduce / Make it less**  `kam-garnuhos-please-reduce-make-it-less`
-
-### Time of Day `time`
-- [ ] दिउँसो — **Afternoon / Daytime**  `diuso-afternoon-daytime`
-
-### Navigation `navigation`
-- [ ] नजिक — **Near / close**  `najik-near`
-- [ ] तिर — **Toward / that way**  `tira-toward-that-way`
-
-### Places & Getting Around `places-getting-around`
-- [ ] पसल — **Shop / store**  `pasal-shop-store`
-- [ ] होटल — **Restaurant / eatery**  `hotel-restaurant-eatery`
-- [ ] बसपार्क — **Bus stop / bus park**  `buspark-bus-stop`
+**80 items remaining** (top-of-course through *Places & Getting Around* — 69 items — reviewed and applied; those sections removed).
 
 ### Place & Position `place-position`
 - [ ] घरमा — **At home / In the house**  `gharma-at-home-in`
@@ -261,4 +144,3 @@ Point-in-time snapshot; regenerate with the T33 script if the data changes.
 ### At the Shop `at-the-shop`
 - [ ] मलाई चाहिँदैन — **I don't need it / no thanks**  `malai-chahidaina-i-dont-need-it`
 
-_(4 pronoun/register-flagged ⟡, 145 candidate accept-either.)_
