@@ -22,7 +22,7 @@ A unit:
 An item (`kind: 'phrases'`):
 
 ```js
-{ id, dev, en, usage, frames? }
+{ id, dev, en, usage, frames?, enEither?, enAlt? }
 // dev = Devanagari (source of truth), en = English, usage = dictionary note.
 // NOTE: `np` (romanized) AND `pron` (pronunciation) are DERIVED at load from `dev` by
 // js/romanize.js (romanize / pronounce; spec: docs/romanization.md). Both were removed from the
@@ -33,6 +33,11 @@ An item (`kind: 'phrases'`):
 //   without adding path units. Frame 0 is the item's own dev/en (clip id = item.id); each extra
 //   frame's clip is `<id>-f1`, `<id>-f2`, … The runtime frame model (itemFrames / frameForSeen /
 //   pickFrame → ex.frame) lives in js/sano.js. dev is AI-drafted → Ross's review, like every dev.
+// enEither? / enAlt? = optional multi-gloss accept (T33). When `en` carries two interchangeable
+//   meanings ("Excuse me / I'm sorry"), the np-en "build/type the English" grader accepts EITHER:
+//   enEither:true splits `en` on " / "; enAlt:[…] lists the accepted glosses explicitly (for a slash
+//   that sits mid-phrase). Resolved by acceptedEnglish(ex) in js/sano.js; applies to any item
+//   (phrases or vocab); unflagged items grade exactly as before.
 ```
 
 An item (`kind: 'vocab'`) — carries an `emoji`, no `usage`:
