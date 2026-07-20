@@ -68,12 +68,12 @@ export const savedState = (page) =>
 	});
 
 // Drive the currently-shown lesson exercise one step forward. Returns the exercise type
-// handled, or 'complete' when the finish screen is up. Uses normal clicks (not force):
-// boot()'s inline animation-freeze makes the in-screen controls stable, so a real click hits
-// the exact target AND waits for it to appear. That matters most for #lesson-continue, which
-// only exists after finishMatch/feedback renders — a forced click could fire while it's still
-// hidden, or land just off a match tile and leave the round (and thus the continue) incomplete.
-// Answers needn't be correct; the lesson advances either way.
+// handled, or 'complete' when the finish screen is up. Most in-screen controls use normal
+// clicks: boot()'s inline animation-freeze keeps them stable, so a real click hits the exact
+// target AND waits for it to appear. The match tiles are the exception — a matched tile plays
+// a tile-pop/tile-shake keyframe on the element itself that WebKit can leave mid-settle under
+// load, timing out a stability-gated click — so those are force-clicked and verified (see
+// below). Answers needn't be correct; the lesson advances either way.
 export async function stepLesson(page) {
 	const click = (sel) => page.locator(sel).first().click();
 	if (await page.locator('#screen-complete').isVisible()) return 'complete';
@@ -90,10 +90,24 @@ export async function stepLesson(page) {
 			const ids = await page.locator(`${grid} .match-tile`).evaluateAll((tiles) => [...new Set(tiles.map((t) => t.dataset.id))]);
 			for (const id of ids) {
 				const pair = page.locator(`${grid} .match-tile[data-id="${id}"]`);
-				await pair.nth(0).click();
-				await pair.nth(1).click();
+				// A matched tile runs a tile-pop/tile-shake keyframe on the tile itself; under
+				// WebKit that (plus render churn under load) can leave the element failing
+				// Playwright's "stable" actionability gate, so a normal click times out. Force
+				// past the gate — but a lone force tap can land before the pair registers,
+				// leaving the round incomplete and #lesson-continue unrendered, so tap the pair
+				// and verify BOTH tiles reached .matched, retrying the pair until they do.
+				await expect(async () => {
+					await pair.nth(0).click({ force: true });
+					await pair.nth(1).click({ force: true });
+					await expect(pair.nth(0)).toHaveClass(/matched/, { timeout: 500 });
+					await expect(pair.nth(1)).toHaveClass(/matched/, { timeout: 500 });
+				}).toPass({ timeout: 10_000 });
 			}
-			await click('#lesson-continue'); // appears once finishMatch shows feedback
+			// #lesson-continue renders once finishMatch shows feedback; wait for it, then force
+			// past any feedback-reveal transition rather than waiting on stability.
+			const cont = page.locator('#lesson-continue');
+			await expect(cont).toBeVisible();
+			await cont.click({ force: true });
 			return type;
 		}
 	}

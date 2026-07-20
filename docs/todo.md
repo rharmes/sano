@@ -7,6 +7,21 @@ so read or edit it by hand anytime. The items below wait on Ross (a review, a de
 native-speaker check) — they aren't derivable from the code, so they're easy to lose if they leave
 this list. Refer to any task by its ID (e.g. "T3").
 
+## Backlog tooling
+
+- [ ] **T34 · Lightweight query structure for the backlog** — add a small, greppable tag convention
+      to this file so tasks can be filtered without moving to an external tracker: a `waiting-on:`
+      marker (`ross` / `native-speaker` / `none`) and an area/status tag where useful, plus a one-line
+      `grep` recipe documented here in the header and mirrored into CLAUDE.md's **Task list** section.
+      Goal: get the one thing GitHub Issues would buy us — filter/query at scale ("everything waiting
+      on me", "all content-review tasks") — while keeping the backlog's strengths: co-authored and
+      updated **in the same commit** that ships the code, versioned in lockstep with the tree, offline,
+      and reviewable in the diff. **Decision (2026-07-20):** chose in-file structure over GitHub Issues
+      — a solo, agent-co-maintained, code-lockstep backlog doesn't benefit from Issues' collaboration
+      features (assignees, notifications, cross-team visibility) but would pay their costs (a split,
+      networked, non-atomic update loop). Revisit Issues only if a collaborator joins or public bug
+      intake is wanted.
+
 ## Dialogues & audio
 
 - [ ] **T1 · Add voice tags to the conversations** — review `tools/tts/dialogue-scripts.md`, add
@@ -45,13 +60,20 @@ this list. Refer to any task by its ID (e.g. "T3").
 
 ## Testing
 
-- [ ] **T17 · Fix the flaky WebKit match-lesson e2e** — `tests/e2e/lesson.spec.mjs` match rounds
+- [x] **T17 · Fix the flaky WebKit match-lesson e2e** — `tests/e2e/lesson.spec.mjs` match rounds
       intermittently time out under WebKit: `stepLesson` (`tests/e2e/_helpers.mjs`) clicks match tiles
       with normal (non-force) clicks and relies on `boot()`'s inline animation-freeze, but that can't
       kill **pseudo-element** (`::before`/`::after`) animations — so a tile stays "unstable" and the
       click times out. Pre-existing (reproduces on clean `main`, both before and after T16). A blanket
       `*::before { animation: none !important }` loses specificity to the app's class-scoped animation
       rules, so the fix needs either a targeted freeze stylesheet or a stability-tolerant match click.
+      **Fixed 2026-07-20** — took the stability-tolerant-click route: `stepLesson` now force-clicks
+      each pair (past WebKit's actionability "stable" gate) and verifies both tiles reached `.matched`,
+      retrying the pair, then waits for + force-clicks `#lesson-continue`. Corrected root cause: the
+      destabilizer is the `tile-pop`/`tile-shake` keyframe on the tile **element** (not a pseudo-element);
+      the inline freeze suppresses it, but under WebKit + parallel-load render churn the stability gate
+      still intermittently timed out. Test-only change (`tests/e2e/_helpers.mjs`); verified match tests
+      30× green under WebKit and full e2e (38) green.
 
 ## Romanization
 
@@ -119,21 +141,21 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       coverage refreshed, audio rendered (50 phrase + 57 word clips, `AUDIO_VERSION` 7), dev-seed
       scenario added. Committed 620a0bd, shipped ea07f30. **Still open:** the 5 unit titles + goals are
       AI-drafted → Ross's refinement.
-- [ ] **T18 · Batch 3 — everyday nouns (~46)** — 46 high-frequency everyday nouns, curated from the
+- [x] **T18 · Batch 3 — everyday nouns (~46)** — 46 high-frequency everyday nouns, curated from the
       top-90 `--pos noun` pool (concrete nouns are already taught, so this is the abstract/everyday-life
       gap: reasons, decisions, plans, money, relationships). Taught as short frames (they don't emoji);
       merged as 5 units **appended at the end of the path** (Time & Events, Ideas & Conversation,
       Problems & Solutions, Money & Business, People & Places) — 73 units / 729 items. Coverage
       refreshed, audio rendered (46 phrase + 63 word clips, `AUDIO_VERSION` 9), dev-seed scenario
-      added. Unit titles/goals AI-drafted → Ross's refinement. **Merged; push/deploy pending Ross's
-      go.**
-- [ ] **T20 · Batch 4 — everyday adverbs (~44)** — 44 high-frequency everyday adverbs (only 1 of the
+      added. Unit titles/goals AI-drafted → Ross's refinement. **Shipped** — verified live on namastesano.com
+      2026-07-20 (units present, `AUDIO_VERSION` 21). Unit titles/goals still AI-drafted → Ross's refinement.
+- [x] **T20 · Batch 4 — everyday adverbs (~44)** — 44 high-frequency everyday adverbs (only 1 of the
       top-70 was already taught), taught as short frames; merged as 5 units **appended at the end of
       the path** (How Much, Before & After, How Often, How & Where, Linking & Certainty) — 78 units /
       773 items. Dropped near-duplicate demonstratives. Coverage refreshed, audio rendered (44 phrase +
       55 word clips, `AUDIO_VERSION` 10), dev-seed scenario added. Also fixed visarga in the romanizer
-      (T19) so प्रायः works. Unit titles/goals AI-drafted → Ross's refinement. **Merged; push/deploy
-      pending Ross's go.**
+      (T19) so प्रायः works. Unit titles/goals AI-drafted → Ross's refinement. **Shipped** — verified live on namastesano.com
+      2026-07-20 (units present, `AUDIO_VERSION` 21). Unit titles/goals still AI-drafted → Ross's refinement.
 - [x] **T21 · Batch 5 — essential function words (~27)** — 27 high-leverage function words
       (pronouns, conjunctions, counters, big numbers, particles/postpositions) — the grammatical glue.
       Only genuinely untaught items (course already has basic pronouns, connectors, numbers to 1000);
