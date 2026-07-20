@@ -169,30 +169,55 @@ const COURSE = [
 				dev: 'एक',
 				emoji: '1️⃣',
 				en: 'One',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'एक कप चिया दिनुस्', en: 'One cup of tea, please' },
+					{ dev: 'एक छिन बस्नुस्', en: 'Sit for a moment' },
+				],
 			},
 			{
 				id: 'dui-two',
 				dev: 'दुई',
 				emoji: '2️⃣',
 				en: 'Two',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'दुई मिनेट पर्खनुस्', en: 'Wait two minutes' },
+					{ dev: 'दुईवटा समोसा दिनुस्', en: 'Two samosas, please' },
+				],
 			},
 			{
 				id: 'tin-three',
 				dev: 'तीन',
 				emoji: '3️⃣',
 				en: 'Three',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'तीन बजे आउनुस्', en: "Come at three o'clock" },
+					{ dev: 'तीन दिन भयो', en: "It's been three days" },
+				],
 			},
 			{
 				id: 'chaar-four',
 				dev: 'चार',
 				emoji: '4️⃣',
 				en: 'Four',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'हामी चार जना छौं', en: 'There are four of us' },
+					{ dev: 'चार कोठा छन्', en: 'There are four rooms' },
+				],
 			},
 			{
 				id: 'paanch-five',
 				dev: 'पाँच',
 				emoji: '5️⃣',
 				en: 'Five',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'पाँच बज्यो', en: "It's five o'clock" },
+					{ dev: 'पाँच रुपैयाँ मात्र', en: 'Only five rupees' },
+				],
 			},
 			{
 				id: 'chha-six',
@@ -205,12 +230,22 @@ const COURSE = [
 				dev: 'सात',
 				emoji: '7️⃣',
 				en: 'Seven',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'हप्तामा सात दिन छन्', en: 'There are seven days in a week' },
+					{ dev: 'म सात बजे उठ्छु', en: 'I get up at seven' },
+				],
 			},
 			{
 				id: 'aath-eight',
 				dev: 'आठ',
 				emoji: '8️⃣',
 				en: 'Eight',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'म आठ बजे घर आउँछु', en: 'I come home at eight' },
+					{ dev: 'हामी आठ बजे खाना खान्छौं', en: 'We eat at eight' },
+				],
 			},
 			{
 				id: 'nau-nine',
@@ -223,6 +258,11 @@ const COURSE = [
 				dev: 'दस',
 				emoji: '🔟',
 				en: 'Ten',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'दस बजे पसल खुल्छ', en: 'The shop opens at ten' },
+					{ dev: 'मसँग दस रुपैयाँ छ', en: 'I have ten rupees' },
+				],
 			},
 		],
 	},
@@ -237,30 +277,55 @@ const COURSE = [
 				dev: 'बीस',
 				emoji: '🔢',
 				en: 'Twenty',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'बीस मिनेट लाग्छ', en: 'It takes twenty minutes' },
+					{ dev: 'बीस रुपैयाँ भयो', en: "It's twenty rupees" },
+				],
 			},
 			{
 				id: 'pachaas-fifty',
 				dev: 'पचास',
 				emoji: '🔢',
 				en: 'Fifty',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'पचास प्रतिशत छुट', en: 'Fifty percent off' },
+					{ dev: 'उहाँ पचास वर्षको हुनुहुन्छ', en: 'He is fifty years old' },
+				],
 			},
 			{
 				id: 'saya-hundred',
 				dev: 'सय',
 				emoji: '💯',
 				en: 'Hundred',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई सय रुपैयाँ चाहियो', en: 'I need a hundred rupees' },
+					{ dev: 'सय वर्ष पुरानो', en: 'A hundred years old' },
+				],
 			},
 			{
 				id: 'hajaar-thousand',
 				dev: 'हजार',
 				emoji: '🔢',
 				en: 'Thousand',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'एक हजार रुपैयाँ', en: 'One thousand rupees' },
+					{ dev: 'दुई हजार भयो', en: "It's two thousand" },
+				],
 			},
 			{
 				id: 'aadha-half',
 				dev: 'आधा',
 				emoji: '🌗',
 				en: 'Half',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'आधा किलो दिनुस्', en: 'Half a kilo, please' },
+					{ dev: 'आधा घण्टा लाग्छ', en: 'It takes half an hour' },
+				],
 			},
 		],
 	},
@@ -283,12 +348,22 @@ const COURSE = [
 				en: 'We / Us',
 				enEither: true,
 				usage: 'The plural "we." You may also hear "hamiharu," which adds the plural marker "-haru" for emphasis. Used the same way in formal and informal speech.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'हामी सँगै जान्छौं', en: 'We go together' },
+					{ dev: 'हामी घरमा छौं', en: 'We are at home' },
+				],
 			},
 			{
 				id: 'tapai-you-formal',
 				dev: 'तपाईं',
 				en: 'You (formal)',
 				usage: 'The respectful "you," safe to use with anyone — elders, strangers, in-laws, shopkeepers. When in doubt, use "tapai" rather than "timi." It pairs with the polite verb endings you have seen, like "-nu huncha."',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'तपाईं कहिले आउनुहुन्छ?', en: 'When will you come?' },
+					{ dev: 'तपाईं राम्रो हुनुहुन्छ', en: 'You are kind' },
+				],
 			},
 			{
 				id: 'u-he-she-informal',
@@ -296,6 +371,11 @@ const COURSE = [
 				en: 'He / She (informal)',
 				enEither: true,
 				usage: 'Informal third person, used for friends, children, or people younger than you. Like "timi," avoid it for elders or people you respect — use "uhaa" instead.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'ऊ मेरो भाइ हो', en: 'He is my little brother' },
+					{ dev: 'ऊ कहाँ छ?', en: 'Where is he?' },
+				],
 			},
 			{
 				id: 'uhaa-he-she-polite',
@@ -303,12 +383,22 @@ const COURSE = [
 				en: 'He / She (polite)',
 				enEither: true,
 				usage: 'The respectful way to say "he" or "she." Use it for elders, in-laws, teachers, or anyone you would address as "tapai." Using the polite third person shows the same respect as polite "you."',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'उहाँ मेरो बुवा हुनुहुन्छ', en: 'He is my father' },
+					{ dev: 'उहाँ डाक्टर हुनुहुन्छ', en: 'She is a doctor' },
+				],
 			},
 			{
 				id: 'uniharu-they',
 				dev: 'उनीहरू',
 				en: 'They',
 				usage: 'Third-person plural. The "-haru" ending is the general plural marker in Nepali — you can attach it to most nouns too: "saathiharu" (friends), "bachchaharu" (children).',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'उनीहरू साथी हुन्', en: 'They are friends' },
+					{ dev: 'उनीहरू घरमा छन्', en: 'They are at home' },
+				],
 			},
 			{
 				id: 'yo-this',
@@ -335,18 +425,33 @@ const COURSE = [
 				en: 'Our / Ours',
 				enEither: true,
 				usage: 'The possessive of "hami." "Hamro ghar" means "our house." Very common in family settings since the household is usually talked about as shared.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'हाम्रो घर सानो छ', en: 'Our house is small' },
+					{ dev: 'हाम्रो देश नेपाल हो', en: 'Our country is Nepal' },
+				],
 			},
 			{
 				id: 'timro-your-informal',
 				dev: 'तिम्रो',
 				en: 'Your (informal)',
 				usage: 'The possessive of "timi," for friends, children, and people younger than you. "Timro naam ke ho?" is the informal way to ask a name.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'तिम्रो घर कहाँ छ?', en: 'Where is your house?' },
+					{ dev: 'तिम्रो किताब यहाँ छ', en: 'Your book is here' },
+				],
 			},
 			{
 				id: 'tapaiko-your-formal',
 				dev: 'तपाईंको',
 				en: 'Your (formal)',
 				usage: 'The possessive of "tapai." "Tapaiko" is built from "tapai" + "ko," the same "ko" that marks possession across Nepali: "Ross ko kitab" (Ross\'s book).',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'यो तपाईंको झोला हो?', en: 'Is this your bag?' },
+					{ dev: 'तपाईंको घर राम्रो छ', en: 'Your house is nice' },
+				],
 			},
 			{
 				id: 'usko-his-her-informal',
@@ -354,6 +459,11 @@ const COURSE = [
 				en: 'His / Her (informal)',
 				enEither: true,
 				usage: 'The possessive of "u." For the polite version use "uhaako" (his/her, respectful), following the same pattern of adding "ko."',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'उसको नाम के हो?', en: 'What is his name?' },
+					{ dev: 'उसको घर टाढा छ', en: 'His house is far' },
+				],
 			},
 		],
 	},
@@ -401,18 +511,33 @@ const COURSE = [
 				dev: 'बहिनी',
 				emoji: '👧',
 				en: 'Younger sister',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरी बहिनी छ', en: 'I have a younger sister' },
+					{ dev: 'बहिनी पढ्दै छ', en: 'Little sister is studying' },
+				],
 			},
 			{
 				id: 'dai-older-brother',
 				dev: 'दाइ',
 				emoji: '👦',
 				en: 'Older brother',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'दाइ, नमस्ते', en: 'Hello, brother' },
+					{ dev: 'मेरो दाइ काममा हुनुहुन्छ', en: 'My older brother is at work' },
+				],
 			},
 			{
 				id: 'bhai-younger-brother',
 				dev: 'भाइ',
 				emoji: '👦',
 				en: 'Younger brother',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'भाइ सानो छ', en: 'Little brother is small' },
+					{ dev: 'भाइ खेल्दै छ', en: 'Little brother is playing' },
+				],
 			},
 			{
 				id: 'chhora-son',
@@ -430,6 +555,11 @@ const COURSE = [
 				dev: 'छोरी',
 				emoji: '👧',
 				en: 'Daughter',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरी छोरी छ', en: 'I have a daughter' },
+					{ dev: 'छोरी स्कुलमा छ', en: 'My daughter is at school' },
+				],
 			},
 		],
 	},
@@ -468,24 +598,44 @@ const COURSE = [
 				dev: 'साथी',
 				emoji: '🧑‍🤝‍🧑',
 				en: 'Friend',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो साथी नेपाली हो', en: 'My friend is Nepali' },
+					{ dev: 'म साथीसँग बजार जान्छु', en: 'I go to the market with my friend' },
+				],
 			},
 			{
 				id: 'chhimeki-neighbor',
 				dev: 'छिमेकी',
 				emoji: '🏠',
 				en: 'Neighbor',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो छिमेकी राम्रो मान्छे हो', en: 'My neighbor is a good person' },
+					{ dev: 'छिमेकीलाई नमस्ते भन्नुस्', en: 'Say namaste to the neighbor' },
+				],
 			},
 			{
 				id: 'manchhe-person',
 				dev: 'मान्छे',
 				emoji: '🧑',
 				en: 'Person',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'त्यो मान्छे को हो?', en: 'Who is that person?' },
+					{ dev: 'धेरै मान्छे छन्', en: 'There are many people' },
+				],
 			},
 			{
 				id: 'bachcha-child-baby',
 				dev: 'बच्चा',
 				emoji: '👶',
 				en: 'Child',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'बच्चा सुत्दै छ', en: 'The baby is sleeping' },
+					{ dev: 'बच्चालाई दूध दिनुस्', en: 'Give the baby milk' },
+				],
 			},
 		],
 	},
@@ -730,30 +880,55 @@ const COURSE = [
 				dev: 'र',
 				en: 'And',
 				usage: 'The basic "and," joining words and clauses: "dal ra bhaat" (lentils and rice). One of the most frequent words in the language.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'दाल र भात', en: 'Dal and rice' },
+					{ dev: 'आमा र बुवा घरमा हुनुहुन्छ', en: 'Mother and father are at home' },
+				],
 			},
 			{
 				id: 'tara-but',
 				dev: 'तर',
 				en: 'But',
 				usage: 'Introduces a contrast: "mitho cha, tara piro cha" (it\'s tasty, but it\'s spicy). Works just like English "but."',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'म जान्छु तर ऊ आउँदैन', en: "I'm going but he isn't coming" },
+					{ dev: 'सस्तो छ तर राम्रो छैन', en: "It's cheap but not good" },
+				],
 			},
 			{
 				id: 'ani-and-then-also',
 				dev: 'अनि',
 				en: 'And then',
 				usage: 'A conversational connector for continuing a story or list: "ani ke bhayo?" (and then what happened?). You will hear it constantly in spoken Nepali.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'अनि तपाईं?', en: 'And you?' },
+					{ dev: 'खाना खानुस् अनि सुत्नुस्', en: 'Eat and then sleep' },
+				],
 			},
 			{
 				id: 'ki-or-in-questions',
 				dev: 'कि',
 				en: 'Or (in questions)',
 				usage: 'Offers alternatives in questions: "chiya ki coffee?" (tea or coffee?). It can also turn a statement into a tag question when added at the end.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'चिया कि कफी?', en: 'Tea or coffee?' },
+					{ dev: 'आज कि भोलि?', en: 'Today or tomorrow?' },
+				],
 			},
 			{
 				id: 'athawa-or-in-statements',
 				dev: 'अथवा',
 				en: 'Or (in statements)',
 				usage: 'The "or" used in statements rather than questions: "aaja athawa bholi" (today or tomorrow). In casual speech, "ki" often covers both.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'आज अथवा भोलि आउनुस्', en: 'Come today or tomorrow' },
+					{ dev: 'बस अथवा ट्याक्सी लिनुस्', en: 'Take a bus or a taxi' },
+				],
 			},
 			{
 				id: 'pani-also-too',
@@ -761,18 +936,33 @@ const COURSE = [
 				en: 'Also / Too',
 				enEither: true,
 				usage: 'Means "also" or "even": "ma pani" (me too). Note the short vowel — "paani" with a long aa means water. Context and length tell them apart.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'म पनि जान्छु', en: "I'm coming too" },
+					{ dev: 'यो पनि दिनुस्', en: 'Give me this one too' },
+				],
 			},
 			{
 				id: 'matra-only-just',
 				dev: 'मात्र',
 				en: 'Only',
 				usage: 'Restricts to "only": "ek matra" (only one), "herna matra" (just looking — useful in shops!). It follows the word it limits.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'एक कप मात्र', en: 'Just one cup' },
+					{ dev: 'पानी मात्र दिनुस्', en: 'Just water, please' },
+				],
 			},
 			{
 				id: 'ahile-now-right-now',
 				dev: 'अहिले',
 				en: 'Now',
 				usage: 'Refers to the present moment: "ahile aaunus" (come now). "Ahile nai" makes it stronger — "right this moment."',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'अहिले समय छैन', en: "There's no time right now" },
+					{ dev: 'म अहिले व्यस्त छु', en: "I'm busy right now" },
+				],
 			},
 			{
 				id: 'pachhi-later-after',
@@ -780,6 +970,11 @@ const COURSE = [
 				en: 'Later / After',
 				enEither: true,
 				usage: 'Means "later" on its own ("pachhi bhetaula" — see you later) or "after" following another word: "khana pachhi" (after the meal).',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'पछि भेटौंला', en: 'See you later' },
+					{ dev: 'म पछि खान्छु', en: "I'll eat later" },
+				],
 			},
 			{
 				id: 'aba-now-next',
@@ -787,12 +982,22 @@ const COURSE = [
 				en: 'Now / Next',
 				enEither: true,
 				usage: 'Marks a transition to what happens next: "aba ke garne?" (now what shall we do?). Slightly different from "ahile" — "aba" is about sequence, "ahile" about the present moment.',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'अब के गर्ने?', en: 'What to do now?' },
+					{ dev: 'अब म घर जान्छु', en: "Now I'm going home" },
+				],
 			},
 			{
 				id: 'pheri-again',
 				dev: 'फेरि',
 				en: 'Again',
 				usage: 'Means "again," already familiar from "pheri bhetaula" (let\'s meet again) and "pheri bhannus" (please say it again). On its own: "pheri garnus" (do it again).',
+				// T29 batch 11 (pronouns & connectors; AI-drafted, approved):
+				frames: [
+					{ dev: 'फेरि आउनुस्', en: 'Come again' },
+					{ dev: 'म फेरि आउँछु', en: "I'll come again" },
+				],
 			},
 		],
 	},
@@ -2528,42 +2733,77 @@ const COURSE = [
 				dev: 'आइतबार',
 				en: 'Sunday',
 				usage: 'The first day of the Nepali week — and a normal working day in Nepal, unlike in Western countries.',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'आज आइतबार हो', en: 'Today is Sunday' },
+					{ dev: 'आइतबार म काम गर्छु', en: 'I work on Sundays' },
+				],
 			},
 			{
 				id: 'sombaar-monday',
 				dev: 'सोमबार',
 				en: 'Monday',
 				usage: 'All weekday names end in "-baar" (day). "Som" relates to the moon, like "lunes" or "Monday" in other languages.',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'सोमबार भेटौंला', en: 'See you Monday' },
+					{ dev: 'सोमबार पसल खुला छ', en: 'The shop is open on Monday' },
+				],
 			},
 			{
 				id: 'mangalbaar-tuesday',
 				dev: 'मङ्गलबार',
 				en: 'Tuesday',
 				usage: 'Tuesday. The "-baar" ending marks the days of the week; "Mangal" is Mars. Sits between "Sombaar" (Monday) and "Budhabaar" (Wednesday).',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'मङ्गलबार म व्यस्त छु', en: "I'm busy on Tuesday" },
+					{ dev: 'मङ्गलबार आउनुस्', en: 'Come on Tuesday' },
+				],
 			},
 			{
 				id: 'budhabaar-wednesday',
 				dev: 'बुधबार',
 				en: 'Wednesday',
 				usage: 'Wednesday, from "Budha" (Mercury) plus "-baar" (day). Comes after "Mangalbaar" (Tuesday) and before "Bihibaar" (Thursday).',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'आज बुधबार हो?', en: 'Is today Wednesday?' },
+					{ dev: 'बुधबार म बजार जान्छु', en: 'On Wednesday I go to the market' },
+				],
 			},
 			{
 				id: 'bihibaar-thursday',
 				dev: 'बिहीबार',
 				en: 'Thursday',
 				usage: 'Thursday — "Bihi" plus "-baar" (day). Follows "Budhabaar" (Wednesday) and leads into "Sukrabaar" (Friday).',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'बिहीबार म घर सफा गर्छु', en: 'On Thursday I clean the house' },
+					{ dev: 'बिहीबार म फिल्म हेर्छु', en: 'On Thursday I watch a movie' },
+				],
 			},
 			{
 				id: 'sukrabaar-friday',
 				dev: 'शुक्रबार',
 				en: 'Friday',
 				usage: 'Friday, from "Sukra" (Venus) plus "-baar" (day). The lead-in to "Sanibaar" (Saturday), the usual day off in Nepal.',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'शुक्रबार बेलुका रमाइलो हुन्छ', en: 'Friday evening is fun' },
+					{ dev: 'शुक्रबार अन्तिम दिन हो', en: 'Friday is the last day' },
+				],
 			},
 			{
 				id: 'sanibaar-saturday',
 				dev: 'शनिबार',
 				en: 'Saturday',
 				usage: 'The weekly holiday in Nepal — offices and schools close on Saturday, not Sunday. Weekend plans revolve around Sanibaar.',
+				// T29 batch 12 (numbers & weekdays; AI-drafted, approved):
+				frames: [
+					{ dev: 'शनिबार बिदा हो', en: 'Saturday is the day off' },
+					{ dev: 'शनिबार म आराम गर्छु', en: 'On Saturday I rest' },
+				],
 			},
 			{
 				id: 'kati-bajyo-what-time-is-it',
@@ -4339,60 +4579,110 @@ const COURSE = [
 				dev: 'खुसी',
 				emoji: '😊',
 				en: 'Happy',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'आज म खुसी छु', en: "I'm happy today" },
+					{ dev: 'तपाईं खुसी हुनुहुन्छ?', en: 'Are you happy?' },
+				],
 			},
 			{
 				id: 'dukhi-sad',
 				dev: 'दुखी',
 				emoji: '😢',
 				en: 'Sad',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'ऊ आज दुखी छ', en: "He's sad today" },
+					{ dev: 'दुखी गीत', en: 'A sad song' },
+				],
 			},
 			{
 				id: 'risaeko-angry',
 				dev: 'रिसाएको',
 				emoji: '😠',
 				en: 'Angry',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'ऊ रिसाएको छ', en: 'He is angry' },
+					{ dev: 'म रिसाएको छैन', en: "I'm not angry" },
+				],
 			},
 			{
 				id: 'dar-fear-scared',
 				dev: 'डर',
 				emoji: '😨',
 				en: 'Fear / Scared',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई डर लाग्यो', en: 'I got scared' },
+					{ dev: 'बाघदेखि डर लाग्छ', en: "I'm scared of tigers" },
+				],
 			},
 			{
 				id: 'chinta-worry-anxiety',
 				dev: 'चिन्ता',
 				emoji: '😟',
 				en: 'Worry / Anxiety',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'चिन्ता नगर्नुस्', en: "Don't worry" },
+					{ dev: 'आमालाई चिन्ता छ', en: 'Mother is worried' },
+				],
 			},
 			{
 				id: 'maya-love',
 				dev: 'माया',
 				emoji: '❤️',
 				en: 'Love',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'म तिमीलाई माया गर्छु', en: 'I love you' },
+					{ dev: 'आमाको माया', en: "A mother's love" },
+				],
 			},
 			{
 				id: 'ghamanda-pride-arrogance',
 				dev: 'घमण्ड',
 				emoji: '😤',
 				en: 'Pride / Arrogance',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'घमण्ड नगर्नुस्', en: "Don't be arrogant" },
+					{ dev: 'घमण्ड राम्रो होइन', en: "Pride isn't good" },
+				],
 			},
 			{
 				id: 'lajja-shame-embarrassment',
 				dev: 'लज्जा',
 				emoji: '😳',
 				en: 'Shame / Embarrassment',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'उसलाई लज्जा लाग्यो', en: 'He was embarrassed' },
+					{ dev: 'मलाई लज्जा लाग्दैन', en: "I'm not embarrassed" },
+				],
 			},
 			{
 				id: 'thakeko-tired',
 				dev: 'थकेको',
 				emoji: '😴',
 				en: 'Tired',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'तपाईं थकेको हुनुहुन्छ?', en: 'Are you tired?' },
+					{ dev: 'थकेको बच्चा', en: 'A tired child' },
+				],
 			},
 			{
 				id: 'biraami-sick',
 				dev: 'बिरामी',
 				emoji: '🤒',
 				en: 'Sick',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो साथी बिरामी छ', en: 'My friend is sick' },
+					{ dev: 'म बिरामी छैन', en: "I'm not sick" },
+				],
 			},
 		],
 	},
@@ -4413,6 +4703,11 @@ const COURSE = [
 				dev: 'बोर',
 				emoji: '😑',
 				en: 'Bored',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'बोर भयो', en: 'This is boring' },
+					{ dev: 'फिल्म बोर छ', en: 'The movie is boring' },
+				],
 			},
 			{
 				id: 'aaramadaayak-comfortable-relaxed',
@@ -4461,6 +4756,11 @@ const COURSE = [
 				dev: 'आशा',
 				emoji: '🤞',
 				en: 'Hope',
+				// T29 batch 10 (emotions & people; AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई आशा छ', en: 'I have hope' },
+					{ dev: 'आशा राम्रो कुरा हो', en: 'Hope is a good thing' },
+				],
 			},
 		],
 	},

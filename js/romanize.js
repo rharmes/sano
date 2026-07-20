@@ -150,8 +150,10 @@ const SanoRomanize = (() => {
 	// व is usually "w" but is realized as "b" in a handful of words (native-speaker confirmed).
 	// Applied in both tracks so np and pron agree: धन्यवाद→Dhanyabaad / dhuhn-yuh-baad. (The व्य
 	// conjunct — व्यस्त, व्यक्ति, व्यापार — is always "by" and is handled positionally in tokenize(),
-	// so it needs no listing here.)
+	// so it needs no listing here.) Matched as prefixes so suffixed/compound forms stay "b" too
+	// (वर्षको→Barsako, वनमा→Banamaa) instead of falling back to "w".
 	const VA_AS_B = new Set(['धन्यवाद', 'वन', 'विद्यार्थी', 'वर्ष']);
+	const vaAsB = (w) => VA_AS_B.has(w) || [...VA_AS_B].some((v) => w.startsWith(v));
 
 	// Stage-6 overrides for the Lite headword: whole Devanagari words → exact-cased romanization.
 	// Proper nouns (capitalized, harvested from Ross's mid-phrase caps) + English loanwords.
@@ -217,8 +219,9 @@ const SanoRomanize = (() => {
 	// nasalOut }, mapped through the tables `T`. Resolves the final inherent schwa and resolves
 	// nasalization (ं/ँ → "n" before a consonant onset, else dropped).
 	function tokenize(w, T) {
-		// व → "b" for the listed words (else the table's default "w"); applies to whichever table T is.
-		const CONS_T = VA_AS_B.has(w) ? Object.assign({}, T.CONS, { व: 'b' }) : T.CONS;
+		// व → "b" for the listed words incl. suffixed forms (else the table's default "w");
+		// applies to whichever table T is.
+		const CONS_T = vaAsB(w) ? Object.assign({}, T.CONS, { व: 'b' }) : T.CONS;
 		for (const [from, to] of SILENT_NASAL) if (w.includes(from)) w = w.split(from).join(to);
 		const syl = [];
 		const last = () => syl[syl.length - 1];

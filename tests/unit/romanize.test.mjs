@@ -18,7 +18,10 @@ const CASES = [
 	['ठूलो', 'Thulo', 'spec example; ू=u (i/u length dropped)'],
 	['धन्यवाद', 'Dhanyabaad', 'व→b (VA_AS_B exception); final schwa dropped'],
 	['वन', 'Ban', 'व→b (VA_AS_B exception)'],
+	['वर्षको', 'Barsako', 'VA_AS_B matches as a prefix: suffixed form stays b'],
+	['वनमा', 'Banamaa', 'VA_AS_B prefix match on a locative suffix'],
 	['स्वागत छ', 'Swaagat chha', 'व→w default'],
+	['वारि', 'Waari', 'व→w default unaffected by the prefix rule'],
 	// व्य conjunct → "by" (positional rule in tokenize, T22).
 	['व्यस्त', 'Byasta', 'व्य conjunct → by (was a VA_AS_B listing)'],
 	['एक व्यक्ति', 'Ek byakti', 'व्य conjunct mid-phrase'],

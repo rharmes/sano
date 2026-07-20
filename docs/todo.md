@@ -289,6 +289,19 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
         Dev-seed 0f derives from COURSE, no change needed. (Minor: the words build now flags 8
         cosmetic slug conflicts — the 3 known ones plus गोलभेंडा/गोलभेँडा, फूल/फुल, राति/राती,
         स्कुल/स्कूल, घमण्ड/घमन्ड — all pre-existing course spelling variants, audibly identical.)
+  - [x] **Batches 10–12 — emotions & people · pronouns & connectors · numbers & weekdays (60 items ·
+        120 frames)** — batch 10: all core emotions + बोर/आशा + family remainder + साथी/बच्चा/मान्छे/
+        छिमेकी (चिन्ता नगर्नुस्, म तिमीलाई माया गर्छु, दाइ, नमस्ते); batch 11: 9 pronouns — म/यो/त्यो/मेरो
+        skipped as already-varied — + all 11 connectors with two-clause frames per Ross (म जान्छु तर ऊ
+        आउँदैन, चिया कि कफी?, अनि तपाईं?), agreement-teaching pronoun frames (उहाँ…हुनुहुन्छ,
+        उनीहरू…छन्/हुन्); batch 12: numbers एक–दस sans छ/नौ + बीस/पचास/सय/हजार/आधा with shop/time frames
+        (पचास प्रतिशत छुट, पाँच बज्यो) + all 7 weekdays (शनिबार बिदा हो). Dup-checked against all 1,249
+        course sentences; some frames deliberately introduce transparent new forms (-दै progressives,
+        आउँदैन/लाग्दैन, आउनुहुन्छ, बिदा). Blanket-approved by Ross 2026-07-20, merged (205 items now
+        framed); audio 120 phrase + 20 word clips, `AUDIO_VERSION` 24. Shipped with the `VA_AS_B`
+        **prefix-match** romanizer fix (वर्षको→Barsako, वनमा→Banamaa; golden tests; no existing slug
+        affected). Remaining unframed pools for future batches: हजुरबुवा/हजुरआमा/बुढा/बुढी, छ/नौ, the
+        formal emotions-more words, core communication units, ~135 object-noun leftovers.
 - [x] **T32 · Depth mechanism — route by the shown frame, not the canonical word** — `buildExercises`
       (`js/sano.js`) now computes `multiWord` from `pickFrame(item).np`, so a single-word `vocab` item
       whose review lands on a multi-word alternate frame is drilled as a word-bank (assemble the
