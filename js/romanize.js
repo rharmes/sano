@@ -148,9 +148,10 @@ const SanoRomanize = (() => {
 	const SILENT_NASAL = [['तपाईं', 'तपाई']];
 
 	// व is usually "w" but is realized as "b" in a handful of words (native-speaker confirmed).
-	// Applied in both tracks so np and pron agree: धन्यवाद→Dhanyabaad / dhuhn-yuh-baad. (व्यस्त
-	// "busy" → Byasta; its pron is polished in PRON_OVERRIDES so the initial व्य reads "byas-" not "b-y".)
-	const VA_AS_B = new Set(['धन्यवाद', 'वन', 'विद्यार्थी', 'वर्ष', 'व्यस्त']);
+	// Applied in both tracks so np and pron agree: धन्यवाद→Dhanyabaad / dhuhn-yuh-baad. (The व्य
+	// conjunct — व्यस्त, व्यक्ति, व्यापार — is always "by" and is handled positionally in tokenize(),
+	// so it needs no listing here.)
+	const VA_AS_B = new Set(['धन्यवाद', 'वन', 'विद्यार्थी', 'वर्ष']);
 
 	// Stage-6 overrides for the Lite headword: whole Devanagari words → exact-cased romanization.
 	// Proper nouns (capitalized, harvested from Ross's mid-phrase caps) + English loanwords.
@@ -186,7 +187,8 @@ const SanoRomanize = (() => {
 		मनसुन: 'mon-soon',
 		टिभी: 'tee-vee',
 		अङ्ग्रेजी: 'ang-gray-jee',
-		व्यस्त: 'byas-ta', // native व→b word (see VA_AS_B); polished so it reads byas-ta, not b-yuhs-tuh
+		व्यस्त: 'byas-ta', // व्य conjunct (व→b in tokenize); polished so it reads byas-ta, not b-yuhs-tuh
+		व्यक्ति: 'byak-tee', // व्य conjunct; polished so it reads byak-tee, not b-yuhk-tee
 		दशैं: 'duh-shain', // keep the word-final nasal (Lite drops it → duh-shai); matches the WORD_OVERRIDE "Dashain"
 		प्रायः: 'praa-yah', // visarga is now handled in tokenize() (→ praayah); this just polishes the pron to praa-yah
 	};
@@ -236,7 +238,11 @@ const SanoRomanize = (() => {
 			}
 			const c = w[i];
 			if (has(CONS_T, c)) {
-				syl.push({ onset: CONS_T[c], vowel: T.INHERENT, inherentA: true, nasal: false });
+				// व in a व्य conjunct is realized "b" (व्यस्त→byasta, व्यक्ति→byakti, व्यापार→byaapaar) —
+				// positional, so future व्य words need no VA_AS_B listing. Kept on the halant path (not a
+				// CONJUNCT unit) so the final-schwa cluster guard still sees the halant (भव्य→bhabya).
+				const onset = c === 'व' && w.startsWith(HALANT + 'य', i + 1) ? 'b' : CONS_T[c];
+				syl.push({ onset, vowel: T.INHERENT, inherentA: true, nasal: false });
 			} else if (has(T.VOWEL_INDEP, c)) {
 				syl.push({ onset: '', vowel: T.VOWEL_INDEP[c], inherentA: false, nasal: false });
 			} else if (has(T.VOWEL_MATRA, c)) {

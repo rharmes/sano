@@ -19,6 +19,11 @@ const CASES = [
 	['धन्यवाद', 'Dhanyabaad', 'व→b (VA_AS_B exception); final schwa dropped'],
 	['वन', 'Ban', 'व→b (VA_AS_B exception)'],
 	['स्वागत छ', 'Swaagat chha', 'व→w default'],
+	// व्य conjunct → "by" (positional rule in tokenize, T22).
+	['व्यस्त', 'Byasta', 'व्य conjunct → by (was a VA_AS_B listing)'],
+	['एक व्यक्ति', 'Ek byakti', 'व्य conjunct mid-phrase'],
+	['व्यापार', 'Byaapaar', 'व्य conjunct generalizes to unlisted words'],
+	['भव्य', 'Bhabya', 'word-final व्य: the cluster guard keeps the final schwa'],
 	// Basic syllables + final inherent-schwa drop.
 	['नमस्ते', 'Namaste', 'inherent a kept medially, े ends the word'],
 	['घर', 'Ghar', 'final inherent schwa dropped'],
@@ -105,6 +110,8 @@ const PRON_CASES = [
 	['औषधि', 'ow-suh-dhee', 'औ→ow'],
 	['धन्यवाद', 'dhuhn-yuh-baad', 'व→b (VA_AS_B exception)'],
 	['स्वागत छ', 's-waa-guht chhuh', 'व→w default'],
+	['व्यस्त', 'byas-ta', 'व्य conjunct; PRON_OVERRIDES polish'],
+	['व्यक्ति', 'byak-tee', 'व्य conjunct; PRON_OVERRIDES polish'],
 	['फूल', 'fool', 'फ→f'],
 	['भित्र', 'bheet-ruh', 'cluster: coda त merges (bheet-ruh)'],
 	['तपाईं', 'tuh-paa-ee', 'तपाईं silent nasal; ई→ee'],

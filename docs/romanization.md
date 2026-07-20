@@ -274,9 +274,12 @@ stays in `js/data.js` as the baseline. Scope is the `COURSE` items only; dialogu
   डस्टबिन→dustbin, डस्टर→duster, हेडफोन→headphone, मनसुन→monsoon).
 - **Postpositions** (को/मा/लाई/…) are written joined in Devanagari and are **kept joined** in the
   romanization (तपाईंको→Tapaaiko, घरमा→Gharamaa) — faithful to the script.
-- **व (w vs b):** rendered `w` by default in **both** tracks (per the spec), but `b` for a small
-  native-speaker-confirmed word set (`VA_AS_B`: धन्यवाद, वन, विद्यार्थी, वर्ष → Dhanyabaad, Ban,
-  Bidyaarthi, Barsa). व is word-dependent in Nepali and not derivable from the script alone.
+- **व (w vs b):** rendered `w` by default in **both** tracks (per the spec), but `b` in a व्य
+  conjunct — a positional rule in the tokenizer (व्यस्त→Byasta, व्यक्ति→Byakti, व्यापार→Byaapaar),
+  kept on the halant path so the final-schwa cluster guard still applies (भव्य→Bhabya) — and for a
+  small native-speaker-confirmed word set (`VA_AS_B`: धन्यवाद, वन, विद्यार्थी, वर्ष → Dhanyabaad,
+  Ban, Bidyaarthi, Barsa). Elsewhere व is word-dependent in Nepali and not derivable from the
+  script alone.
 - **Medial schwa** deletion is not performed (Nepali pronounces most medial schwas; the corpus's
   clusters come from explicit halant, already handled) — biased to under-delete per the spec.
 

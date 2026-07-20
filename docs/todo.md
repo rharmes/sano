@@ -83,12 +83,18 @@ this list. Refer to any task by its ID (e.g. "T3").
       `PRON_OVERRIDE` remains only to polish its pron to *praa-yah*. Minor cosmetic left: word-final
       visarga after an inherent vowel doubles the h in pron (अतः → uh-tuhh); harmless, none in-corpus.
 
-- [ ] **T22 · Generalize व→b for व्य- words in the romanizer** — Nepali realizes व as "b" in the
+- [x] **T22 · Generalize व→b for व्य- words in the romanizer** — Nepali realizes व as "b" in the
       common व्य- cluster (व्यस्त→byasta, व्यक्ति→byakti, व्यापार→byaapaar, व्यवसाय, व्यवहार), but the
       rules default व→w so these read "wy-". व्यस्त is patched via `VA_AS_B`; व्यक्ति already shipped as
       "wyakti" (batch 3). Extend `VA_AS_B` (or add a व्य→by rule) to cover the cluster, re-render the
       affected word slugs (wyakti→byakti, etc.), and bump `AUDIO_VERSION`. Then future व्य- words (e.g.
       व्यापार, deferred out of batch 6 for this reason) can be added cleanly.
+      **Done 2026-07-20** — a positional व्य→"b" rule in the shared tokenizer (`js/romanize.js`),
+      kept on the halant path so the final-schwa cluster guard still applies (भव्य→Bhabya); व्यस्त
+      dropped from `VA_AS_B` (rule covers it); व्यक्ति pron polished (`byak-tee`, like `byas-ta`).
+      The only affected clip was **renamed** (`git mv wyakti.mp3 → byakti.mp3` — the TTS input व्यक्ति
+      is unchanged, so no re-render / no credits), words.json regenerated, `AUDIO_VERSION` 22. Golden
+      tests added (incl. unlisted व्यापार + word-final भव्य). व्यापार is now cleanly addable (T29+).
 
 ## Learning engine — SR-05 relaunch (Phase 1)
 

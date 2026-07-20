@@ -1080,6 +1080,15 @@
 			"bujhnubhayo-bujyau-do-you-understand"
 		]
 	},
+	"byakti": {
+		"roman": "byakti",
+		"dev": "व्यक्ति",
+		"source": "aligned",
+		"phrases": [
+			"fn-pratyek-every",
+			"noun-byakti-person"
+		]
+	},
 	"byasta": {
 		"roman": "byasta",
 		"dev": "व्यस्त",
@@ -6387,15 +6396,6 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-bistarai-slowly"
-		]
-	},
-	"wyakti": {
-		"roman": "wyakti",
-		"dev": "व्यक्ति",
-		"source": "aligned",
-		"phrases": [
-			"fn-pratyek-every",
-			"noun-byakti-person"
 		]
 	},
 	"yaataayaat": {
