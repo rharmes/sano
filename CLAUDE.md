@@ -82,7 +82,8 @@ per-word `audio/words/<slug>.mp3` (`playWord(slug)`, ~233; slug = the **derived*
 from `js/romanize.js` — run through `normalize`); a missing clip is a silent no-op. **All clips are
 pre-rendered by `tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice
 (`eleven_v3`, voice id in RESEARCH.md §9) — never a runtime call.** Per-word Devanagari comes from
-`tools/tts/words.json` (built by `tools/tts/build-words.mjs`, phrases-only). After adding or
+`tools/tts/words.json` (built by `tools/tts/build-words.mjs` from every canonical + frame sentence
+across all units — any word that can appear as a word-bank tile, incl. single-word items). After adding or
 re-spelling content, regenerate the affected clips — `build-words.mjs` → `synth-app.mjs --words
 --new` (`--new` renders only clips missing on disk, so it won't re-spend credits or churn git) — then
 bump `AUDIO_VERSION` in `js/audio.js` to bust caches. Flags + per-voice routing: `tools/tts/README.md`.

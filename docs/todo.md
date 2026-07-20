@@ -32,6 +32,15 @@ this list. Refer to any task by its ID (e.g. "T3").
       + bump `AUDIO_VERSION` once the edits settle. First confirm line-1 नक्कल गरिरहेको ("copying")
       with a native speaker.
 
+- [x] **T35 · Word clips for standalone single-word items** — `build-words.mjs` built its tile-word
+      inventory from **phrases-unit** sentences only, so (a) a single-word item whose word appears in
+      no phrase had no `audio/words/<slug>.mp3` (the e2e-log 404 for `hajaar.mp3` — हजार tiles in its
+      own SR-05 word-bank recall among distractors) and (b) vocab-unit frames (word-bankable since
+      T32) had no clips for their new words. **Fixed 2026-07-20** with the T29 batch 7–9 merge: the
+      inventory is now every word of every canonical + frame sentence across all units (719 → 1050
+      tile-words; the 331 missing clips rendered in the same pass). CLAUDE.md + architecture.md
+      updated.
+
 ## Content review
 
 - [ ] **T3 · Review the dictionary's recommendations** (`tools/dict/`; flag-only, never
@@ -245,8 +254,9 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
         `verbs-past` unit (khaen → "I ate rice," gaen → "I went to the market," heren → "I watched a
         movie," …). Drafted into the T31 tool, approved by Ross, merged; audio rendered (24 phrase +
         5 word clips, `AUDIO_VERSION` 18); dev-seed 0f extended.
-        (Minor: `maile-pien` f1 "मैले चिया पिएँ" uses पिउनु for tea, which the item's own note says
-        colloquially takes खानु — kept as approved; easy to swap later.)
+        (The पिउनु-for-tea quirk was fixed 2026-07-20, Ross-approved: f1 is now "मैले चिया खाएँ"
+        "I had tea" — the colloquial खानु the item's own usage note teaches; clip re-rendered,
+        `AUDIO_VERSION` bump folds into the next batch merge.)
   - [x] **Batch 3 — descriptive adjectives (20 items · 40 frames)** — attributive + fresh-predicate
         frames on the `adj-*` units (lamo/chiso/baliyo/khali/khula/sajilo/gahro/kharab/sundar/byasta/
         jaruri/surakshit/halka/bhari/sahi/galat/kada/pakka/bahadur/niko): "my hair is long," "a busy
@@ -268,6 +278,17 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
         red," "the cow gives milk." Needed the **T32 routing tweak** (below) so a noun shown as a
         multi-word frame becomes a word-bank, not a type-the-sentence. Approved by Ross, merged.
         Batches 4–6 rendered together: 80 phrase + 22 word clips, `AUDIO_VERSION` 20.
+  - [x] **Batches 7–9 — food & kitchen · household objects · weather, nature & animals (60 items ·
+        120 frames)** — first depth batches on the object-noun pools (kitchen/pantry/fruit/veg,
+        bedroom→personal items, weather/animals/colors); 2 frames per item, everyday-context +
+        real-expression mix (बत्ती गयो/आयो, दसवटा मोमो दिनुस्, वाइफाइ पासवर्ड के हो?, जुत्ता बाहिर
+        राख्नुस्). Every dev dup-checked against all 1,129 existing course sentences and
+        romanize-verified at draft time; blanket-approved by Ross 2026-07-20, merged (145 items now
+        framed). Rendering the frames surfaced the T35 root cause (below) — `build-words.mjs` now
+        covers all units, so this render was 120 phrase + 331 word clips, `AUDIO_VERSION` 23.
+        Dev-seed 0f derives from COURSE, no change needed. (Minor: the words build now flags 8
+        cosmetic slug conflicts — the 3 known ones plus गोलभेंडा/गोलभेँडा, फूल/फुल, राति/राती,
+        स्कुल/स्कूल, घमण्ड/घमन्ड — all pre-existing course spelling variants, audibly identical.)
 - [x] **T32 · Depth mechanism — route by the shown frame, not the canonical word** — `buildExercises`
       (`js/sano.js`) now computes `multiWord` from `pickFrame(item).np`, so a single-word `vocab` item
       whose review lands on a multi-word alternate frame is drilled as a word-bank (assemble the

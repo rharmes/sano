@@ -899,12 +899,22 @@ const COURSE = [
 				dev: 'भाँडा',
 				emoji: '🍽️',
 				en: 'Dishes',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'भाँडा फोहोर छ', en: 'The dishes are dirty' },
+					{ dev: 'भाँडा माझ्नुस्', en: 'Wash the dishes' },
+				],
 			},
 			{
 				id: 'thaal-plate',
 				dev: 'थाल',
 				emoji: '🍽️',
 				en: 'Plate',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'थालमा भात छ', en: "There's rice on the plate" },
+					{ dev: 'थाल टेबलमा राख्नुस्', en: 'Put the plate on the table' },
+				],
 			},
 			{
 				id: 'kachaura-bowl',
@@ -917,6 +927,11 @@ const COURSE = [
 				dev: 'चम्चा',
 				emoji: '🥄',
 				en: 'Spoon',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई चम्चा दिनुस्', en: 'Please give me a spoon' },
+					{ dev: 'चम्चा सफा छैन', en: "The spoon isn't clean" },
+				],
 			},
 			{
 				id: 'kaanta-fork',
@@ -935,6 +950,11 @@ const COURSE = [
 				dev: 'गिलास',
 				emoji: '🥤',
 				en: 'Glass',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'गिलासमा पानी छ', en: "There's water in the glass" },
+					{ dev: 'अर्को गिलास दिनुस्', en: 'Another glass, please' },
+				],
 			},
 			{
 				id: 'kap-cup',
@@ -965,6 +985,11 @@ const COURSE = [
 				dev: 'फ्रिज',
 				emoji: '🧊',
 				en: 'Refrigerator',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'दूध फ्रिजमा छ', en: 'The milk is in the fridge' },
+					{ dev: 'फ्रिज खाली छ', en: 'The fridge is empty' },
+				],
 			},
 			{
 				id: 'kitli-kettle',
@@ -1025,18 +1050,33 @@ const COURSE = [
 				emoji: '🥗',
 				en: 'Vegetables / Curry',
 				enEither: true,
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'म बजारमा तरकारी किन्छु', en: 'I buy vegetables at the market' },
+					{ dev: 'तरकारी तयार भयो', en: 'The curry is ready' },
+				],
 			},
 			{
 				id: 'roti-bread-flatbread',
 				dev: 'रोटी',
 				emoji: '🫓',
 				en: 'Flatbread',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'म रोटी बनाउँछु', en: 'I make flatbread' },
+					{ dev: 'रोटी नरम छ', en: 'The flatbread is soft' },
+				],
 			},
 			{
 				id: 'maasu-meat',
 				dev: 'मासु',
 				emoji: '🍖',
 				en: 'Meat',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'मासु महँगो छ', en: 'Meat is expensive' },
+					{ dev: 'बाख्राको मासु मिठो छ', en: 'Goat meat is delicious' },
+				],
 			},
 			{
 				id: 'machha-fish',
@@ -1071,6 +1111,11 @@ const COURSE = [
 				dev: 'दही',
 				emoji: '🥛',
 				en: 'Yogurt',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'दही चिसो छ', en: 'The yogurt is cold' },
+					{ dev: 'ताजा दही', en: 'Fresh yogurt' },
+				],
 			},
 		],
 	},
@@ -1085,6 +1130,11 @@ const COURSE = [
 				dev: 'चिया',
 				emoji: '🍵',
 				en: 'Tea',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'चिया खानुहुन्छ?', en: 'Will you have tea?' },
+					{ dev: 'चिया तातो छ', en: 'The tea is hot' },
+				],
 			},
 			{
 				id: 'paani-water',
@@ -1097,12 +1147,22 @@ const COURSE = [
 				dev: 'नुन',
 				emoji: '🧂',
 				en: 'Salt',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'खानामा नुन छैन', en: "There's no salt in the food" },
+					{ dev: 'नुन धेरै भयो', en: "There's too much salt" },
+				],
 			},
 			{
 				id: 'chini-sugar',
 				dev: 'चिनी',
 				emoji: '🍬',
 				en: 'Sugar',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'चियामा चिनी हाल्नुस्', en: 'Put sugar in the tea' },
+					{ dev: 'चिनी सकियो', en: 'The sugar is finished' },
+				],
 			},
 			{
 				id: 'tel-oil',
@@ -1744,9 +1804,10 @@ const COURSE = [
 				dev: 'मैले पिएँ',
 				en: 'I drank',
 				usage: 'From "piunu" (to drink). "Maile paani pien" (I drank water). For warm drinks Nepali still "eats": "maile chiya khaen" (I had tea).',
-				// T29 batch 2 (past-tense verbs; AI-drafted, approved):
+				// T29 batch 2 (past-tense verbs; AI-drafted, approved). Frame 1 uses खानु for
+				// tea — the colloquial verb, per the usage note (swapped from पिएँ, Ross-approved):
 				frames: [
-					{ dev: 'मैले चिया पिएँ', en: 'I drank tea' },
+					{ dev: 'मैले चिया खाएँ', en: 'I had tea' },
 					{ dev: 'मैले पानी पिएँ', en: 'I drank water' },
 				],
 			},
@@ -2871,12 +2932,22 @@ const COURSE = [
 				dev: 'रङ',
 				emoji: '🎨',
 				en: 'Color',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'तपाईंलाई कुन रङ मन पर्छ?', en: 'Which color do you like?' },
+					{ dev: 'मलाई निलो रङ मन पर्छ', en: 'I like the color blue' },
+				],
 			},
 			{
 				id: 'rato-red',
 				dev: 'रातो',
 				emoji: '🔴',
 				en: 'Red',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'स्याउ रातो छ', en: 'The apple is red' },
+					{ dev: 'रातो टोपी', en: 'A red hat' },
+				],
 			},
 			{
 				id: 'nilo-blue',
@@ -3716,6 +3787,11 @@ const COURSE = [
 				dev: 'ओछ्यान',
 				emoji: '🛏️',
 				en: 'Bed',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'म ओछ्यानमा सुत्छु', en: 'I sleep in my bed' },
+					{ dev: 'ओछ्यान नरम छ', en: 'The bed is soft' },
+				],
 			},
 			{
 				id: 'sirani-pillow',
@@ -3728,6 +3804,11 @@ const COURSE = [
 				dev: 'कम्बल',
 				emoji: '🧺',
 				en: 'Blanket',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'जाडोमा कम्बल चाहिन्छ', en: 'You need a blanket in winter' },
+					{ dev: 'कम्बल न्यानो छ', en: 'The blanket is warm' },
+				],
 			},
 			{
 				id: 'gadda-mattress',
@@ -3752,6 +3833,11 @@ const COURSE = [
 				dev: 'बत्ती',
 				emoji: '💡',
 				en: 'Light / Lamp',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'बत्ती गयो', en: 'The power went out' },
+					{ dev: 'बत्ती आयो', en: 'The power is back' },
+				],
 			},
 			{
 				id: 'ghaadi-clock-watch',
@@ -3764,6 +3850,11 @@ const COURSE = [
 				dev: 'पंखा',
 				emoji: '🌀',
 				en: 'Fan',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'पंखा चलाउनुस्', en: 'Turn on the fan' },
+					{ dev: 'पंखा बन्द गर्नुस्', en: 'Turn off the fan' },
+				],
 			},
 		],
 	},
@@ -3790,12 +3881,22 @@ const COURSE = [
 				dev: 'साबुन',
 				emoji: '🧼',
 				en: 'Soap',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'साबुनले हात धुनुस्', en: 'Wash your hands with soap' },
+					{ dev: 'साबुन कहाँ छ?', en: 'Where is the soap?' },
+				],
 			},
 			{
 				id: 'taauliya-towel',
 				dev: 'तौलिया',
 				emoji: '🧽',
 				en: 'Towel',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'तौलिया सफा छ', en: 'The towel is clean' },
+					{ dev: 'मलाई तौलिया दिनुस्', en: 'Please give me a towel' },
+				],
 			},
 			{
 				id: 'brush-toothbrush',
@@ -3840,12 +3941,22 @@ const COURSE = [
 				dev: 'कुर्सी',
 				emoji: '🪑',
 				en: 'Chair',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'कुर्सीमा बस्नुस्', en: 'Sit on the chair' },
+					{ dev: 'यो कुर्सी खाली छ?', en: 'Is this seat free?' },
+				],
 			},
 			{
 				id: 'tebul-table',
 				dev: 'टेबल',
 				emoji: '🪑',
 				en: 'Table',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'टेबल सफा गर्नुस्', en: 'Clean the table' },
+					{ dev: 'टेबलमुनि झोला छ', en: 'The bag is under the table' },
+				],
 			},
 			{
 				id: 'sofa-sofa-couch',
@@ -3858,6 +3969,11 @@ const COURSE = [
 				dev: 'टिभी',
 				emoji: '📺',
 				en: 'Television',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'टिभी बन्द गर्नुस्', en: 'Turn off the TV' },
+					{ dev: 'टिभीमा के छ?', en: "What's on TV?" },
+				],
 			},
 			{
 				id: 'remote-remote-control',
@@ -3870,6 +3986,11 @@ const COURSE = [
 				dev: 'किताब',
 				emoji: '📚',
 				en: 'Book',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'यो किताब राम्रो छ', en: 'This book is good' },
+					{ dev: 'किताब झोलामा छ', en: 'The book is in the bag' },
+				],
 			},
 			{
 				id: 'kaagaj-paper',
@@ -3882,6 +4003,11 @@ const COURSE = [
 				dev: 'कलम',
 				emoji: '🖊️',
 				en: 'Pen',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई कलम दिनुस्', en: 'Please give me a pen' },
+					{ dev: 'निलो कलम', en: 'A blue pen' },
+				],
 			},
 			{
 				id: 'galaicha-carpet-rug',
@@ -3894,12 +4020,22 @@ const COURSE = [
 				dev: 'झ्याल',
 				emoji: '🪟',
 				en: 'Window',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'झ्यालबाट हावा आउँछ', en: 'Air comes in through the window' },
+					{ dev: 'झ्याल फोहोर छ', en: 'The window is dirty' },
+				],
 			},
 			{
 				id: 'dhoka-door',
 				dev: 'ढोका',
 				emoji: '🚪',
 				en: 'Door',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'ढोका खोल्नुस्', en: 'Open the door' },
+					{ dev: 'ढोकामा को छ?', en: 'Who is at the door?' },
+				],
 			},
 			{
 				id: 'taala-lock',
@@ -3912,6 +4048,11 @@ const COURSE = [
 				dev: 'साँचो',
 				emoji: '🔑',
 				en: 'Key',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'साँचो ढोकामा छ', en: 'The key is in the door' },
+					{ dev: 'मैले साँचो बिर्सें', en: 'I forgot the key' },
+				],
 			},
 		],
 	},
@@ -3988,6 +4129,11 @@ const COURSE = [
 				dev: 'मोबाइल',
 				emoji: '📱',
 				en: 'Cell phone',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो मोबाइल कहाँ छ?', en: 'Where is my phone?' },
+					{ dev: 'मोबाइल चार्ज गर्नुस्', en: 'Charge the phone' },
+				],
 			},
 			{
 				id: 'computer-computer',
@@ -4012,6 +4158,11 @@ const COURSE = [
 				dev: 'वाइफाइ',
 				emoji: '🛜',
 				en: 'WiFi',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'वाइफाइ छैन', en: "There's no wifi" },
+					{ dev: 'वाइफाइ पासवर्ड के हो?', en: "What's the wifi password?" },
+				],
 			},
 			{
 				id: 'plug-electrical-plug',
@@ -4050,6 +4201,11 @@ const COURSE = [
 				dev: 'झोला',
 				emoji: '👜',
 				en: 'Bag',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'झोलामा के छ?', en: "What's in the bag?" },
+					{ dev: 'झोला यहाँ राख्नुस्', en: 'Put the bag here' },
+				],
 			},
 			{
 				id: 'chashma-glasses-spectacles',
@@ -4080,12 +4236,22 @@ const COURSE = [
 				dev: 'जुत्ता',
 				emoji: '👞',
 				en: 'Shoes',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'जुत्ता बाहिर राख्नुस्', en: 'Leave your shoes outside' },
+					{ dev: 'मेरो जुत्ता नयाँ छ', en: 'My shoes are new' },
+				],
 			},
 			{
 				id: 'chhata-umbrella',
 				dev: 'छाता',
 				emoji: '☂️',
 				en: 'Umbrella',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'छाता लिनुस्', en: 'Take an umbrella' },
+					{ dev: 'मेरो छाता हरायो', en: 'I lost my umbrella' },
+				],
 			},
 			{
 				id: 'ghadi-watch-clock',
@@ -4136,6 +4302,11 @@ const COURSE = [
 				dev: 'औषधि',
 				emoji: '💊',
 				en: 'Medicine',
+				// T29 batch 8 (household objects; AI-drafted, approved):
+				frames: [
+					{ dev: 'औषधि खानुस्', en: 'Take your medicine' },
+					{ dev: 'मलाई औषधि चाहियो', en: 'I need medicine' },
+				],
 			},
 			{
 				id: 'chitthi-letter',
@@ -4343,6 +4514,11 @@ const COURSE = [
 				dev: 'बाख्रा',
 				emoji: '🐐',
 				en: 'Goat',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'बाख्रा घाँस खान्छ', en: 'The goat eats grass' },
+					{ dev: 'बाख्रा बाहिर छ', en: 'The goat is outside' },
+				],
 			},
 			{
 				id: 'bhedaa-sheep',
@@ -4355,6 +4531,11 @@ const COURSE = [
 				dev: 'घोडा',
 				emoji: '🐴',
 				en: 'Horse',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'घोडा छिटो दौडन्छ', en: 'The horse runs fast' },
+					{ dev: 'घोडा सेतो छ', en: 'The horse is white' },
+				],
 			},
 			{
 				id: 'gadha-donkey',
@@ -4373,6 +4554,11 @@ const COURSE = [
 				dev: 'कुखुरा',
 				emoji: '🐔',
 				en: 'Chicken',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'कुखुरा अन्डा दिन्छ', en: 'The chicken gives eggs' },
+					{ dev: 'मलाई कुखुराको मासु मन पर्छ', en: 'I like chicken meat' },
+				],
 			},
 			{
 				id: 'haas-duck',
@@ -4385,6 +4571,11 @@ const COURSE = [
 				dev: 'चरा',
 				emoji: '🐦',
 				en: 'Bird',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'चरा रुखमा छ', en: 'The bird is in the tree' },
+					{ dev: 'चरा उड्छ', en: 'The bird flies' },
+				],
 			},
 		],
 	},
@@ -4447,12 +4638,22 @@ const COURSE = [
 				dev: 'हात्ती',
 				emoji: '🐘',
 				en: 'Elephant',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'हात्ती धेरै ठूलो छ', en: 'The elephant is very big' },
+					{ dev: 'चितवनमा हात्ती छ', en: 'There are elephants in Chitwan' },
+				],
 			},
 			{
 				id: 'bandar-monkey',
 				dev: 'बाँदर',
 				emoji: '🐒',
 				en: 'Monkey',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'मन्दिरमा बाँदर छ', en: 'There are monkeys at the temple' },
+					{ dev: 'बाँदर केरा खान्छ', en: 'The monkey eats bananas' },
+				],
 			},
 			{
 				id: 'bhalu-bear',
@@ -4473,12 +4674,22 @@ const COURSE = [
 				dev: 'स्याउ',
 				emoji: '🍎',
 				en: 'Apple',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'स्याउ ताजा छ', en: 'The apples are fresh' },
+					{ dev: 'एक किलो स्याउ दिनुस्', en: 'A kilo of apples, please' },
+				],
 			},
 			{
 				id: 'kera-banana',
 				dev: 'केरा',
 				emoji: '🍌',
 				en: 'Banana',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'केरा पहेँलो छ', en: 'The banana is yellow' },
+					{ dev: 'केरा सस्तो छ', en: 'Bananas are cheap' },
+				],
 			},
 			{
 				id: 'suntala-orange',
@@ -4535,6 +4746,11 @@ const COURSE = [
 				dev: 'गोलभेंडा',
 				emoji: '🍅',
 				en: 'Tomato',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'गोलभेंडा रातो छ', en: 'The tomato is red' },
+					{ dev: 'गोलभेंडाको अचार मिठो छ', en: 'Tomato chutney is delicious' },
+				],
 			},
 			{
 				id: 'kaankro-cucumber',
@@ -4553,6 +4769,11 @@ const COURSE = [
 				dev: 'आलु',
 				emoji: '🥔',
 				en: 'Potato',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'तरकारीमा आलु हाल्नुस्', en: 'Put potatoes in the curry' },
+					{ dev: 'आलु ठूलो छ', en: 'The potato is big' },
+				],
 			},
 			{
 				id: 'pyaaj-onion',
@@ -4571,6 +4792,11 @@ const COURSE = [
 				dev: 'खुर्सानी',
 				emoji: '🌶️',
 				en: 'Chili pepper',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'यो खुर्सानी पिरो छ', en: 'This chili is spicy' },
+					{ dev: 'खुर्सानी नहाल्नुस्', en: "Don't add chili" },
+				],
 			},
 			{
 				id: 'karela-bitter-gourd',
@@ -4627,6 +4853,11 @@ const COURSE = [
 				dev: 'मोमो',
 				emoji: '🥟',
 				en: 'Dumplings / Momos',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई मोमो मन पर्छ', en: 'I like momos' },
+					{ dev: 'दसवटा मोमो दिनुस्', en: 'Ten momos, please' },
+				],
 			},
 			{
 				id: 'sel-roti-sel-roti-ring-shaped-bread',
@@ -4663,6 +4894,11 @@ const COURSE = [
 				dev: 'खाजा',
 				emoji: '🍪',
 				en: 'Snacks',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'खाजा खाने बेला भयो', en: "It's snack time" },
+					{ dev: 'म खाजा खान्छु', en: 'I eat a snack' },
+				],
 			},
 			{
 				id: 'raksi-traditional-alcohol',
@@ -4687,6 +4923,11 @@ const COURSE = [
 				dev: 'कफी',
 				emoji: '☕',
 				en: 'Coffee',
+				// T29 batch 7 (food & kitchen; AI-drafted, approved):
+				frames: [
+					{ dev: 'म बिहान कफी पिउँछु', en: 'I drink coffee in the morning' },
+					{ dev: 'कफी बलियो छ', en: 'The coffee is strong' },
+				],
 			},
 		],
 	},
@@ -4701,6 +4942,11 @@ const COURSE = [
 				dev: 'घाम',
 				emoji: '☀️',
 				en: 'Sun / Sunshine',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'बिहान घाम लाग्छ', en: 'The sun shines in the morning' },
+					{ dev: 'आज घाम छैन', en: "There's no sun today" },
+				],
 			},
 			{
 				id: 'chandra-moon',
@@ -4719,12 +4965,22 @@ const COURSE = [
 				dev: 'बादल',
 				emoji: '☁️',
 				en: 'Cloud',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'आकाशमा बादल छ', en: 'There are clouds in the sky' },
+					{ dev: 'कालो बादल आयो', en: 'Dark clouds came' },
+				],
 			},
 			{
 				id: 'pani-rain',
 				dev: 'पानी',
 				emoji: '🌧️',
 				en: 'Rain',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'मनसुनमा पानी धेरै पर्छ', en: 'It rains a lot in monsoon' },
+					{ dev: 'पानी पर्छ जस्तो छ', en: 'It looks like rain' },
+				],
 			},
 			{
 				id: 'haawaahuri-wind-storm',
@@ -4743,6 +4999,11 @@ const COURSE = [
 				dev: 'हिउँ',
 				emoji: '❄️',
 				en: 'Snow',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'पहाडमा हिउँ छ', en: "There's snow on the mountains" },
+					{ dev: 'हिउँ सेतो छ', en: 'Snow is white' },
+				],
 			},
 			{
 				id: 'tuhaaro-fog-mist',
@@ -4787,12 +5048,22 @@ const COURSE = [
 				dev: 'गर्मी',
 				emoji: '🔥',
 				en: 'Heat / Hot weather',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'आज धेरै गर्मी छ', en: "It's very hot today" },
+					{ dev: 'गर्मीमा धेरै पानी खानुस्', en: 'Drink lots of water in the heat' },
+				],
 			},
 			{
 				id: 'jado-cold-winter',
 				dev: 'जाडो',
 				emoji: '🧊',
 				en: 'Cold / Winter',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई जाडो लाग्यो', en: 'I feel cold' },
+					{ dev: 'जाडोमा हिउँ पर्छ', en: 'It snows in winter' },
+				],
 			},
 			{
 				id: 'monsoon-monsoon-season',
@@ -4811,6 +5082,11 @@ const COURSE = [
 				dev: 'आकाश',
 				emoji: '🌌',
 				en: 'Sky',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'आकाश निलो छ', en: 'The sky is blue' },
+					{ dev: 'राति आकाशमा तारा छ', en: 'There are stars in the sky at night' },
+				],
 			},
 			{
 				id: 'dharti-earth-ground',
@@ -4829,6 +5105,11 @@ const COURSE = [
 				dev: 'पहाड',
 				emoji: '⛰️',
 				en: 'Mountain / Hill',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'नेपालमा पहाड धेरै छ', en: 'Nepal has many mountains' },
+					{ dev: 'म पहाड जान्छु', en: 'I go to the mountains' },
+				],
 			},
 		],
 	},
@@ -4843,6 +5124,11 @@ const COURSE = [
 				dev: 'नदी',
 				emoji: '🏞️',
 				en: 'River',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'नदी सफा छ', en: 'The river is clean' },
+					{ dev: 'नदी पहाडबाट आउँछ', en: 'The river comes from the mountains' },
+				],
 			},
 			{
 				id: 'taal-lake',
@@ -4861,12 +5147,22 @@ const COURSE = [
 				dev: 'रुख',
 				emoji: '🌳',
 				en: 'Tree',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'रुख ठूलो छ', en: 'The tree is big' },
+					{ dev: 'रुखमुनि बस्नुस्', en: 'Sit under the tree' },
+				],
 			},
 			{
 				id: 'phul-flower',
 				dev: 'फूल',
 				emoji: '🌸',
 				en: 'Flower',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'फूल राम्रो छ', en: 'The flower is pretty' },
+					{ dev: 'फूलमा मौरी छ', en: "There's a bee on the flower" },
+				],
 			},
 			{
 				id: 'ghaas-grass',
@@ -4897,6 +5193,11 @@ const COURSE = [
 				dev: 'आगो',
 				emoji: '🔥',
 				en: 'Fire',
+				// T29 batch 9 (weather, nature & animals; AI-drafted, approved):
+				frames: [
+					{ dev: 'आगो तातो छ', en: 'Fire is hot' },
+					{ dev: 'आगो नछुनुस्', en: "Don't touch the fire" },
+				],
 			},
 		],
 	},

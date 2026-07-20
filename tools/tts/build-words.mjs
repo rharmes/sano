@@ -58,13 +58,14 @@ const OVERRIDES = {
 	bujhyau: 'बुझ्यौ', // slug from derived np (झ = jh); was 'bujyau' under the old hand-drafted np
 };
 
-// Word-bank tiles come from multi-word phrases only (np has ≥ 2 words). Depth alternate
-// frames (T28) are expanded into their own entries so any new tile-word appearing only in
-// a rotating sentence still gets a slug + dev; they share the base item id in `appears`.
-const phrases = COURSE.filter((u) => u.kind === 'phrases')
-	.flatMap((u) => u.items)
+// Word-bank tiles can come from ANY unit kind: an en-np word bank tiles the words of the
+// shown sentence — canonical or rotating frame (T28/T32, so vocab items' frames count) —
+// and a single-word item is itself a tile in its own word-bank recall (SR-05), sitting
+// among distractors. So the inventory is every word of every canonical + frame sentence
+// across the whole COURSE (clozes excluded — their np carries the ___ placeholder).
+const phrases = COURSE.flatMap((u) => u.items)
 	.flatMap((it) => [{ id: it.id, dev: it.dev }, ...(it.frames || []).map((f) => ({ id: it.id, dev: f.dev }))])
-	.filter((it) => it.dev && !npOf(it).includes('_') && npOf(it).trim().split(/\s+/).length >= 2);
+	.filter((it) => it.dev && !npOf(it).includes('_'));
 
 // Distinct tile-words, the romanized display form, and which items they appear in.
 const appears = {}; // slug -> Set(itemId)

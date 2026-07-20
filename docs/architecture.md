@@ -98,7 +98,7 @@ necessarily follow auth and live in the DB-gated integration specs.
 | `build-character-heads.mjs` / `build-anim-characters.mjs` | Generate `js/characters.js` / `design/anim-characters.js` from `design/characters.html`. Re-run after editing character art. |
 | `schema.sql` | Canonical DB schema (see `@docs/data-model.md`). Live changes go through a one-off idempotent `migrate-*.php`, then fold back into this file — never re-apply it to an existing DB. |
 | `tts/synth-app.mjs` | Render phrase / word / dialogue-line clips through the ElevenLabs API in Sano's cloned voice — `--phrases` (→ `audio/default/<id>.mp3`, ~588) / `--words` (→ `audio/words/<slug>.mp3`, ~233) / `--dialogues` (→ `audio/<voice>/<clipId>.mp3`, per speaker). Add `--new` for only clips missing on disk, `--only` for one, `--sample` to preview. Bump `AUDIO_VERSION` (js/audio.js) after. |
-| `tts/build-words.mjs` | Build `tts/words.json` (per-word Devanagari, phrases-only) for the word-bank clips. |
+| `tts/build-words.mjs` | Build `tts/words.json` (per-word Devanagari; every canonical + frame sentence across all units, incl. single-word items) for the word-bank clips. |
 | `tts/dialogue-scripts.md` | The conversations' English **source of truth** (story / questions / metadata / voice-direction). `js/dialogues.js` is hand-built from it (adds the Nepali + clip routing); `synth-app.mjs --dialogues` then renders audio. Synced by hand — no generator/drift-check. |
 | `tts/voice-tags.md` | Reference for the ElevenLabs v3 `[bracket]` audio tags + how they flow through the pipeline (inline in dialogue `dev` → synth verbatim → stripped from on-screen text). |
 | `tts/eleven.mjs` / `tts/phrases.mjs` / `tts/build-compare.mjs` | ElevenLabs client + voice mapping + sample-comparison design tool. |
