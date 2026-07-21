@@ -77,9 +77,10 @@ this list. Refer to any task by its ID (e.g. "T3").
         each voice on short course phrases before the full render.** (Per Ross 2026-07-21: bundled
         match / listen-match grids stay all-Sano — a round mixes sections, and every pill on a page
         must share one voice; companion voices are single-item exercises + their feedback replays.)
-  - [ ] **Full render for the voiced six** — once the pilot voices pass, render the rest of their
-        sections (`--units --new`; ~14.4k credits for the remaining mapped-and-voiced units) and bump
-        `AUDIO_VERSION`. Any voice that wobbles just stays default until retuned.
+  - [x] **Full render for the voiced six (2026-07-21)** — pilot voices passed Ross's review; the
+        remaining 771 clips of the six companions' sections rendered (`--units --new`, ~9k credits;
+        920 companion clips total across 49 units), `AUDIO_VERSION` 28. The 53 units owned by the
+        un-voiced four still review in Sano's voice until T36 designs their voices.
 - [ ] **T36 · Design voices for Hiun, Chanchal, Phurtilo, Lamo** — the four companions without an
       ElevenLabs voice (snow leopard, langur, tahr, gharial). Design/pick voices in the dashboard
       (persona notes: `CHARACTER_PERSONAS`, `js/dialogues.js`; process: RESEARCH.md §9), add ids to
