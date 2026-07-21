@@ -912,8 +912,11 @@
 		"source": "aligned",
 		"phrases": [
 			"bajaar-market",
+			"bholi-tomorrow",
+			"budha-husband",
 			"budhabaar-wednesday",
 			"didi-older-sister",
+			"hijo-yesterday",
 			"kahilekaahi-sometimes",
 			"ma-gaen-i-went",
 			"saathi-friend"
@@ -933,8 +936,10 @@
 		"source": "aligned",
 		"phrases": [
 			"aath-eight",
+			"chha-six",
 			"das-ten",
 			"fn-saadhe-andahalf",
+			"nau-nine",
 			"saat-seven",
 			"tin-three"
 		]
@@ -999,9 +1004,11 @@
 			"aankha-eye",
 			"dhoka-banda-garnu-bhayo-did-you-close-the-door",
 			"dhoka-banda-garnus-please-close-the-door",
+			"nau-nine",
 			"noun2-yatayat-transport",
 			"pankha-fan",
 			"pasal-shop-store",
+			"raati-night",
 			"tv-television"
 		]
 	},
@@ -1101,6 +1108,7 @@
 		"dev": "बस्नुहुन्छ",
 		"source": "aligned",
 		"phrases": [
+			"hajurbuwa-grandfather",
 			"kaha-basnu-huncha-where-do-you-live"
 		]
 	},
@@ -1161,6 +1169,7 @@
 		"source": "aligned",
 		"phrases": [
 			"beluka-evening",
+			"chha-six",
 			"sukrabaar-friday"
 		]
 	},
@@ -1352,6 +1361,7 @@
 			"adv-tyaspachhi-afterthat",
 			"bis-twenty",
 			"bore-bored",
+			"chha-six",
 			"dherai-bhayo-thats-plenty",
 			"dherai-mahango-too-expensive",
 			"dhilo-bhayo-it-is-late-i-am-running-late",
@@ -1369,6 +1379,7 @@
 			"nun-salt",
 			"ramailo-bhayo-it-was-fun",
 			"sabai-kati-bhayo-how-much-total",
+			"seto-white",
 			"sutne-bela-bhayo-it-s-bedtime",
 			"tarkari-vegetables-curry",
 			"tin-three"
@@ -1464,6 +1475,7 @@
 		"dev": "बिदा",
 		"source": "aligned",
 		"phrases": [
+			"bholi-tomorrow",
 			"sanibaar-saturday"
 		]
 	},
@@ -2056,6 +2068,7 @@
 			"bhaat-rice-cooked",
 			"bhai-younger-brother",
 			"bhanda-dishes-utensils",
+			"bholi-tomorrow",
 			"biraami-sick",
 			"biralo-cat",
 			"bore-bored",
@@ -2088,7 +2101,9 @@
 			"glass-glass-cup",
 			"golbheda-tomato",
 			"haat-hand-arm",
+			"hajuraamaa-grandmother",
 			"hamro-our-ours",
+			"hariyo-green",
 			"hatti-elephant",
 			"hiun-pariraheko-cha-it-is-snowing",
 			"hiune-paani-snow",
@@ -2103,6 +2118,7 @@
 			"kasto-chha-hawa-how-s-the-weather",
 			"kati-tadha-how-far",
 			"kera-banana",
+			"khairo-brown",
 			"khana-food",
 			"khana-mitho-cha-the-food-is-delicious",
 			"khursaani-chili-pepper",
@@ -2122,6 +2138,7 @@
 			"muni-under-below",
 			"nadhi-river",
 			"najikai-cha-its-nearby",
+			"nilo-blue",
 			"noun-baithak-meeting",
 			"noun-bishwaas-trust",
 			"noun-prashna-question",
@@ -2133,6 +2150,7 @@
 			"ochyan-bed",
 			"oe-chheu",
 			"pahaad-mountain-hill",
+			"pahelo-yellow",
 			"pani-pariracha-it-is-raining",
 			"pani-rain",
 			"pasal-shop-store",
@@ -2397,7 +2415,8 @@
 			"adj-chiso-cold",
 			"dahi-yogurt",
 			"dudh-milk",
-			"haat-hand-arm"
+			"haat-hand-arm",
+			"raati-night"
 		]
 	},
 	"chitawanamaa": {
@@ -2439,6 +2458,7 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-baliyo-strong",
+			"bihaana-morning",
 			"chiya-khaane-will-you-have-tea",
 			"chiya-tea",
 			"ek-one",
@@ -2486,6 +2506,7 @@
 		"dev": "डाक्टर",
 		"source": "aligned",
 		"phrases": [
+			"budhi-wife",
 			"doctor-chaahiyo-i-need-a-doctor",
 			"ma-daktar-hu-i-am-a-doctor",
 			"uhaa-he-she-polite"
@@ -2724,7 +2745,8 @@
 			"dhoka-banda-garnu-bhayo-did-you-close-the-door",
 			"dhoka-banda-garnus-please-close-the-door",
 			"dhoka-door",
-			"dhoka-khulcha-the-door-opens"
+			"dhoka-khulcha-the-door-opens",
+			"raati-night"
 		]
 	},
 	"dhokaamaa": {
@@ -2784,6 +2806,7 @@
 		"dev": "दिन",
 		"source": "aligned",
 		"phrases": [
+			"aaja-today",
 			"adj-dosro-second",
 			"adj-lamo-long",
 			"adj-panchaun-fifth",
@@ -2842,6 +2865,7 @@
 			"ek-one",
 			"glass-glass-cup",
 			"kalam-pen",
+			"kalo-black",
 			"link-alikati",
 			"ma-dinchu-i-give",
 			"matra-only-just",
@@ -3130,7 +3154,8 @@
 		"dev": "गाई",
 		"source": "aligned",
 		"phrases": [
-			"gai-cow"
+			"gai-cow",
+			"khairo-brown"
 		]
 	},
 	"gaalaa": {
@@ -3147,6 +3172,14 @@
 		"source": "aligned",
 		"phrases": [
 			"noun2-gaun-village"
+		]
+	},
+	"gaaunmaa": {
+		"roman": "gaaunmaa",
+		"dev": "गाउँमा",
+		"source": "aligned",
+		"phrases": [
+			"hajurbuwa-grandfather"
 		]
 	},
 	"gaddaa": {
@@ -3170,6 +3203,7 @@
 		"dev": "गएँ",
 		"source": "aligned",
 		"phrases": [
+			"hijo-yesterday",
 			"ma-gaen-i-went"
 		]
 	},
@@ -3259,6 +3293,7 @@
 		"dev": "गर्मी",
 		"source": "aligned",
 		"phrases": [
+			"diuso-afternoon-daytime",
 			"garmi-cha-it-s-hot",
 			"garmi-heat-hot-weather"
 		]
@@ -3328,6 +3363,7 @@
 		"dev": "गर्नुहुन्छ",
 		"source": "aligned",
 		"phrases": [
+			"beluka-evening",
 			"buwa-father",
 			"tapai-kaha-kaam-garnuhunchha-where-do-you-work",
 			"tapai-ke-kaam-garnuhunchha-what-do-you-do"
@@ -3348,6 +3384,7 @@
 			"mobile-cell-phone",
 			"pankha-fan",
 			"piudai-garnus-please-drink",
+			"raati-night",
 			"tebul-table",
 			"tv-television"
 		]
@@ -3391,7 +3428,8 @@
 		"source": "aligned",
 		"phrases": [
 			"bakhra-goat",
-			"ghaas-grass"
+			"ghaas-grass",
+			"hariyo-green"
 		]
 	},
 	"ghaanti": {
@@ -3473,6 +3511,7 @@
 			"aamaa-mother",
 			"didi-older-sister",
 			"gharma-at-home-in",
+			"hajuraamaa-grandmother",
 			"hami-we-us",
 			"kukur-dog",
 			"ra-and",
@@ -3618,6 +3657,8 @@
 		"phrases": [
 			"aath-eight",
 			"adj-saman-equal",
+			"beluka-evening",
+			"bholi-tomorrow",
 			"chaar-four",
 			"haami-jitchaun-we-will-win",
 			"hami-we-us",
@@ -3671,6 +3712,7 @@
 		"dev": "हावा",
 		"source": "aligned",
 		"phrases": [
+			"bihaana-morning",
 			"haawa-air-wind",
 			"hawa-chalyo-it-s-windy",
 			"jhyaal-window",
@@ -3712,6 +3754,14 @@
 	"hajuraaamaa": {
 		"roman": "hajuraaamaa",
 		"dev": "हजुरआमा",
+		"source": "aligned",
+		"phrases": [
+			"hajuraamaa-grandmother"
+		]
+	},
+	"hajuraaamaako": {
+		"roman": "hajuraaamaako",
+		"dev": "हजुरआमाको",
 		"source": "aligned",
 		"phrases": [
 			"hajuraamaa-grandmother"
@@ -3816,6 +3866,14 @@
 			"heraun-lets-see"
 		]
 	},
+	"herchhau": {
+		"roman": "herchhau",
+		"dev": "हेर्छौं",
+		"source": "aligned",
+		"phrases": [
+			"beluka-evening"
+		]
+	},
 	"herchhu": {
 		"roman": "herchhu",
 		"dev": "हेर्छु",
@@ -3874,7 +3932,8 @@
 		"dev": "हिमाल",
 		"source": "aligned",
 		"phrases": [
-			"noun2-himal-mountain"
+			"noun2-himal-mountain",
+			"seto-white"
 		]
 	},
 	"hisaab": {
@@ -3901,6 +3960,7 @@
 		"source": "aligned",
 		"phrases": [
 			"aaitabaar-sunday",
+			"aaja-today",
 			"adj-alag-separate",
 			"adj-galat-wrong",
 			"adj-sahi-correct",
@@ -3915,6 +3975,7 @@
 			"ho-yes-informal",
 			"kati-ho-how-much-is-it",
 			"manchhe-person",
+			"nilo-blue",
 			"noun2-artha-meaning",
 			"oe-aadhunik",
 			"oe-saajhaa",
@@ -4013,10 +4074,15 @@
 		"source": "override",
 		"phrases": [
 			"adv-patakpatak-repeatedly",
+			"bihaana-morning",
+			"diuso-afternoon-daytime",
 			"fn-jaba-when",
 			"fn-natra-otherwise",
 			"huncha-okay-it-will-be-done",
+			"kahile-when",
 			"kahilekaahi-sometimes",
+			"nau-nine",
+			"raati-night",
 			"sukrabaar-friday"
 		]
 	},
@@ -4046,8 +4112,11 @@
 			"adj-kada-strict",
 			"adj-pakka-sure",
 			"adj-sahi-correct",
+			"budhi-wife",
 			"dai-older-brother",
 			"didi-older-sister",
+			"hajuraamaa-grandmother",
+			"hajurbuwa-grandfather",
 			"khushi-happy",
 			"pachaas-fifty",
 			"ra-and",
@@ -4104,6 +4173,7 @@
 		"dev": "जाडो",
 		"source": "aligned",
 		"phrases": [
+			"hijo-yesterday",
 			"jado-cha-it-s-cold",
 			"jado-cold-winter"
 		]
@@ -4156,6 +4226,7 @@
 		"dev": "जान्छौं",
 		"source": "aligned",
 		"phrases": [
+			"bholi-tomorrow",
 			"hami-we-us"
 		]
 	},
@@ -4203,6 +4274,14 @@
 			"malai-jaanu-pardaina-i-dont-have-to-go",
 			"noun2-videsh-abroad",
 			"ramrari-jaanu-go-safely-take-care"
+		]
+	},
+	"jaanubhayo": {
+		"roman": "jaanubhayo",
+		"dev": "जानुभयो",
+		"source": "aligned",
+		"phrases": [
+			"budha-husband"
 		]
 	},
 	"jaanuhunchha": {
@@ -4294,6 +4373,14 @@
 			"chaar-four"
 		]
 	},
+	"janmadin": {
+		"roman": "janmadin",
+		"dev": "जन्मदिन",
+		"source": "aligned",
+		"phrases": [
+			"aaja-today"
+		]
+	},
 	"jaruri": {
 		"roman": "jaruri",
 		"dev": "जरुरी",
@@ -4383,6 +4470,7 @@
 			"adj-bhari-heavy",
 			"adj-halka-light",
 			"jhola-bag",
+			"nilo-blue",
 			"tapaiko-your-formal",
 			"tebul-table"
 		]
@@ -4482,7 +4570,8 @@
 		"source": "aligned",
 		"phrases": [
 			"jutta-lagaaunus-please-put-on-your-shoes",
-			"jutta-shoes"
+			"jutta-shoes",
+			"khairo-brown"
 		]
 	},
 	"jyaaket": {
@@ -4524,6 +4613,7 @@
 		"phrases": [
 			"badal-cloud",
 			"kalo-black",
+			"nilo-blue",
 			"wear-chasmaa-glasses"
 		]
 	},
@@ -4767,7 +4857,8 @@
 		"dev": "कमिज",
 		"source": "aligned",
 		"phrases": [
-			"kamij-shirt"
+			"kamij-shirt",
+			"pahelo-yellow"
 		]
 	},
 	"kampani": {
@@ -4803,7 +4894,8 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-lamo-long",
-			"kapaal-hair"
+			"kapaal-hair",
+			"seto-white"
 		]
 	},
 	"kaphi": {
@@ -4812,6 +4904,7 @@
 		"source": "aligned",
 		"phrases": [
 			"coffee-coffee",
+			"kalo-black",
 			"ki-or-in-questions"
 		]
 	},
@@ -4918,6 +5011,7 @@
 			"adj-sambhav-possible",
 			"adv-tyaspachhi-afterthat",
 			"aru-ke-chaahiyo-what-else-do-you-need",
+			"beluka-evening",
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 			"jhola-bag",
 			"ke-bhayo-what-happened",
@@ -5019,6 +5113,10 @@
 		"phrases": [
 			"aath-eight",
 			"ani-and-then-also",
+			"budha-husband",
+			"chha-six",
+			"hajuraamaa-grandmother",
+			"kahile-when",
 			"khana-food",
 			"khana-khaeko-chhaina-i-haven-t-eaten",
 			"khana-khaeko-chu-i-ve-eaten-i-have-eaten",
@@ -5071,6 +5169,8 @@
 		"dev": "खान्छु",
 		"source": "aligned",
 		"phrases": [
+			"bihaana-morning",
+			"chha-six",
 			"daal-lentils",
 			"khaja-snacks",
 			"khana-food",
@@ -5265,7 +5365,8 @@
 		"source": "aligned",
 		"phrases": [
 			"das-ten",
-			"dhoka-khulcha-the-door-opens"
+			"dhoka-khulcha-the-door-opens",
+			"kahile-when"
 		]
 	},
 	"khursaani": {
@@ -5306,7 +5407,8 @@
 		"dev": "कि",
 		"source": "aligned",
 		"phrases": [
-			"ki-or-in-questions"
+			"ki-or-in-questions",
+			"nilo-blue"
 		]
 	},
 	"kilo": {
@@ -5448,6 +5550,7 @@
 		"dev": "कुकुर",
 		"source": "aligned",
 		"phrases": [
+			"kalo-black",
 			"kukur-dog"
 		]
 	},
@@ -5738,16 +5841,19 @@
 			"adv-yaspatak-thistime",
 			"ahile-now-right-now",
 			"bas-bus",
+			"bihaana-morning",
 			"bihibaar-thursday",
 			"biraami-sick",
 			"budhabaar-wednesday",
 			"coffee-coffee",
 			"daal-lentils",
+			"diuso-afternoon-daytime",
 			"dudh-milk",
 			"feel-eklo-lonely",
 			"feel-khusi-happy",
 			"fn-aaphain-oneself",
 			"fn-chahin-asfor",
+			"hijo-yesterday",
 			"hospital-hospital",
 			"kahilekaahi-sometimes",
 			"khaja-snacks",
@@ -5819,6 +5925,7 @@
 			"ma-yo-linchu-ill-take-this",
 			"mangalbaar-tuesday",
 			"maya-love",
+			"nau-nine",
 			"ochyan-bed",
 			"pachhi-later-after",
 			"pachi-later-after",
@@ -6036,6 +6143,7 @@
 			"cal-phagun",
 			"cal-pus",
 			"cal-saun",
+			"chha-six",
 			"mahina-month"
 		]
 	},
@@ -6250,6 +6358,7 @@
 		"phrases": [
 			"aamaa-mother",
 			"bahini-younger-sister",
+			"budhi-wife",
 			"chhori-daughter",
 			"didi-older-sister"
 		]
@@ -6259,23 +6368,27 @@
 		"dev": "मेरो",
 		"source": "aligned",
 		"phrases": [
+			"aaja-today",
 			"aankha-eye",
 			"adj-kada-strict",
 			"adj-lamo-long",
 			"biraami-sick",
 			"body-ghunda-knee",
 			"body-jibro-tongue",
+			"budha-husband",
 			"buwa-father",
 			"chhata-umbrella",
 			"chhimeki-neighbor",
 			"chhora-son",
 			"dai-older-brother",
 			"haat-hand-arm",
+			"hajurbuwa-grandfather",
 			"jutta-shoes",
 			"kukur-dog",
 			"mero-kap-kaha-cha-where-is-my-cup",
 			"mero-my-mine",
 			"mobile-cell-phone",
+			"nilo-blue",
 			"noun-bajet-budget",
 			"noun-bhaag-part",
 			"noun-desh-country",
@@ -6285,7 +6398,9 @@
 			"noun2-gaun-village",
 			"noun2-sharir-body",
 			"oe-chheu",
+			"pahelo-yellow",
 			"saathi-friend",
+			"seto-white",
 			"tauko-head",
 			"u-he-she-informal",
 			"uhaa-he-she-polite",
@@ -6334,6 +6449,7 @@
 		"phrases": [
 			"daal-lentils",
 			"golbheda-tomato",
+			"hajuraamaa-grandmother",
 			"khana-food",
 			"khana-mitho-cha-the-food-is-delicious",
 			"khana-mitho-thiyo-food-was-delicious",
@@ -6658,6 +6774,7 @@
 		"source": "aligned",
 		"phrases": [
 			"dir-naksa",
+			"hariyo-green",
 			"noun2-rajdhani-capital"
 		]
 	},
@@ -6675,6 +6792,7 @@
 		"source": "aligned",
 		"phrases": [
 			"adj-sajilo-easy",
+			"budhi-wife",
 			"ma-nepali-bolchhu-i-speak-nepali",
 			"ma-nepali-boldina-i-don-t-speak-nepali",
 			"ma-sikchu-i-learn",
@@ -7022,6 +7140,7 @@
 		"dev": "पहाड",
 		"source": "aligned",
 		"phrases": [
+			"hariyo-green",
 			"pahaad-mountain-hill"
 		]
 	},
@@ -7092,6 +7211,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-khana-pakaudai-chu-i-am-cooking-food"
+		]
+	},
+	"pakaaunuhunchha": {
+		"roman": "pakaaunuhunchha",
+		"dev": "पकाउनुहुन्छ",
+		"source": "aligned",
+		"phrases": [
+			"budha-husband"
 		]
 	},
 	"pakaaunus": {
@@ -7256,6 +7383,8 @@
 		"phrases": [
 			"adj-khula-open",
 			"das-ten",
+			"kahile-when",
+			"nau-nine",
 			"pasal-shop-store",
 			"sombaar-monday"
 		]
@@ -7469,6 +7598,7 @@
 		"source": "aligned",
 		"phrases": [
 			"kukhura-ko-phul-egg",
+			"pahelo-yellow",
 			"phul-flower"
 		]
 	},
@@ -7774,6 +7904,7 @@
 		"dev": "राम्रो",
 		"source": "aligned",
 		"phrases": [
+			"aaja-today",
 			"adv-ekdamai-extremely",
 			"adv-jhan-evenmore",
 			"adv-nikai-quite",
@@ -7831,6 +7962,7 @@
 		"phrases": [
 			"aakaash-sky",
 			"adv-raati-atnight",
+			"hijo-yesterday",
 			"raati-night"
 		]
 	},
@@ -8502,6 +8634,7 @@
 		"dev": "सफा",
 		"source": "aligned",
 		"phrases": [
+			"bihaana-morning",
 			"bihibaar-thursday",
 			"chamcha-spoon",
 			"ma-ghar-safaa-garchu-i-will-clean-the-house",
@@ -8671,6 +8804,14 @@
 		"source": "aligned",
 		"phrases": [
 			"ma-sikchu-i-learn"
+		]
+	},
+	"sikdai": {
+		"roman": "sikdai",
+		"dev": "सिक्दै",
+		"source": "aligned",
+		"phrases": [
+			"budhi-wife"
 		]
 	},
 	"sike": {
@@ -8866,6 +9007,8 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-raati-atnight",
+			"diuso-afternoon-daytime",
+			"nau-nine",
 			"ochyan-bed"
 		]
 	},
@@ -9139,6 +9282,7 @@
 		"dev": "तयार",
 		"source": "aligned",
 		"phrases": [
+			"kahile-when",
 			"khana-tayar-bhayo-the-food-is-ready",
 			"tarkari-vegetables-curry"
 		]
@@ -9294,6 +9438,7 @@
 		"dev": "थियो",
 		"source": "aligned",
 		"phrases": [
+			"hijo-yesterday",
 			"khana-mitho-thiyo-food-was-delicious"
 		]
 	},
@@ -9503,6 +9648,7 @@
 		"dev": "टिभी",
 		"source": "aligned",
 		"phrases": [
+			"beluka-evening",
 			"ma-herchu-i-watch",
 			"maile-heren-i-watched",
 			"tv-television"
@@ -9964,6 +10110,7 @@
 			"barsa-year",
 			"fn-baahek-except",
 			"haptaa-week",
+			"khairo-brown",
 			"khursaani-chili-pepper",
 			"kitab-book",
 			"kursi-chair",
@@ -9971,6 +10118,7 @@
 			"ma-linchu-i-take",
 			"ma-yo-linchu-ill-take-this",
 			"mahina-month",
+			"nilo-blue",
 			"noun-kshetra-area",
 			"oe-aadhunik",
 			"oe-saajhaa",

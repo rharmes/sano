@@ -302,6 +302,14 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
         **prefix-match** romanizer fix (वर्षको→Barsako, वनमा→Banamaa; golden tests; no existing slug
         affected). Remaining unframed pools for future batches: हजुरबुवा/हजुरआमा/बुढा/बुढी, छ/नौ, the
         formal emotions-more words, core communication units, ~135 object-noun leftovers.
+  - [x] **Batch 13 — odds & ends: grandparents & spouses, छ/नौ, time-of-day, colors (20 items ·
+        40 frames)** — हजुरबुवा/हजुरआमा/बुढा/बुढी with honorific frames (मेरो बुढा बजार जानुभयो, मेरी
+        बुढी नेपाली सिक्दै हुनुहुन्छ), छ/नौ clock frames (नौ बजे पसल बन्द हुन्छ), the 8 time-of-day
+        words (आज मेरो जन्मदिन हो, हिजो राति जाडो थियो), and 6 colors (यो निलो हो कि कालो?, मेरो कपाल
+        सेतो भयो; गुलाबी/प्याजी left for the nature-leftovers batch). Approved by Ross 2026-07-21,
+        merged (225 items framed), audio rendered, `AUDIO_VERSION` 25. Plan after this: ~2 batches
+        core communication, ~2 batches best object-noun leftovers, then close T29's frame coverage
+        (~300 items framed).
 - [x] **T32 · Depth mechanism — route by the shown frame, not the canonical word** — `buildExercises`
       (`js/sano.js`) now computes `multiWord` from `pickFrame(item).np`, so a single-word `vocab` item
       whose review lands on a multi-word alternate frame is drilled as a word-bank (assemble the

@@ -224,6 +224,11 @@ const COURSE = [
 				dev: 'छ',
 				emoji: '6️⃣',
 				en: 'Six',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'बेलुका छ बजे खाना खान्छु', en: 'I eat at six in the evening' },
+					{ dev: 'छ महिना भयो', en: "It's been six months" },
+				],
 			},
 			{
 				id: 'saat-seven',
@@ -252,6 +257,11 @@ const COURSE = [
 				dev: 'नौ',
 				emoji: '9️⃣',
 				en: 'Nine',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'नौ बजे पसल बन्द हुन्छ', en: 'The shop closes at nine' },
+					{ dev: 'म नौ बजे सुत्छु', en: 'I sleep at nine' },
+				],
 			},
 			{
 				id: 'das-ten',
@@ -574,24 +584,44 @@ const COURSE = [
 				dev: 'हजुरबुवा',
 				emoji: '👴',
 				en: 'Grandfather',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'हजुरबुवा गाउँमा बस्नुहुन्छ', en: 'Grandfather lives in the village' },
+					{ dev: 'मेरो हजुरबुवा हुनुहुन्छ', en: 'I have a grandfather' },
+				],
 			},
 			{
 				id: 'hajuraamaa-grandmother',
 				dev: 'हजुरआमा',
 				emoji: '👵',
 				en: 'Grandmother',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'हजुरआमाको खाना मिठो छ', en: "Grandmother's cooking is delicious" },
+					{ dev: 'हजुरआमा घरमा हुनुहुन्छ', en: 'Grandmother is at home' },
+				],
 			},
 			{
 				id: 'budha-husband',
 				dev: 'बुढा',
 				emoji: '🤵',
 				en: 'Husband',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो बुढा खाना पकाउनुहुन्छ', en: 'My husband cooks' },
+					{ dev: 'मेरो बुढा बजार जानुभयो', en: 'My husband went to the market' },
+				],
 			},
 			{
 				id: 'budhi-wife',
 				dev: 'बुढी',
 				emoji: '👰',
 				en: 'Wife',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरी बुढी डाक्टर हुनुहुन्छ', en: 'My wife is a doctor' },
+					{ dev: 'मेरी बुढी नेपाली सिक्दै हुनुहुन्छ', en: 'My wife is learning Nepali' },
+				],
 			},
 			{
 				id: 'saathi-friend',
@@ -2676,30 +2706,55 @@ const COURSE = [
 				dev: 'कहिले?',
 				en: 'When?',
 				usage: "A simple question word asking about time. You can use it to ask when something will happen, when someone will arrive, or when an event occurred. It's useful in planning and making arrangements.",
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'पसल कहिले खुल्छ?', en: 'When does the shop open?' },
+					{ dev: 'खाना कहिले तयार हुन्छ?', en: 'When will the food be ready?' },
+				],
 			},
 			{
 				id: 'aaja-today',
 				dev: 'आज',
 				en: 'Today',
 				usage: 'Refers to the current day. You\'ll hear this often in daily conversation when discussing plans or events. It can be combined with other words like "aaja nai" (today itself, meaning right away).',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'आज मेरो जन्मदिन हो', en: 'Today is my birthday' },
+					{ dev: 'आज राम्रो दिन हो', en: 'Today is a good day' },
+				],
 			},
 			{
 				id: 'bholi-tomorrow',
 				dev: 'भोलि',
 				en: 'Tomorrow',
 				usage: 'Refers to the next day. Interestingly, "bholi" is also used colloquially to mean "later" or "in the future," and Nepal has a reputation for "bholi culture" where things are often postponed until tomorrow.',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'भोलि बिदा छ', en: 'Tomorrow is a day off' },
+					{ dev: 'भोलि हामी बजार जान्छौं', en: 'Tomorrow we go to the market' },
+				],
 			},
 			{
 				id: 'hijo-yesterday',
 				dev: 'हिजो',
 				en: 'Yesterday',
 				usage: "Refers to the previous day. This word is commonly used when recounting recent events or experiences. It's a straightforward time marker in everyday conversation.",
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'हिजो म बजार गएँ', en: 'Yesterday I went to the market' },
+					{ dev: 'हिजो राति जाडो थियो', en: 'Last night was cold' },
+				],
 			},
 			{
 				id: 'bihaana-morning',
 				dev: 'बिहान',
 				en: 'Morning',
 				usage: 'The morning hours. "Bihaana sabere" means early in the morning. Often used with meals: morning daal bhaat is eaten mid-morning in most households.',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'बिहान हावा सफा हुन्छ', en: 'The morning air is clean' },
+					{ dev: 'म बिहान चिया खान्छु', en: 'I have tea in the morning' },
+				],
 			},
 			{
 				id: 'diuso-afternoon-daytime',
@@ -2707,18 +2762,33 @@ const COURSE = [
 				en: 'Afternoon / Daytime',
 				enEither: true,
 				usage: 'The middle of the day, roughly late morning through afternoon. "Diuso khana" can refer to a midday meal or snack.',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'दिउँसो गर्मी हुन्छ', en: 'It gets hot in the afternoon' },
+					{ dev: 'म दिउँसो सुत्छु', en: 'I nap in the afternoon' },
+				],
 			},
 			{
 				id: 'beluka-evening',
 				dev: 'बेलुका',
 				en: 'Evening',
 				usage: 'The evening hours, from late afternoon until night. "Beluka bhetaula" — see you this evening.',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'बेलुका के गर्नुहुन्छ?', en: 'What do you do in the evening?' },
+					{ dev: 'हामी बेलुका टिभी हेर्छौं', en: 'We watch TV in the evening' },
+				],
 			},
 			{
 				id: 'raati-night',
 				dev: 'राति',
 				en: 'Night',
 				usage: 'Nighttime. You have seen it inside "Subha ratri" (good night). "Raati abela" means late at night.',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'राति चिसो हुन्छ', en: 'It gets cold at night' },
+					{ dev: 'राति ढोका बन्द गर्नुस्', en: 'Lock the door at night' },
+				],
 			},
 		],
 	},
@@ -3194,36 +3264,66 @@ const COURSE = [
 				dev: 'निलो',
 				emoji: '🔵',
 				en: 'Blue',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो झोला निलो छ', en: 'My bag is blue' },
+					{ dev: 'यो निलो हो कि कालो?', en: 'Is this blue or black?' },
+				],
 			},
 			{
 				id: 'hariyo-green',
 				dev: 'हरियो',
 				emoji: '🟢',
 				en: 'Green',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'हरियो घाँस', en: 'Green grass' },
+					{ dev: 'नेपालको पहाड हरियो छ', en: "Nepal's hills are green" },
+				],
 			},
 			{
 				id: 'pahelo-yellow',
 				dev: 'पहेँलो',
 				emoji: '🟡',
 				en: 'Yellow',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'पहेँलो फूल', en: 'A yellow flower' },
+					{ dev: 'मेरो कमिज पहेँलो छ', en: 'My shirt is yellow' },
+				],
 			},
 			{
 				id: 'seto-white',
 				dev: 'सेतो',
 				emoji: '⚪',
 				en: 'White',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'सेतो हिमाल', en: 'White mountains' },
+					{ dev: 'मेरो कपाल सेतो भयो', en: 'My hair has gone white' },
+				],
 			},
 			{
 				id: 'kalo-black',
 				dev: 'कालो',
 				emoji: '⚫',
 				en: 'Black',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'कालो कफी दिनुस्', en: 'Black coffee, please' },
+					{ dev: 'कालो कुकुर', en: 'A black dog' },
+				],
 			},
 			{
 				id: 'khairo-brown',
 				dev: 'खैरो',
 				emoji: '🟤',
 				en: 'Brown',
+				// T29 batch 13 (grandparents, time-of-day & colors; AI-drafted, approved):
+				frames: [
+					{ dev: 'खैरो गाई', en: 'A brown cow' },
+					{ dev: 'यो जुत्ता खैरो छ', en: 'These shoes are brown' },
+				],
 			},
 			{
 				id: 'suntala-rang-orange-color',
