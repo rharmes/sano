@@ -860,7 +860,10 @@ function renderPath() {
 	// pocket without crowding the page edge or the lesson text. Ordered Thulo, then Pyaro,
 	// then the rest, each friend appearing once. Purely ornamental: they idle like Sano and
 	// do a head-shake when tapped (wiring below), nothing more.
-	const buddyOrder = ['thulo', 'pyaro', 'rangin', 'bahadur', 'gyani', 'hiun', 'chanchal', 'shanta', 'phurtilo', 'lamo'];
+	// Pocket order mirrors the UNIT_VOICES path sections (js/data.js): each companion sits
+	// beside the stretch of units they voice in reviews (T13), so the neighbor you meet on
+	// the path is the one who later quizzes you. Change the two together.
+	const buddyOrder = ['thulo', 'pyaro', 'shanta', 'gyani', 'chanchal', 'rangin', 'hiun', 'bahadur', 'phurtilo', 'lamo'];
 	if (typeof CHARACTER_BODIES !== 'undefined') {
 		// A turn is where the wave reverses horizontal direction. Right→left (a local max,
 		// node swung right) opens a pocket on the LEFT; left→right opens one on the RIGHT.
@@ -1112,6 +1115,32 @@ function pickFrame(item) {
 	return frameForSeen(item, record ? record.seen : 0);
 }
 
+// --- T13 companion voices (pure) ---
+// Reviews are voiced by the companion who owns the item's stretch of the path
+// (UNIT_VOICES, js/data.js) — but only once that companion has a designed voice
+// (CHARACTER_VOICES, js/audio.js); everyone else stays Sano. New-word introductions are
+// ALWAYS Sano's voice: buildExercises only tags REVIEW exercises with a companion, so a
+// learner first hears every word from the teacher and meets the neighbors on the way back.
+let itemCompanionCache = null;
+function itemCompanion(itemId) {
+	if (!itemCompanionCache) {
+		itemCompanionCache = {};
+		for (const unit of COURSE) for (const item of unit.items) itemCompanionCache[item.id] = UNIT_VOICES[unit.id] || null;
+	}
+	return itemCompanionCache[itemId] || null;
+}
+// The companion who quizzes this item in reviews, or null (Sano) if its unit's companion
+// has no rendered voice folder yet.
+function reviewCompanion(item) {
+	const companion = itemCompanion(item.id);
+	return companion && SanoAudio.voiceForCharacter(companion) !== SanoAudio.DEFAULT_VOICE ? companion : null;
+}
+// The voiceId a single-item exercise plays in: its tagged companion's, or Sano's default.
+function exVoice(ex) {
+	return ex.companion ? SanoAudio.voiceForCharacter(ex.companion) : undefined;
+}
+// --- end T13 companion voices ---
+
 function buildExercises(newItems, reviewItems) {
 	const exercises = [];
 	for (const item of newItems) {
@@ -1145,6 +1174,10 @@ function buildExercises(newItems, reviewItems) {
 	for (const item of reviewItems) {
 		if (matchItems.includes(item) || listenMatchItems.includes(item)) continue;
 		const record = itemRecord(item.id);
+		// A REVIEW is voiced by the item's path companion (T13) — null keeps Sano. Tagged here
+		// (not at render) so the new-item exercises above never carry a companion, and a
+		// requeued miss (a shallow clone) keeps the same speaker for the whole lesson.
+		const companion = reviewCompanion(item);
 		// Route by the sentence actually shown (the chosen depth frame), not the item's canonical
 		// word: a single-word `vocab` noun whose review lands on a multi-word alternate frame is a
 		// phrase to assemble, not a word to type. pickFrame is deterministic, so the later ex.frame
@@ -1154,13 +1187,14 @@ function buildExercises(newItems, reviewItems) {
 			// Free typing is the hardest recall — reserve it for a GRADUATED word shown as a single
 			// word. A still-learning word (or one shown as a multi-word frame) gets a gentle tap-based
 			// word bank instead (works for single words too), where its recalls accrue toward graduation.
-			if (isGraduated(record) && !multiWord) exercises.push({ item: item, type: 'type', listen: Math.random() < LISTEN_PROBABILITY });
-			else exercises.push({ item: item, type: 'wordbank', dir: Math.random() < 0.5 ? 'en-np' : 'np-en' });
+			if (isGraduated(record) && !multiWord)
+				exercises.push({ item: item, type: 'type', listen: Math.random() < LISTEN_PROBABILITY, companion: companion });
+			else exercises.push({ item: item, type: 'wordbank', dir: Math.random() < 0.5 ? 'en-np' : 'np-en', companion: companion });
 		} else if (Math.random() < LISTEN_PROBABILITY) {
 			// "Select what you hear": audio-only prompt, pick the meaning.
-			exercises.push({ item: item, type: 'choice', dir: 'np-en', listen: true });
+			exercises.push({ item: item, type: 'choice', dir: 'np-en', listen: true, companion: companion });
 		} else {
-			exercises.push({ item: item, type: 'choice', dir: Math.random() < 0.5 ? 'np-en' : 'en-np' });
+			exercises.push({ item: item, type: 'choice', dir: Math.random() < 0.5 ? 'np-en' : 'en-np', companion: companion });
 		}
 	}
 	shuffleArray(exercises);
@@ -1254,9 +1288,17 @@ function renderExercise() {
 	else if (ex.type === 'speak') renderSpeak(ex);
 	else if (ex.type === 'listenMatch') renderListenMatch(ex);
 	else renderMatch(ex);
+
+	// T13: show WHO is asking — the review companion's head above the prompt whenever a
+	// companion voice speaks this exercise. Hidden for Sano-voiced exercises and for the
+	// bundled match grids (several speakers, no single head).
+	const voiceEl = document.getElementById('exercise-voice');
+	const head = ex.companion && typeof CHARACTER_HEADS !== 'undefined' ? CHARACTER_HEADS[ex.companion] : null;
+	voiceEl.innerHTML = head || '';
+	voiceEl.classList.toggle('hide', !head);
 }
 
-function setPrompt(label, word, pron, audioId) {
+function setPrompt(label, word, pron, audioId, voiceId) {
 	document.getElementById('exercise-label').textContent = label;
 	const wordEl = document.getElementById('exercise-word');
 	wordEl.textContent = word;
@@ -1265,10 +1307,11 @@ function setPrompt(label, word, pron, audioId) {
 	// it AND auto-play it on load, so a Nepali word at the top always speaks itself. The
 	// English-prompt directions pass no audioId; their Nepali audio lives in the tappable
 	// tiles/choices below instead. renderExercise always runs inside the tap that opened or
-	// advanced the lesson, so this autoplay stays within a user gesture (iOS).
+	// advanced the lesson, so this autoplay stays within a user gesture (iOS). voiceId
+	// routes a review to its companion's clip (T13); undefined is Sano's default.
 	if (audioId) {
-		wordEl.appendChild(SanoAudio.button(audioId, { className: 'audio-inline' }));
-		SanoAudio.play(audioId);
+		wordEl.appendChild(SanoAudio.button(audioId, { className: 'audio-inline', voiceId: voiceId }));
+		SanoAudio.play(audioId, voiceId);
 	}
 	document.getElementById('exercise-pronounce').textContent = pron;
 }
@@ -1277,19 +1320,19 @@ function setPrompt(label, word, pron, audioId) {
 // no romanization shows, so the learner has to rely on the audio. It also auto-plays on
 // load (like a Nepali headword in setPrompt) so the clip you must identify speaks itself;
 // the button is then there to replay. Same user-gesture chain as setPrompt (iOS).
-function setListenPrompt(label, audioId) {
+function setListenPrompt(label, audioId, voiceId) {
 	document.getElementById('exercise-label').textContent = label;
 	const wordEl = document.getElementById('exercise-word');
 	wordEl.textContent = '';
-	wordEl.appendChild(SanoAudio.button(audioId, { className: 'audio-prompt' }));
-	SanoAudio.play(audioId);
+	wordEl.appendChild(SanoAudio.button(audioId, { className: 'audio-prompt', voiceId: voiceId }));
+	SanoAudio.play(audioId, voiceId);
 	document.getElementById('exercise-pronounce').textContent = '';
 }
 
 function renderChoice(ex) {
 	const f = ex.frame;
-	if (ex.listen) setListenPrompt('Select what you hear', f.audioId);
-	else if (ex.dir === 'np-en') setPrompt('Select the correct meaning', f.np, f.pron, f.audioId);
+	if (ex.listen) setListenPrompt('Select what you hear', f.audioId, exVoice(ex));
+	else if (ex.dir === 'np-en') setPrompt('Select the correct meaning', f.np, f.pron, f.audioId, exVoice(ex));
 	else setPrompt('Select the Nepali', promptText(f), '');
 
 	const choiceText = ex.dir === 'np-en' ? (item) => item.en : (item) => item.np;
@@ -1369,7 +1412,7 @@ function renderWordbank(ex) {
 	} else {
 		// Showing/parsing the Nepali is the prompt here, so its audio button doesn't give
 		// the (English) answer away; setPrompt auto-plays it on load (Nepali headword).
-		setPrompt('Listen and build the English', f.np, '', f.audioId);
+		setPrompt('Listen and build the English', f.np, '', f.audioId, exVoice(ex));
 	}
 
 	const answerEl = document.getElementById('wordbank-answer');
@@ -1448,7 +1491,7 @@ function wordbankDistractors(item, dir) {
 
 function renderType(ex) {
 	const f = ex.frame;
-	if (ex.listen) setListenPrompt('Type what you hear', f.audioId);
+	if (ex.listen) setListenPrompt('Type what you hear', f.audioId, exVoice(ex));
 	else setPrompt('Type the Nepali', promptText(f), '');
 	const input = document.getElementById('type-answer');
 	input.value = '';
@@ -1688,6 +1731,10 @@ function renderMatch(ex) {
 
 	const grid = document.getElementById('exercise-match');
 	grid.textContent = '';
+	// Bundled tiles always speak in Sano's default voice: a review round mixes items from
+	// different path sections, so per-item companion voices would mix speakers pill-to-pill
+	// within one grid (Ross: all pills on a page must share one voice). Companion voices
+	// stay on the single-item exercises, where one companion asks the whole card.
 	const left = shuffleArray(ex.items.slice()).map((item) => matchTile(item, 'left', item.np));
 	const right = shuffleArray(ex.items.slice()).map((item) => matchTile(item, 'right', item.en));
 	// Interleave so each grid row holds one Nepali tile and one English tile; the
@@ -1806,6 +1853,9 @@ function renderListenMatch(ex) {
 
 	const grid = document.getElementById('exercise-listen-match');
 	grid.textContent = '';
+	// Waveform tiles always speak in Sano's default voice, like every bundled grid: a round
+	// mixes items from different path sections, and per-item companion voices would mix
+	// speakers pill-to-pill within one page (see renderMatch).
 	const left = shuffleArray(ex.items.slice()).map((item, i) => listenTile(item, i));
 	const right = shuffleArray(ex.items.slice()).map((item) => matchTile(item, 'right', item.np));
 	for (let i = 0; i < ex.items.length; i++) {
@@ -2004,13 +2054,13 @@ function applyAnswer(ex, correct) {
 	// multiple choice only on a miss.
 	const showAnswer = !correct || ex.type === 'wordbank' || ex.type === 'type' || ex.listen;
 	const f = ex.frame;
-	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? f.np + ' = ' + promptText(f) : '', f.audioId);
+	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? f.np + ' = ' + promptText(f) : '', f.audioId, exVoice(ex));
 
 	saveState();
 	refreshHeader();
 }
 
-function showFeedback(correct, title, answerText, audioId) {
+function showFeedback(correct, title, answerText, audioId, voiceId) {
 	const feedbackEl = document.getElementById('lesson-feedback');
 	feedbackEl.classList.remove('hide');
 	feedbackEl.classList.toggle('correct', correct);
@@ -2018,8 +2068,9 @@ function showFeedback(correct, title, answerText, audioId) {
 	document.getElementById('feedback-title').textContent = title;
 	const answerEl = document.getElementById('feedback-answer');
 	answerEl.textContent = answerText;
-	// The reveal shows the Nepali answer ("<np> = <meaning>") — let the learner hear it.
-	if (answerText && audioId) answerEl.appendChild(SanoAudio.button(audioId, { className: 'audio-inline' }));
+	// The reveal shows the Nepali answer ("<np> = <meaning>") — let the learner hear it,
+	// in the same voice the exercise was asked in (T13).
+	if (answerText && audioId) answerEl.appendChild(SanoAudio.button(audioId, { className: 'audio-inline', voiceId: voiceId }));
 }
 
 function normalize(s) {

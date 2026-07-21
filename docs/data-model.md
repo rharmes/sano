@@ -40,6 +40,16 @@ An item (`kind: 'phrases'`):
 //   (phrases or vocab); unflagged items grade exactly as before.
 ```
 
+`UNIT_VOICES` (T13, same file): `{ [unitId]: companionId }` — every unit belongs to one of the ten
+companions' **contiguous path sections** (order mirrored by `buddyOrder` in `renderPath`; enforced by
+`tests/data/unit-voices.test.mjs`). Reviews of a unit's items are voiced by its companion **once that
+companion has a designed voice** (`CHARACTER_VOICES` in js/audio.js — currently the 6 dialogue
+voices); `reviewCompanion` (js/sano.js) resolves item → companion-or-null, `buildExercises` tags
+**single-item** review exercises with `ex.companion` (never new-word introductions), and the head
+chip + clip routing (`audio/<companion>/<clipId>.mp3`, rendered by `synth-app.mjs --units`, fallback
+to `default`) read that tag. Bundled match/listen-match grids always play the default voice — a
+round mixes items from different sections, and all pills on one page must share one voice (Ross).
+
 An item (`kind: 'vocab'`) — carries an `emoji`, no `usage`:
 
 ```js
@@ -189,7 +199,7 @@ pedagogy roadmap; **R\*** = earlier UI-revision tags.
 | Code | What it is |
 | --- | --- |
 | SR-01 | Two-character **story dialogues** + comprehension quiz (the Duolingo-Stories player). |
-| SR-02 | Self-hosted **audio** — ~588 phrase clips + ~233 word-bank clips, ElevenLabs Sano clone, pre-rendered (no runtime TTS). |
+| SR-02 | Self-hosted **audio** — pre-rendered phrase + word-bank clips, ElevenLabs (no runtime TTS): Sano's clone teaches; since **T13** each path companion voices their own section's **reviews** (`UNIT_VOICES` → `ex.companion` → `audio/<companion>/…`, head chip, fallback to default). |
 | SR-03 | **Listening** exercises — audio-only prompts on ~half of recall reviews. |
 | SR-04 | **Speaking** practice — skippable record-and-compare (Web Audio playback). |
 | SR-05 | **SM-2-lite scheduler + learning steps** — per-item ease/interval, auto-graded; new words climb a gentle ladder and only **graduate** once recalled ~2×; a **mastery gate** (`unitIsComplete`) requires every word graduated before the next unit unlocks; the daily loop (`dailyPlan`) is review-dominant + adaptive. Units >14 items are split into ~8–12-word chunks. **Depth (T28):** an item may carry `frames` (alternate example sentences); reviews rotate through them over the same record so known words are practiced in varied contexts without growing the path. |

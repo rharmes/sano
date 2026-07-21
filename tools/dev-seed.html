@@ -144,6 +144,20 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">SR-02 audio · T13</span>
+			<h2>0g · Companion voices in reviews (T13)</h2>
+			<p>
+				The whole course is mastered, and the six <b>pilot units</b> — one per voiced companion — are <b>due for review</b>. Start the
+				daily lesson: each review is <b>asked in its path companion's voice</b>, with that companion's <b>head above the prompt</b> —
+				basics → Thulo (rhino), family &amp; people → Pyaro (red panda), meals → Shanta (yak), present verbs → Gyani (elephant), colors
+				→ Rangin (danphe), wild animals → Bahadur (tiger). New-word introductions, word-bank tiles, and the
+				<b>bundled tap-the-pairs / listen-match rounds stay Sano</b> (all pills on a page share one voice); the feedback reveal replays
+				in the asking companion's voice; a clip a companion hasn't rendered yet <b>falls back to Sano</b> instead of going silent.
+			</p>
+			<button onclick="seed('t13voices')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-05 schema v3 · fresh start</span>
 			<h2>0d · Fresh-start migration (v2 → v3)</h2>
 			<p>
@@ -754,6 +768,23 @@
 							items[it.id] = mastered({ interval: 8, seen, correct: seen, lastSeen: day(20) });
 						}
 					state = wrap(items, { itemsTotal: 900 });
+				} else if (which === 't13voices') {
+					// T13 companion voices: everything mastered & settled, then the six pilot units (one
+					// per voiced companion) pushed due, so the daily lesson is all reviews and each item
+					// speaks in its path companion's voice (UNIT_VOICES) with the head chip shown. Mixed
+					// intervals land some items on wordbank/type (recall strength) and some on choice;
+					// varied `seen` counts rotate a few onto alternate frames (their -fN companion clips).
+					const items = {};
+					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 30, lastSeen: day(0) });
+					const pilot = ['basics', 'family-people', 'meals', 'verbs-present', 'colors', 'animals-wild'];
+					let n = 0;
+					for (const id of pilot)
+						for (const it of COURSE.find((u) => u.id === id).items) {
+							const seen = 4 + (n % 3);
+							items[it.id] = mastered({ interval: n % 2 ? 10 : 6, seen, correct: seen - 1, lastSeen: day(14) });
+							n++;
+						}
+					state = wrap(items, { itemsTotal: 950 });
 				} else if (which === 'freshstart') {
 					// Schema v3 migration: write an OLD v2 save; on load migrateV2State fresh-starts it to
 					// unit 1, keeping name + streak. (This is the one scenario that intentionally seeds v2.)

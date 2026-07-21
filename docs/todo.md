@@ -60,12 +60,31 @@ this list. Refer to any task by its ID (e.g. "T3").
       companions currently sit in a fixed order in the path pockets (`buddyOrder` in `renderPath`,
       `js/sano.js`). Reorder them so each companion lands near the section it fits, and generate
       companion art that makes sense for that section (regenerate from `design/characters.html` via
-      `tools/build-character-heads.mjs` → `js/characters.js`).
-- [ ] **T13 · Give the companions their own voices in lessons** — today all phrase/word audio is
-      Sano's cloned voice (`CHARACTER_VOICES` in `js/audio.js` is empty; every clip resolves to
-      `default`). Render per-character voice folders and widen `voiceForCharacter()` so lessons aren't
-      all one voice (the dialogue player already routes per character via `synth-app.mjs`'s voice map —
-      reuse those voice ids). Bump `AUDIO_VERSION` after rendering.
+      `tools/build-character-heads.mjs` → `js/characters.js`). **Order half delivered by T13
+      (2026-07-21):** `buddyOrder` now mirrors the `UNIT_VOICES` path sections (drift-guarded by
+      `tests/data/unit-voices.test.mjs` — change the two together). Still open: the
+      section-appropriate **art**.
+- [ ] **T13 · Give the companions their own voices in lessons** — each path companion voices their
+      own section's **reviews** (Sano always introduces new words and voices the word tiles / sounds
+      drill), with the companion's head chip above the prompt and a play-time fallback to the default
+      clip wherever a companion clip isn't rendered. Map: `UNIT_VOICES` (`js/data.js`, ten contiguous
+      sections mirroring `buddyOrder`); routing: `reviewCompanion`/`ex.companion` (`js/sano.js`) +
+      `CHARACTER_VOICES` (`js/audio.js`); render: `synth-app.mjs --units [ids] --new`.
+  - [x] **Mechanism + 6-unit pilot (2026-07-21)** — full seam + head chip + fallback; pilot units
+        rendered in the six dialogue voices (149 clips ≈ 1.7k credits): basics → Thulo,
+        family-people → Pyaro, meals → Shanta, verbs-present → Gyani, colors → Rangin,
+        animals-wild → Bahadur. `AUDIO_VERSION` 27; unit + data tests; dev-seed 0g. **Ross to judge
+        each voice on short course phrases before the full render.** (Per Ross 2026-07-21: bundled
+        match / listen-match grids stay all-Sano — a round mixes sections, and every pill on a page
+        must share one voice; companion voices are single-item exercises + their feedback replays.)
+  - [ ] **Full render for the voiced six** — once the pilot voices pass, render the rest of their
+        sections (`--units --new`; ~14.4k credits for the remaining mapped-and-voiced units) and bump
+        `AUDIO_VERSION`. Any voice that wobbles just stays default until retuned.
+- [ ] **T36 · Design voices for Hiun, Chanchal, Phurtilo, Lamo** — the four companions without an
+      ElevenLabs voice (snow leopard, langur, tahr, gharial). Design/pick voices in the dashboard
+      (persona notes: `CHARACTER_PERSONAS`, `js/dialogues.js`; process: RESEARCH.md §9), add ids to
+      `VOICES` (`tools/tts/synth-app.mjs`) + `CHARACTER_VOICES` (`js/audio.js`), then render their
+      `UNIT_VOICES` sections (`--units --new`). Until then their sections review in Sano's voice.
 
 ## Testing
 

@@ -13,6 +13,8 @@
 //   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --phrases --new   # only clips not yet on disk
 //   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --words --new     # render newly-added words only
 //   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --dialogues       # per-voice story-line clips (js/dialogues.js)
+//   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --units --new     # companion-voice review clips for every mapped unit (T13)
+//   ELEVENLABS_API_KEY=sk_… node tools/tts/synth-app.mjs --units basics,meals --new   # …for just these units
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,6 +22,19 @@ import { fileURLToPath } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
 const SANO_VOICE = 'bxXWfqokkbsD3S7PPjUx'; // RESEARCH.md §9
+
+// Companion ElevenLabs voice ids (RESEARCH.md §9), keyed by voice folder. Shared by
+// --dialogues (story lines) and --units (T13 companion review clips). Hiun / Chanchal /
+// Phurtilo / Lamo have no designed voice yet — their path sections stay Sano's default.
+const VOICES = {
+	default: SANO_VOICE,
+	pyaro: 'cTnqh1Daui2JhvWlVQGC',
+	gyani: 'vTgg1b2Eauo5efIcWup5',
+	shanta: 'Kk1jouQWkqFRzsjKXdUl',
+	bahadur: '1adWuJ6CHzVMDg1XyhYS',
+	rangin: 'yiYB6wyWboWEOt52vuJ6',
+	thulo: 'MW558bGi5hBsE33qo9Rw',
+};
 
 const args = parseArgs(process.argv.slice(2));
 const apiKey = process.env.ELEVENLABS_API_KEY;
@@ -60,15 +75,6 @@ if (args.sample) {
 	// Thulo is in the cast), thornbush -> Rangin, sano -> default clone, else the speaker.
 	outDir = join(ROOT, 'audio');
 	const DIALOGUES = Function(readFileSync(join(ROOT, 'js', 'dialogues.js'), 'utf8') + '; return DIALOGUES;')();
-	const VOICES = {
-		default: SANO_VOICE,
-		pyaro: 'cTnqh1Daui2JhvWlVQGC',
-		gyani: 'vTgg1b2Eauo5efIcWup5',
-		shanta: 'Kk1jouQWkqFRzsjKXdUl',
-		bahadur: '1adWuJ6CHzVMDg1XyhYS',
-		rangin: 'yiYB6wyWboWEOt52vuJ6',
-		thulo: 'MW558bGi5hBsE33qo9Rw',
-	};
 	const folderOf = (d, who) =>
 		who === 'narrator' ? ((d.cast || []).includes('thulo') ? 'gyani' : 'thulo') : who === 'thornbush' ? 'rangin' : who === 'sano' ? 'default' : who;
 	jobs = [];
@@ -84,8 +90,45 @@ if (args.sample) {
 			});
 		});
 	}
+} else if (args.units) {
+	// T13 companion review clips: each unit's phrase + frame clips re-rendered in the voice
+	// of the companion who owns that stretch of the path (UNIT_VOICES, js/data.js), into
+	// audio/<companion>/<clipId>.mp3 — the folder js/audio.js resolves for reviewCompanion
+	// items. Units whose companion has no designed voice yet are skipped (and counted, so a
+	// partial run is visible). `--units` alone covers every mapped unit; a comma list
+	// restricts it (the T13 pilot). Pair with --new to render only clips missing on disk.
+	outDir = join(ROOT, 'audio');
+	const UNIT_VOICES = Function(readFileSync(join(ROOT, 'js', 'data.js'), 'utf8') + '; return UNIT_VOICES;')();
+	const wanted = args.units === true ? null : String(args.units).split(',');
+	if (wanted) for (const id of wanted) if (!COURSE.some((u) => u.id === id)) fail(`--units: unknown unit "${id}"`);
+	jobs = [];
+	let unvoiced = 0;
+	for (const u of COURSE) {
+		if (wanted && !wanted.includes(u.id)) continue;
+		const companion = UNIT_VOICES[u.id];
+		if (!VOICES[companion] || companion === 'default') {
+			unvoiced++;
+			continue;
+		}
+		for (const it of u.items) {
+			if (!it.dev) continue;
+			const unitClips = [
+				{ id: it.id, dev: it.dev },
+				...(it.frames || []).map((f, i) => ({ id: it.id + '-f' + (i + 1), dev: f.dev })).filter((c) => c.dev),
+			];
+			for (const c of unitClips) {
+				jobs.push({
+					text: c.dev,
+					out: join(ROOT, 'audio', companion, c.id + '.mp3'),
+					label: `${companion}/${c.id}`,
+					voiceId: VOICES[companion],
+				});
+			}
+		}
+	}
+	if (unvoiced) console.log(`--units: ${unvoiced} unit(s) skipped (companion has no designed voice yet — stays default).`);
 } else {
-	fail('Pass one of --sample | --phrases | --words | --dialogues.');
+	fail('Pass one of --sample | --phrases | --words | --dialogues | --units.');
 }
 
 if (only) {

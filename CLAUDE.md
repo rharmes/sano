@@ -80,8 +80,14 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 `SanoAudio` serves pre-rendered per-phrase clips `audio/<voice>/<id>.mp3` (`play(id)`, ~588) and
 per-word `audio/words/<slug>.mp3` (`playWord(slug)`, ~233; slug = the **derived** romanized word —
 from `js/romanize.js` — run through `normalize`); a missing clip is a silent no-op. **All clips are
-pre-rendered by `tools/tts/synth-app.mjs` through the ElevenLabs API in Sano's cloned voice
-(`eleven_v3`, voice id in RESEARCH.md §9) — never a runtime call.** Per-word Devanagari comes from
+pre-rendered by `tools/tts/synth-app.mjs` through the ElevenLabs API — never a runtime call** — in
+Sano's cloned voice (`eleven_v3`, voice id in RESEARCH.md §9) or a **companion's** (T13): each
+unit's path companion (`UNIT_VOICES`, js/data.js) voices that unit's **reviews**
+(`reviewCompanion`, js/sano.js — introductions, word tiles, the sounds drill, and the **bundled
+match/listen-match grids** stay Sano: pills on one page must share one voice), with a
+head chip above the prompt and a play-time **fallback to the default clip** when a companion clip
+isn't on disk (`synth-app.mjs --units [ids] --new` renders per unit; only the 6 dialogue-voiced
+companions render — the other 4 stay Sano until their voices are designed). Per-word Devanagari comes from
 `tools/tts/words.json` (built by `tools/tts/build-words.mjs` from every canonical + frame sentence
 across all units — any word that can appear as a word-bank tile, incl. single-word items). After adding or
 re-spelling content, regenerate the affected clips — `build-words.mjs` → `synth-app.mjs --words

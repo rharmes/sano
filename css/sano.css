@@ -1915,6 +1915,21 @@ table#vocab tbody td:nth-child(3) {
 	letter-spacing: 0.1rem;
 	color: var(--text-color-soft);
 }
+/* T13 voice chip: the review companion's head above the prompt when a companion voice
+   asks the exercise (see #exercise-voice in index.html + renderExercise). In-flow and
+   centered so it can never overlap the word on narrow screens; hidden = no space. The
+   head SVGs are the paper-cut .f-*-filled art (shared with the dialogue player), so
+   they follow both themes for free. */
+.voice-chip {
+	width: 4.4rem;
+	height: 4.4rem;
+	margin: 0 auto 0.4rem;
+}
+.voice-chip svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
 #exercise-word {
 	font-family: 'Neuton', serif;
 	font-weight: 700;

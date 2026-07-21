@@ -3,22 +3,31 @@
 // other external call, matching the app's offline-first network discipline
 // (CLAUDE.md). The service worker caches each file cache-first on first play.
 //
-// Voice architecture: every clip is namespaced by a voiceId so characters can
-// diverge later. Today a single `default` voice — Sano's ElevenLabs clone
-// (RESEARCH.md §9), rendered by tools/tts/synth-app.mjs — backs all phrase audio,
-// the per-word tile clips, and every character. Giving each character its own voice
-// (a planned follow-up) is just: render the new voice folders and widen
-// voiceForCharacter() — no caller changes.
+// Voice architecture: every clip is namespaced by a voiceId (the folder under audio/).
+// Sano's ElevenLabs clone (RESEARCH.md §9) is the `default` voice behind all teaching
+// audio and the per-word tile clips. Companions with a designed voice (T13) get their own
+// folder of phrase clips — audio/<companion>/<id>.mp3, rendered per path section by
+// tools/tts/synth-app.mjs --units — used when they quiz reviews (reviewCompanion,
+// js/sano.js). Coverage is allowed to be partial: play() falls back to the default clip
+// when a companion clip is missing, so rendering more sections later is purely additive.
 const SanoAudio = (() => {
 	// Bump when clips are re-rendered (corrected Devanagari, new/retuned voices) so
 	// caches and the browser fetch fresh copies. These URLs are built here in JS, so
 	// tools/stamp-version.mjs (which only stamps index.html) can't version them.
-	const AUDIO_VERSION = '26';
+	const AUDIO_VERSION = '27';
 	const DEFAULT_VOICE = 'default';
 
-	// characterId -> voiceId. Empty today: every character resolves to the one
-	// default voice. This map is the single seam to widen for per-character voices.
-	const CHARACTER_VOICES = {};
+	// characterId -> voiceId (folder under audio/, named after the companion). Only
+	// companions with a designed ElevenLabs voice appear; everyone else — including the
+	// not-yet-voiced Hiun / Chanchal / Phurtilo / Lamo — resolves to the default clone.
+	const CHARACTER_VOICES = {
+		pyaro: 'pyaro',
+		gyani: 'gyani',
+		shanta: 'shanta',
+		bahadur: 'bahadur',
+		rangin: 'rangin',
+		thulo: 'thulo',
+	};
 
 	const voiceForCharacter = (characterId) => CHARACTER_VOICES[characterId] || DEFAULT_VOICE;
 
@@ -32,9 +41,14 @@ const SanoAudio = (() => {
 	// One reused element: a new clip cancels the previous one, and we never pile up
 	// Audio objects over a long session.
 	let el = null;
-	function playSrc(src) {
+	function playSrc(src, fallbackSrc) {
 		if (!el) el = new Audio();
 		el.pause();
+		// A companion voice folder may not cover this clip yet (T13 renders per path
+		// section) — on a load error, fall back to the default-voice clip once instead
+		// of going silent. The handler is reset on every call so a stale fallback never
+		// fires for a later clip.
+		el.onerror = fallbackSrc ? () => playSrc(fallbackSrc) : null;
 		el.src = src;
 		// play() is only ever called from a tap handler, so autoplay policy is
 		// satisfied; a missing file / decode error rejects — swallow it so a gap in
@@ -44,7 +58,8 @@ const SanoAudio = (() => {
 	}
 	function play(id, voiceId) {
 		if (!id) return;
-		playSrc(url(id, voiceId));
+		const v = voiceId || DEFAULT_VOICE;
+		playSrc(url(id, v), v !== DEFAULT_VOICE ? url(id, DEFAULT_VOICE) : null);
 	}
 	// Play a per-word tile clip by slug; a missing clip is a silent no-op.
 	function playWord(slug) {
