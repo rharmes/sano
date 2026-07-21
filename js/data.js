@@ -15,12 +15,22 @@ const COURSE = [
 				en: 'Hello / Goodbye',
 				enEither: true,
 				usage: 'This is the most common greeting in Nepal, used at any time of day. It\'s accompanied by pressing your palms together in front of your chest. The word literally means "I bow to the divine in you" and is appropriate in both formal and informal settings.',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'नमस्ते, म सानो हुँ', en: "Hello, I'm Sano" },
+					{ dev: 'सबैलाई नमस्ते', en: 'Hello, everyone' },
+				],
 			},
 			{
 				id: 'namaskaar-hello-formal',
 				dev: 'नमस्कार',
 				en: 'Hello (formal)',
 				usage: 'More formal version of "namaste." Both mean essentially the same thing and are used as greetings. "Namaskaar" might be used in very formal or official settings.',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'शिक्षकलाई नमस्कार', en: 'Namaskar to the teacher' },
+					{ dev: 'नमस्कार, कस्तो हुनुहुन्छ?', en: 'Greetings, how are you?' },
+				],
 			},
 			{
 				id: 'hajur-yes-polite-pardon',
@@ -28,6 +38,11 @@ const COURSE = [
 				en: 'Yes (polite)',
 				enAlt: ['Yes', 'You', 'Pardon'],
 				usage: 'This versatile word shows respect and can mean "yes," "I agree," or "pardon me?" depending on context and tone. It\'s considered more polite than simply saying "cha" (yes) and is commonly used when speaking to elders or in formal situations.',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'हजुर, भन्नुस्', en: 'Yes, go ahead' },
+					{ dev: 'हजुर? फेरि भन्नुस्', en: 'Pardon? Say that again' },
+				],
 			},
 			{
 				id: 'ho-yes-informal',
@@ -40,12 +55,22 @@ const COURSE = [
 				dev: 'होइन',
 				en: 'No (informal)',
 				usage: 'The casual "no," the counterpart to "ho" (yes). Fine with friends and family; in formal settings soften it with context. "Hoina, dhanyabad" (no, thank you).',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'यो मेरो होइन', en: "This isn't mine" },
+					{ dev: 'राम्रो छ, होइन?', en: "It's good, isn't it?" },
+				],
 			},
 			{
 				id: 'hola-maybe',
 				dev: 'होला',
 				en: 'Maybe',
 				usage: 'Used to express possibility or uncertainty. This is a casual, conversational way to say "maybe" or "perhaps." It can be used when you\'re not sure about something or when you want to leave options open. For example, if someone asks if you\'ll come to dinner, you might say "hola" if you\'re uncertain.',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'पसल बन्द होला', en: 'The shop is probably closed' },
+					{ dev: 'त्यो महँगो होला', en: "That's probably expensive" },
+				],
 			},
 			{
 				id: 'maaf-garnuhos-excuse-me-i-m-sorry',
@@ -59,12 +84,22 @@ const COURSE = [
 				dev: 'कृपया',
 				en: 'Please',
 				usage: 'This formal word for "please" is used to make polite requests. It\'s especially common in written communication and formal speech. In casual conversation, people often omit "kripaya" and rely on polite verb forms instead.',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'कृपया पर्खनुस्', en: 'Please wait' },
+					{ dev: 'कृपया बिस्तारै बोल्नुस्', en: 'Please speak slowly' },
+				],
 			},
 			{
 				id: 'dhanyabad-thank-you',
 				dev: 'धन्यवाद',
 				en: 'Thank you',
 				usage: "This is the standard way to express gratitude. It's used in both casual and formal situations. While Nepali culture doesn't emphasize saying thank you as much as Western cultures, it's still appreciated and understood universally.",
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'धेरै धन्यवाद', en: 'Thank you very much' },
+					{ dev: 'मद्दतको लागि धन्यवाद', en: 'Thanks for the help' },
+				],
 			},
 			{
 				id: 'swagat-cha-you-re-welcome',
@@ -98,6 +133,11 @@ const COURSE = [
 				en: 'Yes',
 				enAlt: ['Yes', 'Okay', 'It will be done'],
 				usage: 'This is one of the most useful words in Nepali, expressing agreement, acceptance, or acknowledgment. You\'ll hear it constantly in everyday conversation. It can mean "okay," "alright," "it\'s possible," or "it will happen."',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'भोलि आउनुस्, हुन्छ?', en: 'Come tomorrow, okay?' },
+					{ dev: 'हुन्छ, म आउँछु', en: "Okay, I'll come" },
+				],
 			},
 			{
 				id: 'hudaina-not-okay-it-won-t-work',
@@ -105,6 +145,11 @@ const COURSE = [
 				en: 'No',
 				enAlt: ['No', "It won't work"],
 				usage: 'This is the negative form of "huncha," used to express that something is not acceptable, not possible, or won\'t work. It\'s a polite way to decline or say no without being too direct.',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'त्यो हुँदैन', en: "That won't do" },
+					{ dev: 'आज हुँदैन, भोलि हुन्छ', en: "Today doesn't work — tomorrow does" },
+				],
 			},
 			{
 				id: 'ke-bhayo-what-happened',
@@ -123,6 +168,11 @@ const COURSE = [
 				dev: 'तिमी',
 				en: 'You (informal)',
 				usage: 'The informal "you" used with friends, family, children, or people younger than you. Unlike "tapai" (formal you), "timi" shows familiarity and closeness. Use it only with people you know well or who are younger.',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'तिमी कहाँ छौ?', en: 'Where are you?' },
+					{ dev: 'तिमी मेरो साथी हौ', en: 'You are my friend' },
+				],
 			},
 			{
 				id: 'cha-yes-is-has',
@@ -840,6 +890,11 @@ const COURSE = [
 				dev: 'कसरी?',
 				en: 'How?',
 				usage: "A question word asking about the manner or method of doing something. It's useful when you need instructions or want to understand the process of something. People use it frequently when learning new tasks.",
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'बसपार्क कसरी जाने?', en: 'How do I get to the bus stop?' },
+					{ dev: 'यो कसरी खाने?', en: 'How do you eat this?' },
+				],
 			},
 		],
 	},
@@ -854,12 +909,22 @@ const COURSE = [
 				dev: 'किन?',
 				en: 'Why?',
 				usage: 'Asks for the reason behind something. While useful, be mindful that repeatedly asking "kina" might be seen as challenging authority in more traditional or formal settings, especially with elders.',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'किन यति महँगो?', en: 'Why so expensive?' },
+					{ dev: 'तपाईं किन दुखी हुनुहुन्छ?', en: 'Why are you sad?' },
+				],
 			},
 			{
 				id: 'kun-which',
 				dev: 'कुन?',
 				en: 'Which?',
 				usage: 'Asks you to choose between options: "kun ek?" (which one?), "kun bato?" (which way?). It rounds out the question words alongside "ke" (what), "kina" (why), and "kasari" (how).',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'कुन राम्रो छ?', en: 'Which one is good?' },
+					{ dev: 'कुन बाटो जाने?', en: 'Which way do we go?' },
+				],
 			},
 			{
 				id: 'nepali-ma-lai-ke-bhanchha-how-do-you-say-in-nepali',
@@ -1084,12 +1149,22 @@ const COURSE = [
 				dev: 'पुग्यो',
 				en: 'Enough',
 				usage: "This word indicates you've had enough, whether it's food being served, items being poured, or any other quantity. It's polite but firm. In restaurants, servers might keep offering more food, and this word stops them.",
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'खाना पुग्यो', en: "That's enough food" },
+					{ dev: 'मलाई पुग्यो', en: "I've had enough" },
+				],
 			},
 			{
 				id: 'pardaina-no-need-not-necessary',
 				dev: 'पर्दैन',
 				en: 'Not necessary',
 				usage: 'Politely declines something or indicates something isn\'t necessary. Less direct than saying "no." For example, when someone offers something you don\'t need, you can say "pardaina, dhanyabad."',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'आउनु पर्दैन', en: "You don't need to come" },
+					{ dev: 'चिन्ता गर्नु पर्दैन', en: 'No need to worry' },
+				],
 			},
 			{
 				id: 'thik-cha-it-s-okay-it-s-fine',
@@ -1404,24 +1479,44 @@ const COURSE = [
 				dev: 'तेल',
 				emoji: '🛢️',
 				en: 'Oil',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'तेल तातो छ', en: 'The oil is hot' },
+					{ dev: 'तेल धेरै नहाल्नुस्', en: "Don't use too much oil" },
+				],
 			},
 			{
 				id: 'masala-spices',
 				dev: 'मसला',
 				emoji: '🌶️',
 				en: 'Spices',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'तरकारीमा मसला हाल्नुस्', en: 'Add spices to the curry' },
+					{ dev: 'मसला धेरै भयो', en: 'Too much spice' },
+				],
 			},
 			{
 				id: 'phal-fruit',
 				dev: 'फल',
 				emoji: '🍎',
 				en: 'Fruit',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'बिहान फल खानुस्', en: 'Eat fruit in the morning' },
+					{ dev: 'यो फल पाकेको छ', en: 'This fruit is ripe' },
+				],
 			},
 			{
 				id: 'achar-pickle-chutney',
 				dev: 'अचार',
 				emoji: '🫙',
 				en: 'Chutney',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'अचार पिरो हुन्छ', en: 'Pickle is spicy' },
+					{ dev: 'भातसँग अचार खानुस्', en: 'Have pickle with rice' },
+				],
 			},
 			{
 				id: 'bhatta-soybean',
@@ -1434,6 +1529,11 @@ const COURSE = [
 				dev: 'मह',
 				emoji: '🍯',
 				en: 'Honey',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'मह गुलियो हुन्छ', en: 'Honey is sweet' },
+					{ dev: 'मह महँगो छ', en: 'Honey is expensive' },
+				],
 			},
 		],
 	},
@@ -1676,6 +1776,11 @@ const COURSE = [
 				dev: 'बाल्टी',
 				emoji: '🪣',
 				en: 'Bucket',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'बाल्टीमा पानी छ', en: "There's water in the bucket" },
+					{ dev: 'बाल्टी ल्याउनुस्', en: 'Bring the bucket' },
+				],
 			},
 			{
 				id: 'panja-gloves',
@@ -2912,6 +3017,11 @@ const COURSE = [
 				dev: 'त्यहाँ',
 				en: 'There',
 				usage: "Indicates that location or place, somewhere away from the speaker. It's used for pointing to locations that aren't immediately near. You can use it when giving or receiving directions.",
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'त्यहाँ के छ?', en: "What's over there?" },
+					{ dev: 'त्यहाँ नजानुस्', en: "Don't go there" },
+				],
 			},
 			{
 				id: 'kata-janey-where-to-go',
@@ -2924,6 +3034,11 @@ const COURSE = [
 				dev: 'रोक्नुस्',
 				en: 'Please stop',
 				usage: 'Useful in taxis or buses when you want the vehicle to stop. "Rok" means to stop, and "nus" makes it polite. You can also say "yaha roknus" (stop here) to indicate you want to get off at this location.',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'गाडी रोक्नुस्', en: 'Stop the car' },
+					{ dev: 'एक छिन रोक्नुस्', en: 'Stop for a moment' },
+				],
 			},
 			{
 				id: 'bato-dekhaunus-please-show-me-the-way',
@@ -2942,12 +3057,22 @@ const COURSE = [
 				dev: 'बायाँ',
 				en: 'Left',
 				usage: 'A direction for giving or following the way. "Baayaa janus" (go left), "baayaa tira" (to the left). It pairs with "daayaa" (right) and "sidhaa" (straight).',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'बायाँ हात', en: 'Left hand' },
+					{ dev: 'बायाँतिर पसल छ', en: 'The shop is on the left' },
+				],
 			},
 			{
 				id: 'daayaa-right',
 				dev: 'दायाँ',
 				en: 'Right',
 				usage: 'The opposite of "baayaa." "Daayaa janus" (go right). Handy when steering a taxi or finding a shop down a side street.',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'दायाँ आँखा', en: 'Right eye' },
+					{ dev: 'दायाँतिर बैंक छ', en: 'The bank is on the right' },
+				],
 			},
 			{
 				id: 'sidhaa-janus-go-straight',
@@ -2961,6 +3086,11 @@ const COURSE = [
 				en: 'Near / close',
 				enEither: true,
 				usage: 'Says something is close by: "najikai cha" (it\'s nearby). The opposite is "taadhaa" (far).',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'नजिक आउनुस्', en: 'Come closer' },
+					{ dev: 'मेरो घर नजिक छ', en: 'My house is close' },
+				],
 			},
 			{
 				id: 'taadhaa-far',
@@ -2974,6 +3104,11 @@ const COURSE = [
 				en: 'Toward / that way',
 				enEither: true,
 				usage: 'Points a direction without naming the exact spot: "ghar tira" (toward home), "tyaha tira" (that way). Nepalis often just point and say "tira."',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'पहाडतिर हेर्नुस्', en: 'Look toward the mountains' },
+					{ dev: 'म घरतिर जान्छु', en: "I'm heading home" },
+				],
 			},
 		],
 	},
@@ -3010,12 +3145,22 @@ const COURSE = [
 				dev: 'बैंक',
 				emoji: '🏦',
 				en: 'Bank',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'बैंक कहाँ छ?', en: 'Where is the bank?' },
+					{ dev: 'बैंक दस बजे खुल्छ', en: 'The bank opens at ten' },
+				],
 			},
 			{
 				id: 'aphis-office',
 				dev: 'अफिस',
 				emoji: '🏢',
 				en: 'Office',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'म अफिस जान्छु', en: 'I go to the office' },
+					{ dev: 'अफिस पाँच बजे बन्द हुन्छ', en: 'The office closes at five' },
+				],
 			},
 			{
 				id: 'pasal-shop-store',
@@ -3039,6 +3184,11 @@ const COURSE = [
 				dev: 'होटल',
 				emoji: '🍽️',
 				en: 'Hotel',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'यो होटल राम्रो छ', en: 'This hotel is good' },
+					{ dev: 'म होटलमा खाना खान्छु', en: 'I eat at the hotel' },
+				],
 			},
 			{
 				id: 'bas-bus',
@@ -3056,18 +3206,33 @@ const COURSE = [
 				dev: 'ट्याक्सी',
 				emoji: '🚕',
 				en: 'Taxi',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'ट्याक्सी बोलाउनुस्', en: 'Call a taxi' },
+					{ dev: 'ट्याक्सी महँगो हुन्छ', en: 'Taxis are expensive' },
+				],
 			},
 			{
 				id: 'buspark-bus-stop',
 				dev: 'बसपार्क',
 				emoji: '🚏',
 				en: 'Bus stop',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'बसपार्क नजिक छ', en: 'The bus stop is near' },
+					{ dev: 'बसपार्कमा धेरै मान्छे छन्', en: 'The bus stop is crowded' },
+				],
 			},
 			{
 				id: 'eyarport-airport',
 				dev: 'एयरपोर्ट',
 				emoji: '✈️',
 				en: 'Airport',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'एयरपोर्ट जानुस्', en: 'To the airport, please' },
+					{ dev: 'एयरपोर्ट टाढा छ?', en: 'Is the airport far?' },
+				],
 			},
 		],
 	},
@@ -3154,6 +3319,11 @@ const COURSE = [
 				dev: 'बीचमा',
 				en: 'Between / In the middle',
 				usage: '"Bich" is the middle, and with "-maa" it becomes "bichma" (in the middle / between). "Dui jana bichma" (between two people), "baatoko bichma" (in the middle of the road).',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'बीचमा बस्नुस्', en: 'Sit in the middle' },
+					{ dev: 'बाटोको बीचमा नबस्नुस्', en: "Don't sit in the middle of the road" },
+				],
 			},
 			{
 				id: 'ma-sanga-with-me',
@@ -3166,6 +3336,11 @@ const COURSE = [
 				dev: 'सम्म',
 				en: 'Until / Up to',
 				usage: '"Samma" means up to, until, or as far as — for distance and time alike. "Ghar samma" (up to the house), "ahile samma" (until now). "Kati samma?" (how far / until when?).',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'बसपार्कसम्म जानुस्', en: 'Go as far as the bus stop' },
+					{ dev: 'पाँच बजेसम्म काम गर्छु', en: 'I work until five' },
+				],
 			},
 		],
 	},
@@ -3186,6 +3361,11 @@ const COURSE = [
 				dev: 'नराम्रो',
 				en: 'Bad / Not good',
 				usage: 'The opposite of ramro, this word describes something negative or unpleasant. "Na-" is a common prefix in Nepali that negates words. It can describe poor quality, bad behavior, or unfortunate situations.',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'मौसम नराम्रो छ', en: 'The weather is bad' },
+					{ dev: 'यो फिल्म नराम्रो छ', en: 'This movie is bad' },
+				],
 			},
 			{
 				id: 'thulo-big-large',
@@ -3336,12 +3516,22 @@ const COURSE = [
 				dev: 'गुलाबी',
 				emoji: '🌸',
 				en: 'Pink',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'तपाईंलाई गुलाबी मन पर्छ?', en: 'Do you like pink?' },
+					{ dev: 'गुलाबी कमिज', en: 'A pink shirt' },
+				],
 			},
 			{
 				id: 'pyaji-purple',
 				dev: 'प्याजी',
 				emoji: '🟣',
 				en: 'Purple',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'प्याजी रङ राम्रो छ', en: 'Purple is a nice color' },
+					{ dev: 'प्याजी फूल', en: 'A purple flower' },
+				],
 			},
 		],
 	},
@@ -3356,6 +3546,11 @@ const COURSE = [
 				dev: 'भन्दा',
 				en: 'Than (for comparing)',
 				usage: 'The comparison word "bhanda" means "than." The thing you compare against comes first: "yo tyo bhanda" = "this, than that." Then add the quality. It is the key to every comparison in Nepali.',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'चिया कफी भन्दा सस्तो छ', en: 'Tea is cheaper than coffee' },
+					{ dev: 'हिजो भन्दा आज गर्मी छ', en: "It's hotter today than yesterday" },
+				],
 			},
 			{
 				id: 'yo-tyo-bhanda-thulo-bigger',
@@ -3398,18 +3593,33 @@ const COURSE = [
 				dev: 'बढी',
 				en: 'More',
 				usage: '"Badhi" means more (in amount). "Ali badhi" (a little more), "dherai badhi" (much more), "badhi paisa" (more money). Its opposite is "kam" (less).',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'अलि बढी दिनुस्', en: 'A little more, please' },
+					{ dev: 'पानी बढी भयो', en: "There's too much water" },
+				],
 			},
 			{
 				id: 'kam-less-few',
 				dev: 'कम',
 				en: 'Less / Few',
 				usage: 'The opposite of "badhi." "Kam paisa" (less money), "ali kam" (a little less) — handy when something is too much.',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'नुन कम हाल्नुस्', en: 'Go easy on the salt' },
+					{ dev: 'अलि कम गर्नुस्', en: 'Bring the price down a bit' },
+				],
 			},
 			{
 				id: 'barabar-equal-same',
 				dev: 'बराबर',
 				en: 'Equal / The same',
 				usage: '"Barabar" means equal or the same. "Yo ra tyo barabar cha" (this and that are equal). Also used for "level" and, in markets, a fair matching price.',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'दुवै बराबर छ', en: "They're both the same" },
+					{ dev: 'यो र त्यो बराबर हो', en: 'This and that are equal' },
+				],
 			},
 		],
 	},
@@ -4065,24 +4275,44 @@ const COURSE = [
 				dev: 'बिस्तारी',
 				en: 'Slowly / Carefully',
 				usage: 'Can mean either slowly or carefully depending on context. You\'ll hear this when someone wants you to take your time or be cautious. "Bistari jaanus" means "go slowly/carefully."',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'बिस्तारी खानुस्', en: 'Eat slowly' },
+					{ dev: 'गाडी बिस्तारी चलाउनुस्', en: 'Drive slowly' },
+				],
 			},
 			{
 				id: 'chitto-quickly-fast',
 				dev: 'छिटो',
 				en: 'Quickly / Fast',
 				usage: 'The opposite of bistari, meaning quickly or fast. "Chitto garnuhos" means "please do it quickly." Useful when you\'re in a hurry or need something done promptly.',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'छिटो आउनुस्', en: 'Come quickly' },
+					{ dev: 'छिटो गर्नुस्', en: 'Hurry up' },
+				],
 			},
 			{
 				id: 'aaija-come-here',
 				dev: 'आइज',
 				en: 'Come here',
 				usage: 'An informal command asking someone to come. Used with friends, family, or subordinates. For a more polite version, use "aaunu hos" (please come).',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'कुकुर, आइज', en: 'Come here, dog' },
+					{ dev: 'छिटो आइज', en: 'Come quick' },
+				],
 			},
 			{
 				id: 'jaau-go-let-s-go',
 				dev: 'जाऊ',
 				en: "Go / Let's go",
 				usage: 'Can be a command "go" or a suggestion "let\'s go" depending on context and tone. Among friends, it\'s a common way to suggest leaving. More polite form is "jaanuhola" (shall we go?).',
+				// T29 batch 14 (everyday communication & getting around; AI-drafted, approved):
+				frames: [
+					{ dev: 'घर जाऊ', en: 'Go home' },
+					{ dev: 'स्कुल जाऊ', en: 'Go to school' },
+				],
 			},
 			{
 				id: 'basnus-please-sit',
@@ -4138,6 +4368,11 @@ const COURSE = [
 				dev: 'सिरानी',
 				emoji: '🛋️',
 				en: 'Pillow',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'सिरानी नरम छ', en: 'The pillow is soft' },
+					{ dev: 'दुईवटा सिरानी दिनुस्', en: 'Two pillows, please' },
+				],
 			},
 			{
 				id: 'kambal-blanket',
@@ -4167,6 +4402,11 @@ const COURSE = [
 				dev: 'ऐना',
 				emoji: '🪞',
 				en: 'Mirror',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'ऐनामा हेर्नुस्', en: 'Look in the mirror' },
+					{ dev: 'ऐना सफा गर्नुस्', en: 'Clean the mirror' },
+				],
 			},
 			{
 				id: 'batti-light-lamp',
@@ -4209,6 +4449,11 @@ const COURSE = [
 				dev: 'चर्पी',
 				emoji: '🚽',
 				en: 'Toilet',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'चर्पी बाहिर छ', en: 'The toilet is outside' },
+					{ dev: 'चर्पी सफा छ', en: 'The toilet is clean' },
+				],
 			},
 			{
 				id: 'nuhaaune-thaau-shower-bathing-area',
@@ -4320,6 +4565,11 @@ const COURSE = [
 				dev: 'रिमोट',
 				emoji: '📱',
 				en: 'Remote control',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'रिमोट मलाई दिनुस्', en: 'Give me the remote' },
+					{ dev: 'रिमोट चल्दैन', en: "The remote isn't working" },
+				],
 			},
 			{
 				id: 'kitab-book',
@@ -4382,6 +4632,11 @@ const COURSE = [
 				dev: 'ताला',
 				emoji: '🔒',
 				en: 'Lock',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'ढोकामा ताला लगाउनुस्', en: 'Put a lock on the door' },
+					{ dev: 'ताला खुल्दैन', en: "The lock won't open" },
+				],
 			},
 			{
 				id: 'saacho-key',
@@ -4407,6 +4662,11 @@ const COURSE = [
 				dev: 'लुगा',
 				emoji: '👕',
 				en: 'Clothes',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'लुगा सफा छ', en: 'The clothes are clean' },
+					{ dev: 'दशैंमा नयाँ लुगा किन्छौं', en: 'We buy new clothes at Dashain' },
+				],
 			},
 			{
 				id: 'dhune-sabun-laundry-detergent',
@@ -4480,6 +4740,11 @@ const COURSE = [
 				dev: 'कम्प्युटर',
 				emoji: '💻',
 				en: 'Computer',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'म कम्प्युटरमा काम गर्छु', en: 'I work on the computer' },
+					{ dev: 'कम्प्युटर बन्द गर्नुस्', en: 'Shut down the computer' },
+				],
 			},
 			{
 				id: 'laptop-laptop',
@@ -4552,6 +4817,11 @@ const COURSE = [
 				dev: 'चश्मा',
 				emoji: '👓',
 				en: 'Glasses / Spectacles',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'मेरो चश्मा कहाँ छ?', en: 'Where are my glasses?' },
+					{ dev: 'हजुरबुवा चश्मा लगाउनुहुन्छ', en: 'Grandfather wears glasses' },
+				],
 			},
 			{
 				id: 'kapi-notebook',
@@ -4570,6 +4840,11 @@ const COURSE = [
 				dev: 'चप्पल',
 				emoji: '🩴',
 				en: 'Slippers / Sandals',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'घरभित्र चप्पल लगाउनुस्', en: 'Wear slippers inside the house' },
+					{ dev: 'चप्पल सस्तो छ', en: 'Slippers are cheap' },
+				],
 			},
 			{
 				id: 'jutta-shoes',
@@ -4630,6 +4905,11 @@ const COURSE = [
 				dev: 'मोमबत्ती',
 				emoji: '🕯️',
 				en: 'Candle',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'बत्ती गयो, मोमबत्ती बाल्नुस्', en: "The power's out — light a candle" },
+					{ dev: 'जन्मदिनमा मोमबत्ती बाल्छौं', en: 'We light candles on birthdays' },
+				],
 			},
 			{
 				id: 'salai-match-matchstick',
@@ -5014,6 +5294,11 @@ const COURSE = [
 				dev: 'साँप',
 				emoji: '🐍',
 				en: 'Snake',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'साँप लामो छ', en: 'The snake is long' },
+					{ dev: 'साँपदेखि डर लाग्छ', en: "I'm scared of snakes" },
+				],
 			},
 			{
 				id: 'kachuwa-turtle-tortoise',
@@ -5060,6 +5345,11 @@ const COURSE = [
 				dev: 'भालु',
 				emoji: '🐻',
 				en: 'Bear',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'वनमा भालु छ', en: "There's a bear in the forest" },
+					{ dev: 'भालु ठूलो हुन्छ', en: 'Bears are big' },
+				],
 			},
 		],
 	},
@@ -5096,6 +5386,11 @@ const COURSE = [
 				dev: 'सुन्तला',
 				emoji: '🍊',
 				en: 'Orange',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'सुन्तला मिठो छ', en: 'The orange is tasty' },
+					{ dev: 'जाडोमा सुन्तला खान्छौं', en: 'We eat oranges in winter' },
+				],
 			},
 			{
 				id: 'aaru-peach',
@@ -5108,6 +5403,11 @@ const COURSE = [
 				dev: 'आँप',
 				emoji: '🥭',
 				en: 'Mango',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'मलाई आँप मन पर्छ', en: 'I like mangoes' },
+					{ dev: 'गर्मीमा आँप आउँछ', en: 'Mangoes come in summer' },
+				],
 			},
 			{
 				id: 'angur-grapes',
@@ -5126,6 +5426,11 @@ const COURSE = [
 				dev: 'कागती',
 				emoji: '🍋',
 				en: 'Lemon / Lime',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'कागती अमिलो हुन्छ', en: 'Lemons are sour' },
+					{ dev: 'कागती पानीमा हाल्नुस्', en: 'Put lemon in the water' },
+				],
 			},
 			{
 				id: 'rukh-kaatahar-pineapple',
@@ -5157,6 +5462,11 @@ const COURSE = [
 				dev: 'काँक्रो',
 				emoji: '🥒',
 				en: 'Cucumber',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'काँक्रो काट्नुस्', en: 'Cut the cucumber' },
+					{ dev: 'काँक्रो लामो छ', en: 'The cucumber is long' },
+				],
 			},
 			{
 				id: 'bandaa-cabbage',
@@ -5186,6 +5496,11 @@ const COURSE = [
 				dev: 'लसुन',
 				emoji: '🧄',
 				en: 'Garlic',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'लसुन नहाल्नुस्', en: 'No garlic, please' },
+					{ dev: 'लसुनको बास्ना आयो', en: 'I smell garlic' },
+				],
 			},
 			{
 				id: 'khursaani-chili-pepper',
@@ -5233,6 +5548,11 @@ const COURSE = [
 				dev: 'धनिया',
 				emoji: '🌿',
 				en: 'Coriander / Cilantro',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'धनिया ताजा छ', en: 'The coriander is fresh' },
+					{ dev: 'मलाई धनिया मन पर्दैन', en: "I don't like coriander" },
+				],
 			},
 		],
 	},
@@ -5247,6 +5567,11 @@ const COURSE = [
 				dev: 'चिउरा',
 				emoji: '🌾',
 				en: 'Beaten rice / Flattened rice',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'दहीसँग चिउरा खान्छु', en: 'I eat beaten rice with yogurt' },
+					{ dev: 'खाजामा चिउरा खान्छौं', en: 'We have chiura for snacks' },
+				],
 			},
 			{
 				id: 'momo-dumplings-momos',
@@ -5264,6 +5589,11 @@ const COURSE = [
 				dev: 'सेलरोटी',
 				emoji: '🍩',
 				en: 'Sel roti (ring-shaped bread)',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'तिहारमा सेलरोटी बनाउँछौं', en: 'We make sel roti at Tihar' },
+					{ dev: 'सेलरोटी मिठो हुन्छ', en: 'Sel roti is delicious' },
+				],
 			},
 			{
 				id: 'chatamari-nepali-pizza',
@@ -5276,6 +5606,11 @@ const COURSE = [
 				dev: 'समोसा',
 				emoji: '🥟',
 				en: 'Samosa',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'समोसा तातो छ', en: 'The samosas are hot' },
+					{ dev: 'समोसा र चिया', en: 'Samosas and tea' },
+				],
 			},
 			{
 				id: 'pakoda-fritters-pakora',
@@ -5288,6 +5623,11 @@ const COURSE = [
 				dev: 'मिठाई',
 				emoji: '🍬',
 				en: 'Sweets / Dessert',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'मिठाई धेरै नखानुस्', en: "Don't eat too many sweets" },
+					{ dev: 'बच्चालाई मिठाई मन पर्छ', en: 'Kids love sweets' },
+				],
 			},
 			{
 				id: 'khaja-snacks',
@@ -5305,18 +5645,33 @@ const COURSE = [
 				dev: 'रक्सी',
 				emoji: '🍶',
 				en: 'Traditional alcohol',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'म रक्सी खाँदिनँ', en: "I don't drink" },
+					{ dev: 'रक्सी नखानुस्', en: "Don't drink" },
+				],
 			},
 			{
 				id: 'lassi-yogurt-drink',
 				dev: 'लस्सी',
 				emoji: '🥛',
 				en: 'Yogurt drink',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'एक गिलास लस्सी दिनुस्', en: 'A glass of lassi, please' },
+					{ dev: 'लस्सी चिसो हुन्छ', en: 'Lassi is served cold' },
+				],
 			},
 			{
 				id: 'juice-juice',
 				dev: 'जुस',
 				emoji: '🧃',
 				en: 'Juice',
+				// T29 batch 16 (food & kitchen leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'आँपको जुस दिनुस्', en: 'Mango juice, please' },
+					{ dev: 'जुस ताजा छ', en: 'The juice is fresh' },
+				],
 			},
 			{
 				id: 'coffee-coffee',
@@ -5353,6 +5708,11 @@ const COURSE = [
 				dev: 'चन्द्रमा',
 				emoji: '🌙',
 				en: 'Moon',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'राति चन्द्रमा हेर्नुस्', en: 'Look at the moon tonight' },
+					{ dev: 'चन्द्रमा टाढा छ', en: 'The moon is far away' },
+				],
 			},
 			{
 				id: 'tara-star',
@@ -5535,6 +5895,11 @@ const COURSE = [
 				dev: 'ताल',
 				emoji: '🏞️',
 				en: 'Lake',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'तालमा माछा छ', en: 'There are fish in the lake' },
+					{ dev: 'पोखरामा ठूलो ताल छ', en: 'Pokhara has a big lake' },
+				],
 			},
 			{
 				id: 'ban-forest',
@@ -5575,18 +5940,33 @@ const COURSE = [
 				dev: 'खोला',
 				emoji: '🏞️',
 				en: 'Stream / Creek',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'खोलामा पानी चिसो छ', en: 'The stream water is cold' },
+					{ dev: 'खोला सानो छ', en: 'The stream is small' },
+				],
 			},
 			{
 				id: 'jharna-waterfall',
 				dev: 'झरना',
 				emoji: '💧',
 				en: 'Waterfall',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'झरना हेर्न जान्छौं', en: 'We go to see the waterfall' },
+					{ dev: 'झरना ठूलो छ', en: 'The waterfall is big' },
+				],
 			},
 			{
 				id: 'bhukampa-earthquake',
 				dev: 'भूकम्प',
 				emoji: '🌋',
 				en: 'Earthquake',
+				// T29 batch 17 (household & nature leftovers; AI-drafted, approved):
+				frames: [
+					{ dev: 'भूकम्प आयो!', en: 'Earthquake!' },
+					{ dev: 'भूकम्पमा बाहिर जानुस्', en: 'In an earthquake, go outside' },
+				],
 			},
 			{
 				id: 'aago-fire',
@@ -7298,24 +7678,44 @@ const COURSE = [
 				dev: 'उत्तरतिर',
 				en: 'Toward the north',
 				usage: 'उत्तर = north. -तिर = toward / in the direction of.',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'हिमाल उत्तरतिर छ', en: 'The Himalaya is to the north' },
+					{ dev: 'बाटो उत्तरतिर जान्छ', en: 'The road goes north' },
+				],
 			},
 			{
 				id: 'dir-dakshin',
 				dev: 'दक्षिणतिर',
 				en: 'Toward the south',
 				usage: 'दक्षिण = south.',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'भारत दक्षिणतिर छ', en: 'India is to the south' },
+					{ dev: 'दक्षिणतिर जानुस्', en: 'Head south' },
+				],
 			},
 			{
 				id: 'dir-purba',
 				dev: 'पूर्वतिर',
 				en: 'Toward the east',
 				usage: "पूर्व = east. (पूर्व also means 'former / previous'.)",
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'पूर्वतिर हेर्नुस्', en: 'Look east' },
+					{ dev: 'घाम बिहान पूर्वतिर हुन्छ', en: 'The sun is in the east in the morning' },
+				],
 			},
 			{
 				id: 'dir-paschim',
 				dev: 'पश्चिमतिर',
 				en: 'Toward the west',
 				usage: 'पश्चिम = west.',
+				// T29 batch 15 (places, positions & everyday replies; AI-drafted, approved):
+				frames: [
+					{ dev: 'पोखरा पश्चिमतिर छ', en: 'Pokhara is to the west' },
+					{ dev: 'बेलुका घाम पश्चिमतिर हुन्छ', en: 'The evening sun is in the west' },
+				],
 			},
 			{
 				id: 'dir-disha',

@@ -242,7 +242,7 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
       Committed `3fea017`; 3 pilot items (maagnu/samjhanu/chheu) got demo frames, audio rendered
       (6 phrase + 5 word clips, `AUDIO_VERSION` 16). **Still open:** the pilot frame `dev` is
       AI-drafted → Ross's review; **push/deploy pending Ross's go.** Bulk content is T29/T30.
-- [ ] **T29 · Depth content — everyday-context alternate frames** — populate `frames` on a curated
+- [x] **T29 · Depth content — everyday-context alternate frames** — populate `frames` on a curated
       set of already-taught items with everyday-context variety, so each word stops being tied to one
       memorized sentence. Nepali `dev` AI-drafted → Ross's review; audio rendered for the new frame
       clips only, bump `AUDIO_VERSION`. Multi-batch, by part of speech.
@@ -307,9 +307,33 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
         बुढी नेपाली सिक्दै हुनुहुन्छ), छ/नौ clock frames (नौ बजे पसल बन्द हुन्छ), the 8 time-of-day
         words (आज मेरो जन्मदिन हो, हिजो राति जाडो थियो), and 6 colors (यो निलो हो कि कालो?, मेरो कपाल
         सेतो भयो; गुलाबी/प्याजी left for the nature-leftovers batch). Approved by Ross 2026-07-21,
-        merged (225 items framed), audio rendered, `AUDIO_VERSION` 25. Plan after this: ~2 batches
-        core communication, ~2 batches best object-noun leftovers, then close T29's frame coverage
-        (~300 items framed).
+        merged (225 items framed), audio rendered (40 phrase + 7 word clips), `AUDIO_VERSION` 25.
+        Shipped commit 5260261. Plan after this: ~2 batches core communication, ~2 batches best
+        object-noun leftovers, then close T29's frame coverage (~300 items framed).
+  - [x] **Batches 14–17 — the four closing batches (80 items · 160 frames)** — drafted 2026-07-21,
+        blanket-approved by Ross 2026-07-21, merged in one pass (305/959 items framed), audio
+        rendered, `AUDIO_VERSION` 26. **T29 frame coverage is now closed** — every high-frequency
+        single-word item carries rotating everyday frames; the remaining unframed pool is the
+        low-value tail + multi-word phrases that already carry context. (Minor: new cosmetic slug
+        conflict chhau छौं×3/छौ×1 — informal छौ shares a slug with plural छौं under nasal-dropping;
+        audibly near-identical, same class as the 8 known ones.) **14 · everyday communication & getting around:** politeness
+        words नमस्ते/हजुर/होला/कृपया/धन्यवाद, question words कसरी/किन/कुन (बसपार्क कसरी जाने?),
+        बिस्तारी/छिटो + informal आइज/जाऊ, the 4 comparison words (चिया कफी भन्दा सस्तो छ, अलि कम
+        गर्नुस्), transport बैंक/एयरपोर्ट/बसपार्क/ट्याक्सी. **15 · places, positions & replies:**
+        होटल-as-eatery, अफिस, त्यहाँ/नजिक/तिर/बायाँ/दायाँ/रोक्नुस्/बीचमा/सम्म, तिमी (introduces
+        informal छौ/हौ), होइन tag-question, नमस्कार, नराम्रो, हुन्छ/हुँदैन reply pairs, the 4 -तिर
+        directions with true-geography frames (हिमाल उत्तरतिर छ; introduces भारत + पोखरा). **16 ·
+        food & kitchen leftovers:** पुग्यो/पर्दैन usage, तेल/मसला/फल/अचार/मह/लसुन/धनिया/काँक्रो +
+        सुन्तला/आँप/कागती + चिउरा/सेलरोटी/समोसा/मिठाई/रक्सी/लस्सी/जुस; introduces the missing taste
+        words गुलियो (मह गुलियो हुन्छ) and अमिलो (कागती अमिलो हुन्छ); culture frames (तिहारमा सेलरोटी
+        बनाउँछौं, दहीसँग चिउरा). **17 · household & nature leftovers:** लुगा/चप्पल/चश्मा/चर्पी/सिरानी/
+        ऐना/ताला/रिमोट/कम्प्युटर/मोमबत्ती/बाल्टी (बत्ती गयो, मोमबत्ती बाल्नुस्) + चन्द्रमा/ताल/खोला/
+        झरना/भूकम्प/साँप/भालु (वनमा भालु छ — exercises the VA_AS_B prefix fix) + गुलाबी/प्याजी.
+        Saturated words skipped throughout (हो/छ/छैन, राम्रो/ठूलो/धेरै, कहाँ/यहाँ, बजार, घरमा…).
+        All 160 devs dup-checked + romanize-verified (validator caught "चर्पी कहाँ छ?" as an existing
+        item → swapped). After approval: merge → render → `AUDIO_VERSION` 26 → **T29 frame coverage
+        closes at ~305/959 items** (remaining unframed = the low-value tail + multi-word phrases that
+        already carry context).
 - [x] **T32 · Depth mechanism — route by the shown frame, not the canonical word** — `buildExercises`
       (`js/sano.js`) now computes `multiWord` from `pickFrame(item).np`, so a single-word `vocab` item
       whose review lands on a multi-word alternate frame is drilled as a word-bank (assemble the
