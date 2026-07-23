@@ -63,6 +63,13 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   `wordbank` recall once recall-strength (interval ≥ 2) while still learning; free `type` for single
   words only once graduated; + audio-only "listen" (SR-03). Large units are split into ~8–12-word
   chunks so the gate stays approachable. State schema is **v3** (a v2 blob is fresh-started on load).
+  An item's alternate **frames** (T28 depth) are **gated** (T38): they rotate into reviews only once
+  the word has graduated AND the frame adds ≤2 never-seen words — a still-learning word keeps its one
+  canonical sentence, and `choice` exercises are always canonical (a long frame among short
+  distractors is the obvious answer). Every **Nepali prompt** is tap-a-word glossed (T37,
+  Duolingo-style dotted underline → English popover + word clip) via the **generated**
+  `js/glosses.js` (`tools/build-glosses.mjs`; never hand-edit) — choices/tiles are answers and stay
+  un-glossed.
 - **Story dialogues** (SR-01, `DIALOGUES` in `js/dialogues.js`) play in a Duolingo-Stories player —
   **romanized-only**, every word tappable for its English (`js/gloss.js`); only `greet-pyaro` is live.
   The English **source of truth** is `tools/tts/dialogue-scripts.md`, hand-mapped into
@@ -92,7 +99,9 @@ companions render — the other 4 stay Sano until their voices are designed). Pe
 across all units — any word that can appear as a word-bank tile, incl. single-word items). After adding or
 re-spelling content, regenerate the affected clips — `build-words.mjs` → `synth-app.mjs --words
 --new` (`--new` renders only clips missing on disk, so it won't re-spend credits or churn git) — then
-bump `AUDIO_VERSION` in `js/audio.js` to bust caches. Flags + per-voice routing: `tools/tts/README.md`.
+bump `AUDIO_VERSION` in `js/audio.js` to bust caches; also re-run `tools/build-glosses.mjs` (the
+tap-gloss lexicon `js/glosses.js` — it fails loudly on any new un-glossed word). Flags + per-voice
+routing: `tools/tts/README.md`.
 
 ## Server / admin / PWA (endpoints + guard order in `@docs/architecture.md`)
 
@@ -149,7 +158,10 @@ bump `AUDIO_VERSION` in `js/audio.js` to bust caches. Flags + per-voice routing:
   `PHP_CLI_SERVER_WORKERS` (else parallel browsers starve it and pages never settle). The app's
   infinite idle animations defeat a stylesheet freeze, so `boot()` freezes them with inline
   `!important` and interaction clicks pass `{ force: true }` (pseudo-element animations can't be frozen
-  inline). `prefers-reduced-motion` is driven with `page.emulateMedia`, not the config option.
+  inline). `boot()` also stubs `Math.random` with a seeded PRNG — the lesson builder makes real
+  random draws (exercise direction, listen rolls, which reviews bundle into a match grid), so every
+  e2e run must draw the identical lesson or type-specific assertions flake (T39).
+  `prefers-reduced-motion` is driven with `page.emulateMedia`, not the config option.
 - **Backend tests:** the `tests/api` guard specs run against `php -S` with **no** `sano-config.php`,
   so they assert only pre-DB guards. Full integration (`tests/api/integration.spec.mjs`) needs MySQL
   and runs only when `SANO_TEST_DB` is set (CI's `integration` job); locally it skips. WebKit-only

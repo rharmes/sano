@@ -28,6 +28,21 @@ export async function boot(page, state, { freezeAnimations = true } = {}) {
 	if (state !== undefined) {
 		await page.addInitScript((s) => localStorage.setItem('sano.state.v1', s), JSON.stringify(state));
 	}
+	// Deterministic Math.random: buildExercises (js/sano.js) makes real random draws —
+	// exercise direction, listen rolls, and WHICH reviews get bundled into a match /
+	// listen-match grid instead of getting their own card — so a spec asserting "a type
+	// card appeared" would otherwise pass or fail by the roll (the T39 webkit flake: the
+	// listen-match shuffle occasionally absorbed the one graduated word). A seeded PRNG
+	// (mulberry32) makes every run draw the same lesson, in every browser and retry.
+	await page.addInitScript(() => {
+		let prngState = 0xc0ffee;
+		Math.random = () => {
+			prngState = (prngState + 0x6d2b79f5) | 0;
+			let t = Math.imul(prngState ^ (prngState >>> 15), 1 | prngState);
+			t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+			return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+		};
+	});
 	// Freeze CSS animations: the app runs infinite idle-mascot loops + a path-reveal that
 	// keep elements perpetually moving, so Playwright's "stable" actionability check times
 	// out before a click (WebKit especially). A stylesheet rule loses to the app's

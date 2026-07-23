@@ -2130,7 +2130,7 @@ table#vocab tbody td:nth-child(3) {
 	text-decoration: underline dotted var(--text-color-softer);
 	-webkit-text-decoration: underline dotted var(--text-color-softer);
 	text-decoration-thickness: 2px;
-	text-underline-offset: 0.28em;
+	text-underline-offset: 0.14em;
 }
 .gloss-word:hover,
 .gloss-word.gloss-open {

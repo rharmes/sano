@@ -31,8 +31,13 @@ An item (`kind: 'phrases'`):
 //   the item's own). Reviews ROTATE through them over the SAME spaced-repetition record (keyed
 //   by item id — one record, many sentences), so a known word is practiced in varied contexts
 //   without adding path units. Frame 0 is the item's own dev/en (clip id = item.id); each extra
-//   frame's clip is `<id>-f1`, `<id>-f2`, … The runtime frame model (itemFrames / frameForSeen /
-//   pickFrame → ex.frame) lives in js/sano.js. dev is AI-drafted → Ross's review, like every dev.
+//   frame's clip is `<id>-f1`, `<id>-f2`, … GATED (T38): an alternate frame only rotates in once
+//   the item has GRADUATED and the frame introduces ≤ FRAME_MAX_NEW_WORDS (2) words that appear
+//   in no introduced item's canonical sentence (knownWordSet) — a still-learning word keeps its
+//   one stable sentence, and `choice` exercises ALWAYS show the canonical (a long alternate among
+//   short distractors would be the obvious answer). The runtime frame model (itemFrames /
+//   eligibleFrames / rotateFrame / pickFrame → ex.frame) lives in js/sano.js. dev is AI-drafted →
+//   Ross's review, like every dev.
 // enEither? / enAlt? = optional multi-gloss accept (T33). When `en` carries two interchangeable
 //   meanings ("Excuse me / I'm sorry"), the np-en "build/type the English" grader accepts EITHER:
 //   enEither:true splits `en` on " / "; enAlt:[…] lists the accepted glosses explicitly (for a slash
@@ -49,6 +54,17 @@ voices); `reviewCompanion` (js/sano.js) resolves item → companion-or-null, `bu
 chip + clip routing (`audio/<companion>/<clipId>.mp3`, rendered by `synth-app.mjs --units`, fallback
 to `default`) read that tag. Bundled match/listen-match grids always play the default voice — a
 round mixes items from different sections, and all pills on one page must share one voice (Ross).
+
+`WORD_GLOSSES` (T37, js/glosses.js — **generated** by `tools/build-glosses.mjs`, do not hand-edit):
+`{ [slug]: en }` — one short English gloss per word that can appear in a Nepali exercise prompt,
+keyed by the same romanized slug as the word's tile clip (`audio/words/<slug>.mp3`). Behind the
+tap-a-word prompt glosses (`glossedPrompt`/`setPrompt` in js/sano.js → `SanoGloss.renderLine`):
+every prompt word is dotted-underlined; tapping pops its English and plays its clip. Sources, in
+priority order: the merged senses of **every** single-word course item sharing the slug (`en` +
+`enAlt`, course order, deduped — a homograph like छ chha lists "Yes / Is / Has / Six", never just
+the first unit's meaning) → the ground-truth dictionary (tools/dict) → hand-drafted surface-form
+fills in the build script (AI-drafted → Ross's review). Coverage and the homograph merge are
+enforced by `tests/data/glosses.test.mjs` and the build fails on any un-glossed word.
 
 An item (`kind: 'vocab'`) — carries an `emoji`, no `usage`:
 
@@ -202,7 +218,7 @@ pedagogy roadmap; **R\*** = earlier UI-revision tags.
 | SR-02 | Self-hosted **audio** — pre-rendered phrase + word-bank clips, ElevenLabs (no runtime TTS): Sano's clone teaches; since **T13** each path companion voices their own section's **reviews** (`UNIT_VOICES` → `ex.companion` → `audio/<companion>/…`, head chip, fallback to default). |
 | SR-03 | **Listening** exercises — audio-only prompts on ~half of recall reviews. |
 | SR-04 | **Speaking** practice — skippable record-and-compare (Web Audio playback). |
-| SR-05 | **SM-2-lite scheduler + learning steps** — per-item ease/interval, auto-graded; new words climb a gentle ladder and only **graduate** once recalled ~2×; a **mastery gate** (`unitIsComplete`) requires every word graduated before the next unit unlocks; the daily loop (`dailyPlan`) is review-dominant + adaptive. Units >14 items are split into ~8–12-word chunks. **Depth (T28):** an item may carry `frames` (alternate example sentences); reviews rotate through them over the same record so known words are practiced in varied contexts without growing the path. |
+| SR-05 | **SM-2-lite scheduler + learning steps** — per-item ease/interval, auto-graded; new words climb a gentle ladder and only **graduate** once recalled ~2×; a **mastery gate** (`unitIsComplete`) requires every word graduated before the next unit unlocks; the daily loop (`dailyPlan`) is review-dominant + adaptive. Units >14 items are split into ~8–12-word chunks. **Depth (T28):** an item may carry `frames` (alternate example sentences); reviews rotate through them over the same record so known words are practiced in varied contexts without growing the path — **gated (T38)** behind graduation + a ≤2 never-seen-word budget, with `choice` exercises always canonical. |
 | SR-06 | Communicative **can-do goals** — per-unit objective on the home CTA + complete screen. |
 | SR-07 | **Companions** — 10 animal friends: heads in bubbles, full-body decorations along the path. |
 | SR-08 | **Pronunciation** drills for sounds romanization hides (aspiration, retroflex, nasal/length). |

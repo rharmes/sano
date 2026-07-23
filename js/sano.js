@@ -1098,21 +1098,72 @@ function itemFrames(item) {
 	);
 }
 
-// Which frame to show given how many times the item has been seen: frame 0 on the very
-// first exposure (seen 0 — a new word's introduction lesson stays on the canonical
-// sentence), then one sentence per subsequent review so contexts vary across lessons.
-function frameForSeen(item, seen) {
+// A word key for the T38 gate below: one romanized word → the lowercase alphanumeric
+// core normalize() would give it (kept local so this block stays liftable).
+function frameWordKey(word) {
+	return word.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+// Every word of the canonical sentence of every INTRODUCED item — the words the learner
+// has actually been shown. Deliberately canonical-only: an alternate frame's extra words
+// were glimpsed in passing, not taught, so they don't count as known.
+function knownWordSet(course, records) {
+	const known = new Set();
+	for (const unit of course)
+		for (const item of unit.items) {
+			const record = records[item.id];
+			if (!record || !record.intro) continue;
+			for (const word of item.np.split(/\s+/)) {
+				const key = frameWordKey(word);
+				if (key) known.add(key);
+			}
+		}
+	return known;
+}
+
+// The early-overwhelm gate (T38): an alternate frame may only replace the canonical
+// sentence once the item has GRADUATED — frames deepen a word that already sticks, so a
+// word still on the learning ladder keeps its one stable sentence — and only when the
+// frame springs at most FRAME_MAX_NEW_WORDS never-seen words on the learner ("one or two
+// new words", not a sentence of strangers). Ineligible frames aren't lost: they surface
+// on later reviews, once graduation lands and their words are known.
+const FRAME_MAX_NEW_WORDS = 2;
+function eligibleFrames(item, record, known) {
 	const frames = itemFrames(item);
+	if (frames.length === 1 || !record || !record.graduated) return [frames[0]];
+	return frames.filter((frame, i) => {
+		if (i === 0) return true; // the canonical sentence is always eligible
+		let unknown = 0;
+		for (const word of frame.np.split(/\s+/)) {
+			const key = frameWordKey(word);
+			if (key && !known.has(key)) unknown++;
+		}
+		return unknown <= FRAME_MAX_NEW_WORDS;
+	});
+}
+
+// Which eligible frame to show given how many times the item has been seen: index 0 (the
+// canonical sentence) on the very first exposure, then one per review, wrapping.
+function rotateFrame(frames, seen) {
 	return frames[seen % frames.length];
 }
 // --- end SR-05 depth ---
 
-// The frame to show for this item right now, keyed off its live review count. Read-only:
-// a not-yet-seen item defaults to seen 0 without creating a record (itemRecord does that
-// when the answer is applied).
+// The known-word set is O(course) to build and pickFrame runs per exercise, so it's
+// cached for the duration of one lesson build (buildExercises resets it — state changes
+// between lessons as words are introduced and graduate).
+let knownWordsCache = null;
+function knownWords() {
+	if (!knownWordsCache) knownWordsCache = knownWordSet(COURSE, state.items);
+	return knownWordsCache;
+}
+
+// The frame to show for this item right now: its eligible frames under the T38 gate,
+// rotated by its live review count. Read-only: a not-yet-seen item defaults to seen 0
+// without creating a record (itemRecord does that when the answer is applied).
 function pickFrame(item) {
 	const record = state.items[item.id];
-	return frameForSeen(item, record ? record.seen : 0);
+	return rotateFrame(eligibleFrames(item, record, knownWords()), record ? record.seen : 0);
 }
 
 // --- T13 companion voices (pure) ---
@@ -1142,6 +1193,7 @@ function exVoice(ex) {
 // --- end T13 companion voices ---
 
 function buildExercises(newItems, reviewItems) {
+	knownWordsCache = null; // rebuild the T38 gate's known-word set against current state
 	const exercises = [];
 	for (const item of newItems) {
 		exercises.push({ item: item, type: 'choice', dir: 'np-en' });
@@ -1233,8 +1285,10 @@ function buildExercises(newItems, reviewItems) {
 	// tiles, audio, and grading all read the same sentence. Picked once here (not per render)
 	// so an item shows ONE consistent sentence for the whole lesson; requeued misses clone the
 	// exercise and keep its frame. Bundled grids (match/listenMatch) have no single `item` and
-	// always render each item's canonical frame.
-	for (const ex of exercises) if (ex.item) ex.frame = pickFrame(ex.item);
+	// always render each item's canonical frame. A `choice` exercise is ALWAYS the canonical
+	// sentence (T38, per Ross): its distractors are other items' short canonical texts, so a
+	// long alternate frame among them would be obviously the odd one out.
+	for (const ex of exercises) if (ex.item) ex.frame = ex.type === 'choice' ? itemFrames(ex.item)[0] : pickFrame(ex.item);
 	return exercises;
 }
 
@@ -1298,10 +1352,27 @@ function renderExercise() {
 	voiceEl.classList.toggle('hide', !head);
 }
 
-function setPrompt(label, word, pron, audioId, voiceId) {
+// Tap-a-word glosses (T37): rebuild a Nepali prompt sentence as SanoGloss segments — each
+// word dotted-underlined and tappable for its English (WORD_GLOSSES, js/glosses.js, keyed
+// by the same slug as the word's tile clip), Duolingo-style, with the word's clip playing
+// on tap. A word with no gloss (or a missing lexicon) stays plain text. Only PROMPTS are
+// glossed — choices and word-bank tiles are answers, so glossing them would leak.
+function glossedPrompt(sentence) {
+	const gloss = sentence.split(/\s+/).map((word) => {
+		const key = normalize(word).replace(/\s+/g, '-');
+		return { np: word, en: (typeof WORD_GLOSSES === 'undefined' ? '' : WORD_GLOSSES[key]) || '' };
+	});
+	return SanoGloss.renderLine({ np: sentence, gloss: gloss }, { onWordTap: (seg) => playTileWord(seg.np) });
+}
+
+function setPrompt(label, word, pron, audioId, voiceId, glossed) {
 	document.getElementById('exercise-label').textContent = label;
 	const wordEl = document.getElementById('exercise-word');
-	wordEl.textContent = word;
+	// A Nepali prompt (glossed) renders as tap-to-gloss words; English prompts stay plain.
+	if (glossed) {
+		wordEl.textContent = '';
+		wordEl.appendChild(glossedPrompt(word));
+	} else wordEl.textContent = word;
 	// An audioId is passed only when the headword shown is the Nepali — the one direction
 	// where playing it can't give the answer away. In that case offer a play button beside
 	// it AND auto-play it on load, so a Nepali word at the top always speaks itself. The
@@ -1332,7 +1403,7 @@ function setListenPrompt(label, audioId, voiceId) {
 function renderChoice(ex) {
 	const f = ex.frame;
 	if (ex.listen) setListenPrompt('Select what you hear', f.audioId, exVoice(ex));
-	else if (ex.dir === 'np-en') setPrompt('Select the correct meaning', f.np, f.pron, f.audioId, exVoice(ex));
+	else if (ex.dir === 'np-en') setPrompt('Select the correct meaning', f.np, f.pron, f.audioId, exVoice(ex), true);
 	else setPrompt('Select the Nepali', promptText(f), '');
 
 	const choiceText = ex.dir === 'np-en' ? (item) => item.en : (item) => item.np;
@@ -1412,7 +1483,7 @@ function renderWordbank(ex) {
 	} else {
 		// Showing/parsing the Nepali is the prompt here, so its audio button doesn't give
 		// the (English) answer away; setPrompt auto-plays it on load (Nepali headword).
-		setPrompt('Listen and build the English', f.np, '', f.audioId, exVoice(ex));
+		setPrompt('Listen and build the English', f.np, '', f.audioId, exVoice(ex), true);
 	}
 
 	const answerEl = document.getElementById('wordbank-answer');
@@ -1613,7 +1684,7 @@ function createRecorder(opts) {
 
 function renderSpeak(ex) {
 	const f = ex.frame;
-	setPrompt('Say it aloud, then compare', f.np, f.pron, f.audioId);
+	setPrompt('Say it aloud, then compare', f.np, f.pron, f.audioId, undefined, true);
 	speakRecorder.reset();
 }
 

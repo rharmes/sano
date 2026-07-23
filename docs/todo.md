@@ -104,6 +104,19 @@ this list. Refer to any task by its ID (e.g. "T3").
       still intermittently timed out. Test-only change (`tests/e2e/_helpers.mjs`); verified match tests
       30× green under WebKit and full e2e (38) green.
 
+- [x] **T39 · Watch: webkit type-recall e2e retried once under full-suite load (2026-07-22)** —
+      `tests/e2e/lesson.spec.mjs` "a type-what-you-know (recall) exercise renders and can be
+      completed" flaked (passed on retry) in one full-suite run during T37/T38 work, then passed
+      38/38 on an isolated `--ui` re-run. **Recurred 2026-07-23 → root-caused and fixed:** not
+      timing at all — `buildExercises` randomly bundles up to 5 single-word recall-strength reviews
+      into the listen-match grid (`shuffleArray(listenable).slice(0, 5)`), and a bundled item gets
+      no card of its own, so whenever the shuffle absorbed the seeded graduated word the lesson
+      genuinely contained no `type` card (the failing run saw only wordbank + listenMatch). Fix:
+      `boot()` (tests/e2e/_helpers.mjs) now stubs `Math.random` with a seeded PRNG (mulberry32),
+      so every e2e run draws the identical lesson in every browser/retry — freezing nondeterminism
+      like the animation freeze, instead of loosening assertions. Verified: two consecutive
+      full-suite runs 38/38, zero flaky.
+
 ## Romanization
 
 - [x] **T19 · Handle visarga (ः, U+0903) in the romanizer** — `tokenize()` now maps visarga to a coda
@@ -417,3 +430,32 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
         `['Yes','Okay','It will be done']`, hudaina `['No',"It won't work"]`).
   - [ ] **Remaining batches** — 80 items still to review (Place & Position → At the Shop) + a
         dev-seed scenario once the review settles.
+- [x] **T37 · Tap-a-word glosses in lesson exercises** — every word of a Nepali sentence shown as an
+      exercise **prompt** gets the Duolingo-style tap-to-reveal treatment (dotted underline; reuses
+      the dialogues' `SanoGloss` popover, now with an `onWordTap` hook that plays the word's tile
+      clip): tapping a word shows its English. **Delivered 2026-07-22** per Ross's decisions (all
+      prompts — select-meaning, listen-and-build, speak — incl. introductions; choices and word-bank
+      tiles are answers, so they stay un-glossed). Backed by the **generated** `js/glosses.js`
+      (`WORD_GLOSSES`, 1,130 entries; `tools/build-glosses.mjs`): single-word item `en` (389) →
+      ground-truth dictionary (559) → hand-drafted surface-form FILLS (182 — inflected verbs,
+      case-suffixed nouns, and the template-item words words.json skips) + 2 mid-sentence
+      SENSE_OVERRIDES (ho, hoina). Coverage enforced by `tests/data/glosses.test.mjs` + a loud build
+      failure on any new un-glossed word. **Review round 1 (2026-07-23):** homograph slugs now merge
+      the senses of every course item sharing them (`en` + `enAlt`, deduped — chha "Yes / Is / Has /
+      Six", paani "Water / Rain", hajur/hunchha/hundaina pick up their enAlt senses) plus 2
+      EXTRA_SENSES from the dictionary (budhaa "old man", budhi "old woman"); dotted underline
+      raised closer to the word (`text-underline-offset` 0.28em → 0.14em, mirrored in the style
+      guide). **Open: the 182 FILLS + 2 overrides + 2 extra senses are AI-drafted → Ross's review**
+      (in the build script, greppable). Dev-seed 0h.
+- [x] **T38 · Gate alternate frames by learner knowledge — fix the early-overwhelm** —
+      `frameForSeen` rotated frames by raw seen-count with no gating, so a barely-introduced item
+      could land on an alternate frame made of never-seen words (Ross hit "Chaar kothaa chhan" while
+      still learning Numbers 1–10), and `renderChoice` showed that frame sentence against
+      single-word canonical distractors — the long option was obviously correct. **Delivered
+      2026-07-22** per Ross's decisions: an alternate frame is eligible only once the item has
+      **graduated** AND the frame introduces **≤ 2 never-seen words** (`FRAME_MAX_NEW_WORDS`;
+      "known" = any word of an introduced item's canonical sentence, `knownWordSet`); ineligible
+      frames are skipped (rotation runs over the eligible list), and `choice` exercises ALWAYS show
+      the canonical sentence. The complex frames aren't lost — they surface later, once graduation
+      lands and their words are known. `eligibleFrames`/`rotateFrame`/`pickFrame` (js/sano.js),
+      unit-tested in `tests/unit/frames.test.mjs`; dev-seed 0h reproduces the Numbers case.

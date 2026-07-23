@@ -81,7 +81,9 @@ const SanoGloss = (() => {
 	// Build the inline content of one line: underlined <button>s for tappable segments, plain
 	// text for empty-en segments, single spaces between segments (so the result reads as the
 	// original `np`). Returns a DocumentFragment the caller drops into its bubble / narration.
-	function renderLine(line) {
+	// `opts.onWordTap(seg)` fires alongside the popover on every open — the lesson prompts
+	// (T37) use it to play the tapped word's tile clip; dialogues pass nothing and are unchanged.
+	function renderLine(line, opts) {
 		const frag = document.createDocumentFragment();
 		const segs = line && line.gloss;
 		if (!segs || !segs.length) {
@@ -100,17 +102,23 @@ const SanoGloss = (() => {
 				b.setAttribute('tabindex', '0');
 				b.textContent = seg.np;
 				b.setAttribute('aria-label', seg.np + ' — ' + seg.en);
-				b.addEventListener('click', (e) => {
+				const tap = (e) => {
 					e.preventDefault();
 					e.stopPropagation();
+					// A tap on the already-open word dismisses its popover (see open) — that
+					// dismissal shouldn't re-fire the word callback (e.g. replay its audio).
+					if (opts && opts.onWordTap && anchor !== b) opts.onWordTap(seg);
 					open(b, seg.en);
-				});
+				};
+				// A mouse/touch tap must NOT focus the span (mousedown's default): focusing can
+				// make the browser scroll the tapped word into view, and the popover dismisses on
+				// ANY scroll — so the tap would open it and instantly close it. Canceling
+				// mousedown keeps taps focus-free while `click` still fires; keyboard users are
+				// unaffected (Tab still focuses, Enter/Space still opens via keydown below).
+				b.addEventListener('mousedown', (e) => e.preventDefault());
+				b.addEventListener('click', tap);
 				b.addEventListener('keydown', (e) => {
-					if (e.key === 'Enter' || e.key === ' ') {
-						e.preventDefault();
-						e.stopPropagation();
-						open(b, seg.en);
-					}
+					if (e.key === 'Enter' || e.key === ' ') tap(e);
 				});
 				frag.appendChild(b);
 			} else {

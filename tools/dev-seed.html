@@ -158,6 +158,21 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">SR-05 depth · T37 / T38</span>
+			<h2>0h · Tap-a-word glosses + the frame gate (T37 / T38)</h2>
+			<p>
+				<b>Gate (the Numbers repro):</b> Basics done, <b>Numbers mid-learning</b> with review counts that used to land on alternate
+				frames (“Chaar kothaa chhan” while still learning “four”). Now an <b>un-graduated word always shows its canonical sentence</b> —
+				the lesson is simple single numbers again, and a choice round never shows an alternate frame among short distractors. Alternate
+				frames return once the word <b>graduates</b>, and only when they add ≤2 never-seen words. <b>Glosses:</b> whole course mastered
+				with phrase reviews due — every word of a Nepali prompt is <b>dotted-underlined</b>; tap one for its English meaning (and its
+				audio), Duolingo-style. Tiles and choices are answers, so they stay un-glossed.
+			</p>
+			<button onclick="seed('t38gate')">Gate: Numbers repro</button>
+			<button onclick="seed('t37gloss')">Glosses: phrase reviews</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-05 schema v3 · fresh start</span>
 			<h2>0d · Fresh-start migration (v2 → v3)</h2>
 			<p>
@@ -782,6 +797,37 @@
 						for (const it of COURSE.find((u) => u.id === id).items) {
 							const seen = 4 + (n % 3);
 							items[it.id] = mastered({ interval: n % 2 ? 10 : 6, seen, correct: seen - 1, lastSeen: day(14) });
+							n++;
+						}
+					state = wrap(items, { itemsTotal: 950 });
+				} else if (which === 't38gate') {
+					// T38 frame gate — the reported Numbers case: Basics mastered, Numbers mid-learning
+					// with seen counts that USED to rotate onto alternate frames ("Chaar kothaa chhan"
+					// while still learning "four") and make the choice round's long option obvious.
+					// Post-gate, an un-graduated word is ALWAYS its canonical sentence, so this lesson
+					// is simple single numbers — each prompt word still tappable for its gloss (T37).
+					const items = {};
+					learnUnits(items, 0, 1, { lastSeen: day(0) });
+					const numbers = COURSE.find((u) => u.id === 'numbers');
+					numbers.items.forEach((it, i) => {
+						const seen = 1 + (i % 3); // pre-gate these landed on frames 1/2; now: canonical
+						items[it.id] = rec({ interval: 1, recalls: 0, seen, correct: seen, lastSeen: day(2) });
+					});
+					state = wrap(items, { itemsTotal: 60 });
+				} else if (which === 't37gloss') {
+					// T37 tap-a-word glosses: whole course mastered, a dozen multi-word phrase items due
+					// at mixed strengths — recognition (choice "Select the correct meaning": glossed
+					// Nepali prompt) and recall (word bank "Listen and build the English": same). Every
+					// prompt word is dotted-underlined — tap for the English + the word's clip. Since
+					// everything is known, graduated items may also rotate onto alternate frames (T38's
+					// gate is satisfied: no frame can spring >2 never-seen words on a full dictionary).
+					const items = {};
+					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 30, lastSeen: day(0) });
+					let n = 0;
+					for (const u of COURSE)
+						for (const it of u.items) {
+							if (n >= 12 || it.dev.split(/\s+/).length < 3) continue;
+							items[it.id] = mastered({ interval: n % 2 ? 6 : 1, seen: 4 + (n % 3), correct: 4, lastSeen: day(14) });
 							n++;
 						}
 					state = wrap(items, { itemsTotal: 950 });
