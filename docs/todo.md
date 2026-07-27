@@ -266,7 +266,7 @@ marked otherwise.
         integration suite cannot grant itself admin — so it was verified directly against the live
         host's MySQL: buffered prepare first, rows streamed one at a time, and a query after
         draining still works.
-- [ ] **T46 · Revoke sessions on the CLI password reset** — `tools/make-user.php:69`
+- [x] **T46 · Revoke sessions on the CLI password reset** — `tools/make-user.php:69`
       `--reset-password` rewrites the hash and clears the lockout but never deletes the user's
       sessions, unlike `api/admin-reset-password.php:37`, which does (and whose UI even says "signed
       out on all devices"). So the most likely reason to run it — "this account was compromised" —
@@ -274,6 +274,18 @@ marked otherwise.
       synced state. One line. Same file: it applies no username validation at all, unlike
       `register.php`'s `^[a-z0-9_]{3,32}$` — reuse the regex so a CLI-made account can't hold
       characters self-service signup rejects.
+  - [x] **Delivered (2026-07-27)** — the reset branch now runs
+        `DELETE FROM sessions WHERE user_id = ?`, mirroring `api/admin-reset-password.php:37`, and
+        reports how many devices were signed out. The username regex is applied up front, before
+        the password prompt, so a bad name fails immediately. Because that rule now lives in three
+        places (`api/register.php`, `js/onboarding.js`, `tools/make-user.php`) — and the CLI missing
+        it *was* this finding — `tests/data/username-rule.test.mjs` diffs all three and separately
+        asserts the pattern still rejects the names that make accounts confusable: case variants,
+        leading/trailing spaces, a Cyrillic-`о` homoglyph, over-length, and markup. Confirmed to
+        fail when one copy is loosened to `[a-zA-Z0-9_]`.
+        Verified on the server against a throwaway account, since neither half can be tested
+        locally: `Bad Name` and `Ross` were rejected with exit 1 **before** any password prompt, and
+        an account given two live sessions had **0** after the reset. Account and sessions cleaned up.
 - [ ] **T47 · Close the login account-existence oracles** — `api/login.php` leaks membership two
       ways. (a) The `429 {error:"locked"}` branch at line 40 is only reachable for a username that
       exists, **and it returns before the `login_attempts` insert at line 46** — so once an account

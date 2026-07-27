@@ -21,6 +21,14 @@ if (count($args) !== 1) {
 	exit(1);
 }
 $username = $args[0];
+// Same rule self-service signup enforces (api/register.php) — without it this script
+// could mint `Ross`, a name with a trailing space, or a Cyrillic homoglyph of an
+// existing account, which would render as a visually identical row in the admin table.
+// Kept in step by tests/data/username-rule.test.mjs.
+if (!preg_match('/^[a-z0-9_]{3,32}$/', $username)) {
+	fwrite(STDERR, "Username must be 3-32 chars of a-z, 0-9 or _\n");
+	exit(1);
+}
 
 $config = null;
 foreach ([__DIR__ . '/sano-config.php', __DIR__ . '/../../sano-config.php'] as $path) {
@@ -67,7 +75,13 @@ if ($reset) {
 		exit(1);
 	}
 	$pdo->prepare('UPDATE users SET password_hash = ?, failed_logins = 0, locked_until = NULL WHERE id = ?')->execute([$hash, $userId]);
-	echo "Password reset for $username\n";
+	// Revoke every session, exactly as api/admin-reset-password.php does. Without this
+	// the most likely reason to run a reset — "this account was compromised" — left the
+	// attacker's 90-day cookie working, with continued read/write access to the victim's
+	// synced state. A reset that doesn't sign anyone out is a false sense of remediation.
+	$sessions = $pdo->prepare('DELETE FROM sessions WHERE user_id = ?');
+	$sessions->execute([$userId]);
+	echo "Password reset for $username (signed out of {$sessions->rowCount()} device(s))\n";
 } else {
 	if ($userId !== false) {
 		fwrite(STDERR, "User already exists: $username (use --reset-password)\n");
