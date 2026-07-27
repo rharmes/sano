@@ -239,13 +239,33 @@ marked otherwise.
         Tests: 7 guard specs — oversized bodies 413 on five endpoints, a 15 KiB body still parsed
         normally (so the cap can't be quietly tightened into breaking real requests), and
         `state.php` bounding at its own larger limit.
-- [ ] **T45 · Stop `api/admin-users.php` loading every user's full state blob** — it `fetchAll()`s
+- [x] **T45 · Stop `api/admin-users.php` loading every user's full state blob** — it `fetchAll()`s
       `a.state` (MEDIUMTEXT, up to 1 MiB each) for *every* account, `json_decode`s each, and
       accumulates every graduated item id — where the ids are attacker-chosen keys inside their own
       blob, with no length or count limit. A few self-registered accounts each PUTting a padded 1 MiB
       state can push the admin request to a fatal OOM and persistently deny Ross the Users tab.
       Extract `streak` / counts in SQL (`JSON_EXTRACT`, `JSON_LENGTH`) instead of shipping blobs;
       `js/admin.js` only intersects the id list against `COURSE`, so a server-side count works.
+  - [x] **Delivered (2026-07-27)** — two independent bounds. (1) Rows are **streamed**
+        (`PDO::MYSQL_ATTR_USE_BUFFERED_QUERY = false`) rather than `fetchAll()`ed, so only one blob
+        is resident at a time whatever the account count. (2) Extraction moved into a pure
+        `state_summary()` in `api/lib.php` which caps ids per account (`ADMIN_MAX_GRADUATED` 1500 —
+        the real course has 1,061 ids, longest 59 chars), drops ids over `ADMIN_MAX_ID_LEN` (64),
+        and honours a whole-response budget (`ADMIN_MAX_TOTAL_IDS` 100,000, ≈2 MB) so the payload is
+        bounded no matter how many accounts exist. Truncation is reported through `error_log`
+        instead of passing silently — a capped list understates someone's progress *and* means an
+        account is carrying far more ids than the course holds.
+        **Kept the id list instead of computing in SQL:** deriving "Unit N of M" needs `COURSE`,
+        which the server doesn't have, and the `JSON_TABLE` route would need an attacker-controlled
+        JSON key interpolated into a path expression — a worse trade than bounding the list.
+        Measured rather than assumed: with ~1 MiB blobs at a 128 M limit the old pattern peaked at
+        **110 MiB for 50 accounts and exhausted memory outright at 100**, while the new one holds
+        ~26 MiB and bounds the response to 100,000 ids rather than 1.2 million.
+        Tests: 13 assertions over `state_summary` (flooding, over-long ids, the shared budget, and
+        every malformed-blob shape). The streaming itself has **no automated coverage** — the
+        integration suite cannot grant itself admin — so it was verified directly against the live
+        host's MySQL: buffered prepare first, rows streamed one at a time, and a query after
+        draining still works.
 - [ ] **T46 · Revoke sessions on the CLI password reset** — `tools/make-user.php:69`
       `--reset-password` rewrites the hash and clears the lockout but never deletes the user's
       sessions, unlike `api/admin-reset-password.php:37`, which does (and whose UI even says "signed

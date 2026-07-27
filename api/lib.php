@@ -21,6 +21,13 @@ const MAX_BODY_BYTES = 16384;
 // blob itself, plus room for a client that pretty-prints its JSON.
 const MAX_STATE_BODY_BYTES = MAX_STATE_BYTES + 8192;
 const MAX_PUSH_SUBS_PER_USER = 20;
+// Bounds for the admin dashboard's per-account summary. The item ids it echoes back
+// are keys the client chose inside its own state blob, so both how many there are and
+// how long each is are attacker-controlled. COURSE holds ~1,061 ids of at most 59
+// characters, so a real account never comes near these; a padded one stops at them.
+const ADMIN_MAX_GRADUATED = 1500;
+const ADMIN_MAX_ID_LEN = 64;
+const ADMIN_MAX_TOTAL_IDS = 100000; // whole-response backstop, ~2 MB of JSON
 
 // Fail closed: never surface a stack trace or the DB DSN to the client. Any
 // uncaught exception (a PDO error, a bad config, register.php's re-thrown
@@ -244,6 +251,47 @@ function push_key_ok(string $key, int $bytes, int $firstByte = -1): bool
 		return false;
 	}
 	return $firstByte < 0 || ord($raw[0]) === $firstByte;
+}
+
+// Summarise one stored state blob for the admin dashboard: the streak, and the ids of
+// the items that have graduated (js/admin.js intersects those against COURSE to derive
+// "Unit N of M" — the server has no COURSE, so it cannot do that itself).
+//
+// Everything here is bounded, because the blob is whatever the account chose to sync.
+// `capped` reports that something was dropped rather than pretending the list is whole;
+// $idBudget lets the caller keep a ceiling across the *whole* response, not just per row.
+function state_summary(?string $stateJson, int $idBudget): array
+{
+	$out = ['streak' => 0, 'graduated' => [], 'capped' => false];
+	if ($stateJson === null) {
+		return $out;
+	}
+	$state = json_decode($stateJson);
+	if (!is_object($state)) {
+		return $out;
+	}
+	$out['streak'] = isset($state->streak) ? (int) $state->streak : 0;
+	if (!isset($state->items) || !is_object($state->items)) {
+		return $out;
+	}
+	$limit = max(0, min(ADMIN_MAX_GRADUATED, $idBudget));
+	foreach ($state->items as $id => $rec) {
+		// Checked first thing each iteration so a blob stuffed with keys stops the scan
+		// too, not just the collecting.
+		if (count($out['graduated']) >= $limit) {
+			$out['capped'] = true;
+			break;
+		}
+		if (!is_object($rec) || empty($rec->graduated)) {
+			continue;
+		}
+		if (strlen($id) > ADMIN_MAX_ID_LEN) {
+			$out['capped'] = true; // far longer than any real course id
+			continue;
+		}
+		$out['graduated'][] = $id;
+	}
+	return $out;
 }
 
 // updated_at (DATETIME(3), server zone) -> epoch milliseconds, via SQL so PHP
