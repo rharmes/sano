@@ -124,6 +124,13 @@ auth design (CSPRNG tokens hashed at rest, argon2id, bound parameters throughout
 the real defects plus the hardening worth doing. Each was confirmed by reading the code path unless
 marked otherwise.
 
+**Order to work in** (the entries stay in ID order below, since IDs are how we refer to them; this
+is the priority, re-ranked 2026-07-27 as items got measured rather than assumed):
+**T57** → **T58** → T53 → T50 → T55 → T54 (what's left of it).
+T57 and T58 were pulled out of T54's bundle: a throttle that can be bypassed wholesale outranks
+"small independent items", and an `innerHTML` sink whose signature invites a username is a different
+kind of thing from a missing header. Ten of the original fifteen are done.
+
 - [x] **T41 · Turn off Apache directory listing** — `/api/`, `/js/`, `/css/`, `/fonts/` and
       `/audio/` all serve a full `Index of /…` autoindex (confirmed live: `GET /api/` lists all 11
       endpoint filenames). `.htaccess` has no `Options -Indexes`, so this is one line at the top of
@@ -495,18 +502,19 @@ marked otherwise.
       key leak or a bug in the reminder script escalates from "wrong message" to "every subscriber's
       app window redirected to a phishing page." Resolve against `location.origin` and fall back
       to `/`.
-- [ ] **T54 · Security hardening bundle** — small independent items, none individually urgent:
-      per-IP throttles key on the full IPv6 address so anyone with a routed /64 has 2^64 buckets and
-      bypasses both the login and signup limits (truncate to /64 — `login.php:26`, `register.php:38`)
-      · no `password_needs_rehash()` on successful login, so hashes never upgrade
+- [ ] **T54 · Security hardening bundle** — small independent items, none individually urgent.
+      (The IPv6 throttle item moved out to **T57** and the `showNotice` sink to **T58** — both
+      outgrew "not individually urgent".) Remaining:
+      no `password_needs_rehash()` on successful login, so hashes never upgrade
       · `Object.assign(defaultState(), parsed)` (`js/sano.js:232`) lets a `__proto__` key in a state
       blob replace the state object's prototype (self-inflicted only, one-line fix)
-      · `showNotice(html)` (`js/admin.js:210`) is an `innerHTML` sink with an HTML-typed parameter —
-      all six callers pass literals today, but the signature invites a username; and `esc()` doesn't
-      escape `'`, so it's element-safe but not attribute-safe · add `declare(strict_types=1)` to the
+      · add `declare(strict_types=1)` to the
       seven `api/` files missing it · set `PDO::ATTR_EMULATE_PREPARES => false` (not an injection
       risk under utf8mb4, but packed binary IPs currently travel as string literals, and a mangled
-      one makes the throttle **fail open** silently) · index `sessions.expires_at` and
+      one makes the throttle **fail open** silently — though **verify that claim first**: T47's
+      `@ip-throttle` spec counts `127.0.0.1`, whose packed form contains three NUL bytes, and it
+      passes in CI with emulation at its pdo_mysql default, which is evidence against it)
+      · index `sessions.expires_at` and
       `login_attempts.created_at`, and move the housekeeping DELETEs to *after* the throttle check so
       a 429'd attacker can't force two full table scans per request · `Header always set` in
       `api/.htaccess` · add `X-Frame-Options`, `Permissions-Policy: microphone=(self), camera=(),
@@ -522,6 +530,30 @@ marked otherwise.
       class as the DB password — the current wording ("can't be walked back to a person") is true
       only for someone holding the DB *alone*; with both, the IPv4 space is small enough to invert
       cheaply.
+- [ ] **T57 · Bucket the per-IP throttles by /64, not by address** — split out of T54 (2026-07-27),
+      and the highest-severity item left. `login.php` and `register.php` both key their throttle on
+      `inet_pton($_SERVER['REMOTE_ADDR'])`, the *whole* address, and match it with `WHERE ip = ?`.
+      For IPv4 that's right. For IPv6 a single routed /64 — what a residential connection is
+      routinely handed — is 2^64 distinct keys, so the login limit (30 per 15 min) and the signup
+      limit (5/hour) are both bypassed by incrementing an address. That doesn't just restore
+      unlimited password guessing; it removes the meter T47 leans on, since the metering only bites
+      if the bucket is stable. Fix: store the packed address truncated to its first 8 bytes when
+      it's 16 bytes long, leave 4-byte IPv4 whole, and match on the truncated value.
+      **Latent, not live, and that is the only reason it isn't first outright:** `namastesano.com`
+      has no `AAAA` record (checked 2026-07-27, A only), so nothing reaches the app over IPv6 today
+      — it arms itself silently the day the host or a CDN turns IPv6 on, with no error and no
+      failing test. Existing `login_attempts`/`signup_attempts` rows are IPv4 and 15-minute/1-hour
+      ephemeral, so no migration is needed; the column already holds VARBINARY.
+      Worth a test that two addresses in one /64 share a bucket while two /64s don't.
+- [ ] **T58 · Close the `showNotice` innerHTML sink** — split out of T54 (2026-07-27).
+      `showNotice(html)` (`js/admin.js:210`) assigns its argument to `innerHTML`, and the parameter
+      is *typed* as HTML by its own name. All six call sites pass literals today, so there is no
+      live XSS — the defect is that the signature invites the next caller to pass a username, and
+      the admin dashboard is exactly where account-controlled strings are on screen. Related in the
+      same file: `esc()` doesn't escape `'`, so it is element-safe but **not** attribute-safe, and
+      nothing marks that boundary. Take text and set `textContent`, with a separate explicit path
+      for the one caller that genuinely needs markup (if any), and either teach `esc()` `'`/`"` or
+      rename it to say where it may be used.
 
 ## Testing
 
