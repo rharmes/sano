@@ -98,6 +98,35 @@ test.describe('logout.php', () => {
 	test('POST without CSRF → 403', async ({ request }) => {
 		expect((await request.post('/api/logout.php')).status()).toBe(403);
 	});
+
+	// The session cookie's shape (T48), asserted here rather than in the DB-backed suite:
+	// logout with no cookie never reaches db(), so this runs on every local `test.sh` too.
+	// It matters that it runs somewhere runnable — the first version of this test lived in
+	// the integration spec, which is skipped without MySQL, and shipped red twice.
+	//
+	// What this catches, measured rather than assumed: PHP matches setcookie()'s option
+	// keys case-insensitively (`sameSite` works), but an unrecognised one makes the call
+	// fail and emit *no cookie at all* — so a real typo shows up here as nobody being able
+	// to sign in, not as one quietly missing attribute.
+	//
+	// This is the dev shape. php -S is the `cli-server` SAPI, and over plain http a Secure
+	// cookie never comes back while a __Host- one is refused outright, so both are
+	// correctly absent. Production's shape is asserted in tests/api/helpers.test.php, which
+	// can inject the branch; no test process runs under the live FastCGI SAPI.
+	test('clearing the session emits the cookie with the right attributes', async ({ request }) => {
+		const res = await request.post('/api/logout.php', { headers: { 'X-Sano-Request': '1' } });
+		expect(res.status()).toBe(204);
+		const cookie = res.headers()['set-cookie'];
+		// Case-insensitive on purpose: PHP writes `path=/` and `secure` lowercase but
+		// `HttpOnly`/`SameSite` capitalised, and that formatting is not ours to pin.
+		expect(cookie).toMatch(/^sano_session=/);
+		expect(cookie).toMatch(/;\s*httponly(;|$)/i);
+		expect(cookie).toMatch(/;\s*samesite=strict(;|$)/i);
+		expect(cookie).toMatch(/;\s*path=\/(;|$)/i);
+		expect(cookie).not.toMatch(/;\s*domain=/i); // a __Host- cookie may not carry one
+		expect(cookie).not.toMatch(/;\s*secure(;|$)/i);
+		expect(cookie).not.toContain('__Host-');
+	});
 });
 
 test.describe('state.php', () => {
