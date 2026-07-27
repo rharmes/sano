@@ -114,6 +114,163 @@ this list. Refer to any task by its ID (e.g. "T3").
         the UA / app-path / crawler-path signals catch the rest. Requiring an audio fetch ("actually
         did a lesson") is the stricter option if the numbers ever look inflated.
 
+## Security
+
+Findings from the full security review of 2026-07-26 (six parallel reviews: auth/session, API
+injection & authz, frontend XSS, Apache/exposure, server-side scripts & privacy, secrets/supply
+chain). **Nothing Critical or High was found, and no credential has ever been committed** — the
+auth design (CSPRNG tokens hashed at rest, argon2id, bound parameters throughout, no
+`X-Forwarded-For` trust, no client-settable `is_admin`) held up under scrutiny. The items below are
+the real defects plus the hardening worth doing. Each was confirmed by reading the code path unless
+marked otherwise.
+
+- [ ] **T41 · Turn off Apache directory listing** — `/api/`, `/js/`, `/css/`, `/fonts/` and
+      `/audio/` all serve a full `Index of /…` autoindex (confirmed live: `GET /api/` lists all 11
+      endpoint filenames). `.htaccess` has no `Options -Indexes`, so this is one line at the top of
+      the root file, inherited by every subdirectory. No secret is exposed today — the value is that
+      any future stray file dropped into a synced directory would otherwise be advertised.
+- [ ] **T42 · Validate and scope push subscriptions** — `api/push-subscribe.php` accepts any
+      non-empty string ≤500 bytes as `endpoint`, and `tools/send-reminders.php` POSTs to it hourly,
+      so any self-registered user turns the server into a blind SSRF client (loopback/LAN probing;
+      the attacker never sees the response, so this is request-forgery, not exfiltration). Require
+      `https` + a host allowlist of the real push services. Same file, same fix session: the
+      `UNIQUE KEY` is on `endpoint` alone and the upsert does `user_id = VALUES(user_id)`, so
+      anyone holding another user's endpoint string can **reassign that device to their own
+      account** — scope the update to the owner instead. Also validate `p256dh` (65 bytes,
+      leading `0x04`) / `auth` (16 bytes) as base64url, and cap rows per user.
+- [ ] **T43 · Fix `api/state.php` write handling** — the file lacks `declare(strict_types=1)` (it's
+      file-scoped, so `lib.php`'s doesn't cover it), and `json_encode()`'s return is unchecked.
+      Verified: a state containing `1e999` decodes to `INF`, re-encodes to `false`, and
+      `strlen(false)` coerces to `0` — so the 1 MiB cap passes and a **non-JSON value is stored**.
+      `tools/send-reminders.php:84` then runs `JSON_UNQUOTE(JSON_EXTRACT(s.state, …))` across every
+      reminder-enabled user in one statement; MySQL aborts the whole SELECT on the invalid row, the
+      uncaught exception kills the cron, and **nobody gets reminders** until it's cleaned up. Use
+      `JSON_THROW_ON_ERROR` (or check `=== false` → 400), add the strict_types declaration, and
+      consider a `JSON` column type so MySQL rejects it at write time. While here: the PUT commits
+      and *then* re-reads the row, so two devices racing can hand the client a revision it didn't
+      produce — collapse it into one atomic `UPDATE … WHERE revision = ?` using `rowCount()` as the
+      conflict signal, which also fixes the deadlock on two concurrent first-ever PUTs.
+- [ ] **T44 · Bound request bodies before decode, and catch fatals** — `read_json_body()`
+      (`api/lib.php:57`) and `api/state.php:24` both do `file_get_contents('php://input')` with no
+      limit, *before* the size cap and *before* auth. `post_max_size` doesn't bound a PUT read this
+      way, so an unauthenticated request can drive PHP to a memory-exhaustion **fatal** — which
+      `set_exception_handler` does not catch, so the client gets a bodiless response with no JSON
+      content type. Pre-check `Content-Length`, read with `stream_get_contents($fh, CAP + 1)`, use a
+      much smaller cap (~16 KB) for the credential/reminder/push endpoints, and add a
+      `register_shutdown_function` fatal handler so no path can return an empty body.
+- [ ] **T45 · Stop `api/admin-users.php` loading every user's full state blob** — it `fetchAll()`s
+      `a.state` (MEDIUMTEXT, up to 1 MiB each) for *every* account, `json_decode`s each, and
+      accumulates every graduated item id — where the ids are attacker-chosen keys inside their own
+      blob, with no length or count limit. A few self-registered accounts each PUTting a padded 1 MiB
+      state can push the admin request to a fatal OOM and persistently deny Ross the Users tab.
+      Extract `streak` / counts in SQL (`JSON_EXTRACT`, `JSON_LENGTH`) instead of shipping blobs;
+      `js/admin.js` only intersects the id list against `COURSE`, so a server-side count works.
+- [ ] **T46 · Revoke sessions on the CLI password reset** — `tools/make-user.php:69`
+      `--reset-password` rewrites the hash and clears the lockout but never deletes the user's
+      sessions, unlike `api/admin-reset-password.php:37`, which does (and whose UI even says "signed
+      out on all devices"). So the most likely reason to run it — "this account was compromised" —
+      leaves the attacker's 90-day cookie valid, with continued read/write access to the victim's
+      synced state. One line. Same file: it applies no username validation at all, unlike
+      `register.php`'s `^[a-z0-9_]{3,32}$` — reuse the regex so a CLI-made account can't hold
+      characters self-service signup rejects.
+- [ ] **T47 · Close the login account-existence oracles** — `api/login.php` leaks membership two
+      ways. (a) The `429 {error:"locked"}` branch at line 40 is only reachable for a username that
+      exists, **and it returns before the `login_attempts` insert at line 46** — so once an account
+      is locked an attacker can poll it forever without consuming any of their 30-failures-per-15-min
+      IP budget. (b) `!$user || !password_verify(…)` short-circuits, so a real username costs a full
+      argon2id verify (~tens–hundreds of ms) and a fake one returns immediately — one request per
+      candidate, measurable over the internet. Fix: verify against a fixed dummy argon2id hash on the
+      miss path so the cost is identical, and either fold "locked" into the generic 401 or record an
+      attempt row on that path so polling is metered.
+- [ ] **T48 · Harden the session cookie and HTTPS enforcement** — `api/lib.php:94` derives `secure`
+      from `$_SERVER['HTTPS']`, which is correct on Dreamhost today but silently mints a **non-Secure
+      90-day cookie** if TLS ever terminates upstream (a CDN, a proxy tier) — no error, no test
+      failure. Make it unconditional except for the `cli-server` dev SAPI. The `http://` → `https://`
+      301 does work live, but it comes from the hosting panel and isn't in the repo — codify it in
+      `.htaccess` so it survives a host migration. Also rename the cookie to `__Host-sano_session`
+      (all its current attributes already satisfy the prefix rules; costs one forced logout) so a
+      future sibling subdomain can't toss a same-named cookie and pin a victim onto an attacker's
+      session.
+- [ ] **T49 · Bound the traffic ingest against a log flooder** — `tools/ingest-traffic.php` slurps
+      the whole day into memory before filtering: one bucket per distinct (ip, UA) pair, one int per
+      request, bot lines allocated too since the filter runs after the parse. An attacker rotating
+      the User-Agent mints a fresh bucket per request; ~100k requests (≈1.2/sec) exhausts the 128 MB
+      CLI limit, the day fails to ingest, and because Dreamhost keeps only ~7 days of logs **that
+      history is permanently lost** if it goes unnoticed. Below that threshold the same flood writes
+      unbounded rows — `traffic_errors` is keyed by distinct path, so requesting
+      `/audio/<random>.mp3` repeatedly is one row each. Cap the per-visitor error/referrer maps,
+      cap distinct visitors per day (overflow into `bot_requests`), apply the bot-UA test at parse
+      time, and store min/max/session-count incrementally instead of the full `times[]`. Two related
+      fixes in the same file: the `mine` flag at line 203 is set on *any* request to `/admin` or
+      `/api/admin-*` **without checking the status**, so any visitor can hit `/admin/` once and
+      permanently hide themselves from the dashboard's default view — require a 2xx. And sanitize
+      log-derived strings at ingest (`parse_url` happily yields a host of `<script>alert(1)<`), so
+      the admin dashboard's XSS-safety doesn't rest entirely on one `textContent` line.
+- [ ] **T50 · Harden `--update-geo`** — the two CC0 CSV URLs are unpinned jsDelivr `latest` paths
+      with no checksum, and a truncated download or an HTML error page silently produces a corrupt
+      or empty index that `rename()` writes over the good one — after which every country reads
+      `NULL` and the only signal is a `geo v4: 0 ranges` line. Pin the package version, require a
+      plausible minimum range count before the rename, check the `fopen`/`rename` return values, and
+      add `ctype_alpha($cc)` next to the existing `strlen` check (two arbitrary bytes into a
+      `CHAR(2)` on a utf8mb4 connection throws inside the write transaction, which with no exception
+      handler kills the nightly run every night until someone notices). TLS verification itself is
+      fine — PHP's https wrapper verifies peer and hostname by default.
+- [ ] **T51 · Keep secrets and device IDs out of the cron logs** — none of the four CLI scripts
+      installs a `set_exception_handler` (unlike `api/lib.php`), so an uncaught `PDOException` prints
+      a full stack trace into `~/sano-traffic.log` / `~/sano-reminders.log`; PHP includes call
+      arguments in traces unless `zend.exception_ignore_args` is on, which would put the **DB
+      password** in a 0644 file on a shared host. Log the message and file:line only, set
+      `zend.exception_ignore_args`, `chmod 600` both logs, and add `umask 077` to the cron lines.
+      Same pass: `send-reminders.php` echoes every subscriber's full push endpoint (a stable
+      per-device identifier tied to a named user) on every run, and `$report->getReason()` is
+      attacker-controlled text that lands unescaped in a file Ross `cat`s — log a `sub_id` plus the
+      endpoint host, and strip non-printables from the reason. Also `api/lib.php:24` logs the whole
+      `$e` object for the same trace reason. And the `--json` debug mode uses a **hardcoded salt
+      published in this repo**, so its printed hashes are trivially reversible to raw IPs if that
+      output is ever shared — generate a random per-invocation salt for non-fixture input (the tests
+      only compare hashes within one process, so they keep passing).
+- [ ] **T52 · Make the reminder cron fault-tolerant** — `tools/send-reminders.php:166` `foreach`es
+      `$webPush->flush()` with no `try`/`catch`, and `p256dh`/`auth` are stored unvalidated, so one
+      malformed key (a wedged browser, or deliberate) raises out of the batch prepare and terminates
+      the script — dropping **every other user's** reminder for that hour, persistently, until the
+      row is removed by hand. Wrap the per-report body so a failure increments `failure_count`
+      instead of aborting, and prune at `failure_count > N` (today only 404/410 ever prunes).
+      Depends on the shape validation in T42.
+- [ ] **T53 · Same-origin guard on the service-worker notification URL** — `sw.js:85` takes
+      `data.url` straight from the push payload and passes it to `c.navigate(target)`, which
+      **retargets the user's already-open Sano window**, and to `openWindow()`. Not reachable today
+      (the sender hard-codes `/`, and payloads are VAPID-signed and encrypted), but it means a VAPID
+      key leak or a bug in the reminder script escalates from "wrong message" to "every subscriber's
+      app window redirected to a phishing page." Resolve against `location.origin` and fall back
+      to `/`.
+- [ ] **T54 · Security hardening bundle** — small independent items, none individually urgent:
+      per-IP throttles key on the full IPv6 address so anyone with a routed /64 has 2^64 buckets and
+      bypasses both the login and signup limits (truncate to /64 — `login.php:26`, `register.php:38`)
+      · no `password_needs_rehash()` on successful login, so hashes never upgrade
+      · `Object.assign(defaultState(), parsed)` (`js/sano.js:232`) lets a `__proto__` key in a state
+      blob replace the state object's prototype (self-inflicted only, one-line fix)
+      · `showNotice(html)` (`js/admin.js:210`) is an `innerHTML` sink with an HTML-typed parameter —
+      all six callers pass literals today, but the signature invites a username; and `esc()` doesn't
+      escape `'`, so it's element-safe but not attribute-safe · add `declare(strict_types=1)` to the
+      seven `api/` files missing it · set `PDO::ATTR_EMULATE_PREPARES => false` (not an injection
+      risk under utf8mb4, but packed binary IPs currently travel as string literals, and a mangled
+      one makes the throttle **fail open** silently) · index `sessions.expires_at` and
+      `login_attempts.created_at`, and move the housekeeping DELETEs to *after* the throttle check so
+      a 429'd attacker can't force two full table scans per request · `Header always set` in
+      `api/.htaccess` · add `X-Frame-Options`, `Permissions-Policy: microphone=(self), camera=(),
+      geolocation=()`, COOP and CORP · add `--delete-after` to the deploy rsync so a renamed or
+      deleted file can't linger live forever · add `permissions: { contents: read }` to the CI
+      workflow.
+- [ ] **T55 · Traffic retention and salt rotation** — the T40 design is sound (no raw IP reaches
+      disk or DB on any path — verified across every write and error path) but two GDPR-shaped gaps
+      remain: nothing ever prunes `traffic_visitor_days`, so pseudonymous rows accumulate forever,
+      and one permanent salt means one lifetime-linkable identifier. Purge visitor-day rows older
+      than ~13 months and rotate the salt yearly (accepting that `is_new` resets at each rotation).
+      Also document explicitly in `@docs/data-model.md` that the salt is a credential of the same
+      class as the DB password — the current wording ("can't be walked back to a person") is true
+      only for someone holding the DB *alone*; with both, the IPv4 space is small enough to invert
+      cheaply.
+
 ## Testing
 
 - [x] **T17 · Fix the flaky WebKit match-lesson e2e** — `tests/e2e/lesson.spec.mjs` match rounds
