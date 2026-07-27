@@ -47,6 +47,24 @@ test('normalizeState: fills in missing top-level fields', () => {
 	assert.ok(s.items && s.dialoguesDone && s.soundsDone);
 });
 
+test('normalizeState: a __proto__ key in the blob cannot replace the prototype', () => {
+	const { normalizeState } = lift();
+	// JSON.parse creates an OWN property called __proto__; Object.assign then copies it by
+	// assignment, which runs the setter and swaps the object's prototype rather than
+	// storing a key. Only this account's own synced blob can carry one, so it is
+	// self-inflicted — but a state object with a replaced prototype misbehaves in ways
+	// nothing in the app would explain, and the guard costs one line.
+	const blob = JSON.parse('{"name":"Aastha","streak":5,"__proto__":{"polluted":true}}');
+	const s = normalizeState(blob);
+
+	assert.equal(Object.getPrototypeOf(s), Object.prototype, 'the prototype must be untouched');
+	assert.equal(s.polluted, undefined);
+	assert.equal({}.polluted, undefined, 'and nothing may leak into Object.prototype');
+	// The legitimate fields still arrive.
+	assert.equal(s.name, 'Aastha');
+	assert.equal(s.streak, 5);
+});
+
 test('normalizeState: derives interval/ease from a legacy Leitner level, then drops it', () => {
 	const { normalizeState } = lift();
 	// A (hypothetical) v3 record still carrying a legacy `level` exercises the derivation loop.

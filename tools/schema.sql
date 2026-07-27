@@ -32,6 +32,8 @@ CREATE TABLE sessions (
   user_id    INT UNSIGNED NOT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   expires_at DATETIME NOT NULL,
+  -- login.php prunes expired rows on every sign-in; without this that is a full scan.
+  KEY idx_expires (expires_at),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -52,7 +54,10 @@ CREATE TABLE signup_attempts (
 CREATE TABLE login_attempts (
   ip         VARBINARY(16) NOT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  KEY idx_ip_time (ip, created_at)
+  KEY idx_ip_time (ip, created_at),
+  -- idx_ip_time can't serve the prune (`WHERE created_at < …` doesn't touch its leading
+  -- column), so that swept the whole table on every failed login.
+  KEY idx_time (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Web Push subscriptions: one row per browser/device that opted in to reminders.

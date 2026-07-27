@@ -229,6 +229,12 @@ function loadState() {
 function normalizeState(parsed) {
 	if (parsed.version === 1) parsed = migrateV1State(parsed);
 	if (parsed.version === 2) parsed = migrateV2State(parsed);
+	// JSON.parse happily creates an OWN property called `__proto__`; Object.assign then
+	// copies it by *assignment*, which runs the setter and swaps the object's prototype
+	// instead of storing a key. The blob is only ever this account's own synced state, so
+	// nobody else can plant one — but "the attacker is you" isn't a security boundary, and
+	// a state object with a replaced prototype fails in ways nothing here would explain.
+	if (Object.prototype.hasOwnProperty.call(parsed, '__proto__')) delete parsed['__proto__'];
 	const loaded = Object.assign(defaultState(), parsed);
 	for (const id in loaded.items) {
 		const record = Object.assign({ seen: 0, correct: 0, lastSeen: null, intro: false, recalls: 0, graduated: false }, loaded.items[id]);

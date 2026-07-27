@@ -54,6 +54,16 @@ Header set Cache-Control "max-age=31536000, immutable" "expr=%{CONTENT_TYPE} =~ 
 Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 Header always set X-Content-Type-Options "nosniff"
 Header always set Referrer-Policy "strict-origin-when-cross-origin"
+# frame-ancestors above is what modern browsers obey; this is the same rule for anything
+# that only knows the older header.
+Header always set X-Frame-Options "DENY"
+# The speaking exercise records audio, so the microphone stays available to this origin.
+# Nothing else does, and neither does any frame we might ever embed.
+Header always set Permissions-Policy "microphone=(self), camera=(), geolocation=(), payment=(), usb=()"
+# No cross-origin window ever opens or is opened, and no other site has business embedding
+# our assets, so both can be locked to same-origin.
+Header always set Cross-Origin-Opener-Policy "same-origin"
+Header always set Cross-Origin-Resource-Policy "same-origin"
 # HTTPS only (session cookie is Secure). Add includeSubDomains/preload once every
 # browser-facing subdomain is confirmed HTTPS.
 Header always set Strict-Transport-Security "max-age=31536000"

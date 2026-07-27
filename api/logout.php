@@ -1,6 +1,7 @@
 <?php
 // POST -> 204; deletes the session row and clears the cookie.
 
+declare(strict_types=1);
 require __DIR__ . '/lib.php';
 
 require_method('POST');

@@ -183,3 +183,44 @@ test('logout clears the session', async ({ request }) => {
 	expect((await request.post('/api/logout.php', { headers: CSRF })).status()).toBe(204);
 	expect((await request.get('/api/state.php')).status()).toBe(401); // and out again
 });
+
+// The admin read paths had no coverage beyond their 403 (T54). That mattered once
+// declare(strict_types=1) and PDO::ATTR_EMULATE_PREPARES => false landed: both change the
+// PHP type of every value coming back from MySQL, which is exactly how a working
+// aggregate query becomes a TypeError in production and nowhere else. Runs in its own CI
+// step, against the account and traffic rows tests/fixtures/seed-admin.php creates.
+test('an admin can read the user list and the traffic dashboard @admin', async ({ request }) => {
+	test.skip(process.env.SANO_ADMIN_SEED !== '1', 'needs the seeded admin account (CI step)');
+	const login = await request.post('/api/login.php', { headers: CSRF, data: { username: 'adminci', password: 'password123' } });
+	expect(login.status()).toBe(200);
+	expect((await login.json()).isAdmin).toBe(true);
+
+	const users = await request.get('/api/admin-users.php');
+	expect(users.status()).toBe(200);
+	const list = await users.json();
+	expect(list.me).toBe('adminci');
+	const self = list.users.find((u) => u.username === 'adminci');
+	// state_summary() over a real blob: the streak, and the graduated ids the dashboard
+	// intersects against COURSE to derive a path position.
+	expect(self.streak).toBe(7);
+	expect(self.graduated).toEqual(expect.arrayContaining(['greet-namaste', 'greet-dhanyabaad']));
+
+	// The populated branch of the traffic tab — every total here is a SUM/COUNT cast to
+	// int, so a typing change shows up as a wrong number or a 500, not a silent pass.
+	const traffic = await request.get('/api/admin-traffic.php?range=7');
+	expect(traffic.status()).toBe(200);
+	const t = await traffic.json();
+	expect(t.hasData).toBe(true);
+	expect(t.totals.requests).toBe(240); // 120 requests × 2 seeded days
+	expect(t.totals.botRequests).toBe(90);
+	expect(t.totals.visitors).toBe(2); // "mine" is excluded by default
+	expect(t.days.length).toBeGreaterThan(0);
+	expect(t.errors.some((e) => e.path === '/audio/words/gone.mp3')).toBe(true);
+
+	// mine=1 includes the visitor whose session touched /admin/.
+	const withMine = await (await request.get('/api/admin-traffic.php?range=7&mine=1')).json();
+	expect(withMine.totals.visitors).toBe(4);
+
+	// And the guard still holds: a bad window is rejected before any of this.
+	expect((await request.get('/api/admin-traffic.php?range=13')).status()).toBe(400);
+});

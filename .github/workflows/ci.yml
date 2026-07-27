@@ -12,6 +12,11 @@ on:
     branches: [main]
   pull_request:
 
+# Read-only by default: nothing here writes to the repo, and a token that cannot
+# push is one less thing a compromised action in the dependency tree can use.
+permissions:
+  contents: read
+
 jobs:
   unit:
     name: static + unit + data + api guards
@@ -105,6 +110,21 @@ jobs:
           SANO_SIGNUPS_PER_HOUR: '100000'
           SANO_LOGIN_IP_MAX: '100000'
         run: npx playwright test tests/api
+      - name: Admin read-path specs (seeded admin account + traffic rows)
+        env:
+          SANO_TEST_DB: '1'
+          SANO_ADMIN_SEED: '1'
+          SANO_SIGNUPS_PER_HOUR: '100000'
+          SANO_LOGIN_IP_MAX: '100000'
+          SANO_PORT: '8125'
+        # admin-users.php's success path and all of admin-traffic.php were only ever
+        # reached for their 403. They read every value back out of MySQL, so they are the
+        # paths most exposed to strict_types and native prepares (T54) — and the ones a
+        # local run can never touch, since there is no local database.
+        run: |
+          php tests/fixtures/seed-admin.php
+          npx playwright test tests/api --grep @admin
+
       - name: Login rate-limit spec (needs the whole per-IP budget to itself)
         env:
           SANO_TEST_DB: '1'

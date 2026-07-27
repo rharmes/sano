@@ -539,7 +539,7 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       Testing: `tests/unit/sw-notification-target.test.mjs` lifts the function out by sentinels with
       a stubbed `self` (17 URL cases), plus a guard that the handler actually *routes through* it —
       a correct check nothing calls is worth nothing, and bypassing the call site fails that test.
-- [ ] **T54 · Security hardening bundle** — small independent items, none individually urgent.
+- [x] **T54 · Security hardening bundle** — small independent items, none individually urgent.
       (The IPv6 throttle item moved out to **T57** and the `showNotice` sink to **T58** — both
       outgrew "not individually urgent".) Remaining:
       no `password_needs_rehash()` on successful login, so hashes never upgrade
@@ -558,6 +558,42 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       geolocation=()`, COOP and CORP · add `--delete-after` to the deploy rsync so a renamed or
       deleted file can't linger live forever · add `permissions: { contents: read }` to the CI
       workflow.
+      **Delivered (2026-07-27)** — eight of the nine, plus two things found on the way.
+      `password_needs_rehash()` on successful login (the only moment the plaintext exists to rehash
+      from; it also keeps stored hashes on the same parameters as T47's `DUMMY_HASH`, which is what
+      makes the miss path cost the same) · the `__proto__` guard, with the hazard *demonstrated*
+      first: unguarded, `Object.assign` runs the setter and the state object's prototype is replaced
+      — `Object.prototype` itself stays clean, so it really is self-inflicted only · `strict_types`
+      on the six remaining `api/` files (the entry said seven; `state.php` gained it in T44) ·
+      indexes on `sessions.expires_at` and `login_attempts.created_at` via an idempotent
+      `tools/migrate-2026-07-throttle-indexes.php`, since neither column had one and both are swept
+      on every sign-in · the two housekeeping DELETEs moved *below* the throttle check, so a caller
+      already over the limit no longer makes the server sweep two tables before being told no ·
+      `Header always set` in `api/.htaccess` (`set` alone skips 4xx/5xx, i.e. exactly the JSON error
+      bodies) · `X-Frame-Options`, `Permissions-Policy`, COOP and CORP, verified against a real
+      Apache on both a 200 and a 404 · `--delete-after` on the deploy rsync · `permissions:
+      {contents: read}` on CI.
+      **`--delete-after` earned its place immediately:** a dry run found `audio/words/wyakti.mp3`
+      live on the server — a clip orphaned when that word was re-romanized to `byakti`. Verified by
+      dry run that it prunes only inside the listed directories, so the host's own top-level files
+      (`.dh-diag`, `favicon.ico`, `favicon.gif`) are untouched.
+      **Not done, deliberately: `PDO::ATTR_EMULATE_PREPARES => false`.** Both stated reasons fail on
+      inspection. The entry already concedes it isn't an injection risk under utf8mb4, and the
+      fail-open claim is contradicted by evidence: T47's `@ip-throttle` spec counts `127.0.0.1`,
+      whose packed form is three NUL bytes, and it passes in CI under pdo_mysql's default emulation
+      — binary parameters round-trip fine. So the security value is ~nil, while the change alters
+      the PHP type of every column MySQL returns. Happy to make it, but as its own change with its
+      own verification, not folded into a hardening sweep.
+      **Found on the way (both fixed here):** `.prettierrc` pinned no `phpVersion`, so the formatter
+      normalizes to the newest syntax it knows — it rewrote `(new DateTimeImmutable())->format()`
+      into the **8.4-only** `new DateTimeImmutable()->format()`, which is a parse error on the
+      server's 8.2 and on CI's 8.3. Now pinned to `"8.2"`, which restored the safe form; no existing
+      file was affected. And the **admin read paths had no integration coverage at all** — only
+      their 403 was ever reached — which is precisely what made the `strict_types` sweep risky,
+      since there is no local database. `tests/fixtures/seed-admin.php` now creates an admin account
+      and two days of traffic rows, and a new `@admin` CI step asserts the user list (including
+      `state_summary()` over a real blob, which T45 rewrote untested) and the populated branch of
+      the traffic dashboard.
 - [x] **T55 · Traffic retention and salt rotation** — the T40 design is sound (no raw IP reaches
       disk or DB on any path — verified across every write and error path) but two GDPR-shaped gaps
       remain: nothing ever prunes `traffic_visitor_days`, so pseudonymous rows accumulate forever,

@@ -151,7 +151,10 @@ routing: `tools/tts/README.md`.
 ## Workflow for every code change
 
 1. Edit, then `tools/format.sh` (Prettier over HTML/CSS/JS/PHP; `npm install` once on a fresh
-   clone). `tools/format.sh --check` is the CI form.
+   clone). `tools/format.sh --check` is the CI form. **`.prettierrc` pins `phpVersion: "8.2"`** —
+   the server's PHP. Without it the plugin normalizes to the newest syntax it knows and will
+   happily rewrite `(new X())->y()` into the 8.4-only `new X()->y()`, which is a parse error
+   live; bump it only when the server's PHP does.
 2. `node tools/stamp-version.mjs` — rewrites the `?v=` content-hash stamps in `index.html` +
    `admin/index.html`. Run **after** formatting; never hand-edit a stamp.
 3. `tools/test.sh` runs the full suite (static + unit + data + api + e2e); pass a flag

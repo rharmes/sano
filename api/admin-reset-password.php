@@ -7,6 +7,7 @@
 // (argon2id, clear lockout) and additionally invalidates every session for that user,
 // so the reset signs them out on all devices. Password rules match signup (8-200).
 
+declare(strict_types=1);
 require __DIR__ . '/lib.php';
 
 require_method('POST');

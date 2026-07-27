@@ -39,8 +39,16 @@ fi
 # deploy is a pure transfer.
 #
 # --no-times: the host resets mtimes, so sync on checksum instead.
+#
+# --delete-after: without it a file that gets renamed or dropped stays live forever, and
+# nothing ever says so. (It found `audio/words/wyakti.mp3` on its first run — a clip left
+# behind when that word was re-romanized to `byakti`.) *After* rather than during, so the
+# site is never missing a file mid-deploy. Verified by dry run that this deletes nothing
+# outside the directories listed below: rsync only prunes inside the directories it is
+# given, so the host's own top-level files (.dh-diag, favicon.ico, favicon.gif) are
+# untouched. Anything added to the docroot by hand must live outside these paths.
 exec rsync "${DRY[@]}" --recursive --links --checksum --no-times --compress \
-	--itemize-changes \
+	--delete-after --itemize-changes \
 	index.html .htaccess favicon.svg apple-touch-icon.png icon-192.png icon-512.png icon-512-maskable.png \
 	manifest.json sw.js css js fonts audio api admin \
 	"$DEST/"

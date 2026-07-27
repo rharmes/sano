@@ -7,6 +7,7 @@
 // username that doesn't exist, and a locked account are deliberately identical in
 // status, body, cost and rate-limit budget (T47 — see the two comments inline).
 
+declare(strict_types=1);
 require __DIR__ . '/lib.php';
 
 // An argon2id hash of a random password nobody holds — not a placeholder, a real hash
@@ -35,9 +36,6 @@ if ($username === '' || $password === '') {
 
 $pdo = db();
 
-// Housekeeping: drop expired sessions while we're here.
-$pdo->exec('DELETE FROM sessions WHERE expires_at <= NOW()');
-
 // Per-IP throttle. The per-account lockout below stops one username being
 // hammered, but not an attacker rotating usernames (credential stuffing); this
 // bounds failed attempts per source IP. Checked before password_verify so a
@@ -52,12 +50,18 @@ $ipMax = (int) getenv('SANO_LOGIN_IP_MAX');
 if ($ipMax < 1) {
 	$ipMax = LOGIN_IP_MAX;
 }
-$pdo->exec('DELETE FROM login_attempts WHERE created_at < NOW() - INTERVAL ' . LOGIN_IP_WINDOW_MINUTES . ' MINUTE');
 $recent = $pdo->prepare('SELECT COUNT(*) FROM login_attempts WHERE ip = ? AND created_at > NOW() - INTERVAL ' . LOGIN_IP_WINDOW_MINUTES . ' MINUTE');
 $recent->execute([$ip]);
 if ((int) $recent->fetchColumn() >= $ipMax) {
 	respond(429, ['error' => 'rate_limited', 'retryAfter' => LOGIN_IP_WINDOW_MINUTES * 60]);
 }
+
+// Housekeeping, deliberately *after* the throttle: pruning is the most expensive thing
+// this endpoint does, and it used to run first, so a caller who was already over the
+// limit still made the server sweep two tables before being told no. The count above is
+// time-bounded in its own WHERE, so it never depended on the prune having happened.
+$pdo->exec('DELETE FROM sessions WHERE expires_at <= NOW()');
+$pdo->exec('DELETE FROM login_attempts WHERE created_at < NOW() - INTERVAL ' . LOGIN_IP_WINDOW_MINUTES . ' MINUTE');
 
 $stmt = $pdo->prepare(
 	'SELECT id, password_hash, failed_logins, locked_until, TIMESTAMPDIFF(SECOND, NOW(), locked_until) AS lock_left, is_admin FROM users WHERE username = ?',
@@ -101,6 +105,15 @@ if (!$ok) {
 }
 
 $pdo->prepare('UPDATE users SET failed_logins = 0, locked_until = NULL WHERE id = ?')->execute([$user['id']]);
+
+// Upgrade the stored hash if PHP's argon2id defaults have moved since it was made. A
+// successful login is the only moment the plaintext exists to rehash from, so without
+// this an account keeps whatever cost parameters it was created with forever — and the
+// cost is meant to rise as hardware does. Also keeps every stored hash on the same
+// parameters as DUMMY_HASH, which is what makes the miss path cost the same (T47).
+if (password_needs_rehash($user['password_hash'], PASSWORD_ARGON2ID)) {
+	$pdo->prepare('UPDATE users SET password_hash = ? WHERE id = ?')->execute([password_hash($password, PASSWORD_ARGON2ID), $user['id']]);
+}
 
 $token = bin2hex(random_bytes(32));
 $pdo->prepare('INSERT INTO sessions (token_hash, user_id, expires_at) VALUES (?, ?, NOW() + INTERVAL ' . SESSION_DAYS . ' DAY)')->execute([

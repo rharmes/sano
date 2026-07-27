@@ -3,5 +3,6 @@
 	"useTabs": true,
 	"tabWidth": 8,
 	"singleQuote": true,
-	"proseWrap": "never"
+	"proseWrap": "never",
+	"phpVersion": "8.2"
 }

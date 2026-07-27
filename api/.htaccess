@@ -1,5 +1,7 @@
-# API responses must never be cached.
-Header set Cache-Control "no-store"
+# API responses must never be cached. `always`, so it covers the error responses too —
+# `set` alone only applies on a 2xx/3xx, which left every 4xx/5xx JSON body (including
+# one carrying a lockout hint or an admin list) cacheable as far as the header said.
+Header always set Cache-Control "no-store"
 
 # lib.php is an include, not an endpoint.
 <Files "lib.php">

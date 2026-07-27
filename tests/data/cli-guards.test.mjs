@@ -1,4 +1,4 @@
-// The four server-side CLI scripts each carry their own copy of the same crash guard
+// Every server-side CLI script carries its own copy of the same crash guard
 // (T51). They can't share a require: each is installed standalone on the server —
 // ~/sano-tools/ for the two cron jobs and the migration, the home directory for
 // make-user.php — with no docroot and no autoloader in reach.
@@ -8,14 +8,20 @@
 // 15 characters, which is not protection) plus the DSN and DB user. PHP 8.2+ masks the
 // password itself behind #[\SensitiveParameter], but only inside its own APIs — a helper
 // of ours that takes a secret is printed in full. A copy that quietly loses the guard
-// looks exactly like the other three until the night it crashes, so diff them here.
+// looks exactly like the others until the night it crashes, so diff them here.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { ROOT } from '../lift.mjs';
 
-const SCRIPTS = ['tools/ingest-traffic.php', 'tools/send-reminders.php', 'tools/migrate-2026-07-traffic.php', 'tools/make-user.php'];
+const SCRIPTS = [
+	'tools/ingest-traffic.php',
+	'tools/send-reminders.php',
+	'tools/migrate-2026-07-traffic.php',
+	'tools/migrate-2026-07-throttle-indexes.php',
+	'tools/make-user.php',
+];
 
 // From the ini call through the end of the handler it installs.
 const START = "ini_set('zend.exception_ignore_args'";

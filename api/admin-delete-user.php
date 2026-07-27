@@ -7,6 +7,7 @@
 // sessions, and push_subscriptions (ON DELETE CASCADE in schema.sql). The admin
 // cannot delete their own account.
 
+declare(strict_types=1);
 require __DIR__ . '/lib.php';
 
 require_method('POST');
