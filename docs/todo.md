@@ -126,7 +126,7 @@ marked otherwise.
 
 **Order to work in** (the entries stay in ID order below, since IDs are how we refer to them; this
 is the priority, re-ranked 2026-07-27 as items got measured rather than assumed):
-~~T57~~ → ~~T58~~ → ~~T53~~ → ~~T50~~ → **T55** → T54 (what's left of it).
+~~T57~~ → ~~T58~~ → ~~T53~~ → ~~T50~~ → ~~T55~~ → **T54** (what's left of it) (what's left of it).
 T57 and T58 were pulled out of T54's bundle: a throttle that can be bypassed wholesale outranks
 "small independent items", and an `innerHTML` sink whose signature invites a username is a different
 kind of thing from a missing header. Ten of the original fifteen are done.
@@ -558,7 +558,7 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       geolocation=()`, COOP and CORP · add `--delete-after` to the deploy rsync so a renamed or
       deleted file can't linger live forever · add `permissions: { contents: read }` to the CI
       workflow.
-- [ ] **T55 · Traffic retention and salt rotation** — the T40 design is sound (no raw IP reaches
+- [x] **T55 · Traffic retention and salt rotation** — the T40 design is sound (no raw IP reaches
       disk or DB on any path — verified across every write and error path) but two GDPR-shaped gaps
       remain: nothing ever prunes `traffic_visitor_days`, so pseudonymous rows accumulate forever,
       and one permanent salt means one lifetime-linkable identifier. Purge visitor-day rows older
@@ -567,6 +567,28 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       class as the DB password — the current wording ("can't be walked back to a person") is true
       only for someone holding the DB *alone*; with both, the IPv4 space is small enough to invert
       cheaply.
+      **Delivered (2026-07-27)** — retention: `traffic_visitor_days` is pruned at 13 months on every
+      real ingest (not only when there's a new day to store, so it can't drift through a quiet
+      week), and it reports what it dropped. `traffic_days` is pure counts with nobody in it and is
+      never purged — that's the history the whole thing exists to accumulate.
+      Rotation is **derived, not scheduled**: `hash_hmac('sha256', <year of the day being ingested>,
+      traffic_salt)`. A yearly chore nobody remembers isn't a control; this rotates itself. Derived
+      rather than rolled because the ingest is idempotent — a re-ingest must reproduce the same ids,
+      and a random rotation salt would split one returning visitor into two.
+      Honest about what it doesn't buy: anyone holding the base secret can still derive every year's
+      salt. It bounds what a leaked **database** discloses, not what the config does — hence the
+      `docs/data-model.md` rewrite, which now says plainly that `traffic_salt` is a credential of the
+      same class as the DB password and that a salt disclosure is equivalent to having stored raw
+      IPs.
+      Cost, measured before deciding: 121 visitor-day rows over 8 days, 111 distinct visitors. So
+      the purge deletes nothing for another year, and the one-time discontinuity at the salt change
+      touches at most 8 days — a good moment to make it. `is_new` resets at each January boundary
+      from here on, by design.
+      Testing: `tests/data/traffic-salt-rotation.test.mjs` drives the real script over synthetic
+      logs — one id within a year, a different id across the boundary, still an opaque 32-hex hash.
+      The re-ingest reproducibility half is pinned at the source instead, because `--json`'s base
+      salt is random per invocation by design (T51) and so can't demonstrate it across processes —
+      a limit worth stating rather than papering over.
 - [x] **T57 · Bucket the per-IP throttles by /64, not by address** — split out of T54 (2026-07-27),
       and the highest-severity item left. `login.php` and `register.php` both key their throttle on
       `inet_pton($_SERVER['REMOTE_ADDR'])`, the *whole* address, and match it with `WHERE ip = ?`.

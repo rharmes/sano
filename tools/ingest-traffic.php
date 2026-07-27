@@ -103,6 +103,13 @@ const GEO_V6_REC = 34; // 16-byte start, 16-byte end, 2-char country
 const GEO_MIN_RANGES = 50000;
 const GEO_MIN_RATIO = 0.9;
 
+// Retention for the per-visitor rows (T55). They are pseudonymous, but they are still one
+// row per person per day, and nothing was ever deleting them — "keep forever" isn't a
+// retention policy, it's the absence of one. 13 months leaves a full year of
+// month-on-month comparison plus a month of slack. `traffic_days` is pure counts with
+// nobody in it, and is the history this whole system exists to accumulate: never purged.
+const TRAFFIC_RETENTION_MONTHS = 13;
+
 // Bot-shaped User-Agents. "monitor" catches DreamHost SiteMonitor (~45% of the log);
 // the tool names catch scripted fetches that don't announce themselves as crawlers.
 const BOT_UA_RE = '/bot\b|bot\/|crawl|spider|slurp|monitor|scanner|scrapy|curl\/|wget|python|java\/|go-http|okhttp|libwww|headless|phantom|puppeteer|playwright|lighthouse|semrush|ahrefs|mj12|dotbot|petal|bytedance|bytespider|externalhit|embedly|feedfetcher|uptime|pingdom|zgrab|censys|masscan|nuclei|expanse|internetmeasurement|dataprovider|webindex|site-?monitor/i';
@@ -246,7 +253,7 @@ foreach ($files as $file) {
 			continue;
 		}
 
-		$vid = substr(hash('sha256', $salt . $r['ip'] . "\n" . $r['ua'], true), 0, 16);
+		$vid = substr(hash('sha256', year_salt($salt, $day) . $r['ip'] . "\n" . $r['ua'], true), 0, 16);
 		if (!isset($bucket['visitors'][$vid])) {
 			if (count($bucket['visitors']) >= MAX_VISITORS_PER_DAY) {
 				// Past this point the day is being flooded, not visited.
@@ -461,6 +468,12 @@ foreach ($targets as $day) {
 }
 
 if (!$opt['dry-run']) {
+	// Purge before the recompute, so is_new/is_mine describe the rows that still exist
+	// rather than ones that were about to be deleted.
+	$purged = purge_old_visitors($pdo);
+	if ($purged > 0) {
+		echo 'retention: dropped ', $purged, ' visitor-day row(s) older than ', TRAFFIC_RETENTION_MONTHS, " months\n";
+	}
 	recompute_visitor_flags($pdo);
 	echo 'ingested ', count($targets), " day(s)\n";
 }
@@ -666,6 +679,32 @@ function classify_ua(string $ua): array
 		}
 	}
 	return [$device, $browser];
+}
+
+// The visitor salt, rotated yearly (T55) — derived rather than replaced. One permanent
+// salt means one identifier that links a person's visits for as long as the rows exist;
+// keying it to the calendar year of the day being ingested caps that at a year, without
+// anyone having to remember to do anything each January.
+//
+// Derived, not random, because a re-ingest has to reproduce the same hashes — the ingest
+// is idempotent by design (`--all` replaces a day wholesale) and a fresh salt would turn
+// one returning visitor into two.
+//
+// What it does NOT buy: anyone holding the base secret can still derive every year's
+// salt. It bounds what a leaked *database* discloses, not what the config does — the base
+// secret is a credential of the same class as the DB password (see docs/data-model.md).
+function year_salt(string $base, string $day): string
+{
+	static $cache = [];
+	$year = substr($day, 0, 4);
+	return $cache[$year] ??= hash_hmac('sha256', $year, $base, true);
+}
+
+// Retention sweep. Runs on every real ingest, not just when there's a new day to store,
+// so it can't drift by however long the log happens to be quiet.
+function purge_old_visitors(PDO $pdo): int
+{
+	return (int) $pdo->exec('DELETE FROM traffic_visitor_days WHERE day < CURDATE() - INTERVAL ' . TRAFFIC_RETENTION_MONTHS . ' MONTH');
 }
 
 // is_new (was this the visitor's first day ever?) and is_mine (did any of their

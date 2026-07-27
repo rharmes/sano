@@ -247,10 +247,23 @@ oldest pruned first.
 Filled nightly by `tools/ingest-traffic.php` from the Apache access logs (Dreamhost keeps
 only ~7 days, so the tables are the history), read by `api/admin-traffic.php`.
 
-- **Visitor** — salted `sha256(ip + "\n" + user-agent)`, truncated to 16 bytes; the salt is
-  `traffic_salt` in `~/sano-config.php`. No raw address is stored, so the rows can't be
-  walked back to a person. One human on two networks counts twice; a household behind one
-  router can count as one.
+- **Visitor** — salted `sha256(ip + "\n" + user-agent)`, truncated to 16 bytes. No raw
+  address is stored. One human on two networks counts twice; a household behind one router
+  can count as one.
+  **`traffic_salt` is a credential of the same class as the DB password** (`~/sano-config.php`,
+  never in the repo, never in a log). "Can't be walked back to a person" holds for someone
+  holding the *database alone* — with the salt as well, IPv4 is 2^32 and a laptop inverts
+  every hash in minutes. Treat a salt disclosure as equivalent to having stored raw IPs.
+  The salt is **rotated yearly** and derived, not replaced: `hash_hmac('sha256', <year of
+  the day being ingested>, traffic_salt)`. So a visitor's id changes each January — which
+  caps how far a leaked database links one person's visits, and costs an `is_new` reset at
+  each boundary (a returning visitor reads as new once a year). It's derived rather than
+  rolled because the ingest is idempotent: a re-ingest has to reproduce the same ids, and a
+  random rotation salt would split one returning visitor into two.
+- **Retention** — `traffic_visitor_days` rows are pruned at **13 months** on every real
+  ingest (a full year of month-on-month comparison, plus slack). `traffic_days` is pure
+  counts with nobody in it and is never purged — it's the history the whole system exists
+  to accumulate.
 - **Session** — a visitor's requests split on a 30-minute idle gap. A session crossing
   midnight is counted in both days (ingest, and the dashboard, are per-day).
 - **Repeat session** — every session after a visitor's first ever, computed as
