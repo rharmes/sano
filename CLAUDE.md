@@ -111,7 +111,11 @@ routing: `tools/tts/README.md`.
   need CSRF header `X-Sano-Request: 1`. Accounts come from self-service `register.php` (throttled) or
   the invite-only `tools/make-user.php` CLI (also password resets). Hardening: argon2id, per-account
   lockout + per-IP throttles, CSP/HSTS/nosniff, a JSON-500 handler, and a guard order that runs the
-  stateless method/CSRF/JSON/validation checks before auth/`db()`.
+  stateless method/CSRF/JSON/validation checks before auth/`db()`. **`login.php` has exactly one
+  failure response** — a wrong password, an unknown username and a locked-out account must stay
+  identical in status, body, argon2id cost *and* rate-limit budget (`login_decide()`, T47); a
+  friendlier "your account is locked" message would re-open a membership oracle, so the "wait a
+  few minutes" hint lives in `js/sync.js`, counted client-side.
 - **Admin dashboard** `/admin/` (server-enforced via `users.is_admin` + `require_admin()`), two tabs:
   **Users** lists every account with reset-password / delete actions, and **Traffic** (T40) shows
   distinct visitors / repeat sessions / countries + a daily chart, device split, referrers and errors.

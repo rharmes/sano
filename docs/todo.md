@@ -286,7 +286,7 @@ marked otherwise.
         Verified on the server against a throwaway account, since neither half can be tested
         locally: `Bad Name` and `Ross` were rejected with exit 1 **before** any password prompt, and
         an account given two live sessions had **0** after the reset. Account and sessions cleaned up.
-- [ ] **T47 · Close the login account-existence oracles** — `api/login.php` leaks membership two
+- [x] **T47 · Close the login account-existence oracles** — `api/login.php` leaks membership two
       ways. (a) The `429 {error:"locked"}` branch at line 40 is only reachable for a username that
       exists, **and it returns before the `login_attempts` insert at line 46** — so once an account
       is locked an attacker can poll it forever without consuming any of their 30-failures-per-15-min
@@ -295,6 +295,36 @@ marked otherwise.
       candidate, measurable over the internet. Fix: verify against a fixed dummy argon2id hash on the
       miss path so the cost is identical, and either fold "locked" into the generic 401 or record an
       attempt row on that path so polling is metered.
+      **Delivered (2026-07-27)** — both, not either: the lockout now answers with the same
+      `401 bad_credentials` as everything else *and* records its attempt row, so a wrong password, an
+      unknown username and a locked account are one response in status, body, cost and budget. The
+      branch table moved into `login_decide()` (`api/lib.php`) — `$usable ? real : DUMMY_HASH`
+      evaluated *inside* the `password_verify()` call, never `$usable && password_verify(...)`, since
+      the short-circuit is the oracle. `DUMMY_HASH` is a real argon2id hash of a discarded random
+      password; server (PHP 8.2.30) and local (8.5.8) both default to `m=65536,t=4,p=1`, and a test
+      fails if the constant ever drifts from the running PHP's defaults.
+      Measured, not assumed: all three failure shapes now cost **98–100 ms**; with the short-circuit
+      fault-injected back in, two of them drop to **0 ms** and the test fails by name.
+      Trade-offs taken deliberately: (i) a junk username is no longer free to serve — it costs a full
+      verify and argon2id's 64 MiB, a ceiling that already existed for anyone who knew one real
+      username, bounded by the per-IP throttle that still runs first; (ii) the lock is *not* re-armed
+      by probes, so the locked path stays one indexed UPDATE lighter than a wrong password
+      (sub-ms against ~100 ms — under any remote jitter, and the alternative is an indefinite
+      lockout); (iii) the honest "try again in N min" message is gone from the 401, so `js/sync.js`
+      counts failures client-side and hints after three — **wording is a draft for Ross**.
+      Registration still reveals taken usernames (`409 username_taken`, inherent to the signup UX)
+      but at 5/hour/IP rather than unmetered.
+      Testing: `login_decide()`'s six-case truth table + the three timing floors run in the **unit**
+      tier with no database, which matters because there's no local MySQL. The DB-backed half proves
+      the lock is *invisible yet real* (ten failures, then the **correct** password is refused, and
+      byte-identically to a never-registered username), plus an `@ip-throttle` spec proving the
+      metering by exhausting the budget — it needs the whole per-IP bucket to itself, so CI runs it
+      as a second step on its own port against a cleared `login_attempts`. `SANO_LOGIN_IP_MAX`
+      (CI-only, like `SANO_SIGNUPS_PER_HOUR`; garbage falls back to the constant, never to zero) also
+      removes a latent flake: the suite was already at ~13 of the 30-per-window cap.
+      Not automated: the timing equality itself is asserted per-shape (>20 ms each), not as a
+      statistical comparison — a ratio test would flake on a shared runner, and the failure mode it
+      guards is 0 ms vs 100 ms, not 90 vs 110.
 - [ ] **T48 · Harden the session cookie and HTTPS enforcement** — `api/lib.php:94` derives `secure`
       from `$_SERVER['HTTPS']`, which is correct on Dreamhost today but silently mints a **non-Secure
       90-day cookie** if TLS ever terminates upstream (a CDN, a proxy tier) — no error, no test

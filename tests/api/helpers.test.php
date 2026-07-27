@@ -118,6 +118,71 @@ $budgeted = state_summary($blob(['x-1' => $grad, 'x-2' => $grad, 'x-3' => $grad]
 check('state_summary: the shared budget bounds the list', count($budgeted['graduated']) === 2);
 check('state_summary: an exhausted budget yields nothing', state_summary($blob(['x-1' => $grad]), 0)['graduated'] === []);
 
+// --- The login timing equalizer (T47) ---------------------------------------
+// api/login.php verifies against a fixed DUMMY_HASH whenever the username doesn't exist
+// or the account is locked, so those cost the same argon2id work as a real attempt. That
+// only holds while the dummy's cost parameters match the ones the stored hashes were
+// made with — if PHP ever changes its argon2id defaults, the dummy silently becomes
+// cheaper (or dearer) than the real hashes and the timing oracle re-opens without a
+// single test noticing. Read it out of the source rather than requiring login.php, which
+// would run the endpoint.
+preg_match("/const DUMMY_HASH = '([^']+)'/", file_get_contents(__DIR__ . '/../../api/login.php'), $m);
+check('login.php: DUMMY_HASH is defined', isset($m[1]));
+$dummy = $m[1] ?? '';
+$params = fn(string $hash) => implode('$', array_slice(explode('$', $hash), 0, 4)); // $argon2id$v=19$m=…,t=…,p=…
+check('DUMMY_HASH: is argon2id', str_starts_with($dummy, '$argon2id$'));
+check("DUMMY_HASH: cost parameters match this PHP's argon2id defaults", $params($dummy) === $params(password_hash('x', PASSWORD_ARGON2ID)));
+// It has to be a hash of something nobody can supply — a verify that could ever return
+// true would hand out a session for a username that doesn't exist.
+foreach (['', 'password', 'password123', 'dummy'] as $guess) {
+	check('DUMMY_HASH: rejects ' . var_export($guess, true), !password_verify($guess, $dummy));
+}
+
+// login_decide(): the whole branch table, with no database in sight. api/login.php is
+// otherwise only exercised by the MySQL-backed integration job, and this is the part
+// worth pinning everywhere — that the three ways to fail are one way to fail.
+$right = 'password123';
+$row = fn($lockLeft) => [
+	'id' => 1,
+	'password_hash' => password_hash($right, PASSWORD_ARGON2ID),
+	'failed_logins' => 0,
+	'locked_until' => $lockLeft === null ? null : '2030-01-01 00:00:00',
+	'lock_left' => $lockLeft,
+	'is_admin' => 0,
+];
+$open = $row(null);
+$locked = $row(600); // ten minutes left on the lock
+$expired = $row(-5); // lock ran out five seconds ago
+
+$cases = [
+	'right password on an open account signs in' => [login_decide($open, $right, $dummy), true, false],
+	'wrong password on an open account fails' => [login_decide($open, 'nope', $dummy), false, false],
+	'right password on a locked account fails, and reports the lock' => [login_decide($locked, $right, $dummy), false, true],
+	'wrong password on a locked account fails' => [login_decide($locked, 'nope', $dummy), false, true],
+	'an expired lock lets the right password through' => [login_decide($expired, $right, $dummy), true, false],
+	'a username that does not exist fails' => [login_decide(false, $right, $dummy), false, false],
+];
+foreach ($cases as $name => [$got, $wantOk, $wantLocked]) {
+	check("login_decide: $name", $got['ok'] === $wantOk && $got['locked'] === $wantLocked);
+}
+
+// The point of the dummy hash: every failure has to cost what a real verify costs. A
+// short-circuit shows up as microseconds against argon2id's ~100 ms, so a floor well
+// below one real verify separates them without depending on how fast the machine is.
+foreach (
+	[
+		'a wrong password' => [$open, 'nope'],
+		'a locked account' => [$locked, $right],
+		'an unknown username' => [false, $right],
+	]
+	as $name => [$who, $pw]
+) {
+	$t = hrtime(true);
+	login_decide($who, $pw, $dummy);
+	$ms = (hrtime(true) - $t) / 1e6;
+	check("login_decide: $name still does the argon2id work (" . round($ms) . 'ms)', $ms > 20);
+}
+
 if ($failures > 0) {
 	fwrite(STDERR, "\n$failures PHP helper assertion(s) failed.\n");
 	exit(1);

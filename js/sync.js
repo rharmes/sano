@@ -152,6 +152,12 @@ const SanoSync = (() => {
 
 	// Login panel.
 
+	// Wrong password, unknown username and locked-out all answer with the same 401 now
+	// (api/login.php, T47) — the server can't tell you it's the lockout without telling
+	// everyone else who has an account here. So count the tries on this side and hint at
+	// it after a few, which is honest and leaks nothing.
+	let loginFailures = 0;
+
 	function togglePanel() {
 		document.getElementById('login-panel').classList.toggle('hide');
 		const error = document.getElementById('login-error');
@@ -183,7 +189,9 @@ const SanoSync = (() => {
 			return;
 		}
 		if (res.status === 401) {
-			showLoginError('Wrong username or password.');
+			loginFailures++;
+			const hint = loginFailures >= 3 ? ' Several wrong tries in a row pause sign-in for a while — wait a few minutes, then try again.' : '';
+			showLoginError('Wrong username or password.' + hint);
 			return;
 		}
 		if (res.status === 429) {
@@ -196,6 +204,7 @@ const SanoSync = (() => {
 			return;
 		}
 		const body = await res.json();
+		loginFailures = 0;
 		document.getElementById('login-password').value = '';
 		hidePanel();
 		adoptSession(username, body);

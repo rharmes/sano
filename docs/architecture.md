@@ -64,7 +64,7 @@ change both) → `css/admin.css` (admin dashboard only).
 | --- | --- |
 | `lib.php` | Shared: PDO connect (reads `sano-config.php` one level above docroot), auth, `require_admin()`/`is_admin()`, JSON 500 exception handler. Not an endpoint. |
 | `register.php` | Open self-service signup (argon2id, auto-login, per-IP hourly throttle via `signup_attempts`). |
-| `login.php` | Username/password login; per-account lockout + per-IP throttle (`login_attempts`); returns state, revision, `isAdmin`. |
+| `login.php` | Username/password login; per-account lockout + per-IP throttle (`login_attempts`); returns state, revision, `isAdmin`. **Every rejection is one `401 bad_credentials`** — wrong password, unknown username and locked account are identical in body, argon2id cost (`login_decide()` + `DUMMY_HASH`) and rate-limit budget, so nothing announces who has an account (T47). `SANO_LOGIN_IP_MAX` overrides the per-IP cap for CI only. |
 | `logout.php` | Clears the `sano_session` cookie. |
 | `state.php` | `GET` fetch / `PUT` push the app-state blob; revision conflict → 409. Returns `isAdmin`. |
 | `reminder.php` | `GET`/`POST` the per-account `reminder_hour` (0–23) + `reminder_tz` (IANA). |

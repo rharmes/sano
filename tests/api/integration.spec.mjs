@@ -93,20 +93,57 @@ test('state sync increments revision and rejects a stale base revision (409 conf
 	expect((await forced.json()).revision).toBe(2);
 });
 
-test('login rejects bad credentials and locks the account after repeated failures', async ({ request }) => {
+// T47: the account lockout used to answer with its own `429 {error:"locked"}`, which only
+// a username that exists could ever produce — a membership oracle. It has to still work,
+// and still be invisible.
+test('a locked account is indistinguishable from a wrong password or an unknown username', async ({ request }) => {
 	const username = uniqueName();
 	await register(request, username, 'password123');
-	const bad = await request.post('/api/login.php', { headers: CSRF, data: { username, password: 'wrongpass1' } });
-	expect(bad.status()).toBe(401);
-	expect((await bad.json()).error).toBe('bad_credentials');
+	const wrong = { headers: CSRF, data: { username, password: 'wrongpass1' } };
 
-	// LOCK_AFTER_FAILURES = 10: keep failing until the per-account lock engages (429 locked).
-	let locked = false;
-	for (let i = 0; i < 12 && !locked; i++) {
-		const r = await request.post('/api/login.php', { headers: CSRF, data: { username, password: 'wrongpass1' } });
-		locked = r.status() === 429 && (await r.json()).error === 'locked';
+	// LOCK_AFTER_FAILURES = 10. Every one of them — before the lock and after it — is the
+	// same 401 with the same body: no 429, no retryAfter, nothing a probe can read.
+	for (let i = 0; i < 10; i++) {
+		const r = await request.post('/api/login.php', wrong);
+		expect(r.status(), `attempt ${i + 1}`).toBe(401);
+		expect(await r.json()).toEqual({ error: 'bad_credentials' });
 	}
-	expect(locked).toBe(true);
+
+	// The lock did engage: the *correct* password is refused too. This is the assertion
+	// that fails if hiding the lock quietly turned it off.
+	const correct = await request.post('/api/login.php', { headers: CSRF, data: { username, password: 'password123' } });
+	expect(correct.status()).toBe(401);
+
+	// And it is the same answer a never-registered username gets.
+	const ghost = await request.post('/api/login.php', { headers: CSRF, data: { username: uniqueName(), password: 'password123' } });
+	expect(ghost.status()).toBe(correct.status());
+	expect(await ghost.json()).toEqual(await correct.json());
+});
+
+// Runs only in the dedicated CI step that gives it a cleared login_attempts table and a
+// small cap — the per-IP throttle is one bucket for the whole suite (every test reaches
+// the API from 127.0.0.1), so a spec that deliberately exhausts it cannot share a run.
+test('probing a locked account spends the prober’s rate-limit budget @ip-throttle', async ({ request }) => {
+	test.skip(Number(process.env.SANO_LOGIN_IP_MAX) !== 14, 'needs the isolated SANO_LOGIN_IP_MAX=14 step');
+	const username = uniqueName();
+	await register(request, username, 'password123');
+	const wrong = { headers: CSRF, data: { username, password: 'wrongpass1' } };
+
+	// 10 failures lock the account; attempts 11–14 are locked-account probes. Those four
+	// used to be free — the 429 "locked" returned above the attempt row — so the budget
+	// would still read 10 here and a 15th request would be yet another "locked", forever.
+	for (let i = 0; i < 14; i++) {
+		const r = await request.post('/api/login.php', wrong);
+		expect(r.status(), `attempt ${i + 1}`).toBe(401);
+	}
+
+	// Metered, the 15th is the per-IP throttle instead: the probing stopped being free.
+	const throttled = await request.post('/api/login.php', wrong);
+	expect(throttled.status()).toBe(429);
+	expect(await throttled.json()).toEqual({ error: 'rate_limited', retryAfter: 900 });
+
+	// The throttle is per-IP, not per-account: an unrelated username is refused as well.
+	expect((await request.post('/api/login.php', { headers: CSRF, data: { username: uniqueName(), password: 'password123' } })).status()).toBe(429);
 });
 
 test('the reminder schedule round-trips and validates its inputs', async ({ request }) => {

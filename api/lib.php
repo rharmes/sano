@@ -197,6 +197,31 @@ function require_admin(): int
 	return $userId;
 }
 
+// --- Login ------------------------------------------------------------------
+// Decide one login attempt, without the decision leaking *which* of the three ways it
+// failed. $user is the row api/login.php fetched, or false when the username doesn't
+// exist; $dummyHash is a real argon2id hash of a password nobody holds. Returns
+// ['ok' => bool, 'locked' => bool] — the caller needs `locked` to know whether to touch
+// the failure counter, but must not put it in the response.
+//
+// The verify runs exactly once and unconditionally: against the account's own hash when
+// there is a usable one, against $dummyHash when there isn't. Written as a single
+// expression on purpose — the natural `$user && !$locked && password_verify(...)`
+// short-circuits, and a login that answers in 1 ms for an unknown username and 100 ms
+// for a real one is a membership oracle anybody can read over the internet.
+//
+// A locked account is checked against the dummy too, never its real hash, so the lockout
+// still does its job of capping guesses per account while it is engaged.
+function login_decide($user, string $password, string $dummyHash): array
+{
+	$locked = $user !== false && $user['locked_until'] !== null && (int) $user['lock_left'] > 0;
+	$usable = $user !== false && !$locked;
+	return [
+		'ok' => password_verify($password, $usable ? $user['password_hash'] : $dummyHash) && $usable,
+		'locked' => $locked,
+	];
+}
+
 // --- Web Push subscriptions -------------------------------------------------
 // A subscription endpoint is a URL *the server itself* POSTs to, every hour, from
 // tools/send-reminders.php. So an unvalidated one doesn't just store junk — it

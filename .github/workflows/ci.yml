@@ -99,7 +99,23 @@ jobs:
       - name: API integration specs
         env:
           SANO_TEST_DB: '1'
-          # The whole suite registers from one IP (127.0.0.1); lift the per-IP signup cap so
-          # the 5/hour throttle doesn't starve later tests of a session. Prod keeps the default.
+          # The whole suite registers and logs in from one IP (127.0.0.1); lift both per-IP
+          # caps so the 5/hour signup throttle and the 30/window login throttle don't starve
+          # later tests. Prod sets neither, so the defaults (5 and 30) hold there.
           SANO_SIGNUPS_PER_HOUR: '100000'
+          SANO_LOGIN_IP_MAX: '100000'
         run: npx playwright test tests/api
+      - name: Login rate-limit spec (needs the whole per-IP budget to itself)
+        env:
+          SANO_TEST_DB: '1'
+          SANO_SIGNUPS_PER_HOUR: '100000'
+          # Small on purpose: this spec proves that probing a locked account consumes the
+          # prober's budget, which can only be observed by exhausting it. One bucket serves
+          # every test, so it runs alone, against a table cleared of the run above.
+          SANO_LOGIN_IP_MAX: '14'
+          # Its own port: this starts a second php -S, and reusing the one the step above
+          # just tore down is a bind race with nothing to gain.
+          SANO_PORT: '8124'
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -uroot -proot sano -e 'DELETE FROM login_attempts'
+          npx playwright test tests/api --grep @ip-throttle
