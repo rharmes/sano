@@ -80,9 +80,15 @@ $pdo = new PDO($config['dsn'], $config['user'], $config['pass'], [
 // Pull every reminder-enabled subscription with the user's chosen hour/zone and
 // their last activity day. The LEFT JOIN keeps users who have never saved state
 // (JSON_EXTRACT yields SQL NULL there, which never equals today's date).
+//
+// JSON_VALID guard: JSON_EXTRACT raises ER_INVALID_JSON_TEXT on a row whose state
+// isn't valid JSON, and that aborts the entire SELECT — one bad row would stop
+// every user's reminders. api/state.php can no longer write one (T43), but a row
+// stored before that fix still could exist, so degrade to "no activity recorded"
+// rather than taking the run down.
 $sql = "SELECT u.id AS user_id, u.username, u.reminder_hour, u.reminder_tz,
                ps.id AS sub_id, ps.endpoint, ps.p256dh, ps.auth_secret,
-               JSON_UNQUOTE(JSON_EXTRACT(s.state, '$.lastActivityDay')) AS last_activity_day
+               JSON_UNQUOTE(JSON_EXTRACT(IF(JSON_VALID(s.state), s.state, '{}'), '$.lastActivityDay')) AS last_activity_day
         FROM push_subscriptions ps
         JOIN users u ON u.id = ps.user_id
         LEFT JOIN app_state s ON s.user_id = u.id

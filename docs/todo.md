@@ -177,7 +177,7 @@ marked otherwise.
         rests on review. **Adding a browser means editing two files** (see CLAUDE.md).
         Unblocks T52, whose remaining work is now just the `try`/`catch` around `flush()` and
         pruning on repeated failure.
-- [ ] **T43 · Fix `api/state.php` write handling** — the file lacks `declare(strict_types=1)` (it's
+- [x] **T43 · Fix `api/state.php` write handling** — the file lacks `declare(strict_types=1)` (it's
       file-scoped, so `lib.php`'s doesn't cover it), and `json_encode()`'s return is unchecked.
       Verified: a state containing `1e999` decodes to `INF`, re-encodes to `false`, and
       `strlen(false)` coerces to `0` — so the 1 MiB cap passes and a **non-JSON value is stored**.
@@ -189,6 +189,27 @@ marked otherwise.
       and *then* re-reads the row, so two devices racing can hand the client a revision it didn't
       produce — collapse it into one atomic `UPDATE … WHERE revision = ?` using `rowCount()` as the
       conflict signal, which also fixes the deadlock on two concurrent first-ever PUTs.
+  - [x] **Delivered (2026-07-27)** — `declare(strict_types=1)` plus an explicit
+        `json_encode(...) === false` → **400 `bad_state`**. Chose the explicit check over
+        `JSON_THROW_ON_ERROR`, which would surface through the generic exception handler as a 500;
+        this is a bad request, and the client should be told so. The write path is now one atomic
+        statement: the revision check rides inside `UPDATE … WHERE user_id = ? AND revision = ?`
+        with `rowCount()` as the conflict signal, so there is no read-then-write window, and the
+        `SELECT … FOR UPDATE` that gap-locked a missing row is gone. `rowCount() === 0` falls
+        through to an `INSERT` and lets the primary key say which case it was — duplicate key
+        (23000) means the row existed, so a genuine conflict; a deadlock (40001) from two racing
+        first-ever PUTs resolves to the same 409, since the loser should reconcile either way.
+        The revision is now read **inside** the open transaction, so it is the value this request
+        produced rather than one a racing device wrote between commit and read.
+        Defence in depth in `tools/send-reminders.php`: the query wraps the extract in
+        `IF(JSON_VALID(s.state), s.state, '{}')`, because `state.php` can no longer write a bad row
+        but one stored before this fix still could exist — checked the live DB, 2 rows, **0
+        invalid**, so this is precaution rather than repair. Test: a guard spec PUTs the raw string
+        `{"state":{"x":1e999},"baseRevision":0}` (JSON.stringify would turn `Infinity` into `null`
+        and never reproduce it), confirmed to **fail against the pre-fix file and pass against the
+        fixed one**. Revision/conflict/force behaviour stays covered by the CI integration spec.
+        **Not done:** switching `state` to a `JSON` column — that is a live-DB migration for
+        belt-and-braces on a path PHP now guards, so it is not worth the schema change.
 - [ ] **T44 · Bound request bodies before decode, and catch fatals** — `read_json_body()`
       (`api/lib.php:57`) and `api/state.php:24` both do `file_get_contents('php://input')` with no
       limit, *before* the size cap and *before* auth. `post_max_size` doesn't bound a PUT read this

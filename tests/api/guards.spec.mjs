@@ -92,6 +92,20 @@ test.describe('state.php', () => {
 			body: { error: 'missing_state' },
 		});
 	});
+	// T43. json_decode turns the JSON literal 1e999 into INF, which json_encode
+	// cannot represent and returns false for. Without state.php's own strict_types
+	// that false measured as strlen 0, slipped past the size cap, and was stored as
+	// the empty string — a row that then made the reminder cron's JSON_EXTRACT abort
+	// for every user. Sent as a raw string because JSON.stringify would turn
+	// Infinity into null and never reproduce it.
+	test('PUT with a state that cannot be re-encoded → 400 bad_state', async ({ request }) => {
+		const r = await request.put('/api/state.php', {
+			headers: { ...CSRF, 'Content-Type': 'application/json' },
+			data: '{"state":{"x":1e999},"baseRevision":0}',
+		});
+		expect(await read(r)).toEqual({ status: 400, body: { error: 'bad_state' } });
+	});
+
 	test('PUT over the size cap → 413 state_too_large', async ({ request }) => {
 		const huge = { state: { blob: 'a'.repeat(1_100_000) }, baseRevision: 0 }; // state JSON > MAX_STATE_BYTES (1 MiB)
 		expect((await request.put('/api/state.php', { headers: CSRF, data: huge })).status()).toBe(413);
