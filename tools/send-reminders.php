@@ -9,7 +9,9 @@
 //
 // Cron — runs hourly (each user fires at their own local hour, so it must run
 // every hour on the hour; no CRON_TZ needed, zones are handled per-user):
-//   0 * * * * php $HOME/sano-tools/send-reminders.php >> $HOME/sano-reminders.log 2>&1
+//   0 * * * * umask 077; php $HOME/sano-tools/send-reminders.php >> $HOME/sano-reminders.log 2>&1
+// The umask is what makes the log 0600 — cron inherits 0022, and the shell creates the
+// file on redirect, before this script could chmod anything it doesn't know the name of.
 //
 // Flags:
 //   --dry-run         List who would be notified, send nothing.
@@ -28,6 +30,19 @@ declare(strict_types=1);
 if (PHP_SAPI !== 'cli') {
 	exit(1);
 }
+
+// A crash must not spill a stack trace into the cron log. A trace carries every string
+// argument on the stack — PHP truncates them to 15 characters, which is not protection —
+// along with the DSN and the DB user. PHP 8.2+ does mask the password itself behind
+// #[\SensitiveParameter], but only inside its own APIs: a helper of ours that takes a
+// secret is printed in full (both verified on 8.5). So arguments off, and one line out
+// instead of a trace. Identical in all four CLI scripts — they are installed standalone
+// on the server and cannot share a require — drift-guarded by tests/data/cli-guards.test.mjs.
+ini_set('zend.exception_ignore_args', '1');
+set_exception_handler(function (Throwable $e): void {
+	fwrite(STDERR, get_class($e) . ': ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine() . "\n");
+	exit(1);
+});
 
 // Locate config and the Composer autoload. The script supports running both
 // from the deployed location (~/sano-tools/) and from the repo (tools/), where

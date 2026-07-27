@@ -411,7 +411,7 @@ marked otherwise.
       `CHAR(2)` on a utf8mb4 connection throws inside the write transaction, which with no exception
       handler kills the nightly run every night until someone notices). TLS verification itself is
       fine — PHP's https wrapper verifies peer and hostname by default.
-- [ ] **T51 · Keep secrets and device IDs out of the cron logs** — none of the four CLI scripts
+- [x] **T51 · Keep secrets and device IDs out of the cron logs** — none of the four CLI scripts
       installs a `set_exception_handler` (unlike `api/lib.php`), so an uncaught `PDOException` prints
       a full stack trace into `~/sano-traffic.log` / `~/sano-reminders.log`; PHP includes call
       arguments in traces unless `zend.exception_ignore_args` is on, which would put the **DB
@@ -426,6 +426,37 @@ marked otherwise.
       published in this repo**, so its printed hashes are trivially reversible to raw IPs if that
       output is ever shared — generate a random per-invocation salt for non-fixture input (the tests
       only compare hashes within one process, so they keep passing).
+      **Correction (2026-07-27):** the headline claim above — that a trace would put the **DB
+      password** in the log — is **wrong on PHP 8.2+**, and this entry (mine, from the original
+      review) asserted it without checking. PHP 8.2 marks the password parameter of `PDO::__construct`
+      and `password_hash`/`password_verify` `#[\SensitiveParameter]`; a real trace from a failed
+      connect prints `Object(SensitiveParameterValue)` in its place. Measured on 8.5 and confirmed
+      against the server's 8.2.30 defaults. What a trace *does* expose is the **DSN** (DB host +
+      database), the **DB username**, absolute paths, and — the part that still matters — every
+      string argument to *our own* functions, which nothing masks: a one-line wrapper taking a
+      secret prints it in full (demonstrated). The second premise was also softer than written: the
+      logs are `0644`, but the home directory is `drwx--x---` and the group `pg131571` has **no
+      other members**, so no other tenant can reach them today. Fixed anyway, as depth, not as an
+      active leak — and the priority claim was overstated.
+      **Delivered (2026-07-27)** — all four CLI scripts now set `zend.exception_ignore_args` and
+      install a handler that prints `Class: message at file:line` and exits **1**, instead of PHP's
+      fatal + trace. Before/after on a dead DB: the old path printed
+      `PDO->__construct('mysql:host=127....', 'sano_user', …)`; the new one is a single line.
+      The block is duplicated rather than shared because each script is installed **standalone** on
+      the server with no docroot in reach — `tests/data/cli-guards.test.mjs` diffs the four copies
+      and fails if one drifts (verified by stripping it from one script).
+      `api/lib.php` no longer stringifies `$e` into the shared host's error log, same reasoning.
+      **The `--json` salt is the piece that mattered most** and it's now
+      `bin2hex(random_bytes(16))` per invocation: a salt committed to this repo made every printed
+      visitor hash reversible to a raw IP by brute force over 2^32, in the one mode you reach for
+      while debugging a *real* access log — i.e. the output most likely to get pasted somewhere.
+      Verified the hashes now differ run to run; the parse tests keep passing because they only
+      ever compare hashes from a single run.
+      **Needs a server step to take effect** (not done — the cron scripts aren't in the deploy
+      allowlist, and the crontab isn't mine to edit): re-scp both scripts to `~/sano-tools/`, add
+      `umask 077;` to the two cron lines (now documented in the script headers — the shell creates
+      the log on redirect, so no chmod inside the script could win), and `chmod 600` the two
+      existing logs.
 - [x] **T52 · Make the reminder cron fault-tolerant** — `tools/send-reminders.php:166` `foreach`es
       `$webPush->flush()` with no `try`/`catch`, and `p256dh`/`auth` are stored unvalidated, so one
       malformed key (a wedged browser, or deliberate) raises out of the batch prepare and terminates

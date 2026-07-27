@@ -19,7 +19,9 @@
 //
 // Cron — nightly. Dreamhost rotates the log just after midnight (America/Los_Angeles),
 // so 2:30am leaves plenty of slack; the script skips today as incomplete anyway:
-//   30 2 * * * php $HOME/sano-tools/ingest-traffic.php >> $HOME/sano-traffic.log 2>&1
+//   30 2 * * * umask 077; php $HOME/sano-tools/ingest-traffic.php >> $HOME/sano-traffic.log 2>&1
+// The umask is what makes the log 0600 — cron inherits 0022, and the shell creates the
+// file on redirect, before this script could chmod anything it doesn't know the name of.
 //
 // Setup once on the server:
 //   scp tools/ingest-traffic.php sano-deploy:sano-tools/
@@ -47,6 +49,19 @@ declare(strict_types=1);
 if (PHP_SAPI !== 'cli') {
 	exit(1);
 }
+
+// A crash must not spill a stack trace into the cron log. A trace carries every string
+// argument on the stack — PHP truncates them to 15 characters, which is not protection —
+// along with the DSN and the DB user. PHP 8.2+ does mask the password itself behind
+// #[\SensitiveParameter], but only inside its own APIs: a helper of ours that takes a
+// secret is printed in full (both verified on 8.5). So arguments off, and one line out
+// instead of a trace. Identical in all four CLI scripts — they are installed standalone
+// on the server and cannot share a require — drift-guarded by tests/data/cli-guards.test.mjs.
+ini_set('zend.exception_ignore_args', '1');
+set_exception_handler(function (Throwable $e): void {
+	fwrite(STDERR, get_class($e) . ': ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine() . "\n");
+	exit(1);
+});
 
 // A session ends after this much silence from one visitor (the analytics standard).
 // A session that spans midnight is counted once per day: ingest is per-day, and a
@@ -136,7 +151,15 @@ if ($opt['update-geo']) {
 // ── config (skipped for --json, which is pure parsing) ────────────────────────
 
 $config = null;
-$salt = 'sano-traffic-test-salt'; // --json only; a real run always uses the config salt
+// --json only; a real run always uses the config salt. Random per invocation, and
+// deliberately not a constant: the whole point of hashing a visitor is that the row can't
+// be walked back to an address, and a salt committed to this repo gives that away for
+// free — IPv4 is 2^32, so a published salt makes every printed hash a raw IP to anyone
+// who can run a loop. --json is the mode you reach for while debugging a *real* access
+// log, and its output is the kind of thing that gets pasted into an issue.
+// Nothing is comparable across invocations as a result; tests/data/traffic-parse.test.mjs
+// only ever compares hashes produced by one run, which is what makes this safe.
+$salt = bin2hex(random_bytes(16));
 if (!$opt['json']) {
 	foreach ([__DIR__ . '/../sano-config.php', __DIR__ . '/../../sano-config.php'] as $path) {
 		if (file_exists($path)) {

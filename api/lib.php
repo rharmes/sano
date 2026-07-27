@@ -33,8 +33,15 @@ const ADMIN_MAX_TOTAL_IDS = 100000; // whole-response backstop, ~2 MB of JSON
 // non-duplicate insert) becomes a generic JSON 500; the detail is logged
 // server-side only. Endpoints just `require` this file, so the guard covers all.
 ini_set('display_errors', '0');
+// Arguments out of traces, and the trace itself out of the log. `error_log('… ' . $e)`
+// stringifies the whole exception, which writes every string argument on the stack into
+// the shared host's error log — the DSN and DB user among them, and anything a helper of
+// ours was handed. Class, message and file:line is what a 500 actually needs to be
+// diagnosed. (PHP 8.2+ masks passwords passed to PDO/password_* behind
+// #[\SensitiveParameter]; nothing masks our own function arguments, hence the ini too.)
+ini_set('zend.exception_ignore_args', '1');
 set_exception_handler(function (Throwable $e): void {
-	error_log('sano api: ' . $e);
+	error_log('sano api: ' . get_class($e) . ': ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
 	if (!headers_sent()) {
 		http_response_code(500);
 		header('Content-Type: application/json');
