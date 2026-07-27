@@ -312,6 +312,18 @@ marked otherwise.
 
 ## Testing
 
+- [ ] **T56 · Fix the flaky `no horizontal overflow across mobile widths` e2e** — the 9-width
+      viewport sweep (`tests/e2e/home.spec.mjs:27`) failed all three attempts on the T40 commit's CI
+      run (30228655062, Chromium), each hitting the **60 s test timeout** exactly — `page.waitForFunction`
+      timed out, then the retries reported "Target page, context or browser has been closed", which is
+      the timeout tearing the context down rather than a second distinct fault. It passed on the T41
+      and T42 runs, so it isn't a real overflow regression: the test is simply sitting near the
+      timeout boundary (~20 s locally, but it re-navigates and re-boots per width while CI runs
+      Chromium and WebKit projects concurrently against a single-threaded `php -S`). Per the
+      no-flaky-tests rule this is a defect, not noise. Fix the cost rather than raising the timeout —
+      resize within one page context instead of a fresh navigation per width, or split the sweep so
+      each width is its own short test. Found during the T42 CI check (2026-07-27).
+
 - [x] **T17 · Fix the flaky WebKit match-lesson e2e** — `tests/e2e/lesson.spec.mjs` match rounds
       intermittently time out under WebKit: `stepLesson` (`tests/e2e/_helpers.mjs`) clicks match tiles
       with normal (non-force) clicks and relies on `boot()`'s inline animation-freeze, but that can't
