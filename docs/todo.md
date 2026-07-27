@@ -126,7 +126,7 @@ marked otherwise.
 
 **Order to work in** (the entries stay in ID order below, since IDs are how we refer to them; this
 is the priority, re-ranked 2026-07-27 as items got measured rather than assumed):
-~~T57~~ → ~~T58~~ → **T53** → T50 → T55 → T54 (what's left of it).
+~~T57~~ → ~~T58~~ → ~~T53~~ → **T50** → T55 → T54 (what's left of it).
 T57 and T58 were pulled out of T54's bundle: a throttle that can be bypassed wholesale outranks
 "small independent items", and an `innerHTML` sink whose signature invites a username is a different
 kind of thing from a missing header. Ten of the original fifteen are done.
@@ -495,13 +495,26 @@ kind of thing from a missing header. Ten of the original fifteen are done.
         `would notify ross (sub 2)`. Cost: sequential HTTP instead of Guzzle's parallel pool —
         revisit only in the hundreds of subscribers. **Trade-off accepted:** no local test coverage;
         this script needs the server's vendor tree + MySQL, so the verification above is the record.
-- [ ] **T53 · Same-origin guard on the service-worker notification URL** — `sw.js:85` takes
+- [x] **T53 · Same-origin guard on the service-worker notification URL** — `sw.js:85` takes
       `data.url` straight from the push payload and passes it to `c.navigate(target)`, which
       **retargets the user's already-open Sano window**, and to `openWindow()`. Not reachable today
       (the sender hard-codes `/`, and payloads are VAPID-signed and encrypted), but it means a VAPID
       key leak or a bug in the reminder script escalates from "wrong message" to "every subscriber's
       app window redirected to a phishing page." Resolve against `location.origin` and fall back
       to `/`.
+      **Delivered (2026-07-27)** — `safeTarget()` in `sw.js`: resolve against `self.location.origin`,
+      keep the URL only if the resolved origin matches, otherwise `/`. Both consumers take the
+      guarded value, which matters because they fail differently — `c.navigate()` retargets a window
+      the user already has open, and `openWindow()` follows a cross-origin URL without complaint.
+      Uses the URL parser rather than a string test, which is what catches the shapes a naive check
+      waves through: protocol-relative `//evil.test/x` **starts with a slash**, and `javascript:` /
+      `data:` resolve to the opaque origin `"null"`. Fault-injected a `startsWith('/')` version and
+      it fails exactly the test named for those.
+      No `VERSION` bump: the file's own rule ties that to *cache strategy* changes, and `sw.js` is
+      served `no-cache`, so clients revalidate and pick the new worker up on their next visit.
+      Testing: `tests/unit/sw-notification-target.test.mjs` lifts the function out by sentinels with
+      a stubbed `self` (17 URL cases), plus a guard that the handler actually *routes through* it —
+      a correct check nothing calls is worth nothing, and bypassing the call site fails that test.
 - [ ] **T54 · Security hardening bundle** — small independent items, none individually urgent.
       (The IPv6 throttle item moved out to **T57** and the `showNotice` sink to **T58** — both
       outgrew "not individually urgent".) Remaining:

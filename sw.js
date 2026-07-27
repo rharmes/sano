@@ -80,9 +80,36 @@ self.addEventListener('push', (event) => {
 	);
 });
 
+// --- notification target (pure) ---
+// Where a notification click sends the user. The URL arrives inside the push payload, so
+// it is exactly as trustworthy as the VAPID key that signed it — and no more. Resolve it
+// against our own origin and refuse anything that lands anywhere else.
+//
+// This is not reachable today: tools/send-reminders.php hard-codes `/`, and payloads are
+// signed and encrypted. It's cheap insurance against the day that stops being true,
+// because the blast radius is unusually bad for a "wrong message" bug: the click handler
+// calls c.navigate() on a window the user *already has open*, so a hostile URL doesn't
+// just open a tab, it retargets the running app — and openWindow() will follow a
+// cross-origin URL happily. A leaked key would escalate from "sends nonsense" to "every
+// subscriber's Sano window is now a phishing page."
+//
+// Covers the shapes that sneak past a naive check: protocol-relative `//evil.test/x`
+// resolves to another origin, and `javascript:` resolves to the opaque origin "null".
+// Unit-tested via tests/unit/sw-notification-target.test.mjs (lifted by these sentinels).
+function safeTarget(url) {
+	if (typeof url !== 'string' || url === '') return '/';
+	try {
+		const resolved = new URL(url, self.location.origin);
+		return resolved.origin === self.location.origin ? resolved.href : '/';
+	} catch (_) {
+		return '/'; // not a URL at all
+	}
+}
+// --- end notification target ---
+
 self.addEventListener('notificationclick', (event) => {
 	event.notification.close();
-	const target = (event.notification.data && event.notification.data.url) || '/';
+	const target = safeTarget(event.notification.data && event.notification.data.url);
 	event.waitUntil(
 		(async () => {
 			const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });

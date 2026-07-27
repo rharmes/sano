@@ -133,7 +133,10 @@ routing: `tools/tts/README.md`.
   it excluded. Definitions (session, repeat, mine) live in `@docs/data-model.md`; the parser is testable
   with `--json`, which needs no DB.
 - **PWA + reminders:** installable; `sw.js` caches the shell (HTML network-first, stamped assets
-  cache-first) and handles `push`. A reminder needs **both** a per-device subscription (`js/push.js` →
+  cache-first) and handles `push`. The **click** target comes out of the push payload, so it goes
+  through `safeTarget()` (T53) — anything not resolving to our own origin becomes `/`, because the
+  handler `navigate()`s a window the user already has open. A reminder needs **both** a per-device
+  subscription (`js/push.js` →
   `push-subscribe.php`) **and** a per-account time (`reminder_hour` / `reminder_tz` via `reminder.php`);
   `tools/send-reminders.php` dispatches hourly via server cron (not in the rsync). VAPID public key is
   baked into `js/push.js`; the private key is in `sano-config.php`. The subscription `endpoint` is a URL
