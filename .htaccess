@@ -1,3 +1,11 @@
+# No directory is browsable. Without this, mod_autoindex serves a full file listing
+# for any directory that has no index file — /api/, /js/, /css/, /fonts/ and /audio/
+# all did. Nothing secret lives in them, but a listing advertises every stray file
+# that ever lands in a deployed directory, so this is the cheap half of not having
+# to notice one. Inherited by every subdirectory (neither api/.htaccess nor any
+# other overrides Options), so the single root directive covers the whole site.
+Options -Indexes
+
 Header set Cache-Control "no-cache" "expr=%{CONTENT_TYPE} =~ m#text/html#"
 Header set Cache-Control "max-age=31536000, immutable" "expr=%{CONTENT_TYPE} == 'font/woff2'"
 # Content-stamped (?v=hash) css/js never change under a given URL — cache them hard.

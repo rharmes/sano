@@ -124,11 +124,25 @@ auth design (CSPRNG tokens hashed at rest, argon2id, bound parameters throughout
 the real defects plus the hardening worth doing. Each was confirmed by reading the code path unless
 marked otherwise.
 
-- [ ] **T41 · Turn off Apache directory listing** — `/api/`, `/js/`, `/css/`, `/fonts/` and
+- [x] **T41 · Turn off Apache directory listing** — `/api/`, `/js/`, `/css/`, `/fonts/` and
       `/audio/` all serve a full `Index of /…` autoindex (confirmed live: `GET /api/` lists all 11
       endpoint filenames). `.htaccess` has no `Options -Indexes`, so this is one line at the top of
       the root file, inherited by every subdirectory. No secret is exposed today — the value is that
       any future stray file dropped into a synced directory would otherwise be advertised.
+  - [x] **Delivered (2026-07-27)** — `Options -Indexes` at the top of `.htaccess`. Verified against a
+        real Apache 2.4 (macOS `httpd`, serving a copy outside `~/Documents`, which TCC blocks Apache
+        from reading at all): with the file honored, `/js/`, `/css/` and `/api/` return 403 and leak
+        zero filenames, while `/` and `/index.html` still return 200 with all three security headers
+        intact. The `AllowOverride None` control run reproduces the live bug exactly (200 + 14 `.js`
+        filenames), so the check discriminates rather than passing vacuously. Regression guard added
+        to `tools/check.sh`: no other tier can see Apache config — `php -S` ignores `.htaccess` — so
+        the static tier now asserts the security-critical directives in both `.htaccess` files. It
+        strips comments before matching (the first version passed a commented-out directive), and was
+        confirmed to fail when the line is commented out *and* when it's deleted.
+        **Live re-check required immediately after the next deploy:** `Options` needs `AllowOverride
+        Options`/`All` in the vhost, and if Dreamhost disallowed it every request would 500. Confirm
+        `curl -sI https://namastesano.com/` is 200 and `curl -o /dev/null -w '%{http_code}'
+        https://namastesano.com/js/` is 403; if the site 500s, revert this one line and redeploy.
 - [ ] **T42 · Validate and scope push subscriptions** — `api/push-subscribe.php` accepts any
       non-empty string ≤500 bytes as `endpoint`, and `tools/send-reminders.php` POSTs to it hourly,
       so any self-registered user turns the server into a blind SSRF client (loopback/LAN probing;
