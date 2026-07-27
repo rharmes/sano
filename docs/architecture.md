@@ -97,7 +97,7 @@ necessarily follow auth and live in the DB-gated integration specs.
 | `make-user.php` | CLI account create / `--reset-password` (invite-only; run on the server). |
 | `ingest-traffic.php` | Server-only nightly cron (T40): parse the Apache access logs → the `traffic_*` aggregate tables. Dreamhost keeps ~7 days of logs, so this is what accumulates history. Visitors are salted `sha256(ip + UA)` hashes — no raw IP is stored; countries come from a locally compiled CC0 IP→country index (`--update-geo`). `--json` prints the parse with no DB or config (what `tests/data/traffic-parse.test.mjs` asserts on). Not in the rsync. |
 | `migrate-2026-07-traffic.php` | One-off idempotent migration creating the four `traffic_*` tables. Run once on the server; already folded into `schema.sql`. |
-| `send-reminders.php` | Server-only hourly cron: dispatch Web Push reminders (minishlink/web-push). Not in the rsync. |
+| `send-reminders.php` | Server-only hourly cron: dispatch Web Push reminders (minishlink/web-push). Not in the rsync — install by hand into `~/sano-tools/`. One subscription per `flush()` so a single broken row can't abort the run (T52); retires a subscription after `MAX_PUSH_FAILURES` consecutive failures. |
 | `make-touch-icon.html` | Source for the app-icon PNGs (render at 512 then `sips` downscale). |
 | `build-character-heads.mjs` / `build-anim-characters.mjs` | Generate `js/characters.js` / `design/anim-characters.js` from `design/characters.html`. Re-run after editing character art. |
 | `schema.sql` | Canonical DB schema (see `@docs/data-model.md`). Live changes go through a one-off idempotent `migrate-*.php`, then fold back into this file — never re-apply it to an existing DB. |

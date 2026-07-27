@@ -209,43 +209,89 @@ $payload = json_encode([
 	'url' => '/',
 ]);
 
-// Track endpoint -> sub_id so we can update the right row in flush().
-$subIdByEndpoint = [];
-foreach ($rows as $r) {
-	$sub = Minishlink\WebPush\Subscription::create([
-		'endpoint' => $r['endpoint'],
-		'publicKey' => $r['p256dh'],
-		'authToken' => $r['auth_secret'],
-	]);
-	$webPush->queueNotification($sub, $payload);
-	$subIdByEndpoint[$r['endpoint']] = (int) $r['sub_id'];
+// Drop a subscription after this many consecutive failures rather than retrying a
+// permanently broken row every hour forever. Reset to 0 on any success.
+const MAX_PUSH_FAILURES = 10;
+
+// Count a failed delivery; returns true if that failure retired the subscription.
+// The reason text comes from the push service (or from an exception message), so
+// strip it to printable ASCII and truncate before it lands in a log a human reads.
+function push_failed(PDO $pdo, int $subId, string $username, string $why): bool
+{
+	$pdo->prepare('UPDATE push_subscriptions SET last_failure_at = NOW(), failure_count = failure_count + 1 WHERE id = ?')->execute([$subId]);
+	$read = $pdo->prepare('SELECT failure_count FROM push_subscriptions WHERE id = ?');
+	$read->execute([$subId]);
+	$n = (int) $read->fetchColumn();
+	$why = substr(preg_replace('/[^\x20-\x7E]/', '', $why) ?? '', 0, 120);
+	if ($n >= MAX_PUSH_FAILURES) {
+		$pdo->prepare('DELETE FROM push_subscriptions WHERE id = ?')->execute([$subId]);
+		printf("DROP sub %d (%s) after %d failures: %s\n", $subId, $username, $n, $why);
+		return true;
+	}
+	printf("FAIL sub %d (%s) %d/%d: %s\n", $subId, $username, $n, MAX_PUSH_FAILURES, $why);
+	return false;
 }
 
-foreach ($webPush->flush() as $report) {
-	$endpoint = $report->getEndpoint();
-	$subId = $subIdByEndpoint[$endpoint] ?? null;
-	if ($report->isSuccess()) {
-		if ($subId) {
-			$pdo->prepare('UPDATE push_subscriptions SET last_success_at = NOW(), failure_count = 0, last_failure_at = NULL WHERE id = ?')->execute(
-				[$subId],
-			);
+// One subscription per flush(), deliberately. flush() is a generator that calls
+// prepare() — the encryption step — from *inside* itself, so anything thrown there
+// kills the generator and takes every notification still queued behind it. The
+// library's default batchSize is 1000, i.e. the whole run is always a single batch,
+// so queueing everything and flushing once means one broken subscription costs
+// every other user their reminder for that hour, silently.
+//
+// Keys are validated on write (T42) and again above, but shape validation cannot
+// prove that a 65-byte 0x04-prefixed blob is a point actually on the P-256 curve —
+// a well-formed-but-invalid key still throws in here. Isolating each send is what
+// makes the run independent of any single row. The cost is sequential HTTP rather
+// than Guzzle's parallel pool; at this scale that is a far better trade than a
+// shared failure mode. Revisit only if the subscriber count reaches the hundreds.
+$sent = $dropped = $failed = 0;
+
+foreach ($rows as $r) {
+	$subId = (int) $r['sub_id'];
+	$ok = false;
+	$code = 0;
+	$why = 'no delivery report';
+	try {
+		$webPush->queueNotification(
+			Minishlink\WebPush\Subscription::create([
+				'endpoint' => $r['endpoint'],
+				'publicKey' => $r['p256dh'],
+				'authToken' => $r['auth_secret'],
+			]),
+			$payload,
+		);
+		foreach ($webPush->flush() as $report) {
+			$ok = $report->isSuccess();
+			$resp = $report->getResponse();
+			$code = $resp ? $resp->getStatusCode() : 0;
+			if (!$ok) {
+				$why = $code . ' ' . $report->getReason();
+			}
 		}
-		echo "OK $endpoint\n";
-		continue;
+	} catch (Throwable $e) {
+		$why = get_class($e) . ': ' . $e->getMessage();
 	}
-	$resp = $report->getResponse();
-	$code = $resp ? $resp->getStatusCode() : 0;
-	if ($code === 410 || $code === 404) {
-		if ($subId) {
-			$pdo->prepare('DELETE FROM push_subscriptions WHERE id = ?')->execute([$subId]);
-		}
-		echo "GONE $endpoint (deleted)\n";
+
+	// The database work sits outside the try on purpose: a DB error is not a push
+	// failure and must not quietly increment failure_count — let it surface.
+	if ($ok) {
+		$pdo->prepare('UPDATE push_subscriptions SET last_success_at = NOW(), failure_count = 0, last_failure_at = NULL WHERE id = ?')->execute([
+			$subId,
+		]);
+		$sent++;
+		printf("OK   sub %d (%s)\n", $subId, $r['username']);
+	} elseif ($code === 404 || $code === 410) {
+		// The push service says this subscription is gone for good.
+		$pdo->prepare('DELETE FROM push_subscriptions WHERE id = ?')->execute([$subId]);
+		$dropped++;
+		printf("GONE sub %d (%s) %d — deleted\n", $subId, $r['username'], $code);
 	} else {
-		if ($subId) {
-			$pdo->prepare('UPDATE push_subscriptions SET last_failure_at = NOW(), failure_count = failure_count + 1 WHERE id = ?')->execute([
-				$subId,
-			]);
+		$failed++;
+		if (push_failed($pdo, $subId, $r['username'], $why)) {
+			$dropped++;
 		}
-		echo "FAIL $endpoint ($code) " . $report->getReason() . "\n";
 	}
 }
+
+printf("sent %d · failed %d · dropped %d\n", $sent, $failed, $dropped);

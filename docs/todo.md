@@ -260,21 +260,46 @@ marked otherwise.
       arguments in traces unless `zend.exception_ignore_args` is on, which would put the **DB
       password** in a 0644 file on a shared host. Log the message and file:line only, set
       `zend.exception_ignore_args`, `chmod 600` both logs, and add `umask 077` to the cron lines.
-      Same pass: `send-reminders.php` echoes every subscriber's full push endpoint (a stable
-      per-device identifier tied to a named user) on every run, and `$report->getReason()` is
-      attacker-controlled text that lands unescaped in a file Ross `cat`s — log a `sub_id` plus the
-      endpoint host, and strip non-printables from the reason. Also `api/lib.php:24` logs the whole
+      ~~Same pass: `send-reminders.php` echoes every subscriber's full push endpoint … strip
+      non-printables from the reason.~~ **Done as part of T52 (2026-07-27)** — the rewritten dispatch
+      logs `sub <id> (<username>)` instead of the endpoint, and pushes every reason through
+      `preg_replace('/[^\x20-\x7E]/', '')` + a 120-char truncation. Still open here:
+      `api/lib.php:24` logs the whole
       `$e` object for the same trace reason. And the `--json` debug mode uses a **hardcoded salt
       published in this repo**, so its printed hashes are trivially reversible to raw IPs if that
       output is ever shared — generate a random per-invocation salt for non-fixture input (the tests
       only compare hashes within one process, so they keep passing).
-- [ ] **T52 · Make the reminder cron fault-tolerant** — `tools/send-reminders.php:166` `foreach`es
+- [x] **T52 · Make the reminder cron fault-tolerant** — `tools/send-reminders.php:166` `foreach`es
       `$webPush->flush()` with no `try`/`catch`, and `p256dh`/`auth` are stored unvalidated, so one
       malformed key (a wedged browser, or deliberate) raises out of the batch prepare and terminates
       the script — dropping **every other user's** reminder for that hour, persistently, until the
       row is removed by hand. Wrap the per-report body so a failure increments `failure_count`
       instead of aborting, and prune at `failure_count > N` (today only 404/410 ever prunes).
       Depends on the shape validation in T42.
+  - [x] **Delivered (2026-07-27)** — a `try`/`catch` around the existing loop would have stopped the
+        crash but silently dropped everyone queued behind the bad row: `flush()` is a **generator**
+        that calls `prepare()` (the encryption step) from inside itself, so a throw there kills the
+        generator and everything still queued, and the library's default `batchSize` of 1000 means
+        the whole run is always one batch. So each subscription now gets its own
+        `queueNotification` + `flush()` inside a `try`/`catch`. DB work sits **outside** the catch,
+        so a database error can't be mistaken for a push failure and quietly inflate
+        `failure_count`. Added `MAX_PUSH_FAILURES = 10`: a subscription failing that many times
+        consecutively is deleted rather than retried hourly forever (404/410 still deletes at once,
+        success still resets to 0), plus a `sent · failed · dropped` summary line.
+        **Why T42's validation wasn't enough:** shape validation can't prove a 65-byte `0x04`-tagged
+        blob is a point actually *on* the P-256 curve, so a well-formed-but-invalid key still throws
+        in the encryption step. Verified on the server with a throwaway user and three
+        subscriptions — two with valid-shaped off-curve keys, one with a genuine `openssl`-generated
+        P-256 point. **Control (old code): `RuntimeException: Unable to compute the agreement key`
+        out of `WebPush->prepare()`, exit 255, 0 of 3 processed.** New code: all 3 processed, exit 0
+        — the second bad row proving the loop survives the first throw, and the real-point row
+        taking the normal delivery path (clean 400 from Apple). Priming one row to `failure_count=9`
+        then re-running retired it (`DROP … after 10 failures`) while the other two incremented to
+        2/10 and survived. Fixture and both staged script copies removed afterwards; the live table
+        is back to its single real subscription and `--dry-run --force` still reports
+        `would notify ross (sub 2)`. Cost: sequential HTTP instead of Guzzle's parallel pool —
+        revisit only in the hundreds of subscribers. **Trade-off accepted:** no local test coverage;
+        this script needs the server's vendor tree + MySQL, so the verification above is the record.
 - [ ] **T53 · Same-origin guard on the service-worker notification URL** — `sw.js:85` takes
       `data.url` straight from the push payload and passes it to `c.navigate(target)`, which
       **retargets the user's already-open Sano window**, and to `openWindow()`. Not reachable today
