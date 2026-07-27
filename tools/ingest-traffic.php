@@ -53,6 +53,18 @@ if (PHP_SAPI !== 'cli') {
 // day is the unit the dashboard queries.
 const SESSION_GAP = 1800;
 
+// Flood bounds (T49). A whole day is held in memory before anything can be classified,
+// and the visitor key is sha256(ip + UA) — so someone rotating the User-Agent mints a
+// fresh bucket per request. Unbounded, a few hundred thousand requests exhaust the
+// 128 MB CLI limit, the nightly run dies, and because Dreamhost keeps only ~7 days of
+// logs that day's history is gone for good. Below that threshold the same flood writes
+// one traffic_errors row per distinct 404 path. Every limit here sits far above a real
+// day for this site, and anything dropped is reported rather than silently discarded.
+const MAX_VISITORS_PER_DAY = 20000;
+const MAX_TIMES_PER_VISITOR = 2000; // only ever used to find session gaps
+const MAX_KEYS_PER_VISITOR = 50; // distinct error paths / referrer hosts per visitor
+const MAX_ROWS_PER_DAY = 500; // distinct referrer / error rows stored per day
+
 // Free, public-domain (CC0) IP->country ranges. Compiled locally into fixed-width
 // binary so lookups are an fseek binary search — a 128M PHP CLI can't hold the 8MB
 // CSV as arrays, and this keeps every lookup on our own disk (no third party ever
@@ -185,13 +197,33 @@ foreach ($files as $file) {
 		if (!isset($days[$day])) {
 			$days[$day] = day_bucket();
 		}
-		$vid = substr(hash('sha256', $salt . $r['ip'] . "\n" . $r['ua'], true), 0, 16);
 		$bucket = &$days[$day];
+
+		// A bot-shaped User-Agent is decided by the UA alone, so settle it here instead
+		// of allocating a bucket and unpicking it later: roughly half of all traffic is
+		// crawlers and monitors, and this keeps every one of them out of memory. Totals
+		// are unchanged — a bot's requests only ever counted toward botRequests anyway.
+		if (is_bot_ua($r['ua'])) {
+			$bucket['botRequests']++;
+			unset($bucket);
+			continue;
+		}
+
+		$vid = substr(hash('sha256', $salt . $r['ip'] . "\n" . $r['ua'], true), 0, 16);
 		if (!isset($bucket['visitors'][$vid])) {
+			if (count($bucket['visitors']) >= MAX_VISITORS_PER_DAY) {
+				// Past this point the day is being flooded, not visited.
+				$bucket['botRequests']++;
+				$bucket['overflow']++;
+				unset($bucket);
+				continue;
+			}
 			$bucket['visitors'][$vid] = visitor_bucket($r['ip'], $r['ua']);
 		}
 		$v = &$bucket['visitors'][$vid];
-		$v['times'][] = $r['time'];
+		if (count($v['times']) < MAX_TIMES_PER_VISITOR) {
+			$v['times'][] = $r['time']; // only needed to spot the gaps between sessions
+		}
 		$v['requests']++;
 		$v['bytes'] += $r['bytes'];
 		if (is_app_path($r['path']) && $r['status'] >= 200 && $r['status'] < 400) {
@@ -200,21 +232,28 @@ foreach ($files as $file) {
 		if (is_crawler_path($r['path'])) {
 			$v['crawler'] = true;
 		}
-		if (str_starts_with($r['path'], '/admin') || str_starts_with($r['path'], '/api/admin-')) {
+		// Only a real admin session gets a 2xx out of an admin endpoint. /admin/ itself
+		// is a public static shell that answers 200 to anyone, so counting a request for
+		// it let *any* visitor mark themselves "mine" and drop out of the dashboard's
+		// default view permanently — a one-request, no-account way to skew the numbers.
+		if (str_starts_with($r['path'], '/api/admin-') && $r['status'] >= 200 && $r['status'] < 300) {
 			$v['mine'] = true;
 		}
 		if ($r['status'] >= 400) {
-			$v['errors'][$r['status'] . "\t" . substr($r['path'], 0, 180)] ??= 0;
-			$v['errors'][$r['status'] . "\t" . substr($r['path'], 0, 180)]++;
+			$key = $r['status'] . "\t" . log_text($r['path'], 180);
+			// Bounded: the path is attacker-chosen, so /audio/<random>.mp3 on repeat would
+			// otherwise mint a distinct key — and later a distinct DB row — every time.
+			if (isset($v['errors'][$key]) || count($v['errors']) < MAX_KEYS_PER_VISITOR) {
+				$v['errors'][$key] = ($v['errors'][$key] ?? 0) + 1;
+			}
 			$v[$r['status'] < 500 ? 'e4' : 'e5']++;
 		}
 		// Referrers only from the page request itself: every asset carries the site
 		// as its referer, which would drown out the handful of real arrivals.
 		if (is_page_path($r['path'])) {
 			$host = referrer_host($r['ref']);
-			if ($host !== null) {
-				$v['refs'][$host] ??= 0;
-				$v['refs'][$host]++;
+			if ($host !== null && (isset($v['refs'][$host]) || count($v['refs']) < MAX_KEYS_PER_VISITOR)) {
+				$v['refs'][$host] = ($v['refs'][$host] ?? 0) + 1;
 			}
 		}
 		unset($v, $bucket);
@@ -227,7 +266,10 @@ $today = date('Y-m-d');
 $ipCountry = [];
 foreach ($days as $day => &$bucket) {
 	foreach ($bucket['visitors'] as $vid => &$v) {
-		$bot = $v['botUa'] || $v['crawler'] || !$v['app'];
+		// A bot-shaped UA never got a bucket (filtered at parse time), so what's left is
+		// a browser UA that either asked for something only a crawler asks for, or never
+		// successfully fetched an app path at all.
+		$bot = $v['crawler'] || !$v['app'];
 		if ($bot) {
 			$bucket['botRequests'] += $v['requests'];
 			unset($bucket['visitors'][$vid]);
@@ -264,6 +306,17 @@ foreach ($days as $day => &$bucket) {
 		}
 	}
 	unset($v);
+	// Keep only the busiest rows. The dashboard reads the top 20 of each, and without a
+	// ceiling a flood of distinct 404 paths becomes a distinct DB row apiece, for ever.
+	foreach (['referrers', 'errors'] as $k) {
+		if (count($bucket[$k]) > MAX_ROWS_PER_DAY) {
+			arsort($bucket[$k]);
+			$bucket[$k] = array_slice($bucket[$k], 0, MAX_ROWS_PER_DAY, true);
+		}
+	}
+	if ($bucket['overflow'] > 0) {
+		fwrite(STDERR, "$day: dropped {$bucket['overflow']} request(s) past " . MAX_VISITORS_PER_DAY . " distinct visitors\n");
+	}
 }
 unset($bucket);
 ksort($days);
@@ -379,7 +432,34 @@ if (!$opt['dry-run']) {
 
 function day_bucket(): array
 {
-	return ['visitors' => [], 'requests' => 0, 'botRequests' => 0, 'bytes' => 0, 'errors4xx' => 0, 'errors5xx' => 0, 'referrers' => [], 'errors' => []];
+	return [
+		'visitors' => [],
+		'requests' => 0,
+		'botRequests' => 0,
+		'overflow' => 0, // requests dropped past MAX_VISITORS_PER_DAY
+		'bytes' => 0,
+		'errors4xx' => 0,
+		'errors5xx' => 0,
+		'referrers' => [],
+		'errors' => [],
+	];
+}
+
+// Decided by the User-Agent alone, so it can run before a bucket is allocated.
+function is_bot_ua(string $ua): bool
+{
+	return $ua === '' || $ua === '-' || preg_match(BOT_UA_RE, $ua) === 1;
+}
+
+// Log fields are attacker-chosen: the request path and the Referer are whatever was
+// sent. Apache escapes control bytes as \xNN before writing, but printable mischief —
+// markup, quotes — arrives intact and ends up rendered in the admin dashboard. The
+// dashboard builds every cell with textContent, so this is defence in depth rather than
+// the only guard; it also keeps the byte-wise truncation below from splitting anything.
+function log_text(string $s, int $max): string
+{
+	$s = preg_replace('/[^\x20-\x7E]/', '', $s) ?? '';
+	return substr(str_replace(['<', '>', '"', "'", '\\'], '', $s), 0, $max);
 }
 
 function visitor_bucket(string $ip, string $ua): array
@@ -387,7 +467,6 @@ function visitor_bucket(string $ip, string $ua): array
 	return [
 		'ip' => $ip,
 		'ua' => $ua,
-		'botUa' => $ua === '' || $ua === '-' || preg_match(BOT_UA_RE, $ua) === 1,
 		'app' => false, // fetched a real app path successfully -> a browser, not a scanner
 		'crawler' => false, // asked for something only a crawler or scanner asks for
 		'mine' => false,
@@ -493,6 +572,12 @@ function referrer_host(string $ref): ?string
 		return null;
 	}
 	$host = strtolower($host);
+	// parse_url is lenient — `http://<script>alert(1)</script>/x` yields the host
+	// `<script>alert(1)<`. A hostname is a narrow thing, so require it to look like one
+	// and drop anything else rather than storing it for the dashboard to render.
+	if (preg_match('/^[a-z0-9.-]+$/', $host) !== 1) {
+		return null;
+	}
 	if ($host === 'namastesano.com' || str_ends_with($host, '.namastesano.com')) {
 		return null;
 	}

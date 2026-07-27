@@ -7,7 +7,7 @@
 import { test, before } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { ROOT } from '../lift.mjs';
@@ -51,7 +51,7 @@ test('a crawler wearing a browser UA is caught by the paths it asks for', () => 
 	// "did it load the app" checks both clear it — then it asks for /llms.txt, which
 	// the app never requests. That one line disqualifies the whole visitor-day, and
 	// its 404 must not pollute the error list.
-	assert.equal(visitorsOf('2026-07-25').length, 2);
+	assert.equal(visitorsOf('2026-07-25').length, 3);
 	assert.equal(days['2026-07-25'].botRequests, 3);
 	assert.ok(!days['2026-07-25'].errors.some((e) => e.path === '/llms.txt'));
 });
@@ -95,6 +95,23 @@ test('a visitor who touched /admin/ is flagged as mine', () => {
 	assert.equal(mine[0].country, 'GB');
 });
 
+test('loading the public /admin/ shell is not enough to be flagged as mine', () => {
+	// /admin/ is a static page that answers 200 to anyone, so treating a request for it
+	// as "mine" let any visitor drop themselves out of the dashboard's default view for
+	// good — one request, no account. Only a 2xx from an /api/admin-* endpoint counts,
+	// and only a real admin session gets one. The 07-25 visitor fetched /admin/ and
+	// nothing else admin-ish; the 07-24 one also got a 200 from admin-users.php.
+	assert.equal(visitorsOf('2026-07-25').filter((v) => v.mine).length, 0, 'a visitor who only loaded the admin shell must not count as mine');
+});
+
+test('a Referer that is not a plausible hostname is dropped, not stored', () => {
+	// parse_url happily returns `<script>alert(1)<` as the host of
+	// `http://<script>alert(1)</script>/`. The dashboard renders referrer hosts, so the
+	// value never gets stored in the first place.
+	for (const day of Object.values(days)) for (const r of day.referrers) assert.match(r.host, /^[a-z0-9.-]+$/);
+	assert.ok(!days['2026-07-25'].referrers.some((r) => r.host.includes('script')));
+});
+
 test('referrers count only page arrivals, and www is folded in', () => {
 	assert.deepEqual(days['2026-07-24'].referrers, [{ mine: false, host: 'google.com', hits: 1 }]);
 	assert.deepEqual(days['2026-07-25'].referrers, [{ mine: false, host: 'duckduckgo.com', hits: 1 }]);
@@ -110,4 +127,35 @@ test('errors are recorded for humans only, split 4xx / 5xx', () => {
 
 test('query strings are stripped from paths so one asset is one row', () => {
 	for (const day of Object.values(days)) for (const e of day.errors) assert.ok(!e.path.includes('?'));
+});
+
+// T49 — flood bounds. The parser holds a whole day in memory before it can classify
+// anything, and both the error map and the request path are attacker-chosen, so a
+// synthetic log is the only way to exercise the ceilings.
+test('one visitor cannot mint unlimited error rows, and markup never survives a path', () => {
+	const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15';
+	const at = (n) => `[26/Jul/2026:0${Math.floor(n / 60) % 10}:${String(n % 60).padStart(2, '0')}:00 -0700]`;
+	const line = (n, path, status, bytes) => `198.51.100.5 - - ${at(n)} "GET ${path} HTTP/2.0" ${status} ${bytes} "-" "${UA}"`;
+
+	const lines = [line(0, '/', 200, 11103), line(1, '/js/sano.js?v=1', 200, 91002)];
+	// 80 distinct 404 paths — exactly the "request /audio/<random>.mp3 on repeat" shape.
+	for (let i = 0; i < 80; i++) lines.push(line(2 + i, `/audio/words/flood-${i}.mp3`, 404, 451));
+	lines.push(line(90, '/x<script>alert(1)</script>', 404, 451));
+
+	const dir = mkdtempSync(join(tmpdir(), 'sano-flood-'));
+	const log = join(dir, 'access.log');
+	writeFileSync(log, lines.join('\n') + '\n');
+	const out = JSON.parse(php('--file', log, '--json', '--geo-dir', geoDir)).days['2026-07-26'];
+	rmSync(dir, { recursive: true, force: true });
+
+	// The visitor is human (it fetched the app), so its errors are real error rows —
+	// but bounded at MAX_KEYS_PER_VISITOR rather than one per distinct path.
+	assert.equal(out.visitors.length, 1);
+	assert.equal(out.errors.length, 50, 'distinct error rows must be capped per visitor');
+	// The 4xx *count* is still honest even though the distinct rows are capped.
+	assert.equal(out.errors4xx, 81);
+	for (const e of out.errors) {
+		assert.ok(!e.path.includes('<'), `markup survived into a stored path: ${e.path}`);
+		assert.ok(!e.path.includes('>'), `markup survived into a stored path: ${e.path}`);
+	}
 });

@@ -253,10 +253,21 @@ only ~7 days, so the tables are the history), read by `api/admin-traffic.php`.
   UA is bot-shaped, OR it never successfully fetched a real app path, OR it asked for
   something only a crawler asks for (`/robots.txt`, `/llms.txt`, `/wp-*`, …). The third
   test is what catches AI crawlers that fetch the page and assets like a browser.
-- **Mine** — a visitor whose session ever touched `/admin/`, i.e. Ross. Sticky across days
-  and excluded from the dashboard by default.
+- **Mine** — a visitor who ever got a **2xx from an `/api/admin-*` endpoint**, i.e. Ross.
+  Sticky across days and excluded from the dashboard by default. It deliberately does *not*
+  count a request for `/admin/` itself: that page is a static shell served 200 to anyone, so
+  counting it let any visitor mark themselves "mine" with a single request and vanish from
+  the default view for good (T49). Only a real admin session earns a 2xx from the API.
 - **is_new / is_mine** are recomputed across the whole table after each ingest, so
   backfilling an older day is self-correcting and re-ingesting a day is idempotent.
+- **Flood bounds (T49)** — a day is parsed into memory before anything can be classified, so
+  the ingest caps distinct visitors per day (20,000), timestamps kept per visitor (2,000,
+  used only to find session gaps), distinct error paths / referrer hosts per visitor (50),
+  and stored referrer/error rows per day (500). Every ceiling is far above a real day —
+  roughly 99 visitors — and anything dropped is reported on stderr rather than silently
+  discarded. Attacker-supplied text (request path, `Referer` host) is stripped to printable
+  ASCII without markup characters on the way in; a `Referer` whose host isn't a plausible
+  hostname is dropped rather than stored.
 
 ## Feature-code glossary
 

@@ -292,7 +292,7 @@ marked otherwise.
       (all its current attributes already satisfy the prefix rules; costs one forced logout) so a
       future sibling subdomain can't toss a same-named cookie and pin a victim onto an attacker's
       session.
-- [ ] **T49 · Bound the traffic ingest against a log flooder** — `tools/ingest-traffic.php` slurps
+- [x] **T49 · Bound the traffic ingest against a log flooder** — `tools/ingest-traffic.php` slurps
       the whole day into memory before filtering: one bucket per distinct (ip, UA) pair, one int per
       request, bot lines allocated too since the filter runs after the parse. An attacker rotating
       the User-Agent mints a fresh bucket per request; ~100k requests (≈1.2/sec) exhausts the 128 MB
@@ -307,6 +307,30 @@ marked otherwise.
       permanently hide themselves from the dashboard's default view — require a 2xx. And sanitize
       log-derived strings at ingest (`parse_url` happily yields a host of `<script>alert(1)<`), so
       the admin dashboard's XSS-safety doesn't rest entirely on one `textContent` line.
+  - [x] **Delivered (2026-07-27)** — bounds, all reported on stderr rather than silent:
+        `MAX_VISITORS_PER_DAY` 20,000 (a real day is ~99), `MAX_TIMES_PER_VISITOR` 2,000 (only
+        used to find session gaps), `MAX_KEYS_PER_VISITOR` 50 distinct error paths / referrer
+        hosts, `MAX_ROWS_PER_DAY` 500 stored rows. The bot-UA test also moved to **parse time**, so
+        roughly half the log never allocates a bucket at all; totals are unchanged, since a
+        bot's requests only ever counted toward `bot_requests`. Measured against a 150,000-line
+        UA-rotating flood: the **old parser exhausts a 128 MB limit outright** — which is the whole
+        DoS, since a failed day is unrecoverable once the log rotates — while the new one finishes
+        at 58 MiB peak RSS and completes even under a **64 MB** limit. (First sized the visitor cap
+        at 50,000, measured 106 MiB, and tightened it to 20,000; still ~200× a real day.)
+        **`mine` now requires a 2xx from an `/api/admin-*` endpoint.** `/admin/` is a static shell
+        served 200 to anyone, so the old check let any visitor mark themselves "mine" with one
+        request and disappear from the dashboard's default view for good. **This was not
+        theoretical:** the live table has **4 distinct visitors flagged mine** where Ross is one
+        person — so real visitors had already self-excluded. Attacker-supplied text is stripped to
+        printable ASCII without markup on the way in, and a `Referer` whose host isn't a plausible
+        hostname is dropped rather than stored (`parse_url` returns `<script>alert(1)<` as the
+        "host" of `http://<script>alert(1)</script>/`); the dashboard's `textContent` rendering is
+        now the second line of defence, not the only one. Tests: 3 new (the admin-shell visitor is
+        not mine, referrer hosts always match `^[a-z0-9.-]+$`, and a generated 80-distinct-404 log
+        caps at 50 error rows while `errors4xx` still counts all 81 honestly), plus a fixture
+        visitor. `@docs/data-model.md` definitions updated.
+        **Follow-up for the deploy:** re-ingest with `--all` (9 log files are still on disk,
+        8 days stored) so the stored `is_mine` flags are recomputed under the corrected rule.
 - [ ] **T50 · Harden `--update-geo`** — the two CC0 CSV URLs are unpinned jsDelivr `latest` paths
       with no checksum, and a truncated download or an HTML error page silently produces a corrupt
       or empty index that `rename()` writes over the good one — after which every country reads

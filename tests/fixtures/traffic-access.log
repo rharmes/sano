@@ -23,3 +23,6 @@
 198.51.100.77 - - [25/Jul/2026:06:00:00 -0700] "GET / HTTP/1.1" 200 11103 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"
 198.51.100.77 - - [25/Jul/2026:06:00:01 -0700] "GET /js/sano.js?v=1234abcd HTTP/1.1" 200 91002 "https://namastesano.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"
 198.51.100.77 - - [25/Jul/2026:06:00:02 -0700] "GET /llms.txt HTTP/1.1" 404 451 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"
+203.0.113.55 - - [25/Jul/2026:11:00:00 -0700] "GET / HTTP/2.0" 200 11103 "http://<script>alert(1)</script>/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:130.0) Gecko/20100101 Firefox/130.0"
+203.0.113.55 - - [25/Jul/2026:11:00:01 -0700] "GET /js/sano.js?v=1234abcd HTTP/2.0" 200 91002 "https://namastesano.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:130.0) Gecko/20100101 Firefox/130.0"
+203.0.113.55 - - [25/Jul/2026:11:00:02 -0700] "GET /admin/ HTTP/2.0" 200 4210 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:130.0) Gecko/20100101 Firefox/130.0"
