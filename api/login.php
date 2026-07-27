@@ -41,8 +41,9 @@ $pdo->exec('DELETE FROM sessions WHERE expires_at <= NOW()');
 // Per-IP throttle. The per-account lockout below stops one username being
 // hammered, but not an attacker rotating usernames (credential stuffing); this
 // bounds failed attempts per source IP. Checked before password_verify so a
-// flood can't also burn argon2id CPU. Pack the IP to bytes (IPv4 4 / IPv6 16).
-$ip = inet_pton($_SERVER['REMOTE_ADDR'] ?? '') ?: str_repeat("\0", 16);
+// flood can't also burn argon2id CPU. throttle_ip() packs the address and keys
+// IPv6 on its /64, so incrementing an address inside one doesn't buy a new budget.
+$ip = throttle_ip($_SERVER['REMOTE_ADDR'] ?? null);
 // Overridable via env so the CI integration suite (every test logging in from 127.0.0.1)
 // isn't starved by the 30/window cap, and so one spec can drive the cap deliberately.
 // Unset in production, and any nonsense value falls back to the constant rather than to

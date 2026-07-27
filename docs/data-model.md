@@ -205,6 +205,13 @@ words by review debt and is review-dominant.
 | `sessions` | `token_hash` PK (sha256), `user_id` FK, `created_at`, `expires_at` (90 days) |
 | `signup_attempts` | `ip`, `created_at` (per-IP hourly signup throttle) |
 | `login_attempts` | `ip`, `created_at` (per-IP login throttle) |
+
+`ip` in both is what `throttle_ip()` (api/lib.php) returns, **not** the raw address: IPv4 whole
+(4 bytes), IPv6 truncated to its **/64** (8 bytes). One end site is routinely handed a whole /64,
+so keying on the full address gives an attacker 2^64 buckets — no limit at all (T57). IPv4-mapped
+`::ffff:a.b.c.d` is unmapped to its 4-byte address first; truncating it instead would put every
+IPv4 client behind a dual-stack proxy in one shared bucket and lock the site out globally.
+
 | `push_subscriptions` | `id` PK, `user_id` FK, `endpoint` UNIQUE, `p256dh`, `auth_secret`, `created_at`, `last_success_at`, `last_failure_at`, `failure_count` — see the ownership rule below |
 | `traffic_days` | `day` PK, `requests` (human), `bot_requests`, `bytes`, `errors_4xx`, `errors_5xx`, `ingested_at` — also the ingest ledger: a row exists only for a parsed day |
 | `traffic_visitor_days` | `(day, visitor)` PK, `sessions`, `requests`, `is_new`, `is_mine`, `country`, `device`, `browser` — the grain every traffic number derives from |

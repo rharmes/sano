@@ -126,7 +126,7 @@ marked otherwise.
 
 **Order to work in** (the entries stay in ID order below, since IDs are how we refer to them; this
 is the priority, re-ranked 2026-07-27 as items got measured rather than assumed):
-**T57** → **T58** → T53 → T50 → T55 → T54 (what's left of it).
+~~T57~~ → **T58** → T53 → T50 → T55 → T54 (what's left of it).
 T57 and T58 were pulled out of T54's bundle: a throttle that can be bypassed wholesale outranks
 "small independent items", and an `innerHTML` sink whose signature invites a username is a different
 kind of thing from a missing header. Ten of the original fifteen are done.
@@ -530,7 +530,7 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       class as the DB password — the current wording ("can't be walked back to a person") is true
       only for someone holding the DB *alone*; with both, the IPv4 space is small enough to invert
       cheaply.
-- [ ] **T57 · Bucket the per-IP throttles by /64, not by address** — split out of T54 (2026-07-27),
+- [x] **T57 · Bucket the per-IP throttles by /64, not by address** — split out of T54 (2026-07-27),
       and the highest-severity item left. `login.php` and `register.php` both key their throttle on
       `inet_pton($_SERVER['REMOTE_ADDR'])`, the *whole* address, and match it with `WHERE ip = ?`.
       For IPv4 that's right. For IPv6 a single routed /64 — what a residential connection is
@@ -545,6 +545,26 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       failing test. Existing `login_attempts`/`signup_attempts` rows are IPv4 and 15-minute/1-hour
       ephemeral, so no migration is needed; the column already holds VARBINARY.
       Worth a test that two addresses in one /64 share a bucket while two /64s don't.
+      **Delivered (2026-07-27)** — `throttle_ip()` in `api/lib.php`, used by both endpoints: IPv4
+      whole, IPv6 keyed on its first 8 bytes. `VARBINARY(16)` is variable-length and the two tables
+      are 15-minute/1-hour ephemeral, so no migration; 4-byte and 8-byte keys can't collide under
+      `WHERE ip = ?`, so the families stay separate.
+      **The naive version of this fix would have been an outage, not a fix.** `::ffff:203.0.113.9`
+      packs to ten zero bytes, `ffff`, then the v4 address — so "take the first 8 bytes" collapses
+      *every* IPv4 client behind a dual-stack proxy into one shared bucket, and thirty failures
+      anywhere would lock out the whole site. Caught by inspecting real `inet_pton()` output before
+      writing the code, not after. IPv4-mapped addresses are unmapped to their 4-byte form first;
+      two different mapped addresses stay in different buckets, asserted.
+      Also: `filter_var(..., FILTER_VALIDATE_IP)` before `inet_pton()`, because `inet_pton()` warns
+      on malformed input and the old call would have written a warning per request into the shared
+      host's error log. Verified stderr is empty across the malformed cases.
+      Testing: a 12-assertion truth table in `tests/api/helpers.test.php` — the only place this can
+      be checked, since `REMOTE_ADDR` comes from the socket and no HTTP test can present an IPv6
+      client to `php -S`. Both failure modes fault-injected and caught by name: dropping the
+      unmapping fails the two IPv4-mapped assertions, dropping the truncation fails the /64 ones.
+      Still true afterwards: a /56 or /48 end-site allocation is 256 or 65536 buckets. /64 is the
+      granularity that doesn't group strangers together, and going broader trades the bypass for a
+      shared-fate bucket.
 - [ ] **T58 · Close the `showNotice` innerHTML sink** — split out of T54 (2026-07-27).
       `showNotice(html)` (`js/admin.js:210`) assigns its argument to `innerHTML`, and the parameter
       is *typed* as HTML by its own name. All six call sites pass literals today, so there is no

@@ -118,6 +118,33 @@ $budgeted = state_summary($blob(['x-1' => $grad, 'x-2' => $grad, 'x-3' => $grad]
 check('state_summary: the shared budget bounds the list', count($budgeted['graduated']) === 2);
 check('state_summary: an exhausted budget yields nothing', state_summary($blob(['x-1' => $grad]), 0)['graduated'] === []);
 
+// --- Per-IP throttle bucketing (T57) ----------------------------------------
+// This is the only place the /64 rule can be checked: REMOTE_ADDR comes from the socket,
+// so no HTTP-level test can present an IPv6 client to php -S.
+$bucket = fn(string $ip) => bin2hex(throttle_ip($ip));
+
+check('throttle_ip: IPv4 keeps its whole address', $bucket('203.0.113.9') === 'cb007109');
+check('throttle_ip: two IPv4 addresses stay in different buckets', $bucket('203.0.113.9') !== $bucket('203.0.113.10'));
+
+// The bypass this exists to close: one end site, 2^64 addresses, one budget.
+check('throttle_ip: IPv6 keys on the /64', $bucket('2001:db8:1234:5678::1') === '20010db812345678');
+check('throttle_ip: addresses inside one /64 share a bucket', $bucket('2001:db8:1234:5678::1') === $bucket('2001:db8:1234:5678:ffff:ffff:ffff:ffff'));
+check('throttle_ip: neighbouring /64s do not share a bucket', $bucket('2001:db8:1234:5678::1') !== $bucket('2001:db8:1234:5679::1'));
+
+// The failure that would have been worse than the bug: ::ffff:a.b.c.d packs to ten zero
+// bytes then ffff, so truncating it blindly puts every IPv4 client behind a dual-stack
+// proxy in ONE bucket — thirty failures anywhere and nobody can sign in.
+check('throttle_ip: an IPv4-mapped address unmaps to its IPv4 bucket', $bucket('::ffff:203.0.113.9') === $bucket('203.0.113.9'));
+check('throttle_ip: two IPv4-mapped addresses do not collapse together', $bucket('::ffff:203.0.113.9') !== $bucket('::ffff:198.51.100.4'));
+
+// Families can't collide: 4 bytes against 8 means one `WHERE ip = ?` keeps them apart.
+check('throttle_ip: IPv4 is 4 bytes, an IPv6 /64 is 8', strlen(throttle_ip('203.0.113.9')) === 4 && strlen(throttle_ip('2001:db8::1')) === 8);
+
+// Absent/garbage keeps the old behaviour — one shared bucket, and no PHP warning.
+foreach ([null, '', 'not-an-ip', '999.1.1.1'] as $bad) {
+	check('throttle_ip: ' . var_export($bad, true) . ' falls back to the shared bucket', throttle_ip($bad) === str_repeat("\0", 8));
+}
+
 // --- The session cookie (T48) -----------------------------------------------
 // The __Host- prefix is a contract with the browser, not a naming convention: Secure,
 // Path=/, no Domain. Break any one of them and the browser silently drops the cookie, so

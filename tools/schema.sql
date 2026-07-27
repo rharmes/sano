@@ -37,7 +37,9 @@ CREATE TABLE sessions (
 
 -- Per-IP signup throttle: one row per account-creation attempt that passed
 -- validation. api/register.php counts rows from the last hour to rate-limit, and
--- prunes rows older than that. IP stored as packed bytes (INET6_ATON / inet_pton).
+-- prunes rows older than that. IP stored as the packed bytes throttle_ip() returns:
+-- IPv4 whole (4 bytes), IPv6 truncated to its /64 (8), since one end site owns a
+-- whole /64 and keying on the full address is the same as having no limit (T57).
 CREATE TABLE signup_attempts (
   ip         VARBINARY(16) NOT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

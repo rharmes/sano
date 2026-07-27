@@ -233,6 +233,44 @@ function require_admin(): int
 	return $userId;
 }
 
+// --- Per-IP throttles -------------------------------------------------------
+// Which bucket a request counts against in login_attempts / signup_attempts.
+//
+// IPv4 keeps its whole address. IPv6 must not: a single end site is routinely handed a
+// **/64** — 18 quintillion addresses — so keying on the full address hands an attacker a
+// fresh budget every time they increment the low half. That isn't a weaker throttle, it's
+// no throttle, and it would take the metering T47 depends on with it. So key IPv6 on the
+// /64: the first 8 bytes.
+//
+// The IPv4-mapped case is the one that must not be got wrong, because getting it wrong
+// fails *closed*. `::ffff:203.0.113.9` packs to ten zero bytes, `ffff`, then the v4
+// address — so a plain "first 8 bytes" collapses **every** IPv4 client behind a
+// dual-stack proxy into one shared bucket, and thirty failures anywhere would lock out
+// the whole site. Those get unmapped to the 4-byte address they actually carry.
+//
+// Lengths can't collide across families (4 bytes for v4, 8 for a v6 /64), so one
+// `WHERE ip = ?` still separates them. A /56 or /48 end-site allocation still yields 256
+// or 65536 buckets; /64 is the granularity worth keying on without grouping strangers.
+function throttle_ip(?string $remoteAddr): string
+{
+	$addr = (string) $remoteAddr;
+	// filter_var first: inet_pton() warns on malformed input, and a warning per request
+	// into the shared host's error log is its own small problem.
+	$packed = filter_var($addr, FILTER_VALIDATE_IP) === false ? false : inet_pton($addr);
+	if ($packed === false) {
+		// Absent or unparseable — one shared, deliberate bucket, as before. Unreachable
+		// over TCP on Apache; this is the "rather count it somewhere than not at all" case.
+		return str_repeat("\0", 8);
+	}
+	if (strlen($packed) !== 16) {
+		return $packed; // IPv4, whole
+	}
+	if (str_starts_with($packed, str_repeat("\0", 10) . "\xff\xff")) {
+		return substr($packed, 12, 4); // ::ffff:0:0/96 — an IPv4 address in a v6 coat
+	}
+	return substr($packed, 0, 8);
+}
+
 // --- Login ------------------------------------------------------------------
 // Decide one login attempt, without the decision leaking *which* of the three ways it
 // failed. $user is the row api/login.php fetched, or false when the username doesn't

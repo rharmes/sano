@@ -33,9 +33,10 @@ if (strlen($password) < 8 || strlen($password) > 200) {
 
 $pdo = db();
 
-// Per-IP throttle. Pack the address to bytes (IPv4 -> 4, IPv6 -> 16); fall back
-// to all-zero for a missing/odd REMOTE_ADDR so the attempt still records.
-$ip = inet_pton($_SERVER['REMOTE_ADDR'] ?? '') ?: str_repeat("\0", 16);
+// Per-IP throttle. throttle_ip() packs the address, keys IPv6 on its /64 (one end site
+// otherwise has 2^64 buckets and no limit at all), and falls back to a shared all-zero
+// bucket for a missing/odd REMOTE_ADDR so the attempt still records.
+$ip = throttle_ip($_SERVER['REMOTE_ADDR'] ?? null);
 
 $pdo->prepare('DELETE FROM signup_attempts WHERE created_at < NOW() - INTERVAL 1 HOUR')->execute();
 $recent = $pdo->prepare('SELECT COUNT(*) FROM signup_attempts WHERE ip = ? AND created_at > NOW() - INTERVAL 1 HOUR');
