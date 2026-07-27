@@ -40,6 +40,39 @@ test.describe('register.php', () => {
 	});
 });
 
+// T44. The body used to be pulled into memory in full before any size check, and
+// post_max_size doesn't bound a php://input read — so an unauthenticated request
+// could reach a memory-exhaustion fatal (which set_exception_handler cannot catch)
+// before a single guard ran. Every endpoint but state.php now caps at
+// MAX_BODY_BYTES, well above anything legitimate and far below anything harmful.
+test.describe('request bodies are bounded before they are parsed', () => {
+	const oversize = 'x'.repeat(20_000); // > MAX_BODY_BYTES (16 KiB)
+
+	for (const path of ['/api/login.php', '/api/register.php', '/api/reminder.php', '/api/push-subscribe.php', '/api/admin-reset-password.php']) {
+		test(`${path} rejects an oversized body → 413 too_large`, async ({ request }) => {
+			const r = await request.post(path, { headers: { ...CSRF, 'Content-Type': 'application/json' }, data: `{"username":"${oversize}"}` });
+			expect(await read(r)).toEqual({ status: 413, body: { error: 'too_large' } });
+		});
+	}
+
+	test('a body just under the cap is still parsed normally', async ({ request }) => {
+		// 15 KiB of padding: over the cap this would 413, under it the request must
+		// reach ordinary field validation instead. Guards the cap against being set
+		// so low that real requests break.
+		const data = `{"username":"gooduser","password":"longenough","pad":"${'x'.repeat(15_000)}"}`;
+		const r = await request.post('/api/register.php', { headers: { ...CSRF, 'Content-Type': 'application/json' }, data });
+		expect(r.status()).not.toBe(413);
+	});
+
+	test('state.php allows a much larger body but still bounds it → 413', async ({ request }) => {
+		const r = await request.put('/api/state.php', {
+			headers: { ...CSRF, 'Content-Type': 'application/json' },
+			data: `{"state":{"blob":"${'a'.repeat(1_200_000)}"},"baseRevision":0}`,
+		});
+		expect(await read(r)).toEqual({ status: 413, body: { error: 'state_too_large' } });
+	});
+});
+
 test.describe('login.php', () => {
 	test('GET → 405', async ({ request }) => {
 		expect((await request.get('/api/login.php')).status()).toBe(405);

@@ -210,7 +210,7 @@ marked otherwise.
         fixed one**. Revision/conflict/force behaviour stays covered by the CI integration spec.
         **Not done:** switching `state` to a `JSON` column — that is a live-DB migration for
         belt-and-braces on a path PHP now guards, so it is not worth the schema change.
-- [ ] **T44 · Bound request bodies before decode, and catch fatals** — `read_json_body()`
+- [x] **T44 · Bound request bodies before decode, and catch fatals** — `read_json_body()`
       (`api/lib.php:57`) and `api/state.php:24` both do `file_get_contents('php://input')` with no
       limit, *before* the size cap and *before* auth. `post_max_size` doesn't bound a PUT read this
       way, so an unauthenticated request can drive PHP to a memory-exhaustion **fatal** — which
@@ -218,6 +218,27 @@ marked otherwise.
       content type. Pre-check `Content-Length`, read with `stream_get_contents($fh, CAP + 1)`, use a
       much smaller cap (~16 KB) for the credential/reminder/push endpoints, and add a
       `register_shutdown_function` fatal handler so no path can return an empty body.
+  - [x] **Delivered (2026-07-27)** — new `read_body($maxBytes, $tooLarge)` in `api/lib.php`: rejects
+        cheaply on `Content-Length` first, then still bounds the actual read with
+        `stream_get_contents($fh, $max + 1)`, because a chunked request carries no Content-Length
+        and the header is a hint rather than a promise. Reading one byte past the cap is enough to
+        know it was too big without holding it all. `read_json_body()` now defaults to
+        `MAX_BODY_BYTES` (16 KiB) — every endpoint but `state.php` carries a handful of short
+        fields — and `state.php` passes `MAX_STATE_BODY_BYTES` (the 1 MiB blob plus an 8 KiB
+        envelope allowance) and keeps its `state_too_large` error string so the client contract is
+        unchanged. Plus a `register_shutdown_function` emitting the same JSON 500 on
+        `E_ERROR`/`E_PARSE`/`E_CORE_ERROR`/`E_COMPILE_ERROR`/`E_USER_ERROR`, which
+        `set_exception_handler` cannot see.
+        Verified the fatal handler by forcing real memory exhaustion, not by inspection: without
+        `lib.php` an OOM yields an empty body (what the client used to get); with it,
+        `{"error":"server"}` — at memory limits down to 2M, under both a single failed allocation
+        and many retained ones — while a clean request still emits nothing extra. **Dropped a
+        64 KiB "memory reserve" I had first written for the handler:** testing showed it made no
+        difference at any limit, because PHP frees the request's allocations before shutdown
+        functions run, so it was pure per-request cost with a comment that overstated its value.
+        Tests: 7 guard specs — oversized bodies 413 on five endpoints, a 15 KiB body still parsed
+        normally (so the cap can't be quietly tightened into breaking real requests), and
+        `state.php` bounding at its own larger limit.
 - [ ] **T45 · Stop `api/admin-users.php` loading every user's full state blob** — it `fetchAll()`s
       `a.state` (MEDIUMTEXT, up to 1 MiB each) for *every* account, `json_decode`s each, and
       accumulates every graduated item id — where the ids are attacker-chosen keys inside their own

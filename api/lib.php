@@ -14,6 +14,12 @@ const LOCK_MINUTES = 15;
 const LOGIN_IP_WINDOW_MINUTES = 15; // per-IP login throttle window
 const LOGIN_IP_MAX = 30; // failed logins per IP per window before a 429
 const MAX_STATE_BYTES = 1048576;
+// Everything except the state blob is a handful of fields — credentials, an hour
+// and a timezone, a push endpoint and two keys. Nothing legitimate approaches this.
+const MAX_BODY_BYTES = 16384;
+// The state PUT's envelope ({"state":…,"baseRevision":N,"force":…}) on top of the
+// blob itself, plus room for a client that pretty-prints its JSON.
+const MAX_STATE_BODY_BYTES = MAX_STATE_BYTES + 8192;
 const MAX_PUSH_SUBS_PER_USER = 20;
 
 // Fail closed: never surface a stack trace or the DB DSN to the client. Any
@@ -28,6 +34,25 @@ set_exception_handler(function (Throwable $e): void {
 		header('Content-Type: application/json');
 	}
 	echo json_encode(['error' => 'server']);
+});
+
+// A fatal error — memory exhaustion above all — bypasses set_exception_handler
+// completely, so without this a request that runs out of memory returns an empty
+// body with no Content-Type and the client's res.json() rejects on nothing.
+// (No memory is reserved for this handler: PHP frees the request's allocations
+// before shutdown functions run, verified down to a 2M memory_limit under both a
+// single failed allocation and many retained ones.)
+register_shutdown_function(function (): void {
+	$last = error_get_last();
+	if ($last === null || !in_array($last['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR], true)) {
+		return;
+	}
+	error_log('sano api fatal: ' . $last['message'] . ' in ' . $last['file'] . ':' . $last['line']);
+	if (!headers_sent()) {
+		http_response_code(500);
+		header('Content-Type: application/json');
+		echo json_encode(['error' => 'server']);
+	}
 });
 
 function db(): PDO
@@ -53,9 +78,36 @@ function respond(int $code, $data): void
 	exit();
 }
 
-function read_json_body(): array
+// Read the raw request body with a hard ceiling. Every size check used to run
+// *after* file_get_contents('php://input') had already pulled the whole body into
+// memory, and post_max_size does not bound a PUT read that way — only memory_limit
+// does. So an unauthenticated request could drive PHP into a memory-exhaustion
+// fatal before a single guard ran.
+function read_body(int $maxBytes, string $tooLarge = 'too_large'): string
 {
-	$body = json_decode(file_get_contents('php://input'), true);
+	// Content-Length is a hint, not a promise (a chunked request carries none), so
+	// use it to reject cheaply and still bound the read that follows.
+	if ((int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > $maxBytes) {
+		respond(413, ['error' => $tooLarge]);
+	}
+	$fh = fopen('php://input', 'rb');
+	$raw = $fh === false ? false : stream_get_contents($fh, $maxBytes + 1);
+	if ($fh !== false) {
+		fclose($fh);
+	}
+	if ($raw === false) {
+		respond(400, ['error' => 'bad_json']);
+	}
+	// One byte over the cap is enough to know it was too big, without holding it all.
+	if (strlen($raw) > $maxBytes) {
+		respond(413, ['error' => $tooLarge]);
+	}
+	return $raw;
+}
+
+function read_json_body(int $maxBytes = MAX_BODY_BYTES): array
+{
+	$body = json_decode(read_body($maxBytes), true);
 	if (!is_array($body)) {
 		respond(400, ['error' => 'bad_json']);
 	}

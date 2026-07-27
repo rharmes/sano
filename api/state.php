@@ -25,7 +25,7 @@ require_csrf_header();
 // JSON objects (a fresh state's "items": {}) as [], corrupting the blob. Parse and
 // validate the payload before authenticating, so a malformed body fails fast and
 // stays testable without a DB (see the guard-order note in lib.php).
-$body = json_decode(file_get_contents('php://input'));
+$body = json_decode(read_body(MAX_STATE_BODY_BYTES, 'state_too_large'));
 if (!is_object($body)) {
 	respond(400, ['error' => 'bad_json']);
 }
