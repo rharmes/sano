@@ -126,7 +126,7 @@ marked otherwise.
 
 **Order to work in** (the entries stay in ID order below, since IDs are how we refer to them; this
 is the priority, re-ranked 2026-07-27 as items got measured rather than assumed):
-~~T57~~ → **T58** → T53 → T50 → T55 → T54 (what's left of it).
+~~T57~~ → ~~T58~~ → **T53** → T50 → T55 → T54 (what's left of it).
 T57 and T58 were pulled out of T54's bundle: a throttle that can be bypassed wholesale outranks
 "small independent items", and an `innerHTML` sink whose signature invites a username is a different
 kind of thing from a missing header. Ten of the original fifteen are done.
@@ -565,7 +565,7 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       Still true afterwards: a /56 or /48 end-site allocation is 256 or 65536 buckets. /64 is the
       granularity that doesn't group strangers together, and going broader trades the bypass for a
       shared-fate bucket.
-- [ ] **T58 · Close the `showNotice` innerHTML sink** — split out of T54 (2026-07-27).
+- [x] **T58 · Close the `showNotice` innerHTML sink** — split out of T54 (2026-07-27).
       `showNotice(html)` (`js/admin.js:210`) assigns its argument to `innerHTML`, and the parameter
       is *typed* as HTML by its own name. All six call sites pass literals today, so there is no
       live XSS — the defect is that the signature invites the next caller to pass a username, and
@@ -574,6 +574,28 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       nothing marks that boundary. Take text and set `textContent`, with a separate explicit path
       for the one caller that genuinely needs markup (if any), and either teach `esc()` `'`/`"` or
       rename it to say where it may be used.
+      **Delivered (2026-07-27)** — `showNotice(text)` builds a `<p>` and appends; strings handed to
+      `append()` become text nodes, so nothing routed through it can become markup regardless of
+      where it came from. The two callers that needed a link get `showNoticeLink(before, linkText,
+      after, href)`, where the link is an *element*, not a string of markup.
+      Also converted the sink that actually held user data: the delete modal interpolated the
+      username into `innerHTML`. It was `esc()`-wrapped and therefore safe, but it was the only
+      account-controlled string on the page and it now builds a `<b>` node instead — signup limits
+      usernames to `[a-z0-9_]`, and this must not lean on that, since accounts minted by the CLI
+      before T46 were not constrained at all.
+      `esc()` now escapes `'` too. It was element-safe but **not** attribute-safe: inside
+      `title='…'` an apostrophe closes the attribute and the rest is markup. Nothing used it that
+      way — the defect was that "safe in one context only" is invisible in the name.
+      Left as-is deliberately: the table header still builds an `<svg><use>` through `innerHTML`,
+      but every value in it comes from the `COLUMNS` constant. Noted rather than rewritten;
+      `createElementNS` for a literal-only template buys nothing.
+      Testing: `esc()` is lifted out by sentinels into `tests/unit/admin-escaping.test.mjs` (6
+      assertions incl. the single-quoted-attribute break-out and no double-encoding of `&`). Two
+      e2e tests drive the real path by **stubbing the API** rather than editing the `?demo=1` data,
+      which stays clean for visual review: a username of `<img src=x onerror=…>` renders as text
+      with no `img` element and no `window.__xss`, and the 401/403 notices still offer a working
+      link home. Fault-injected the old `innerHTML` line: the payload is parsed, the username
+      vanishes from the text, and the test fails.
 
 ## Testing
 

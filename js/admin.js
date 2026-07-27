@@ -203,12 +203,44 @@
 		return b;
 	}
 
+	// --- html escaping (pure) ---
+	// Escapes `'` as well as `&<>"`. It didn't, which made it element-safe but NOT
+	// attribute-safe: `<b title='...'>` around an unescaped apostrophe closes the
+	// attribute and the rest is markup. Nothing used it that way, but "safe in one
+	// context only" is a distinction the next caller has no way to see in the name.
+	// Every remaining caller builds DOM instead; this is left correct for both.
+	// Unit-tested via tests/unit/admin-escaping.test.mjs (lifted by these sentinels).
 	function esc(s) {
-		return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+		return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+	}
+	// --- end html escaping ---
+
+	// The page's notice sink, built rather than parsed. This used to take a parameter
+	// *named* `html` and assign it straight to innerHTML. Every caller passed a literal, so
+	// there was no live hole — but the signature was an open invitation to pass a username,
+	// on the one page in the app where account-controlled strings are on screen. Strings
+	// handed to append() become text nodes, so nothing routed through here can become
+	// markup no matter where it came from.
+	function putNotice(...parts) {
+		const p = document.createElement('p');
+		p.className = 'admin-notice';
+		p.append(...parts);
+		const content = $('admin-content');
+		content.textContent = '';
+		content.appendChild(p);
 	}
 
-	function showNotice(html) {
-		$('admin-content').innerHTML = '<p class="admin-notice">' + html + '</p>';
+	function showNotice(text) {
+		putNotice(text);
+	}
+
+	// The two notices that offer a way back out. The link is an element, not a string of
+	// markup, which is what keeps this on the safe side of the same line.
+	function showNoticeLink(before, linkText, after, href) {
+		const a = document.createElement('a');
+		a.href = href;
+		a.textContent = linkText;
+		putNotice(before, a, after);
 	}
 
 	function status(msg, isError) {
@@ -252,7 +284,14 @@
 	function openDelete(username) {
 		deleteUser = username;
 		$('admin-delete-title').textContent = 'Delete ' + username + '?';
-		$('admin-delete-body').innerHTML = 'This permanently removes <b>' + esc(username) + '</b> and all their progress. This can’t be undone.';
+		// Built, not parsed. `username` is the one genuinely account-controlled string on
+		// this page; signup constrains it to [a-z0-9_], but accounts minted by the CLI
+		// before T46 were not constrained at all, so this must not depend on that.
+		const name = document.createElement('b');
+		name.textContent = username;
+		const body = $('admin-delete-body');
+		body.textContent = 'This permanently removes ';
+		body.append(name, ' and all their progress. This can’t be undone.');
 		$('admin-delete-error').classList.add('hide');
 		$('admin-delete-dialog').showModal();
 	}
@@ -348,11 +387,11 @@
 			return;
 		}
 		if (res.status === 401) {
-			showNotice('Please <a href="/">sign in</a> as an admin to view this page.');
+			showNoticeLink('Please ', 'sign in', ' as an admin to view this page.', '/');
 			return;
 		}
 		if (res.status === 403) {
-			showNotice('This account isn’t an admin. <a href="/">Back to Sano</a>.');
+			showNoticeLink('This account isn’t an admin. ', 'Back to Sano', '.', '/');
 			return;
 		}
 		if (!res.ok) {
