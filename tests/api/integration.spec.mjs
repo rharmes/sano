@@ -211,15 +211,22 @@ test('an admin can read the user list and the traffic dashboard @admin', async (
 	expect(traffic.status()).toBe(200);
 	const t = await traffic.json();
 	expect(t.hasData).toBe(true);
-	expect(t.totals.requests).toBe(240); // 120 requests × 2 seeded days
+	// The seed is 2 days × 2 visitors × 60 requests, and one visitor per day is flagged
+	// `mine`. These two numbers are the mine filter: `requests` and `visitors` come from
+	// traffic_visitor_days *with* it applied, so they see one visitor per day, not two.
+	expect(t.totals.visitors).toBe(2);
+	expect(t.totals.requests).toBe(120);
+	// botRequests comes from traffic_days instead — a bot request belongs to no visitor,
+	// so it is never mine-filtered. 45 × 2 days.
 	expect(t.totals.botRequests).toBe(90);
-	expect(t.totals.visitors).toBe(2); // "mine" is excluded by default
 	expect(t.days.length).toBeGreaterThan(0);
 	expect(t.errors.some((e) => e.path === '/audio/words/gone.mp3')).toBe(true);
 
-	// mine=1 includes the visitor whose session touched /admin/.
+	// mine=1 takes the filter off: both visitors a day, and their requests with them.
 	const withMine = await (await request.get('/api/admin-traffic.php?range=7&mine=1')).json();
 	expect(withMine.totals.visitors).toBe(4);
+	expect(withMine.totals.requests).toBe(240);
+	expect(withMine.totals.botRequests).toBe(90); // unchanged — not a per-visitor number
 
 	// And the guard still holds: a bad window is rejected before any of this.
 	expect((await request.get('/api/admin-traffic.php?range=13')).status()).toBe(400);
