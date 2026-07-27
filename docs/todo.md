@@ -325,7 +325,7 @@ marked otherwise.
       Not automated: the timing equality itself is asserted per-shape (>20 ms each), not as a
       statistical comparison — a ratio test would flake on a shared runner, and the failure mode it
       guards is 0 ms vs 100 ms, not 90 vs 110.
-- [ ] **T48 · Harden the session cookie and HTTPS enforcement** — `api/lib.php:94` derives `secure`
+- [x] **T48 · Harden the session cookie and HTTPS enforcement** — `api/lib.php:94` derives `secure`
       from `$_SERVER['HTTPS']`, which is correct on Dreamhost today but silently mints a **non-Secure
       90-day cookie** if TLS ever terminates upstream (a CDN, a proxy tier) — no error, no test
       failure. Make it unconditional except for the `cli-server` dev SAPI. The `http://` → `https://`
@@ -334,6 +334,35 @@ marked otherwise.
       (all its current attributes already satisfy the prefix rules; costs one forced logout) so a
       future sibling subdomain can't toss a same-named cookie and pin a victim onto an attacker's
       session.
+      **Delivered (2026-07-27)** — all three. `Secure` is now unconditional, and the name is
+      `__Host-sano_session`; the prefix and the flag are one decision (`session_cookie_name()` /
+      `session_cookie_options()`) because a `__Host-` cookie without `Secure` is one the browser
+      throws away. Both come off only under the `php -S` `cli-server` SAPI, which serves the plain
+      http local dev and the CI suite run on — Apache is never `cli-server`, so production always
+      gets both. **This logged every device out once**; `setLoggedOut()` clears only
+      `meta.username`, so learning progress in `sano.state.v1` was never at risk.
+      The `http→https` 301 is now in `.htaccess` under two guards, both load-bearing:
+      `<IfModule mod_rewrite.c>` because a bare `RewriteEngine On` on a host without the module is
+      a 500 for the *entire site*, and a `X-Forwarded-Proto !=https` condition because the very
+      scenario this task worries about — TLS terminating one tier upstream — makes `%{HTTPS}` read
+      `off` on a request that already is https, i.e. an infinite redirect loop.
+      **Found and fixed in passing:** the compression block was guarded by `<IfModule
+      mod_deflate.c>`, but `AddOutputFilterByType` is a **mod_filter** directive. Verified against
+      Apache 2.4.66: on a host with deflate and no filter the old file was `Invalid command` — a
+      500 on every request to every URL. Now nested under both modules. Exactly the host-migration
+      breakage this task was about, one block away from it.
+      Verified against a real Apache rather than by reading: a throwaway 2.4.66 instance (macOS TCC
+      blocks httpd from `~/Documents`, so the docroot was a copy under the job tmp dir) → plain http
+      **301** preserving path *and* query; `X-Forwarded-Proto: https` → **200**, no loop, headers
+      intact; mod_filter absent → serves (was a 500); mod_rewrite absent → serves, just no redirect.
+      Testing: the unit tier asserts both cookie shapes including that prefix and `Secure` always
+      agree — production's shape can't be observed from any test process, since `PHP_SAPI` is `cli`
+      there and `cli-server` under Playwright, never the live FastCGI, so it's injected. The
+      integration tier asserts the header that actually reaches the wire, because PHP *silently
+      ignores* an unrecognised key in `setcookie()`'s options array — a typo'd `samesite` would drop
+      it with nothing to show. `tools/check.sh` now fails if the redirect leaves `.htaccess`.
+      Still open (pre-existing, deliberate): HSTS carries no `includeSubDomains`/`preload` until
+      every browser-facing subdomain is confirmed HTTPS.
 - [x] **T49 · Bound the traffic ingest against a log flooder** — `tools/ingest-traffic.php` slurps
       the whole day into memory before filtering: one bucket per distinct (ip, UA) pair, one int per
       request, bot lines allocated too since the filter runs after the parse. An attacker rotating

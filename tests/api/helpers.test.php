@@ -118,6 +118,35 @@ $budgeted = state_summary($blob(['x-1' => $grad, 'x-2' => $grad, 'x-3' => $grad]
 check('state_summary: the shared budget bounds the list', count($budgeted['graduated']) === 2);
 check('state_summary: an exhausted budget yields nothing', state_summary($blob(['x-1' => $grad]), 0)['graduated'] === []);
 
+// --- The session cookie (T48) -----------------------------------------------
+// The __Host- prefix is a contract with the browser, not a naming convention: Secure,
+// Path=/, no Domain. Break any one of them and the browser silently drops the cookie, so
+// nobody stays signed in — and the protection the prefix buys (no sibling host can write
+// this cookie) is gone. Both shapes are asserted here because production's can't be
+// observed from the test suite: PHP_SAPI is 'cli' here and 'cli-server' under the
+// Playwright specs, never the FastCGI SAPI the live site runs.
+$prod = session_cookie_options(SESSION_DAYS * 86400, false);
+check('session cookie: production is named __Host-sano_session', session_cookie_name(false) === '__Host-sano_session');
+check('session cookie: production is Secure', $prod['secure'] === true);
+check('session cookie: __Host- requires Path=/', $prod['path'] === '/');
+check('session cookie: __Host- forbids a Domain', !array_key_exists('domain', $prod));
+check('session cookie: HttpOnly, so no script can read it', $prod['httponly'] === true);
+check('session cookie: SameSite=Strict', $prod['samesite'] === 'Strict');
+check('session cookie: lives SESSION_DAYS', $prod['expires'] > time() + (SESSION_DAYS - 1) * 86400);
+check('session cookie: maxAge 0 expires it in the past', session_cookie_options(0, false)['expires'] === 1);
+
+// The dev server (php -S) is plain http, where a Secure cookie never comes back and a
+// __Host- one is refused on arrival — so both come off, together. They must move
+// together: a __Host- name without Secure is a cookie the browser throws away.
+$dev = session_cookie_options(SESSION_DAYS * 86400, true);
+check('session cookie: the dev server gets the unprefixed name', session_cookie_name(true) === 'sano_session');
+check('session cookie: the dev server drops Secure with the prefix', $dev['secure'] === false);
+check('session cookie: the dev server keeps HttpOnly and SameSite', $dev['httponly'] === true && $dev['samesite'] === 'Strict');
+foreach ([false, true] as $isDev) {
+	$prefixed = str_starts_with(session_cookie_name($isDev), '__Host-');
+	check('session cookie: prefix and Secure agree (dev=' . var_export($isDev, true) . ')', $prefixed === session_cookie_options(1, $isDev)['secure']);
+}
+
 // --- The login timing equalizer (T47) ---------------------------------------
 // api/login.php verifies against a fixed DUMMY_HASH whenever the username doesn't exist
 // or the account is locked, so those cost the same argon2id work as a real attempt. That

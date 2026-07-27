@@ -107,7 +107,10 @@ routing: `tools/tts/README.md`.
 
 - **Sync:** localStorage is the working copy; `SanoSync` (js/sync.js) debounces revision-checked,
   last-write-wins PUTs to `api/state.php`; the app stays fully usable offline / logged-out. Auth is a
-  username/password session token in an HttpOnly `sano_session` cookie (90 days); mutating requests
+  username/password session token in an HttpOnly `__Host-sano_session` cookie (90 days —
+  `session_cookie_name()`/`session_cookie_options()`; the prefix binds it to Secure + `Path=/` +
+  no `Domain`, and both prefix and Secure come off **only** under the `php -S` dev SAPI, which is
+  plain http); mutating requests
   need CSRF header `X-Sano-Request: 1`. Accounts come from self-service `register.php` (throttled) or
   the invite-only `tools/make-user.php` CLI (also password resets). Hardening: argon2id, per-account
   lockout + per-IP throttles, CSP/HSTS/nosniff, a JSON-500 handler, and a guard order that runs the

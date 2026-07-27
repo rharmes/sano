@@ -16,10 +16,34 @@ Header set Cache-Control "max-age=31536000, immutable" "expr=%{CONTENT_TYPE} =~ 
     Header set Cache-Control "no-cache"
 </Files>
 
+# Force HTTPS. This redirect already worked, but it was configured in the hosting
+# panel — nowhere in this repo, so a move to another host would have silently dropped
+# it, and the session cookie is Secure, so a plain-http request can carry no session at
+# all. HSTS below covers every repeat visitor; this covers the first one.
+#
+# <IfModule> because `RewriteEngine On` without mod_rewrite is a 500 for the entire
+# site rather than a no-op. The X-Forwarded-Proto condition is not decoration: if TLS
+# ever terminates a tier upstream, %{HTTPS} reads off while the request really is
+# https, and without it that is an infinite redirect loop. (Forging that header only
+# buys you the http response you could have asked for directly.) %{HTTP_HOST} is safe
+# to echo here because only hostnames actually mapped to this docroot reach this file.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
 # Compress text responses. The shared host already gzips; codifying it keeps the
 # behavior in the repo and portable (mod_deflate won't double-compress).
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+# Two guards, because the line needs two modules and the guard used to name only one:
+# AddOutputFilterByType comes from mod_filter, DEFLATE from mod_deflate. On a host with
+# deflate but no filter — verified against Apache 2.4.66 — the directive is an "Invalid
+# command" and .htaccess errors, which is a 500 on every request to the whole site.
+<IfModule mod_filter.c>
+    <IfModule mod_deflate.c>
+        AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+    </IfModule>
 </IfModule>
 
 # Security headers (`always` so they cover error responses too). The app makes no

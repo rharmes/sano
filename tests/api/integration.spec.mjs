@@ -93,6 +93,23 @@ test('state sync increments revision and rejects a stale base revision (409 conf
 	expect((await forced.json()).revision).toBe(2);
 });
 
+// T48: the unit test pins what session_cookie_options() returns; this pins what actually
+// reaches the wire. PHP silently ignores an unrecognised key in setcookie()'s options
+// array, so a typo there would drop SameSite or HttpOnly with nothing to show for it.
+test('the session cookie reaches the browser HttpOnly, SameSite=Strict and site-scoped', async ({ request }) => {
+	const res = await register(request, uniqueName());
+	const setCookie = res.headers()['set-cookie'];
+	// php -S is the `cli-server` SAPI, so this is the dev shape — no Secure, and no
+	// __Host- prefix, both of which a browser refuses over the plain http this suite runs
+	// on. Production's shape is asserted in tests/api/helpers.test.php, which can inject
+	// the branch; no test process ever runs under the live FastCGI SAPI.
+	expect(setCookie).toContain('sano_session=');
+	expect(setCookie).toContain('HttpOnly');
+	expect(setCookie).toContain('SameSite=Strict');
+	expect(setCookie).toContain('Path=/');
+	expect(setCookie).not.toContain('Domain=');
+});
+
 // T47: the account lockout used to answer with its own `429 {error:"locked"}`, which only
 // a username that exists could ever produce — a membership oracle. It has to still work,
 // and still be invisible.

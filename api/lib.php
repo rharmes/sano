@@ -7,7 +7,6 @@
 
 declare(strict_types=1);
 
-const SESSION_COOKIE = 'sano_session';
 const SESSION_DAYS = 90;
 const LOCK_AFTER_FAILURES = 10;
 const LOCK_MINUTES = 15;
@@ -146,21 +145,51 @@ function require_csrf_header(): void
 	}
 }
 
-function set_session_cookie(string $value, int $maxAge): void
+// --- The session cookie -----------------------------------------------------
+// The name carries the __Host- prefix, which a browser honours only when the cookie is
+// Secure, Path=/ and carries no Domain — and which makes it refuse the cookie outright
+// when any of those is missing. That strictness is the point: a __Host- cookie cannot be
+// written by a sibling host, so if anything ever gains a name under this domain it still
+// can't hand a visitor a cookie of its choosing and pin them onto a session it controls.
+//
+// Secure is unconditional rather than read off $_SERVER['HTTPS']. That was true on this
+// Apache and would have stayed true right up until TLS terminated one tier upstream — a
+// CDN, a proxy — at which point it would have quietly started minting non-Secure 90-day
+// session cookies with no error and no failing test.
+//
+// The one exception is PHP's built-in server (php -S, SAPI `cli-server`), which serves
+// plain http for local dev and the CI suite: there a Secure cookie never comes back and a
+// __Host- one is dropped on arrival, so the prefix and the flag come off together. Apache
+// is never `cli-server`, so production always gets both. $dev is injectable so the
+// production shape is testable from the CLI, where PHP_SAPI is 'cli' (tests/api/helpers).
+function session_cookie_name(?bool $dev = null): string
 {
-	setcookie(SESSION_COOKIE, $value, [
+	$dev ??= PHP_SAPI === 'cli-server';
+	return $dev ? 'sano_session' : '__Host-sano_session';
+}
+
+function session_cookie_options(int $maxAge, ?bool $dev = null): array
+{
+	$dev ??= PHP_SAPI === 'cli-server';
+	return [
 		'expires' => $maxAge > 0 ? time() + $maxAge : 1,
-		'path' => '/',
-		'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+		'path' => '/', // required by __Host-
+		'secure' => !$dev, // required by __Host-
 		'httponly' => true,
 		'samesite' => 'Strict',
-	]);
+		// and deliberately no 'domain' — a __Host- cookie may not carry one.
+	];
+}
+
+function set_session_cookie(string $value, int $maxAge): void
+{
+	setcookie(session_cookie_name(), $value, session_cookie_options($maxAge));
 }
 
 // Returns the authenticated user id, or null.
 function session_user(): ?int
 {
-	$token = $_COOKIE[SESSION_COOKIE] ?? '';
+	$token = $_COOKIE[session_cookie_name()] ?? '';
 	if ($token === '') {
 		return null;
 	}

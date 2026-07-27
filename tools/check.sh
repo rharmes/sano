@@ -32,7 +32,7 @@ echo "==> Security directives"
 # plain substring grep would happily match "# Options -Indexes".
 root_active=$(grep -v '^[[:space:]]*#' .htaccess)
 api_active=$(grep -v '^[[:space:]]*#' api/.htaccess)
-for d in "Options -Indexes" "Content-Security-Policy" "X-Content-Type-Options" "Strict-Transport-Security"; do
+for d in "Options -Indexes" "Content-Security-Policy" "X-Content-Type-Options" "Strict-Transport-Security" "RewriteRule ^ https://"; do
 	case "$root_active" in
 	*"$d"*) ;;
 	*)

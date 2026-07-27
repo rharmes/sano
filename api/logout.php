@@ -6,7 +6,7 @@ require __DIR__ . '/lib.php';
 require_method('POST');
 require_csrf_header();
 
-$token = $_COOKIE[SESSION_COOKIE] ?? '';
+$token = $_COOKIE[session_cookie_name()] ?? '';
 if ($token !== '') {
 	db()
 		->prepare('DELETE FROM sessions WHERE token_hash = ?')
