@@ -379,7 +379,7 @@ marked otherwise.
 
 ## Testing
 
-- [ ] **T56 · Fix the flaky `no horizontal overflow across mobile widths` e2e** — the 9-width
+- [x] **T56 · Fix the flaky `no horizontal overflow across mobile widths` e2e** — the 9-width
       viewport sweep (`tests/e2e/home.spec.mjs:27`) failed all three attempts on the T40 commit's CI
       run (30228655062, Chromium), each hitting the **60 s test timeout** exactly — `page.waitForFunction`
       timed out, then the retries reported "Target page, context or browser has been closed", which is
@@ -389,7 +389,26 @@ marked otherwise.
       Chromium and WebKit projects concurrently against a single-threaded `php -S`). Per the
       no-flaky-tests rule this is a defect, not noise. Fix the cost rather than raising the timeout —
       resize within one page context instead of a fresh navigation per width, or split the sweep so
-      each width is its own short test. Found during the T42 CI check (2026-07-27).
+      each width is its own short test. Found during the T42 CI check (2026-07-27). **It went on to
+      fail the T43 run too — 2 of 4 runs, i.e. ~50%**, which is why it was taken before T45.
+  - [x] **Fixed (2026-07-27)** — measured the cost before changing anything: **14.5 s in Chromium
+        alone**, because the sweep called `boundingBox()` once per matched element and a mid-course
+        path renders **107 `.path-node` + 107 `.path-label`** — 216 elements × 9 widths ≈ **1,900 IPC
+        round trips**, on top of 9 full navigations. Two changes: every element for a width is now
+        measured in a **single in-page `evaluate`**, and the sweep **resizes in place** instead of
+        navigating. Resizing is faithful because the app re-renders the path on resize; rather than
+        wait out that 150 ms debounce (a fixed sleep being exactly the wrong fix here) the test calls
+        `window.Sano.renderHome()` — the same function the debounced handler calls — so the
+        re-render is synchronous and there is no race to lose. The evaluate now also asserts
+        `#screen-home` is showing and path nodes exist, so an empty render can't pass vacuously, and
+        it returns **all** violations for a width instead of stopping at the first. A separate short
+        test keeps cold-load coverage at the narrowest width, which the in-place sweep would
+        otherwise lose. **14.5 s → ~1 s** (whole suite 38 tests/35 s → 40 tests/26 s); `home.spec.mjs`
+        across both browsers runs in 2.4 s, stable over three consecutive runs. Verified it still
+        catches a real regression by injecting `#progress { min-width: 900px }` — it failed with
+        `#progress[0] right edge at 975.9, past 320`. Worth noting the page-level `scrollWidth` check
+        did **not** fire on that injection while the element-bounds check did, which is why both are
+        kept.
 
 - [x] **T17 · Fix the flaky WebKit match-lesson e2e** — `tests/e2e/lesson.spec.mjs` match rounds
       intermittently time out under WebKit: `stepLesson` (`tests/e2e/_helpers.mjs`) clicks match tiles
