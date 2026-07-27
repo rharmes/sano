@@ -636,6 +636,19 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">traffic tab (T40)</span>
+			<h2>Traffic numbers from the Apache logs</h2>
+			<p>
+				Opens the admin <b>Traffic</b> tab with <b>sample traffic</b>: distinct visitors, repeat sessions, countries, the daily visitors
+				chart (hover a bar for its numbers, or open <b>Daily numbers</b> for the table), device/browser split, referrers, and failed
+				requests. Try the <b>7 / 30 / 90 / All time</b> range and the <b>Include my visits</b> toggle — your own visits (any session
+				that touched /admin/) are excluded by default. Live numbers come from the nightly <code>tools/ingest-traffic.php</code> ingest
+				on the server, so localhost only ever shows this demo.
+			</p>
+			<button onclick="location.href = '/admin/?demo=1#traffic'">Open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">clean slate</span>
 			<h2>Reset to a brand-new user</h2>
 			<p>Clears all saved progress so the first-run onboarding plays again.</p>

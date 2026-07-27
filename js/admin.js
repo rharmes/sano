@@ -1,5 +1,7 @@
 // Admin dashboard logic (/admin/). Loads the user list from /api/admin-users.php,
-// renders a sortable table, and drives the reset-password / delete-user modals.
+// renders a sortable table, and drives the reset-password / delete-user modals. Also
+// owns the Users | Traffic tabs — the Traffic panel's contents belong to
+// js/admin-traffic.js, which is only asked to render once that tab is opened.
 //
 // COURSE (js/data.js) is loaded first; path position is derived client-side,
 // mirroring sano.js's unitIsComplete — a unit is complete when every item has
@@ -363,10 +365,48 @@
 		render();
 	}
 
+	// ── tabs ─────────────────────────────────────────────────────────────────
+
+	// Users | Traffic. The traffic panel is handed to js/admin-traffic.js the first
+	// time it's opened, so its fetch never runs for someone who only wants the user
+	// list. The hash keeps the choice across a reload; arrow keys move between tabs,
+	// per the tablist pattern.
+	const TABS = ['users', 'traffic'];
+
+	function selectTab(name, focus) {
+		if (!TABS.includes(name)) name = 'users';
+		for (const t of TABS) {
+			const tab = $('tab-' + t);
+			const panel = $('panel-' + t);
+			const on = t === name;
+			tab.setAttribute('aria-selected', on ? 'true' : 'false');
+			tab.tabIndex = on ? 0 : -1;
+			panel.hidden = !on;
+		}
+		if (focus) $('tab-' + name).focus();
+		if (location.hash.slice(1) !== name) history.replaceState(null, '', '#' + name);
+		if (name === 'traffic' && window.SanoAdminTraffic) window.SanoAdminTraffic.show($('admin-traffic'));
+	}
+
+	function initTabs() {
+		TABS.forEach((name, i) => {
+			const tab = $('tab-' + name);
+			tab.addEventListener('click', () => selectTab(name));
+			tab.addEventListener('keydown', (e) => {
+				const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+				if (!step) return;
+				e.preventDefault();
+				selectTab(TABS[(i + step + TABS.length) % TABS.length], true);
+			});
+		});
+		selectTab(location.hash.slice(1));
+	}
+
 	function init() {
 		document.querySelectorAll('[data-admin-cancel]').forEach((b) => b.addEventListener('click', () => b.closest('dialog').close()));
 		$('admin-reset-form').addEventListener('submit', submitReset);
 		$('admin-delete-confirm').addEventListener('click', confirmDelete);
+		initTabs();
 		load();
 	}
 

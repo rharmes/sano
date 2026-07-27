@@ -87,6 +87,33 @@ this list. Refer to any task by its ID (e.g. "T3").
       `VOICES` (`tools/tts/synth-app.mjs`) + `CHARACTER_VOICES` (`js/audio.js`), then render their
       `UNIT_VOICES` sections (`--units --new`). Until then their sections review in Sano's voice.
 
+## Server & admin
+
+- [x] **T40 · Traffic numbers in the admin dashboard** — surface real usage from the Apache access
+      logs: distinct visitors, repeat sessions, and countries, plus a daily trend chart, a
+      device/browser split, top referrers, and 4xx/5xx errors. **Constraint:** Dreamhost keeps only
+      ~7 days of `~/logs/namastesano.com/https/access.log*`, so anything not captured is lost —
+      history has to accumulate server-side. **Decisions (Ross, 2026-07-26):** nightly cron ingest
+      into MySQL (dashboard reads the DB; today's numbers land tomorrow) · a visitor is a salted
+      `sha256(ip + UA)` hash, never a raw IP · countries from a free CC0 IP→country table kept on the
+      server (no third party ever sees a visitor IP, no runtime external calls) · Users | Traffic
+      tabs on `/admin/` · aggressive multi-signal bot filtering (≈45% of the log is DreamHost
+      SiteMonitor + crawlers + wp-admin scanners) with the excluded count shown · sessions split on a
+      30-minute idle gap, a repeat session is any session after a visitor's first-ever · store only
+      hashes + aggregates · Ross's own visits auto-detected (any visitor whose session touched
+      `/admin/`) and excluded by default behind a toggle · selectable 7 / 30 / 90 / all-time range.
+  - [x] **Delivered (2026-07-26)** — `tools/ingest-traffic.php` (nightly cron in `~/sano-tools/`;
+        `--update-geo` compiles the CC0 CSVs into a fixed-width binary index searched by fseek, since
+        Dreamhost's PHP CLI caps at 128MB) → the four `traffic_*` tables
+        (`tools/migrate-2026-07-traffic.php`, folded into `schema.sql`) → `api/admin-traffic.php` →
+        the Traffic tab (`js/admin-traffic.js` + `.tr-*` in `css/admin.css`; chart series colors are
+        the brand crimson/indigo snapped to the nearest step that clears the dataviz chroma floor in
+        both themes). Tests: `tests/data/traffic-parse.test.mjs` drives the script's DB-free `--json`
+        mode over `tests/fixtures/traffic-access.log`, plus three API guard specs. Dev-seed scenario
+        added. **Known limit:** an AI crawler that fetches only app paths still counts as a visitor —
+        the UA / app-path / crawler-path signals catch the rest. Requiring an audio fetch ("actually
+        did a lesson") is the stricter option if the numbers ever look inflated.
+
 ## Testing
 
 - [x] **T17 · Fix the flaky WebKit match-lesson e2e** — `tests/e2e/lesson.spec.mjs` match rounds

@@ -112,8 +112,19 @@ routing: `tools/tts/README.md`.
   the invite-only `tools/make-user.php` CLI (also password resets). Hardening: argon2id, per-account
   lockout + per-IP throttles, CSP/HSTS/nosniff, a JSON-500 handler, and a guard order that runs the
   stateless method/CSRF/JSON/validation checks before auth/`db()`.
-- **Admin dashboard** `/admin/` (server-enforced via `users.is_admin` + `require_admin()`): lists
-  every account with reset-password / delete actions; `?demo=1` renders stub rows for local UI review.
+- **Admin dashboard** `/admin/` (server-enforced via `users.is_admin` + `require_admin()`), two tabs:
+  **Users** lists every account with reset-password / delete actions, and **Traffic** (T40) shows
+  distinct visitors / repeat sessions / countries + a daily chart, device split, referrers and errors.
+  `?demo=1` renders stub data for both, for local UI review (there's no local MySQL).
+- **Traffic numbers come from the Apache logs, and Dreamhost keeps only ~7 days of them** — so
+  `tools/ingest-traffic.php` (server-only nightly cron, installed as `~/sano-tools/`, like
+  `send-reminders.php`) is what accumulates history into the `traffic_*` tables; `api/admin-traffic.php`
+  only ever reads those aggregates. A visitor is a salted `sha256(ip + UA)` — **never store a raw IP**
+  (salt: `traffic_salt` in `sano-config.php`); countries come from a CC0 IP→country index compiled onto
+  the server by `--update-geo`, so no third party sees an address. Roughly half the raw log is bots, so
+  the ingest filters on three signals (UA, "did it load the app", crawler-only paths) and reports what
+  it excluded. Definitions (session, repeat, mine) live in `@docs/data-model.md`; the parser is testable
+  with `--json`, which needs no DB.
 - **PWA + reminders:** installable; `sw.js` caches the shell (HTML network-first, stamped assets
   cache-first) and handles `push`. A reminder needs **both** a per-device subscription (`js/push.js` →
   `push-subscribe.php`) **and** a per-account time (`reminder_hour` / `reminder_tz` via `reminder.php`);

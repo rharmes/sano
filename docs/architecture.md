@@ -72,6 +72,7 @@ change both) → `css/admin.css` (admin dashboard only).
 | `admin-users.php` | Admin: every account's last-sync, streak, graduated item ids (for path position). |
 | `admin-reset-password.php` | Admin: argon2id reset + clears that user's sessions. |
 | `admin-delete-user.php` | Admin: delete a user (cascades app_state/sessions/subscriptions); self-delete blocked. |
+| `admin-traffic.php` | Admin: the Traffic tab's numbers (T40) — `?range=7\|30\|90\|all&mine=0\|1` → totals, daily series, countries, devices/browsers, referrers, errors. Reads only the aggregate tables the nightly ingest fills; never parses a log in a web request. |
 
 Every endpoint follows one **guard order** (documented at the top of the guards in
 `lib.php`): `require_method()` → `require_csrf_header()` (mutating verbs) →
@@ -94,6 +95,8 @@ necessarily follow auth and live in the DB-gated integration specs.
 | `screenshot.sh` | Headless-Chrome screenshot wrapper (`<url> <out.png> [WxH] [budget-ms]`). |
 | `dev-seed.html` | Committed dev tool (served, never deployed): seeds `sano.state.v1` and opens the app where a gated feature is visible. Add a scenario for every new feature. |
 | `make-user.php` | CLI account create / `--reset-password` (invite-only; run on the server). |
+| `ingest-traffic.php` | Server-only nightly cron (T40): parse the Apache access logs → the `traffic_*` aggregate tables. Dreamhost keeps ~7 days of logs, so this is what accumulates history. Visitors are salted `sha256(ip + UA)` hashes — no raw IP is stored; countries come from a locally compiled CC0 IP→country index (`--update-geo`). `--json` prints the parse with no DB or config (what `tests/data/traffic-parse.test.mjs` asserts on). Not in the rsync. |
+| `migrate-2026-07-traffic.php` | One-off idempotent migration creating the four `traffic_*` tables. Run once on the server; already folded into `schema.sql`. |
 | `send-reminders.php` | Server-only hourly cron: dispatch Web Push reminders (minishlink/web-push). Not in the rsync. |
 | `make-touch-icon.html` | Source for the app-icon PNGs (render at 512 then `sips` downscale). |
 | `build-character-heads.mjs` / `build-anim-characters.mjs` | Generate `js/characters.js` / `design/anim-characters.js` from `design/characters.html`. Re-run after editing character art. |

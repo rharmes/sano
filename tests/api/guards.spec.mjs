@@ -191,4 +191,13 @@ test.describe('admin endpoints run method, CSRF, and field validation before the
 			body: { error: 'missing_fields' },
 		});
 	});
+	test('admin-traffic POST → 405 (GET-only)', async ({ request }) => {
+		expect((await request.post('/api/admin-traffic.php', { headers: CSRF, data: {} })).status()).toBe(405);
+	});
+	test('admin-traffic with an unknown range → 400 range, before any auth or DB work', async ({ request }) => {
+		expect(await read(await request.get('/api/admin-traffic.php?range=everything'))).toEqual({ status: 400, body: { error: 'range' } });
+	});
+	test('admin-traffic with a valid range but no session → 401 auth', async ({ request }) => {
+		expect(await read(await request.get('/api/admin-traffic.php?range=30'))).toEqual({ status: 401, body: { error: 'auth' } });
+	});
 });

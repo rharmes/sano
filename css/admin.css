@@ -273,3 +273,341 @@ body {
 		animation: none;
 	}
 }
+
+/* ── Tabs (Users | Traffic) ─────────────────────────────────────────────── */
+
+.admin-tabs {
+	display: flex;
+	gap: 0.4rem;
+	margin-bottom: 1.6rem;
+	border-bottom: 1px solid var(--border-color);
+}
+.admin-tab {
+	appearance: none;
+	padding: 0.9rem 1.4rem;
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--text-color-soft);
+	background: none;
+	border: 0;
+	border-bottom: 2px solid transparent;
+	border-radius: 0;
+	cursor: pointer;
+	transition:
+		color 0.12s ease,
+		border-color 0.12s ease;
+}
+.admin-tab:hover {
+	color: var(--text-color-normal);
+}
+.admin-tab[aria-selected='true'] {
+	color: var(--accent);
+	border-bottom-color: var(--accent);
+}
+
+/* ── Traffic tab (T40) ──────────────────────────────────────────────────── */
+
+/* Chart series. The brand indigo (#56629e) sits just under the chroma floor for a
+   data mark — it reads gray next to the crimson — so the chart uses the nearest
+   saturated step. Both pairs clear CVD separation, the normal-vision floor, and 3:1
+   against their surface (dataviz validator, light + dark). Admin-only, so they live
+   here rather than in css/sano.css's app-wide token blocks. */
+.admin-main {
+	--tr-new: #dd6470;
+	--tr-returning: #4f5fae;
+}
+@media (prefers-color-scheme: dark) {
+	.admin-main {
+		--tr-new: #e0697a;
+		--tr-returning: #7385d6;
+	}
+}
+
+.tr-controls {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 1.2rem;
+	margin-bottom: 1.6rem;
+}
+.tr-range {
+	display: inline-flex;
+	overflow: hidden;
+	border: 1px solid var(--border-color);
+	border-radius: 0.8rem;
+}
+.tr-range-btn {
+	padding: 0.7rem 1.3rem;
+	font-size: 1.4rem;
+	color: var(--text-color-soft);
+	background: var(--background-color);
+	border: 0;
+	border-right: 1px solid var(--border-color);
+	border-radius: 0;
+	cursor: pointer;
+}
+.tr-range-btn:last-child {
+	border-right: 0;
+}
+.tr-range-btn:hover {
+	background: var(--background-color-softer);
+}
+.tr-range-btn[aria-pressed='true'] {
+	color: var(--button-primary-color);
+	background: var(--accent);
+}
+.tr-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+	font-size: 1.4rem;
+	color: var(--text-color-normal);
+	cursor: pointer;
+}
+.tr-toggle input {
+	width: 1.6rem;
+	height: 1.6rem;
+	accent-color: var(--accent);
+}
+
+.tr-tiles {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+	gap: 1.2rem;
+	margin-bottom: 1.6rem;
+}
+.tr-tile {
+	padding: 1.4rem 1.6rem;
+	background: var(--background-color-softer);
+	border: 1px solid var(--border-color-softer);
+	border-radius: 1rem;
+}
+.tr-tile-label {
+	font-size: 1.2rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--text-color-softer);
+}
+.tr-tile-value {
+	margin: 0.4rem 0 0.2rem;
+	font-family: var(--heading-font-family, inherit);
+	font-size: 3.2rem;
+	font-weight: 700;
+	line-height: 1.05;
+	color: var(--text-color-richer);
+	font-variant-numeric: tabular-nums;
+}
+.tr-tile-note {
+	font-size: 1.3rem;
+	color: var(--text-color-soft);
+}
+
+.tr-card {
+	padding: 1.6rem;
+	background: var(--background-color);
+	border: 1px solid var(--border-color);
+	border-radius: 1rem;
+}
+.tr-card + .tr-card,
+.tr-tiles + .tr-card {
+	margin-top: 1.6rem;
+}
+.tr-card-title {
+	margin: 0 0 0.4rem;
+	font-size: 1.9rem;
+}
+.tr-card-note {
+	margin: 0 0 1.2rem;
+	font-size: 1.3rem;
+	line-height: 1.4;
+	color: var(--text-color-soft);
+}
+
+.tr-legend {
+	display: flex;
+	gap: 1.4rem;
+	margin-bottom: 1rem;
+	font-size: 1.3rem;
+	color: var(--text-color-soft);
+}
+.tr-legend-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+.tr-swatch {
+	width: 1rem;
+	height: 1rem;
+	border-radius: 0.3rem;
+}
+.tr-swatch-new {
+	background: var(--tr-new);
+}
+.tr-swatch-returning {
+	background: var(--tr-returning);
+}
+
+.tr-plot-wrap {
+	display: flex;
+	gap: 0.8rem;
+}
+.tr-yaxis {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 16rem;
+	font-size: 1.1rem;
+	color: var(--text-color-softer);
+	font-variant-numeric: tabular-nums;
+}
+/* One recessive midline; the axis itself is the card's own rhythm, not a box. */
+.tr-plot {
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	gap: 2px;
+	flex: 1;
+	height: 16rem;
+	border-bottom: 1px solid var(--border-color);
+	background: linear-gradient(to top, transparent calc(50% - 1px), var(--border-color-softer) 50%, transparent calc(50% + 1px));
+}
+.tr-bar {
+	display: flex;
+	flex: 1 1 0;
+	flex-direction: column;
+	justify-content: flex-end;
+	min-width: 2px;
+	height: 100%;
+}
+.tr-bar:hover {
+	background: var(--background-color-softer);
+}
+.tr-seg {
+	min-height: 2px;
+}
+/* 2px of surface between the stacked segments; the top of the stack is the data end. */
+.tr-seg-new {
+	margin-bottom: 2px;
+	background: var(--tr-new);
+	border-radius: 0.4rem 0.4rem 0 0;
+}
+.tr-seg-returning {
+	background: var(--tr-returning);
+}
+.tr-seg-returning:first-child {
+	border-radius: 0.4rem 0.4rem 0 0;
+}
+.tr-seg-empty {
+	height: 2px;
+	background: var(--border-color);
+}
+/* display:flex would otherwise beat the UA sheet's [hidden] rule and leave an empty
+   pill sitting over the chart before the first hover. */
+.tr-tip[hidden] {
+	display: none;
+}
+.tr-tip {
+	position: absolute;
+	top: -0.6rem;
+	z-index: 3;
+	display: flex;
+	flex-direction: column;
+	padding: 0.6rem 0.9rem;
+	font-size: 1.25rem;
+	line-height: 1.35;
+	white-space: nowrap;
+	color: var(--background-color);
+	background: var(--text-color-richer);
+	border-radius: 0.6rem;
+	transform: translateX(-50%);
+	pointer-events: none;
+}
+.tr-xaxis {
+	display: flex;
+	justify-content: space-between;
+	margin: 0.5rem 0 0 3.2rem;
+	font-size: 1.1rem;
+	color: var(--text-color-softer);
+}
+
+.tr-details {
+	margin-top: 1.4rem;
+	font-size: 1.4rem;
+	color: var(--text-color-soft);
+}
+.tr-details summary {
+	cursor: pointer;
+}
+.tr-details .admin-table-wrap {
+	margin-top: 1rem;
+	max-height: 34rem;
+	overflow-y: auto;
+}
+
+.tr-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(31rem, 1fr));
+	gap: 1.6rem;
+	margin-top: 1.6rem;
+}
+.tr-split {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.2rem;
+}
+@media (max-width: 30rem) {
+	.tr-split {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* The traffic tables are narrow enough not to need the users table's sticky first
+   column, which would otherwise paint over the horizontal scroll. */
+.tr-table th:first-child,
+.tr-table td:first-child,
+.tr-table thead th:first-child {
+	position: static;
+	background: transparent;
+}
+.tr-table thead th {
+	background: var(--background-color-softer);
+}
+.tr-num {
+	text-align: right;
+}
+.tr-country {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.7rem;
+}
+.tr-flag {
+	font-size: 1.7rem;
+	line-height: 1;
+}
+.tr-errors td:first-child {
+	font-weight: 700;
+	color: var(--text-incomplete-color);
+}
+.tr-errors td:nth-child(2) {
+	max-width: 26rem;
+	white-space: normal;
+	word-break: break-all;
+}
+.tr-empty {
+	margin: 0;
+	font-size: 1.4rem;
+	line-height: 1.5;
+	color: var(--text-color-soft);
+}
+
+.tr-footnote {
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	margin: 1.6rem 0 0;
+	font-size: 1.25rem;
+	line-height: 1.5;
+	color: var(--text-color-softer);
+}

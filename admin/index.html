@@ -17,13 +17,14 @@
 		<link rel="stylesheet" href="/css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="/css/barebones.css?v=406ae0d7" />
 		<link rel="stylesheet" href="/css/sano.css?v=d441e73b" />
-		<link rel="stylesheet" href="/css/admin.css?v=479d511d" />
+		<link rel="stylesheet" href="/css/admin.css?v=7941f7e6" />
 		<link rel="icon" href="/favicon.svg?v=e1facae9" type="image/svg+xml" />
 		<meta name="theme-color" content="#fbf5e9" media="(prefers-color-scheme: light)" />
 		<meta name="theme-color" content="#1b1822" media="(prefers-color-scheme: dark)" />
 
 		<script src="/js/data.js?v=3f238e84" defer></script>
-		<script src="/js/admin.js?v=2c961ef1" defer></script>
+		<script src="/js/admin-traffic.js?v=68031a2d" defer></script>
+		<script src="/js/admin.js?v=5a9a5105" defer></script>
 	</head>
 	<body>
 		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
@@ -49,11 +50,38 @@
 
 		<main class="admin-main">
 			<header class="admin-head">
-				<h1 class="admin-title">Sano · users</h1>
+				<h1 class="admin-title">Sano · admin</h1>
 				<a class="admin-back" href="/">← Back to app</a>
 			</header>
+
+			<!-- Users | Traffic. The selected tab is mirrored into the hash so a reload
+			     (and a bookmark) lands where you left off; js/admin.js owns the switching
+			     and hands the traffic panel to js/admin-traffic.js on first open. -->
+			<div class="admin-tabs" role="tablist" aria-label="Admin sections">
+				<button type="button" class="admin-tab" id="tab-users" role="tab" aria-controls="panel-users" aria-selected="true">
+					Users
+				</button>
+				<button
+					type="button"
+					class="admin-tab"
+					id="tab-traffic"
+					role="tab"
+					aria-controls="panel-traffic"
+					aria-selected="false"
+					tabindex="-1"
+				>
+					Traffic
+				</button>
+			</div>
+
 			<p id="admin-status" class="admin-status" aria-live="polite"></p>
-			<div id="admin-content"></div>
+
+			<div id="panel-users" role="tabpanel" aria-labelledby="tab-users">
+				<div id="admin-content"></div>
+			</div>
+			<div id="panel-traffic" role="tabpanel" aria-labelledby="tab-traffic" hidden>
+				<div id="admin-traffic"></div>
+			</div>
 		</main>
 
 		<dialog id="admin-reset-dialog" class="panel admin-dialog" aria-labelledby="admin-reset-title">

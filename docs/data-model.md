@@ -206,6 +206,33 @@ words by review debt and is review-dominant.
 | `signup_attempts` | `ip`, `created_at` (per-IP hourly signup throttle) |
 | `login_attempts` | `ip`, `created_at` (per-IP login throttle) |
 | `push_subscriptions` | `id` PK, `user_id` FK, `endpoint` UNIQUE, `p256dh`, `auth_secret`, `created_at`, `last_success_at`, `last_failure_at`, `failure_count` |
+| `traffic_days` | `day` PK, `requests` (human), `bot_requests`, `bytes`, `errors_4xx`, `errors_5xx`, `ingested_at` — also the ingest ledger: a row exists only for a parsed day |
+| `traffic_visitor_days` | `(day, visitor)` PK, `sessions`, `requests`, `is_new`, `is_mine`, `country`, `device`, `browser` — the grain every traffic number derives from |
+| `traffic_referrers` | `(day, mine, host)` PK, `hits` (page arrivals only) |
+| `traffic_errors` | `(day, mine, status, path)` PK, `hits` (human visitors only) |
+
+### Traffic aggregates (T40) — the definitions behind the numbers
+
+Filled nightly by `tools/ingest-traffic.php` from the Apache access logs (Dreamhost keeps
+only ~7 days, so the tables are the history), read by `api/admin-traffic.php`.
+
+- **Visitor** — salted `sha256(ip + "\n" + user-agent)`, truncated to 16 bytes; the salt is
+  `traffic_salt` in `~/sano-config.php`. No raw address is stored, so the rows can't be
+  walked back to a person. One human on two networks counts twice; a household behind one
+  router can count as one.
+- **Session** — a visitor's requests split on a 30-minute idle gap. A session crossing
+  midnight is counted in both days (ingest, and the dashboard, are per-day).
+- **Repeat session** — every session after a visitor's first ever, computed as
+  `SUM(sessions) - SUM(is_new)`; `is_new` marks a visitor's first day. **Returned** is the
+  narrower "seen on 2+ separate days".
+- **Bot** — a visitor-day is excluded (and its requests counted as `bot_requests`) when the
+  UA is bot-shaped, OR it never successfully fetched a real app path, OR it asked for
+  something only a crawler asks for (`/robots.txt`, `/llms.txt`, `/wp-*`, …). The third
+  test is what catches AI crawlers that fetch the page and assets like a browser.
+- **Mine** — a visitor whose session ever touched `/admin/`, i.e. Ross. Sticky across days
+  and excluded from the dashboard by default.
+- **is_new / is_mine** are recomputed across the whole table after each ingest, so
+  backfilling an older day is self-correcting and re-ingesting a day is idempotent.
 
 ## Feature-code glossary
 

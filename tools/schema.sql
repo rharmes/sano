@@ -69,3 +69,61 @@ CREATE TABLE push_subscriptions (
   KEY idx_user (user_id),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ── Traffic dashboard (T40) ─────────────────────────────────────────────────
+-- Filled by tools/ingest-traffic.php (nightly cron, installed as
+-- ~/sano-tools/ingest-traffic.php) from the Apache access logs, which Dreamhost
+-- keeps for only ~7 days; read by api/admin-traffic.php. No raw IP is ever
+-- stored: a "visitor" is a salted sha256(ip + user-agent) truncated to 16 bytes,
+-- with the salt in ~/sano-config.php ('traffic_salt').
+
+-- Per-day rollup. Doubles as the ingest ledger — a row exists only for a day that
+-- has been parsed, which is how the nightly run knows what is left to do.
+CREATE TABLE traffic_days (
+  day          DATE PRIMARY KEY,
+  requests     INT UNSIGNED NOT NULL DEFAULT 0,      -- human requests (post bot filter)
+  bot_requests INT UNSIGNED NOT NULL DEFAULT 0,      -- everything the filter excluded
+  bytes        BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  errors_4xx   INT UNSIGNED NOT NULL DEFAULT 0,
+  errors_5xx   INT UNSIGNED NOT NULL DEFAULT 0,
+  ingested_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- One row per visitor per day — the grain every headline number derives from.
+-- is_new (their first day ever) and is_mine (a session touched /admin/, i.e. Ross)
+-- are recomputed across the whole table after each ingest, so backfilling an older
+-- day is self-correcting.
+CREATE TABLE traffic_visitor_days (
+  day      DATE NOT NULL,
+  visitor  BINARY(16) NOT NULL,
+  sessions SMALLINT UNSIGNED NOT NULL DEFAULT 1,     -- split on a 30-minute idle gap
+  requests INT UNSIGNED NOT NULL DEFAULT 0,
+  is_new   TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  is_mine  TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  country  CHAR(2) NULL,
+  device   VARCHAR(16) NULL,
+  browser  VARCHAR(16) NULL,
+  PRIMARY KEY (day, visitor),
+  KEY idx_visitor (visitor)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Referrers, counted only on page requests (every asset carries the site itself
+-- as its referer). Split by `mine` so the dashboard toggle applies here too.
+CREATE TABLE traffic_referrers (
+  day  DATE NOT NULL,
+  mine TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  host VARCHAR(190) NOT NULL,
+  hits INT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (day, mine, host)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Failed requests from human visitors only — a scanner 404ing on /wp-login.php
+-- isn't a bug, but a 404 on an audio clip is.
+CREATE TABLE traffic_errors (
+  day    DATE NOT NULL,
+  mine   TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  status SMALLINT UNSIGNED NOT NULL,
+  path   VARCHAR(190) NOT NULL,
+  hits   INT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (day, mine, status, path)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
