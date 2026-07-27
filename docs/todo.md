@@ -143,7 +143,7 @@ marked otherwise.
         Options`/`All` in the vhost, and if Dreamhost disallowed it every request would 500. Confirm
         `curl -sI https://namastesano.com/` is 200 and `curl -o /dev/null -w '%{http_code}'
         https://namastesano.com/js/` is 403; if the site 500s, revert this one line and redeploy.
-- [ ] **T42 · Validate and scope push subscriptions** — `api/push-subscribe.php` accepts any
+- [x] **T42 · Validate and scope push subscriptions** — `api/push-subscribe.php` accepts any
       non-empty string ≤500 bytes as `endpoint`, and `tools/send-reminders.php` POSTs to it hourly,
       so any self-registered user turns the server into a blind SSRF client (loopback/LAN probing;
       the attacker never sees the response, so this is request-forgery, not exfiltration). Require
@@ -152,6 +152,31 @@ marked otherwise.
       anyone holding another user's endpoint string can **reassign that device to their own
       account** — scope the update to the owner instead. Also validate `p256dh` (65 bytes,
       leading `0x04`) / `auth` (16 bytes) as base64url, and cap rows per user.
+  - [x] **Delivered (2026-07-27)** — `push_endpoint_ok()` / `push_key_ok()` in `api/lib.php`, applied
+        in `push-subscribe.php` **before** `require_user()` so the whole surface stays DB-free
+        testable. Endpoint must be `https`, no userinfo, no explicit port, host in `PUSH_HOSTS`
+        (Apple / FCM / Mozilla) or under `.notify.windows.com`. An **allowlist, not a private-IP
+        blocklist** — the endpoint is a hostname, so it can resolve anywhere and re-resolve
+        elsewhere before the cron runs an hour later. Ownership: insert first and let
+        `UNIQUE(endpoint)` decide (no SELECT-then-INSERT race, no gap lock), then allow the update
+        only if the caller owns the row **or** presents that subscription's own keys
+        (`hash_equals`) — which keeps the legitimate "same phone, different account" re-attach
+        working while blocking a device takeover by anyone who read an endpoint out of an ops log
+        (the very leak T51 describes); otherwise `403 endpoint_taken`. Cap of 20 rows per user,
+        oldest pruned. `tools/send-reminders.php` re-checks both on read, since existing rows
+        predate this — it **skips and reports**, never deletes, so a legitimate row rejected by a
+        stale allowlist stays visible and fixable. Verified the one live subscription first
+        (`web.push.apple.com`, `p256dh` 87 chars, `auth` 22) so the rules can't strand Ross's own
+        iPhone. Tests: 24 assertions in `tests/api/helpers.test.php` (loopback, cloud metadata,
+        userinfo trick `https://web.push.apple.com@evil.test/`, lookalike host, undotted suffix,
+        every key shape), 6 HTTP guard specs including one asserting a **valid** Apple subscription
+        reaches 401 rather than being rejected, a DB-backed rebind test in `integration.spec.mjs`
+        (CI only — no local MySQL), and `tests/data/push-allowlist.test.mjs` diffing the two copies
+        of the allowlist (confirmed to fail on both host drift and logic drift). **The per-user cap
+        is not covered by a test** — there's no read endpoint to observe row counts through, so it
+        rests on review. **Adding a browser means editing two files** (see CLAUDE.md).
+        Unblocks T52, whose remaining work is now just the `try`/`catch` around `flush()` and
+        pruning on repeated failure.
 - [ ] **T43 · Fix `api/state.php` write handling** — the file lacks `declare(strict_types=1)` (it's
       file-scoped, so `lib.php`'s doesn't cover it), and `json_encode()`'s return is unchecked.
       Verified: a state containing `1e999` decodes to `INF`, re-encodes to `false`, and

@@ -14,6 +14,7 @@ const LOCK_MINUTES = 15;
 const LOGIN_IP_WINDOW_MINUTES = 15; // per-IP login throttle window
 const LOGIN_IP_MAX = 30; // failed logins per IP per window before a 429
 const MAX_STATE_BYTES = 1048576;
+const MAX_PUSH_SUBS_PER_USER = 20;
 
 // Fail closed: never surface a stack trace or the DB DSN to the client. Any
 // uncaught exception (a PDO error, a bad config, register.php's re-thrown
@@ -135,6 +136,62 @@ function require_admin(): int
 		respond(403, ['error' => 'forbidden']);
 	}
 	return $userId;
+}
+
+// --- Web Push subscriptions -------------------------------------------------
+// A subscription endpoint is a URL *the server itself* POSTs to, every hour, from
+// tools/send-reminders.php. So an unvalidated one doesn't just store junk — it
+// points the host's outbound HTTP at whatever address the caller likes.
+//
+// The allowlist is deliberate. Rejecting private/loopback IPs is the obvious
+// alternative and it does not work: the endpoint is a *hostname*, it can resolve
+// anywhere, and it can resolve somewhere else by the time the cron runs an hour
+// later. The set of real Web Push services is small and changes about once a
+// decade, so naming them is both stronger and simpler.
+//
+// Keep in sync with the copy in tools/send-reminders.php, which re-checks rows
+// that predate this validation (drift-guarded by tests/data/push-allowlist.test.mjs).
+const PUSH_HOSTS = [
+	'web.push.apple.com', // Safari / iOS
+	'fcm.googleapis.com', // Chrome, Edge, Samsung, Opera — every Chromium
+	'updates.push.services.mozilla.com', // Firefox
+];
+const PUSH_HOST_SUFFIXES = ['.notify.windows.com']; // WNS, per-region subdomains
+
+function push_endpoint_ok(string $endpoint): bool
+{
+	$parts = parse_url($endpoint);
+	// No userinfo and no explicit port: `https://web.push.apple.com@evil.test/`
+	// parses with host `evil.test`, and a real push service is always on 443.
+	if (!is_array($parts) || ($parts['scheme'] ?? '') !== 'https' || isset($parts['port']) || isset($parts['user'])) {
+		return false;
+	}
+	$host = strtolower($parts['host'] ?? '');
+	if ($host === '') {
+		return false;
+	}
+	if (in_array($host, PUSH_HOSTS, true)) {
+		return true;
+	}
+	foreach (PUSH_HOST_SUFFIXES as $suffix) {
+		if (str_ends_with($host, $suffix)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+// A subscription key is base64url of a fixed-length binary value: p256dh is an
+// uncompressed P-256 point (65 bytes, leading 0x04), auth is 16 random bytes.
+// Anything else can only fail later — inside the cron's encryption step, where
+// it takes the whole run down with it.
+function push_key_ok(string $key, int $bytes, int $firstByte = -1): bool
+{
+	$raw = base64_decode(strtr($key, '-_', '+/'), true);
+	if ($raw === false || strlen($raw) !== $bytes) {
+		return false;
+	}
+	return $firstByte < 0 || ord($raw[0]) === $firstByte;
 }
 
 // updated_at (DATETIME(3), server zone) -> epoch milliseconds, via SQL so PHP

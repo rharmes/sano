@@ -68,7 +68,7 @@ change both) → `css/admin.css` (admin dashboard only).
 | `logout.php` | Clears the `sano_session` cookie. |
 | `state.php` | `GET` fetch / `PUT` push the app-state blob; revision conflict → 409. Returns `isAdmin`. |
 | `reminder.php` | `GET`/`POST` the per-account `reminder_hour` (0–23) + `reminder_tz` (IANA). |
-| `push-subscribe.php` / `push-unsubscribe.php` | Store / delete a per-device Web Push subscription. |
+| `push-subscribe.php` / `push-unsubscribe.php` | Store / delete a per-device Web Push subscription. Subscribe validates the endpoint against the `PUSH_HOSTS` allowlist and the keys against their fixed byte lengths (T42, `lib.php`), and re-attaching an endpoint to a different account requires presenting that subscription's own keys. |
 | `admin-users.php` | Admin: every account's last-sync, streak, graduated item ids (for path position). |
 | `admin-reset-password.php` | Admin: argon2id reset + clears that user's sessions. |
 | `admin-delete-user.php` | Admin: delete a user (cascades app_state/sessions/subscriptions); self-delete blocked. |

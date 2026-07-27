@@ -129,7 +129,11 @@ routing: `tools/tts/README.md`.
   cache-first) and handles `push`. A reminder needs **both** a per-device subscription (`js/push.js` →
   `push-subscribe.php`) **and** a per-account time (`reminder_hour` / `reminder_tz` via `reminder.php`);
   `tools/send-reminders.php` dispatches hourly via server cron (not in the rsync). VAPID public key is
-  baked into `js/push.js`; the private key is in `sano-config.php`.
+  baked into `js/push.js`; the private key is in `sano-config.php`. The subscription `endpoint` is a URL
+  **the server POSTs to**, so it's validated against a small **allowlist of real push services**
+  (`PUSH_HOSTS`, T42) — **supporting a new browser means adding its host in two places**, `api/lib.php`
+  and `tools/send-reminders.php` (which can't require the docroot; `tests/data/push-allowlist.test.mjs`
+  fails if they drift). Rules + the endpoint-ownership check: `@docs/data-model.md`.
 - **Live-DB schema changes** go through a one-off idempotent `tools/migrate-*.php` — **never re-apply
   `schema.sql`** to an existing DB; a new column that `login.php` / `state.php` SELECT must be migrated
   **before** deploying the code.

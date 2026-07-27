@@ -97,11 +97,65 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $candidates = $stmt->fetchAll();
 
+// Rows stored before api/push-subscribe.php started validating them (T42) can
+// hold any endpoint string and any key shape, so re-check here rather than
+// trusting the table: the endpoint is a URL *this script* POSTs to, and a
+// malformed key throws inside the encryption step, which takes the whole run
+// down with it. A failing row is skipped and reported, never deleted — a
+// legitimate subscription rejected by a stale allowlist should be visible and
+// fixable, not silently destroyed.
+//
+// Mirrors PUSH_HOSTS / push_endpoint_ok / push_key_ok in api/lib.php; this script
+// runs from ~/sano-tools/ on the server and can't require the docroot's lib.php,
+// so the copy is deliberate (drift-guarded by tests/data/push-allowlist.test.mjs).
+const PUSH_HOSTS = [
+	'web.push.apple.com', // Safari / iOS
+	'fcm.googleapis.com', // Chrome, Edge, Samsung, Opera — every Chromium
+	'updates.push.services.mozilla.com', // Firefox
+];
+const PUSH_HOST_SUFFIXES = ['.notify.windows.com']; // WNS, per-region subdomains
+
+function push_endpoint_ok(string $endpoint): bool
+{
+	$parts = parse_url($endpoint);
+	if (!is_array($parts) || ($parts['scheme'] ?? '') !== 'https' || isset($parts['port']) || isset($parts['user'])) {
+		return false;
+	}
+	$host = strtolower($parts['host'] ?? '');
+	if ($host === '') {
+		return false;
+	}
+	if (in_array($host, PUSH_HOSTS, true)) {
+		return true;
+	}
+	foreach (PUSH_HOST_SUFFIXES as $suffix) {
+		if (str_ends_with($host, $suffix)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function push_key_ok(string $key, int $bytes, int $firstByte = -1): bool
+{
+	$raw = base64_decode(strtr($key, '-_', '+/'), true);
+	if ($raw === false || strlen($raw) !== $bytes) {
+		return false;
+	}
+	return $firstByte < 0 || ord($raw[0]) === $firstByte;
+}
+
 // Filter in PHP (not SQL) so we never depend on the MySQL timezone tables being
 // loaded: a subscription is due when it's the user's chosen hour in their own
 // zone and they haven't studied yet today (local date).
 $rows = [];
+$rejected = 0;
 foreach ($candidates as $r) {
+	if (!push_endpoint_ok($r['endpoint']) || !push_key_ok($r['p256dh'], 65, 0x04) || !push_key_ok($r['auth_secret'], 16)) {
+		fwrite(STDERR, "skip {$r['username']}: sub {$r['sub_id']} failed validation (kept, not sent)\n");
+		$rejected++;
+		continue;
+	}
 	try {
 		$now = new DateTime('now', new DateTimeZone($r['reminder_tz']));
 	} catch (Exception $e) {
@@ -117,6 +171,10 @@ foreach ($candidates as $r) {
 		}
 	}
 	$rows[] = $r;
+}
+
+if ($rejected > 0) {
+	fwrite(STDERR, "$rejected subscription(s) failed validation and were skipped\n");
 }
 
 if (!$rows) {

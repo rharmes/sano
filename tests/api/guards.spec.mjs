@@ -157,6 +157,42 @@ test.describe('push endpoints', () => {
 			body: { error: 'missing_endpoint' },
 		});
 	});
+
+	// T42 — the endpoint is a URL the hourly cron POSTs to, so it is validated against
+	// an allowlist of the real push services before anything is stored. These run
+	// before auth, so they are reachable here with no database.
+	const b64url = (bytes) => Buffer.from(bytes).toString('base64url');
+	const KEYS = { p256dh: b64url([4, ...Array(64).fill(0x11)]), auth: b64url(Array(16).fill(0x22)) };
+	const APPLE = 'https://web.push.apple.com/QSAgent-test';
+
+	for (const [label, endpoint] of [
+		['loopback', 'https://127.0.0.1/x'],
+		['cloud metadata', 'https://169.254.169.254/latest/meta-data/'],
+		['plaintext http', 'http://web.push.apple.com/x'],
+		['a lookalike host', 'https://web.push.apple.com.evil.test/x'],
+		['userinfo before a real host', 'https://web.push.apple.com@evil.test/x'],
+	]) {
+		test(`subscribe POST with ${label} → 400 bad_endpoint`, async ({ request }) => {
+			const r = await read(await request.post('/api/push-subscribe.php', { headers: CSRF, data: { endpoint, keys: KEYS } }));
+			expect(r).toEqual({ status: 400, body: { error: 'bad_endpoint' } });
+		});
+	}
+
+	test('subscribe POST with a real endpoint but malformed keys → 400 bad_keys', async ({ request }) => {
+		const data = { endpoint: APPLE, keys: { p256dh: 'AAAA', auth: 'BBBB' } };
+		expect(await read(await request.post('/api/push-subscribe.php', { headers: CSRF, data }))).toEqual({
+			status: 400,
+			body: { error: 'bad_keys' },
+		});
+	});
+
+	// The mirror image of the rejections above: a genuine subscription must sail
+	// through validation and stop only at auth. Guards the allowlist against being
+	// tightened into something that silently breaks real devices.
+	test('subscribe POST with a valid Apple subscription → 401 auth (not rejected by validation)', async ({ request }) => {
+		const r = await read(await request.post('/api/push-subscribe.php', { headers: CSRF, data: { endpoint: APPLE, keys: KEYS } }));
+		expect(r).toEqual({ status: 401, body: { error: 'auth' } });
+	});
 });
 
 test.describe('admin endpoints run method, CSRF, and field validation before the admin check', () => {

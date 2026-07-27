@@ -36,6 +36,50 @@ $_SERVER['HTTP_X_SANO_REQUEST'] = '1';
 require_csrf_header();
 check('require_csrf_header(): returns when the header is present', true);
 
+// --- Web Push validation (T42) ----------------------------------------------
+// push_endpoint_ok() decides where the hourly cron is willing to send an outbound
+// POST, so the interesting cases are the ones that *look* like a push service.
+$b64url = fn(string $raw): string => rtrim(strtr(base64_encode($raw), '+/', '-_'), '=');
+$goodP256 = $b64url("\x04" . str_repeat("\x11", 64)); // 65 bytes, uncompressed-point tag
+$goodAuth = $b64url(str_repeat("\x22", 16)); // 16 bytes
+
+// Shapes taken from the one real subscription on the server: 87 and 22 chars.
+check('push_key_ok: a real-shaped p256dh is 87 chars', strlen($goodP256) === 87);
+check('push_key_ok: a real-shaped auth is 22 chars', strlen($goodAuth) === 22);
+
+foreach (
+	[
+		'https://web.push.apple.com/QSAgent' => true, // Safari / iOS — the live one
+		'https://fcm.googleapis.com/fcm/send/abc123' => true,
+		'https://updates.push.services.mozilla.com/wpush/v2/abc' => true,
+		'https://db5p.notify.windows.com/w/?token=abc' => true, // WNS regional subdomain
+		'http://web.push.apple.com/x' => false, // plaintext
+		'https://127.0.0.1/x' => false, // loopback — the SSRF target
+		'https://169.254.169.254/latest/meta-data/' => false, // cloud metadata
+		'https://localhost/x' => false,
+		'https://web.push.apple.com@evil.test/x' => false, // userinfo trick: host is evil.test
+		'https://web.push.apple.com:8080/x' => false, // explicit port
+		'https://web.push.apple.com.evil.test/x' => false, // lookalike suffix
+		'https://evilnotify.windows.com/x' => false, // suffix must be dot-anchored
+		'ftp://web.push.apple.com/x' => false,
+		'' => false,
+		'not a url' => false,
+	]
+	as $endpoint => $want
+) {
+	$label = $endpoint === '' ? '(empty)' : $endpoint;
+	check("push_endpoint_ok: $label -> " . ($want ? 'allowed' : 'rejected'), push_endpoint_ok($endpoint) === $want);
+}
+
+check('push_key_ok: a well-formed p256dh passes', push_key_ok($goodP256, 65, 0x04));
+check('push_key_ok: a well-formed auth passes', push_key_ok($goodAuth, 16));
+check('push_key_ok: a p256dh of the wrong length fails', !push_key_ok($b64url("\x04" . str_repeat("\x11", 32)), 65, 0x04));
+check('push_key_ok: a p256dh without the 0x04 point tag fails', !push_key_ok($b64url("\x02" . str_repeat("\x11", 64)), 65, 0x04));
+check('push_key_ok: an auth of the wrong length fails', !push_key_ok($b64url(str_repeat("\x22", 15)), 16));
+check('push_key_ok: non-base64 fails', !push_key_ok('!!!not base64!!!', 16));
+check('push_key_ok: empty fails', !push_key_ok('', 16));
+check('push_key_ok: the p256dh is not accepted as an auth', !push_key_ok($goodP256, 16));
+
 if ($failures > 0) {
 	fwrite(STDERR, "\n$failures PHP helper assertion(s) failed.\n");
 	exit(1);

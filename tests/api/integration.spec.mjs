@@ -16,6 +16,13 @@ let counter = 0;
 const uniqueName = () => `u${Date.now().toString(36)}${counter++}`;
 const register = (request, username, password = 'password123') => request.post('/api/register.php', { headers: CSRF, data: { username, password } });
 
+// A well-formed Web Push subscription, as api/lib.php now requires (T42): the endpoint
+// must be a real push service, p256dh an uncompressed P-256 point (65 bytes, leading
+// 0x04) and auth 16 bytes, both base64url. Vary `fill` for a *different* device's keys.
+const b64url = (bytes) => Buffer.from(bytes).toString('base64url');
+const pushKeys = (fill = 0x11) => ({ p256dh: b64url([4, ...Array(64).fill(fill)]), auth: b64url(Array(16).fill(fill)) });
+const pushEndpoint = () => `https://web.push.apple.com/${uniqueName()}`;
+
 test('register creates an account, auto-logs-in, and rejects a duplicate username', async ({ request }) => {
 	const username = uniqueName();
 	const res = await register(request, username);
@@ -31,6 +38,36 @@ test('register creates an account, auto-logs-in, and rejects a duplicate usernam
 
 test('a logged-out state request is 401', async ({ request }) => {
 	expect((await request.get('/api/state.php')).status()).toBe(401);
+});
+
+// T42. The endpoint is stored under UNIQUE(endpoint), so re-subscribing has to decide
+// who owns the row. Re-attaching a device to a different account is legitimate (sign
+// out, sign in as someone else on the same phone) — but the endpoint string alone must
+// not be enough to do it, or anyone who reads one out of an ops log can move that
+// device onto their own account. The device proves itself with the subscription keys.
+test('a push subscription is refreshed by its own device but not stealable with the endpoint alone', async ({ request, playwright, baseURL }) => {
+	const keys = pushKeys(0x11);
+	const otherKeys = pushKeys(0x33); // a different device's subscription
+	const endpoint = pushEndpoint();
+	const subscribe = (ctx, data) => ctx.post('/api/push-subscribe.php', { headers: CSRF, data });
+
+	await register(request, uniqueName());
+	// A genuine subscription is accepted end to end — the allowlist doesn't break it.
+	expect((await subscribe(request, { endpoint, keys })).status()).toBe(200);
+	// The same device re-subscribing on the same account just refreshes the row.
+	expect((await subscribe(request, { endpoint, keys })).status()).toBe(200);
+
+	const other = await playwright.request.newContext({ baseURL });
+	await register(other, uniqueName());
+
+	// Knows the endpoint, not the keys: refused.
+	const stolen = await subscribe(other, { endpoint, keys: otherKeys });
+	expect(stolen.status()).toBe(403);
+	expect((await stolen.json()).error).toBe('endpoint_taken');
+
+	// Same physical device, now signed in as the second account: re-attaches.
+	expect((await subscribe(other, { endpoint, keys })).status()).toBe(200);
+	await other.dispose();
 });
 
 test('state sync increments revision and rejects a stale base revision (409 conflict)', async ({ request }) => {
@@ -86,7 +123,7 @@ test('the reminder schedule round-trips and validates its inputs', async ({ requ
 
 test('push subscriptions can be stored and removed', async ({ request }) => {
 	await register(request, uniqueName());
-	const sub = { endpoint: `https://push.example/${uniqueName()}`, keys: { p256dh: 'a'.repeat(80), auth: 'b'.repeat(20) } };
+	const sub = { endpoint: pushEndpoint(), keys: pushKeys() };
 	expect((await request.post('/api/push-subscribe.php', { headers: CSRF, data: sub })).status()).toBe(200);
 	expect((await request.post('/api/push-unsubscribe.php', { headers: CSRF, data: { endpoint: sub.endpoint } })).status()).toBe(204); // 204 No Content
 });

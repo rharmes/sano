@@ -205,11 +205,35 @@ words by review debt and is review-dominant.
 | `sessions` | `token_hash` PK (sha256), `user_id` FK, `created_at`, `expires_at` (90 days) |
 | `signup_attempts` | `ip`, `created_at` (per-IP hourly signup throttle) |
 | `login_attempts` | `ip`, `created_at` (per-IP login throttle) |
-| `push_subscriptions` | `id` PK, `user_id` FK, `endpoint` UNIQUE, `p256dh`, `auth_secret`, `created_at`, `last_success_at`, `last_failure_at`, `failure_count` |
+| `push_subscriptions` | `id` PK, `user_id` FK, `endpoint` UNIQUE, `p256dh`, `auth_secret`, `created_at`, `last_success_at`, `last_failure_at`, `failure_count` — see the ownership rule below |
 | `traffic_days` | `day` PK, `requests` (human), `bot_requests`, `bytes`, `errors_4xx`, `errors_5xx`, `ingested_at` — also the ingest ledger: a row exists only for a parsed day |
 | `traffic_visitor_days` | `(day, visitor)` PK, `sessions`, `requests`, `is_new`, `is_mine`, `country`, `device`, `browser` — the grain every traffic number derives from |
 | `traffic_referrers` | `(day, mine, host)` PK, `hits` (page arrivals only) |
 | `traffic_errors` | `(day, mine, status, path)` PK, `hits` (human visitors only) |
+
+### Push subscriptions (T42) — what may be stored, and who owns a row
+
+A subscription `endpoint` is a URL **the server itself POSTs to**, hourly, from
+`tools/send-reminders.php` — so it is validated on write, not merely stored.
+`push_endpoint_ok()` (`api/lib.php`) requires `https`, no userinfo, no explicit port, and a
+host in `PUSH_HOSTS` (`web.push.apple.com`, `fcm.googleapis.com`,
+`updates.push.services.mozilla.com`) or under `PUSH_HOST_SUFFIXES` (`.notify.windows.com`).
+An allowlist rather than a private-IP blocklist, because the endpoint is a *hostname*: it can
+resolve anywhere, and resolve somewhere else by the time the cron runs. **Adding a browser
+means adding its host in two places** — `api/lib.php` and `tools/send-reminders.php`, which
+carries its own copy because it runs from `~/sano-tools/` and can't require the docroot
+(`tests/data/push-allowlist.test.mjs` fails if they drift). `push_key_ok()` requires `p256dh`
+to be base64url of a 65-byte uncompressed P-256 point (leading `0x04`) and `auth` of 16 bytes;
+a malformed key would otherwise throw inside the cron's encryption step and take down that
+hour's whole run.
+
+Because `endpoint` is UNIQUE, re-subscribing has to decide who owns the row. Re-attaching a
+device to a **different** account is legitimate — one phone, sign out, sign in as someone else
+— but the endpoint string alone must not be enough to do it, or anyone who reads one out of an
+ops log can move that device onto their own account. So the update is allowed when the caller
+already owns the row **or** presents that subscription's own `p256dh` + `auth` (`hash_equals`);
+otherwise `403 endpoint_taken`. Each account keeps at most `MAX_PUSH_SUBS_PER_USER` (20) rows,
+oldest pruned first.
 
 ### Traffic aggregates (T40) — the definitions behind the numbers
 
