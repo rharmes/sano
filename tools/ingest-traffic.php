@@ -84,10 +84,24 @@ const MAX_ROWS_PER_DAY = 500; // distinct referrer / error rows stored per day
 // binary so lookups are an fseek binary search — a 128M PHP CLI can't hold the 8MB
 // CSV as arrays, and this keeps every lookup on our own disk (no third party ever
 // sees a visitor's address, and nothing is fetched at app runtime).
-const GEO_V4_URL = 'https://cdn.jsdelivr.net/npm/@ip-location-db/geo-whois-asn-country/geo-whois-asn-country-ipv4-num.csv';
-const GEO_V6_URL = 'https://cdn.jsdelivr.net/npm/@ip-location-db/geo-whois-asn-country/geo-whois-asn-country-ipv6.csv';
+// Pinned to the 2.3 line rather than floating on `latest` (T50). Not to an exact version:
+// this package publishes daily — the version *is* a datestamp — so an exact pin would
+// freeze the very data `--update-geo` exists to refresh, and no checksum can be recorded
+// for content that legitimately changes every day. What a range pin does buy is the
+// failure that would actually hurt: a major release reordering the CSV columns, which
+// parses "successfully" into a garbage index. Bump this deliberately when 2.4 lands.
+const GEO_PKG = '@ip-location-db/geo-whois-asn-country@2.3';
+const GEO_V4_URL = 'https://cdn.jsdelivr.net/npm/' . GEO_PKG . '/geo-whois-asn-country-ipv4-num.csv';
+const GEO_V6_URL = 'https://cdn.jsdelivr.net/npm/' . GEO_PKG . '/geo-whois-asn-country-ipv6.csv';
 const GEO_V4_REC = 10; // uint32 start, uint32 end, 2-char country
 const GEO_V6_REC = 34; // 16-byte start, 16-byte end, 2-char country
+// Floors that a compiled index has to clear before it may replace the one on disk. The
+// absolute one catches an empty file or an HTML error page served with a 200; the ratio
+// catches the nastier case, a download that stopped half way and would otherwise install
+// a plausible-looking index that has simply lost every range above the cut.
+// Measured 2026-07-27: 334,373 v4 ranges, 216,295 v6.
+const GEO_MIN_RANGES = 50000;
+const GEO_MIN_RATIO = 0.9;
 
 // Bot-shaped User-Agents. "monitor" catches DreamHost SiteMonitor (~45% of the log);
 // the tool names catch scripted fetches that don't announce themselves as crawlers.
@@ -720,8 +734,8 @@ function geo_update(string $dir, ?string $localCsv): void
 		fwrite(STDERR, "cannot create $dir\n");
 		exit(1);
 	}
-	$jobs = $localCsv !== null ? [[$localCsv, null]] : [[GEO_V4_URL, 'v4'], [GEO_V6_URL, 'v6']];
-	foreach ($jobs as [$src, $kind]) {
+	$jobs = $localCsv !== null ? [[$localCsv, null, false]] : [[GEO_V4_URL, 'v4', true], [GEO_V6_URL, 'v6', true]];
+	foreach ($jobs as [$src, $kind, $remote]) {
 		$in = @fopen($src, 'rb');
 		if (!$in) {
 			fwrite(STDERR, "cannot read $src\n");
@@ -734,11 +748,22 @@ function geo_update(string $dir, ?string $localCsv): void
 			fwrite(STDERR, "empty source $src\n");
 			exit(1);
 		}
+		// Is this the range CSV at all? A CDN that answers a bad path with an HTML error
+		// page still answers 200, and every one of its lines would simply be skipped
+		// below — leaving a valid, empty index to overwrite the good one.
+		if (substr_count(trim($first), ',') < 2) {
+			fwrite(STDERR, "$src is not the range CSV — first line: " . substr(trim($first), 0, 80) . "\n");
+			exit(1);
+		}
 		if ($kind === null) {
 			$kind = ctype_digit(explode(',', trim($first))[0] ?? '') ? 'v4' : 'v6';
 		}
 		$tmp = $dir . "/geo-ip$kind.bin.tmp";
 		$out = fopen($tmp, 'wb');
+		if (!$out) {
+			fwrite(STDERR, "cannot write $tmp\n");
+			exit(1);
+		}
 		$count = 0;
 		$line = $first;
 		do {
@@ -748,28 +773,64 @@ function geo_update(string $dir, ?string $localCsv): void
 			}
 			[$start, $end, $cc] = $cols;
 			$cc = strtoupper(substr($cc, 0, 2));
-			if (strlen($cc) !== 2) {
+			// ctype_alpha, not just a length check: this value ends up in a CHAR(2) on a
+			// utf8mb4 connection, and two arbitrary bytes out of a malformed row throw
+			// inside the ingest's write transaction — which, uncaught, would kill the
+			// nightly run every night until somebody read the log.
+			if (strlen($cc) !== 2 || !ctype_alpha($cc)) {
 				continue;
 			}
 			if ($kind === 'v4') {
 				if (!ctype_digit($start) || !ctype_digit($end)) {
 					continue;
 				}
-				fwrite($out, pack('NN', (int) $start, (int) $end) . $cc);
+				$ok = fwrite($out, pack('NN', (int) $start, (int) $end) . $cc);
 			} else {
 				$s = @inet_pton($start);
 				$e = @inet_pton($end);
 				if ($s === false || $e === false || strlen($s) !== 16 || strlen($e) !== 16) {
 					continue;
 				}
-				fwrite($out, $s . $e . $cc);
+				$ok = fwrite($out, $s . $e . $cc);
+			}
+			if ($ok === false) {
+				fclose($out);
+				@unlink($tmp);
+				fwrite(STDERR, "write failed for $tmp (disk full?)\n");
+				exit(1);
 			}
 			$count++;
 		} while (($line = fgets($in)) !== false);
 		fclose($in);
-		fclose($out);
-		rename($tmp, $dir . "/geo-ip$kind.bin");
-		echo "geo $kind: $count ranges -> $dir/geo-ip$kind.bin\n";
+		if (!fclose($out)) {
+			@unlink($tmp);
+			fwrite(STDERR, "could not flush $tmp\n");
+			exit(1);
+		}
+
+		// Nothing replaces a working index until it proves it is at least as complete as
+		// the one already there. Without this the failure is silent and total: every
+		// country reads NULL from then on, and the only trace is one "0 ranges" line in a
+		// log nobody reads. The old index staying put is always the better outcome.
+		//
+		// The absolute floor is for downloads only. A `--from` file is an operator naming
+		// a file deliberately — the test fixtures compile three ranges on purpose — so
+		// there it only has to beat "empty", plus the ratio if there's an index at risk.
+		$target = $dir . "/geo-ip$kind.bin";
+		$have = is_file($target) ? intdiv((int) filesize($target), $kind === 'v4' ? GEO_V4_REC : GEO_V6_REC) : 0;
+		$floor = max($remote ? GEO_MIN_RANGES : 1, (int) ($have * GEO_MIN_RATIO));
+		if ($count < $floor) {
+			@unlink($tmp);
+			fwrite(STDERR, "geo $kind: only $count ranges, expected at least $floor — keeping the existing index.\n");
+			fwrite(STDERR, "  (if the source really did shrink, delete $target and re-run)\n");
+			exit(1);
+		}
+		if (!rename($tmp, $target)) {
+			@unlink($tmp);
+			fwrite(STDERR, "could not replace $target\n");
+			exit(1);
+		}
+		echo "geo $kind: $count ranges -> $target\n";
 	}
 }
 

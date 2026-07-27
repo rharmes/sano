@@ -126,7 +126,7 @@ marked otherwise.
 
 **Order to work in** (the entries stay in ID order below, since IDs are how we refer to them; this
 is the priority, re-ranked 2026-07-27 as items got measured rather than assumed):
-~~T57~~ → ~~T58~~ → ~~T53~~ → **T50** → T55 → T54 (what's left of it).
+~~T57~~ → ~~T58~~ → ~~T53~~ → ~~T50~~ → **T55** → T54 (what's left of it).
 T57 and T58 were pulled out of T54's bundle: a throttle that can be bypassed wholesale outranks
 "small independent items", and an `innerHTML` sink whose signature invites a username is a different
 kind of thing from a missing header. Ten of the original fifteen are done.
@@ -409,7 +409,7 @@ kind of thing from a missing header. Ten of the original fifteen are done.
         visitor. `@docs/data-model.md` definitions updated.
         **Follow-up for the deploy:** re-ingest with `--all` (9 log files are still on disk,
         8 days stored) so the stored `is_mine` flags are recomputed under the corrected rule.
-- [ ] **T50 · Harden `--update-geo`** — the two CC0 CSV URLs are unpinned jsDelivr `latest` paths
+- [x] **T50 · Harden `--update-geo`** — the two CC0 CSV URLs are unpinned jsDelivr `latest` paths
       with no checksum, and a truncated download or an HTML error page silently produces a corrupt
       or empty index that `rename()` writes over the good one — after which every country reads
       `NULL` and the only signal is a `geo v4: 0 ranges` line. Pin the package version, require a
@@ -418,6 +418,30 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       `CHAR(2)` on a utf8mb4 connection throws inside the write transaction, which with no exception
       handler kills the nightly run every night until someone notices). TLS verification itself is
       fine — PHP's https wrapper verifies peer and hostname by default.
+      **Delivered (2026-07-27)** — all of it except the exact pin, deliberately. The package
+      publishes **daily** (the version *is* a datestamp: `2.3.2026061719`), so an exact pin would
+      freeze the data `--update-geo` exists to refresh, and no checksum can be recorded for content
+      that legitimately changes every day. Pinned to the **`@2.3` line** instead, which still buys
+      the failure that the count checks can't see — a major release reordering the columns and
+      compiling a garbage index that passes every sanity test. Say the word if you'd rather have the
+      exact pin plus a checksum and accept the manual bumps.
+      Two floors before `rename()`: an absolute one (50,000) for **downloads only**, and a ratio one
+      (90% of the index being replaced) for any source. The ratio is what catches a half-finished
+      download, which an absolute floor waves straight through — measured: a 100,000-row truncation
+      of the real 334,373-row CSV is refused, and the good index survives byte-for-byte.
+      Also: the first line must look like the range CSV at all (a CDN answers a bad path with an
+      HTML page and a **200**, and every line of it would simply be skipped, leaving a valid empty
+      index); `fopen`/`fwrite`/`fclose`/`rename` returns are all checked; the temp file is unlinked
+      on every failure path; and `ctype_alpha($cc)` joins the length check, since two arbitrary
+      bytes into a `CHAR(2)` on a utf8mb4 connection throw inside the ingest's write transaction.
+      Real counts measured against upstream: **334,373** v4 ranges, **216,295** v6.
+      **Caught before committing:** the first version applied the absolute floor to `--from` too,
+      which broke **15 tests** — the geo fixtures are three ranges on purpose. A file the operator
+      names is not a download; it now only has to beat "empty", plus the ratio if there's an index
+      at risk.
+      Testing: `tests/data/geo-index-guard.test.mjs` — six cases, no network (HTML page, empty file,
+      shrunken source, temp-file cleanup, the small-fixture path that regression broke, and that the
+      URLs carry a version). Fault-injecting the guard away fails the shrunken-source test.
 - [x] **T51 · Keep secrets and device IDs out of the cron logs** — none of the four CLI scripts
       installs a `set_exception_handler` (unlike `api/lib.php`), so an uncaught `PDOException` prints
       a full stack trace into `~/sano-traffic.log` / `~/sano-reminders.log`; PHP includes call
