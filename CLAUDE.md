@@ -5,6 +5,10 @@ frontend, **no build step** (`index.html`, `css/`, `js/`, `fonts/`, `tools/`) pl
 PHP/MySQL sync API in `api/`. Deployed to namastesano.com (Apache) via `tools/deploy.sh`;
 Ross tests on an iPhone running iOS 26.
 
+The global `~/.claude/CLAUDE.md` defaults apply, with two exceptions stated here: **this
+repo commits directly to `main`** (workflow step 6 — never a side branch, no PRs), and
+tasks live in **`docs/todo.md`** with `T##` ids, not GitHub Issues.
+
 ## Reference docs (load with `@` at session start instead of scanning the code)
 
 - **`@docs/architecture.md`** — file + function map, the global each script defines, control
@@ -20,13 +24,6 @@ Ross tests on an iPhone running iOS 26.
 Those carry the deep detail; this file keeps the summary, the non-obvious constraints, and the
 workflow. **Keep it current:** when architecture/tooling changes significantly, update this file
 (and the relevant `docs/` file) in the same commit.
-
-## Ask questions, especially when in Planning Mode
-
-- **Interview me about every aspect of a plan until we reach a shared understanding.**  Walk down
-  each branch of the design tree, resolving dependencies between decisions one-by-one. For each
-  question, provide your recommended answer. If a question can be answered by exploring the codebase,
-  explore the codebase instead.
 
 ## Non-negotiable constraints
 
@@ -169,15 +166,10 @@ routing: `tools/tts/README.md`.
    (`python3 -m http.server 8000` works for frontend-only checks, exercising the offline path.)
 6. After approval, **commit directly to `main`** (never a side branch). **Push and deploy only when
    Ross asks.**
-7. Commit message: short imperative summary ending with a period, plus `Co-Authored-By` attribution.
-8. Deploy with `tools/deploy.sh` (`-n` for a dry run) only when asked, then run the live cache check.
+7. Deploy with `tools/deploy.sh` (`-n` for a dry run) only when asked, then run the live cache check.
 
 ## Testing notes (the non-obvious bits)
 
-- **Very low tolerance for flaky tests.** A test that passes only *sometimes* is a defect — in the
-  test or the app — not noise to shrug off. Fix the root cause: wait for the real condition instead of
-  a fixed `waitForTimeout`, click-and-verify-with-retry on a flaky control, freeze animations, or
-  surface a genuine app race. CI `retries` are a backstop for truly unavoidable timing — never the fix.
 - **Test suite** — one entry point `tools/test.sh` (tiers `--static/--unit/--data/--api/--ui`; tier
   table in `@docs/architecture.md`): `node:test` for pure logic + data integrity, Playwright for HTTP
   + browser. Pure helpers are lifted from the classic scripts by `tests/lift.mjs` (no app-code change
@@ -257,14 +249,5 @@ routing: `tools/tts/README.md`.
 
 ## Task list (`docs/todo.md`)
 
-The backlog lives in **`docs/todo.md`** (checkbox Markdown), not here. Keep it authoritative:
-
-- **Add every task to it** — features Ross asks for, suggestions Ross agrees to, and anything
-  discovered mid-work (bugs, follow-ups, review items) — as an unchecked box (`- [ ]`).
-- **Give each task a unique ID** — `T<n>`, the next sequential number with no zero-padding (`T1`,
-  `T2`, … `T12`). Assign it once and never reuse it (even after the task is done), so Ross can refer
-  to any task by its ID.
-- **Tick the box in place** (`- [ ]` → `- [x]`) when a task is delivered, rather than deleting it, so
-  the file doubles as a record of what's done.
-- **Check it at the start of a session**, and update it in the **same** change that adds or delivers a
-  task, so the list never drifts from reality.
+The backlog lives in **`docs/todo.md`** (checkbox Markdown), IDs `T<n>` — sequential, no
+zero-padding. Mechanics per the global file.
