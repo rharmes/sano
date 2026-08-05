@@ -20,6 +20,8 @@ tasks live in **`docs/todo.md`** with `T##` ids, not GitHub Issues.
   components (brand source of truth).
 - **`docs/todo.md`** — the running task backlog (what's outstanding, mostly waiting on Ross); I keep
   it current (see **Task list** below).
+- `docs/todo-archived.md` — the full delivery record of every completed task. **Read on demand,
+  never auto-load** (it's ~1,000 lines of history); `grep` it for a `T##`.
 
 Those carry the deep detail; this file keeps the summary, the non-obvious constraints, and the
 workflow. **Keep it current:** when architecture/tooling changes significantly, update this file
@@ -251,3 +253,11 @@ routing: `tools/tts/README.md`.
 
 The backlog lives in **`docs/todo.md`** (checkbox Markdown), IDs `T<n>` — sequential, no
 zero-padding. Mechanics per the global file.
+
+**Archive on delivery.** When a task is delivered, shrink its entry in `docs/todo.md` to a one-line
+ticked summary and move the full delivery record — decisions, rulings, measured numbers, what was
+deliberately *not* done — to **`docs/todo-archived.md`**, in the **same change**. `todo.md` is
+loaded into context every session, so it stays small (open tasks in full + a ticked-summary
+history); the archive is read only on demand and keeps everything. Same section groupings and the
+same `T##` ids in both files, so an id in a commit message always resolves; **never renumber or
+reuse an id.** Open tasks keep their full entries.

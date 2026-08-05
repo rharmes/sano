@@ -7,6 +7,11 @@ so read or edit it by hand anytime. The items below wait on Ross (a review, a de
 native-speaker check) — they aren't derivable from the code, so they're easy to lose if they leave
 this list. Refer to any task by its ID (e.g. "T3").
 
+**Delivered tasks shrink to one line here**, and their full record — decisions, rulings, measured
+numbers, what was deliberately *not* done — moves to **`docs/todo-archived.md`** in the same change.
+This file is loaded into context every session, so it stays small; the archive is read on demand.
+IDs are never reused, so a `T##` in a commit message still resolves.
+
 ## Backlog tooling
 
 - [ ] **T34 · Lightweight query structure for the backlog** — add a small, greppable tag convention
@@ -27,19 +32,10 @@ this list. Refer to any task by its ID (e.g. "T3").
 - [ ] **T1 · Add voice tags to the conversations** — review `tools/tts/dialogue-scripts.md`, add
       ElevenLabs `[performance tags]` (list + pipeline: `tools/tts/voice-tags.md`), re-map changed
       lines into `js/dialogues.js`, and re-render their audio.
-- [x] **T2 · Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` lag the text
-      after the `[shouting]`/"copying" edits in `bbe8024`; re-render (`synth-app.mjs --dialogues --only greet-pyaro-01` …)
-      + bump `AUDIO_VERSION` once the edits settle. First confirm line-1 नक्कल गरिरहेको ("copying")
-      with a native speaker.
-
-- [x] **T35 · Word clips for standalone single-word items** — `build-words.mjs` built its tile-word
-      inventory from **phrases-unit** sentences only, so (a) a single-word item whose word appears in
-      no phrase had no `audio/words/<slug>.mp3` (the e2e-log 404 for `hajaar.mp3` — हजार tiles in its
-      own SR-05 word-bank recall among distractors) and (b) vocab-unit frames (word-bankable since
-      T32) had no clips for their new words. **Fixed 2026-07-20** with the T29 batch 7–9 merge: the
-      inventory is now every word of every canonical + frame sentence across all units (719 → 1050
-      tile-words; the 331 missing clips rendered in the same pass). CLAUDE.md + architecture.md
-      updated.
+- [x] **T2 · Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` re-rendered to
+      match the text after the `[shouting]`/"copying" edits.
+- [x] **T35 · Word clips for standalone single-word items** — the word inventory now covers every
+      canonical + frame sentence in every unit (719 → 1050 tile-words), 2026-07-20.
 
 ## Content review
 
@@ -89,719 +85,103 @@ this list. Refer to any task by its ID (e.g. "T3").
 
 ## Server & admin
 
-- [x] **T40 · Traffic numbers in the admin dashboard** — surface real usage from the Apache access
-      logs: distinct visitors, repeat sessions, and countries, plus a daily trend chart, a
-      device/browser split, top referrers, and 4xx/5xx errors. **Constraint:** Dreamhost keeps only
-      ~7 days of `~/logs/namastesano.com/https/access.log*`, so anything not captured is lost —
-      history has to accumulate server-side. **Decisions (Ross, 2026-07-26):** nightly cron ingest
-      into MySQL (dashboard reads the DB; today's numbers land tomorrow) · a visitor is a salted
-      `sha256(ip + UA)` hash, never a raw IP · countries from a free CC0 IP→country table kept on the
-      server (no third party ever sees a visitor IP, no runtime external calls) · Users | Traffic
-      tabs on `/admin/` · aggressive multi-signal bot filtering (≈45% of the log is DreamHost
-      SiteMonitor + crawlers + wp-admin scanners) with the excluded count shown · sessions split on a
-      30-minute idle gap, a repeat session is any session after a visitor's first-ever · store only
-      hashes + aggregates · Ross's own visits auto-detected (any visitor whose session touched
-      `/admin/`) and excluded by default behind a toggle · selectable 7 / 30 / 90 / all-time range.
-  - [x] **Delivered (2026-07-26)** — `tools/ingest-traffic.php` (nightly cron in `~/sano-tools/`;
-        `--update-geo` compiles the CC0 CSVs into a fixed-width binary index searched by fseek, since
-        Dreamhost's PHP CLI caps at 128MB) → the four `traffic_*` tables
-        (`tools/migrate-2026-07-traffic.php`, folded into `schema.sql`) → `api/admin-traffic.php` →
-        the Traffic tab (`js/admin-traffic.js` + `.tr-*` in `css/admin.css`; chart series colors are
-        the brand crimson/indigo snapped to the nearest step that clears the dataviz chroma floor in
-        both themes). Tests: `tests/data/traffic-parse.test.mjs` drives the script's DB-free `--json`
-        mode over `tests/fixtures/traffic-access.log`, plus three API guard specs. Dev-seed scenario
-        added. **Known limit:** an AI crawler that fetches only app paths still counts as a visitor —
-        the UA / app-path / crawler-path signals catch the rest. Requiring an audio fetch ("actually
-        did a lesson") is the stricter option if the numbers ever look inflated.
+- [x] **T40 · Traffic numbers in the admin dashboard** — nightly Apache-log ingest → the `traffic_*`
+      tables → the Traffic tab; a visitor is a salted hash, never a raw IP (2026-07-26).
 
 ## Security
 
 Findings from the full security review of 2026-07-26 (six parallel reviews: auth/session, API
 injection & authz, frontend XSS, Apache/exposure, server-side scripts & privacy, secrets/supply
-chain). **Nothing Critical or High was found, and no credential has ever been committed** — the
-auth design (CSPRNG tokens hashed at rest, argon2id, bound parameters throughout, no
-`X-Forwarded-For` trust, no client-settable `is_admin`) held up under scrutiny. The items below are
-the real defects plus the hardening worth doing. Each was confirmed by reading the code path unless
-marked otherwise.
+chain). **Nothing Critical or High was found, and no credential has ever been committed** — the auth
+design (CSPRNG tokens hashed at rest, argon2id, bound parameters throughout, no `X-Forwarded-For`
+trust, no client-settable `is_admin`) held up under scrutiny. All fifteen items — plus T57 and T58,
+split out of T54's bundle once they outgrew "not individually urgent" — are delivered and deployed.
+Findings, rulings, measurements and what was deliberately left undone: `docs/todo-archived.md`.
 
-**Order to work in** (the entries stay in ID order below, since IDs are how we refer to them; this
-is the priority, re-ranked 2026-07-27 as items got measured rather than assumed):
-~~T57~~ → ~~T58~~ → ~~T53~~ → ~~T50~~ → ~~T55~~ → **T54** (what's left of it) (what's left of it).
-T57 and T58 were pulled out of T54's bundle: a throttle that can be bypassed wholesale outranks
-"small independent items", and an `innerHTML` sink whose signature invites a username is a different
-kind of thing from a missing header. Ten of the original fifteen are done.
-
-- [x] **T41 · Turn off Apache directory listing** — `/api/`, `/js/`, `/css/`, `/fonts/` and
-      `/audio/` all serve a full `Index of /…` autoindex (confirmed live: `GET /api/` lists all 11
-      endpoint filenames). `.htaccess` has no `Options -Indexes`, so this is one line at the top of
-      the root file, inherited by every subdirectory. No secret is exposed today — the value is that
-      any future stray file dropped into a synced directory would otherwise be advertised.
-  - [x] **Delivered (2026-07-27)** — `Options -Indexes` at the top of `.htaccess`. Verified against a
-        real Apache 2.4 (macOS `httpd`, serving a copy outside `~/Documents`, which TCC blocks Apache
-        from reading at all): with the file honored, `/js/`, `/css/` and `/api/` return 403 and leak
-        zero filenames, while `/` and `/index.html` still return 200 with all three security headers
-        intact. The `AllowOverride None` control run reproduces the live bug exactly (200 + 14 `.js`
-        filenames), so the check discriminates rather than passing vacuously. Regression guard added
-        to `tools/check.sh`: no other tier can see Apache config — `php -S` ignores `.htaccess` — so
-        the static tier now asserts the security-critical directives in both `.htaccess` files. It
-        strips comments before matching (the first version passed a commented-out directive), and was
-        confirmed to fail when the line is commented out *and* when it's deleted.
-        **Live re-check required immediately after the next deploy:** `Options` needs `AllowOverride
-        Options`/`All` in the vhost, and if Dreamhost disallowed it every request would 500. Confirm
-        `curl -sI https://namastesano.com/` is 200 and `curl -o /dev/null -w '%{http_code}'
-        https://namastesano.com/js/` is 403; if the site 500s, revert this one line and redeploy.
-- [x] **T42 · Validate and scope push subscriptions** — `api/push-subscribe.php` accepts any
-      non-empty string ≤500 bytes as `endpoint`, and `tools/send-reminders.php` POSTs to it hourly,
-      so any self-registered user turns the server into a blind SSRF client (loopback/LAN probing;
-      the attacker never sees the response, so this is request-forgery, not exfiltration). Require
-      `https` + a host allowlist of the real push services. Same file, same fix session: the
-      `UNIQUE KEY` is on `endpoint` alone and the upsert does `user_id = VALUES(user_id)`, so
-      anyone holding another user's endpoint string can **reassign that device to their own
-      account** — scope the update to the owner instead. Also validate `p256dh` (65 bytes,
-      leading `0x04`) / `auth` (16 bytes) as base64url, and cap rows per user.
-  - [x] **Delivered (2026-07-27)** — `push_endpoint_ok()` / `push_key_ok()` in `api/lib.php`, applied
-        in `push-subscribe.php` **before** `require_user()` so the whole surface stays DB-free
-        testable. Endpoint must be `https`, no userinfo, no explicit port, host in `PUSH_HOSTS`
-        (Apple / FCM / Mozilla) or under `.notify.windows.com`. An **allowlist, not a private-IP
-        blocklist** — the endpoint is a hostname, so it can resolve anywhere and re-resolve
-        elsewhere before the cron runs an hour later. Ownership: insert first and let
-        `UNIQUE(endpoint)` decide (no SELECT-then-INSERT race, no gap lock), then allow the update
-        only if the caller owns the row **or** presents that subscription's own keys
-        (`hash_equals`) — which keeps the legitimate "same phone, different account" re-attach
-        working while blocking a device takeover by anyone who read an endpoint out of an ops log
-        (the very leak T51 describes); otherwise `403 endpoint_taken`. Cap of 20 rows per user,
-        oldest pruned. `tools/send-reminders.php` re-checks both on read, since existing rows
-        predate this — it **skips and reports**, never deletes, so a legitimate row rejected by a
-        stale allowlist stays visible and fixable. Verified the one live subscription first
-        (`web.push.apple.com`, `p256dh` 87 chars, `auth` 22) so the rules can't strand Ross's own
-        iPhone. Tests: 24 assertions in `tests/api/helpers.test.php` (loopback, cloud metadata,
-        userinfo trick `https://web.push.apple.com@evil.test/`, lookalike host, undotted suffix,
-        every key shape), 6 HTTP guard specs including one asserting a **valid** Apple subscription
-        reaches 401 rather than being rejected, a DB-backed rebind test in `integration.spec.mjs`
-        (CI only — no local MySQL), and `tests/data/push-allowlist.test.mjs` diffing the two copies
-        of the allowlist (confirmed to fail on both host drift and logic drift). **The per-user cap
-        is not covered by a test** — there's no read endpoint to observe row counts through, so it
-        rests on review. **Adding a browser means editing two files** (see CLAUDE.md).
-        Unblocks T52, whose remaining work is now just the `try`/`catch` around `flush()` and
-        pruning on repeated failure.
-- [x] **T43 · Fix `api/state.php` write handling** — the file lacks `declare(strict_types=1)` (it's
-      file-scoped, so `lib.php`'s doesn't cover it), and `json_encode()`'s return is unchecked.
-      Verified: a state containing `1e999` decodes to `INF`, re-encodes to `false`, and
-      `strlen(false)` coerces to `0` — so the 1 MiB cap passes and a **non-JSON value is stored**.
-      `tools/send-reminders.php:84` then runs `JSON_UNQUOTE(JSON_EXTRACT(s.state, …))` across every
-      reminder-enabled user in one statement; MySQL aborts the whole SELECT on the invalid row, the
-      uncaught exception kills the cron, and **nobody gets reminders** until it's cleaned up. Use
-      `JSON_THROW_ON_ERROR` (or check `=== false` → 400), add the strict_types declaration, and
-      consider a `JSON` column type so MySQL rejects it at write time. While here: the PUT commits
-      and *then* re-reads the row, so two devices racing can hand the client a revision it didn't
-      produce — collapse it into one atomic `UPDATE … WHERE revision = ?` using `rowCount()` as the
-      conflict signal, which also fixes the deadlock on two concurrent first-ever PUTs.
-  - [x] **Delivered (2026-07-27)** — `declare(strict_types=1)` plus an explicit
-        `json_encode(...) === false` → **400 `bad_state`**. Chose the explicit check over
-        `JSON_THROW_ON_ERROR`, which would surface through the generic exception handler as a 500;
-        this is a bad request, and the client should be told so. The write path is now one atomic
-        statement: the revision check rides inside `UPDATE … WHERE user_id = ? AND revision = ?`
-        with `rowCount()` as the conflict signal, so there is no read-then-write window, and the
-        `SELECT … FOR UPDATE` that gap-locked a missing row is gone. `rowCount() === 0` falls
-        through to an `INSERT` and lets the primary key say which case it was — duplicate key
-        (23000) means the row existed, so a genuine conflict; a deadlock (40001) from two racing
-        first-ever PUTs resolves to the same 409, since the loser should reconcile either way.
-        The revision is now read **inside** the open transaction, so it is the value this request
-        produced rather than one a racing device wrote between commit and read.
-        Defence in depth in `tools/send-reminders.php`: the query wraps the extract in
-        `IF(JSON_VALID(s.state), s.state, '{}')`, because `state.php` can no longer write a bad row
-        but one stored before this fix still could exist — checked the live DB, 2 rows, **0
-        invalid**, so this is precaution rather than repair. Test: a guard spec PUTs the raw string
-        `{"state":{"x":1e999},"baseRevision":0}` (JSON.stringify would turn `Infinity` into `null`
-        and never reproduce it), confirmed to **fail against the pre-fix file and pass against the
-        fixed one**. Revision/conflict/force behaviour stays covered by the CI integration spec.
-        **Not done:** switching `state` to a `JSON` column — that is a live-DB migration for
-        belt-and-braces on a path PHP now guards, so it is not worth the schema change.
-- [x] **T44 · Bound request bodies before decode, and catch fatals** — `read_json_body()`
-      (`api/lib.php:57`) and `api/state.php:24` both do `file_get_contents('php://input')` with no
-      limit, *before* the size cap and *before* auth. `post_max_size` doesn't bound a PUT read this
-      way, so an unauthenticated request can drive PHP to a memory-exhaustion **fatal** — which
-      `set_exception_handler` does not catch, so the client gets a bodiless response with no JSON
-      content type. Pre-check `Content-Length`, read with `stream_get_contents($fh, CAP + 1)`, use a
-      much smaller cap (~16 KB) for the credential/reminder/push endpoints, and add a
-      `register_shutdown_function` fatal handler so no path can return an empty body.
-  - [x] **Delivered (2026-07-27)** — new `read_body($maxBytes, $tooLarge)` in `api/lib.php`: rejects
-        cheaply on `Content-Length` first, then still bounds the actual read with
-        `stream_get_contents($fh, $max + 1)`, because a chunked request carries no Content-Length
-        and the header is a hint rather than a promise. Reading one byte past the cap is enough to
-        know it was too big without holding it all. `read_json_body()` now defaults to
-        `MAX_BODY_BYTES` (16 KiB) — every endpoint but `state.php` carries a handful of short
-        fields — and `state.php` passes `MAX_STATE_BODY_BYTES` (the 1 MiB blob plus an 8 KiB
-        envelope allowance) and keeps its `state_too_large` error string so the client contract is
-        unchanged. Plus a `register_shutdown_function` emitting the same JSON 500 on
-        `E_ERROR`/`E_PARSE`/`E_CORE_ERROR`/`E_COMPILE_ERROR`/`E_USER_ERROR`, which
-        `set_exception_handler` cannot see.
-        Verified the fatal handler by forcing real memory exhaustion, not by inspection: without
-        `lib.php` an OOM yields an empty body (what the client used to get); with it,
-        `{"error":"server"}` — at memory limits down to 2M, under both a single failed allocation
-        and many retained ones — while a clean request still emits nothing extra. **Dropped a
-        64 KiB "memory reserve" I had first written for the handler:** testing showed it made no
-        difference at any limit, because PHP frees the request's allocations before shutdown
-        functions run, so it was pure per-request cost with a comment that overstated its value.
-        Tests: 7 guard specs — oversized bodies 413 on five endpoints, a 15 KiB body still parsed
-        normally (so the cap can't be quietly tightened into breaking real requests), and
-        `state.php` bounding at its own larger limit.
-- [x] **T45 · Stop `api/admin-users.php` loading every user's full state blob** — it `fetchAll()`s
-      `a.state` (MEDIUMTEXT, up to 1 MiB each) for *every* account, `json_decode`s each, and
-      accumulates every graduated item id — where the ids are attacker-chosen keys inside their own
-      blob, with no length or count limit. A few self-registered accounts each PUTting a padded 1 MiB
-      state can push the admin request to a fatal OOM and persistently deny Ross the Users tab.
-      Extract `streak` / counts in SQL (`JSON_EXTRACT`, `JSON_LENGTH`) instead of shipping blobs;
-      `js/admin.js` only intersects the id list against `COURSE`, so a server-side count works.
-  - [x] **Delivered (2026-07-27)** — two independent bounds. (1) Rows are **streamed**
-        (`PDO::MYSQL_ATTR_USE_BUFFERED_QUERY = false`) rather than `fetchAll()`ed, so only one blob
-        is resident at a time whatever the account count. (2) Extraction moved into a pure
-        `state_summary()` in `api/lib.php` which caps ids per account (`ADMIN_MAX_GRADUATED` 1500 —
-        the real course has 1,061 ids, longest 59 chars), drops ids over `ADMIN_MAX_ID_LEN` (64),
-        and honours a whole-response budget (`ADMIN_MAX_TOTAL_IDS` 100,000, ≈2 MB) so the payload is
-        bounded no matter how many accounts exist. Truncation is reported through `error_log`
-        instead of passing silently — a capped list understates someone's progress *and* means an
-        account is carrying far more ids than the course holds.
-        **Kept the id list instead of computing in SQL:** deriving "Unit N of M" needs `COURSE`,
-        which the server doesn't have, and the `JSON_TABLE` route would need an attacker-controlled
-        JSON key interpolated into a path expression — a worse trade than bounding the list.
-        Measured rather than assumed: with ~1 MiB blobs at a 128 M limit the old pattern peaked at
-        **110 MiB for 50 accounts and exhausted memory outright at 100**, while the new one holds
-        ~26 MiB and bounds the response to 100,000 ids rather than 1.2 million.
-        Tests: 13 assertions over `state_summary` (flooding, over-long ids, the shared budget, and
-        every malformed-blob shape). The streaming itself has **no automated coverage** — the
-        integration suite cannot grant itself admin — so it was verified directly against the live
-        host's MySQL: buffered prepare first, rows streamed one at a time, and a query after
-        draining still works.
-- [x] **T46 · Revoke sessions on the CLI password reset** — `tools/make-user.php:69`
-      `--reset-password` rewrites the hash and clears the lockout but never deletes the user's
-      sessions, unlike `api/admin-reset-password.php:37`, which does (and whose UI even says "signed
-      out on all devices"). So the most likely reason to run it — "this account was compromised" —
-      leaves the attacker's 90-day cookie valid, with continued read/write access to the victim's
-      synced state. One line. Same file: it applies no username validation at all, unlike
-      `register.php`'s `^[a-z0-9_]{3,32}$` — reuse the regex so a CLI-made account can't hold
-      characters self-service signup rejects.
-  - [x] **Delivered (2026-07-27)** — the reset branch now runs
-        `DELETE FROM sessions WHERE user_id = ?`, mirroring `api/admin-reset-password.php:37`, and
-        reports how many devices were signed out. The username regex is applied up front, before
-        the password prompt, so a bad name fails immediately. Because that rule now lives in three
-        places (`api/register.php`, `js/onboarding.js`, `tools/make-user.php`) — and the CLI missing
-        it *was* this finding — `tests/data/username-rule.test.mjs` diffs all three and separately
-        asserts the pattern still rejects the names that make accounts confusable: case variants,
-        leading/trailing spaces, a Cyrillic-`о` homoglyph, over-length, and markup. Confirmed to
-        fail when one copy is loosened to `[a-zA-Z0-9_]`.
-        Verified on the server against a throwaway account, since neither half can be tested
-        locally: `Bad Name` and `Ross` were rejected with exit 1 **before** any password prompt, and
-        an account given two live sessions had **0** after the reset. Account and sessions cleaned up.
-- [x] **T47 · Close the login account-existence oracles** — `api/login.php` leaks membership two
-      ways. (a) The `429 {error:"locked"}` branch at line 40 is only reachable for a username that
-      exists, **and it returns before the `login_attempts` insert at line 46** — so once an account
-      is locked an attacker can poll it forever without consuming any of their 30-failures-per-15-min
-      IP budget. (b) `!$user || !password_verify(…)` short-circuits, so a real username costs a full
-      argon2id verify (~tens–hundreds of ms) and a fake one returns immediately — one request per
-      candidate, measurable over the internet. Fix: verify against a fixed dummy argon2id hash on the
-      miss path so the cost is identical, and either fold "locked" into the generic 401 or record an
-      attempt row on that path so polling is metered.
-      **Delivered (2026-07-27)** — both, not either: the lockout now answers with the same
-      `401 bad_credentials` as everything else *and* records its attempt row, so a wrong password, an
-      unknown username and a locked account are one response in status, body, cost and budget. The
-      branch table moved into `login_decide()` (`api/lib.php`) — `$usable ? real : DUMMY_HASH`
-      evaluated *inside* the `password_verify()` call, never `$usable && password_verify(...)`, since
-      the short-circuit is the oracle. `DUMMY_HASH` is a real argon2id hash of a discarded random
-      password; server (PHP 8.2.30) and local (8.5.8) both default to `m=65536,t=4,p=1`, and a test
-      fails if the constant ever drifts from the running PHP's defaults.
-      Measured, not assumed: all three failure shapes now cost **98–100 ms**; with the short-circuit
-      fault-injected back in, two of them drop to **0 ms** and the test fails by name.
-      Trade-offs taken deliberately: (i) a junk username is no longer free to serve — it costs a full
-      verify and argon2id's 64 MiB, a ceiling that already existed for anyone who knew one real
-      username, bounded by the per-IP throttle that still runs first; (ii) the lock is *not* re-armed
-      by probes, so the locked path stays one indexed UPDATE lighter than a wrong password
-      (sub-ms against ~100 ms — under any remote jitter, and the alternative is an indefinite
-      lockout); (iii) the honest "try again in N min" message is gone from the 401, so `js/sync.js`
-      counts failures client-side and hints after three — **wording is a draft for Ross**.
-      Registration still reveals taken usernames (`409 username_taken`, inherent to the signup UX)
-      but at 5/hour/IP rather than unmetered.
-      Testing: `login_decide()`'s six-case truth table + the three timing floors run in the **unit**
-      tier with no database, which matters because there's no local MySQL. The DB-backed half proves
-      the lock is *invisible yet real* (ten failures, then the **correct** password is refused, and
-      byte-identically to a never-registered username), plus an `@ip-throttle` spec proving the
-      metering by exhausting the budget — it needs the whole per-IP bucket to itself, so CI runs it
-      as a second step on its own port against a cleared `login_attempts`. `SANO_LOGIN_IP_MAX`
-      (CI-only, like `SANO_SIGNUPS_PER_HOUR`; garbage falls back to the constant, never to zero) also
-      removes a latent flake: the suite was already at ~13 of the 30-per-window cap.
-      Not automated: the timing equality itself is asserted per-shape (>20 ms each), not as a
-      statistical comparison — a ratio test would flake on a shared runner, and the failure mode it
-      guards is 0 ms vs 100 ms, not 90 vs 110.
-- [x] **T48 · Harden the session cookie and HTTPS enforcement** — `api/lib.php:94` derives `secure`
-      from `$_SERVER['HTTPS']`, which is correct on Dreamhost today but silently mints a **non-Secure
-      90-day cookie** if TLS ever terminates upstream (a CDN, a proxy tier) — no error, no test
-      failure. Make it unconditional except for the `cli-server` dev SAPI. The `http://` → `https://`
-      301 does work live, but it comes from the hosting panel and isn't in the repo — codify it in
-      `.htaccess` so it survives a host migration. Also rename the cookie to `__Host-sano_session`
-      (all its current attributes already satisfy the prefix rules; costs one forced logout) so a
-      future sibling subdomain can't toss a same-named cookie and pin a victim onto an attacker's
-      session.
-      **Delivered (2026-07-27)** — all three. `Secure` is now unconditional, and the name is
-      `__Host-sano_session`; the prefix and the flag are one decision (`session_cookie_name()` /
-      `session_cookie_options()`) because a `__Host-` cookie without `Secure` is one the browser
-      throws away. Both come off only under the `php -S` `cli-server` SAPI, which serves the plain
-      http local dev and the CI suite run on — Apache is never `cli-server`, so production always
-      gets both. **This logged every device out once**; `setLoggedOut()` clears only
-      `meta.username`, so learning progress in `sano.state.v1` was never at risk.
-      The `http→https` 301 is now in `.htaccess` under two guards, both load-bearing:
-      `<IfModule mod_rewrite.c>` because a bare `RewriteEngine On` on a host without the module is
-      a 500 for the *entire site*, and a `X-Forwarded-Proto !=https` condition because the very
-      scenario this task worries about — TLS terminating one tier upstream — makes `%{HTTPS}` read
-      `off` on a request that already is https, i.e. an infinite redirect loop.
-      **Found and fixed in passing:** the compression block was guarded by `<IfModule
-      mod_deflate.c>`, but `AddOutputFilterByType` is a **mod_filter** directive. Verified against
-      Apache 2.4.66: on a host with deflate and no filter the old file was `Invalid command` — a
-      500 on every request to every URL. Now nested under both modules. Exactly the host-migration
-      breakage this task was about, one block away from it.
-      Verified against a real Apache rather than by reading: a throwaway 2.4.66 instance (macOS TCC
-      blocks httpd from `~/Documents`, so the docroot was a copy under the job tmp dir) → plain http
-      **301** preserving path *and* query; `X-Forwarded-Proto: https` → **200**, no loop, headers
-      intact; mod_filter absent → serves (was a 500); mod_rewrite absent → serves, just no redirect.
-      Testing: the unit tier asserts both cookie shapes including that prefix and `Secure` always
-      agree — production's shape can't be observed from any test process, since `PHP_SAPI` is `cli`
-      there and `cli-server` under Playwright, never the live FastCGI, so it's injected. The
-      integration tier asserts the header that actually reaches the wire, because PHP *silently
-      ignores* an unrecognised key in `setcookie()`'s options array — a typo'd `samesite` would drop
-      it with nothing to show. `tools/check.sh` now fails if the redirect leaves `.htaccess`.
-      Still open (pre-existing, deliberate): HSTS carries no `includeSubDomains`/`preload` until
-      every browser-facing subdomain is confirmed HTTPS.
-- [x] **T49 · Bound the traffic ingest against a log flooder** — `tools/ingest-traffic.php` slurps
-      the whole day into memory before filtering: one bucket per distinct (ip, UA) pair, one int per
-      request, bot lines allocated too since the filter runs after the parse. An attacker rotating
-      the User-Agent mints a fresh bucket per request; ~100k requests (≈1.2/sec) exhausts the 128 MB
-      CLI limit, the day fails to ingest, and because Dreamhost keeps only ~7 days of logs **that
-      history is permanently lost** if it goes unnoticed. Below that threshold the same flood writes
-      unbounded rows — `traffic_errors` is keyed by distinct path, so requesting
-      `/audio/<random>.mp3` repeatedly is one row each. Cap the per-visitor error/referrer maps,
-      cap distinct visitors per day (overflow into `bot_requests`), apply the bot-UA test at parse
-      time, and store min/max/session-count incrementally instead of the full `times[]`. Two related
-      fixes in the same file: the `mine` flag at line 203 is set on *any* request to `/admin` or
-      `/api/admin-*` **without checking the status**, so any visitor can hit `/admin/` once and
-      permanently hide themselves from the dashboard's default view — require a 2xx. And sanitize
-      log-derived strings at ingest (`parse_url` happily yields a host of `<script>alert(1)<`), so
-      the admin dashboard's XSS-safety doesn't rest entirely on one `textContent` line.
-  - [x] **Delivered (2026-07-27)** — bounds, all reported on stderr rather than silent:
-        `MAX_VISITORS_PER_DAY` 20,000 (a real day is ~99), `MAX_TIMES_PER_VISITOR` 2,000 (only
-        used to find session gaps), `MAX_KEYS_PER_VISITOR` 50 distinct error paths / referrer
-        hosts, `MAX_ROWS_PER_DAY` 500 stored rows. The bot-UA test also moved to **parse time**, so
-        roughly half the log never allocates a bucket at all; totals are unchanged, since a
-        bot's requests only ever counted toward `bot_requests`. Measured against a 150,000-line
-        UA-rotating flood: the **old parser exhausts a 128 MB limit outright** — which is the whole
-        DoS, since a failed day is unrecoverable once the log rotates — while the new one finishes
-        at 58 MiB peak RSS and completes even under a **64 MB** limit. (First sized the visitor cap
-        at 50,000, measured 106 MiB, and tightened it to 20,000; still ~200× a real day.)
-        **`mine` now requires a 2xx from an `/api/admin-*` endpoint.** `/admin/` is a static shell
-        served 200 to anyone, so the old check let any visitor mark themselves "mine" with one
-        request and disappear from the dashboard's default view for good. **This was not
-        theoretical:** the live table has **4 distinct visitors flagged mine** where Ross is one
-        person — so real visitors had already self-excluded. Attacker-supplied text is stripped to
-        printable ASCII without markup on the way in, and a `Referer` whose host isn't a plausible
-        hostname is dropped rather than stored (`parse_url` returns `<script>alert(1)<` as the
-        "host" of `http://<script>alert(1)</script>/`); the dashboard's `textContent` rendering is
-        now the second line of defence, not the only one. Tests: 3 new (the admin-shell visitor is
-        not mine, referrer hosts always match `^[a-z0-9.-]+$`, and a generated 80-distinct-404 log
-        caps at 50 error rows while `errors4xx` still counts all 81 honestly), plus a fixture
-        visitor. `@docs/data-model.md` definitions updated.
-        **Follow-up for the deploy:** re-ingest with `--all` (9 log files are still on disk,
-        8 days stored) so the stored `is_mine` flags are recomputed under the corrected rule.
-- [x] **T50 · Harden `--update-geo`** — the two CC0 CSV URLs are unpinned jsDelivr `latest` paths
-      with no checksum, and a truncated download or an HTML error page silently produces a corrupt
-      or empty index that `rename()` writes over the good one — after which every country reads
-      `NULL` and the only signal is a `geo v4: 0 ranges` line. Pin the package version, require a
-      plausible minimum range count before the rename, check the `fopen`/`rename` return values, and
-      add `ctype_alpha($cc)` next to the existing `strlen` check (two arbitrary bytes into a
-      `CHAR(2)` on a utf8mb4 connection throws inside the write transaction, which with no exception
-      handler kills the nightly run every night until someone notices). TLS verification itself is
-      fine — PHP's https wrapper verifies peer and hostname by default.
-      **Delivered (2026-07-27)** — all of it except the exact pin, deliberately. The package
-      publishes **daily** (the version *is* a datestamp: `2.3.2026061719`), so an exact pin would
-      freeze the data `--update-geo` exists to refresh, and no checksum can be recorded for content
-      that legitimately changes every day. Pinned to the **`@2.3` line** instead, which still buys
-      the failure that the count checks can't see — a major release reordering the columns and
-      compiling a garbage index that passes every sanity test. Say the word if you'd rather have the
-      exact pin plus a checksum and accept the manual bumps.
-      Two floors before `rename()`: an absolute one (50,000) for **downloads only**, and a ratio one
-      (90% of the index being replaced) for any source. The ratio is what catches a half-finished
-      download, which an absolute floor waves straight through — measured: a 100,000-row truncation
-      of the real 334,373-row CSV is refused, and the good index survives byte-for-byte.
-      Also: the first line must look like the range CSV at all (a CDN answers a bad path with an
-      HTML page and a **200**, and every line of it would simply be skipped, leaving a valid empty
-      index); `fopen`/`fwrite`/`fclose`/`rename` returns are all checked; the temp file is unlinked
-      on every failure path; and `ctype_alpha($cc)` joins the length check, since two arbitrary
-      bytes into a `CHAR(2)` on a utf8mb4 connection throw inside the ingest's write transaction.
-      Real counts measured against upstream: **334,373** v4 ranges, **216,295** v6.
-      **Caught before committing:** the first version applied the absolute floor to `--from` too,
-      which broke **15 tests** — the geo fixtures are three ranges on purpose. A file the operator
-      names is not a download; it now only has to beat "empty", plus the ratio if there's an index
-      at risk.
-      Testing: `tests/data/geo-index-guard.test.mjs` — six cases, no network (HTML page, empty file,
-      shrunken source, temp-file cleanup, the small-fixture path that regression broke, and that the
-      URLs carry a version). Fault-injecting the guard away fails the shrunken-source test.
-- [x] **T51 · Keep secrets and device IDs out of the cron logs** — none of the four CLI scripts
-      installs a `set_exception_handler` (unlike `api/lib.php`), so an uncaught `PDOException` prints
-      a full stack trace into `~/sano-traffic.log` / `~/sano-reminders.log`; PHP includes call
-      arguments in traces unless `zend.exception_ignore_args` is on, which would put the **DB
-      password** in a 0644 file on a shared host. Log the message and file:line only, set
-      `zend.exception_ignore_args`, `chmod 600` both logs, and add `umask 077` to the cron lines.
-      ~~Same pass: `send-reminders.php` echoes every subscriber's full push endpoint … strip
-      non-printables from the reason.~~ **Done as part of T52 (2026-07-27)** — the rewritten dispatch
-      logs `sub <id> (<username>)` instead of the endpoint, and pushes every reason through
-      `preg_replace('/[^\x20-\x7E]/', '')` + a 120-char truncation. Still open here:
-      `api/lib.php:24` logs the whole
-      `$e` object for the same trace reason. And the `--json` debug mode uses a **hardcoded salt
-      published in this repo**, so its printed hashes are trivially reversible to raw IPs if that
-      output is ever shared — generate a random per-invocation salt for non-fixture input (the tests
-      only compare hashes within one process, so they keep passing).
-      **Correction (2026-07-27):** the headline claim above — that a trace would put the **DB
-      password** in the log — is **wrong on PHP 8.2+**, and this entry (mine, from the original
-      review) asserted it without checking. PHP 8.2 marks the password parameter of `PDO::__construct`
-      and `password_hash`/`password_verify` `#[\SensitiveParameter]`; a real trace from a failed
-      connect prints `Object(SensitiveParameterValue)` in its place. Measured on 8.5 and confirmed
-      against the server's 8.2.30 defaults. What a trace *does* expose is the **DSN** (DB host +
-      database), the **DB username**, absolute paths, and — the part that still matters — every
-      string argument to *our own* functions, which nothing masks: a one-line wrapper taking a
-      secret prints it in full (demonstrated). The second premise was also softer than written: the
-      logs are `0644`, but the home directory is `drwx--x---` and the group `pg131571` has **no
-      other members**, so no other tenant can reach them today. Fixed anyway, as depth, not as an
-      active leak — and the priority claim was overstated.
-      **Delivered (2026-07-27)** — all four CLI scripts now set `zend.exception_ignore_args` and
-      install a handler that prints `Class: message at file:line` and exits **1**, instead of PHP's
-      fatal + trace. Before/after on a dead DB: the old path printed
-      `PDO->__construct('mysql:host=127....', 'sano_user', …)`; the new one is a single line.
-      The block is duplicated rather than shared because each script is installed **standalone** on
-      the server with no docroot in reach — `tests/data/cli-guards.test.mjs` diffs the four copies
-      and fails if one drifts (verified by stripping it from one script).
-      `api/lib.php` no longer stringifies `$e` into the shared host's error log, same reasoning.
-      **The `--json` salt is the piece that mattered most** and it's now
-      `bin2hex(random_bytes(16))` per invocation: a salt committed to this repo made every printed
-      visitor hash reversible to a raw IP by brute force over 2^32, in the one mode you reach for
-      while debugging a *real* access log — i.e. the output most likely to get pasted somewhere.
-      Verified the hashes now differ run to run; the parse tests keep passing because they only
-      ever compare hashes from a single run.
-      **Needs a server step to take effect** (not done — the cron scripts aren't in the deploy
-      allowlist, and the crontab isn't mine to edit): re-scp both scripts to `~/sano-tools/`, add
-      `umask 077;` to the two cron lines (now documented in the script headers — the shell creates
-      the log on redirect, so no chmod inside the script could win), and `chmod 600` the two
-      existing logs.
-- [x] **T52 · Make the reminder cron fault-tolerant** — `tools/send-reminders.php:166` `foreach`es
-      `$webPush->flush()` with no `try`/`catch`, and `p256dh`/`auth` are stored unvalidated, so one
-      malformed key (a wedged browser, or deliberate) raises out of the batch prepare and terminates
-      the script — dropping **every other user's** reminder for that hour, persistently, until the
-      row is removed by hand. Wrap the per-report body so a failure increments `failure_count`
-      instead of aborting, and prune at `failure_count > N` (today only 404/410 ever prunes).
-      Depends on the shape validation in T42.
-  - [x] **Delivered (2026-07-27)** — a `try`/`catch` around the existing loop would have stopped the
-        crash but silently dropped everyone queued behind the bad row: `flush()` is a **generator**
-        that calls `prepare()` (the encryption step) from inside itself, so a throw there kills the
-        generator and everything still queued, and the library's default `batchSize` of 1000 means
-        the whole run is always one batch. So each subscription now gets its own
-        `queueNotification` + `flush()` inside a `try`/`catch`. DB work sits **outside** the catch,
-        so a database error can't be mistaken for a push failure and quietly inflate
-        `failure_count`. Added `MAX_PUSH_FAILURES = 10`: a subscription failing that many times
-        consecutively is deleted rather than retried hourly forever (404/410 still deletes at once,
-        success still resets to 0), plus a `sent · failed · dropped` summary line.
-        **Why T42's validation wasn't enough:** shape validation can't prove a 65-byte `0x04`-tagged
-        blob is a point actually *on* the P-256 curve, so a well-formed-but-invalid key still throws
-        in the encryption step. Verified on the server with a throwaway user and three
-        subscriptions — two with valid-shaped off-curve keys, one with a genuine `openssl`-generated
-        P-256 point. **Control (old code): `RuntimeException: Unable to compute the agreement key`
-        out of `WebPush->prepare()`, exit 255, 0 of 3 processed.** New code: all 3 processed, exit 0
-        — the second bad row proving the loop survives the first throw, and the real-point row
-        taking the normal delivery path (clean 400 from Apple). Priming one row to `failure_count=9`
-        then re-running retired it (`DROP … after 10 failures`) while the other two incremented to
-        2/10 and survived. Fixture and both staged script copies removed afterwards; the live table
-        is back to its single real subscription and `--dry-run --force` still reports
-        `would notify ross (sub 2)`. Cost: sequential HTTP instead of Guzzle's parallel pool —
-        revisit only in the hundreds of subscribers. **Trade-off accepted:** no local test coverage;
-        this script needs the server's vendor tree + MySQL, so the verification above is the record.
-- [x] **T53 · Same-origin guard on the service-worker notification URL** — `sw.js:85` takes
-      `data.url` straight from the push payload and passes it to `c.navigate(target)`, which
-      **retargets the user's already-open Sano window**, and to `openWindow()`. Not reachable today
-      (the sender hard-codes `/`, and payloads are VAPID-signed and encrypted), but it means a VAPID
-      key leak or a bug in the reminder script escalates from "wrong message" to "every subscriber's
-      app window redirected to a phishing page." Resolve against `location.origin` and fall back
-      to `/`.
-      **Delivered (2026-07-27)** — `safeTarget()` in `sw.js`: resolve against `self.location.origin`,
-      keep the URL only if the resolved origin matches, otherwise `/`. Both consumers take the
-      guarded value, which matters because they fail differently — `c.navigate()` retargets a window
-      the user already has open, and `openWindow()` follows a cross-origin URL without complaint.
-      Uses the URL parser rather than a string test, which is what catches the shapes a naive check
-      waves through: protocol-relative `//evil.test/x` **starts with a slash**, and `javascript:` /
-      `data:` resolve to the opaque origin `"null"`. Fault-injected a `startsWith('/')` version and
-      it fails exactly the test named for those.
-      No `VERSION` bump: the file's own rule ties that to *cache strategy* changes, and `sw.js` is
-      served `no-cache`, so clients revalidate and pick the new worker up on their next visit.
-      Testing: `tests/unit/sw-notification-target.test.mjs` lifts the function out by sentinels with
-      a stubbed `self` (17 URL cases), plus a guard that the handler actually *routes through* it —
-      a correct check nothing calls is worth nothing, and bypassing the call site fails that test.
-- [x] **T54 · Security hardening bundle** — small independent items, none individually urgent.
-      (The IPv6 throttle item moved out to **T57** and the `showNotice` sink to **T58** — both
-      outgrew "not individually urgent".) Remaining:
-      no `password_needs_rehash()` on successful login, so hashes never upgrade
-      · `Object.assign(defaultState(), parsed)` (`js/sano.js:232`) lets a `__proto__` key in a state
-      blob replace the state object's prototype (self-inflicted only, one-line fix)
-      · add `declare(strict_types=1)` to the
-      seven `api/` files missing it · set `PDO::ATTR_EMULATE_PREPARES => false` (not an injection
-      risk under utf8mb4, but packed binary IPs currently travel as string literals, and a mangled
-      one makes the throttle **fail open** silently — though **verify that claim first**: T47's
-      `@ip-throttle` spec counts `127.0.0.1`, whose packed form contains three NUL bytes, and it
-      passes in CI with emulation at its pdo_mysql default, which is evidence against it)
-      · index `sessions.expires_at` and
-      `login_attempts.created_at`, and move the housekeeping DELETEs to *after* the throttle check so
-      a 429'd attacker can't force two full table scans per request · `Header always set` in
-      `api/.htaccess` · add `X-Frame-Options`, `Permissions-Policy: microphone=(self), camera=(),
-      geolocation=()`, COOP and CORP · add `--delete-after` to the deploy rsync so a renamed or
-      deleted file can't linger live forever · add `permissions: { contents: read }` to the CI
-      workflow.
-      **Delivered (2026-07-27)** — eight of the nine, plus two things found on the way.
-      `password_needs_rehash()` on successful login (the only moment the plaintext exists to rehash
-      from; it also keeps stored hashes on the same parameters as T47's `DUMMY_HASH`, which is what
-      makes the miss path cost the same) · the `__proto__` guard, with the hazard *demonstrated*
-      first: unguarded, `Object.assign` runs the setter and the state object's prototype is replaced
-      — `Object.prototype` itself stays clean, so it really is self-inflicted only · `strict_types`
-      on the six remaining `api/` files (the entry said seven; `state.php` gained it in T44) ·
-      indexes on `sessions.expires_at` and `login_attempts.created_at` via an idempotent
-      `tools/migrate-2026-07-throttle-indexes.php`, since neither column had one and both are swept
-      on every sign-in · the two housekeeping DELETEs moved *below* the throttle check, so a caller
-      already over the limit no longer makes the server sweep two tables before being told no ·
-      `Header always set` in `api/.htaccess` (`set` alone skips 4xx/5xx, i.e. exactly the JSON error
-      bodies) · `X-Frame-Options`, `Permissions-Policy`, COOP and CORP, verified against a real
-      Apache on both a 200 and a 404 · `--delete-after` on the deploy rsync · `permissions:
-      {contents: read}` on CI.
-      **`--delete-after` earned its place immediately:** a dry run found `audio/words/wyakti.mp3`
-      live on the server — a clip orphaned when that word was re-romanized to `byakti`. Verified by
-      dry run that it prunes only inside the listed directories, so the host's own top-level files
-      (`.dh-diag`, `favicon.ico`, `favicon.gif`) are untouched.
-      **Not done, deliberately: `PDO::ATTR_EMULATE_PREPARES => false`.** Both stated reasons fail on
-      inspection. The entry already concedes it isn't an injection risk under utf8mb4, and the
-      fail-open claim is contradicted by evidence: T47's `@ip-throttle` spec counts `127.0.0.1`,
-      whose packed form is three NUL bytes, and it passes in CI under pdo_mysql's default emulation
-      — binary parameters round-trip fine. So the security value is ~nil, while the change alters
-      the PHP type of every column MySQL returns. Happy to make it, but as its own change with its
-      own verification, not folded into a hardening sweep.
-      **Found on the way (both fixed here):** `.prettierrc` pinned no `phpVersion`, so the formatter
-      normalizes to the newest syntax it knows — it rewrote `(new DateTimeImmutable())->format()`
-      into the **8.4-only** `new DateTimeImmutable()->format()`, which is a parse error on the
-      server's 8.2 and on CI's 8.3. Now pinned to `"8.2"`, which restored the safe form; no existing
-      file was affected. And the **admin read paths had no integration coverage at all** — only
-      their 403 was ever reached — which is precisely what made the `strict_types` sweep risky,
-      since there is no local database. `tests/fixtures/seed-admin.php` now creates an admin account
-      and two days of traffic rows, and a new `@admin` CI step asserts the user list (including
-      `state_summary()` over a real blob, which T45 rewrote untested) and the populated branch of
-      the traffic dashboard.
-- [x] **T55 · Traffic retention and salt rotation** — the T40 design is sound (no raw IP reaches
-      disk or DB on any path — verified across every write and error path) but two GDPR-shaped gaps
-      remain: nothing ever prunes `traffic_visitor_days`, so pseudonymous rows accumulate forever,
-      and one permanent salt means one lifetime-linkable identifier. Purge visitor-day rows older
-      than ~13 months and rotate the salt yearly (accepting that `is_new` resets at each rotation).
-      Also document explicitly in `@docs/data-model.md` that the salt is a credential of the same
-      class as the DB password — the current wording ("can't be walked back to a person") is true
-      only for someone holding the DB *alone*; with both, the IPv4 space is small enough to invert
-      cheaply.
-      **Delivered (2026-07-27)** — retention: `traffic_visitor_days` is pruned at 13 months on every
-      real ingest (not only when there's a new day to store, so it can't drift through a quiet
-      week), and it reports what it dropped. `traffic_days` is pure counts with nobody in it and is
-      never purged — that's the history the whole thing exists to accumulate.
-      Rotation is **derived, not scheduled**: `hash_hmac('sha256', <year of the day being ingested>,
-      traffic_salt)`. A yearly chore nobody remembers isn't a control; this rotates itself. Derived
-      rather than rolled because the ingest is idempotent — a re-ingest must reproduce the same ids,
-      and a random rotation salt would split one returning visitor into two.
-      Honest about what it doesn't buy: anyone holding the base secret can still derive every year's
-      salt. It bounds what a leaked **database** discloses, not what the config does — hence the
-      `docs/data-model.md` rewrite, which now says plainly that `traffic_salt` is a credential of the
-      same class as the DB password and that a salt disclosure is equivalent to having stored raw
-      IPs.
-      Cost, measured before deciding: 121 visitor-day rows over 8 days, 111 distinct visitors. So
-      the purge deletes nothing for another year, and the one-time discontinuity at the salt change
-      touches at most 8 days — a good moment to make it. `is_new` resets at each January boundary
-      from here on, by design.
-      Testing: `tests/data/traffic-salt-rotation.test.mjs` drives the real script over synthetic
-      logs — one id within a year, a different id across the boundary, still an opaque 32-hex hash.
-      The re-ingest reproducibility half is pinned at the source instead, because `--json`'s base
-      salt is random per invocation by design (T51) and so can't demonstrate it across processes —
-      a limit worth stating rather than papering over.
-- [x] **T57 · Bucket the per-IP throttles by /64, not by address** — split out of T54 (2026-07-27),
-      and the highest-severity item left. `login.php` and `register.php` both key their throttle on
-      `inet_pton($_SERVER['REMOTE_ADDR'])`, the *whole* address, and match it with `WHERE ip = ?`.
-      For IPv4 that's right. For IPv6 a single routed /64 — what a residential connection is
-      routinely handed — is 2^64 distinct keys, so the login limit (30 per 15 min) and the signup
-      limit (5/hour) are both bypassed by incrementing an address. That doesn't just restore
-      unlimited password guessing; it removes the meter T47 leans on, since the metering only bites
-      if the bucket is stable. Fix: store the packed address truncated to its first 8 bytes when
-      it's 16 bytes long, leave 4-byte IPv4 whole, and match on the truncated value.
-      **Latent, not live, and that is the only reason it isn't first outright:** `namastesano.com`
-      has no `AAAA` record (checked 2026-07-27, A only), so nothing reaches the app over IPv6 today
-      — it arms itself silently the day the host or a CDN turns IPv6 on, with no error and no
-      failing test. Existing `login_attempts`/`signup_attempts` rows are IPv4 and 15-minute/1-hour
-      ephemeral, so no migration is needed; the column already holds VARBINARY.
-      Worth a test that two addresses in one /64 share a bucket while two /64s don't.
-      **Delivered (2026-07-27)** — `throttle_ip()` in `api/lib.php`, used by both endpoints: IPv4
-      whole, IPv6 keyed on its first 8 bytes. `VARBINARY(16)` is variable-length and the two tables
-      are 15-minute/1-hour ephemeral, so no migration; 4-byte and 8-byte keys can't collide under
-      `WHERE ip = ?`, so the families stay separate.
-      **The naive version of this fix would have been an outage, not a fix.** `::ffff:203.0.113.9`
-      packs to ten zero bytes, `ffff`, then the v4 address — so "take the first 8 bytes" collapses
-      *every* IPv4 client behind a dual-stack proxy into one shared bucket, and thirty failures
-      anywhere would lock out the whole site. Caught by inspecting real `inet_pton()` output before
-      writing the code, not after. IPv4-mapped addresses are unmapped to their 4-byte form first;
-      two different mapped addresses stay in different buckets, asserted.
-      Also: `filter_var(..., FILTER_VALIDATE_IP)` before `inet_pton()`, because `inet_pton()` warns
-      on malformed input and the old call would have written a warning per request into the shared
-      host's error log. Verified stderr is empty across the malformed cases.
-      Testing: a 12-assertion truth table in `tests/api/helpers.test.php` — the only place this can
-      be checked, since `REMOTE_ADDR` comes from the socket and no HTTP test can present an IPv6
-      client to `php -S`. Both failure modes fault-injected and caught by name: dropping the
-      unmapping fails the two IPv4-mapped assertions, dropping the truncation fails the /64 ones.
-      Still true afterwards: a /56 or /48 end-site allocation is 256 or 65536 buckets. /64 is the
-      granularity that doesn't group strangers together, and going broader trades the bypass for a
-      shared-fate bucket.
-- [x] **T58 · Close the `showNotice` innerHTML sink** — split out of T54 (2026-07-27).
-      `showNotice(html)` (`js/admin.js:210`) assigns its argument to `innerHTML`, and the parameter
-      is *typed* as HTML by its own name. All six call sites pass literals today, so there is no
-      live XSS — the defect is that the signature invites the next caller to pass a username, and
-      the admin dashboard is exactly where account-controlled strings are on screen. Related in the
-      same file: `esc()` doesn't escape `'`, so it is element-safe but **not** attribute-safe, and
-      nothing marks that boundary. Take text and set `textContent`, with a separate explicit path
-      for the one caller that genuinely needs markup (if any), and either teach `esc()` `'`/`"` or
-      rename it to say where it may be used.
-      **Delivered (2026-07-27)** — `showNotice(text)` builds a `<p>` and appends; strings handed to
-      `append()` become text nodes, so nothing routed through it can become markup regardless of
-      where it came from. The two callers that needed a link get `showNoticeLink(before, linkText,
-      after, href)`, where the link is an *element*, not a string of markup.
-      Also converted the sink that actually held user data: the delete modal interpolated the
-      username into `innerHTML`. It was `esc()`-wrapped and therefore safe, but it was the only
-      account-controlled string on the page and it now builds a `<b>` node instead — signup limits
-      usernames to `[a-z0-9_]`, and this must not lean on that, since accounts minted by the CLI
-      before T46 were not constrained at all.
-      `esc()` now escapes `'` too. It was element-safe but **not** attribute-safe: inside
-      `title='…'` an apostrophe closes the attribute and the rest is markup. Nothing used it that
-      way — the defect was that "safe in one context only" is invisible in the name.
-      Left as-is deliberately: the table header still builds an `<svg><use>` through `innerHTML`,
-      but every value in it comes from the `COLUMNS` constant. Noted rather than rewritten;
-      `createElementNS` for a literal-only template buys nothing.
-      Testing: `esc()` is lifted out by sentinels into `tests/unit/admin-escaping.test.mjs` (6
-      assertions incl. the single-quoted-attribute break-out and no double-encoding of `&`). Two
-      e2e tests drive the real path by **stubbing the API** rather than editing the `?demo=1` data,
-      which stays clean for visual review: a username of `<img src=x onerror=…>` renders as text
-      with no `img` element and no `window.__xss`, and the 401/403 notices still offer a working
-      link home. Fault-injected the old `innerHTML` line: the payload is parsed, the username
-      vanishes from the text, and the test fails.
+- [x] **T41 · Turn off Apache directory listing** — `Options -Indexes`, verified against a real
+      Apache 2.4 and guarded by the static tier.
+- [x] **T42 · Validate and scope push subscriptions** — https + a host allowlist, key-shape checks,
+      an owner-scoped upsert, and a 20-row cap per user.
+- [x] **T43 · Fix `api/state.php` write handling** — `strict_types`, a `json_encode` failure now
+      400s, and the write is one atomic revision-checked `UPDATE`.
+- [x] **T44 · Bound request bodies before decode, and catch fatals** — `read_body()` caps by
+      `Content-Length` and by the read itself; a shutdown handler emits the JSON 500.
+- [x] **T45 · Stop `api/admin-users.php` loading every user's full state blob** — rows are streamed
+      and summarized by a bounded `state_summary()`.
+- [x] **T46 · Revoke sessions on the CLI password reset** — the reset now deletes the user's
+      sessions and applies the same username regex as signup.
+- [x] **T47 · Close the login account-existence oracles** — a wrong password, an unknown username
+      and a locked account are one 401, identical in cost and rate-limit budget.
+- [x] **T48 · Harden the session cookie and HTTPS enforcement** — `__Host-` prefix, unconditional
+      `Secure`, and the http→https 301 codified in `.htaccess`.
+- [x] **T49 · Bound the traffic ingest against a log flooder** — per-day and per-visitor caps, a
+      parse-time bot filter, and `mine` now requires a 2xx from an admin endpoint.
+- [x] **T50 · Harden `--update-geo`** — a version-pinned source, absolute + ratio floors before the
+      rename, and `ctype_alpha()` on the country code.
+- [x] **T51 · Keep secrets and device IDs out of the cron logs** — one-line exception handlers in
+      all four CLI scripts, and a random per-invocation salt for `--json`.
+- [x] **T52 · Make the reminder cron fault-tolerant** — each subscription queues and flushes inside
+      its own `try`/`catch`, and is dropped after 10 consecutive failures.
+- [x] **T53 · Same-origin guard on the service-worker notification URL** — `safeTarget()` resolves
+      the payload URL against our origin and falls back to `/`.
+- [x] **T54 · Security hardening bundle** — eight of nine small items (rehash-on-login, the
+      `__proto__` guard, `strict_types`, throttle indexes, four headers, `--delete-after`, CI
+      permissions); `PDO::ATTR_EMULATE_PREPARES` deliberately left for its own change.
+- [x] **T55 · Traffic retention and salt rotation** — a 13-month purge plus a per-year derived salt;
+      `traffic_salt` documented as a credential of the same class as the DB password.
+- [x] **T57 · Bucket the per-IP throttles by /64, not by address** — `throttle_ip()`; IPv4 whole,
+      IPv4-mapped unmapped first so a dual-stack proxy can't share one bucket.
+- [x] **T58 · Close the `showNotice` innerHTML sink** — notices build text nodes, links go through
+      `showNoticeLink()`, and `esc()` is now attribute-safe.
 
 ## Testing
 
-- [x] **T56 · Fix the flaky `no horizontal overflow across mobile widths` e2e** — the 9-width
-      viewport sweep (`tests/e2e/home.spec.mjs:27`) failed all three attempts on the T40 commit's CI
-      run (30228655062, Chromium), each hitting the **60 s test timeout** exactly — `page.waitForFunction`
-      timed out, then the retries reported "Target page, context or browser has been closed", which is
-      the timeout tearing the context down rather than a second distinct fault. It passed on the T41
-      and T42 runs, so it isn't a real overflow regression: the test is simply sitting near the
-      timeout boundary (~20 s locally, but it re-navigates and re-boots per width while CI runs
-      Chromium and WebKit projects concurrently against a single-threaded `php -S`). Per the
-      no-flaky-tests rule this is a defect, not noise. Fix the cost rather than raising the timeout —
-      resize within one page context instead of a fresh navigation per width, or split the sweep so
-      each width is its own short test. Found during the T42 CI check (2026-07-27). **It went on to
-      fail the T43 run too — 2 of 4 runs, i.e. ~50%**, which is why it was taken before T45.
-  - [x] **Fixed (2026-07-27)** — measured the cost before changing anything: **14.5 s in Chromium
-        alone**, because the sweep called `boundingBox()` once per matched element and a mid-course
-        path renders **107 `.path-node` + 107 `.path-label`** — 216 elements × 9 widths ≈ **1,900 IPC
-        round trips**, on top of 9 full navigations. Two changes: every element for a width is now
-        measured in a **single in-page `evaluate`**, and the sweep **resizes in place** instead of
-        navigating. Resizing is faithful because the app re-renders the path on resize; rather than
-        wait out that 150 ms debounce (a fixed sleep being exactly the wrong fix here) the test calls
-        `window.Sano.renderHome()` — the same function the debounced handler calls — so the
-        re-render is synchronous and there is no race to lose. The evaluate now also asserts
-        `#screen-home` is showing and path nodes exist, so an empty render can't pass vacuously, and
-        it returns **all** violations for a width instead of stopping at the first. A separate short
-        test keeps cold-load coverage at the narrowest width, which the in-place sweep would
-        otherwise lose. **14.5 s → ~1 s** (whole suite 38 tests/35 s → 40 tests/26 s); `home.spec.mjs`
-        across both browsers runs in 2.4 s, stable over three consecutive runs. Verified it still
-        catches a real regression by injecting `#progress { min-width: 900px }` — it failed with
-        `#progress[0] right edge at 975.9, past 320`. Worth noting the page-level `scrollWidth` check
-        did **not** fire on that injection while the element-bounds check did, which is why both are
-        kept.
-
-- [x] **T17 · Fix the flaky WebKit match-lesson e2e** — `tests/e2e/lesson.spec.mjs` match rounds
-      intermittently time out under WebKit: `stepLesson` (`tests/e2e/_helpers.mjs`) clicks match tiles
-      with normal (non-force) clicks and relies on `boot()`'s inline animation-freeze, but that can't
-      kill **pseudo-element** (`::before`/`::after`) animations — so a tile stays "unstable" and the
-      click times out. Pre-existing (reproduces on clean `main`, both before and after T16). A blanket
-      `*::before { animation: none !important }` loses specificity to the app's class-scoped animation
-      rules, so the fix needs either a targeted freeze stylesheet or a stability-tolerant match click.
-      **Fixed 2026-07-20** — took the stability-tolerant-click route: `stepLesson` now force-clicks
-      each pair (past WebKit's actionability "stable" gate) and verifies both tiles reached `.matched`,
-      retrying the pair, then waits for + force-clicks `#lesson-continue`. Corrected root cause: the
-      destabilizer is the `tile-pop`/`tile-shake` keyframe on the tile **element** (not a pseudo-element);
-      the inline freeze suppresses it, but under WebKit + parallel-load render churn the stability gate
-      still intermittently timed out. Test-only change (`tests/e2e/_helpers.mjs`); verified match tests
-      30× green under WebKit and full e2e (38) green.
-
-- [x] **T39 · Watch: webkit type-recall e2e retried once under full-suite load (2026-07-22)** —
-      `tests/e2e/lesson.spec.mjs` "a type-what-you-know (recall) exercise renders and can be
-      completed" flaked (passed on retry) in one full-suite run during T37/T38 work, then passed
-      38/38 on an isolated `--ui` re-run. **Recurred 2026-07-23 → root-caused and fixed:** not
-      timing at all — `buildExercises` randomly bundles up to 5 single-word recall-strength reviews
-      into the listen-match grid (`shuffleArray(listenable).slice(0, 5)`), and a bundled item gets
-      no card of its own, so whenever the shuffle absorbed the seeded graduated word the lesson
-      genuinely contained no `type` card (the failing run saw only wordbank + listenMatch). Fix:
-      `boot()` (tests/e2e/_helpers.mjs) now stubs `Math.random` with a seeded PRNG (mulberry32),
-      so every e2e run draws the identical lesson in every browser/retry — freezing nondeterminism
-      like the animation freeze, instead of loosening assertions. Verified: two consecutive
-      full-suite runs 38/38, zero flaky.
+- [x] **T56 · Fix the flaky `no horizontal overflow across mobile widths` e2e** — one in-page
+      measurement per width and resize-in-place instead of re-navigating: 14.5 s → ~1 s.
+- [x] **T17 · Fix the flaky WebKit match-lesson e2e** — force-click each pair and verify both tiles
+      reached `.matched`, retrying the pair.
+- [x] **T39 · Watch: webkit type-recall e2e retried once under full-suite load (2026-07-22)** — not
+      timing: the lesson draw was random, so `boot()` now stubs `Math.random` with a seeded PRNG.
 
 ## Romanization
 
-- [x] **T19 · Handle visarga (ः, U+0903) in the romanizer** — `tokenize()` now maps visarga to a coda
-      "h" (प्रायः → Praayah, अतः → Atah, दुःख → Duhkha); `VISARGA` is exported in `_tables` and added to
-      the romanize-coverage known-set. The प्रायः `WORD_OVERRIDE` was dropped (tokenizer handles it); a
-      `PRON_OVERRIDE` remains only to polish its pron to *praa-yah*. Minor cosmetic left: word-final
-      visarga after an inherent vowel doubles the h in pron (अतः → uh-tuhh); harmless, none in-corpus.
-
-- [x] **T22 · Generalize व→b for व्य- words in the romanizer** — Nepali realizes व as "b" in the
-      common व्य- cluster (व्यस्त→byasta, व्यक्ति→byakti, व्यापार→byaapaar, व्यवसाय, व्यवहार), but the
-      rules default व→w so these read "wy-". व्यस्त is patched via `VA_AS_B`; व्यक्ति already shipped as
-      "wyakti" (batch 3). Extend `VA_AS_B` (or add a व्य→by rule) to cover the cluster, re-render the
-      affected word slugs (wyakti→byakti, etc.), and bump `AUDIO_VERSION`. Then future व्य- words (e.g.
-      व्यापार, deferred out of batch 6 for this reason) can be added cleanly.
-      **Done 2026-07-20** — a positional व्य→"b" rule in the shared tokenizer (`js/romanize.js`),
-      kept on the halant path so the final-schwa cluster guard still applies (भव्य→Bhabya); व्यस्त
-      dropped from `VA_AS_B` (rule covers it); व्यक्ति pron polished (`byak-tee`, like `byas-ta`).
-      The only affected clip was **renamed** (`git mv wyakti.mp3 → byakti.mp3` — the TTS input व्यक्ति
-      is unchanged, so no re-render / no credits), words.json regenerated, `AUDIO_VERSION` 22. Golden
-      tests added (incl. unlisted व्यापार + word-final भव्य). व्यापार is now cleanly addable (T29+).
+- [x] **T19 · Handle visarga (ः, U+0903) in the romanizer** — `tokenize()` maps it to a coda "h"
+      (प्रायः → Praayah).
+- [x] **T22 · Generalize व→b for व्य- words in the romanizer** — a positional व्य→"b" rule in the
+      shared tokenizer; the one affected clip was renamed `wyakti` → `byakti`.
 
 ## Learning engine — SR-05 relaunch (Phase 1)
 
 Restructures the learning plan for mastery-based, high-repetition progression (interviewed +
-planned 2026-07-01; reviewed and shipped 2026-07-01). Green across all test tiers. The re-cut
-sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
+planned 2026-07-01; reviewed and shipped 2026-07-01). Green across all test tiers. **Every batch's
+unit titles + goals below are AI-drafted — still Ross's to refine**, as are the re-cut sub-unit
+titles from T9.
 
-- [x] **T6 · Learning-steps scheduler + softened intervals** — new words climb a gentle ladder
-      (1 → 2 → 4) and only graduate after being *recalled* ~2×; intervals softened (was
-      1 → 2 → 5 → 16 → 55); each new word gets an in-session tap-based word-bank recall. (`js/sano.js`
-      SR-05 block, `tests/unit/scheduler.test.mjs`.)
+- [x] **T6 · Learning-steps scheduler + softened intervals** — new words climb 1 → 2 → 4 days and
+      graduate only after being *recalled* ~2×.
 - [x] **T7 · Mastery gate + in-progress path UX** — a unit unlocks the next only when every word has
-      graduated (not merely introduced); the current node's ring now fills by *mastery*; tapping an
-      all-introduced-but-unmastered unit drills its weakest words. (`unitIsComplete`, `renderPath`,
-      `startUnitLesson`, `placeBefore`.)
-- [x] **T24 · Two-tone ring so early progress shows** — the T7 mastery-only ring sat at 0% for a
-      unit's first ~4 days (nothing graduates that fast), reading as "no progress" after a couple of
-      lessons (Ross-reported). `renderPath` now layers a faint `--accent-soft` "introduced" arc under
-      the solid `--accent` "mastered" arc, so the ring moves the moment you practice yet still fills
-      only at unlock. New `--accent-soft` token (both themes); dev-seed `earlyring` scenario (0e).
-      (`js/sano.js` ring block, `css/sano.css`, `tools/dev-seed.html`.)
+      graduated, and the ring fills by mastery.
+- [x] **T24 · Two-tone ring so early progress shows** — a faint "introduced" arc under the solid
+      "mastered" arc, so the ring moves the moment you practice.
 - [x] **T8 · Adaptive, review-dominant daily loop** — `dailyPlan()` throttles new words by review
-      debt and sizes reviews to a ~18–20 exercise session, carrying the backlog. (`startDailyLesson`,
-      `renderHome`.)
-- [x] **T9 · Split units >14 items** — 44 → 58 units (~8–12 words each), item ids untouched, anchor
-      ids preserved on chunk 1. **New sub-unit titles/goals are AI-drafted → Ross's review.**
-      (`js/data.js`.)
-- [x] **T10 · Schema v3 migration (fresh start)** — `migrateV2State` keeps name/streak/lifetime
-      tally, resets learning progress, restarts at unit 1. (`tests/unit/migration.test.mjs`.)
+      debt and sizes a ~18–20 exercise session.
+- [x] **T9 · Split units >14 items** — 44 → 58 units (~8–12 words each), item ids untouched.
+- [x] **T10 · Schema v3 migration (fresh start)** — keeps name/streak/lifetime tally, resets
+      learning progress, restarts at unit 1.
+- [x] **T14 · Build the expansion pipeline** — select → Claude draft → `design/expansion.html`
+      review → hand merge → audio; reusable across every T11 batch.
+- [x] **T15 · Batch 1 — everyday verbs (~50)** — merged as 5 units after `verbs-past`.
+- [x] **T18 · Batch 3 — everyday nouns (~46)** — 5 units appended; 73 units / 729 items.
+- [x] **T20 · Batch 4 — everyday adverbs (~44)** — 5 units appended; 78 units / 773 items.
+- [x] **T21 · Batch 5 — essential function words (~27)** — 5 units appended; 83 units / 800 items.
+- [x] **T23 · Batch 6 — everyday-life nouns, part 2 (~45)** — 5 units appended; 88 units / 845 items.
+- [x] **T25 · Batch 7 — feelings & everyday things (~33)** — first hand-curated themed pocket, 4
+      units appended; 92 units / 878 items.
+- [x] **T26 · Batch 8 — calendar, festivals & directions (~27)** — 3 units appended; 95 units /
+      905 items.
+- [x] **T27 · Batch 9 — linking words, more verbs & odds (~22)** — the final breadth batch, 3 units
+      appended; 98 units / 927 items. After this T11 pivots from breadth to depth.
+- [x] **T16 · Batch 2 — everyday adjectives (~45)** — merged as 5 units after `comparing-things`.
 - [ ] **T11 · Phase 2 — grow vocabulary toward ~1,550 words (the everyday tier)** — source the
       highest-frequency missing words from the `tools/dict` frequency ranking (ties to **T3**), add as
       new ~8–12-word mastery-gated units by frequency + situation; regenerate audio for the new items
@@ -811,229 +191,30 @@ sub-unit **titles + goals are AI-drafted — still Ross's to refine** (T9).
       start, atop 683 taught); reaching the older ~2,000 goal would mean dipping into the formal
       register. Done: batch 1 (verbs, T15), batch 2 (adjectives, T16). Next: nouns (batch 3+, ~557
       candidates — the biggest well), then adverbs (~84) and function words (~40).
-- [x] **T14 · Build the expansion pipeline** (reusable across all T11 batches) —
-      `tools/dict/select-candidates.mjs` (mechanical: ranks the everyday, not-yet-covered words of a
-      given part of speech from `dictionary.json`), a Claude drafting pass (wraps each word in a
-      usable frame → `design/expansion-draft.json`), and a localhost review tool
-      `design/expansion.html` + `expansion-save.php` (edit / approve / reject → the gitignored
-      `expansion-approved.json`; never touches `js/data.js`). Approved rows are merged by hand, then
-      audio rendered (`build-words.mjs` → `synth-app.mjs --new --words --new`, bump `AUDIO_VERSION`).
-- [x] **T15 · Batch 1 — everyday verbs (~50)** — 50 high-frequency everyday verbs, curated (dropped
-      verbs already taught + advanced passives/causatives) and wrapped in short natural frames.
-      Reviewed + approved, then merged into `js/data.js` as 5 units after `verbs-past` (Reactions &
-      Opinions, Asking for Help, Getting Around, Making & Doing, Everyday Actions); `tools/dict`
-      coverage refreshed, audio rendered (50 phrase + 57 word clips, `AUDIO_VERSION` 7), dev-seed
-      scenario added. Committed 620a0bd, shipped ea07f30. **Still open:** the 5 unit titles + goals are
-      AI-drafted → Ross's refinement.
-- [x] **T18 · Batch 3 — everyday nouns (~46)** — 46 high-frequency everyday nouns, curated from the
-      top-90 `--pos noun` pool (concrete nouns are already taught, so this is the abstract/everyday-life
-      gap: reasons, decisions, plans, money, relationships). Taught as short frames (they don't emoji);
-      merged as 5 units **appended at the end of the path** (Time & Events, Ideas & Conversation,
-      Problems & Solutions, Money & Business, People & Places) — 73 units / 729 items. Coverage
-      refreshed, audio rendered (46 phrase + 63 word clips, `AUDIO_VERSION` 9), dev-seed scenario
-      added. Unit titles/goals AI-drafted → Ross's refinement. **Shipped** — verified live on namastesano.com
-      2026-07-20 (units present, `AUDIO_VERSION` 21). Unit titles/goals still AI-drafted → Ross's refinement.
-- [x] **T20 · Batch 4 — everyday adverbs (~44)** — 44 high-frequency everyday adverbs (only 1 of the
-      top-70 was already taught), taught as short frames; merged as 5 units **appended at the end of
-      the path** (How Much, Before & After, How Often, How & Where, Linking & Certainty) — 78 units /
-      773 items. Dropped near-duplicate demonstratives. Coverage refreshed, audio rendered (44 phrase +
-      55 word clips, `AUDIO_VERSION` 10), dev-seed scenario added. Also fixed visarga in the romanizer
-      (T19) so प्रायः works. Unit titles/goals AI-drafted → Ross's refinement. **Shipped** — verified live on namastesano.com
-      2026-07-20 (units present, `AUDIO_VERSION` 21). Unit titles/goals still AI-drafted → Ross's refinement.
-- [x] **T21 · Batch 5 — essential function words (~27)** — 27 high-leverage function words
-      (pronouns, conjunctions, counters, big numbers, particles/postpositions) — the grammatical glue.
-      Only genuinely untaught items (course already has basic pronouns, connectors, numbers to 1000);
-      taught as short frames; merged as 5 units **appended at the end of the path** (Pronouns & Self,
-      If/When & Because, Counting Things, Big Numbers, Little Connecting Words) — 83 units / 800 items.
-      Coverage refreshed, audio rendered (27 phrase + 30 word clips, `AUDIO_VERSION` 11), dev-seed
-      scenario added. Smaller batch — function words are inherently fewer. Unit titles/goals AI-drafted
-      → Ross's refinement. **Shipped** (commit e7194aa).
-- [x] **T23 · Batch 6 — everyday-life nouns, part 2 (~45)** — a second nouns pass, deeper in the pool
-      with hard curation for genuinely everyday domains (skipping civic/news terms): 45 nouns as short
-      frames, merged as 5 units **appended at the end of the path** (Travel & Transport, City &
-      Country, Money & Commerce, School & Mind, Health & Life) — 88 units / 845 items. Coverage
-      refreshed, audio rendered (45 phrase + 58 word clips, `AUDIO_VERSION` 12), dev-seed scenario
-      added. व्यापार deferred pending T22 (व→b). Unit titles/goals AI-drafted → Ross's refinement.
-      **Shipped** (commit f0f5e94).
-- [x] **T25 · Batch 7 — feelings & everyday things (~33)** — raw-frequency everyday pool exhausted
-      (remaining top words are civic/news nouns or already-taught verbs), so a **hand-curated themed
-      pocket** of verified gaps: emotions, body parts, clothes, food/kitchen — 33 frames merged as
-      **4 units appended at the end of the path** (Feelings & States, More Body Parts, Clothes &
-      Accessories, More Groceries) — 92 units / 878 items. Dropped the sentence-final danda (।) to
-      match the course's no-terminal-punctuation frame convention. Coverage refreshed, audio rendered
-      (33 phrase + 52 word clips, `AUDIO_VERSION` 13), dev-seed scenario added. Unit titles/goals +
-      the `मलाई ___ लाग्यो` frame repetition AI-drafted → Ross's refinement.
-- [x] **T26 · Batch 8 — calendar, festivals & directions (~27)** — second hand-curated themed pocket:
-      the 12 Bikram Sambat months (colloquial spellings — बैशाख not वैशाख, साउन not श्रावण), major
-      festivals, and cardinal directions (`-तिर` pattern) — all verified 0-coverage gaps. 27 frames
-      merged as **3 units appended at the end of the path** (Nepali Calendar, Festivals & Celebrations,
-      Directions & Places) — 95 units / 905 items. **दशैं forced to "Dashain"** (whole-word
-      WORD_OVERRIDE + PRON_OVERRIDE in `js/romanize.js`, keeping the word-final nasal the Lite scheme
-      drops) — Ross-requested. व्रत dropped (romanizes "Wrat" not "Brat"; see T22) → used पूजा. Coverage
-      refreshed, audio rendered (27 phrase + 28 word clips, `AUDIO_VERSION` 14), dev-seed scenario
-      added. Unit titles/goals AI-drafted → Ross's refinement.
-- [x] **T27 · Batch 9 — linking words, more verbs & odds (~22) — FINAL breadth batch** — an honest
-      assessment (verified spot-checks: ~all top "everyday not covered" dictionary rows are false gaps
-      already taught in a conjugated/spelling variant, plus news-register noise) found the everyday pool
-      effectively picked clean. So a last hand-curated pass of the highest-value genuine gaps: linking
-      words (शायद, तैपनि, अवश्य, जहाँ, जसरी, जबसम्म, जस्तो, अलिकति), more everyday verbs (माग्नु, सम्झनु,
-      बिर्सनु, रोज्नु, पढाउनु, हाँस्नु, रुनु, नाच्नु, छुनु), and odds & ends (छेउ, वारि, पारि, आधुनिक, साझा) —
-      22 frames merged as **3 units appended at the end of the path** (Linking Words, More Everyday Verbs,
-      Odds & Ends) — 98 units / 927 items. **Five drafted frames dropped mid-merge as spelling-variant
-      dups** the initial grep missed (अरू≈अरु "else", कम्तिमा≈कम्तीमा "at least", and सोध्नु/फर्कनु/फाल्नु
-      already taught as म सोध्छु / म फर्किन्छु / म फोहोर फाल्छु). Coverage refreshed, audio rendered (22
-      phrase + 27 word clips, `AUDIO_VERSION` 15), dev-seed scenario added. Unit titles/goals AI-drafted
-      → Ross's refinement. **After this, T11 pivots from breadth to depth** — more frames/phrases around
-      words already known (a new task when Ross starts it).
-- [x] **T16 · Batch 2 — everyday adjectives (~45)** — 45 high-frequency everyday adjectives, curated
-      from the top-80 `--pos adj` pool (dropped semantic dupes already taught + news/formal terms) and
-      wrapped in short natural frames (phrases-style). Reviewed + approved, then merged into
-      `js/data.js` as 5 units after `comparing-things` (Size & Feel, Good/Bad & Right, Order &
-      Sequence, Same or Different, States & Conditions); aligned अरू→अरु to the course's spelling;
-      `tools/dict` coverage refreshed, audio rendered (45 phrase + 58 word clips, `AUDIO_VERSION` 8),
-      dev-seed scenario added. **Still open:** the 5 unit titles + goals are AI-drafted → Ross's
-      refinement; **push/deploy pending Ross's go.**
 
 ## Learning engine — T11 depth pivot (Phase 3)
 
 The breadth expansion (T11 batches 1–9) picked the everyday-frequency pool clean, so T11 pivots from
 **breadth → depth**: more frames/phrases around words already known, rather than new vocabulary.
 Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **real expressions** +
-**everyday contexts**.
+**everyday contexts**. All frame and unit `dev`/English below is AI-drafted → Ross's review.
 
-- [x] **T28 · Rotating-frames mechanism** — an item may carry optional `frames: [{dev,en}]`; reviews
-      rotate through them so a known word is practiced in varied contexts **without adding path
-      units** (the SR record stays keyed by item id — one record, many sentences). Frame 0 is the
-      item's own `dev`/`en` (audio id `<id>`); extras get `<id>-f1`, `<id>-f2`, … `js/romanize.js`
-      derives `np`/`pron` per frame; `itemFrames`/`frameForSeen`/`pickFrame` + `ex.frame` threaded
-      through the render/grade sites (`js/sano.js`); `synth-app.mjs` + `build-words.mjs` expand frames
-      so `--new` renders only the new clips. Unit test + data validation + dev-seed scenario (0f).
-      Committed `3fea017`; 3 pilot items (maagnu/samjhanu/chheu) got demo frames, audio rendered
-      (6 phrase + 5 word clips, `AUDIO_VERSION` 16). **Still open:** the pilot frame `dev` is
-      AI-drafted → Ross's review; **push/deploy pending Ross's go.** Bulk content is T29/T30.
-- [x] **T29 · Depth content — everyday-context alternate frames** — populate `frames` on a curated
-      set of already-taught items with everyday-context variety, so each word stops being tied to one
-      memorized sentence. Nepali `dev` AI-drafted → Ross's review; audio rendered for the new frame
-      clips only, bump `AUDIO_VERSION`. Multi-batch, by part of speech.
-  - [x] **Batch 1 — core present-tense verbs (10 items · 20 frames)** — everyday-context + real-expression
-        frames on the `verbs-present` unit (herchu → "I watch a movie," dinchu → "Please give me water,"
-        padhchu → "I read the news," …). Approved by Ross; audio rendered (20 phrase + 8 word clips,
-        `AUDIO_VERSION` 17); dev-seed 0f extended.
-  - [x] **Batch 2 — core past-tense verbs (12 items · 24 frames)** — everyday-context frames on the
-        `verbs-past` unit (khaen → "I ate rice," gaen → "I went to the market," heren → "I watched a
-        movie," …). Drafted into the T31 tool, approved by Ross, merged; audio rendered (24 phrase +
-        5 word clips, `AUDIO_VERSION` 18); dev-seed 0f extended.
-        (The पिउनु-for-tea quirk was fixed 2026-07-20, Ross-approved: f1 is now "मैले चिया खाएँ"
-        "I had tea" — the colloquial खानु the item's own usage note teaches; clip re-rendered,
-        `AUDIO_VERSION` bump folds into the next batch merge.)
-  - [x] **Batch 3 — descriptive adjectives (20 items · 40 frames)** — attributive + fresh-predicate
-        frames on the `adj-*` units (lamo/chiso/baliyo/khali/khula/sajilo/gahro/kharab/sundar/byasta/
-        jaruri/surakshit/halka/bhari/sahi/galat/kada/pakka/bahadur/niko): "my hair is long," "a busy
-        road," "this road is safe." Drafted into the T31 tool, approved by Ross, merged; audio rendered
-        (40 phrase + 8 word clips, `AUDIO_VERSION` 19); dev-seed 0f now derives its framed set from
-        COURSE. (Merge caught a scanner bug — double-quoted `en` strings; fixed + re-verified all 20
-        match the draft exactly.)
-  - [x] **Batch 4 — position + time/frequency (14 items · 28 frames)** — everyday-context frames on
-        `place-position` + `duration-frequency` bare words (माथि/मुनि/अगाडि/पछाडि/भित्र/बाहिर,
-        हप्ता/महिना/वर्ष/सधैं/कहिलेकाहीं/पछि/अघि/मिनेट): "next week," "I always get up in the morning,"
-        "an hour ago." Approved by Ross, merged; audio in the combined render below.
-  - [x] **Batch 5 — modal patterns (6 items · 12 frames)** — the can/want/must constructions
-        (`modals-can-want-must`) with a different **known verb** swapped in (म पढ्न सक्छु "I can read,"
-        मलाई सुत्न मन लाग्छ "I want to sleep," मलाई पढ्नु पर्छ "I have to study"), so the pattern
-        generalizes. Approved by Ross, merged.
-  - [x] **Batch 6 — common nouns (20 items · 40 frames)** — first depth batch on single-word `vocab`
-        items (family/places/food/body/animals: आमा/बुवा/दिदी/छोरा, हस्पिटल/स्कुल/पसल/बस,
-        खाना/भात/दाल/दूध/माछा, टाउको/आँखा/हात/पेट, कुकुर/बिरालो/गाई): "the dog is at home," "my eye is
-        red," "the cow gives milk." Needed the **T32 routing tweak** (below) so a noun shown as a
-        multi-word frame becomes a word-bank, not a type-the-sentence. Approved by Ross, merged.
-        Batches 4–6 rendered together: 80 phrase + 22 word clips, `AUDIO_VERSION` 20.
-  - [x] **Batches 7–9 — food & kitchen · household objects · weather, nature & animals (60 items ·
-        120 frames)** — first depth batches on the object-noun pools (kitchen/pantry/fruit/veg,
-        bedroom→personal items, weather/animals/colors); 2 frames per item, everyday-context +
-        real-expression mix (बत्ती गयो/आयो, दसवटा मोमो दिनुस्, वाइफाइ पासवर्ड के हो?, जुत्ता बाहिर
-        राख्नुस्). Every dev dup-checked against all 1,129 existing course sentences and
-        romanize-verified at draft time; blanket-approved by Ross 2026-07-20, merged (145 items now
-        framed). Rendering the frames surfaced the T35 root cause (below) — `build-words.mjs` now
-        covers all units, so this render was 120 phrase + 331 word clips, `AUDIO_VERSION` 23.
-        Dev-seed 0f derives from COURSE, no change needed. (Minor: the words build now flags 8
-        cosmetic slug conflicts — the 3 known ones plus गोलभेंडा/गोलभेँडा, फूल/फुल, राति/राती,
-        स्कुल/स्कूल, घमण्ड/घमन्ड — all pre-existing course spelling variants, audibly identical.)
-  - [x] **Batches 10–12 — emotions & people · pronouns & connectors · numbers & weekdays (60 items ·
-        120 frames)** — batch 10: all core emotions + बोर/आशा + family remainder + साथी/बच्चा/मान्छे/
-        छिमेकी (चिन्ता नगर्नुस्, म तिमीलाई माया गर्छु, दाइ, नमस्ते); batch 11: 9 pronouns — म/यो/त्यो/मेरो
-        skipped as already-varied — + all 11 connectors with two-clause frames per Ross (म जान्छु तर ऊ
-        आउँदैन, चिया कि कफी?, अनि तपाईं?), agreement-teaching pronoun frames (उहाँ…हुनुहुन्छ,
-        उनीहरू…छन्/हुन्); batch 12: numbers एक–दस sans छ/नौ + बीस/पचास/सय/हजार/आधा with shop/time frames
-        (पचास प्रतिशत छुट, पाँच बज्यो) + all 7 weekdays (शनिबार बिदा हो). Dup-checked against all 1,249
-        course sentences; some frames deliberately introduce transparent new forms (-दै progressives,
-        आउँदैन/लाग्दैन, आउनुहुन्छ, बिदा). Blanket-approved by Ross 2026-07-20, merged (205 items now
-        framed); audio 120 phrase + 20 word clips, `AUDIO_VERSION` 24. Shipped with the `VA_AS_B`
-        **prefix-match** romanizer fix (वर्षको→Barsako, वनमा→Banamaa; golden tests; no existing slug
-        affected). Remaining unframed pools for future batches: हजुरबुवा/हजुरआमा/बुढा/बुढी, छ/नौ, the
-        formal emotions-more words, core communication units, ~135 object-noun leftovers.
-  - [x] **Batch 13 — odds & ends: grandparents & spouses, छ/नौ, time-of-day, colors (20 items ·
-        40 frames)** — हजुरबुवा/हजुरआमा/बुढा/बुढी with honorific frames (मेरो बुढा बजार जानुभयो, मेरी
-        बुढी नेपाली सिक्दै हुनुहुन्छ), छ/नौ clock frames (नौ बजे पसल बन्द हुन्छ), the 8 time-of-day
-        words (आज मेरो जन्मदिन हो, हिजो राति जाडो थियो), and 6 colors (यो निलो हो कि कालो?, मेरो कपाल
-        सेतो भयो; गुलाबी/प्याजी left for the nature-leftovers batch). Approved by Ross 2026-07-21,
-        merged (225 items framed), audio rendered (40 phrase + 7 word clips), `AUDIO_VERSION` 25.
-        Shipped commit 5260261. Plan after this: ~2 batches core communication, ~2 batches best
-        object-noun leftovers, then close T29's frame coverage (~300 items framed).
-  - [x] **Batches 14–17 — the four closing batches (80 items · 160 frames)** — drafted 2026-07-21,
-        blanket-approved by Ross 2026-07-21, merged in one pass (305/959 items framed), audio
-        rendered, `AUDIO_VERSION` 26. **T29 frame coverage is now closed** — every high-frequency
-        single-word item carries rotating everyday frames; the remaining unframed pool is the
-        low-value tail + multi-word phrases that already carry context. (Minor: new cosmetic slug
-        conflict chhau छौं×3/छौ×1 — informal छौ shares a slug with plural छौं under nasal-dropping;
-        audibly near-identical, same class as the 8 known ones.) **14 · everyday communication & getting around:** politeness
-        words नमस्ते/हजुर/होला/कृपया/धन्यवाद, question words कसरी/किन/कुन (बसपार्क कसरी जाने?),
-        बिस्तारी/छिटो + informal आइज/जाऊ, the 4 comparison words (चिया कफी भन्दा सस्तो छ, अलि कम
-        गर्नुस्), transport बैंक/एयरपोर्ट/बसपार्क/ट्याक्सी. **15 · places, positions & replies:**
-        होटल-as-eatery, अफिस, त्यहाँ/नजिक/तिर/बायाँ/दायाँ/रोक्नुस्/बीचमा/सम्म, तिमी (introduces
-        informal छौ/हौ), होइन tag-question, नमस्कार, नराम्रो, हुन्छ/हुँदैन reply pairs, the 4 -तिर
-        directions with true-geography frames (हिमाल उत्तरतिर छ; introduces भारत + पोखरा). **16 ·
-        food & kitchen leftovers:** पुग्यो/पर्दैन usage, तेल/मसला/फल/अचार/मह/लसुन/धनिया/काँक्रो +
-        सुन्तला/आँप/कागती + चिउरा/सेलरोटी/समोसा/मिठाई/रक्सी/लस्सी/जुस; introduces the missing taste
-        words गुलियो (मह गुलियो हुन्छ) and अमिलो (कागती अमिलो हुन्छ); culture frames (तिहारमा सेलरोटी
-        बनाउँछौं, दहीसँग चिउरा). **17 · household & nature leftovers:** लुगा/चप्पल/चश्मा/चर्पी/सिरानी/
-        ऐना/ताला/रिमोट/कम्प्युटर/मोमबत्ती/बाल्टी (बत्ती गयो, मोमबत्ती बाल्नुस्) + चन्द्रमा/ताल/खोला/
-        झरना/भूकम्प/साँप/भालु (वनमा भालु छ — exercises the VA_AS_B prefix fix) + गुलाबी/प्याजी.
-        Saturated words skipped throughout (हो/छ/छैन, राम्रो/ठूलो/धेरै, कहाँ/यहाँ, बजार, घरमा…).
-        All 160 devs dup-checked + romanize-verified (validator caught "चर्पी कहाँ छ?" as an existing
-        item → swapped). After approval: merge → render → `AUDIO_VERSION` 26 → **T29 frame coverage
-        closes at ~305/959 items** (remaining unframed = the low-value tail + multi-word phrases that
-        already carry context).
-- [x] **T32 · Depth mechanism — route by the shown frame, not the canonical word** — `buildExercises`
-      (`js/sano.js`) now computes `multiWord` from `pickFrame(item).np`, so a single-word `vocab` item
-      whose review lands on a multi-word alternate frame is drilled as a word-bank (assemble the
-      phrase) instead of free-typing the whole sentence. No-op for items whose canonical is already
-      multi-word (all prior batches). Verified headlessly (एक → type at its word, word-bank with a
-      multi-word frame); full suite green. Unlocks the large single-word noun pool for depth (T29 batch 6+).
-- [x] **T30 · Depth content — new "real expression" units** — via the existing expansion pipeline
-      (T14), add a few new mastery-gated units of short, high-utility whole utterances built from
-      already-known vocabulary. Appended at the path's end; Nepali `dev` AI-drafted → Ross's review;
-      audio rendered for the new items only, bump `AUDIO_VERSION`.
-  - [x] **Batch 1 — four themed units (32 utterances)** — drafted into the T14 expansion tool
-        (`design/expansion.html`), blanket-approved by Ross, merged as four new `kind:'phrases'` units
-        appended at the path's end (`COURSE` now 102 units / 959 items): **Sounding Natural** (saanchai
-        "really?!", chhodnus "never mind", ke garne "oh well"), **On the Move** (yahin roknus "stop
-        here", kati taadha cha "how far?", baayaa/daayaa jaanus "turn left/right"), **Being a Guest**
-        (ma aghaaen "I'm full", piro nahaalnus "no spice", ma shaakaahaari hu "I'm vegetarian",
-        khanako lagi dhanyabaad "thanks for the food"), **At the Shop** (dherai mahango bhayo "too
-        expensive", chhut dinus "give a discount", sabai kati bhayo "how much for everything?"). Every
-        `dev` dedup-checked against the course; one guest phrase swapped off an eyelash-ra (ZWJ) spelling
-        for a clean one. Audio rendered (32 phrase + 19 word clips, `AUDIO_VERSION` 21); dev-seed card
-        added (four `seed('unit:…')` buttons). (Minor: words.json flags 3 cosmetic slug conflicts —
-        `mitho` मिठो/मीठो, `sidhaa` सिधा/सीधा, pre-existing `bhane` भने/भनेँ — audibly identical, tile
-        clip plays a correct pronunciation either way; easy to align spelling later if wanted.)
-- [x] **T31 · Frames-review tool** — `design/frames.html` + `design/frames-save.php` (mirrors the
-      `expansion.html` pipeline): groups candidate frames under their target item (English + canonical
-      `dev`/romanization), live-romanizes the editable frame `dev`, and lets Ross edit / approve /
-      reject; POSTs decisions to `frames-save.php` → gitignored `design/frames-approved.json` (never
-      touches `js/data.js`). Draft format `design/frames-draft.json` (gitignored) = `[{ id, item,
-      itemEn, itemDev, dev, en }]`; approved frames merged into the items' `frames: []` by hand, then
-      audio rendered (`<id>-fN`, bump `AUDIO_VERSION`). Seeded with the next batch — **24 past-tense
-      verb frames awaiting Ross's review** (T29 batch 2). Not deployed (`design/` never ships).
+- [x] **T28 · Rotating-frames mechanism** — an item may carry optional `frames: [{dev,en}]` that
+      reviews rotate through, so a known word is practiced in varied contexts without new path units.
+- [x] **T29 · Depth content — everyday-context alternate frames** — 17 batches, closed 2026-07-21:
+      every high-frequency single-word item now carries rotating everyday frames (~305/959 framed).
+- [x] **T32 · Depth mechanism — route by the shown frame, not the canonical word** — `multiWord` is
+      computed from the shown frame, so a single-word item on a multi-word frame becomes a word-bank.
+- [x] **T30 · Depth content — new "real expression" units** — 4 themed units of 32 whole utterances
+      appended at the path's end; 102 units / 959 items.
+- [x] **T31 · Frames-review tool** — `design/frames.html` + `design/frames-save.php`, mirroring the
+      `expansion.html` pipeline (never touches `js/data.js`; `design/` never ships).
+- [x] **T37 · Tap-a-word glosses in lesson exercises** — every word of a Nepali *prompt* taps to its
+      English, backed by the generated `js/glosses.js` (1,130 entries). **Open: the 182 hand-drafted
+      FILLS + 2 sense overrides + 2 extra senses are AI-drafted → Ross's review** (in the build
+      script, greppable).
+- [x] **T38 · Gate alternate frames by learner knowledge** — an alternate frame is eligible only once
+      the item has graduated AND it adds ≤ 2 never-seen words; `choice` always shows the canonical.
 - [ ] **T33 · Accept either gloss for multi-English phrases** — many items carry two English
       glosses in `en` (`"Excuse me / I'm sorry"`, `"Enough / That's sufficient"`, …). Where the
       **English is the graded answer**, only the full both-glosses string is accepted today, so
@@ -1066,32 +247,3 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
         `['Yes','Okay','It will be done']`, hudaina `['No',"It won't work"]`).
   - [ ] **Remaining batches** — 80 items still to review (Place & Position → At the Shop) + a
         dev-seed scenario once the review settles.
-- [x] **T37 · Tap-a-word glosses in lesson exercises** — every word of a Nepali sentence shown as an
-      exercise **prompt** gets the Duolingo-style tap-to-reveal treatment (dotted underline; reuses
-      the dialogues' `SanoGloss` popover, now with an `onWordTap` hook that plays the word's tile
-      clip): tapping a word shows its English. **Delivered 2026-07-22** per Ross's decisions (all
-      prompts — select-meaning, listen-and-build, speak — incl. introductions; choices and word-bank
-      tiles are answers, so they stay un-glossed). Backed by the **generated** `js/glosses.js`
-      (`WORD_GLOSSES`, 1,130 entries; `tools/build-glosses.mjs`): single-word item `en` (389) →
-      ground-truth dictionary (559) → hand-drafted surface-form FILLS (182 — inflected verbs,
-      case-suffixed nouns, and the template-item words words.json skips) + 2 mid-sentence
-      SENSE_OVERRIDES (ho, hoina). Coverage enforced by `tests/data/glosses.test.mjs` + a loud build
-      failure on any new un-glossed word. **Review round 1 (2026-07-23):** homograph slugs now merge
-      the senses of every course item sharing them (`en` + `enAlt`, deduped — chha "Yes / Is / Has /
-      Six", paani "Water / Rain", hajur/hunchha/hundaina pick up their enAlt senses) plus 2
-      EXTRA_SENSES from the dictionary (budhaa "old man", budhi "old woman"); dotted underline
-      raised closer to the word (`text-underline-offset` 0.28em → 0.14em, mirrored in the style
-      guide). **Open: the 182 FILLS + 2 overrides + 2 extra senses are AI-drafted → Ross's review**
-      (in the build script, greppable). Dev-seed 0h.
-- [x] **T38 · Gate alternate frames by learner knowledge — fix the early-overwhelm** —
-      `frameForSeen` rotated frames by raw seen-count with no gating, so a barely-introduced item
-      could land on an alternate frame made of never-seen words (Ross hit "Chaar kothaa chhan" while
-      still learning Numbers 1–10), and `renderChoice` showed that frame sentence against
-      single-word canonical distractors — the long option was obviously correct. **Delivered
-      2026-07-22** per Ross's decisions: an alternate frame is eligible only once the item has
-      **graduated** AND the frame introduces **≤ 2 never-seen words** (`FRAME_MAX_NEW_WORDS`;
-      "known" = any word of an introduced item's canonical sentence, `knownWordSet`); ineligible
-      frames are skipped (rotation runs over the eligible list), and `choice` exercises ALWAYS show
-      the canonical sentence. The complex frames aren't lost — they surface later, once graduation
-      lands and their words are known. `eligibleFrames`/`rotateFrame`/`pickFrame` (js/sano.js),
-      unit-tested in `tests/unit/frames.test.mjs`; dev-seed 0h reproduces the Numbers case.
