@@ -5,9 +5,11 @@ frontend, **no build step** (`index.html`, `css/`, `js/`, `fonts/`, `tools/`) pl
 PHP/MySQL sync API in `api/`. Deployed to namastesano.com (Apache) via `tools/deploy.sh`;
 Ross tests on an iPhone running iOS 26.
 
-The global `~/.claude/CLAUDE.md` defaults apply, with two exceptions stated here: **this
-repo commits directly to `main`** (workflow step 6 — never a side branch, no PRs), and
-tasks live in **`docs/todo.md`** with `T##` ids, not GitHub Issues.
+The global `~/.claude/CLAUDE.md` defaults apply in full — including **branch → PR → Ross merges by
+hand** (workflow steps 6–8) — with one exception stated here: tasks live in **`docs/todo.md`** with
+`T##` ids, not GitHub Issues, so a PR closes nothing automatically and the ticked box ships **inside**
+the PR. There is no `docs/pr-review.md` here: **no PR gauntlet, no `pr-antagonist`, no model law** —
+Ross is the reviewer.
 
 ## Reference docs (load with `@` at session start instead of scanning the code)
 
@@ -166,9 +168,19 @@ routing: `tools/tts/README.md`.
 5. Serve `php -S 127.0.0.1:8000` from the repo root (executes `/api`; needs the dev
    `sano-config.php`) and **ask Ross to review at http://127.0.0.1:8000/ before committing.**
    (`python3 -m http.server 8000` works for frontend-only checks, exercising the offline path.)
-6. After approval, **commit directly to `main`** (never a side branch). **Push and deploy only when
-   Ross asks.**
-7. Deploy with `tools/deploy.sh` (`-n` for a dry run) only when asked, then run the live cache check.
+6. After approval, commit to a **task branch** — `t54-security-hardening`: the `T##` lowercased plus a
+   short slug (no id prefix for an unticketed fix). Never work on `main`, never in a worktree
+   (see **Repo facts**). Push as you go, so the work is never only on this Mac. Tick the task's box in
+   `docs/todo.md` and archive its record (**Task list**, below) **in the branch** — nothing here
+   auto-closes on merge.
+7. **Ask before opening the PR.** One PR per complete feature or change, body citing the `T##`.
+   Then wait: confirm CI is green **on the PR head SHA** (`gh run list --commit` is unreliable — match
+   on `headSha`, never take the newest run), and let **Ross merge**. Never self-merge; a red or
+   unresolvable run is not ready to review.
+8. Once merged: `git switch main && git pull`, delete the branch local **and** remote, then **deploy** —
+   the merge is the go-ahead, no separate ask. `tools/deploy.sh` (`-n` first for a dry run), then the
+   live cache check. A docs-only merge ships nothing (`deploy.sh` allowlists, and `docs/` isn't on it) —
+   say so and skip it rather than running a no-op deploy.
 
 ## Testing notes (the non-obvious bits)
 
@@ -194,7 +206,8 @@ routing: `tools/tts/README.md`.
 
 ## Repo facts
 
-- Remote `git@github.com:rharmes/sano.git`, branch `main`. `.claude/settings.json` sets
+- Remote `git@github.com:rharmes/sano.git`; `main` is the PR base **and** the deploy source — deploy
+  only from a merged `main`, never from a task branch. `.claude/settings.json` sets
   `worktree.bgIsolation: "none"` — background sessions edit this checkout directly; **do not use
   worktrees.**
 - **Deploy** connection details live in the `sano-deploy` SSH alias (key auth) — no hostnames or
