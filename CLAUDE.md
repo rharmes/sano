@@ -70,7 +70,11 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   distractors is the obvious answer). Every **Nepali prompt** is tap-a-word glossed (T37,
   Duolingo-style dotted underline → English popover + word clip) via the **generated**
   `js/glosses.js` (`tools/build-glosses.mjs`; never hand-edit) — choices/tiles are answers and stay
-  un-glossed.
+  un-glossed. **English prompts hint back** (T59): the same underline pops the **romanized Nepali**,
+  from the **generated** `js/en-glosses.js` (`tools/build-en-glosses.mjs`). Two differences that are
+  deliberate — it's keyed **per prompt**, not per word (an English word's Nepali depends on its
+  sentence), and it **reveals the graded answer**, so it's an always-available Duolingo-style hint
+  that is **silent** (the clip would read the answer out) and **doesn't affect grading** (Ross).
 - **Story dialogues** (SR-01, `DIALOGUES` in `js/dialogues.js`) play in a Duolingo-Stories player —
   **romanized-only**, every word tappable for its English (`js/gloss.js`); only `greet-pyaro` is live.
   The English **source of truth** is `tools/tts/dialogue-scripts.md`, hand-mapped into
@@ -101,7 +105,8 @@ across all units — any word that can appear as a word-bank tile, incl. single-
 re-spelling content, regenerate the affected clips — `build-words.mjs` → `synth-app.mjs --words
 --new` (`--new` renders only clips missing on disk, so it won't re-spend credits or churn git) — then
 bump `AUDIO_VERSION` in `js/audio.js` to bust caches; also re-run `tools/build-glosses.mjs` (the
-tap-gloss lexicon `js/glosses.js` — it fails loudly on any new un-glossed word). Flags + per-voice
+tap-gloss lexicon `js/glosses.js` — it fails loudly on any new un-glossed word) and then
+`tools/build-en-glosses.mjs` (T59's `js/en-glosses.js`, which reads those glosses). Flags + per-voice
 routing: `tools/tts/README.md`.
 
 ## Server / admin / PWA (endpoints + guard order in `@docs/architecture.md`)
@@ -239,6 +244,14 @@ routing: `tools/tts/README.md`.
   `frames-approved.json`) → approved frames are merged into the items' `frames: [{dev,en}]` in
   `js/data.js` **by hand** → audio rendered for the new frame clips only (`<id>-fN`; bump
   `AUDIO_VERSION`). Both staging JSONs are gitignored; it does **not** touch `js/data.js`.
+- **`design/en-gloss.html`** is the localhost-only review surface for **T59**'s English→Nepali
+  alignment: every English prompt with a dropdown per word choosing which word of *that prompt's own
+  Nepali* it hints at. Pipeline: `tools/build-en-glosses.mjs --report` writes
+  `design/en-gloss-report.json` → this tool edits (POSTs to `en-gloss-save.php` → gitignored
+  `en-gloss-review.json`) → reviewed rows are folded into that script's `OVERRIDES` **by hand** and it
+  re-run. The aligner is **timid on purpose** — it leaves a word plain rather than guess, so the gaps
+  it flags are *missing* hints, never wrong ones. Both staging JSONs are gitignored; it does **not**
+  touch `js/data.js` or `js/en-glosses.js`.
 - **`tools/dict/`** is a local-only (never-deployed) **ground-truth Nepali↔English dictionary** to
   cross-check the AI-drafted translations and surface high-frequency words the course is missing
   (`tools/dict/README.md`, file map in `@docs/architecture.md`). `build-dictionary.mjs` ranks words

@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		<title>Sano — English Gloss Alignment Review</title>
+		<link rel="stylesheet" href="../css/fonts.css" />
+		<style>
+			/* ───────────────────────────────────────────────────────────────
+			   A localhost-only review tool for T59: every English exercise
+			   prompt shown with the Nepali word each of its words hints at, so
+			   the machine alignment from tools/build-en-glosses.mjs can be
+			   corrected by hand. Pick a Nepali word per English word (or "—"
+			   to leave it plain); changes POST to en-gloss-save.php, which
+			   merges them into design/en-gloss-review.json for Ross to fold
+			   into that script's OVERRIDES. Not in the deploy rsync.
+
+			   Brand tokens copied verbatim from css/sano.css (the source of
+			   truth); 1rem = 10px (base-font 62.5% on <html>).
+			   ─────────────────────────────────────────────────────────────── */
+			html {
+				font-size: 62.5%;
+				color-scheme: light;
+
+				--accent: #dd6470;
+				--accent-deep: #b94f5b;
+				--path-complete-color: #56629e;
+
+				--text-color-richer: #2e2933;
+				--text-color-normal: #45404c;
+				--text-color-soft: #79705f;
+				--text-color-softer: #b1a795;
+
+				--text-complete-color: #38824a;
+
+				--background-color: #fbf5e9;
+				--background-color-softer: #f3ecdb;
+
+				--border-color: #e0d8c4;
+				--border-color-softer: #e9e2d1;
+
+				--button-primary-color: #fff;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				padding: 0 2rem 12rem;
+				background: var(--background-color);
+				color: var(--text-color-normal);
+				font-family: 'Lato', sans-serif;
+				font-size: 1.6rem;
+				line-height: 1.5;
+			}
+			header {
+				position: sticky;
+				top: 0;
+				z-index: 5;
+				margin: 0 -2rem 2rem;
+				padding: 1.6rem 2rem;
+				background: var(--background-color-softer);
+				border-bottom: 1px solid var(--border-color);
+			}
+			h1 {
+				margin: 0 0 0.4rem;
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 2.4rem;
+				color: var(--text-color-richer);
+			}
+			.lede {
+				max-width: 90rem;
+				margin: 0 0 1.2rem;
+				font-size: 1.4rem;
+				color: var(--text-color-soft);
+			}
+			.controls {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.8rem;
+				align-items: center;
+			}
+			button {
+				font: inherit;
+				padding: 0.6rem 1.4rem;
+				border: 1px solid var(--border-color);
+				border-radius: 999px;
+				background: #fff;
+				color: var(--text-color-normal);
+				cursor: pointer;
+			}
+			button.on {
+				background: var(--accent);
+				border-color: var(--accent);
+				color: var(--button-primary-color);
+			}
+			button.primary {
+				background: var(--accent);
+				border-color: var(--accent);
+				color: var(--button-primary-color);
+				font-weight: 700;
+			}
+			button[disabled] {
+				opacity: 0.5;
+				cursor: default;
+			}
+			input[type='search'] {
+				font: inherit;
+				padding: 0.6rem 1.2rem;
+				border: 1px solid var(--border-color);
+				border-radius: 999px;
+				background: #fff;
+				min-width: 22rem;
+			}
+			.stats {
+				font-size: 1.3rem;
+				color: var(--text-color-soft);
+			}
+			h2 {
+				margin: 3rem 0 1rem;
+				font-family: 'Baloo 2', sans-serif;
+				font-size: 1.8rem;
+				color: var(--text-color-richer);
+				border-bottom: 1px solid var(--border-color-softer);
+			}
+			.row {
+				display: grid;
+				grid-template-columns: minmax(28rem, 1fr) minmax(30rem, 1.2fr);
+				gap: 1.2rem 2.4rem;
+				padding: 1.2rem 0;
+				border-bottom: 1px solid var(--border-color-softer);
+			}
+			.row.edited {
+				background: #fff6f0;
+				box-shadow: inset 3px 0 0 var(--accent);
+				padding-left: 1.2rem;
+			}
+			.row.saved {
+				box-shadow: inset 3px 0 0 var(--path-complete-color);
+			}
+			.id {
+				font-size: 1.2rem;
+				color: var(--text-color-softer);
+				font-family: ui-monospace, monospace;
+			}
+			.np {
+				font-style: italic;
+				color: var(--text-color-soft);
+			}
+			.words {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6rem;
+			}
+			.word {
+				display: flex;
+				flex-direction: column;
+				gap: 0.2rem;
+			}
+			.word .en {
+				font-size: 1.6rem;
+				color: var(--text-color-richer);
+			}
+			.word.hinted .en {
+				text-decoration: underline dotted var(--text-color-softer);
+				text-decoration-thickness: 2px;
+				text-underline-offset: 0.14em;
+			}
+			.word.gap .en {
+				color: var(--accent-deep);
+			}
+			.word.aside .en {
+				color: var(--text-color-softer);
+				font-style: italic;
+			}
+			/* The preview: how the prompt actually renders in a lesson. Adjacent words sharing
+			   one Nepali word are ONE span with ONE underline, because that whole phrase is
+			   that single word ("go ahead" → bhannus) — which is the thing the per-word
+			   dropdowns below can't show on their own. */
+			.preview {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: flex-end;
+				gap: 0 0.5rem;
+				margin-bottom: 0.6rem;
+				font-size: 1.8rem;
+				color: var(--text-color-richer);
+			}
+			.preview .span {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+			.preview .span.hinted > .t {
+				text-decoration: underline dotted var(--accent);
+				text-decoration-thickness: 2px;
+				text-underline-offset: 0.18em;
+			}
+			.preview .span.aside > .t {
+				color: var(--text-color-softer);
+				font-style: italic;
+			}
+			.preview .np-under {
+				font-size: 1.2rem;
+				font-style: italic;
+				color: var(--accent-deep);
+				line-height: 1.6;
+			}
+			select {
+				font: inherit;
+				font-size: 1.3rem;
+				padding: 0.2rem;
+				border: 1px solid var(--border-color);
+				border-radius: 6px;
+				background: #fff;
+				max-width: 16rem;
+			}
+			.unused {
+				font-size: 1.3rem;
+				color: var(--accent-deep);
+			}
+			footer {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				display: flex;
+				gap: 1.2rem;
+				align-items: center;
+				padding: 1.2rem 2rem;
+				background: var(--background-color-softer);
+				border-top: 1px solid var(--border-color);
+			}
+			.msg {
+				font-size: 1.4rem;
+				color: var(--text-color-soft);
+			}
+			.empty {
+				padding: 4rem 0;
+				color: var(--text-color-soft);
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>English gloss alignment (T59)</h1>
+			<p class="lede">
+				Every English exercise prompt, with the Nepali word each of its words hints at when tapped. The alignment is machine-made
+				(<code>tools/build-en-glosses.mjs</code>) and deliberately timid — it leaves a word plain rather than guess, so
+				<strong>the gaps in red are missing hints, not wrong ones</strong>. Fix a word by picking its Nepali from the dropdown. The line
+				above each row is <strong>the lesson's own rendering</strong>. <strong>Grouping works both ways:</strong> give two neighbouring
+				English words the same hint and they become <strong>one span under one underline</strong> (“go ahead” → <i>bhannus</i>), and
+				each dropdown also offers <strong>multi-word Nepali phrases</strong> for the reverse case, where one English word is a whole
+				phrase (“sorry” → <i>maaf garnuhos</i>). <strong>Parentheticals and “/” are greyed out and skipped</strong> — “(formal)”
+				describes register and “/” separates two glosses; neither has a Nepali word behind it, so neither gets an underline. Saves to
+				<code>design/en-gloss-review.json</code>; nothing here edits <code>js/data.js</code> or ships.
+			</p>
+			<div class="controls">
+				<button data-filter="all" class="on">All</button>
+				<button data-filter="partial">Has gaps</button>
+				<button data-filter="none">Nothing matched</button>
+				<button data-filter="complete">Complete</button>
+				<button data-filter="edited">Edited</button>
+				<input type="search" id="q" placeholder="Search English, Nepali or id…" />
+				<span class="stats" id="stats"></span>
+			</div>
+		</header>
+
+		<main id="rows"><p class="empty">Loading…</p></main>
+
+		<footer>
+			<button class="primary" id="save" disabled>Save changes</button>
+			<button id="reset" disabled>Discard changes</button>
+			<span class="msg" id="msg"></span>
+		</footer>
+
+		<script>
+			// The report is written by `node tools/build-en-glosses.mjs --report`. It holds every
+			// prompt (canonical + alternate frames), its romanized Nepali, and the aligner's
+			// per-word assignment — the same word-level shape this tool saves back, so a
+			// correction here is a drop-in replacement for the aligner's row.
+			const REPORT = 'en-gloss-report.json';
+			let rows = [];
+			let saved = {}; // id → reviewed tokens already on disk
+			const edits = new Map(); // id → tokens, unsaved
+			let filter = 'all';
+			let query = '';
+
+			const el = (tag, cls, text) => {
+				const n = document.createElement(tag);
+				if (cls) n.className = cls;
+				if (text !== undefined) n.textContent = text;
+				return n;
+			};
+
+			async function load() {
+				let report;
+				try {
+					report = await (await fetch(REPORT, { cache: 'no-store' })).json();
+				} catch (e) {
+					document.getElementById('rows').innerHTML =
+						'<p class="empty">No <code>design/en-gloss-report.json</code>. Generate it with <code>node tools/build-en-glosses.mjs --report</code>, then reload.</p>';
+					return;
+				}
+				try {
+					saved = await (await fetch('en-gloss-review.json', { cache: 'no-store' })).json();
+				} catch (e) {
+					saved = {}; // nothing reviewed yet
+				}
+				rows = report.map((r) => ({ ...r, tokens: (saved[r.id] && saved[r.id].tokens) || r.tokens }));
+				render();
+			}
+
+			// A row's own Nepali is the only legal source of hints: the alignment is per prompt,
+			// so a word can only ever point at something in its own sentence.
+			const npWordsOf = (row) => row.np.split(/\s+/).filter(Boolean);
+
+			// Every hint a row can offer: each single Nepali word, plus every CONTIGUOUS run of
+			// them. The runs are what make grouping work in the other direction — one English
+			// word standing for a whole Nepali phrase ("sorry" is the whole of "maaf garnuhos").
+			// Only contiguous runs, and always in sentence order, so a hint is never words
+			// plucked from opposite ends of the sentence.
+			function hintOptions(row) {
+				const words = npWordsOf(row).filter((w) => /[a-z0-9]/i.test(w));
+				const out = [];
+				for (let len = 1; len <= words.length; len++)
+					for (let start = 0; start + len <= words.length; start++) out.push(words.slice(start, start + len).join(' '));
+				return out;
+			}
+
+			function tokensOf(row) {
+				return edits.get(row.id) || row.tokens;
+			}
+			// A word is a gap only if it could have been hinted: parenthetical asides never
+			// count, so a row reading "He / She (informal)" is complete once He and She are done.
+			const gapsOf = (row) => tokensOf(row).filter((pair, i) => !pair[1] && !(row.asides || [])[i]);
+			const hintableOf = (row) => tokensOf(row).filter((pair, i) => !(row.asides || [])[i]);
+
+			function matches(row) {
+				const gaps = gapsOf(row).length;
+				const hinted = hintableOf(row).length - gaps;
+				if (filter === 'partial' && !(gaps && hinted)) return false;
+				if (filter === 'none' && hinted) return false;
+				if (filter === 'complete' && gaps) return false;
+				if (filter === 'edited' && !edits.has(row.id) && !saved[row.id]) return false;
+				if (query) {
+					const hay = (row.id + ' ' + row.en + ' ' + row.np + ' ' + row.unit).toLowerCase();
+					if (!hay.includes(query)) return false;
+				}
+				return true;
+			}
+
+			function render() {
+				const host = document.getElementById('rows');
+				host.textContent = '';
+				const shown = rows.filter(matches);
+				let unit = null;
+				for (const row of shown) {
+					if (row.unit !== unit) {
+						unit = row.unit;
+						host.appendChild(el('h2', null, unit));
+					}
+					host.appendChild(renderRow(row));
+				}
+				if (!shown.length) host.appendChild(el('p', 'empty', 'Nothing matches that filter.'));
+
+				const totalGaps = rows.reduce((n, r) => n + gapsOf(r).length, 0);
+				const words = rows.reduce((n, r) => n + hintableOf(r).length, 0);
+				document.getElementById('stats').textContent =
+					// "words underlined", not "content words hinted" — this counts every non-aside word
+					// including small ones like "at", so it deliberately reads higher than the build
+					// script's content-word percentage. Two different questions, two different numbers.
+					`${shown.length} shown · ${rows.length} prompts · ${words - totalGaps}/${words} words underlined · ${edits.size} unsaved`;
+				document.getElementById('save').disabled = !edits.size;
+				document.getElementById('reset').disabled = !edits.size;
+			}
+
+			function renderRow(row) {
+				const node = el('div', 'row' + (edits.has(row.id) ? ' edited' : saved[row.id] ? ' saved' : ''));
+
+				const left = el('div');
+				left.appendChild(el('div', 'id', row.id));
+				left.appendChild(el('div', 'np', row.np));
+				const tokens = tokensOf(row);
+				// A hint may be a phrase, so credit every word inside it before calling one unused.
+				const used = new Set(tokens.flatMap((t) => (t[1] || '').split(/\s+/)).filter(Boolean));
+				const unused = npWordsOf(row).filter((w) => !used.has(w));
+				if (unused.length) left.appendChild(el('div', 'unused', 'unused: ' + unused.join(', ')));
+				node.appendChild(left);
+
+				const right = el('div');
+				right.appendChild(renderPreview(row, tokens));
+
+				const words = el('div', 'words');
+				tokens.forEach((pair, i) => {
+					const aside = (row.asides || [])[i];
+					// A parenthetical note ("(formal)") has no Nepali behind it, so it gets no
+					// dropdown at all — it isn't work waiting to be done.
+					const w = el('div', 'word' + (aside ? ' aside' : pair[1] ? ' hinted' : ' gap'));
+					w.appendChild(el('span', 'en', pair[0]));
+					if (aside) {
+						words.appendChild(w);
+						return;
+					}
+					const sel = el('select');
+					const plain = el('option', null, '—');
+					plain.value = '';
+					sel.appendChild(plain);
+					for (const np of hintOptions(row)) {
+						const opt = el('option', null, np);
+						opt.value = np;
+						sel.appendChild(opt);
+					}
+					sel.value = pair[1] || '';
+					sel.addEventListener('change', () => {
+						const next = tokensOf(row).map((p, j) => (j === i ? [p[0], sel.value] : p));
+						// Back to exactly what the aligner produced = no edit worth storing.
+						if (JSON.stringify(next) === JSON.stringify(row.tokens)) edits.delete(row.id);
+						else edits.set(row.id, next);
+						render();
+					});
+					w.appendChild(sel);
+					words.appendChild(w);
+				});
+				right.appendChild(words);
+				node.appendChild(right);
+				return node;
+			}
+
+			// Merge neighbouring words that point at the same Nepali word into one span — the
+			// same rule mergeSegs applies at build time, so this preview is what the lesson
+			// will actually show: one underline across "go ahead", with bhannus beneath it.
+			function mergeSpans(tokens, asides) {
+				const spans = [];
+				tokens.forEach(([en, np], i) => {
+					const aside = !!(asides || [])[i];
+					const last = spans[spans.length - 1];
+					if (last && last.np === (np || '') && last.aside === aside) last.text += ' ' + en;
+					else spans.push({ text: en, np: np || '', aside });
+				});
+				return spans;
+			}
+
+			function renderPreview(row, tokens) {
+				const box = el('div', 'preview');
+				for (const span of mergeSpans(tokens, row.asides)) {
+					const s = el('div', 'span' + (span.np ? ' hinted' : '') + (span.aside ? ' aside' : ''));
+					s.appendChild(el('span', 't', span.text));
+					if (span.np) s.appendChild(el('span', 'np-under', span.np));
+					box.appendChild(s);
+				}
+				return box;
+			}
+
+			document.querySelectorAll('[data-filter]').forEach((b) =>
+				b.addEventListener('click', () => {
+					filter = b.dataset.filter;
+					document.querySelectorAll('[data-filter]').forEach((o) => o.classList.toggle('on', o === b));
+					render();
+				}),
+			);
+			document.getElementById('q').addEventListener('input', (e) => {
+				query = e.target.value.trim().toLowerCase();
+				render();
+			});
+			document.getElementById('reset').addEventListener('click', () => {
+				edits.clear();
+				render();
+			});
+			document.getElementById('save').addEventListener('click', async () => {
+				const msg = document.getElementById('msg');
+				const payload = [...edits.entries()].map(([id, tokens]) => {
+					const row = rows.find((r) => r.id === id);
+					return { id, en: row.en, np: row.np, tokens };
+				});
+				msg.textContent = 'Saving…';
+				try {
+					const res = await fetch('en-gloss-save.php', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ edits: payload }),
+					});
+					const out = await res.json();
+					if (!out.ok) throw new Error(out.error || 'save failed');
+					for (const [id, tokens] of edits) {
+						saved[id] = { tokens };
+						const row = rows.find((r) => r.id === id);
+						row.tokens = tokens;
+					}
+					edits.clear();
+					msg.textContent = `Saved ${out.saved} row(s) — ${out.total} reviewed in total. Fold them into OVERRIDES in tools/build-en-glosses.mjs, then re-run it.`;
+					render();
+				} catch (e) {
+					msg.textContent = 'Save failed: ' + e.message + ' (is this served through php -S?)';
+				}
+			});
+
+			load();
+		</script>
+	</body>
+</html>

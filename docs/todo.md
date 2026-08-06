@@ -215,18 +215,13 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
       script, greppable).
 - [x] **T38 · Gate alternate frames by learner knowledge** — an alternate frame is eligible only once
       the item has graduated AND it adds ≤ 2 never-seen words; `choice` always shows the canonical.
-- [ ] **T59 · Tap-a-word glosses on English prompts (T37 in reverse)** — every word of an *English*
-      prompt gets T37's dotted underline and pops its **romanized Nepali** below on tap. The English
-      prompts are exactly three sites in `js/sano.js`, all reached via `setPrompt(…, glossed=false)`:
-      `choice` en-np ("Select the Nepali"), `wordbank` ("Build the Nepali from the tiles") and `type`
-      ("Type the Nepali"). Two things stop it being a mirror image of T37. **(a) It reveals the graded
-      answer** — in all three the Nepali *is* what the learner must produce, so this is a deliberate
-      hint (Duolingo does the same on its "write this in Spanish" prompts), not a free gloss; needs a
-      ruling on gating and on whether a hinted answer still counts for SR credit. **(b) The data
-      doesn't exist** — `WORD_GLOSSES` (js/glosses.js) is slug→English, and only **251 of 959** items
-      have a single-word `en` (459 are 2–3 words, 249 are 4+, 103 contain a ` / ` alternate, plus 610
-      frames), so there is no per-word English→Nepali alignment to reverse; it has to be generated,
-      and anything AI-drafted is Ross's to review.
+- [x] **T59 · Tap-a-word hints on English prompts (T37 in reverse)** — an English prompt's words are
+      dotted-underlined and tap to their **romanized Nepali**, on all three produce-the-Nepali cards.
+      Ross's rulings: always available, **silent**, no SR penalty. Backed by the generated
+      `js/en-glosses.js` (`tools/build-en-glosses.mjs`), keyed **per prompt** because an English
+      word's Nepali depends on its sentence. **Open: 73% of content words are hinted (921 of 1,569
+      prompts complete) — the remaining gaps are Ross's to fill in `design/en-gloss.html`**, whose
+      rulings come back as `OVERRIDES`.
 - [ ] **T33 · Accept either gloss for multi-English phrases** — many items carry two English
       glosses in `en` (`"Excuse me / I'm sorry"`, `"Enough / That's sufficient"`, …). Where the
       **English is the graded answer**, only the full both-glosses string is accepted today, so

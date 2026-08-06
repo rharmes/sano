@@ -66,6 +66,27 @@ the first unit's meaning) → the ground-truth dictionary (tools/dict) → hand-
 fills in the build script (AI-drafted → Ross's review). Coverage and the homograph merge are
 enforced by `tests/data/glosses.test.mjs` and the build fails on any un-glossed word.
 
+`EN_GLOSSES` (T59, js/en-glosses.js — **generated** by `tools/build-en-glosses.mjs`, do not hand-edit):
+`{ [audioId]: [[en] | [en, np], …] }` — the same tap-a-word treatment on an **English** prompt,
+popping the romanized Nepali. Each entry is that prompt's words **in order**: a one-element pair is
+plain text, a two-element pair is a tappable span and the Nepali word it hints at. The key is the
+frame's `audioId` (`item.id`, or `<id>-fN`), i.e. what `ex.frame` already carries.
+
+Keyed **per prompt**, not per word — the one structural difference from `WORD_GLOSSES`, and the
+reason a reversed lookup won't do: a Nepali word means roughly the same thing wherever it appears,
+but an English one doesn't ("have" is छ in one frame and खान्छु in another), and only 251 of 959
+items are single-word, so there is no English-word → Nepali-word table to invert. The generator
+therefore aligns each frame's own English against its own Nepali *through* `WORD_GLOSSES`, which
+makes the context unambiguous. Neighbouring words sharing a hint merge into one span, because a
+case-suffixed noun **is** a phrase in English (`at home` → gharamaa).
+
+Unmatched words are left plain **on purpose**: these prompts sit on produce-the-Nepali exercises, so
+a wrong hint teaches the wrong answer, while a missing one just costs a hint. Ross's rulings on the
+feature: the hint is always available (a Duolingo-style scaffold, even though it reveals the graded
+answer), **silent** (the tile clip would read the answer aloud), and has **no effect on grading**.
+`tests/data/en-glosses.test.mjs` pins the invariants that matter — the English still rebuilds the
+prompt exactly, and every hint is a word of that same prompt's Nepali.
+
 An item (`kind: 'vocab'`) — carries an `emoji`, no `usage`:
 
 ```js
