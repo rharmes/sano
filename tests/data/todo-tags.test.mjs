@@ -43,6 +43,19 @@ test('todo.md: the Tags header documents both vocabularies', () => {
 	assert.ok(WAITING_ON.length >= 2, `waiting-on vocabulary looks empty: ${JSON.stringify(WAITING_ON)}`);
 	assert.ok(WAITING_ON.includes('none'), 'waiting-on must offer `none`, or nothing can be marked unblocked');
 	assert.ok(AREAS.length >= 2, `area vocabulary looks empty: ${JSON.stringify(AREAS)}`);
+
+	// A bullet's prose sits in the same block as its enumeration, so a **`bolded`** word in the
+	// explanation joins the vocabulary — which silently makes it a legal tag. Re-bolding a value
+	// that's already enumerated shows up here as a duplicate; the header tells writers to keep
+	// prose in plain ticks. (A bolded word that is *new* still slips through — the reason the
+	// convention is written down rather than only enforced.)
+	for (const [name, vocab] of [
+		['waiting-on', WAITING_ON],
+		['area', AREAS],
+	]) {
+		const dupes = vocab.filter((v, i) => vocab.indexOf(v) !== i);
+		assert.deepEqual(dupes, [], `docs/todo.md: the \`${name}:\` bullet bolds ${dupes.join(', ')} twice — keep prose in plain code ticks`);
+	}
 });
 
 test('todo.md: every open task has exactly one waiting-on: and one area:, from the documented vocabulary', () => {
