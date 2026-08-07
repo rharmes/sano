@@ -173,6 +173,20 @@
 		</div>
 
 		<div class="card">
+			<span class="tests">SR-05 depth · T59</span>
+			<h2>0h · Tap-a-word hints on English prompts (T59)</h2>
+			<p>
+				T37 in reverse. Whole course mastered with a dozen <b>multi-word phrase items due</b>, so the lesson keeps landing on the
+				produce-the-Nepali cards — <b>“Select the Nepali”</b>, <b>“Build the Nepali from the tiles”</b>, <b>“Type the Nepali”</b>. On
+				those, the <b>English</b> at the top is dotted-underlined: tap a word for its <b>romanized Nepali</b>. A phrase that is one
+				Nepali word underlines as one chunk (“at home” → <i>gharamaa</i>). These <b>reveal the answer on purpose</b> (Duolingo-style
+				scaffold, always available, no effect on grading) and stay <b>silent</b> — the tile clip would read the answer aloud. Words the
+				aligner couldn't resolve stay plain: a missing hint is fine, a wrong one is not.
+			</p>
+			<button onclick="seed('t59engloss')">Seed &amp; open</button>
+		</div>
+
+		<div class="card">
 			<span class="tests">SR-05 schema v3 · fresh start</span>
 			<h2>0d · Fresh-start migration (v2 → v3)</h2>
 			<p>
@@ -834,6 +848,22 @@
 					// prompt word is dotted-underlined — tap for the English + the word's clip. Since
 					// everything is known, graduated items may also rotate onto alternate frames (T38's
 					// gate is satisfied: no frame can spring >2 never-seen words on a full dictionary).
+					const items = {};
+					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 30, lastSeen: day(0) });
+					let n = 0;
+					for (const u of COURSE)
+						for (const it of u.items) {
+							if (n >= 12 || it.dev.split(/\s+/).length < 3) continue;
+							items[it.id] = mastered({ interval: n % 2 ? 6 : 1, seen: 4 + (n % 3), correct: 4, lastSeen: day(14) });
+							n++;
+						}
+					state = wrap(items, { itemsTotal: 950 });
+				} else if (which === 't59engloss') {
+					// T59 tap-a-word hints on ENGLISH prompts. Same shape as t37gloss — whole course
+					// mastered so nothing is gated, a dozen multi-word items due — but the cards to look
+					// at are the en-np ones, where the English prompt is now tappable for its romanized
+					// Nepali. Direction is drawn per exercise, so stepping a few cards shows both: the
+					// Nepali prompts glossed to English (T37) and the English prompts hinted back (T59).
 					const items = {};
 					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 30, lastSeen: day(0) });
 					let n = 0;

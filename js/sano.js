@@ -1371,14 +1371,49 @@ function glossedPrompt(sentence) {
 	return SanoGloss.renderLine({ np: sentence, gloss: gloss }, { onWordTap: (seg) => playTileWord(seg.np) });
 }
 
-function setPrompt(label, word, pron, audioId, voiceId, glossed) {
+// Tap-a-word hints on ENGLISH prompts (T59): the same dotted underline and popover as
+// T37, running the other way — the words shown are English and the popover holds the
+// romanized Nepali. `key` is the frame's audioId, which is how EN_GLOSSES (js/en-glosses.js,
+// generated) keys its per-prompt alignment; the alignment is per prompt, not per word,
+// because an English word's Nepali depends on its sentence.
+//
+// Unlike T37 this DOES reveal the answer — every English prompt sits on a produce-the-
+// Nepali exercise — so it is a deliberate hint, Duolingo-style, and Ross ruled it always
+// available. It stays SILENT (no onWordTap): the tile clip would read the answer aloud.
+//
+// `text` is the whole prompt, which may carry the item's emoji ahead of the English; the
+// emoji is rendered as plain text and only the English is glossed. Returns null — meaning
+// "render it plain, as before" — when the prompt has no alignment, so a prompt the aligner
+// couldn't resolve degrades to exactly today's behaviour.
+function glossedEnglishPrompt(text, key) {
+	const segs = typeof EN_GLOSSES === 'undefined' ? null : EN_GLOSSES[key];
+	if (!segs || !segs.length) return null;
+	const english = segs.map((seg) => seg[0]).join(' ');
+	const at = text.lastIndexOf(english);
+	if (at < 0) return null; // prompt text and lexicon disagree (stale build) — stay plain
+	const frag = document.createDocumentFragment();
+	if (at > 0) frag.appendChild(document.createTextNode(text.slice(0, at)));
+	// NOTE the swap: SanoGloss shows `np` and pops `en`, so an English-side gloss puts the
+	// English span in `np` and its romanized Nepali in `en`.
+	frag.appendChild(SanoGloss.renderLine({ np: english, gloss: segs.map(([en, np]) => ({ np: en, en: np || '' })) }));
+	return frag;
+}
+
+function setPrompt(label, word, pron, audioId, voiceId, glossed, enKey) {
 	document.getElementById('exercise-label').textContent = label;
 	const wordEl = document.getElementById('exercise-word');
-	// A Nepali prompt (glossed) renders as tap-to-gloss words; English prompts stay plain.
+	// A Nepali prompt (glossed) taps to its English; an English prompt taps to its Nepali
+	// (T59) when the frame has an alignment, and otherwise stays plain.
 	if (glossed) {
 		wordEl.textContent = '';
 		wordEl.appendChild(glossedPrompt(word));
-	} else wordEl.textContent = word;
+	} else {
+		const hinted = enKey ? glossedEnglishPrompt(word, enKey) : null;
+		if (hinted) {
+			wordEl.textContent = '';
+			wordEl.appendChild(hinted);
+		} else wordEl.textContent = word;
+	}
 	// An audioId is passed only when the headword shown is the Nepali — the one direction
 	// where playing it can't give the answer away. In that case offer a play button beside
 	// it AND auto-play it on load, so a Nepali word at the top always speaks itself. The
@@ -1410,7 +1445,7 @@ function renderChoice(ex) {
 	const f = ex.frame;
 	if (ex.listen) setListenPrompt('Select what you hear', f.audioId, exVoice(ex));
 	else if (ex.dir === 'np-en') setPrompt('Select the correct meaning', f.np, f.pron, f.audioId, exVoice(ex), true);
-	else setPrompt('Select the Nepali', promptText(f), '');
+	else setPrompt('Select the Nepali', promptText(f), '', undefined, undefined, false, f.audioId);
 
 	const choiceText = ex.dir === 'np-en' ? (item) => item.en : (item) => item.np;
 	const choices = shuffleArray([ex.item].concat(getDistractors(ex.item, choiceText)));
@@ -1485,7 +1520,7 @@ function renderWordbank(ex) {
 	const target = buildNepali ? f.np : acceptedEnglish(ex)[0];
 
 	if (buildNepali) {
-		setPrompt('Build the Nepali from the tiles', promptText(f), '');
+		setPrompt('Build the Nepali from the tiles', promptText(f), '', undefined, undefined, false, f.audioId);
 	} else {
 		// Showing/parsing the Nepali is the prompt here, so its audio button doesn't give
 		// the (English) answer away; setPrompt auto-plays it on load (Nepali headword).
@@ -1569,7 +1604,7 @@ function wordbankDistractors(item, dir) {
 function renderType(ex) {
 	const f = ex.frame;
 	if (ex.listen) setListenPrompt('Type what you hear', f.audioId, exVoice(ex));
-	else setPrompt('Type the Nepali', promptText(f), '');
+	else setPrompt('Type the Nepali', promptText(f), '', undefined, undefined, false, f.audioId);
 	const input = document.getElementById('type-answer');
 	input.value = '';
 	document.getElementById('exercise-check').disabled = true;

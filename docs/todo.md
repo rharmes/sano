@@ -215,6 +215,13 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
       script, greppable).
 - [x] **T38 · Gate alternate frames by learner knowledge** — an alternate frame is eligible only once
       the item has graduated AND it adds ≤ 2 never-seen words; `choice` always shows the canonical.
+- [x] **T59 · Tap-a-word hints on English prompts (T37 in reverse)** — an English prompt's words are
+      dotted-underlined and tap to their **romanized Nepali**, on all three produce-the-Nepali cards.
+      Ross's rulings: always available, **silent**, no SR penalty. Backed by the generated
+      `js/en-glosses.js` (`tools/build-en-glosses.mjs`), keyed **per prompt** because an English
+      word's Nepali depends on its sentence. **Open: 73% of content words are hinted (921 of 1,569
+      prompts complete) — the remaining gaps are Ross's to fill in `design/en-gloss.html`**, whose
+      rulings come back as `OVERRIDES`.
 - [ ] **T33 · Accept either gloss for multi-English phrases** — many items carry two English
       glosses in `en` (`"Excuse me / I'm sorry"`, `"Enough / That's sufficient"`, …). Where the
       **English is the graded answer**, only the full both-glosses string is accepted today, so

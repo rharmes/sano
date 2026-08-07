@@ -981,3 +981,88 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       the canonical sentence. The complex frames aren't lost — they surface later, once graduation
       lands and their words are known. `eligibleFrames`/`rotateFrame`/`pickFrame` (js/sano.js),
       unit-tested in `tests/unit/frames.test.mjs`; dev-seed 0h reproduces the Numbers case.
+
+- [x] **T59 · Tap-a-word hints on English prompts (T37 in reverse)** — every word of an English
+      exercise prompt is dotted-underlined and taps to its **romanized Nepali**, on the three
+      produce-the-Nepali cards (`choice` en-np "Select the Nepali", `wordbank` "Build the Nepali from
+      the tiles", `type` "Type the Nepali" — all three reached via `setPrompt(…, glossed=false)`).
+      Renderer: `glossedEnglishPrompt` (js/sano.js) reusing `SanoGloss.renderLine` with the sides
+      swapped (English in `np`, Nepali in `en`), returning `null` — render plain, exactly as before —
+      for any prompt with no alignment.
+  - **Ross's four rulings (2026-08-06), asked before any code was written.** The feature is not a
+        mirror image of T37, because every English prompt sits on an exercise where the Nepali *is*
+        the graded answer. (1) **Always available** on all three types — a Duolingo-style scaffold;
+        the alternatives considered were "not on `type`" (which is the SR-05 mastery check) and
+        "only after answering". (2) Generated alignment **with a review surface**, over reversing the
+        lexicon or a whole-prompt reveal. (3) **Silent** — no tile clip on tap, because the clip
+        would read the answer aloud; this is the one place T59 deliberately diverges from T37, which
+        does play the word. (4) **No SR penalty** — a hinted answer grades exactly as now, so the
+        scheduler is untouched and there is no new per-exercise state.
+  - **Why it's keyed per prompt, not per word.** T37 gets away with one slug → one gloss because a
+        Nepali word means roughly the same thing wherever it appears. English doesn't ("have" is छ in
+        one frame, खान्छु in another), and only **251 of 959** items have a single-word `en` (459 are
+        2–3 words, 249 are 4+, 103 carry a ` / ` alternate, plus 610 frames) — so there was no
+        English-word → Nepali-word table to invert. `tools/build-en-glosses.mjs` instead aligns each
+        frame's **own** English against its **own** Nepali *through* `WORD_GLOSSES`, which makes the
+        context unambiguous, and keys the result by the frame's `audioId` (`item.id` / `<id>-fN`) —
+        the identity `ex.frame` already carries.
+  - **The aligner.** Each Nepali word's T37 gloss is matched back into the English as a contiguous
+        span (senses split on ` / `, parentheticals and leading articles tried as variants, a crude
+        stemmer plus an irregular-verb table). Longest span wins; a match made only of function words
+        is rejected as no evidence. A second pass lets one Nepali word claim a further span, which is
+        what makes the 103 slash items work ("Hello / Goodbye" → both halves hint namaste). Adjacent
+        words sharing a hint merge into one span, because a case-suffixed noun **is** an English
+        phrase ("at home" → gharamaa). Result: **1,480 of 1,569 prompts hintable, 921 of them
+        complete, 73% of content words** (2,814/3,864).
+  - **Deliberately timid.** An unresolved word is left plain rather than guessed at. On a
+        produce-the-Nepali card a wrong hint teaches the wrong answer, while a missing hint only
+        costs a hint — so the 27% gap is a known, safe state, not a defect. This is also why the
+        review tool colours gaps rather than filling them.
+  - **Review surface** `design/en-gloss.html` + `en-gloss-save.php` (localhost-only, never deployed,
+        mirroring the `frames.html` pipeline): every prompt with a dropdown per English word listing
+        only that prompt's own Nepali words, filters for gaps / nothing-matched / complete / edited,
+        and a save that writes the gitignored `design/en-gloss-review.json`. Rulings are folded into
+        the build script's `OVERRIDES` by hand — the same shape and review discipline as T37's FILLS.
+        Alignment is stored per **word** and merged into spans at build time, so a correction is a
+        drop-in replacement for the aligner's row.
+  - **Tests.** `tests/data/en-glosses.test.mjs` (5) pins the invariants that protect against a wrong
+        hint: every key is a real frame, the words rebuild the prompt's English exactly (a drift
+        would silently kill the hint, since `setPrompt` locates the English by substring), every hint
+        is a word of that same prompt's Nepali, no empty spans, no un-merged neighbours. Each was
+        **mutation-checked** — a foreign hint, a drifted English word and an un-merged span each fail
+        exactly one assertion. The e2e `an English prompt taps to reveal its Nepali, silently (T59)`
+        walks a lesson to an English card, taps a word, asserts the popover holds something other
+        than the English, and asserts **zero** `SanoAudio.playWord` calls across the tap — the silence
+        ruling, pinned. Verified non-vacuous by stubbing `glossedEnglishPrompt` to `null`: the test
+        fails with "no English prompt with hints appeared".
+  - **Review round 1 (Ross, on the tool): asides.** Anything in parentheses is never hinted —
+        "(formal)", "(informal)", "(cooked)" describe register or sense, and no Nepali word stands
+        behind them, so an underline would promise a translation that doesn't exist. Round 2 extended
+        that to **every token with no letter or digit**: the 107 `/` separators between two glosses,
+        the 17 `___` fill-in blanks, and 2 stray `—`. Asides stay in the token list (the prompt must
+        rebuild verbatim) but are skipped by the matcher, greyed in the review tool with no dropdown,
+        and never counted as gaps — which moved rows like "Hello (formal)" from *has-gaps* to
+        *complete* (921 → 929) and dropped the content-word denominator 3,864 → 3,820.
+  - **Grouping, both directions (Ross, round 2).** English side was already there: neighbours
+        sharing a hint merge into one underlined span. The Nepali side needed the hint itself to be a
+        **contiguous phrase** of the prompt's own sentence, for the case where one English word is a
+        whole Nepali phrase ("sorry" is all of "maaph garnuhos"). The format, the app, the tests and
+        the review tool's dropdowns (which now offer every contiguous run) all carry it. The
+        review tool grew a **preview line per row** showing the lesson's actual rendering, because
+        per-word dropdowns cannot show a merged span.
+  - **Automatic Nepali-side grouping: built, measured, PULLED.** The obvious rule — when every
+        English content word is hinted, attach each leftover Nepali word to its one claimed
+        neighbour — fires on **303** prompts and is wrong on most: `Dudh chiso chha` gave
+        `cold → chiso chha` (the copula glued onto "cold"), `Ma chiyaa piunchhu` gave `tea → Ma
+        chiyaa`, `Mero naam ___ ho` swallowed the blank. Structural cause: leftovers are nearly
+        always copulas whose English counterpart is an unhinted small word. Those are *wrong* hints
+        on a card graded on producing that exact Nepali — the failure mode the whole file exists to
+        avoid — so the pass is gone and the reasoning sits in `build-en-glosses.mjs` so it isn't
+        re-added. Leftover Nepali stays visible in the report for review instead.
+  - **Not done:** no Claude drafting pass for the 27% the heuristic can't reach — it would cost API
+        spend and produce AI-drafted strings, so it waits on Ross working the review tool first. The
+        236 rows with exactly one unused Nepali word and one contiguous gap run were **not**
+        auto-filled, for the same reason the grouping pass was pulled. Parentheticals were left **in
+        the prompt text**: that text is `item.en` in `js/data.js`, Ross's AI-drafted content, so
+        removing "(formal)" from what the learner sees is a separate data pass on his word. No CSS
+        was added to the app: romanization is already italic and `.gloss-pop` matched it.
