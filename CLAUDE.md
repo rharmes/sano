@@ -280,6 +280,19 @@ routing: `tools/tts/README.md`.
 The backlog lives in **`docs/todo.md`** (checkbox Markdown), IDs `T<n>` — sequential, no
 zero-padding. Mechanics per the global file.
 
+**Tags (T34).** Every **open, top-level** task carries `waiting-on:` (`ross`/`native-speaker`/`none`)
+and `area:` on its **title line**, in backticks, plus `blocked-by:T##` where a real dependency
+exists — so `grep -nE '^- \[ \].*waiting-on:ross' docs/todo.md` returns one line per task and that
+line names the task (the anchor skips the header's own prose and the ticked one-line summaries).
+Ticked tasks and indented sub-items carry none. The vocabularies and the `grep` recipes
+live in todo.md's own **Tags** header, and `tests/data/todo-tags.test.mjs` parses them back out of
+it — so a new value must be documented there before it can be used.
+
+**Closing without delivering.** A task Ross drops is ticked like any other but reads **`closed
+wontfix (date, Ross)`** as the first thing after the title, and its archive record says what
+overtook it and what to watch for that would justify reopening. It's still `- [x]` — the box means
+*resolved*, not *shipped*, and the archive carries the distinction.
+
 **Archive on delivery.** When a task is delivered, shrink its entry in `docs/todo.md` to a one-line
 ticked summary and move the full delivery record — decisions, rulings, measured numbers, what was
 deliberately *not* done — to **`docs/todo-archived.md`**, in the **same change**. `todo.md` is

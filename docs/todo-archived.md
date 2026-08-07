@@ -8,8 +8,35 @@ Split out on 2026-08-04 to keep `docs/todo.md` small, because it is loaded into 
 session while this file is read only when someone asks what happened. **Never auto-load this file**;
 open it on demand, or `grep` it for a `T##`.
 
-Sections and IDs mirror `docs/todo.md` exactly. IDs are never reused, so a `T##` in a commit
-message or a PR resolves here for as long as the project exists.
+Task sections and IDs mirror `docs/todo.md` exactly (its **Tags** header is convention, not tasks,
+so it has no counterpart here). IDs are never reused, so a `T##` in a commit message or a PR
+resolves here for as long as the project exists. A task closed **`wontfix`** is ticked like any
+other and its record says so — the box means *resolved*, not *shipped*.
+
+## Backlog tooling
+
+- [x] **T34 · Lightweight query structure for the backlog** — a small, greppable tag convention in
+      `docs/todo.md` so tasks can be filtered without moving to an external tracker. **Decision
+      (2026-07-20):** chose in-file structure over GitHub Issues — a solo, agent-co-maintained,
+      code-lockstep backlog doesn't benefit from Issues' collaboration features (assignees,
+      notifications, cross-team visibility) but would pay their costs (a split, networked,
+      non-atomic update loop). Revisit Issues only if a collaborator joins or public bug intake is
+      wanted. **Delivered 2026-08-07.** Ross's rulings: tags sit **on the title line in backticks**
+      (so one `grep` returns one line per task and that line names the task — a trailer line would
+      have had to repeat the ID by hand); all three tags ship, not just `waiting-on:`; and a test
+      enforces them. Shape: `waiting-on:` (`ross`/`native-speaker`/`none`) + `area:` (nine values) on
+      every open top-level task, `blocked-by:T##` only where a real dependency exists — today just
+      T13 → T36. Two things fell out of writing it: `waiting-on:` is about **people** only, so
+      "startable right now" is `waiting-on:none` *minus* `blocked-by:` (which composes only because
+      all tags share a line — hence the title-line rule is enforced, not merely preferred), and
+      `area:` deliberately **isn't** the `##` heading, because `grep` can't see headings and T33 sits
+      under the learning engine while being content review. The test **parses the two vocabularies
+      out of the todo.md header** rather than hardcoding them, so a new value must be documented
+      before it can be used and the docs cannot drift from what's in use; it also fails a
+      `blocked-by:` pointing at an already-delivered task. Ticked tasks and indented sub-items are
+      deliberately untagged (noise, and "waiting on" is meaningless once done) — the test enforces
+      that too. Mirrored into CLAUDE.md's **Task list** section. `native-speaker` is defined but
+      currently unused: no open task needs one.
 
 ## Dialogues & audio
 
@@ -25,6 +52,23 @@ message or a PR resolves here for as long as the project exists.
       inventory is now every word of every canonical + frame sentence across all units (719 → 1050
       tile-words; the 331 missing clips rendered in the same pass). CLAUDE.md + architecture.md
       updated.
+
+## Companion characters
+
+- [x] **T5 · Pick a direction per companion, then refine and wire them in** — **closed wontfix
+      2026-08-07 (Ross), not delivered.** The task was to review the paper-cut explorations in
+      `design/characters.html` (5 directions each for the 10 animal companions), pick a favorite per
+      animal, refine the chosen art, and wire it into Sano's conversation system — with the Nepali
+      trait-word names (Sano = "small") to be confirmed by Ross. What overtook it: the companions
+      were wired in anyway, from the *existing* art, by T13 (voices + head chips) and T12's ordering
+      half — `tools/build-character-heads.mjs` generates `js/characters.js` straight from
+      `design/characters.html`, so the app has had usable companion heads on the path and above
+      lesson prompts since 2026-07-21 without anyone ever picking a direction. The 5-directions
+      review was the expensive way to reach a result the pipeline already delivers acceptably.
+      **Not lost:** `design/characters.html` remains the source of truth for all 11 characters and
+      their animations, the explorations stay in it, and the *art* question — section-appropriate
+      companion art — stays open under **T12**, which is where it would actually get acted on.
+      Reopen only if the generated heads start looking wrong beside real content.
 
 ## Server & admin
 

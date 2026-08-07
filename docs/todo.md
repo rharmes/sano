@@ -2,34 +2,62 @@
 
 The project backlog. Claude keeps this current: every task Ross asks for — plus any suggestion Ross
 agrees to, and anything discovered mid-work — is added here as an unchecked box with a unique `T<n>`
-ID, and the box is ticked in place once the task is delivered. It's plain Markdown grouped by area,
-so read or edit it by hand anytime. The items below wait on Ross (a review, a decision, or a
-native-speaker check) — they aren't derivable from the code, so they're easy to lose if they leave
-this list. Refer to any task by its ID (e.g. "T3").
+ID and the tags below, and the box is ticked in place once the task is **resolved** — delivered, or
+closed `wontfix` with the reason in the archive. It's plain Markdown grouped by area, so read or
+edit it by hand anytime. Most items here wait on Ross (a review, a decision, or a native-speaker
+check) — they aren't derivable from the code, so they're easy to lose if they leave this list.
+Refer to any task by its ID (e.g. "T3").
 
 **Delivered tasks shrink to one line here**, and their full record — decisions, rulings, measured
 numbers, what was deliberately *not* done — moves to **`docs/todo-archived.md`** in the same change.
 This file is loaded into context every session, so it stays small; the archive is read on demand.
 IDs are never reused, so a `T##` in a commit message still resolves.
 
+## Tags (T34)
+
+Every **open, top-level** task carries all of its tags on its title line — never wrapped onto a
+continuation line, even when that runs the line long — so one `grep` returns one line per task and
+that line says which task it is. (Markdown isn't Prettier-formatted here, so nothing reflows them.)
+Ticked tasks and indented sub-items carry none: they'd be noise, and "who is this waiting on" is
+meaningless once it's done.
+
+- **`waiting-on:`** — required, exactly one of **`ross`** · **`native-speaker`** · **`none`**. This
+  is about **people**: `none` means no human owes anything before the work can proceed. It does not
+  mean "startable" on its own — a task can wait on nobody and still be held up by another task,
+  which is what `blocked-by:` is for.
+- **`area:`** — required, exactly one of **`content`** · **`companions`** · **`dialogues`** ·
+  **`vocab`** · **`engine`** · **`tooling`** · **`server`** · **`security`** · **`testing`**.
+  This is deliberately *not* just the `##` heading: `grep` can't see headings, and a task can sit
+  under one section while the work is another kind (T33 files under the learning engine but is
+  content review).
+- **`blocked-by:T##`** — optional, only where a real dependency exists. Must point at a task that
+  is still open in this file; a `blocked-by:` aimed at a delivered task is stale by definition.
+
+```sh
+T=docs/todo.md; O='^- \[ \]'                     # O = "an open task line", not this header
+grep -nE "$O.*waiting-on:ross" $T                # everything sitting on Ross
+grep -nE "$O.*area:content" $T                   # one area, across every section
+grep -nE "$O.*blocked-by:" $T                    # held up by a task rather than a person
+grep -nE "$O.*waiting-on:none" $T | grep -v blocked-by   # startable right now, by anyone
+```
+
+The `^- \[ \]` anchor matters: without it every recipe also matches this header's own prose and
+code, and the ticked one-line summaries. And the last one composes only because a task's tags all
+share one line — which is why the title-line rule above is a rule and not a preference.
+
+`tests/data/todo-tags.test.mjs` enforces all of the above, and reads the two vocabularies out of
+**this header** — so adding a value means documenting it here first, and the docs can't drift from
+what's in use.
+
 ## Backlog tooling
 
-- [ ] **T34 · Lightweight query structure for the backlog** — add a small, greppable tag convention
-      to this file so tasks can be filtered without moving to an external tracker: a `waiting-on:`
-      marker (`ross` / `native-speaker` / `none`) and an area/status tag where useful, plus a one-line
-      `grep` recipe documented here in the header and mirrored into CLAUDE.md's **Task list** section.
-      Goal: get the one thing GitHub Issues would buy us — filter/query at scale ("everything waiting
-      on me", "all content-review tasks") — while keeping the backlog's strengths: co-authored and
-      updated **in the same commit** that ships the code, versioned in lockstep with the tree, offline,
-      and reviewable in the diff. **Decision (2026-07-20):** chose in-file structure over GitHub Issues
-      — a solo, agent-co-maintained, code-lockstep backlog doesn't benefit from Issues' collaboration
-      features (assignees, notifications, cross-team visibility) but would pay their costs (a split,
-      networked, non-atomic update loop). Revisit Issues only if a collaborator joins or public bug
-      intake is wanted.
+- [x] **T34 · Lightweight query structure for the backlog** — `waiting-on:` / `area:` /
+      `blocked-by:` tags on every open task's title line, documented in the **Tags** header above and
+      enforced by `tests/data/todo-tags.test.mjs` (2026-08-07).
 
 ## Dialogues & audio
 
-- [ ] **T1 · Add voice tags to the conversations** — review `tools/tts/dialogue-scripts.md`, add
+- [ ] **T1 · Add voice tags to the conversations** `waiting-on:ross` `area:dialogues` — review `tools/tts/dialogue-scripts.md`, add
       ElevenLabs `[performance tags]` (list + pipeline: `tools/tts/voice-tags.md`), re-map changed
       lines into `js/dialogues.js`, and re-render their audio.
 - [x] **T2 · Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` re-rendered to
@@ -39,20 +67,20 @@ IDs are never reused, so a `T##` in a commit message still resolves.
 
 ## Content review
 
-- [ ] **T3 · Review the dictionary's recommendations** (`tools/dict/`; flag-only, never
+- [ ] **T3 · Review the dictionary's recommendations** `waiting-on:ross` `area:content` (`tools/dict/`; flag-only, never
       auto-applied): COURSE translations it disagrees with (`tests/data/dictionary.test.mjs` / the
       `.review` entries in `dictionary.json`) and high-frequency missing words
       (`tools/dict/coverage-report.md`).
-- [ ] **T4 · Merge the Devanagari review** — `design/devanagari-review.json` (gitignored) → the `dev`
+- [ ] **T4 · Merge the Devanagari review** `waiting-on:ross` `area:content` — `design/devanagari-review.json` (gitignored) → the `dev`
       fields of `js/data.js` (in-session, no merge script), then clear the review file.
 
 ## Companion characters
 
-- [ ] **T5 · Pick a direction per companion, then refine and wire them in** — review the paper-cut
-      explorations in `design/characters.html` (5 directions each for the 10 animal companions), pick
-      a favorite per animal, refine the chosen art, and wire it into Sano's conversation system. Names
-      follow the Nepali trait-word convention (Sano = "small"); the Nepali is Ross's to confirm.
-- [ ] **T12 · Reorder companions along the path + section-appropriate art** — the decorative
+- [x] **T5 · Pick a direction per companion, then refine and wire them in** — **closed wontfix
+      (2026-08-07, Ross):** the 5-directions-per-animal review in `design/characters.html` was never
+      run, and the generated heads are good enough to ship behind. Art direction stays open under
+      T12.
+- [ ] **T12 · Reorder companions along the path + section-appropriate art** `waiting-on:ross` `area:companions` — the decorative
       companions currently sit in a fixed order in the path pockets (`buddyOrder` in `renderPath`,
       `js/sano.js`). Reorder them so each companion lands near the section it fits, and generate
       companion art that makes sense for that section (regenerate from `design/characters.html` via
@@ -60,7 +88,7 @@ IDs are never reused, so a `T##` in a commit message still resolves.
       (2026-07-21):** `buddyOrder` now mirrors the `UNIT_VOICES` path sections (drift-guarded by
       `tests/data/unit-voices.test.mjs` — change the two together). Still open: the
       section-appropriate **art**.
-- [ ] **T13 · Give the companions their own voices in lessons** — each path companion voices their
+- [ ] **T13 · Give the companions their own voices in lessons** `waiting-on:none` `area:companions` `blocked-by:T36` — each path companion voices their
       own section's **reviews** (Sano always introduces new words and voices the word tiles / sounds
       drill), with the companion's head chip above the prompt and a play-time fallback to the default
       clip wherever a companion clip isn't rendered. Map: `UNIT_VOICES` (`js/data.js`, ten contiguous
@@ -77,7 +105,7 @@ IDs are never reused, so a `T##` in a commit message still resolves.
         remaining 771 clips of the six companions' sections rendered (`--units --new`, ~9k credits;
         920 companion clips total across 49 units), `AUDIO_VERSION` 28. The 53 units owned by the
         un-voiced four still review in Sano's voice until T36 designs their voices.
-- [ ] **T36 · Design voices for Hiun, Chanchal, Phurtilo, Lamo** — the four companions without an
+- [ ] **T36 · Design voices for Hiun, Chanchal, Phurtilo, Lamo** `waiting-on:ross` `area:companions` — the four companions without an
       ElevenLabs voice (snow leopard, langur, tahr, gharial). Design/pick voices in the dashboard
       (persona notes: `CHARACTER_PERSONAS`, `js/dialogues.js`; process: RESEARCH.md §9), add ids to
       `VOICES` (`tools/tts/synth-app.mjs`) + `CHARACTER_VOICES` (`js/audio.js`), then render their
@@ -182,7 +210,7 @@ titles from T9.
 - [x] **T27 · Batch 9 — linking words, more verbs & odds (~22)** — the final breadth batch, 3 units
       appended; 98 units / 927 items. After this T11 pivots from breadth to depth.
 - [x] **T16 · Batch 2 — everyday adjectives (~45)** — merged as 5 units after `comparing-things`.
-- [ ] **T11 · Phase 2 — grow vocabulary toward ~1,550 words (the everyday tier)** — source the
+- [ ] **T11 · Phase 2 — grow vocabulary toward ~1,550 words (the everyday tier)** `waiting-on:none` `area:vocab` — source the
       highest-frequency missing words from the `tools/dict` frequency ranking (ties to **T3**), add as
       new ~8–12-word mastery-gated units by frequency + situation; regenerate audio for the new items
       only and bump `AUDIO_VERSION`. Nepali `dev` AI-drafted → Ross's review. Multi-batch — driven by
@@ -222,7 +250,7 @@ Direction chosen with Ross 2026-07-02 — **Both** structures, emphasis on **rea
       word's Nepali depends on its sentence. **Open: 73% of content words are hinted (921 of 1,569
       prompts complete) — the remaining gaps are Ross's to fill in `design/en-gloss.html`**, whose
       rulings come back as `OVERRIDES`.
-- [ ] **T33 · Accept either gloss for multi-English phrases** — many items carry two English
+- [ ] **T33 · Accept either gloss for multi-English phrases** `waiting-on:ross` `area:content` — many items carry two English
       glosses in `en` (`"Excuse me / I'm sorry"`, `"Enough / That's sufficient"`, …). Where the
       **English is the graded answer**, only the full both-glosses string is accepted today, so
       producing one gloss grades wrong. Concretely: the **`wordbank` np-en** direction
