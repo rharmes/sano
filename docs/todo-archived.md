@@ -754,6 +754,31 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       is unchanged, so no re-render / no credits), words.json regenerated, `AUDIO_VERSION` 22. Golden
       tests added (incl. unlisted व्यापार + word-final भव्य). व्यापार is now cleanly addable (T29+).
 
+## App & UX
+
+- [x] **T61 · Word-bank pill: immediate visual feedback, decoupled from the tap audio** — Ross
+      reported (2026-08-24, iPhone PWA): tapping a word-bank pill took a noticeable beat before the
+      word appeared in the answer line above and the clip played, and suspected the sound was the
+      delay. **Cause (confirmed by reading, not by on-device timing):** every tile tap handler ran
+      its audio call *before* its DOM update, and both ran in the same event task — the browser
+      paints only after the handler returns, so the paint showing the placed tile waited on
+      `playSrc`'s synchronous media-element work (`pause()`, set `src`, `play()` — and on iOS,
+      waking the audio session, the plausibly-expensive step on an iPhone PWA). **Fix (2026-08-24):**
+      a small `afterPaint(fn)` helper (`requestAnimationFrame` + nested 0 ms `setTimeout` — rAF
+      alone fires *before* the paint, so it wouldn't unblock it) and a reorder at all three
+      tap-tile call sites: the word-bank pool tile (`renderWordbank`), the match-grid left tile
+      (`matchTile`) and the listen tile (`listenTile`) now place/select first and start the clip
+      one frame later. The on-device timing instrumentation the task called for was deliberately
+      skipped: the decouple makes the paint independent of the audio cost whichever media step is
+      slow, so measuring first bought nothing. **Preserved:** a matched left tile still speaks on
+      every tap; deferring one frame stays inside the tap's transient user activation, so autoplay
+      policy is still satisfied. **Not done:** the deferral was *not* pushed down into `playSrc`
+      itself — that would blanket-defer every play, including the prompt auto-plays that aren't
+      behind a tap; the scope is exactly the three tap-tile handlers. No dev-seed scenario (pure
+      latency fix, any word-bank exercise demos it). Acceptance: Ross to confirm the felt latency
+      on the iPhone PWA after deploy — if a beat remains, the cause isn't audio and the task's
+      "profile what is" branch reopens.
+
 ## Learning engine — SR-05 relaunch (Phase 1)
 
 - [x] **T6 · Learning-steps scheduler + softened intervals** — new words climb a gentle ladder

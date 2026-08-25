@@ -1494,6 +1494,17 @@ function playTileWord(word) {
 	SanoAudio.playWord(normalize(word).replace(/\s+/g, '-'));
 }
 
+// Run `fn` just after the next paint (T61). Tap handlers use this to start tile audio
+// without holding up the tap's visual feedback: playSrc's media-element work (pause, set
+// src, play — and on iOS, waking the audio session) runs synchronously on the main
+// thread, so calling it inside the handler delays the paint that shows the placed or
+// selected tile. rAF alone isn't enough — it fires *before* that paint — hence the
+// nested 0ms timeout, which lands right after it. One frame later is still well inside
+// the tap's transient user activation, so autoplay policy stays satisfied.
+function afterPaint(fn) {
+	requestAnimationFrame(() => setTimeout(fn, 0));
+}
+
 // Word bank in two directions (request #5):
 //   en-np (default) — English prompt at top, assemble the Nepali from tiles; tapping a
 //                     Nepali tile plays that word (request #1).
@@ -1571,8 +1582,8 @@ function renderWordbank(ex) {
 			if (poolTile.classList.contains('selected')) {
 				deselect();
 			} else {
-				if (buildNepali) playTileWord(word); // hear the word when placing it (request #1)
-				select();
+				select(); // place the tile first — the tap's feedback never waits on audio (T61)
+				if (buildNepali) afterPaint(() => playTileWord(word)); // hear the word when placing it (request #1)
 			}
 		});
 		poolEl.appendChild(poolTile);
@@ -1951,8 +1962,8 @@ function listenTile(item, n) {
 	// No visible text, so give assistive tech a neutral label that never reveals the answer.
 	tile.setAttribute('aria-label', 'Play audio clip ' + (n + 1));
 	tile.addEventListener('click', () => {
-		SanoAudio.play(item.id);
 		selectMatchTile(tile, 'left');
+		afterPaint(() => SanoAudio.play(item.id));
 	});
 	return tile;
 }
@@ -1986,9 +1997,10 @@ function matchTile(item, side, text) {
 	tile.dataset.id = item.id;
 	tile.addEventListener('click', () => {
 		// The left column holds the Nepali word — speak it on every tap (even once
-		// matched) so the sound reinforces the pairing.
-		if (side === 'left') SanoAudio.play(item.id);
+		// matched) so the sound reinforces the pairing; the clip starts after the
+		// selection paints (T61).
 		selectMatchTile(tile, side);
+		if (side === 'left') afterPaint(() => SanoAudio.play(item.id));
 	});
 	return tile;
 }
