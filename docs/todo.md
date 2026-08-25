@@ -210,6 +210,20 @@ Findings, rulings, measurements and what was deliberately left undone: `docs/tod
         generated `js/*.js` — recommended), and whether out-of-course results appear by default or
         behind a "look beyond your course" toggle.
 
+## App & UX
+
+- [ ] **T61 · Word-bank pill: immediate visual feedback, decoupled from the tap audio** `waiting-on:none` `area:app` — Ross reports (2026-08-24, iPhone PWA): tapping a word-bank pill takes a
+      noticeable beat before the word appears in the answer line above and the clip plays; he suspects
+      the sound itself is the delay. Plausible: the tap handler (`renderWordbank`, `js/sano.js`) calls
+      `playTileWord(word)` **before** `select()` appends the answer tile, and the audio path
+      (`SanoAudio.playWord` → `playSrc`, `js/audio.js`) does synchronous media-element work —
+      `pause()`, set `src`, `play()` — on the main thread before the DOM update. First **confirm the
+      cause on-device** (timestamps around the two calls, or temporarily stub the audio); then
+      decouple: place the tile first and fire the audio after paint (reorder, deferring the
+      `playTileWord` call), so the pill lands instantly even when the clip is slow. If audio turns out
+      not to be the delay, profile what is. Perceived-latency bug — verify on the real iPhone PWA, not
+      just desktop.
+
 ## Learning engine — SR-05 relaunch (Phase 1)
 
 Restructures the learning plan for mastery-based, high-repetition progression (interviewed +
