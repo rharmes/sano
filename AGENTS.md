@@ -236,14 +236,14 @@ routing: `tools/tts/README.md`.
   `design/devanagari-review.json` — it does **not** touch `js/data.js`. Serve with `php -S`.
 - **`design/expansion.html`** is the localhost-only review surface for the **T11 vocabulary
   expansion** (grow toward ~1,550 words, the everyday-register tier). Pipeline: `tools/dict/select-candidates.mjs` ranks the
-  everyday, not-yet-covered words of one part of speech → Claude drafts each as a usable frame
+  everyday, not-yet-covered words of one part of speech → the agent drafts each as a usable frame
   (`design/expansion-draft.json`) → this tool edits/approves/rejects (live romanization; POSTs to
   `expansion-save.php` → gitignored `expansion-approved.json`) → approved rows are merged into
   `js/data.js` **by hand** → audio rendered for the new items only (bump `AUDIO_VERSION`). The three
   staging JSONs are gitignored; it does **not** touch `js/data.js`.
 - **`design/frames.html`** is the localhost-only review surface for the **T11 depth pivot** (T31) —
   the same pipeline for **alternate frames** (extra example sentences that rotate into an item's
-  reviews, T28/T29): Claude drafts candidate frames under their target item
+  reviews, T28/T29): the agent drafts candidate frames under their target item
   (`design/frames-draft.json`, `[{ id, item, itemEn, itemDev, dev, en }]`) → this tool groups them by
   item and edits/approves/rejects each (live romanization; POSTs to `frames-save.php` → gitignored
   `frames-approved.json`) → approved frames are merged into the items' `frames: [{dev,en}]` in
