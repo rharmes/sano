@@ -38,6 +38,32 @@ other and its record says so — the box means *resolved*, not *shipped*.
       that too. Mirrored into CLAUDE.md's **Task list** section. `native-speaker` is defined but
       currently unused: no open task needs one.
 
+## Agent instructions
+
+- [x] **T62 · `AGENTS.md`, a Codex-CLI twin of `CLAUDE.md`** (2026-09-03). Codex CLI never reads
+      `CLAUDE.md`; it reads the repo's `AGENTS.md` under the user-level `~/.codex/AGENTS.md`, which the
+      setup repo already keeps as the twin of `~/.claude/CLAUDE.md` (same rules, stated for Codex's
+      mechanics, changed in the same commit). This repo now follows the same pattern one level down.
+      - **What differs, and only this:** the global file's path (`~/.claude/CLAUDE.md` →
+        `~/.codex/AGENTS.md`), and Claude Code's `@` imports — the "Reference docs" header says
+        *read* instead of *load with `@`*, and every `` `@docs/…` `` becomes `` `docs/…` `` (Codex would
+        otherwise see a literal `@` it has no meaning for). Everything else, including the pipeline
+        prose that names Claude as the drafting model, is byte-identical.
+      - **Sync is enforced, not asked for.** Both files carry the same paragraph stating the
+        same-commit rule, and `tests/data/agents-md.test.mjs` (the `--data` tier, so CI) asserts that
+        `AGENTS.md` equals `CLAUDE.md` under a three-row substitution table — line for line, naming the
+        first line that drifted — that every rule still fires (a stale rule fails too), and that the
+        Claude-only forms never appear in `AGENTS.md`. The table is bidirectional in effect: an edit
+        to either file fails until the other carries it.
+      - **Codex's read budget is a test, not prose:** Codex reads `AGENTS.md` up to
+        `project_doc_max_bytes` (32 KiB default) and silently drops the tail, which in this file is
+        the workflow and task-list rules. The test fails past that line; today the file is ~25 KB.
+      - **Deliberately not done:** no generator (`tools/build-agents-md.mjs`) — a generator makes
+        `CLAUDE.md` the source and clobbers edits to `AGENTS.md`, whereas Ross's setup-repo precedent
+        treats the two as peers; and no symlink — GitHub renders a symlink as its target path, not the
+        content, and a symlink can't say *read* where the original says *load with `@`*. Not shipped
+        (`deploy.sh` allowlists; neither file is on it). No dev-seed scenario: nothing user-facing.
+
 ## Dialogues & audio
 
 - [x] **T2 · Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` lag the text

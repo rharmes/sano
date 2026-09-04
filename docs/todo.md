@@ -58,6 +58,12 @@ what's in use.
       `blocked-by:` tags on every open task's title line, documented in the **Tags** header above and
       enforced by `tests/data/todo-tags.test.mjs` (2026-08-07).
 
+## Agent instructions
+
+- [x] **T62 · `AGENTS.md`, a Codex-CLI twin of `CLAUDE.md`** — the same instructions under three
+      harness substitutions, the same-commit rule stated in both, and `tests/data/agents-md.test.mjs`
+      failing on any other difference (2026-09-03).
+
 ## Dialogues & audio
 
 - [ ] **T1 · Add voice tags to the conversations** `waiting-on:ross` `area:dialogues` — review `tools/tts/dialogue-scripts.md`, add
