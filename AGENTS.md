@@ -5,7 +5,7 @@ frontend, **no build step** (`index.html`, `css/`, `js/`, `fonts/`, `tools/`) pl
 PHP/MySQL sync API in `api/`. Deployed to namastesano.com (Apache) via `tools/deploy.sh`;
 Ross tests on an iPhone running iOS 26.
 
-The global `~/.claude/CLAUDE.md` defaults apply in full — including **branch → PR → Ross merges by
+The global `~/.codex/AGENTS.md` defaults apply in full — including **branch → PR → Ross merges by
 hand** (workflow steps 6–8) — with one exception stated here: tasks live in **`docs/todo.md`** with
 `T##` ids, not GitHub Issues, so a PR closes nothing automatically and the ticked box ships **inside**
 the PR. There is no `docs/pr-review.md` here: **no PR gauntlet, no `pr-antagonist`, no model law** —
@@ -16,11 +16,11 @@ differing only in harness mechanics — the global file's path and Claude Code's
 to one is a change to the other, **in the same commit**; `tests/data/agents-md.test.mjs` fails when
 they drift, and its substitution table is the complete list of the differences allowed.
 
-## Reference docs (load with `@` at session start instead of scanning the code)
+## Reference docs (read at session start instead of scanning the code)
 
-- **`@docs/architecture.md`** — file + function map, the global each script defines, control
+- **`docs/architecture.md`** — file + function map, the global each script defines, control
   flow (home / lesson / dialogue / sync), and the `api/` + `tools/` tables.
-- **`@docs/data-model.md`** — data shapes (`COURSE`, `DIALOGUES`, the state record), localStorage
+- **`docs/data-model.md`** — data shapes (`COURSE`, `DIALOGUES`, the state record), localStorage
   keys, DB schema, scheduler constants, and the **SR-\* / R\*** feature-code glossary.
 - `docs/pedagogy.md` — learning-science basis. `docs/testing.md` — visual-capture + screenshot
   recipes. `tools/tts/RESEARCH.md` — voice/TTS. `design/style-guide.html` — visual tokens +
@@ -54,7 +54,7 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 - **Prefer the everyday loanword** in Nepali translations (हस्पिटल, टोइलेट) over the formal native
   term when that's what people actually say.
 
-## What the app is (one level down; functions in `@docs/architecture.md`, shapes in `@docs/data-model.md`)
+## What the app is (one level down; functions in `docs/architecture.md`, shapes in `docs/data-model.md`)
 
 - **Home** is a Duolingo-style winding **path** (`renderPath`): units unlock in order, with
   **dialogue** (gold) and **pronunciation** (lavender) nodes woven in after their anchor unit and
@@ -85,7 +85,7 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   The English **source of truth** is `tools/tts/dialogue-scripts.md`, hand-mapped into
   `js/dialogues.js` (no generator — synced by hand); a line's `dev` may carry inline `[performance
   tags]` for the TTS, stripped from all on-screen text and never allowed in `np`/`gloss`/`en`. (Full
-  schema + the tags rule: `@docs/data-model.md`.)
+  schema + the tags rule: `docs/data-model.md`.)
 - **First-run onboarding** (`SanoOnboard`) greets new users with a scripted Sano conversation,
   captures the name, and offers experienced learners a **placement / skip-ahead** (`Sano.placeBefore`
   marks earlier units introduced at recall strength), then optionally an account / PWA install.
@@ -114,7 +114,7 @@ tap-gloss lexicon `js/glosses.js` — it fails loudly on any new un-glossed word
 `tools/build-en-glosses.mjs` (T59's `js/en-glosses.js`, which reads those glosses). Flags + per-voice
 routing: `tools/tts/README.md`.
 
-## Server / admin / PWA (endpoints + guard order in `@docs/architecture.md`)
+## Server / admin / PWA (endpoints + guard order in `docs/architecture.md`)
 
 - **Sync:** localStorage is the working copy; `SanoSync` (js/sync.js) debounces revision-checked,
   last-write-wins PUTs to `api/state.php`; the app stays fully usable offline / logged-out. Auth is a
@@ -141,7 +141,7 @@ routing: `tools/tts/README.md`.
   (salt: `traffic_salt` in `sano-config.php`); countries come from a CC0 IP→country index compiled onto
   the server by `--update-geo`, so no third party sees an address. Roughly half the raw log is bots, so
   the ingest filters on three signals (UA, "did it load the app", crawler-only paths) and reports what
-  it excluded. Definitions (session, repeat, mine) live in `@docs/data-model.md`; the parser is testable
+  it excluded. Definitions (session, repeat, mine) live in `docs/data-model.md`; the parser is testable
   with `--json`, which needs no DB.
 - **PWA + reminders:** installable; `sw.js` caches the shell (HTML network-first, stamped assets
   cache-first) and handles `push`. The **click** target comes out of the push payload, so it goes
@@ -154,7 +154,7 @@ routing: `tools/tts/README.md`.
   **the server POSTs to**, so it's validated against a small **allowlist of real push services**
   (`PUSH_HOSTS`, T42) — **supporting a new browser means adding its host in two places**, `api/lib.php`
   and `tools/send-reminders.php` (which can't require the docroot; `tests/data/push-allowlist.test.mjs`
-  fails if they drift). Rules + the endpoint-ownership check: `@docs/data-model.md`.
+  fails if they drift). Rules + the endpoint-ownership check: `docs/data-model.md`.
 - **Live-DB schema changes** go through a one-off idempotent `tools/migrate-*.php` — **never re-apply
   `schema.sql`** to an existing DB; a new column that `login.php` / `state.php` SELECT must be migrated
   **before** deploying the code.
@@ -195,7 +195,7 @@ routing: `tools/tts/README.md`.
 ## Testing notes (the non-obvious bits)
 
 - **Test suite** — one entry point `tools/test.sh` (tiers `--static/--unit/--data/--api/--ui`; tier
-  table in `@docs/architecture.md`): `node:test` for pure logic + data integrity, Playwright for HTTP
+  table in `docs/architecture.md`): `node:test` for pure logic + data integrity, Playwright for HTTP
   + browser. Pure helpers are lifted from the classic scripts by `tests/lift.mjs` (no app-code change
   needed to test them); seeds come from `tests/seed.mjs` — the same builders `dev-seed.html` uses.
 - **e2e gotchas:** `php -S` is single-threaded, so the Playwright `webServer` sets
@@ -259,7 +259,7 @@ routing: `tools/tts/README.md`.
   touch `js/data.js` or `js/en-glosses.js`.
 - **`tools/dict/`** is a local-only (never-deployed) **ground-truth Nepali↔English dictionary** to
   cross-check the AI-drafted translations and surface high-frequency words the course is missing
-  (`tools/dict/README.md`, file map in `@docs/architecture.md`). `build-dictionary.mjs` ranks words
+  (`tools/dict/README.md`, file map in `docs/architecture.md`). `build-dictionary.mjs` ranks words
   from a Nepali corpus (register-weighted toward conversational) and uses **Claude** to lemmatize +
   gloss, cross-checked against the Wiktionary/kaikki extract; it **flags** COURSE translation
   disagreements for review but **never auto-corrects** them (per the AI-drafts-are-Ross's rule). Needs

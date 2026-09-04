@@ -60,12 +60,9 @@ what's in use.
 
 ## Agent instructions
 
-- [ ] **T62 · `AGENTS.md`, a Codex-CLI twin of `CLAUDE.md`** `waiting-on:none` `area:tooling` — the repo's
-      instructions exist only as `CLAUDE.md`, which Codex CLI never reads: it reads `AGENTS.md`, under the
-      user-level `~/.codex/AGENTS.md` that the setup repo already keeps as the twin of `~/.claude/CLAUDE.md`.
-      Create `AGENTS.md` carrying the same intent, stated for Codex's mechanics (no `@` imports; the global
-      file's own path), and make the pair impossible to drift: state the same-commit rule in both files, and
-      add a data test that fails when they differ by anything beyond the allowed harness substitutions.
+- [x] **T62 · `AGENTS.md`, a Codex-CLI twin of `CLAUDE.md`** — the same instructions under three
+      harness substitutions, the same-commit rule stated in both, and `tests/data/agents-md.test.mjs`
+      failing on any other difference (2026-09-03).
 
 ## Dialogues & audio
 
