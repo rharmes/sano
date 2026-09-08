@@ -218,6 +218,19 @@ Findings, rulings, measurements and what was deliberately left undone: `docs/tod
 
 ## App & UX
 
+- [ ] **T63 · English-only onboarding and settings** `waiting-on:ross` `area:app` — the first-run onboarding thread and the settings surfaces speak in **dual-language speech bubbles** (romanized Nepali large, English small); Ross wants them **English only** (asked 2026-09-08, not started). Every onboarding line — Sano's, the two tappable answer choices, and the bubbles with the name / username / password inputs spliced in — comes from the `L` table in `js/onboarding.js` (`[romanized, english]` pairs; `bubble()` renders one `.np` paragraph per line plus the `.en` subtitle), and the reminder modal's Sano bubble is static markup in `index.html` (`#reminder-modal`: "Ma har din samjhana garaun?"). The account panel (`#login-panel`) is already a plain English form.
+      - **Open for Ross:** drop the romanized drafts outright, or keep them unused? Recommendation:
+        drop them — `L` becomes plain English strings, `bubble()` loses its `npLines` argument, and
+        the file's `NOTE` about Ross correcting the romanized drafts goes with it. The English then
+        renders at the `.np` size (a bubble with only the small `.en` line would look like a
+        subtitle with no speech), so the shared `.bubble` styles need a single-line variant checked
+        in both themes and mirrored into `design/style-guide.html`.
+      - **Not in scope unless Ross says so:** the home-screen greeting pair ("Namaste, mero naam
+        Sano ho." / "Namaste, Sano.") in `index.html` is also dual-language but is neither onboarding
+        nor settings; the story player is romanized-only by design.
+      - Ride-alongs: re-check `tests/e2e/onboarding.spec.mjs` and `reminder.spec.mjs`; the
+        replay-onboarding scenario in `tools/dev-seed.html` already demos it.
+
 - [x] **T61 · Word-bank pill: immediate visual feedback, decoupled from the tap audio** — tap
       handlers now place/select the tile first and start the clip just after the paint
       (`afterPaint`, `js/sano.js`); word-bank, match and listen tiles (2026-08-24).
