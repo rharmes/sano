@@ -296,6 +296,23 @@
 			<button onclick="seed('sounds')">Seed &amp; open</button>
 		</div>
 		<div class="card">
+			<span class="tests">T64 grammar notes · streak</span>
+			<h2>7b · A grammar note on the path (word order)</h2>
+			<p>
+				Everything through <b>Pronouns &amp; Possessives</b> is done, so the teal <b>SOV</b> node — <b>The verb goes last</b> — is
+				unlocked just after it. Tap it for a one-page note: the concept in a few lines, an English-vs-Nepali contrast row with the words
+				coloured <b>who · what · does</b>, four real course sentences with the same colouring, a word-for-word gloss and a play button,
+				and a tip. <b>“Got it”</b> ticks the note off (a check on the node) and, since you studied <b>yesterday</b> but not yet today,
+				<b>extends your streak</b>.
+			</p>
+			<p>
+				<b>All nine notes</b> masters everything through Daily Routine instead, so every grammar node on the path is open at once:
+				counting words, word order, timi/tapaai, ho vs chha, postpositions, -laai, questions, verb endings, saying no.
+			</p>
+			<button onclick="seed('grammar')">Seed &amp; open</button>
+			<button onclick="seed('grammar-all')">All nine notes</button>
+		</div>
+		<div class="card">
 			<span class="tests">SR-02 audio · match</span>
 			<h2>Tap a Nepali word to hear it (matching)</h2>
 			<p>
@@ -960,6 +977,16 @@
 					const items = {};
 					for (const it of COURSE[0].items) items[it.id] = mastered({ lastSeen: day(0) });
 					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 40 });
+				} else if (which === 'grammar') {
+					// T64: everything through Pronouns mastered -> the word-order grammar node (after it) is unlocked.
+					const items = {};
+					masterThrough(items, 'pronouns');
+					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 60 });
+				} else if (which === 'grammar-all') {
+					// T64: everything through Daily Routine (the last note's anchor) mastered -> all nine notes open.
+					const items = {};
+					masterThrough(items, 'daily-routine');
+					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 260 });
 				} else if (which === 'wordbank') {
 					// Whole course mastered, then a few multi-word phrases pushed past due -> word-bank drills.
 					const items = {};

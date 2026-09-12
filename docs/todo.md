@@ -74,6 +74,12 @@ what's in use.
 - [x] **T35 · Word clips for standalone single-word items** — the word inventory now covers every
       canonical + frame sentence in every unit (719 → 1050 tile-words), 2026-07-20.
 
+## Grammar notes
+
+- [x] **T64 · Grammar notes on the path** — nine one-page explainers (`js/grammar.js`) woven in as
+      teal nodes after their anchor units, from counting words to saying no, each built from real
+      course sentences coloured who · what · does (2026-09-12).
+
 ## Content review
 
 - [ ] **T3 · Review the dictionary's recommendations** `waiting-on:ross` `area:content` (`tools/dict/`; flag-only, never

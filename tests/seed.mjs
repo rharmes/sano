@@ -69,6 +69,35 @@ export function dialogueReady(extra) {
 	);
 }
 
+// Everything through Pronouns & Possessives mastered, so the first grammar note — the teal
+// "The verb goes last" node after that unit (T64) — is unlocked; studied yesterday, not yet
+// today, so reading it extends the streak (dev-seed 'grammar').
+export function grammarReady(extra) {
+	const items = {};
+	for (const u of COURSE) {
+		for (const it of u.items) items[it.id] = mastered({ lastSeen: day(0) });
+		if (u.id === 'pronouns') break;
+	}
+	return Object.assign(
+		{ version: 3, name: 'Aastha', onboarded: true, streak: 4, streakFreezes: 1, lastActivityDay: day(1), itemsToday: 0, itemsTotal: 60, items },
+		extra,
+	);
+}
+
+// Everything through Daily Routine mastered — the last grammar-note anchor — so every note on
+// the path is unlocked at once (dev-seed 'grammar-all', and the e2e sweep over all notes).
+export function allNotesReady(extra) {
+	const items = {};
+	for (const u of COURSE) {
+		for (const it of u.items) items[it.id] = mastered({ lastSeen: day(0) });
+		if (u.id === 'daily-routine') break;
+	}
+	return Object.assign(
+		{ version: 3, name: 'Aastha', onboarded: true, streak: 4, streakFreezes: 1, lastActivityDay: day(1), itemsToday: 0, itemsTotal: 260, items },
+		extra,
+	);
+}
+
 // First 8 Basics words introduced (still learning, not mastered), for the dictionary (dev-seed 'dict').
 export function dictReady(extra) {
 	const items = {};

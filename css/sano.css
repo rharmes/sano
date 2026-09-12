@@ -14,6 +14,7 @@ html {
 
 	--badge-color: #d99e3a; /* pennant gold */
 	--sound-color: #be87f5; /* lavender: pronunciation path nodes */
+	--grammar-color: #3f9e8f; /* paper teal: grammar-note path nodes */
 	--word-color: #c25566;
 	--text-complete-color: #38824a;
 	--text-incomplete-color: #c2403d;
@@ -60,6 +61,7 @@ html {
 
 		--badge-color: #d9aa4e;
 		--sound-color: #be87f5; /* lavender (dark) */
+		--grammar-color: #57b3a3; /* paper teal (dark) */
 		--word-color: #e58794;
 		--text-complete-color: #7fae83;
 		--text-incomplete-color: #e07a72;
@@ -1589,6 +1591,25 @@ table#vocab tbody td:nth-child(3) {
 .path-node.sound.complete:hover {
 	filter: brightness(1.12);
 }
+/* A grammar note in the path (T64) — teal, with a short text mark (e.g. "SOV") for its icon. */
+.path-node.grammar.unlocked,
+.path-node.grammar.complete {
+	background: var(--grammar-color);
+}
+.path-node.grammar.unlocked .icon {
+	font-size: 1.7rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	line-height: 1;
+}
+.path-node.grammar.unlocked .icon,
+.path-node.grammar.complete .icon {
+	color: var(--button-primary-color);
+}
+.path-node.grammar.unlocked:hover,
+.path-node.grammar.complete:hover {
+	filter: brightness(1.12);
+}
 .path-ring {
 	position: absolute;
 	z-index: 1;
@@ -1874,21 +1895,24 @@ table#vocab tbody td:nth-child(3) {
 	padding-bottom: 220px;
 }
 #lesson-top,
-#sounds-drill-top {
+#sounds-drill-top,
+#grammar-top {
 	display: flex;
 	align-items: center;
 	gap: 16px;
 	margin-bottom: 4rem;
 }
 #lesson-quit,
-#sounds-drill-back {
+#sounds-drill-back,
+#grammar-back {
 	cursor: pointer;
 	font-size: 3rem;
 	color: var(--text-color-softer);
 	user-select: none;
 }
 #lesson-quit:hover,
-#sounds-drill-back:hover {
+#sounds-drill-back:hover,
+#grammar-back:hover {
 	color: var(--text-color-richer);
 }
 #lesson-progress,
@@ -2450,14 +2474,16 @@ table#vocab tbody td:nth-child(3) {
 #screen-lesson:not(.hide) ~ .footer,
 #screen-complete:not(.hide) ~ .footer,
 #screen-dialogue:not(.hide) ~ .footer,
-#screen-sounds:not(.hide) ~ .footer {
+#screen-sounds:not(.hide) ~ .footer,
+#screen-grammar:not(.hide) ~ .footer {
 	display: none;
 }
 #nepali:has(#screen-onboarding:not(.hide)) #header,
 #nepali:has(#screen-lesson:not(.hide)) #header,
 #nepali:has(#screen-complete:not(.hide)) #header,
 #nepali:has(#screen-dialogue:not(.hide)) #header,
-#nepali:has(#screen-sounds:not(.hide)) #header {
+#nepali:has(#screen-sounds:not(.hide)) #header,
+#nepali:has(#screen-grammar:not(.hide)) #header {
 	display: none;
 }
 
@@ -2827,4 +2853,164 @@ table#vocab tbody td:nth-child(3) {
 }
 #sounds-next {
 	width: 100%;
+}
+
+/* Grammar notes (T64). A one-page explainer on the same chrome as the sounds drill
+   (#screen-sounds sizing, .sounds-heading / .sounds-lede / .sounds-tip), plus the
+   who · what · does word chips that colour a sentence by role. */
+#screen-grammar {
+	max-width: 700px;
+	margin: 0 auto;
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+}
+.grammar-eyebrow {
+	font-size: var(--text-label);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--grammar-color);
+}
+.grammar-contrast {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: center;
+	row-gap: 1.2rem;
+	column-gap: 1.6rem;
+	margin: 0 0 1.2rem;
+	padding: 2rem;
+	background: var(--background-color-softer);
+	border: 1px solid var(--border-color);
+	border-radius: 1.6rem;
+}
+.grammar-contrast .lang {
+	font-size: var(--text-label);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--text-color-soft);
+}
+.grammar-legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem 1.6rem;
+	margin: 0 0 2.4rem;
+	padding: 0;
+	list-style: none;
+	font-size: 1.4rem;
+	color: var(--text-color-soft);
+}
+.grammar-legend li::before {
+	content: '';
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	margin-right: 0.6rem;
+	border-radius: 50%;
+	background: var(--role-color);
+	vertical-align: baseline;
+}
+.grammar-points {
+	margin: 0 0 2.4rem;
+	padding-left: 2.2rem;
+	font-size: 1.6rem;
+	line-height: 1.5;
+	color: var(--text-color-normal);
+}
+.grammar-points li + li {
+	margin-top: 0.8rem;
+}
+.grammar-examples {
+	display: flex;
+	flex-direction: column;
+	gap: 1.2rem;
+	margin: 0 0 2.4rem;
+}
+.grammar-example {
+	padding: 1.6rem 2rem;
+	background: var(--background-color-softer);
+	border: 1px solid var(--border-color);
+	border-radius: 1.6rem;
+}
+.grammar-words {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 0.8rem;
+}
+/* One word of a sentence, coloured by role: the romanized word on a soft tint, its literal
+   English underneath so the word-for-word order lines up. --role-color is set per role. */
+.gram-word {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 5.6rem;
+}
+.gram-word .np {
+	padding: 0.5rem 1.1rem;
+	border-radius: 0.8rem;
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 1.25;
+	color: var(--role-color);
+	background: color-mix(in srgb, var(--role-color) 14%, var(--background-color-softer));
+	border: 1px solid color-mix(in srgb, var(--role-color) 45%, var(--background-color-softer));
+}
+.gram-word .en {
+	margin-top: 0.4rem;
+	font-size: 1.3rem;
+	line-height: 1.3;
+	color: var(--text-color-soft);
+}
+.role-who {
+	--role-color: var(--path-complete-color);
+}
+.role-what {
+	--role-color: var(--badge-color);
+}
+.role-verb {
+	--role-color: var(--accent);
+}
+.role-mark {
+	--role-color: var(--grammar-color);
+}
+.grammar-example-en {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-top: 1.2rem;
+	font-size: 1.6rem;
+	color: var(--text-color-normal);
+}
+#grammar-done {
+	width: 100%;
+}
+/* Compact phones: the whole point is the ORDER, so keep each sentence on one line — smaller
+   chips, and the contrast row's language label moves above its chips to free the width. */
+@media (max-width: 520px) {
+	.grammar-contrast {
+		grid-template-columns: 1fr;
+		row-gap: 0.6rem;
+		padding: 1.6rem;
+	}
+	.grammar-contrast .grammar-words + .lang {
+		margin-top: 1rem;
+	}
+	.grammar-example {
+		padding: 1.4rem 1.4rem;
+	}
+	.grammar-words {
+		gap: 0.6rem;
+	}
+	.gram-word {
+		min-width: 4.4rem;
+	}
+	.gram-word .np {
+		padding: 0.4rem 0.8rem;
+		font-size: 1.7rem;
+	}
+	.gram-word .en {
+		font-size: 1.2rem;
+	}
 }
