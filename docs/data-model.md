@@ -135,6 +135,29 @@ and `DIALOGUES` is hand-built from it (adding the Nepali + clip routing), synced
 // marks: Devanagari characters to find in each item's `dev` to surface real examples
 ```
 
+## Grammar notes — `GRAMMAR_TOPICS` (js/grammar.js, T64)
+
+```js
+{ id, after, glyph, title, sub, intro, legend, contrast, points, examples, tip }
+// after:    one note per anchor unit (the path takes the first match; the data test enforces it)
+// glyph:    short text mark for the teal path node ('SOV', '-लाई', 'छैन' …)
+// legend:   [{ role, label }]  the roles this note uses, in order, with this note's wording for each
+// contrast: [{ label, chips: [{ en, role }] } | { label, clip }]  ≥2 labelled rows — a written-out
+//           row (the English side) or one of the note's own examples, coloured the same way
+// points:   [string]         the concept, a few lines
+// examples: [{ clip, parts: [{ dev, en, role }] }]
+//   clip:  an item id, or `<itemId>-fN` for that item's Nth frame — a REAL course sentence, so
+//          audio/<voice>/<clip>.mp3 is already shipped; the note plays it via SanoAudio.button(clip)
+//   parts: the sentence's `dev` split word by word — parts.map(p => p.dev).join(' ') MUST equal it
+//          (tests/data/grammar.test.mjs) — each with a literal English gloss and a role
+// role: a key of GRAMMAR_ROLES — who (subject) · what (object, or where/when) · verb · mark (the
+//       piece of grammar the note is about) — which colours the word chip (indigo / gold /
+//       crimson / teal) on the note screen
+```
+
+Prose, contrast row and literal glosses are AI-drafted, under Ross's review. Nothing is scored:
+"Got it" sets `state.grammarDone[id]` and counts toward the streak like a sound drill.
+
 ## Character art — js/characters.js (generated)
 
 ```js
@@ -159,6 +182,7 @@ server. Written via the `STATE_KEY` constant.
   items: { [itemId]: record },
   dialoguesDone: { [dialogueId]: true },
   soundsDone:    { [soundTopicId]: true },
+  grammarDone:   { [grammarTopicId]: true },   // T64: notes read
 }
 ```
 

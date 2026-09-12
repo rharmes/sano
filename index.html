@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="css/fonts.css?v=370d668b" />
 		<link rel="stylesheet" href="css/normalize.css?v=144638bb" />
 		<link rel="stylesheet" href="css/barebones.css?v=406ae0d7" />
-		<link rel="stylesheet" href="css/sano.css?v=d441e73b" />
+		<link rel="stylesheet" href="css/sano.css?v=7a59c002" />
 		<link rel="icon" href="favicon.svg?v=e1facae9" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png?v=a0282fd9" />
 		<link rel="manifest" href="manifest.json?v=1eaf39bb" />
@@ -40,7 +40,8 @@
 		<script src="js/glosses.js?v=2d87dfd5" defer></script>
 		<script src="js/en-glosses.js?v=33303b07" defer></script>
 		<script src="js/sounds.js?v=bf057a6a" defer></script>
-		<script src="js/sano.js?v=fd87b95e" defer></script>
+		<script src="js/grammar.js?v=4f15b640" defer></script>
+		<script src="js/sano.js?v=a5c0e96d" defer></script>
 	</head>
 	<body>
 		<svg width="0" height="0" style="position: absolute" aria-hidden="true">
@@ -504,6 +505,23 @@
 					<p id="sounds-tip" class="sounds-tip"></p>
 					<button id="sounds-next" type="button" class="btn-primary">Next sound</button>
 				</div>
+			</div>
+
+			<div id="screen-grammar" class="hide">
+				<div id="grammar-top">
+					<a id="grammar-back" class="icon" role="button" aria-label="Back to the path"
+						><svg><use href="#i-close" /></svg
+					></a>
+					<span class="grammar-eyebrow">Grammar note</span>
+				</div>
+				<h2 id="grammar-title" class="sounds-heading"></h2>
+				<p id="grammar-intro" class="sounds-lede"></p>
+				<div id="grammar-contrast" class="grammar-contrast"></div>
+				<ul id="grammar-legend" class="grammar-legend"></ul>
+				<ul id="grammar-points" class="grammar-points"></ul>
+				<div id="grammar-examples" class="grammar-examples"></div>
+				<p id="grammar-tip" class="sounds-tip"></p>
+				<button id="grammar-done" type="button" class="btn-primary">Got it</button>
 			</div>
 
 			<p class="footer">

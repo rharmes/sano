@@ -79,6 +79,44 @@ other and its record says so — the box means *resolved*, not *shipped*.
       tile-words; the 331 missing clips rendered in the same pass). CLAUDE.md + architecture.md
       updated.
 
+## Grammar notes
+
+- [x] **T64 · Grammar notes on the path** — Ross (2026-09-12): a lesson node early in the journey
+      that explains subject–object–verb order, built like the pronunciation guides (one node, its own
+      colour) so more concepts can follow; then, on the first preview, "work on all of them" for the
+      eight follow-ups recommended with it. **Delivered (2026-09-12):** `GRAMMAR_TOPICS` in
+      `js/grammar.js` — nine notes, one per anchor unit: counting words (after Numbers 1–10), the verb
+      goes last (Pronouns & Possessives), timi or tapaai (Family), two ways to say "is" (People Around
+      You), postpositions (Getting to Know You), -laai (Comprehension), a question keeps the order
+      (Asking Questions), the ending says who (Verbs: Present tense), saying no (Daily Routine). A
+      **teal** `grammar` path node (`--grammar-color`, both themes; short text mark, a check once read)
+      unlocks when its `after` unit is complete, like a sound drill; `renderPath` now draws all three
+      stop kinds (dialogue / sound / grammar) through one `addStop` helper instead of three copied
+      blocks. The **note screen** (`#screen-grammar`, `startGrammar` / `finishGrammar`) is a one-page
+      read: title, intro, labelled **contrast rows** (a written-out English row, or one of the note's
+      own sentences — e.g. a `ho` sentence over a `chha` sentence), a per-note **legend**, three
+      points, four **example cards** (romanized words as chips coloured by role — who indigo · what
+      gold · verb crimson · mark teal — with a literal gloss under each and `SanoAudio.button(clip)`),
+      a tip, and "Got it", which sets `state.grammarDone[id]` and counts toward the streak. Nothing is
+      scored. **Content rule:** every example is a REAL course sentence — an item id or `<id>-fN`
+      frame — so no new audio was rendered and nothing touched `js/data.js`; `parts` must join back
+      to the sentence's `dev` exactly (`tests/data/grammar.test.mjs`, which also checks the clip is on
+      disk, one note per anchor unit, every used role in the legend, and every contrast row names a
+      real sentence). **Decisions:** the romanized chips split the whole romanized sentence on spaces
+      (keeps sentence capitalization); compact widths (≤520px) shrink the chips and stack the
+      contrast label above its row so a three-word sentence stays on one line (two four-chip polite
+      sentences still wrap; the order still reads). **Not done / open:** the course ships no
+      first-person negative verb with audio, so "saying no" teaches hoina / chhaina / hundaina from
+      clips and only mentions -dina in prose; seven of the nine sit between Numbers and Asking
+      Questions — re-anchoring is one `after` field per note if that ever feels dense; no quick-check
+      exercise (a Duolingo-tips-style read was the ask). Prose, legend labels and literal glosses are
+      AI drafts under Ross's review (Ross reviewed the nine previews 2026-09-12: "looks great").
+      Ride-alongs: `tests/e2e/grammar.spec.mjs` (locked / open / tick, plus a sweep that opens every
+      note), `tests/seed.mjs` `grammarReady` + `allNotesReady`, dev-seed card 7b with an "All nine
+      notes" button, style-guide token + stop-node demos (which also added the missing lavender
+      sound-node demo), `docs/data-model.md` shape + `grammarDone`, `docs/architecture.md`, both
+      instruction twins.
+
 ## Companion characters
 
 - [x] **T5 · Pick a direction per companion, then refine and wire them in** — **closed wontfix

@@ -76,19 +76,9 @@ what's in use.
 
 ## Grammar notes
 
-- [ ] **T64 · Grammar notes on the path — first one: word order (the verb goes last)** `waiting-on:ross` `area:app` —
-      Ross (2026-09-12): a single lesson node early in the journey (after **Pronouns & Possessives**)
-      that explains subject–object–verb order, built like the pronunciation guides (SR-08 — one node,
-      its own colour) so more grammar concepts can be woven in the same way. Shape: a `GRAMMAR_TOPICS`
-      table in `js/grammar.js` (id, `after` unit, glyph, prose, examples), a **teal** `grammar` path
-      node that unlocks when its `after` unit is complete, and a one-page **note** screen — the
-      concept in a few lines, an English-vs-Nepali contrast row, then real course sentences (an item
-      id or `<id>-fN` frame, so the audio is already shipped) shown as colour-coded **who · what ·
-      does** chips with a word-for-word gloss and a play button. "Got it" ticks it off
-      (`state.grammarDone`, streak-counting like a sound drill). The prose and the literal glosses are
-      AI drafts for Ross to correct. Follow-up in the same task: recommend the next grammar concepts.
-      Ride-alongs: `tests/data/grammar.test.mjs` (parts join back to the sentence exactly),
-      `tests/e2e/grammar.spec.mjs`, a `dev-seed.html` scenario, style-guide token + node demos.
+- [x] **T64 · Grammar notes on the path** — nine one-page explainers (`js/grammar.js`) woven in as
+      teal nodes after their anchor units, from counting words to saying no, each built from real
+      course sentences coloured who · what · does (2026-09-12).
 
 ## Content review
 

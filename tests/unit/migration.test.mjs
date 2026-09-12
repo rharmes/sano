@@ -36,6 +36,7 @@ test('defaultState: a fresh v3 record', () => {
 	assert.deepEqual(s.items, {});
 	assert.deepEqual(s.dialoguesDone, {});
 	assert.deepEqual(s.soundsDone, {});
+	assert.deepEqual(s.grammarDone, {});
 });
 
 test('normalizeState: fills in missing top-level fields', () => {
@@ -44,7 +45,7 @@ test('normalizeState: fills in missing top-level fields', () => {
 	assert.equal(s.version, 3);
 	assert.equal(s.name, 'Aastha');
 	assert.equal(s.streakFreezes, 1);
-	assert.ok(s.items && s.dialoguesDone && s.soundsDone);
+	assert.ok(s.items && s.dialoguesDone && s.soundsDone && s.grammarDone);
 });
 
 test('normalizeState: a __proto__ key in the blob cannot replace the prototype', () => {
@@ -109,6 +110,7 @@ test('migrateV2State: SR-05 fresh start keeps identity + streak, resets learning
 		items: { foo: { intro: true, interval: 40, graduated: true } },
 		dialoguesDone: { 'greet-pyaro': true },
 		soundsDone: { aspiration: true },
+		grammarDone: { 'word-order': true },
 	});
 	assert.equal(out.version, 3);
 	// Identity + habit + lifetime tally kept.
@@ -122,6 +124,7 @@ test('migrateV2State: SR-05 fresh start keeps identity + streak, resets learning
 	assert.deepEqual(out.items, {});
 	assert.deepEqual(out.dialoguesDone, {});
 	assert.deepEqual(out.soundsDone, {});
+	assert.deepEqual(out.grammarDone, {});
 	assert.equal(out.itemsToday, 0);
 });
 

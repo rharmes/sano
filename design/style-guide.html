@@ -27,6 +27,8 @@
 				--text-color-softer: #b1a795;
 
 				--badge-color: #d99e3a; /* pennant gold */
+				--sound-color: #be87f5; /* lavender: pronunciation path nodes */
+				--grammar-color: #3f9e8f; /* paper teal: grammar-note path nodes */
 				--word-color: #c25566;
 				--text-complete-color: #38824a;
 				--text-incomplete-color: #c2403d;
@@ -70,6 +72,8 @@
 				--text-color-softer: #645c70;
 
 				--badge-color: #d9aa4e;
+				--sound-color: #be87f5; /* lavender (dark) */
+				--grammar-color: #57b3a3; /* paper teal (dark) */
 				--word-color: #e58794;
 				--text-complete-color: #7fae83;
 				--text-incomplete-color: #e07a72;
@@ -960,6 +964,33 @@
 			}
 			.path-node.locked .icon {
 				color: color-mix(in srgb, var(--text-color-softer) 60%, var(--background-color));
+			}
+			/* Stops between units — mirrors css/sano.css: a conversation (gold), a sound drill
+			   (lavender, Devanagari glyph), a grammar note (teal, short text mark). */
+			.path-node.dialogue.unlocked {
+				background: var(--badge-color);
+			}
+			.path-node.sound.unlocked {
+				background: var(--sound-color);
+			}
+			.path-node.sound.unlocked .icon {
+				font-size: 3rem;
+				font-weight: 300;
+				line-height: 1;
+			}
+			.path-node.grammar.unlocked {
+				background: var(--grammar-color);
+			}
+			.path-node.grammar.unlocked .icon {
+				font-size: 1.7rem;
+				font-weight: 700;
+				letter-spacing: 0.06em;
+				line-height: 1;
+			}
+			.path-node.dialogue.unlocked .icon,
+			.path-node.sound.unlocked .icon,
+			.path-node.grammar.unlocked .icon {
+				color: #fff;
 			}
 			.node-demo .cap {
 				margin-top: 1.4rem;
@@ -1915,7 +1946,9 @@
 				<p class="sg-note">
 					Circular nodes with a flat drop "shadow" (a hard <code>box-shadow</code>, not blur). State sets the fill: complete =
 					indigo, current = crimson, locked = muted border tint. The due-review badge is a gold pennant clipped to fly off the
-					node's upper-right.
+					node's upper-right. Stops woven between units get their own fill so they read as a different kind of thing: a
+					conversation is pennant gold, a pronunciation drill is lavender with a Devanagari glyph, and a grammar note (T64) is
+					paper teal with a short text mark.
 				</p>
 				<div class="nodes">
 					<div class="node-demo">
@@ -1942,6 +1975,26 @@
 							></span>
 						</div>
 						<div class="cap">locked</div>
+					</div>
+					<div class="node-demo">
+						<div class="path-node dialogue unlocked">
+							<span class="icon"
+								><svg><use href="#i-forum" /></svg
+							></span>
+						</div>
+						<div class="cap">conversation</div>
+					</div>
+					<div class="node-demo">
+						<div class="path-node sound unlocked">
+							<span class="icon">ख</span>
+						</div>
+						<div class="cap">sound drill</div>
+					</div>
+					<div class="node-demo">
+						<div class="path-node grammar unlocked">
+							<span class="icon">SOV</span>
+						</div>
+						<div class="cap">grammar note</div>
 					</div>
 				</div>
 				<p class="sg-note" style="margin-top: 2rem">

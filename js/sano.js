@@ -161,6 +161,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('sounds-record').addEventListener('click', () => soundsRecorder.toggle());
 	document.getElementById('sounds-play-you').addEventListener('click', () => soundsRecorder.play());
 	document.getElementById('sounds-next').addEventListener('click', advanceSound);
+	// T64: grammar notes.
+	document.getElementById('grammar-back').addEventListener('click', goHome);
+	document.getElementById('grammar-done').addEventListener('click', finishGrammar);
 	const typeInput = document.getElementById('type-answer');
 	typeInput.addEventListener('input', () => {
 		document.getElementById('exercise-check').disabled = typeInput.value.trim() === '';
@@ -207,6 +210,7 @@ function defaultState() {
 		items: {}, // item id -> { seen, correct, ease, interval, lastSeen, intro, recalls, graduated }
 		dialoguesDone: {}, // SR-01: which path conversations have been completed
 		soundsDone: {}, // SR-08: which pronunciation drills have been completed
+		grammarDone: {}, // T64: which grammar notes have been read
 	};
 }
 
@@ -431,7 +435,7 @@ function openDictionary() {
 }
 
 function showScreen(name) {
-	for (const screen of ['onboarding', 'home', 'lesson', 'complete', 'dictionary', 'dialogue', 'sounds'])
+	for (const screen of ['onboarding', 'home', 'lesson', 'complete', 'dictionary', 'dialogue', 'sounds', 'grammar'])
 		document.getElementById('screen-' + screen).classList.toggle('hide', screen !== name);
 }
 
@@ -440,6 +444,7 @@ function goHome() {
 	if (speakRecorder && speakRecorder.recording) speakRecorder.reset(); // stop the mic if quitting mid-record
 	if (soundsRecorder && soundsRecorder.recording) soundsRecorder.reset();
 	soundDrill = null;
+	grammarTopic = null;
 
 	// Show the screen first so the path can measure its real width.
 	showScreen('home');
@@ -652,7 +657,8 @@ function renderPath() {
 		label.style.top = (h ? y + nodeSize / 2 - h / 2 : y + (compact ? 10 : 16)) + 'px';
 	};
 
-	// Weave each section's conversation into the path right after the unit it follows.
+	// Weave each section's stops — a conversation, a sound drill, a grammar note — into the
+	// path right after the unit each one follows.
 	const seq = [];
 	for (const unit of COURSE) {
 		seq.push({ kind: 'unit', unit: unit });
@@ -660,7 +666,54 @@ function renderPath() {
 		if (dlg) seq.push({ kind: 'dialogue', dialogue: dlg });
 		const snd = SOUND_TOPICS.find((t) => t.after === unit.id);
 		if (snd) seq.push({ kind: 'sound', topic: snd });
+		const gram = GRAMMAR_TOPICS.find((t) => t.after === unit.id);
+		if (gram) seq.push({ kind: 'grammar', topic: gram });
 	}
+
+	// A stop between units: a conversation (gold), a sound drill (lavender) or a grammar
+	// note (teal). Same geometry as a unit node but no mastery ring, and no badge. The icon
+	// follows the status — a lock, then the stop's own mark while open (a sprite icon or a
+	// short text glyph), then a check once done.
+	const addStop = (kind, status, title, mark, open) => {
+		const x = xAtV(vWave);
+		const onLeft = x > center;
+		const node = document.createElement('button');
+		node.type = 'button';
+		node.className = 'path-node ' + kind + ' ' + status;
+		node.style.width = nodeSize + 'px';
+		node.style.height = nodeSize + 'px';
+		node.style.left = x - nodeSize / 2 + 'px';
+		node.style.top = y + 'px';
+		node.title = title;
+		const icon = document.createElement('span');
+		icon.className = 'icon';
+		if (status === 'unlocked' && mark.glyph) {
+			icon.textContent = mark.glyph;
+		} else {
+			const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+			const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+			use.setAttribute('href', '#i-' + (status === 'complete' ? 'check' : status === 'unlocked' ? mark.icon : 'lock'));
+			svg.appendChild(use);
+			icon.appendChild(svg);
+		}
+		node.appendChild(icon);
+		if (status !== 'locked') node.addEventListener('click', open);
+		wrap.appendChild(node);
+		anchors.push({ x: x, yTop: y });
+
+		const label = document.createElement('div');
+		label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
+		label.style.width = labelWidth + 'px';
+		label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - labelGap : x + nodeSize / 2 + labelGap) + 'px';
+		const stitle = document.createElement('div');
+		stitle.textContent = title;
+		label.appendChild(stitle);
+		wrap.appendChild(label);
+		centerLabel(label);
+
+		advance();
+	};
+	const stopStatus = (done, unlocked) => (done ? 'complete' : unlocked ? 'unlocked' : 'locked');
 
 	seq.forEach((entry) => {
 		const x = xAtV(vWave);
@@ -669,90 +722,22 @@ function renderPath() {
 		if (entry.kind === 'dialogue') {
 			const dlg = entry.dialogue;
 			const done = !!(state.dialoguesDone && state.dialoguesDone[dlg.id]);
-			const unlocked = dialogueUnlocked(dlg);
-			const status = done ? 'complete' : unlocked ? 'unlocked' : 'locked';
-
-			const node = document.createElement('button');
-			node.type = 'button';
-			node.className = 'path-node dialogue ' + status;
-			node.style.width = nodeSize + 'px';
-			node.style.height = nodeSize + 'px';
-			node.style.left = x - nodeSize / 2 + 'px';
-			node.style.top = y + 'px';
-			node.title = dlg.title;
-			const icon = document.createElement('span');
-			icon.className = 'icon';
-			const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-			const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-			use.setAttribute('href', '#i-' + (done ? 'check' : unlocked ? 'forum' : 'lock'));
-			svg.appendChild(use);
-			icon.appendChild(svg);
-			node.appendChild(icon);
-			if (unlocked || done) node.addEventListener('click', () => startDialogue(dlg));
-			wrap.appendChild(node);
-			anchors.push({ x: x, yTop: y });
-
-			const label = document.createElement('div');
-			label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
-			label.style.width = labelWidth + 'px';
-			label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - labelGap : x + nodeSize / 2 + labelGap) + 'px';
-			const dtitle = document.createElement('div');
-			dtitle.textContent = dlg.title;
-			label.appendChild(dtitle);
-			wrap.appendChild(label);
-			centerLabel(label);
-
-			advance();
+			addStop('dialogue', stopStatus(done, dialogueUnlocked(dlg)), dlg.title, { icon: 'forum' }, () => startDialogue(dlg));
 			return;
 		}
-
 		if (entry.kind === 'sound') {
 			const topic = entry.topic;
 			const done = !!(state.soundsDone && state.soundsDone[topic.id]);
-			const unlocked = soundUnlocked(topic);
-			const status = done ? 'complete' : unlocked ? 'unlocked' : 'locked';
-
-			const node = document.createElement('button');
-			node.type = 'button';
-			node.className = 'path-node sound ' + status;
-			node.style.width = nodeSize + 'px';
-			node.style.height = nodeSize + 'px';
-			node.style.left = x - nodeSize / 2 + 'px';
-			node.style.top = y + 'px';
-			node.title = topic.title;
-			const icon = document.createElement('span');
-			icon.className = 'icon';
-			if (done) {
-				const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-				const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-				use.setAttribute('href', '#i-check');
-				svg.appendChild(use);
-				icon.appendChild(svg);
-			} else if (unlocked) {
-				icon.textContent = topic.glyph; // a Devanagari letter from the lesson
-			} else {
-				const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-				const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-				use.setAttribute('href', '#i-lock');
-				svg.appendChild(use);
-				icon.appendChild(svg);
-			}
-			node.appendChild(icon);
-			if (unlocked || done) node.addEventListener('click', () => startSoundDrill(topic, soundExamples(topic)));
-			wrap.appendChild(node);
-			anchors.push({ x: x, yTop: y });
-
-			const label = document.createElement('div');
-			label.className = 'path-label ' + (onLeft ? 'left' : 'right') + (status === 'locked' ? ' locked-label' : '');
-			label.style.width = labelWidth + 'px';
-			label.style.left = (onLeft ? x - nodeSize / 2 - labelWidth - labelGap : x + nodeSize / 2 + labelGap) + 'px';
-			const stitle = document.createElement('div');
-			stitle.textContent = topic.title;
-			label.appendChild(stitle);
-			wrap.appendChild(label);
-			centerLabel(label);
-
-			advance();
+			// The mark is a Devanagari letter from the lesson.
+			addStop('sound', stopStatus(done, soundUnlocked(topic)), topic.title, { glyph: topic.glyph }, () =>
+				startSoundDrill(topic, soundExamples(topic)),
+			);
+			return;
+		}
+		if (entry.kind === 'grammar') {
+			const topic = entry.topic;
+			const done = !!(state.grammarDone && state.grammarDone[topic.id]);
+			addStop('grammar', stopStatus(done, grammarUnlocked(topic)), topic.title, { glyph: topic.glyph }, () => startGrammar(topic));
 			return;
 		}
 		const unit = entry.unit;
@@ -1844,6 +1829,150 @@ function finishSound() {
 	document.getElementById('complete-strengthened').classList.add('hide');
 	document.getElementById('complete-stats').textContent =
 		'You practiced ' + count + ' ' + (count === 1 ? 'word' : 'words') + ' — ' + topic.title.toLowerCase();
+	document.getElementById('complete-goal').classList.add('hide');
+	showScreen('complete');
+}
+
+// --- T64: grammar notes ---
+// A one-page explainer for a grammar concept (js/grammar.js), reached from its own path
+// node. No exercises and no per-word scoring: the learner reads it, hears the examples —
+// real course sentences, coloured by who / what / does — and taps "Got it".
+
+// A grammar node unlocks once the unit it follows in the path is complete (like a sound drill).
+function grammarUnlocked(topic) {
+	const afterUnit = COURSE.find((u) => u.id === topic.after);
+	return afterUnit ? unitIsComplete(afterUnit) : true;
+}
+
+// Resolve an example's `clip` — an item id, or `<itemId>-fN` for one of its alternate
+// frames — to the sentence it names: { dev, en } (the clip itself is `audio/…/<clip>.mp3`).
+function grammarSentence(clip) {
+	const byId = COURSE.flatMap((u) => u.items).find((it) => it.id === clip);
+	if (byId) return { dev: byId.dev, en: byId.en };
+	const m = /^(.+)-f(\d+)$/.exec(clip);
+	const item = m && COURSE.flatMap((u) => u.items).find((it) => it.id === m[1]);
+	const frame = item && item.frames && item.frames[Number(m[2]) - 1];
+	return frame ? { dev: frame.dev, en: frame.en } : null;
+}
+
+// One word chip: the romanized word tinted by its role, with the literal English under it
+// (omitted for the English side of the contrast row, where the word IS the English).
+function grammarWord(np, en, role) {
+	const el = document.createElement('span');
+	el.className = 'gram-word role-' + role;
+	const top = document.createElement('span');
+	top.className = 'np';
+	top.textContent = np;
+	el.appendChild(top);
+	if (en) {
+		const sub = document.createElement('span');
+		sub.className = 'en';
+		sub.textContent = en;
+		el.appendChild(sub);
+	}
+	return el;
+}
+
+// The romanized words of an example, one per part. The sentence is romanized whole (so it
+// keeps the sentence's capitalization — "Ma Nepali bolchhu", not "Ma Nepali Bolchhu") and
+// split on spaces; the data test guarantees the parts join back to that same sentence.
+function grammarRomanizedParts(example, sentence) {
+	const words = SanoRomanize.romanize(sentence.dev).split(/\s+/);
+	return example.parts.map((p, i) => words[i] || SanoRomanize.romanize(p.dev));
+}
+
+let grammarTopic = null;
+
+function startGrammar(topic) {
+	grammarTopic = topic;
+	showScreen('grammar');
+	document.getElementById('grammar-title').textContent = topic.title;
+	document.getElementById('grammar-intro').textContent = topic.intro;
+	document.getElementById('grammar-tip').textContent = topic.tip;
+
+	// The contrast rows: a written-out row (`chips`, the English side) or one of the note's
+	// own examples (`clip`), coloured the same way — e.g. English order vs Nepali order, or
+	// a `ho` sentence over a `chha` sentence.
+	const contrast = document.getElementById('grammar-contrast');
+	contrast.textContent = '';
+	for (const r of topic.contrast) {
+		const lab = document.createElement('span');
+		lab.className = 'lang';
+		lab.textContent = r.label;
+		contrast.appendChild(lab);
+		const words = document.createElement('div');
+		words.className = 'grammar-words';
+		if (r.chips) {
+			for (const c of r.chips) words.appendChild(grammarWord(c.en, '', c.role));
+		} else {
+			const ex = r.parts ? r : topic.examples.find((e) => e.clip === r.clip);
+			const sentence = ex && grammarSentence(ex.clip);
+			if (sentence) {
+				const np = grammarRomanizedParts(ex, sentence);
+				ex.parts.forEach((p, i) => words.appendChild(grammarWord(np[i], p.en, p.role)));
+			}
+		}
+		contrast.appendChild(words);
+	}
+	// The legend names only the roles this note uses, with the note's own wording.
+	const legend = document.getElementById('grammar-legend');
+	legend.textContent = '';
+	for (const entry of topic.legend) {
+		const li = document.createElement('li');
+		li.className = 'role-' + entry.role;
+		li.textContent = entry.label;
+		legend.appendChild(li);
+	}
+
+	const points = document.getElementById('grammar-points');
+	points.textContent = '';
+	for (const text of topic.points) {
+		const li = document.createElement('li');
+		li.textContent = text;
+		points.appendChild(li);
+	}
+
+	const list = document.getElementById('grammar-examples');
+	list.textContent = '';
+	for (const ex of topic.examples) {
+		const sentence = grammarSentence(ex.clip);
+		if (!sentence) continue; // the data test keeps this from shipping; never blank the page over it
+		const card = document.createElement('div');
+		card.className = 'grammar-example';
+		const words = document.createElement('div');
+		words.className = 'grammar-words';
+		const np = grammarRomanizedParts(ex, sentence);
+		ex.parts.forEach((p, i) => words.appendChild(grammarWord(np[i], p.en, p.role)));
+		card.appendChild(words);
+		const en = document.createElement('div');
+		en.className = 'grammar-example-en';
+		const text = document.createElement('span');
+		text.textContent = '“' + sentence.en + '”';
+		en.appendChild(text);
+		en.appendChild(SanoAudio.button(ex.clip));
+		card.appendChild(en);
+		list.appendChild(card);
+	}
+	window.scrollTo(0, 0);
+}
+
+// "Got it": tick the note off and celebrate like a lesson. Nothing is scored, but reading a
+// note counts toward the daily streak, exactly as finishing a sound drill does.
+function finishGrammar() {
+	const topic = grammarTopic;
+	if (!topic) return;
+	if (!state.grammarDone) state.grammarDone = {};
+	state.grammarDone[topic.id] = true;
+	streakFreezeJustUsed = false;
+	const firstOfDay = state.lastActivityDay !== dayString(new Date()); // before registerActivity() stamps today
+	registerActivity();
+	saveState();
+	grammarTopic = null;
+	const n = topic.examples.length;
+	document.getElementById('complete-title').textContent = 'Got it!';
+	showStreakResult(firstOfDay);
+	document.getElementById('complete-strengthened').classList.add('hide');
+	document.getElementById('complete-stats').textContent = topic.title + ' — ' + n + ' example ' + (n === 1 ? 'sentence' : 'sentences') + ' heard';
 	document.getElementById('complete-goal').classList.add('hide');
 	showScreen('complete');
 }
