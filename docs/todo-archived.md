@@ -115,7 +115,16 @@ other and its record says so — the box means *resolved*, not *shipped*.
       note), `tests/seed.mjs` `grammarReady` + `allNotesReady`, dev-seed card 7b with an "All nine
       notes" button, style-guide token + stop-node demos (which also added the missing lavender
       sound-node demo), `docs/data-model.md` shape + `grammarDone`, `docs/architecture.md`, both
-      instruction twins.
+      instruction twins. **Review round (PR #8, Claude Code's built-in code review at high effort —
+      this repo has no `pr-antagonist`):** eight findings, all taken. The one content finding: the
+      app's romanizer writes the "we" ending छौं as **-chhau** (no nasal) and सँग as **-sang**, so the
+      prose was aligned to what the chips show (-chhau with a note about the nasal hum, -sang,
+      masang, ekajanaa, tinawataa) rather than teaching the romanizer a nasal — Ross's call to
+      revisit. Code: one `stopUnlocked(afterId)` and one `finishStop(doneKey, id, title, stats,
+      goal)` now serve dialogue, sound and grammar stops; `grammarSentence` uses the cached
+      `courseItem` map; `grammarChips` builds both contrast rows and example cards; the complete
+      stat no longer claims sentences were "heard"; the e2e sweep finds nodes by title, and the data
+      test checks chip-row roles against the legend too.
 
 ## Companion characters
 

@@ -46,7 +46,11 @@ test('GRAMMAR_TOPICS: shape, `after` is a real unit, ids unique', () => {
 				);
 		}
 		assert.ok(Array.isArray(t.legend) && t.legend.length, `${t.id}: no legend`);
-		const used = new Set(sentences(t).flatMap((e) => e.parts.map((p) => p.role)));
+		const used = new Set(
+			sentences(t)
+				.flatMap((e) => e.parts.map((p) => p.role))
+				.concat(t.contrast.flatMap((r) => (r.chips || []).map((c) => c.role))),
+		);
 		for (const l of t.legend) assert.ok(roles.has(l.role) && l.label, `${t.id}: bad legend entry ${JSON.stringify(l)}`);
 		for (const role of used)
 			assert.ok(

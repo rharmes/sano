@@ -564,11 +564,10 @@ function renderHome() {
 	}
 }
 
-// The Duolingo-style winding path. All geometry is computed here so it can
-// adapt to the container width; CSS handles colors and type.
-// A path conversation unlocks once the unit it follows is complete.
-function dialogueUnlocked(dlg) {
-	const afterUnit = COURSE.find((u) => u.id === dlg.after);
+// A stop between units — a conversation, a sound drill, a grammar note — unlocks once the
+// unit it follows in the path is complete.
+function stopUnlocked(afterId) {
+	const afterUnit = COURSE.find((u) => u.id === afterId);
 	return afterUnit ? unitIsComplete(afterUnit) : true;
 }
 
@@ -722,14 +721,14 @@ function renderPath() {
 		if (entry.kind === 'dialogue') {
 			const dlg = entry.dialogue;
 			const done = !!(state.dialoguesDone && state.dialoguesDone[dlg.id]);
-			addStop('dialogue', stopStatus(done, dialogueUnlocked(dlg)), dlg.title, { icon: 'forum' }, () => startDialogue(dlg));
+			addStop('dialogue', stopStatus(done, stopUnlocked(dlg.after)), dlg.title, { icon: 'forum' }, () => startDialogue(dlg));
 			return;
 		}
 		if (entry.kind === 'sound') {
 			const topic = entry.topic;
 			const done = !!(state.soundsDone && state.soundsDone[topic.id]);
 			// The mark is a Devanagari letter from the lesson.
-			addStop('sound', stopStatus(done, soundUnlocked(topic)), topic.title, { glyph: topic.glyph }, () =>
+			addStop('sound', stopStatus(done, stopUnlocked(topic.after)), topic.title, { glyph: topic.glyph }, () =>
 				startSoundDrill(topic, soundExamples(topic)),
 			);
 			return;
@@ -737,7 +736,7 @@ function renderPath() {
 		if (entry.kind === 'grammar') {
 			const topic = entry.topic;
 			const done = !!(state.grammarDone && state.grammarDone[topic.id]);
-			addStop('grammar', stopStatus(done, grammarUnlocked(topic)), topic.title, { glyph: topic.glyph }, () => startGrammar(topic));
+			addStop('grammar', stopStatus(done, stopUnlocked(topic.after)), topic.title, { glyph: topic.glyph }, () => startGrammar(topic));
 			return;
 		}
 		const unit = entry.unit;
@@ -1730,12 +1729,6 @@ function renderSpeak(ex) {
 // (js/sounds.js) is illustrated by real course words found by scanning their Devanagari
 // for the topic's marks, so the audio and Nepali are the ones already shipped in COURSE.
 
-// A pronunciation node unlocks once the unit it follows in the path is complete.
-function soundUnlocked(topic) {
-	const afterUnit = COURSE.find((u) => u.id === topic.after);
-	return afterUnit ? unitIsComplete(afterUnit) : true;
-}
-
 // Real course words that exhibit a contrast: those whose Devanagari contains one of the
 // topic's marks — single words, de-duped, shortest first (clearer), capped at six.
 function soundExamples(topic) {
@@ -1814,22 +1807,33 @@ function advanceSound() {
 function finishSound() {
 	const topic = soundDrill.topic;
 	const count = soundDrill.examples.length;
-	if (!state.soundsDone) state.soundsDone = {};
-	state.soundsDone[topic.id] = true;
-	// Counts toward the daily streak, like other lessons. Capture firstOfDay before
-	// registerActivity() stamps today's date.
-	streakFreezeJustUsed = false;
-	const firstOfDay = state.lastActivityDay !== dayString(new Date());
-	registerActivity();
-	saveState();
 	soundsRecorder.reset();
 	soundDrill = null;
-	document.getElementById('complete-title').textContent = 'Sounds practiced!';
+	finishStop(
+		'soundsDone',
+		topic.id,
+		'Sounds practiced!',
+		'You practiced ' + count + ' ' + (count === 1 ? 'word' : 'words') + ' — ' + topic.title.toLowerCase(),
+	);
+}
+
+// A path stop — a conversation, a sound drill, a grammar note — is done: tick it off in the
+// state map `doneKey`, count it toward the daily streak like a lesson, and fill the complete
+// screen. `goal` (a can-do line) shows only when given. Nothing per-word is scored.
+function finishStop(doneKey, id, title, stats, goal) {
+	if (!state[doneKey]) state[doneKey] = {};
+	state[doneKey][id] = true;
+	streakFreezeJustUsed = false;
+	const firstOfDay = state.lastActivityDay !== dayString(new Date()); // before registerActivity() stamps today
+	registerActivity();
+	saveState();
+	document.getElementById('complete-title').textContent = title;
 	showStreakResult(firstOfDay);
 	document.getElementById('complete-strengthened').classList.add('hide');
-	document.getElementById('complete-stats').textContent =
-		'You practiced ' + count + ' ' + (count === 1 ? 'word' : 'words') + ' — ' + topic.title.toLowerCase();
-	document.getElementById('complete-goal').classList.add('hide');
+	document.getElementById('complete-stats').textContent = stats;
+	const goalEl = document.getElementById('complete-goal');
+	goalEl.textContent = goal || '';
+	goalEl.classList.toggle('hide', !goal);
 	showScreen('complete');
 }
 
@@ -1838,19 +1842,13 @@ function finishSound() {
 // node. No exercises and no per-word scoring: the learner reads it, hears the examples —
 // real course sentences, coloured by who / what / does — and taps "Got it".
 
-// A grammar node unlocks once the unit it follows in the path is complete (like a sound drill).
-function grammarUnlocked(topic) {
-	const afterUnit = COURSE.find((u) => u.id === topic.after);
-	return afterUnit ? unitIsComplete(afterUnit) : true;
-}
-
 // Resolve an example's `clip` — an item id, or `<itemId>-fN` for one of its alternate
 // frames — to the sentence it names: { dev, en } (the clip itself is `audio/…/<clip>.mp3`).
 function grammarSentence(clip) {
-	const byId = COURSE.flatMap((u) => u.items).find((it) => it.id === clip);
+	const byId = courseItem(clip);
 	if (byId) return { dev: byId.dev, en: byId.en };
 	const m = /^(.+)-f(\d+)$/.exec(clip);
-	const item = m && COURSE.flatMap((u) => u.items).find((it) => it.id === m[1]);
+	const item = m && courseItem(m[1]);
 	const frame = item && item.frames && item.frames[Number(m[2]) - 1];
 	return frame ? { dev: frame.dev, en: frame.en } : null;
 }
@@ -1881,6 +1879,15 @@ function grammarRomanizedParts(example, sentence) {
 	return example.parts.map((p, i) => words[i] || SanoRomanize.romanize(p.dev));
 }
 
+// A row of chips for one sentence: the romanized words coloured by role, literal glosses under.
+function grammarChips(example, sentence) {
+	const words = document.createElement('div');
+	words.className = 'grammar-words';
+	const np = grammarRomanizedParts(example, sentence);
+	example.parts.forEach((p, i) => words.appendChild(grammarWord(np[i], p.en, p.role)));
+	return words;
+}
+
 let grammarTopic = null;
 
 function startGrammar(topic) {
@@ -1900,17 +1907,15 @@ function startGrammar(topic) {
 		lab.className = 'lang';
 		lab.textContent = r.label;
 		contrast.appendChild(lab);
-		const words = document.createElement('div');
-		words.className = 'grammar-words';
-		if (r.chips) {
-			for (const c of r.chips) words.appendChild(grammarWord(c.en, '', c.role));
+		const ex = r.parts ? r : r.clip && topic.examples.find((e) => e.clip === r.clip);
+		const sentence = ex && grammarSentence(ex.clip);
+		let words;
+		if (sentence) {
+			words = grammarChips(ex, sentence);
 		} else {
-			const ex = r.parts ? r : topic.examples.find((e) => e.clip === r.clip);
-			const sentence = ex && grammarSentence(ex.clip);
-			if (sentence) {
-				const np = grammarRomanizedParts(ex, sentence);
-				ex.parts.forEach((p, i) => words.appendChild(grammarWord(np[i], p.en, p.role)));
-			}
+			words = document.createElement('div');
+			words.className = 'grammar-words';
+			for (const c of r.chips || []) words.appendChild(grammarWord(c.en, '', c.role));
 		}
 		contrast.appendChild(words);
 	}
@@ -1939,11 +1944,7 @@ function startGrammar(topic) {
 		if (!sentence) continue; // the data test keeps this from shipping; never blank the page over it
 		const card = document.createElement('div');
 		card.className = 'grammar-example';
-		const words = document.createElement('div');
-		words.className = 'grammar-words';
-		const np = grammarRomanizedParts(ex, sentence);
-		ex.parts.forEach((p, i) => words.appendChild(grammarWord(np[i], p.en, p.role)));
-		card.appendChild(words);
+		card.appendChild(grammarChips(ex, sentence));
 		const en = document.createElement('div');
 		en.className = 'grammar-example-en';
 		const text = document.createElement('span');
@@ -1956,25 +1957,14 @@ function startGrammar(topic) {
 	window.scrollTo(0, 0);
 }
 
-// "Got it": tick the note off and celebrate like a lesson. Nothing is scored, but reading a
-// note counts toward the daily streak, exactly as finishing a sound drill does.
+// "Got it": tick the note off and celebrate like a lesson (finishStop). The stat only claims
+// what the screen can vouch for — the clips play on tap, so it doesn't say they were heard.
 function finishGrammar() {
 	const topic = grammarTopic;
 	if (!topic) return;
-	if (!state.grammarDone) state.grammarDone = {};
-	state.grammarDone[topic.id] = true;
-	streakFreezeJustUsed = false;
-	const firstOfDay = state.lastActivityDay !== dayString(new Date()); // before registerActivity() stamps today
-	registerActivity();
-	saveState();
 	grammarTopic = null;
 	const n = topic.examples.length;
-	document.getElementById('complete-title').textContent = 'Got it!';
-	showStreakResult(firstOfDay);
-	document.getElementById('complete-strengthened').classList.add('hide');
-	document.getElementById('complete-stats').textContent = topic.title + ' — ' + n + ' example ' + (n === 1 ? 'sentence' : 'sentences') + ' heard';
-	document.getElementById('complete-goal').classList.add('hide');
-	showScreen('complete');
+	finishStop('grammarDone', topic.id, 'Got it!', topic.title + ' — ' + n + ' example ' + (n === 1 ? 'sentence' : 'sentences'));
 }
 
 function renderMatch(ex) {
@@ -2552,22 +2542,7 @@ function continueDialogue() {
 
 function finishDialogue() {
 	const d = dialogueSession.def;
-	if (!state.dialoguesDone) state.dialoguesDone = {};
-	state.dialoguesDone[d.id] = true;
-	// Completing a conversation counts toward the daily streak, like other lessons.
-	// Capture firstOfDay before registerActivity() stamps today's date.
-	streakFreezeJustUsed = false;
-	const firstOfDay = state.lastActivityDay !== dayString(new Date());
-	registerActivity();
-	saveState();
-	document.getElementById('complete-title').textContent = 'Conversation complete!';
-	showStreakResult(firstOfDay);
-	document.getElementById('complete-strengthened').classList.add('hide');
-	document.getElementById('complete-stats').textContent = dialogueSession.correct + ' of ' + d.questions.length + ' questions correct';
-	const goalEl = document.getElementById('complete-goal');
-	goalEl.textContent = d.goal;
-	goalEl.classList.remove('hide');
-	showScreen('complete');
+	finishStop('dialoguesDone', d.id, 'Conversation complete!', dialogueSession.correct + ' of ' + d.questions.length + ' questions correct', d.goal);
 }
 
 // Rendering. Both tables are built from COURSE so the HTML stays a thin shell.

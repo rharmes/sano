@@ -57,7 +57,7 @@ test('every note on the path opens and renders its contrast rows, legend and exa
 	await expect(nodes).toHaveCount(GRAMMAR_TOPICS.length);
 	for (let i = 0; i < GRAMMAR_TOPICS.length; i++) {
 		const topic = GRAMMAR_TOPICS[i];
-		const node = nodes.nth(i);
+		const node = page.locator(`#path .path-node.grammar[title="${topic.title}"]`); // by title: the array order needn't match the path
 		await expect(node).toHaveClass(/unlocked/);
 		await expect(node).toHaveAttribute('title', topic.title);
 		await openScreen(page, node, '#screen-grammar');

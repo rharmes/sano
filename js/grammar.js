@@ -54,8 +54,8 @@ const GRAMMAR_TOPICS = [
 			{ label: 'Nepali', clip: 'fn-duiwataa-twoitems' },
 		],
 		points: [
-			'-wataa attaches straight onto the number for things: duiwataa, tinwataa, dasawataa.',
-			'-janaa is the counter for people: ekjanaa (one person), chaar janaa (four people).',
+			'-wataa attaches straight onto the number for things: duiwataa, tinawataa, dasawataa.',
+			'-janaa is the counter for people: ekajanaa (one person), chaar janaa (four people).',
 			'The noun stays singular. “Two pens” is duiwataa kalam — kalam does not change.',
 		],
 		examples: [
@@ -91,7 +91,7 @@ const GRAMMAR_TOPICS = [
 				],
 			},
 		],
-		tip: 'When you order or ask for a number of anything, reach for -wataa: duiwataa chiyaa, tinwataa momo. It is rarely wrong for things.',
+		tip: 'When you order or ask for a number of anything, reach for -wataa: duiwataa chiyaa, tinawataa momo. It is rarely wrong for things.',
 	},
 	{
 		id: 'word-order',
@@ -280,7 +280,7 @@ const GRAMMAR_TOPICS = [
 		after: 'introductions-origins', // path anchor: this node sits just after this unit
 		glyph: '-मा', // short mark for the path node
 		title: 'Little words come after',
-		sub: '-maa · -baata · -sanga',
+		sub: '-maa · -baata · -sang',
 		intro: 'Where English puts “in”, “from” and “with” before a word, Nepali hangs them on the end of it: gharamaa (house-in), kahaanbaat (where-from), saathisang (friend-with). They are called postpositions, and they glue straight onto the noun — there is no “the” or “a” to get in the way.',
 		legend: [
 			{ role: 'who', label: 'who' },
@@ -302,8 +302,8 @@ const GRAMMAR_TOPICS = [
 		],
 		points: [
 			'-maa means in, at or on: gharamaa (at home), thaalamaa (on the plate), gilaasamaa (in the glass).',
-			'-baata means from: kahaanbaat (from where), and -sanga means with: saathisang (with a friend).',
-			'They attach to pronouns too, and the two fuse: ma + sanga → masanga (with me), so masanga das rupaiyaa chha is “I have ten rupees”.',
+			'-baata means from: kahaanbaat (from where), and -sang means with: saathisang (with a friend).',
+			'They attach to pronouns too, and the two fuse: ma + sang → masang (with me), so masang das rupaiyaa chha is “I have ten rupees”.',
 		],
 		examples: [
 			{
@@ -480,8 +480,8 @@ const GRAMMAR_TOPICS = [
 		after: 'verbs-present', // path anchor: this node sits just after this unit
 		glyph: '-छु', // short mark for the path node
 		title: 'The ending says who',
-		sub: '-chhu · -chhaun · -chha · -nuhunchha',
-		intro: 'A Nepali verb changes its ending to match who is doing it: ma bolchhu (I speak), haami jaanchhaun (we go), pasal khulchha (the shop opens), didi jaanuhunchha (elder sister goes). Learn a verb as a stem plus a set of endings, and one verb gives you every person.',
+		sub: '-chhu · -chhau · -chha · -nuhunchha',
+		intro: 'A Nepali verb changes its ending to match who is doing it: ma bolchhu (I speak), haami jaanchhau (we go), pasal khulchha (the shop opens), didi jaanuhunchha (elder sister goes). Learn a verb as a stem plus a set of endings, and one verb gives you every person.',
 		legend: [
 			{ role: 'who', label: 'who' },
 			{ role: 'what', label: 'what' },
@@ -489,10 +489,10 @@ const GRAMMAR_TOPICS = [
 		],
 		contrast: [
 			{ label: 'I → -chhu', clip: 'ma-nepali-bolchhu-i-speak-nepali' },
-			{ label: 'We → -chhaun', clip: 'hami-we-us-f1' },
+			{ label: 'We → -chhau', clip: 'hami-we-us-f1' },
 		],
 		points: [
-			'ma → -chhu · haami → -chhaun · timi → -chhau · u / yo → -chha · uniharu → -chhan · tapaai / uhaa → -nuhunchha.',
+			'ma → -chhu · haami → -chhau (with a nasal hum on the end that the romanization leaves out) · timi → -chhau · u / yo → -chha · uniharu → -chhan · tapaai / uhaa → -nuhunchha.',
 			'Because the ending already says who, the pronoun is often dropped: Nepali bolchhu is a complete “I speak Nepali”.',
 			'The stem stays put: bol- (speak), jaa- (go), khaa- (eat), gar- (do) — swap only the ending.',
 		],
@@ -532,7 +532,7 @@ const GRAMMAR_TOPICS = [
 				],
 			},
 		],
-		tip: 'When you meet a new verb, say it through the set once: garchhu, garchhaun, garchha, garnuhunchha. The pattern is the same every time.',
+		tip: 'When you meet a new verb, say it through the set once: garchhu, garchhau, garchha, garnuhunchha. The pattern is the same every time.',
 	},
 	{
 		id: 'negation',
