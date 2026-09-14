@@ -139,7 +139,16 @@ and `DIALOGUES` is hand-built from it (adding the Nepali + clip routing), synced
 
 ```js
 { id, after, glyph, title, sub, intro, legend, contrast, points, examples, tip }
+{ id, kind: 'verb', after, glyph, title, sub, intro, legend, table, points, examples, tip }   // a verb card (T66)
 // after:    one note per anchor unit (the path takes the first match; the data test enforces it)
+// kind:     absent = a grammar note (teal); 'verb' = a verb card — a clay path node whose glyph is the
+//           verb's dictionary form, no `contrast`, and a conjugation `table` above the legend
+// table:    [{ label, dev, word? } | { heading }]  one row per form: the situation ('I did'), the form's
+//           Devanagari ('मैले गरेँ', romanized on screen), and the ONE word the row voices — `word`,
+//           required when `dev` has several words, else `dev` itself — through audio/words/<slug>.mp3
+//           (the word-bank tile clips; tools/tts/build-words.mjs adds every cell to that inventory
+//           under the pseudo-id `grammar:<card>`, so the clip is on disk; cards don't vote on spelling).
+//           A `heading` row splits a two-verb card. Cells' `dev` are AI-drafted like everything else.
 // glyph:    short text mark for the teal path node ('SOV', '-लाई', 'छैन' …)
 // legend:   [{ role, label }]  the roles this note uses, in order, with this note's wording for each
 // contrast: [{ label, chips: [{ en, role }] } | { label, clip }]  ≥2 labelled rows — a written-out
@@ -155,8 +164,9 @@ and `DIALOGUES` is hand-built from it (adding the Nepali + clip routing), synced
 //       crimson / teal) on the note screen
 ```
 
-Prose, contrast row and literal glosses are AI-drafted, under Ross's review. Nothing is scored:
-"Got it" sets `state.grammarDone[id]` and counts toward the streak like a sound drill.
+Prose, contrast row, table labels and literal glosses are AI-drafted, under Ross's review. Nothing is
+scored: "Got it" sets `state.grammarDone[id]` (notes and verb cards alike) and counts toward the streak
+like a sound drill.
 
 ## Character art — js/characters.js (generated)
 

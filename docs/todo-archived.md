@@ -125,6 +125,38 @@ other and its record says so — the box means *resolved*, not *shipped*.
       `courseItem` map; `grammarChips` builds both contrast rows and example cards; the complete
       stat no longer claims sentences were "heard"; the e2e sweep finds nodes by title, and the data
       test checks chip-row roles against the legend too.
+- [x] **T66 · Verb notes on the path — common verbs and how they change** — Ross (2026-09-14), after
+      T64: "I really like the recent grammar nodes we added, and want more for verbs." Delivered
+      2026-09-14 in two layers, both in `js/grammar.js` (twenty grammar stops on the path in all):
+  - **Situation notes** (T64 shape, teal): `progressive` (right now: -dai chhu) after *Patterns: Doing &
+    Going*; `perfect` (have you eaten? -eko chhu) after *Meals*; `ne-form` after *Household Living*;
+    `past` (-e · -yo · -nubhayo, with ma → maile as a point and the `-le` chip coloured as the topic)
+    after *Verbs: Past tense*; `bhayo` after *Reactions & Opinions*; `requests` (please: -nus, -nuhos,
+    na-) after *Asking for Help*; `modals` (-na sakchhu · man laagchha · -nu parchha) after *Can, Want &
+    Must*. Every example a shipped course sentence, as T64.
+  - **Verb cards** — the same array with `kind: 'verb'`: `card-jaanu` (jaanu + aaunu, two headed table
+    blocks) after *Getting Around*, `card-garnu` after *Making & Doing*, `card-khaanu` after *Everyday
+    Actions*, `card-hunu` after *Days & the Clock*. A card has no contrast rows; its `table`
+    (`[{ label, dev, word? } | { heading }]`) renders one row per form, the form's romanization as a
+    button that plays the ONE word the row voices (`word`, else the last word of `dev`) through the
+    word-bank tile clips (`playTileWord`). `tools/tts/build-words.mjs` now adds every cell to the
+    `words.json` inventory; the 8 forms the course never says alone (garchhau, garchha, gardina,
+    jaandai, jaandina, aaunchhau, aaundina, hunu) were rendered with `synth-app.mjs --words --new`
+    under Ross's express permission (2026-09-14) and got `FILLS` glosses in `build-glosses.mjs`;
+    `AUDIO_VERSION` 28 → 29. The data test refuses a cell whose slug isn't in `words.json` or whose
+    clip isn't on disk.
+  - **Colour**: Ross chose **B · paper clay** (`--verb-color` #cf7a3e / #dd905a dark) from four
+    options (moss, clay, plum, cobalt) rendered on the path in both themes; the node is
+    `.path-node.grammar.verb` (every grammar rule, then the verb paint), glyph = the verb's
+    dictionary form in Devanagari; `#screen-grammar.verb` recolours the eyebrow and the table chips.
+  - **Also**: `allNotesReady` / dev-seed "All notes" master through *Days & the Clock* (the last
+    anchor); e2e adds a verb-card test (table count, the garchhau clip request on tap, the "N forms"
+    stat, `grammarDone`) and the sweep branches on kind; docs (`data-model.md` shape, `architecture.md`,
+    the Home bullet in both instruction twins, style-guide token + node demo).
+  - **Rulings / flags**: two layers (not cards-only) and rendering the missing clips were Ross's
+    calls before drafting. All prose, table labels, the 8 new Devanagari forms and the 7 fills are
+    AI drafts under Ross's review. Not done: a `--verb-color` on the lesson-complete screen; the
+    "one grammar stop per anchor" rule stayed (no anchor needed two).
 
 ## Companion characters
 

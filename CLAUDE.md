@@ -57,8 +57,9 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 ## What the app is (one level down; functions in `@docs/architecture.md`, shapes in `@docs/data-model.md`)
 
 - **Home** is a Duolingo-style winding **path** (`renderPath`): units unlock in order, with
-  **dialogue** (gold), **pronunciation** (lavender) and **grammar-note** (teal, T64: one-page explainers
-  such as "the verb goes last", `js/grammar.js`) nodes woven in after their anchor unit and
+  **dialogue** (gold), **pronunciation** (lavender), **grammar-note** (teal, T64: one-page explainers
+  such as "the verb goes last", `js/grammar.js`) and **verb-card** (clay, T66: a conjugation table per
+  workhorse verb whose every form plays its word clip; same file, `kind: 'verb'`) nodes woven in after their anchor unit and
   decorative **companions** (SR-07) in the pockets. A unit is complete — and unlocks the next — only
   when every item has **graduated** (the SR-05 **mastery gate**), not merely been introduced; the
   current node's ring is **two-tone** — a faint arc for words *introduced* under a solid arc for words
@@ -107,8 +108,9 @@ head chip above the prompt and a play-time **fallback to the default clip** when
 isn't on disk (`synth-app.mjs --units [ids] --new` renders per unit; only the 6 dialogue-voiced
 companions render — the other 4 stay Sano until their voices are designed). Per-word Devanagari comes from
 `tools/tts/words.json` (built by `tools/tts/build-words.mjs` from every canonical + frame sentence
-across all units — any word that can appear as a word-bank tile, incl. single-word items). After adding or
-re-spelling content, regenerate the affected clips — `build-words.mjs` → `synth-app.mjs --words
+across all units — any word that can appear as a word-bank tile, incl. single-word items — plus every
+verb-card table cell in `js/grammar.js`, T66). After adding or re-spelling content, or editing a verb card,
+regenerate the affected clips — `build-words.mjs` → `synth-app.mjs --words
 --new` (`--new` renders only clips missing on disk, so it won't re-spend credits or churn git) — then
 bump `AUDIO_VERSION` in `js/audio.js` to bust caches; also re-run `tools/build-glosses.mjs` (the
 tap-gloss lexicon `js/glosses.js` — it fails loudly on any new un-glossed word) and then

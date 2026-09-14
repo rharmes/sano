@@ -67,10 +67,20 @@ const phrases = COURSE.flatMap((u) => u.items)
 	.flatMap((it) => [{ id: it.id, dev: it.dev }, ...(it.frames || []).map((f) => ({ id: it.id, dev: f.dev }))])
 	.filter((it) => it.dev && !npOf(it).includes('_'));
 
+// T66 verb cards (js/grammar.js): each conjugation-table cell voices ONE word — its `word`, else
+// its `dev` — through the same audio/words/ clips, so those words join the inventory (listed
+// under the pseudo-id `grammar:<card>` in `phrases`). Most already occur in course sentences;
+// the rest (garchha, jaandai …) are rendered by `synth-app.mjs --words --new` like any new
+// tile-word. Cards do NOT vote on a word's spelling: where a course sentence carries the word,
+// the sentences' majority spelling wins as before; the card's `dev` is used only for a word no
+// sentence says.
+const GRAMMAR_TOPICS = Function(readFileSync(join(ROOT, 'js', 'grammar.js'), 'utf8') + '; return GRAMMAR_TOPICS;')();
+const cardWords = GRAMMAR_TOPICS.flatMap((t) => (t.table || []).filter((r) => r.dev).map((r) => ({ id: 'grammar:' + t.id, dev: r.word || r.dev })));
+
 // Distinct tile-words, the romanized display form, and which items they appear in.
 const appears = {}; // slug -> Set(itemId)
 const romanOf = {}; // slug -> normalized roman
-for (const it of phrases) {
+for (const it of phrases.concat(cardWords)) {
 	for (const w of stripParens(npOf(it)).split(/\s+/)) {
 		const s = slugOf(w);
 		if (!s) continue;
@@ -91,6 +101,10 @@ for (const it of phrases) {
 	}
 }
 
+// A verb-card cell's own Devanagari: the fallback for a word no course sentence carries.
+const cardDev = {}; // slug -> dev
+for (const w of cardWords) cardDev[slugOf(stripParens(npOf(w)))] = devClean(w.dev);
+
 const out = {};
 const missing = [];
 const conflicts = [];
@@ -99,6 +113,9 @@ for (const slug of Object.keys(appears).sort()) {
 	if (OVERRIDES[slug]) {
 		dev = OVERRIDES[slug];
 		source = 'override';
+	} else if (!aligned[slug] && cardDev[slug]) {
+		dev = cardDev[slug];
+		source = 'card';
 	} else if (aligned[slug]) {
 		const entries = [...aligned[slug].entries()].sort((a, b) => b[1] - a[1]);
 		dev = entries[0][0];

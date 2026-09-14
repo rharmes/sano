@@ -111,7 +111,10 @@ Two tools, run from the repo root with `ELEVENLABS_API_KEY` set:
   tile audio (one entry per distinct tile-word). The tile romanization is derived from each
   phrase's `dev` via `js/romanize.js` (`romanize`), so it aligns 1:1 with the `dev` words by
   construction; a tiny `OVERRIDES` table covers the few words a non-space separator splits (e.g.
-  `/`). Deterministic — re-run after editing `js/data.js`. Reviewable artifact: `words.json`.
+  `/`). The T66 verb cards' table cells (`js/grammar.js`) join the inventory too, listed under the
+  pseudo-id `grammar:<card>` — they never out-vote a course sentence's spelling; a card's own `dev`
+  is used only for a form no sentence says. Deterministic — re-run after editing `js/data.js` or a
+  verb card. Reviewable artifact: `words.json`.
   **Note:** the shipped `audio/words/*.mp3` are in sync with the derived slugs (re-rendered
   2026-06-27); after editing content, render only the new slugs with `synth-app.mjs --words --new`
   and bump `AUDIO_VERSION`.

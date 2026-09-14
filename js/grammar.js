@@ -592,4 +592,722 @@ const GRAMMAR_TOPICS = [
 		],
 		tip: 'Two words carry most of your everyday “no”: hoina for “that’s not it” and chhaina for “there isn’t / it isn’t”. Both still go last.',
 	},
+	// ---- T66: the verb situations, then the verb cards (`kind: 'verb'`, with a conjugation `table`) ----
+	{
+		id: 'progressive',
+		after: 'patterns-doing',
+		glyph: '-दै',
+		title: 'Right now: -dai chhu',
+		sub: '-dai + chhu · chha · chhan · hunuhunchha',
+		intro: 'ma kaam garchhu means “I work” in general, or “I’ll do it”. For something happening at this moment Nepali adds -dai to the stem and then says “am / is / are”: ma khaanaa pakaaundai chhu, “I am cooking food”.',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'am / is / are' },
+			{ role: 'mark', label: '-dai' },
+		],
+		contrast: [
+			{
+				label: 'In general → -chhu',
+				clip: 'ma-kaam-garchu-i-am-working-i-will-do-the-work',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'काम', en: 'work', role: 'what' },
+					{ dev: 'गर्छु', en: 'do', role: 'verb' },
+				],
+			},
+			{ label: 'Right now → -dai chhu', clip: 'ma-khana-pakaudai-chu-i-am-cooking-food' },
+		],
+		points: [
+			'Take the stem, add -dai, then the “to be” word that matches who: ma … -dai chhu, u … -dai chha, uniharu … -dai chhan, tapaai … -dai hunuhunchha.',
+			'The -dai word never changes; only the “to be” word after it does — the same chhu · chha · chhan · hunuhunchha you use for “I am at home”.',
+			'Keep the plain -chhu form for habits and plans (ma kaam garchhu — I work, I’ll work) and -dai chhu for what is going on right now.',
+		],
+		examples: [
+			{
+				clip: 'ma-khana-pakaudai-chu-i-am-cooking-food',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'खाना', en: 'food', role: 'what' },
+					{ dev: 'पकाउँदै', en: 'cooking', role: 'mark' },
+					{ dev: 'छु', en: 'am', role: 'verb' },
+				],
+			},
+			{
+				clip: 'bahini-younger-sister-f2',
+				parts: [
+					{ dev: 'बहिनी', en: 'little sister', role: 'who' },
+					{ dev: 'पढ्दै', en: 'studying', role: 'mark' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+				],
+			},
+			{
+				clip: 'paahuna-aaudai-chan-guests-are-coming',
+				parts: [
+					{ dev: 'पाहुना', en: 'guests', role: 'who' },
+					{ dev: 'आउँदै', en: 'coming', role: 'mark' },
+					{ dev: 'छन्', en: 'are', role: 'verb' },
+				],
+			},
+			{
+				clip: 'tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite',
+				parts: [
+					{ dev: 'तपाईं', en: 'you', role: 'who' },
+					{ dev: 'के', en: 'what', role: 'what' },
+					{ dev: 'गर्दै', en: 'doing', role: 'mark' },
+					{ dev: 'हुनुहुन्छ?', en: 'are (polite)', role: 'verb' },
+				],
+			},
+		],
+		tip: 'You will use this most when answering tapaai ke gardai hunuhunchha? (what are you doing?): ma … -dai chhu, with the thing you are doing in the middle.',
+	},
+	{
+		id: 'perfect',
+		after: 'meals',
+		glyph: '-एको',
+		title: 'Have you eaten? -eko chhu',
+		sub: '-eko + chhu · chha · chhaina',
+		intro: 'khaanaa khaanubhayo? — “have you eaten?” — is how Nepali says hello. The answer uses the -eko form: khaanaa khaaeko chhu, “I have eaten”, or khaaeko chhaina, “I haven’t”. The same shape describes a state you are in: thakeko chhu, “I am tired”.',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'am / is' },
+			{ role: 'mark', label: '-eko' },
+		],
+		contrast: [
+			{ label: 'Have → -eko chhu', clip: 'khana-khaeko-chu-i-ve-eaten-i-have-eaten' },
+			{ label: 'Haven’t → -eko chhaina', clip: 'khana-khaeko-chhaina-i-haven-t-eaten' },
+		],
+		points: [
+			'-eko turns a verb into a “done” word: khaaeko (eaten), thakeko (tired out), paakeko (ripened). Then add chhu / chha / hunuhunchha for who.',
+			'For “not yet”, swap chhu for chhaina: khaaeko chhaina (I haven’t eaten). Nothing else moves.',
+			'Because it describes a state, -eko chhu also covers “I am tired”, “he is angry”, “this fruit is ripe” — a result, not an action.',
+		],
+		examples: [
+			{
+				clip: 'khana-khaeko-chu-i-ve-eaten-i-have-eaten',
+				parts: [
+					{ dev: 'खाना', en: 'food', role: 'what' },
+					{ dev: 'खाएको', en: 'eaten', role: 'mark' },
+					{ dev: 'छु', en: 'have (I)', role: 'verb' },
+				],
+			},
+			{
+				clip: 'khana-khaeko-chhaina-i-haven-t-eaten',
+				parts: [
+					{ dev: 'खाना', en: 'food', role: 'what' },
+					{ dev: 'खाएको', en: 'eaten', role: 'mark' },
+					{ dev: 'छैन', en: 'have not', role: 'verb' },
+				],
+			},
+			{
+				clip: 'phal-fruit-f2',
+				parts: [
+					{ dev: 'यो', en: 'this', role: 'who' },
+					{ dev: 'फल', en: 'fruit', role: 'who' },
+					{ dev: 'पाकेको', en: 'ripened', role: 'mark' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+				],
+			},
+			{
+				clip: 'ma-thakeko-chu-i-am-tired',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'थकेको', en: 'tired', role: 'mark' },
+					{ dev: 'छु', en: 'am', role: 'verb' },
+				],
+			},
+		],
+		tip: 'Someone asking khaanaa khaanubhayo? is being friendly, not offering a meal. khaaeko chhu, dhanyabaad — and asking it back — is the whole exchange.',
+	},
+	{
+		id: 'ne-form',
+		after: 'household-living',
+		glyph: '-ने',
+		title: 'The -ne form',
+		sub: 'kahaa jaane? · chiyaa khaane? · sutne belaa',
+		intro: 'Stem + -ne is the most relaxed verb form in Nepali. On its own it asks or announces a plan — kahaa jaane? (where are you off to?), chiyaa khaane? (tea?), ma nuhaaun jaane (I’m going to bathe) — and in front of a noun it means “for …-ing”: sutne belaa, bedtime.',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+			{ role: 'mark', label: '-ne' },
+		],
+		contrast: [
+			{
+				label: 'Statement → -chhu',
+				clip: 'ma-ghar-jaanchu-i-am-going-home',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'घर', en: 'home', role: 'what' },
+					{ dev: 'जान्छु', en: 'go', role: 'verb' },
+				],
+			},
+			{ label: 'Casual plan → -ne', clip: 'kaha-jane-where-are-you-going' },
+		],
+		points: [
+			'No ending for who: jaane is the same for me, you and them. The person comes from context, which is what makes it sound casual.',
+			'As a question it is an invitation or a quick check: chiyaa khaane? (will you have tea?), aba ke garne? (what now?).',
+			'Before a noun it says what the noun is for: sutne belaa (sleeping time), khaane kuraa (things to eat).',
+		],
+		examples: [
+			{
+				clip: 'kaha-jane-where-are-you-going',
+				parts: [
+					{ dev: 'कहाँ', en: 'where', role: 'what' },
+					{ dev: 'जाने?', en: 'going?', role: 'mark' },
+				],
+			},
+			{
+				clip: 'chiya-khaane-will-you-have-tea',
+				parts: [
+					{ dev: 'चिया', en: 'tea', role: 'what' },
+					{ dev: 'खाने?', en: 'having?', role: 'mark' },
+				],
+			},
+			{
+				clip: 'aba-now-next-f1',
+				parts: [
+					{ dev: 'अब', en: 'now', role: 'what' },
+					{ dev: 'के', en: 'what', role: 'what' },
+					{ dev: 'गर्ने?', en: 'to do?', role: 'mark' },
+				],
+			},
+			{
+				clip: 'ma-nuhaauna-jane-i-m-going-to-bathe',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'नुहाउन', en: 'to bathe', role: 'what' },
+					{ dev: 'जाने', en: 'going', role: 'mark' },
+				],
+			},
+		],
+		tip: 'You will hear kahaa jaane? called across the street. It is friendly small talk, and a one-word answer — bajaar (the market) — is plenty.',
+	},
+	{
+		id: 'past',
+		after: 'verbs-past',
+		glyph: '-यो',
+		title: 'Yesterday: the past',
+		sub: '-e · -yo · -nubhayo — and ma becomes maile',
+		intro: 'The past swaps the -chh- endings for a short set of its own: ma gae (I went), chaabi haraayo (the key got lost), khaanaa khaanubhayo? (did you eat?). Same stems, new endings — and one small change to “I”.',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'did' },
+			{ role: 'mark', label: '-le' },
+		],
+		contrast: [
+			{
+				label: 'Now → -chhu',
+				clip: 'ma-kaam-garchu-i-am-working-i-will-do-the-work',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'काम', en: 'work', role: 'what' },
+					{ dev: 'गर्छु', en: 'do', role: 'verb' },
+				],
+			},
+			{ label: 'Past → -e', clip: 'maile-garen-i-did-f1' },
+		],
+		points: [
+			'ma → -e: gae (went), aae (came), gare (did), khaae (ate). u / yo → -yo: gayo, bhayo, haraayo. tapaai / uhaa → -nubhayo: jaanubhayo, khaanubhayo.',
+			'When the verb has an object, “I” becomes maile in the past: maile kaam gare (I did the work), maile bhaat khaae (I ate rice). Going and coming take no object, so it stays ma gae, ma aae.',
+			'A question is the same sentence with a rise: khaanaa khaanubhayo? — the everyday “have you eaten?” greeting.',
+		],
+		examples: [
+			{
+				clip: 'ma-gaen-i-went-f1',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'बजार', en: 'market', role: 'what' },
+					{ dev: 'गएँ', en: 'went', role: 'verb' },
+				],
+			},
+			{
+				clip: 'maile-garen-i-did-f1',
+				parts: [
+					{ dev: 'मैले', en: 'I (-le)', role: 'mark' },
+					{ dev: 'काम', en: 'work', role: 'what' },
+					{ dev: 'गरेँ', en: 'did', role: 'verb' },
+				],
+			},
+			{
+				clip: 'chaabi-haraayo-i-lost-the-key',
+				parts: [
+					{ dev: 'चाबी', en: 'key', role: 'what' },
+					{ dev: 'हरायो', en: 'got lost', role: 'verb' },
+				],
+			},
+			{
+				clip: 'khana-khanu-bhayo-have-you-eaten',
+				parts: [
+					{ dev: 'खाना', en: 'food', role: 'what' },
+					{ dev: 'खानुभयो?', en: 'ate? (you, polite)', role: 'verb' },
+				],
+			},
+		],
+		tip: 'Listen for the -le on ma. It only appears in the past, and only with a verb that does something to something — a tell that the thing already happened.',
+	},
+	{
+		id: 'bhayo',
+		after: 'verbs-reactions',
+		glyph: 'भयो',
+		title: 'bhayo: it happened',
+		sub: 'chha → bhayo',
+		intro: 'bhayo is the past of hunu (to be, to become) and Nepali leans on it constantly: ke bhayo? (what happened?), khaanaa tayaar bhayo (the food is ready — it became ready), dhilo bhayo (it’s late), ramaailo bhayo (that was fun).',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'is' },
+			{ role: 'mark', label: 'bhayo' },
+		],
+		contrast: [
+			{
+				label: 'Is → chha',
+				clip: 'yo-piro-cha-is-this-spicy',
+				parts: [
+					{ dev: 'यो', en: 'this', role: 'who' },
+					{ dev: 'पिरो', en: 'spicy', role: 'what' },
+					{ dev: 'छ?', en: 'is?', role: 'verb' },
+				],
+			},
+			{ label: 'Became → bhayo', clip: 'khana-tayar-bhayo-the-food-is-ready' },
+		],
+		points: [
+			'Where English says “is”, Nepali often says “became”: tayaar bhayo — ready now, when it wasn’t before. chha is a state; bhayo is the moment it changed.',
+			'With a time or an amount it means “it has come to”: tin din bhayo (it’s been three days), kati bhayo? (how much did it come to?).',
+			'ke bhayo? is the all-purpose “what happened? / what’s wrong?”, and bhayo on its own means “done”, “that’s enough”.',
+		],
+		examples: [
+			{
+				clip: 'ke-bhayo-what-happened',
+				parts: [
+					{ dev: 'के', en: 'what', role: 'what' },
+					{ dev: 'भयो?', en: 'happened?', role: 'mark' },
+				],
+			},
+			{
+				clip: 'khana-tayar-bhayo-the-food-is-ready',
+				parts: [
+					{ dev: 'खाना', en: 'food', role: 'who' },
+					{ dev: 'तयार', en: 'ready', role: 'what' },
+					{ dev: 'भयो', en: 'became', role: 'mark' },
+				],
+			},
+			{
+				clip: 'ramailo-bhayo-it-was-fun',
+				parts: [
+					{ dev: 'रमाइलो', en: 'fun', role: 'what' },
+					{ dev: 'भयो', en: 'was', role: 'mark' },
+				],
+			},
+			{
+				clip: 'tin-three-f2',
+				parts: [
+					{ dev: 'तीन', en: 'three', role: 'what' },
+					{ dev: 'दिन', en: 'days', role: 'what' },
+					{ dev: 'भयो', en: 'has been', role: 'mark' },
+				],
+			},
+		],
+		tip: 'When someone keeps serving you more — food, tea, change — bhayo with a small wave of the hand means “that’s enough, thank you”.',
+	},
+	{
+		id: 'requests',
+		after: 'verbs-requests',
+		glyph: '-नुस्',
+		title: 'Please: -nus',
+		sub: '-nus · -nuhos · na- for “don’t”',
+		intro: 'Stem + -nus is the everyday polite “please …”: basnus (please sit), aaunus (come in), paani lyaaunus (bring water). It is a request, not an order — the tapaai form of the verb. -nuhos is the same thing a shade more formal, and na- on the front turns it into “please don’t”.',
+		legend: [
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'please …' },
+			{ role: 'mark', label: 'na-' },
+		],
+		contrast: [
+			{ label: 'Please → -nus', clip: 'pani-lyaaunus-please-bring-water' },
+			{ label: 'Please don’t → na- + -nus', clip: 'tyaha-there-f2' },
+		],
+		points: [
+			'The ending carries the politeness, so you rarely need a “please” word: dinus is already “please give”. kripayaa (please) adds extra weight.',
+			'-nuhos is slightly more formal than -nus and just as common: maaph garnuhos (excuse me), basnuhos (do sit).',
+			'For “don’t”, put na- on the front: najaanus (don’t go), nakhaanus (don’t eat). With friends and children the verb drops to a bare form — jaau (go), aaija (come here) — which you will hear, but should not use with elders.',
+		],
+		examples: [
+			{
+				clip: 'ma-bhanchu-i-say-f1',
+				parts: [
+					{ dev: 'बिस्तारै', en: 'slowly', role: 'what' },
+					{ dev: 'भन्नुस्', en: 'please say', role: 'verb' },
+				],
+			},
+			{
+				clip: 'pani-lyaaunus-please-bring-water',
+				parts: [
+					{ dev: 'पानी', en: 'water', role: 'what' },
+					{ dev: 'ल्याउनुस्', en: 'please bring', role: 'verb' },
+				],
+			},
+			{
+				clip: 'maaf-garnuhos-excuse-me-i-m-sorry',
+				parts: [
+					{ dev: 'माफ', en: 'forgiveness', role: 'what' },
+					{ dev: 'गर्नुहोस्', en: 'please do', role: 'verb' },
+				],
+			},
+			{
+				clip: 'tyaha-there-f2',
+				parts: [
+					{ dev: 'त्यहाँ', en: 'there', role: 'what' },
+					{ dev: 'नजानुस्', en: 'please don’t go', role: 'mark' },
+				],
+			},
+		],
+		tip: 'When in doubt, use -nus. It is polite to everyone, and a polite request in Nepali never sounds stiff.',
+	},
+	{
+		id: 'modals',
+		after: 'modals-can-want-must',
+		glyph: 'सक्छु',
+		title: 'Can, want, must',
+		sub: '-na sakchhu · man laagchha · -nu parchha',
+		intro: 'Three patterns cover “can”, “want to” and “have to”, and all three keep the main verb in a “to …” form while a helper carries the ending: garna sakchhu (I can do), jaan man laagchha (I want to go), jaanu parchha (I have to go).',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'helper' },
+			{ role: 'mark', label: 'to …' },
+		],
+		contrast: [
+			{ label: 'Can → -na sakchhu', clip: 'ma-garna-sakchu-i-can-do' },
+			{ label: 'Must → -nu parchha', clip: 'malai-jaanu-parcha-i-have-to-go' },
+		],
+		points: [
+			'“Can”: the short “to” form + sakchhu, with the usual who-endings on sakchhu: ma garna sakchhu, tapaai garna saknuhunchha?, ma garna sakdina (I can’t).',
+			'“Want to”: malaai + short form + man laagchha — literally “to me, going feels right”. It never changes for who; only malaai / tapaailaai does.',
+			'“Have to”: malaai + the full -nu form + parchha: malaai jaanu parchha. The negative is pardaina (I don’t have to).',
+		],
+		examples: [
+			{
+				clip: 'ma-garna-sakchu-i-can-do',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'गर्न', en: 'to do', role: 'mark' },
+					{ dev: 'सक्छु', en: 'can', role: 'verb' },
+				],
+			},
+			{
+				clip: 'malai-jana-man-laagcha-i-want-to-go',
+				parts: [
+					{ dev: 'मलाई', en: 'to me', role: 'who' },
+					{ dev: 'जान', en: 'to go', role: 'mark' },
+					{ dev: 'मन', en: 'mind', role: 'what' },
+					{ dev: 'लाग्छ', en: 'feels', role: 'verb' },
+				],
+			},
+			{
+				clip: 'malai-jaanu-parcha-i-have-to-go',
+				parts: [
+					{ dev: 'मलाई', en: 'to me', role: 'who' },
+					{ dev: 'जानु', en: 'to go', role: 'mark' },
+					{ dev: 'पर्छ', en: 'must', role: 'verb' },
+				],
+			},
+			{
+				clip: 'ma-garna-sakdina-i-cannot-do',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'गर्न', en: 'to do', role: 'mark' },
+					{ dev: 'सक्दिनँ', en: 'cannot', role: 'verb' },
+				],
+			},
+		],
+		tip: 'The short “to” form (jaan, garna, khaan) pairs with sakchhu and man laagchha; the full -nu form (jaanu, garnu) pairs with parchha. Hear both enough and the pairing sticks.',
+	},
+	{
+		id: 'card-garnu',
+		kind: 'verb',
+		after: 'verbs-making-doing',
+		glyph: 'गर्नु',
+		title: 'garnu — to do',
+		sub: 'stem gar-',
+		intro: 'The verb behind “work”, “help”, “clean” and half of everyday Nepali: gar- plus an ending. Every form below is one the course uses; tap a form to hear it on its own.',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		table: [
+			{ label: 'I do · will do', dev: 'म गर्छु', word: 'गर्छु' },
+			{ label: 'we do', dev: 'हामी गर्छौं', word: 'गर्छौं' },
+			{ label: 'he / she / it does', dev: 'ऊ गर्छ', word: 'गर्छ' },
+			{ label: 'you (polite) do', dev: 'तपाईं गर्नुहुन्छ', word: 'गर्नुहुन्छ' },
+			{ label: 'I did', dev: 'मैले गरेँ', word: 'गरेँ' },
+			{ label: 'did you? (polite)', dev: 'गर्नुभयो?' },
+			{ label: 'doing, right now', dev: 'गर्दै छु', word: 'गर्दै' },
+			{ label: 'please do', dev: 'गर्नुस्' },
+			{ label: 'please don’t', dev: 'नगर्नुस्' },
+			{ label: 'I can do', dev: 'गर्न सक्छु', word: 'गर्न' },
+			{ label: 'I have to do', dev: 'गर्नु पर्छ', word: 'गर्नु' },
+			{ label: 'I don’t do', dev: 'गर्दिनँ' },
+		],
+		points: [
+			'Any noun + garnu makes a verb: kaam garnu (work), maddat garnu (help), saphaa garnu (clean).',
+			'The endings are the same set every verb uses (The ending says who, earlier on the path), so once gar- is yours, so is every other stem.',
+		],
+		examples: [
+			{
+				clip: 'ma-kaam-garchu-i-am-working-i-will-do-the-work',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'काम', en: 'work', role: 'what' },
+					{ dev: 'गर्छु', en: 'do', role: 'verb' },
+				],
+			},
+			{
+				clip: 'maile-garen-i-did-f1',
+				parts: [
+					{ dev: 'मैले', en: 'I (-le)', role: 'who' },
+					{ dev: 'काम', en: 'work', role: 'what' },
+					{ dev: 'गरेँ', en: 'did', role: 'verb' },
+				],
+			},
+			{
+				clip: 'tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite',
+				parts: [
+					{ dev: 'तपाईं', en: 'you', role: 'who' },
+					{ dev: 'के', en: 'what', role: 'what' },
+					{ dev: 'गर्दै', en: 'doing', role: 'verb' },
+					{ dev: 'हुनुहुन्छ?', en: 'are (polite)', role: 'verb' },
+				],
+			},
+			{
+				clip: 'dhoka-banda-garnus-please-close-the-door',
+				parts: [
+					{ dev: 'ढोका', en: 'door', role: 'what' },
+					{ dev: 'बन्द', en: 'closed', role: 'what' },
+					{ dev: 'गर्नुस्', en: 'please do', role: 'verb' },
+				],
+			},
+		],
+		tip: 'Say the set aloud once a day: garchhu, garchhau, garchha, garnuhunchha — gare, garnubhayo — garnus. A minute of that and gar- runs on its own.',
+	},
+	{
+		id: 'card-jaanu',
+		kind: 'verb',
+		after: 'verbs-getting-around',
+		glyph: 'जानु',
+		title: 'jaanu · aaunu — to go, to come',
+		sub: 'stems jaa- · aau-',
+		intro: 'Going and coming: the two verbs you will use every day on the street. Both take the usual endings; the past of jaanu changes its stem (gae, gayo), and “I” stays ma with both, since neither takes an object.',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		table: [
+			{ heading: 'jaanu — to go' },
+			{ label: 'I go · will go', dev: 'म जान्छु', word: 'जान्छु' },
+			{ label: 'we go', dev: 'हामी जान्छौं', word: 'जान्छौं' },
+			{ label: 'he / she / it goes', dev: 'ऊ जान्छ', word: 'जान्छ' },
+			{ label: 'you (polite) go', dev: 'तपाईं जानुहुन्छ', word: 'जानुहुन्छ' },
+			{ label: 'I went', dev: 'म गएँ', word: 'गएँ' },
+			{ label: 'it went', dev: 'गयो' },
+			{ label: 'you (polite) went', dev: 'जानुभयो' },
+			{ label: 'going, right now', dev: 'जाँदै छु', word: 'जाँदै' },
+			{ label: 'please go', dev: 'जानुस्' },
+			{ label: 'please don’t go', dev: 'नजानुस्' },
+			{ label: 'going? (casual)', dev: 'जाने?' },
+			{ label: 'I can go', dev: 'जान सक्छु', word: 'जान' },
+			{ label: 'I don’t go', dev: 'जाँदिनँ' },
+			{ heading: 'aaunu — to come' },
+			{ label: 'I come · will come', dev: 'म आउँछु', word: 'आउँछु' },
+			{ label: 'we come', dev: 'हामी आउँछौं', word: 'आउँछौं' },
+			{ label: 'he / she / it comes', dev: 'ऊ आउँछ', word: 'आउँछ' },
+			{ label: 'you (polite) come', dev: 'तपाईं आउनुहुन्छ', word: 'आउनुहुन्छ' },
+			{ label: 'I came', dev: 'म आएँ', word: 'आएँ' },
+			{ label: 'it came', dev: 'आयो' },
+			{ label: 'coming, right now', dev: 'आउँदै छु', word: 'आउँदै' },
+			{ label: 'please come', dev: 'आउनुस्' },
+			{ label: 'he / she isn’t coming', dev: 'आउँदैन' },
+			{ label: 'I don’t come', dev: 'आउँदिनँ' },
+		],
+		points: [
+			'jaanu is the main action verb whose past changes stem: gae, gayo, jaanubhayo — jaa- becomes ga- (hunu → bhayo is the other). aaunu keeps its stem: aae, aayo.',
+			'Both take a destination with no “to”: ma ghar jaanchhu, ma bajaar gae. The place sits where an object would.',
+		],
+		examples: [
+			{
+				clip: 'ma-ghar-jaanchu-i-am-going-home',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'घर', en: 'home', role: 'what' },
+					{ dev: 'जान्छु', en: 'go', role: 'verb' },
+				],
+			},
+			{
+				clip: 'ma-gaen-i-went-f1',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'बजार', en: 'market', role: 'what' },
+					{ dev: 'गएँ', en: 'went', role: 'verb' },
+				],
+			},
+			{
+				clip: 'tapai-you-formal-f1',
+				parts: [
+					{ dev: 'तपाईं', en: 'you', role: 'who' },
+					{ dev: 'कहिले', en: 'when', role: 'what' },
+					{ dev: 'आउनुहुन्छ?', en: 'come? (polite)', role: 'verb' },
+				],
+			},
+			{
+				clip: 'tara-but-f1',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'जान्छु', en: 'go', role: 'verb' },
+					{ dev: 'तर', en: 'but', role: 'what' },
+					{ dev: 'ऊ', en: 'he', role: 'who' },
+					{ dev: 'आउँदैन', en: 'isn’t coming', role: 'verb' },
+				],
+			},
+		],
+		tip: 'ma ahile aaunchhu (I’ll be right back) and ma jaanchhu (I’m off) are said on every exit. Have both ready.',
+	},
+	{
+		id: 'card-khaanu',
+		kind: 'verb',
+		after: 'verbs-everyday-actions',
+		glyph: 'खानु',
+		title: 'khaanu — to eat, drink, take',
+		sub: 'stem khaa-',
+		intro: 'khaanu covers more than eating: tea, water and medicine are all “eaten” in Nepali (chiyaa khaanus — have some tea). It takes an object, so in the past “I” becomes maile.',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		table: [
+			{ label: 'I eat · will eat', dev: 'म खान्छु', word: 'खान्छु' },
+			{ label: 'we eat', dev: 'हामी खान्छौं', word: 'खान्छौं' },
+			{ label: 'he / she / it eats', dev: 'ऊ खान्छ', word: 'खान्छ' },
+			{ label: 'you (polite) eat', dev: 'तपाईं खानुहुन्छ', word: 'खानुहुन्छ' },
+			{ label: 'I ate', dev: 'मैले खाएँ', word: 'खाएँ' },
+			{ label: 'did you eat? (polite)', dev: 'खानुभयो?' },
+			{ label: 'eating, right now', dev: 'खाँदै छु', word: 'खाँदै' },
+			{ label: 'I have eaten', dev: 'खाएको छु', word: 'खाएको' },
+			{ label: 'please eat', dev: 'खानुस्' },
+			{ label: 'please don’t eat', dev: 'नखानुस्' },
+			{ label: 'eat? (casual)', dev: 'खाने?' },
+			{ label: 'I can eat', dev: 'खान सक्छु', word: 'खान' },
+			{ label: 'I don’t eat', dev: 'खाँदिनँ' },
+		],
+		points: [
+			'Drinks are eaten too: chiyaa khaanchhu, paani khaanus. piunu (to drink) exists, but khaanu is what people say.',
+			'ma maachhaamaasu khaandina — “I don’t eat meat” — is the khaandina form doing real work at the table.',
+		],
+		examples: [
+			{
+				clip: 'khana-food-f1',
+				parts: [
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'खाना', en: 'food', role: 'what' },
+					{ dev: 'खान्छु', en: 'eat', role: 'verb' },
+				],
+			},
+			{
+				clip: 'maile-khaen-i-ate-f1',
+				parts: [
+					{ dev: 'मैले', en: 'I (-le)', role: 'who' },
+					{ dev: 'भात', en: 'rice', role: 'what' },
+					{ dev: 'खाएँ', en: 'ate', role: 'verb' },
+				],
+			},
+			{
+				clip: 'chiya-tea-f1',
+				parts: [
+					{ dev: 'चिया', en: 'tea', role: 'what' },
+					{ dev: 'खानुहुन्छ?', en: 'will you have? (polite)', role: 'verb' },
+				],
+			},
+			{
+				clip: 'khana-khaeko-chu-i-ve-eaten-i-have-eaten',
+				parts: [
+					{ dev: 'खाना', en: 'food', role: 'what' },
+					{ dev: 'खाएको', en: 'eaten', role: 'verb' },
+					{ dev: 'छु', en: 'have (I)', role: 'verb' },
+				],
+			},
+		],
+		tip: 'khaanaa khaanubhayo? is a greeting. Reply khaae (I ate) or khaaeko chhu, and ask it back.',
+	},
+	{
+		id: 'card-hunu',
+		kind: 'verb',
+		after: 'time-week',
+		glyph: 'हुनु',
+		title: 'hunu — to be',
+		sub: 'ho · chha · hunchha · bhayo · thiyo',
+		intro: 'The one verb with several presents: ho names what something is, chha says where or how it is, hunchha is what generally happens — and each has its own negative. The past is bhayo (became) or thiyo (was).',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		table: [
+			{ label: 'it is (what it is)', dev: 'हो' },
+			{ label: 'it is not', dev: 'होइन' },
+			{ label: 'I am', dev: 'म छु', word: 'छु' },
+			{ label: 'we are', dev: 'हामी छौं', word: 'छौं' },
+			{ label: 'he / she / it is (where, how)', dev: 'ऊ छ', word: 'छ' },
+			{ label: 'they are', dev: 'उनीहरू छन्', word: 'छन्' },
+			{ label: 'you (polite) are', dev: 'तपाईं हुनुहुन्छ', word: 'हुनुहुन्छ' },
+			{ label: 'there isn’t · it isn’t', dev: 'छैन' },
+			{ label: 'it is (generally) · okay', dev: 'हुन्छ' },
+			{ label: 'it isn’t · won’t do', dev: 'हुँदैन' },
+			{ label: 'it became · happened', dev: 'भयो' },
+			{ label: 'it was', dev: 'थियो' },
+			{ label: 'to be', dev: 'हुनु' },
+		],
+		points: [
+			'ho vs chha: ho for what something is (yo mero ho — this is mine), chha for place, state and having (ma gharamaa chhu, malaai thaahaa chha). See ho vs chha, earlier on the path.',
+			'hunchha is for what is generally so — and for “okay”: maha guliyo hunchha (honey is sweet), hunchha! (fine, will do). thiyo and bhayo split the past into “was” and “became”.',
+		],
+		examples: [
+			{
+				clip: 'uhaa-he-she-polite-f2',
+				parts: [
+					{ dev: 'उहाँ', en: 'she', role: 'who' },
+					{ dev: 'डाक्टर', en: 'doctor', role: 'what' },
+					{ dev: 'हुनुहुन्छ', en: 'is (polite)', role: 'verb' },
+				],
+			},
+			{
+				clip: 'hami-we-us-f2',
+				parts: [
+					{ dev: 'हामी', en: 'we', role: 'who' },
+					{ dev: 'घरमा', en: 'at home', role: 'what' },
+					{ dev: 'छौं', en: 'are', role: 'verb' },
+				],
+			},
+			{
+				clip: 'maha-honey-f1',
+				parts: [
+					{ dev: 'मह', en: 'honey', role: 'who' },
+					{ dev: 'गुलियो', en: 'sweet', role: 'what' },
+					{ dev: 'हुन्छ', en: 'is (always)', role: 'verb' },
+				],
+			},
+			{
+				clip: 'hijo-yesterday-f2',
+				parts: [
+					{ dev: 'हिजो', en: 'yesterday', role: 'what' },
+					{ dev: 'राति', en: 'night', role: 'what' },
+					{ dev: 'जाडो', en: 'cold', role: 'what' },
+					{ dev: 'थियो', en: 'was', role: 'verb' },
+				],
+			},
+		],
+		tip: 'Not sure which present to use? A noun after it wants ho; a place or a feeling wants chha; a general truth wants hunchha.',
+	},
 ];

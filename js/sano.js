@@ -736,7 +736,10 @@ function renderPath() {
 		if (entry.kind === 'grammar') {
 			const topic = entry.topic;
 			const done = !!(state.grammarDone && state.grammarDone[topic.id]);
-			addStop('grammar', stopStatus(done, stopUnlocked(topic.after)), topic.title, { glyph: topic.glyph }, () => startGrammar(topic));
+			// A verb card (T66) is a grammar stop in its own colour: `.grammar.verb` keeps every
+			// grammar rule and lets the verb rules override the paint.
+			const kind = topic.kind === 'verb' ? 'grammar verb' : 'grammar';
+			addStop(kind, stopStatus(done, stopUnlocked(topic.after)), topic.title, { glyph: topic.glyph }, () => startGrammar(topic));
 			return;
 		}
 		const unit = entry.unit;
@@ -1892,17 +1895,21 @@ let grammarTopic = null;
 
 function startGrammar(topic) {
 	grammarTopic = topic;
+	const isCard = topic.kind === 'verb';
 	showScreen('grammar');
+	document.getElementById('screen-grammar').classList.toggle('verb', isCard);
+	document.getElementById('grammar-eyebrow').textContent = isCard ? 'Verb card' : 'Grammar note';
 	document.getElementById('grammar-title').textContent = topic.title;
 	document.getElementById('grammar-intro').textContent = topic.intro;
 	document.getElementById('grammar-tip').textContent = topic.tip;
 
 	// The contrast rows: a written-out row (`chips`, the English side) or one of the note's
 	// own examples (`clip`), coloured the same way — e.g. English order vs Nepali order, or
-	// a `ho` sentence over a `chha` sentence.
+	// a `ho` sentence over a `chha` sentence. A verb card has none (its table is the headline).
 	const contrast = document.getElementById('grammar-contrast');
 	contrast.textContent = '';
-	for (const r of topic.contrast) {
+	contrast.classList.toggle('hide', !(topic.contrast && topic.contrast.length));
+	for (const r of topic.contrast || []) {
 		const lab = document.createElement('span');
 		lab.className = 'lang';
 		lab.textContent = r.label;
@@ -1919,6 +1926,7 @@ function startGrammar(topic) {
 		}
 		contrast.appendChild(words);
 	}
+	grammarTable(topic.table);
 	// The legend names only the roles this note uses, with the note's own wording.
 	const legend = document.getElementById('grammar-legend');
 	legend.textContent = '';
@@ -1957,6 +1965,44 @@ function startGrammar(topic) {
 	window.scrollTo(0, 0);
 }
 
+// A verb card's conjugation table (T66): one row per form — the situation on the left, the
+// form on the right as a button that plays the form's own word clip (audio/words/, the same
+// clips the word-bank tiles use; the data test keeps every cell's clip on disk). A row with
+// `heading` splits a two-verb card. The voiced word is the cell's `word` — required whenever
+// `dev` has more than one word ('म गर्छु' names word 'गर्छु') — else `dev` itself.
+function grammarTable(rows) {
+	const table = document.getElementById('grammar-table');
+	table.textContent = '';
+	table.classList.toggle('hide', !rows);
+	for (const row of rows || []) {
+		if (row.heading) {
+			const h = document.createElement('div');
+			h.className = 'grammar-table-heading';
+			h.textContent = row.heading;
+			table.appendChild(h);
+			continue;
+		}
+		const tr = document.createElement('div');
+		tr.className = 'grammar-table-row';
+		const label = document.createElement('span');
+		label.className = 'label';
+		label.textContent = row.label;
+		const form = document.createElement('button');
+		form.type = 'button';
+		form.className = 'grammar-form';
+		const word = row.word || row.dev;
+		form.appendChild(document.createTextNode(SanoRomanize.romanize(row.dev).toLowerCase()));
+		const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+		const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+		use.setAttribute('href', '#i-volume-up');
+		svg.appendChild(use);
+		form.appendChild(svg);
+		form.addEventListener('click', () => playTileWord(SanoRomanize.romanize(word)));
+		tr.append(label, form);
+		table.appendChild(tr);
+	}
+}
+
 // "Got it": tick the note off and celebrate like a lesson (finishStop). The stat only claims
 // what the screen can vouch for — the clips play on tap, so it doesn't say they were heard.
 function finishGrammar() {
@@ -1964,7 +2010,8 @@ function finishGrammar() {
 	if (!topic) return;
 	grammarTopic = null;
 	const n = topic.examples.length;
-	finishStop('grammarDone', topic.id, 'Got it!', topic.title + ' — ' + n + ' example ' + (n === 1 ? 'sentence' : 'sentences'));
+	const forms = topic.table ? topic.table.filter((r) => r.dev).length + ' forms · ' : '';
+	finishStop('grammarDone', topic.id, 'Got it!', topic.title + ' — ' + forms + n + ' example ' + (n === 1 ? 'sentence' : 'sentences'));
 }
 
 function renderMatch(ex) {

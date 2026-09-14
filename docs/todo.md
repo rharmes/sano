@@ -73,12 +73,29 @@ what's in use.
       match the text after the `[shouting]`/"copying" edits.
 - [x] **T35 · Word clips for standalone single-word items** — the word inventory now covers every
       canonical + frame sentence in every unit (719 → 1050 tile-words), 2026-07-20.
+- [ ] **T65 · Take the story nodes off the path for now** `waiting-on:none` `area:dialogues` — Ross (2026-09-14): the
+      stories aren't where he wants them yet and he'll work on them more before they come back, so the
+      **gold dialogue nodes leave the path** while the content, the player and every audio clip stay.
+      Shape: a `DIALOGUES` entry gains an `onPath` flag (or a top-level `PATH_DIALOGUES` allowlist — pick
+      the one that reads best) and `renderPath` weaves only flagged entries, so bringing a story back is a
+      one-line flip, not a re-implementation. Everything else stays reachable: `startDialogue` and
+      `#screen-dialogue` untouched; `state.dialoguesDone` kept (a learner who already played `greet-pyaro`
+      keeps that tick for when it returns — no migration); `tools/dev-seed.html`'s "dialogue" and
+      "dialoguefun" cards keep opening the player directly, since that's how Ross will review the
+      rewrites; `tests/e2e/dialogue.spec.mjs` opens the player through the seed instead of clicking a path
+      node; `tests/seed.mjs`'s `dialogueReady` stays. Docs: the Home bullet in `CLAUDE.md` + `AGENTS.md`
+      and `docs/architecture.md`'s path description say "no story nodes on the path today (T65)"; the
+      gold stop-node CSS and the style-guide demo stay, since they're coming back. Not deleted: `js/dialogues.js`,
+      `audio/*/greet-pyaro-*.mp3`, `tools/tts/dialogue-scripts.md`.
 
 ## Grammar notes
 
 - [x] **T64 · Grammar notes on the path** — nine one-page explainers (`js/grammar.js`) woven in as
       teal nodes after their anchor units, from counting words to saying no, each built from real
       course sentences coloured who · what · does (2026-09-12).
+- [x] **T66 · Verb notes on the path — common verbs and how they change** — seven situation notes (right now,
+      have eaten, the -ne form, the past, bhayo, please, can/want/must) and four clay **verb cards** (garnu,
+      jaanu·aaunu, khaanu, hunu) whose conjugation tables play a word clip per form (2026-09-14).
 
 ## Content review
 
