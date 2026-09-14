@@ -24,7 +24,8 @@ export async function openScreen(page, locator, screenSel) {
 // Seed sano.state.v1 BEFORE the app's deferred scripts run, then load and wait for the
 // app global. Pass no state to exercise the first-run (onboarding) path. Set
 // freezeAnimations:false only for the motion spec, which asserts animations actually run.
-export async function boot(page, state, { freezeAnimations = true } = {}) {
+// `url` lands somewhere other than `/` — `/?dialogue=<id>` opens a story player (T65).
+export async function boot(page, state, { freezeAnimations = true, url = '/' } = {}) {
 	if (state !== undefined) {
 		await page.addInitScript((s) => localStorage.setItem('sano.state.v1', s), JSON.stringify(state));
 	}
@@ -68,7 +69,7 @@ export async function boot(page, state, { freezeAnimations = true } = {}) {
 			else run();
 		});
 	}
-	await page.goto('/');
+	await page.goto(url);
 	await page.waitForFunction(() => !!window.Sano);
 }
 

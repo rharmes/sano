@@ -57,7 +57,9 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 ## What the app is (one level down; functions in `docs/architecture.md`, shapes in `docs/data-model.md`)
 
 - **Home** is a Duolingo-style winding **path** (`renderPath`): units unlock in order, with
-  **dialogue** (gold), **pronunciation** (lavender), **grammar-note** (teal, T64: one-page explainers
+  **dialogue** (gold — **no story node is on the path today, T65:** every `DIALOGUES` entry carries
+  `onPath: false` while Ross reworks the stories, and the player opens by `/?dialogue=<id>`),
+  **pronunciation** (lavender), **grammar-note** (teal, T64: one-page explainers
   such as "the verb goes last", `js/grammar.js`) and **verb-card** (clay, T66: a conjugation table per
   workhorse verb whose every form plays its word clip; same file, `kind: 'verb'`) nodes woven in after their anchor unit and
   decorative **companions** (SR-07) in the pockets. A unit is complete — and unlocks the next — only
@@ -83,7 +85,9 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   sentence), and it **reveals the graded answer**, so it's an always-available Duolingo-style hint
   that is **silent** (the clip would read the answer out) and **doesn't affect grading** (Ross).
 - **Story dialogues** (SR-01, `DIALOGUES` in `js/dialogues.js`) play in a Duolingo-Stories player —
-  **romanized-only**, every word tappable for its English (`js/gloss.js`); only `greet-pyaro` is live.
+  **romanized-only**, every word tappable for its English (`js/gloss.js`); only `greet-pyaro` is live,
+  and **no story is on the path** (T65: `onPath: false` until the rework lands — review one via
+  `/?dialogue=<id>`, which the dev-seed dialogue cards open).
   The English **source of truth** is `tools/tts/dialogue-scripts.md`, hand-mapped into
   `js/dialogues.js` (no generator — synced by hand); a line's `dev` may carry inline `[performance
   tags]` for the TTS, stripped from all on-screen text and never allowed in `np`/`gloss`/`en`. (Full

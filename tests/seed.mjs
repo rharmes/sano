@@ -58,7 +58,8 @@ export function midCourse(extra) {
 	);
 }
 
-// Foundations mastered so the greet-pyaro conversation node unlocks (dev-seed 'dialogue').
+// Foundations mastered — the state behind dev-seed 'dialogue'. With no story node on the path
+// (T65) the player opens by `/?dialogue=greet-pyaro` (tests/e2e/dialogue.spec.mjs).
 export function dialogueReady(extra) {
 	const items = {};
 	const done = ['basics', 'numbers', 'pronouns', 'family-people', 'introductions'];

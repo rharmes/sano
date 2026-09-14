@@ -1,14 +1,42 @@
-// Story dialogue player (SR-01): open the unlocked "Meeting Pyaro" conversation, exercise
-// the tap-to-translate gloss, then play through to the comprehension quiz and finish.
+// Story dialogue player (SR-01): open the "Meeting Pyaro" conversation, exercise the
+// tap-to-translate gloss, then play through to the comprehension quiz and finish. The story
+// nodes are off the path for now (T65), so the player opens by the `/?dialogue=<id>` link.
 import { test, expect } from '@playwright/test';
 import { boot, seed, openScreen } from './_helpers.mjs';
 
 async function openConversation(page) {
+	await boot(page, seed.dialogueReady(), { url: '/?dialogue=greet-pyaro' });
+	await expect(page.locator('#screen-dialogue')).toBeVisible();
+}
+
+test('the dialogue link opens the player, drops its param, and quits to a path with no story node', async ({ page }) => {
+	await openConversation(page);
+	await expect(page).toHaveURL('/');
+	await page.locator('#dialogue-quit').click();
+	await expect(page.locator('#screen-home')).toBeVisible();
+	await expect(page.locator('#path .path-node.dialogue')).toHaveCount(0);
+	await expect(page.locator('#path .path-node.sound').first()).toBeVisible(); // the other stops still weave in
+});
+
+test('an unknown dialogue id lands on home', async ({ page }) => {
+	await boot(page, seed.dialogueReady(), { url: '/?dialogue=nope' });
+	await expect(page.locator('#screen-home')).toBeVisible();
+	await expect(page).toHaveURL('/');
+});
+
+test('flipping a story to onPath brings its gold node back after its anchor unit', async ({ page }) => {
 	await boot(page, seed.dialogueReady());
+	await expect(page.locator('#path .path-node.dialogue')).toHaveCount(0);
+	await page.evaluate(() => {
+		DIALOGUES.find((d) => d.id === 'greet-pyaro').onPath = true;
+		renderHome();
+	});
+	const node = page.locator('#path .path-node.dialogue[title="Meeting Pyaro"]');
+	await expect(node).toHaveClass(/unlocked/);
 	// Path nodes animate (an infinite "bob"); openScreen clicks-and-verifies with retry so a
 	// click that lands mid-animation can't leave the dialogue unopened.
-	await openScreen(page, page.locator('#path .path-node.dialogue').first(), '#screen-dialogue');
-}
+	await openScreen(page, node, '#screen-dialogue');
+});
 
 test('lines are romanized with tappable, underlined words', async ({ page }) => {
 	await openConversation(page);

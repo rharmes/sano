@@ -100,8 +100,10 @@ Two verb units (`verbs-present`, `verbs-past`) and five intermediate units
 ## Story dialogues — `DIALOGUES` (js/dialogues.js, schema v2)
 
 ```js
-{ id, title, goal, section, after, cast, lines, questions }
+{ id, title, goal, section, after, onPath, cast, lines, questions }
 // cast: companion ids in the story (excludes 'narrator'); after: anchor unit id
+// onPath: draw the gold node after that unit? Required boolean; false on every story today (T65),
+//   so the player opens only by /?dialogue=<id> — flip to true to bring a story back
 ```
 
 A line (inline, schema v2):
@@ -123,7 +125,7 @@ tappable chunk); **`gloss.map(g => g.np).join(' ')` must equal `np`**:
 { np, en }   // en: '' => plain, non-tappable text (e.g. an em-dash). No gloss => plain np (back-compat).
 ```
 
-Only `greet-pyaro` is live; its `gloss` English is AI-drafted and awaits review. Per-line
+Only `greet-pyaro` is live, and none is on the path (T65: `onPath: false` until the rework lands); its `gloss` English is AI-drafted and awaits review. Per-line
 audio is voiced per character; a head comes from `CHARACTER_HEADS[who]`. The English (story /
 lines / questions) is authored in `tools/tts/dialogue-scripts.md` — the **source of truth** —
 and `DIALOGUES` is hand-built from it (adding the Nepali + clip routing), synced by hand.

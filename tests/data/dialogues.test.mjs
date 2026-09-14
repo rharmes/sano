@@ -30,6 +30,10 @@ test('DIALOGUES: `after` references a real COURSE unit', () => {
 	for (const d of DIALOGUES) assert.ok(unitIds.has(d.after), `${d.id}: after '${d.after}' is not a unit id`);
 });
 
+test('DIALOGUES: every story says whether it sits on the path (`onPath` boolean, T65)', () => {
+	for (const d of DIALOGUES) assert.equal(typeof d.onPath, 'boolean', `${d.id}: onPath must be true or false`);
+});
+
 test('DIALOGUES: cast members have head art and a persona intro', () => {
 	for (const d of DIALOGUES) {
 		for (const who of d.cast) {
