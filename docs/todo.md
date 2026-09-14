@@ -73,12 +73,49 @@ what's in use.
       match the text after the `[shouting]`/"copying" edits.
 - [x] **T35 · Word clips for standalone single-word items** — the word inventory now covers every
       canonical + frame sentence in every unit (719 → 1050 tile-words), 2026-07-20.
+- [ ] **T65 · Take the story nodes off the path for now** `waiting-on:none` `area:dialogues` — Ross (2026-09-14): the
+      stories aren't where he wants them yet and he'll work on them more before they come back, so the
+      **gold dialogue nodes leave the path** while the content, the player and every audio clip stay.
+      Shape: a `DIALOGUES` entry gains an `onPath` flag (or a top-level `PATH_DIALOGUES` allowlist — pick
+      the one that reads best) and `renderPath` weaves only flagged entries, so bringing a story back is a
+      one-line flip, not a re-implementation. Everything else stays reachable: `startDialogue` and
+      `#screen-dialogue` untouched; `state.dialoguesDone` kept (a learner who already played `greet-pyaro`
+      keeps that tick for when it returns — no migration); `tools/dev-seed.html`'s "dialogue" and
+      "dialoguefun" cards keep opening the player directly, since that's how Ross will review the
+      rewrites; `tests/e2e/dialogue.spec.mjs` opens the player through the seed instead of clicking a path
+      node; `tests/seed.mjs`'s `dialogueReady` stays. Docs: the Home bullet in `CLAUDE.md` + `AGENTS.md`
+      and `docs/architecture.md`'s path description say "no story nodes on the path today (T65)"; the
+      gold stop-node CSS and the style-guide demo stay, since they're coming back. Not deleted: `js/dialogues.js`,
+      `audio/*/greet-pyaro-*.mp3`, `tools/tts/dialogue-scripts.md`.
 
 ## Grammar notes
 
 - [x] **T64 · Grammar notes on the path** — nine one-page explainers (`js/grammar.js`) woven in as
       teal nodes after their anchor units, from counting words to saying no, each built from real
       course sentences coloured who · what · does (2026-09-12).
+- [ ] **T66 · Verb notes on the path — common verbs and how they change** `waiting-on:ross` `area:content` — Ross
+      (2026-09-14): he likes the T64 notes and wants more of them for **verbs**: the common verbs, and how each
+      one is conjugated for the different situations. Proposed in two layers, both in `js/grammar.js` and
+      both teal (preview + placement shown 2026-09-14; Ross to rule on the set before drafting):
+  - [ ] **Situation notes** (a T64-style note each, anchored where the course first leans on the form):
+        **right now** `-dai chhu` after *Patterns: Doing & Going*; **have you eaten?** `-eko chhu` after
+        *Meals*; **the -ne form** (kahaa jaane? · chiyaa khaane? · sutne belaa) after *Household Living*;
+        **the past** `-e · -yo · -nubhayo` after *Verbs: Past tense*, with **ma → maile** as one of its
+        points; **bhayo** (it happened / it became) after *Reactions & Opinions*; **please: -nus** (and
+        na- for don't) after *Asking for Help*; **can · want · must** (`-na sakchhu` · `man laagchha` ·
+        `-nu parchha`) after *Can, Want & Must*. Every example a shipped course sentence, as in T64.
+  - [ ] **Verb cards** — a new note shape: one card per workhorse verb (**hunu**, **garnu**, **jaanu**,
+        **aaunu**, **khaanu**; bolnu / dinu / hernu if wanted) with the dictionary form, the stem, and a
+        **conjugation table** — I · we · he/she · polite you · past · right now · please · don't — where
+        every cell is the real form and taps to play its **existing word clip** (`audio/words/`: garchhu,
+        gare, gardai, garnus, garnuhunchha, nagarnus… are already on disk because they occur in course
+        sentences). Cells the course never says (e.g. garchha, garchhan) render silent unless Ross wants
+        them rendered (`build-words.mjs` → `synth-app.mjs --words --new`, ElevenLabs — needs his say-so).
+        Placement: the verb block, one card after each of *Getting Around* (jaanu + aaunu), *Making & Doing*
+        (garnu), *Everyday Actions* (khaanu), *Days & the Clock* (hunu); `renderPath` must then allow a
+        situation note **and** a verb card after the same unit (today it draws one grammar stop per anchor).
+  - [ ] Data test extends `tests/data/grammar.test.mjs` (table cells romanize to on-disk word slugs);
+        e2e + dev-seed scenario as T64; docs (`data-model.md` shape, `architecture.md`, Home bullet twins).
 
 ## Content review
 
