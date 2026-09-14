@@ -62,9 +62,18 @@ test('every note on the path opens and renders its contrast rows, legend and exa
 		await expect(node).toHaveAttribute('title', topic.title);
 		await openScreen(page, node, '#screen-grammar');
 		await expect(page.locator('#grammar-title')).toHaveText(topic.title);
-		const rows = page.locator('#grammar-contrast .grammar-words');
-		await expect(rows).toHaveCount(topic.contrast.length);
-		for (const row of await rows.all()) await expect(row.locator('.gram-word').first()).toBeVisible(); // no row rendered empty
+		if (topic.kind === 'verb') {
+			// A verb card (T66): no contrast block, a table with one button per form.
+			await expect(page.locator('#grammar-eyebrow')).toHaveText('Verb card');
+			await expect(page.locator('#grammar-contrast')).toBeHidden();
+			await expect(page.locator('#grammar-table .grammar-form')).toHaveCount(topic.table.filter((r) => r.dev).length);
+		} else {
+			await expect(page.locator('#grammar-eyebrow')).toHaveText('Grammar note');
+			await expect(page.locator('#grammar-table')).toBeHidden();
+			const rows = page.locator('#grammar-contrast .grammar-words');
+			await expect(rows).toHaveCount(topic.contrast.length);
+			for (const row of await rows.all()) await expect(row.locator('.gram-word').first()).toBeVisible(); // no row rendered empty
+		}
 		await expect(page.locator('#grammar-legend li')).toHaveCount(topic.legend.length);
 		await expect(page.locator('#grammar-points li')).toHaveCount(topic.points.length);
 		const examples = page.locator('#grammar-examples .grammar-example');
@@ -73,4 +82,36 @@ test('every note on the path opens and renders its contrast rows, legend and exa
 		await page.locator('#grammar-back').click();
 		await expect(page.locator('#screen-home')).toBeVisible();
 	}
+});
+
+// Verb cards (T66): the garnu card sits after Making & Doing in its own colour; its table shows
+// every form romanized, each a button wired to that form's word clip, and "Got it" ticks it off
+// under the same grammarDone key.
+test('a verb card opens with its conjugation table, and every form plays a word clip', async ({ page }) => {
+	await boot(page, seed.allNotesReady());
+	const card = GRAMMAR_TOPICS.find((t) => t.id === 'card-garnu');
+	const node = page.locator(`#path .path-node.grammar.verb[title="${card.title}"]`);
+	await expect(node).toHaveClass(/unlocked/);
+	await expect(node).toHaveText(card.glyph);
+	await openScreen(page, node, '#screen-grammar');
+	await expect(page.locator('#screen-grammar')).toHaveClass(/verb/);
+
+	const forms = page.locator('#grammar-table .grammar-form');
+	const cells = card.table.filter((r) => r.dev);
+	await expect(forms).toHaveCount(cells.length);
+	await expect(forms.first()).toHaveText(/^ma garchhu/);
+	await expect(page.locator('#grammar-table .grammar-table-row .label').first()).toHaveText(cells[0].label);
+	// Tapping a form requests its clip from audio/words/ (the slug of the voiced word).
+	const requests = [];
+	page.on('request', (r) => r.url().includes('/audio/words/') && requests.push(r.url()));
+	await forms.nth(1).click({ force: true }); // 'haami garchhau' → garchhau, a clip that only the card made necessary
+	await expect.poll(() => requests.some((u) => /\/audio\/words\/garchhau\.mp3/.test(u))).toBe(true);
+
+	await page.locator('#grammar-done').click();
+	await expect(page.locator('#screen-complete')).toBeVisible();
+	await expect(page.locator('#complete-stats')).toContainText(`${cells.length} forms`);
+	const state = await savedState(page);
+	expect(state.grammarDone['card-garnu']).toBe(true);
+	await page.locator('#complete-continue').click();
+	await expect(page.locator(`#path .path-node.grammar.verb[title="${card.title}"]`)).toHaveClass(/complete/);
 });

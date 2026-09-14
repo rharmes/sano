@@ -67,6 +67,15 @@ const phrases = COURSE.flatMap((u) => u.items)
 	.flatMap((it) => [{ id: it.id, dev: it.dev }, ...(it.frames || []).map((f) => ({ id: it.id, dev: f.dev }))])
 	.filter((it) => it.dev && !npOf(it).includes('_'));
 
+// T66 verb cards (js/grammar.js, `kind: 'verb'`): each conjugation-table cell voices ONE word —
+// its `word`, or the last word of the cell's `dev` — through the same audio/words/ clips, so
+// those words join the inventory as one-word "phrases" (id `grammar:<card>`). Most already
+// occur in course sentences; the rest (garchha, jaandai …) are rendered by
+// `synth-app.mjs --words --new` like any new tile-word.
+const GRAMMAR_TOPICS = Function(readFileSync(join(ROOT, 'js', 'grammar.js'), 'utf8') + '; return GRAMMAR_TOPICS;')();
+for (const t of GRAMMAR_TOPICS)
+	if (t.kind === 'verb') for (const r of t.table) if (r.dev) phrases.push({ id: 'grammar:' + t.id, dev: r.word || r.dev.trim().split(/\s+/).pop() });
+
 // Distinct tile-words, the romanized display form, and which items they appear in.
 const appears = {}; // slug -> Set(itemId)
 const romanOf = {}; // slug -> normalized roman

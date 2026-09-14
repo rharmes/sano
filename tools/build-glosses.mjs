@@ -59,9 +59,11 @@ const FILLS = {
 	aaraam: 'rest',
 	aaun: 'to come',
 	aaunchha: '(he/she/it) comes',
+	aaunchhau: '(we) come', // T66 verb-card form
 	aaunchhu: '(I) come',
 	aaundai: 'coming',
 	aaundaina: "(he/she/it) doesn't come",
+	aaundina: "(I) don't come", // T66 verb-card form
 	aaunuhunchha: 'come(s) (polite)',
 	aghaae: '(I) am full',
 	ainaamaa: 'in the mirror',
@@ -110,6 +112,9 @@ const FILLS = {
 	dukhchha: 'hurts',
 	gaaunmaa: 'in the village',
 	gae: '(I) went',
+	garchha: '(he/she/it) does', // T66 verb-card form
+	garchhau: '(we) do', // T66 verb-card form
+	gardina: "(I) don't do", // T66 verb-card form
 	gare: '(I) did',
 	garmimaa: 'in summer',
 	gayo: 'went / went out',
@@ -134,6 +139,8 @@ const FILLS = {
 	jaadomaa: 'in winter',
 	jaanchha: '(he/she/it) goes',
 	jaanchhau: '(we) go',
+	jaandai: 'going', // T66 verb-card form
+	jaandina: "(I) don't go", // T66 verb-card form
 	jaanubhayo: 'went (honorific)',
 	jaanuhunchha: 'goes (honorific)',
 	janmadin: 'birthday',

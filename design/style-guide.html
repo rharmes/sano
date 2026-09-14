@@ -29,6 +29,7 @@
 				--badge-color: #d99e3a; /* pennant gold */
 				--sound-color: #be87f5; /* lavender: pronunciation path nodes */
 				--grammar-color: #3f9e8f; /* paper teal: grammar-note path nodes */
+				--verb-color: #cf7a3e; /* paper clay: verb-card path nodes (T66) */
 				--word-color: #c25566;
 				--text-complete-color: #38824a;
 				--text-incomplete-color: #c2403d;
@@ -74,6 +75,7 @@
 				--badge-color: #d9aa4e;
 				--sound-color: #be87f5; /* lavender (dark) */
 				--grammar-color: #57b3a3; /* paper teal (dark) */
+				--verb-color: #dd905a; /* paper clay (dark) */
 				--word-color: #e58794;
 				--text-complete-color: #7fae83;
 				--text-incomplete-color: #e07a72;
@@ -966,7 +968,8 @@
 				color: color-mix(in srgb, var(--text-color-softer) 60%, var(--background-color));
 			}
 			/* Stops between units — mirrors css/sano.css: a conversation (gold), a sound drill
-			   (lavender, Devanagari glyph), a grammar note (teal, short text mark). */
+			   (lavender, Devanagari glyph), a grammar note (teal, short text mark), a verb card
+			   (clay, the verb's dictionary form). */
 			.path-node.dialogue.unlocked {
 				background: var(--badge-color);
 			}
@@ -987,9 +990,18 @@
 				letter-spacing: 0.06em;
 				line-height: 1;
 			}
+			.path-node.verb.unlocked {
+				background: var(--verb-color);
+			}
+			.path-node.verb.unlocked .icon {
+				font-size: 1.9rem;
+				font-weight: 700;
+				line-height: 1;
+			}
 			.path-node.dialogue.unlocked .icon,
 			.path-node.sound.unlocked .icon,
-			.path-node.grammar.unlocked .icon {
+			.path-node.grammar.unlocked .icon,
+			.path-node.verb.unlocked .icon {
 				color: #fff;
 			}
 			.node-demo .cap {
@@ -1947,8 +1959,8 @@
 					Circular nodes with a flat drop "shadow" (a hard <code>box-shadow</code>, not blur). State sets the fill: complete =
 					indigo, current = crimson, locked = muted border tint. The due-review badge is a gold pennant clipped to fly off the
 					node's upper-right. Stops woven between units get their own fill so they read as a different kind of thing: a
-					conversation is pennant gold, a pronunciation drill is lavender with a Devanagari glyph, and a grammar note (T64) is
-					paper teal with a short text mark.
+					conversation is pennant gold, a pronunciation drill is lavender with a Devanagari glyph, a grammar note (T64) is paper
+					teal with a short text mark, and a verb card (T66) is paper clay with the verb's dictionary form.
 				</p>
 				<div class="nodes">
 					<div class="node-demo">
@@ -1995,6 +2007,12 @@
 							<span class="icon">SOV</span>
 						</div>
 						<div class="cap">grammar note</div>
+					</div>
+					<div class="node-demo">
+						<div class="path-node grammar verb unlocked">
+							<span class="icon">गर्नु</span>
+						</div>
+						<div class="cap">verb card</div>
 					</div>
 				</div>
 				<p class="sg-note" style="margin-top: 2rem">

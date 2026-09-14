@@ -93,29 +93,9 @@ what's in use.
 - [x] **T64 · Grammar notes on the path** — nine one-page explainers (`js/grammar.js`) woven in as
       teal nodes after their anchor units, from counting words to saying no, each built from real
       course sentences coloured who · what · does (2026-09-12).
-- [ ] **T66 · Verb notes on the path — common verbs and how they change** `waiting-on:ross` `area:content` — Ross
-      (2026-09-14): he likes the T64 notes and wants more of them for **verbs**: the common verbs, and how each
-      one is conjugated for the different situations. Proposed in two layers, both in `js/grammar.js` and
-      both teal (preview + placement shown 2026-09-14; Ross to rule on the set before drafting):
-  - [ ] **Situation notes** (a T64-style note each, anchored where the course first leans on the form):
-        **right now** `-dai chhu` after *Patterns: Doing & Going*; **have you eaten?** `-eko chhu` after
-        *Meals*; **the -ne form** (kahaa jaane? · chiyaa khaane? · sutne belaa) after *Household Living*;
-        **the past** `-e · -yo · -nubhayo` after *Verbs: Past tense*, with **ma → maile** as one of its
-        points; **bhayo** (it happened / it became) after *Reactions & Opinions*; **please: -nus** (and
-        na- for don't) after *Asking for Help*; **can · want · must** (`-na sakchhu` · `man laagchha` ·
-        `-nu parchha`) after *Can, Want & Must*. Every example a shipped course sentence, as in T64.
-  - [ ] **Verb cards** — a new note shape: one card per workhorse verb (**hunu**, **garnu**, **jaanu**,
-        **aaunu**, **khaanu**; bolnu / dinu / hernu if wanted) with the dictionary form, the stem, and a
-        **conjugation table** — I · we · he/she · polite you · past · right now · please · don't — where
-        every cell is the real form and taps to play its **existing word clip** (`audio/words/`: garchhu,
-        gare, gardai, garnus, garnuhunchha, nagarnus… are already on disk because they occur in course
-        sentences). Cells the course never says (e.g. garchha, garchhan) render silent unless Ross wants
-        them rendered (`build-words.mjs` → `synth-app.mjs --words --new`, ElevenLabs — needs his say-so).
-        Placement: the verb block, one card after each of *Getting Around* (jaanu + aaunu), *Making & Doing*
-        (garnu), *Everyday Actions* (khaanu), *Days & the Clock* (hunu); `renderPath` must then allow a
-        situation note **and** a verb card after the same unit (today it draws one grammar stop per anchor).
-  - [ ] Data test extends `tests/data/grammar.test.mjs` (table cells romanize to on-disk word slugs);
-        e2e + dev-seed scenario as T64; docs (`data-model.md` shape, `architecture.md`, Home bullet twins).
+- [x] **T66 · Verb notes on the path — common verbs and how they change** — seven situation notes (right now,
+      have eaten, the -ne form, the past, bhayo, please, can/want/must) and four clay **verb cards** (garnu,
+      jaanu·aaunu, khaanu, hunu) whose conjugation tables play a word clip per form (2026-09-14).
 
 ## Content review
 

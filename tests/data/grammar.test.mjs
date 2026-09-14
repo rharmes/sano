@@ -4,7 +4,7 @@
 // colour that sentence word by word and the clip it plays is the one already shipped.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { liftGlobals, ROOT } from '../lift.mjs';
 
@@ -27,7 +27,16 @@ function sentence(clip) {
 }
 
 // Every sentence a note colours: its examples plus any contrast row that carries its own parts.
-const sentences = (t) => t.examples.concat(t.contrast.filter((r) => r.parts));
+const sentences = (t) => t.examples.concat((t.contrast || []).filter((r) => r.parts));
+const isCard = (t) => t.kind === 'verb';
+// Mirror of grammarTable() in js/sano.js: the one word a table cell voices, and its clip slug.
+const cellWord = (r) => r.word || r.dev.trim().split(/\s+/).pop();
+const slugOf = (word) =>
+	SanoRomanize.romanize(word)
+		.toLowerCase()
+		.replace(/[^a-z0-9\s]/g, '')
+		.trim()
+		.replace(/\s+/g, '-');
 
 test('GRAMMAR_TOPICS: shape, `after` is a real unit, ids unique', () => {
 	for (const t of GRAMMAR_TOPICS) {
@@ -35,8 +44,10 @@ test('GRAMMAR_TOPICS: shape, `after` is a real unit, ids unique', () => {
 		assert.ok(unitIds.has(t.after), `${t.id}: after '${t.after}' is not a unit id`);
 		assert.ok(Array.isArray(t.points) && t.points.length, `${t.id}: no points`);
 		assert.ok(Array.isArray(t.examples) && t.examples.length, `${t.id}: no examples`);
-		assert.ok(Array.isArray(t.contrast) && t.contrast.length >= 2, `${t.id}: needs at least two contrast rows`);
-		for (const r of t.contrast) {
+		assert.ok(t.kind === undefined || isCard(t), `${t.id}: unknown kind '${t.kind}'`);
+		if (isCard(t)) assert.ok(!t.contrast, `${t.id}: a verb card has a table, not contrast rows`);
+		else assert.ok(Array.isArray(t.contrast) && t.contrast.length >= 2, `${t.id}: needs at least two contrast rows`);
+		for (const r of t.contrast || []) {
 			assert.ok(r.label, `${t.id}: contrast row without a label`);
 			if (r.chips) for (const c of r.chips) assert.ok(roles.has(c.role) && c.en, `${t.id}: bad contrast chip ${JSON.stringify(c)}`);
 			else if (!r.parts)
@@ -49,7 +60,7 @@ test('GRAMMAR_TOPICS: shape, `after` is a real unit, ids unique', () => {
 		const used = new Set(
 			sentences(t)
 				.flatMap((e) => e.parts.map((p) => p.role))
-				.concat(t.contrast.flatMap((r) => (r.chips || []).map((c) => c.role))),
+				.concat((t.contrast || []).flatMap((r) => (r.chips || []).map((c) => c.role))),
 		);
 		for (const l of t.legend) assert.ok(roles.has(l.role) && l.label, `${t.id}: bad legend entry ${JSON.stringify(l)}`);
 		for (const role of used)
@@ -86,4 +97,34 @@ test('GRAMMAR_TOPICS: every example clip is on disk in the default voice', () =>
 	for (const t of GRAMMAR_TOPICS)
 		for (const ex of sentences(t))
 			assert.ok(existsSync(join(ROOT, 'audio', 'default', ex.clip + '.mp3')), `${t.id}: audio/default/${ex.clip}.mp3 is missing`);
+});
+
+// Verb cards (T66): every table cell names a real Devanagari form, and the one word it voices
+// is a tile-word — in tools/tts/words.json (build-words.mjs adds the cells to the inventory)
+// with its clip on disk — so a tap on the form is never a silent no-op.
+test('verb cards: every table cell is a form whose word clip is in words.json and on disk', () => {
+	const words = JSON.parse(readFileSync(join(ROOT, 'tools', 'tts', 'words.json'), 'utf8'));
+	const cards = GRAMMAR_TOPICS.filter(isCard);
+	assert.ok(cards.length, 'no verb cards');
+	for (const t of cards) {
+		assert.ok(Array.isArray(t.table) && t.table.filter((r) => r.dev).length >= 6, `${t.id}: a card needs a table of at least six forms`);
+		for (const r of t.table) {
+			if (r.heading) {
+				assert.ok(Object.keys(r).length === 1, `${t.id}: a heading row carries only 'heading'`);
+				continue;
+			}
+			assert.ok(r.label && r.dev, `${t.id}: table row needs label + dev: ${JSON.stringify(r)}`);
+			const word = cellWord(r);
+			assert.ok(/^[\u0900-\u097F]+$/.test(word.replace(/[?!]/g, '')), `${t.id}: '${word}' is not a single Devanagari word`);
+			if (r.word)
+				assert.ok(r.dev.replace(/[?!]/g, '').split(/\s+/).includes(r.word), `${t.id}: word '${r.word}' is not a word of '${r.dev}'`);
+			const slug = slugOf(word);
+			assert.ok(words[slug], `${t.id}: '${word}' (${slug}) is not in tools/tts/words.json — run build-words.mjs`);
+			assert.equal(words[slug].dev, word.replace(/[?!]/g, ''), `${t.id}: words.json spells ${slug} differently`);
+			assert.ok(
+				existsSync(join(ROOT, 'audio', 'words', slug + '.mp3')),
+				`${t.id}: audio/words/${slug}.mp3 is missing — synth-app.mjs --words --new`,
+			);
+		}
+	}
 });

@@ -20,6 +20,7 @@
 		"dev": "आएँ",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-jaanu",
 			"ma-aaen-i-came",
 			"ma-ghar-aaye-i-am-home-i-came-home"
 		]
@@ -265,9 +266,18 @@
 		"source": "aligned",
 		"phrases": [
 			"amba-mango",
+			"grammar:card-jaanu",
 			"jhyaal-window",
 			"nadhi-river",
 			"sadhai-always"
+		]
+	},
+	"aaunchhau": {
+		"roman": "aaunchhau",
+		"dev": "आउँछौं",
+		"source": "aligned",
+		"phrases": [
+			"grammar:card-jaanu"
 		]
 	},
 	"aaunchhu": {
@@ -278,6 +288,7 @@
 			"aath-eight",
 			"adv-chhittai-soon",
 			"adv-pakkai-surely",
+			"grammar:card-jaanu",
 			"huncha-okay-it-will-be-done",
 			"link-avashya",
 			"ma-ahile-aaunchu-i-will-be-right-back",
@@ -291,6 +302,7 @@
 		"dev": "आउँदै",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-jaanu",
 			"paahuna-aaudai-chan-guests-are-coming"
 		]
 	},
@@ -299,7 +311,16 @@
 		"dev": "आउँदैन",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-jaanu",
 			"tara-but"
+		]
+	},
+	"aaundina": {
+		"roman": "aaundina",
+		"dev": "आउँदिनँ",
+		"source": "aligned",
+		"phrases": [
+			"grammar:card-jaanu"
 		]
 	},
 	"aaunu": {
@@ -315,6 +336,7 @@
 		"dev": "आउनुहुन्छ",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-jaanu",
 			"tapai-you-formal"
 		]
 	},
@@ -329,6 +351,7 @@
 			"bhitra-aaunus-please-come-in",
 			"bhitra-inside-within",
 			"chitto-quickly-fast",
+			"grammar:card-jaanu",
 			"huncha-okay-it-will-be-done",
 			"mangalbaar-tuesday",
 			"najik-near",
@@ -356,6 +379,7 @@
 			"batti-light-lamp",
 			"bhukampa-earthquake",
 			"fest-dashain",
+			"grammar:card-jaanu",
 			"lasun-garlic",
 			"ramro-basna-aayo-it-smells-good"
 		]
@@ -1510,6 +1534,7 @@
 			"dherai-mahango-too-expensive",
 			"dhilo-bhayo-it-is-late-i-am-running-late",
 			"feel-pachhuto-regret",
+			"grammar:card-hunu",
 			"hajaar-thousand",
 			"kati-bhayo-how-much-was-it",
 			"ke-bhayo-what-happened",
@@ -2279,6 +2304,7 @@
 			"ghoda-horse",
 			"glass-glass-cup",
 			"golbheda-tomato",
+			"grammar:card-hunu",
 			"haat-hand-arm",
 			"hajuraamaa-grandmother",
 			"hamro-our-ours",
@@ -2421,6 +2447,7 @@
 			"chhaina-no-is-not-don-t-have",
 			"fn-kunai-any",
 			"ghaam-sun-sunshine",
+			"grammar:card-hunu",
 			"kehi-chhaina-nothing-it-s-nothing",
 			"khana-khaeko-chhaina-i-haven-t-eaten",
 			"noun-samay-time",
@@ -2447,6 +2474,7 @@
 		"phrases": [
 			"buspark-bus-stop",
 			"chaar-four",
+			"grammar:card-hunu",
 			"manchhe-person",
 			"paahuna-aaudai-chan-guests-are-coming",
 			"saat-seven",
@@ -2460,6 +2488,7 @@
 		"phrases": [
 			"adj-saman-equal",
 			"chaar-four",
+			"grammar:card-hunu",
 			"hami-we-us",
 			"timi-you-informal"
 		]
@@ -2553,6 +2582,7 @@
 			"ahile-now-right-now",
 			"feel-eklo-lonely",
 			"feel-khusi-happy",
+			"grammar:card-hunu",
 			"khana-khaeko-chu-i-ve-eaten-i-have-eaten",
 			"khushi-happy",
 			"ma-khana-pakaudai-chu-i-am-cooking-food",
@@ -3455,6 +3485,7 @@
 		"dev": "गएँ",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-jaanu",
 			"hijo-yesterday",
 			"ma-gaen-i-went"
 		]
@@ -3499,6 +3530,22 @@
 			"noun-chhalphal-discussion"
 		]
 	},
+	"garchha": {
+		"roman": "garchha",
+		"dev": "गर्छ",
+		"source": "aligned",
+		"phrases": [
+			"grammar:card-garnu"
+		]
+	},
+	"garchhau": {
+		"roman": "garchhau",
+		"dev": "गर्छौं",
+		"source": "aligned",
+		"phrases": [
+			"grammar:card-garnu"
+		]
+	},
 	"garchhu": {
 		"roman": "garchhu",
 		"dev": "गर्छु",
@@ -3508,6 +3555,7 @@
 			"bihibaar-thursday",
 			"computer-computer",
 			"fn-aaphain-oneself",
+			"grammar:card-garnu",
 			"link-jasari",
 			"link-taipani",
 			"ma-ghar-safaa-garchu-i-will-clean-the-house",
@@ -3523,7 +3571,16 @@
 		"dev": "गर्दै",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-garnu",
 			"tapai-ke-gardai-hunuhunchha-what-are-you-doing-polite"
+		]
+	},
+	"gardina": {
+		"roman": "gardina",
+		"dev": "गर्दिनँ",
+		"source": "aligned",
+		"phrases": [
+			"grammar:card-garnu"
 		]
 	},
 	"gare": {
@@ -3531,6 +3588,7 @@
 		"dev": "गरेँ",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-garnu",
 			"maile-garen-i-did"
 		]
 	},
@@ -3567,6 +3625,7 @@
 		"dev": "गर्न",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-garnu",
 			"ma-garna-sakchu-i-can-do",
 			"ma-garna-sakdina-i-cannot-do",
 			"ma-kehi-maddat-garna-sakchu-can-i-help-with-anything",
@@ -3588,6 +3647,7 @@
 		"source": "override",
 		"phrases": [
 			"fest-puja",
+			"grammar:card-garnu",
 			"ke-garnu-parcha-what-should-i-do",
 			"malai-kaam-garnu-parcha-i-have-to-work",
 			"noun2-adhyayan-study",
@@ -3601,7 +3661,8 @@
 		"dev": "गर्नुभयो",
 		"source": "aligned",
 		"phrases": [
-			"dhoka-banda-garnu-bhayo-did-you-close-the-door"
+			"dhoka-banda-garnu-bhayo-did-you-close-the-door",
+			"grammar:card-garnu"
 		]
 	},
 	"garnuhos": {
@@ -3622,6 +3683,7 @@
 		"phrases": [
 			"beluka-evening",
 			"buwa-father",
+			"grammar:card-garnu",
 			"tapai-kaha-kaam-garnuhunchha-where-do-you-work",
 			"tapai-ke-kaam-garnuhunchha-what-do-you-do"
 		]
@@ -3638,6 +3700,7 @@
 			"chitto-quickly-fast",
 			"computer-computer",
 			"dhoka-banda-garnus-please-close-the-door",
+			"grammar:card-garnu",
 			"hosh-garnus-be-careful",
 			"kam-less-few",
 			"khadai-garnus-please-eat",
@@ -3664,6 +3727,7 @@
 		"source": "aligned",
 		"phrases": [
 			"batti-light-lamp",
+			"grammar:card-jaanu",
 			"mombatti-candle"
 		]
 	},
@@ -4282,6 +4346,7 @@
 			"barabar-equal-same",
 			"budhabaar-wednesday",
 			"chhimeki-neighbor",
+			"grammar:card-hunu",
 			"hajur-ko-naam-ke-ho-what-is-your-name-very-polite",
 			"hamro-our-ours",
 			"ho-yes-informal",
@@ -4311,6 +4376,7 @@
 		"source": "aligned",
 		"phrases": [
 			"ghamanda-pride-arrogance",
+			"grammar:card-hunu",
 			"hoina-no-informal"
 		]
 	},
@@ -4404,6 +4470,7 @@
 			"diuso-afternoon-daytime",
 			"fn-jaba-when",
 			"fn-natra-otherwise",
+			"grammar:card-hunu",
 			"hudaina-not-okay-it-won-t-work",
 			"huncha-okay-it-will-be-done",
 			"kagati-lemon-lime",
@@ -4424,7 +4491,16 @@
 		"source": "aligned",
 		"phrases": [
 			"adv-kahilyai-never",
+			"grammar:card-hunu",
 			"hudaina-not-okay-it-won-t-work"
+		]
+	},
+	"hunu": {
+		"roman": "hunu",
+		"dev": "हुनु",
+		"source": "aligned",
+		"phrases": [
+			"grammar:card-hunu"
 		]
 	},
 	"hunuhos": {
@@ -4447,6 +4523,7 @@
 			"budhi-wife",
 			"dai-older-brother",
 			"didi-older-sister",
+			"grammar:card-hunu",
 			"hajuraamaa-grandmother",
 			"hajurbuwa-grandfather",
 			"khushi-happy",
@@ -4535,6 +4612,7 @@
 		"dev": "जान",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-jaanu",
 			"ma-jana-sakchu-i-can-go",
 			"malai-jana-man-laagcha-i-want-to-go",
 			"malai-man-laagdaina-i-dont-want-to"
@@ -4554,7 +4632,8 @@
 		"source": "aligned",
 		"phrases": [
 			"chhora-son",
-			"dir-uttar"
+			"dir-uttar",
+			"grammar:card-jaanu"
 		]
 	},
 	"jaanchhau": {
@@ -4563,6 +4642,7 @@
 		"source": "aligned",
 		"phrases": [
 			"bholi-tomorrow",
+			"grammar:card-jaanu",
 			"hami-we-us",
 			"jharna-waterfall"
 		]
@@ -4579,6 +4659,7 @@
 			"bas-bus",
 			"budhabaar-wednesday",
 			"fn-chahin-asfor",
+			"grammar:card-jaanu",
 			"hospital-hospital",
 			"kahilekaahi-sometimes",
 			"ma-ghar-jaanchu-i-am-going-home",
@@ -4592,11 +4673,28 @@
 			"tira-toward-that-way"
 		]
 	},
+	"jaandai": {
+		"roman": "jaandai",
+		"dev": "जाँदै",
+		"source": "aligned",
+		"phrases": [
+			"grammar:card-jaanu"
+		]
+	},
+	"jaandina": {
+		"roman": "jaandina",
+		"dev": "जाँदिनँ",
+		"source": "aligned",
+		"phrases": [
+			"grammar:card-jaanu"
+		]
+	},
 	"jaane": {
 		"roman": "jaane",
 		"dev": "जाने",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-jaanu",
 			"kaha-jane-where-are-you-going",
 			"kasari-how",
 			"kata-janey-where-to-go",
@@ -4622,7 +4720,8 @@
 		"dev": "जानुभयो",
 		"source": "aligned",
 		"phrases": [
-			"budha-husband"
+			"budha-husband",
+			"grammar:card-jaanu"
 		]
 	},
 	"jaanuhunchha": {
@@ -4631,7 +4730,8 @@
 		"source": "aligned",
 		"phrases": [
 			"buwa-father",
-			"didi-older-sister"
+			"didi-older-sister",
+			"grammar:card-jaanu"
 		]
 	},
 	"jaanus": {
@@ -4646,6 +4746,7 @@
 			"daayan-janus-turn-right",
 			"dir-dakshin",
 			"eyarport-airport",
+			"grammar:card-jaanu",
 			"link-jahaan",
 			"mathi-on-above",
 			"samma-until-up-to",
@@ -5443,6 +5544,7 @@
 		"dev": "खाएँ",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-khaanu",
 			"maile-khaen-i-ate",
 			"maile-pien-i-drank"
 		]
@@ -5452,6 +5554,7 @@
 		"dev": "खाएको",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-khaanu",
 			"khana-khaeko-chhaina-i-haven-t-eaten",
 			"khana-khaeko-chu-i-ve-eaten-i-have-eaten"
 		]
@@ -5488,6 +5591,7 @@
 		"dev": "खान",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-khaanu",
 			"ma-garna-sakchu-i-can-do",
 			"malai-khana-man-laagcha-i-want-to-eat"
 		]
@@ -5541,7 +5645,8 @@
 		"source": "aligned",
 		"phrases": [
 			"bakhra-goat",
-			"bandar-monkey"
+			"bandar-monkey",
+			"grammar:card-khaanu"
 		]
 	},
 	"khaanchhau": {
@@ -5551,6 +5656,7 @@
 		"phrases": [
 			"aath-eight",
 			"chiura-beaten-rice-flattened-rice",
+			"grammar:card-khaanu",
 			"suntala-orange"
 		]
 	},
@@ -5563,6 +5669,7 @@
 			"chha-six",
 			"chiura-beaten-rice-flattened-rice",
 			"daal-lentils",
+			"grammar:card-khaanu",
 			"hotel-restaurant-eatery",
 			"khaja-snacks",
 			"khana-food",
@@ -5574,6 +5681,7 @@
 		"dev": "खाँदै",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-khaanu",
 			"khadai-garnus-please-eat"
 		]
 	},
@@ -5582,6 +5690,7 @@
 		"dev": "खाँदिनँ",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-khaanu",
 			"ma-dudh-dahi-ra-ghue-khadina-i-don-t-eat-milk-and-milk-prod",
 			"ma-machha-maasu-khadina-i-don-t-eat-meat",
 			"raksi-traditional-alcohol"
@@ -5593,6 +5702,7 @@
 		"source": "aligned",
 		"phrases": [
 			"chiya-khaane-will-you-have-tea",
+			"grammar:card-khaanu",
 			"kasari-how",
 			"khaja-snacks",
 			"khana-khane-bela-bhayo-it-is-time-to-eat"
@@ -5611,6 +5721,7 @@
 		"dev": "खानुभयो",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-khaanu",
 			"khana-khanu-bhayo-have-you-eaten"
 		]
 	},
@@ -5619,7 +5730,8 @@
 		"dev": "खानुहुन्छ",
 		"source": "aligned",
 		"phrases": [
-			"chiya-tea"
+			"chiya-tea",
+			"grammar:card-khaanu"
 		]
 	},
 	"khaanus": {
@@ -5632,6 +5744,7 @@
 			"aushadhi-medicine",
 			"bistari-slowly-carefully",
 			"garmi-heat-hot-weather",
+			"grammar:card-khaanu",
 			"phal-fruit"
 		]
 	},
@@ -7123,7 +7236,8 @@
 		"source": "aligned",
 		"phrases": [
 			"chinta-worry-anxiety",
-			"ghamanda-pride-arrogance"
+			"ghamanda-pride-arrogance",
+			"grammar:card-garnu"
 		]
 	},
 	"nahaalnus": {
@@ -7142,6 +7256,7 @@
 		"dev": "नजानुस्",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-jaanu",
 			"tyaha-there"
 		]
 	},
@@ -7168,6 +7283,7 @@
 		"dev": "नखानुस्",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-khaanu",
 			"mithai-sweets-dessert",
 			"raksi-traditional-alcohol"
 		]
@@ -10051,6 +10167,7 @@
 		"dev": "थियो",
 		"source": "aligned",
 		"phrases": [
+			"grammar:card-hunu",
 			"hijo-yesterday",
 			"khana-mitho-thiyo-food-was-delicious"
 		]

@@ -57,8 +57,9 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
 ## What the app is (one level down; functions in `docs/architecture.md`, shapes in `docs/data-model.md`)
 
 - **Home** is a Duolingo-style winding **path** (`renderPath`): units unlock in order, with
-  **dialogue** (gold), **pronunciation** (lavender) and **grammar-note** (teal, T64: one-page explainers
-  such as "the verb goes last", `js/grammar.js`) nodes woven in after their anchor unit and
+  **dialogue** (gold), **pronunciation** (lavender), **grammar-note** (teal, T64: one-page explainers
+  such as "the verb goes last", `js/grammar.js`) and **verb-card** (clay, T66: a conjugation table per
+  workhorse verb whose every form plays its word clip; same file, `kind: 'verb'`) nodes woven in after their anchor unit and
   decorative **companions** (SR-07) in the pockets. A unit is complete — and unlocks the next — only
   when every item has **graduated** (the SR-05 **mastery gate**), not merely been introduced; the
   current node's ring is **two-tone** — a faint arc for words *introduced* under a solid arc for words
