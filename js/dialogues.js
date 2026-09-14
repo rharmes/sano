@@ -3,12 +3,16 @@
 //
 // SCHEMA v2 — the lines are now original Nepali STORIES (funny fables), not remixes of
 // existing course phrases, so each line carries its own text inline:
-//   { id, title, goal, section, after, cast:[companionIds], lines:[{who, np, dev, en, gloss}], questions }
+//   { id, title, goal, section, after, onPath, cast:[companionIds], lines:[{who, np, dev, en, gloss}], questions }
 // `who` is a speaker id: 'sano' or a companion id (both rendered on the left: head + bubble),
 // 'narrator' (full-width scene narration, no bubble), or 'thornbush' (a one-off prop). `cast`
 // lists the non-narrator companions (for
 // the head art + the persona intro). `after` is the COURSE unit id the node follows in the
-// path. The Nepali (`np`/`dev`) is AI-DRAFTED and Ross's to refine; the English (`en`) is the
+// path; `onPath` (T65) says whether that gold node is drawn at all — false keeps the story, its
+// player and its audio but puts no node on the path, which is how every story sits today while
+// Ross reworks them (flip it to true to bring one back). An off-path story still opens directly
+// via `/?dialogue=<id>` (the dev-seed review link) and startDialogue.
+// The Nepali (`np`/`dev`) is AI-DRAFTED and Ross's to refine; the English (`en`) is the
 // subtitle. Each line gets its own audio clip rendered per-voice — see VOICE RULES below and
 // tools/tts/synth-app.mjs --dialogues.
 //
@@ -39,6 +43,7 @@ const DIALOGUES = [
 		goal: 'Greet someone and make small talk',
 		section: 'Foundations',
 		after: 'introductions',
+		onPath: false, // T65: off the path while the stories are reworked; true brings the gold node back
 		cast: ['pyaro'],
 		lines: [
 			{

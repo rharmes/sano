@@ -179,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	SanoSync.init();
 	SanoPush.init();
 	SanoOnboard.maybeStart();
+	openLinkedDialogue();
 
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('/sw.js').catch((err) => console.warn('SW register failed:', err));
@@ -194,6 +195,22 @@ document.addEventListener('DOMContentLoaded', () => {
 		}, 150);
 	});
 });
+
+// T65: `/?dialogue=<id>` opens a story player directly — the way in now that no story node
+// is on the path (tools/dev-seed.html's dialogue cards and tests/e2e/dialogue.spec.mjs use
+// it; it's also the review link for the rewrites). The param is dropped from the URL first so
+// a reload or "home" doesn't reopen it; a first run stays with onboarding; an unknown id is
+// ignored.
+function openLinkedDialogue() {
+	const params = new URLSearchParams(location.search);
+	const id = params.get('dialogue');
+	if (id === null) return;
+	params.delete('dialogue');
+	const rest = params.toString();
+	history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+	const dialogue = DIALOGUES.find((d) => d.id === id);
+	if (dialogue && state.onboarded) startDialogue(dialogue);
+}
 
 // State management. All progress lives in a single versioned LocalStorage entry.
 
@@ -657,11 +674,13 @@ function renderPath() {
 	};
 
 	// Weave each section's stops — a conversation, a sound drill, a grammar note — into the
-	// path right after the unit each one follows.
+	// path right after the unit each one follows. A story is drawn only when it's flagged
+	// `onPath` (T65: none is today — the stories are being reworked; the player still opens
+	// by `/?dialogue=<id>`, see openLinkedDialogue).
 	const seq = [];
 	for (const unit of COURSE) {
 		seq.push({ kind: 'unit', unit: unit });
-		const dlg = DIALOGUES.find((d) => d.after === unit.id);
+		const dlg = DIALOGUES.find((d) => d.onPath && d.after === unit.id);
 		if (dlg) seq.push({ kind: 'dialogue', dialogue: dlg });
 		const snd = SOUND_TOPICS.find((t) => t.after === unit.id);
 		if (snd) seq.push({ kind: 'sound', topic: snd });

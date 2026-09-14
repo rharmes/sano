@@ -78,6 +78,25 @@ other and its record says so — the box means *resolved*, not *shipped*.
       inventory is now every word of every canonical + frame sentence across all units (719 → 1050
       tile-words; the 331 missing clips rendered in the same pass). CLAUDE.md + architecture.md
       updated.
+- [x] **T65 · Take the story nodes off the path for now** — Ross (2026-09-14): the stories aren't
+      where he wants them yet and he'll rework them before they come back, so the gold dialogue nodes
+      leave the path while the content, the player and every clip stay. **Delivered 2026-09-14.**
+      Shape: each `DIALOGUES` entry carries an explicit `onPath` boolean (chosen over a
+      `PATH_DIALOGUES` allowlist — the flag sits beside the `after` it qualifies, can't mis-spell an
+      id, and `tests/data/dialogues.test.mjs` requires every story to declare it); `renderPath`
+      weaves only `onPath` stories, so bringing one back is `false → true`. `greet-pyaro` (the only
+      story) is `onPath: false`. New way in: `/?dialogue=<id>` → `openLinkedDialogue` at boot (drops
+      the param from the URL so a reload or "home" doesn't reopen it; a first run stays with
+      onboarding; an unknown id is ignored) — what `tools/dev-seed.html`'s "dialogue" and
+      "dialoguefun" cards now open, and how `tests/e2e/dialogue.spec.mjs` reaches the player
+      (`boot(page, state, { url })`). The e2e also asserts that no `.path-node.dialogue` renders,
+      that an unknown id lands on home, and that flipping the flag at runtime draws the gold node
+      after Introductions and opens the player. Kept: `startDialogue` / `#screen-dialogue`,
+      `state.dialoguesDone` (no migration — an existing tick survives for the story's return),
+      `seed.dialogueReady`, the gold stop CSS + style-guide demo, `js/dialogues.js`,
+      `audio/*/greet-pyaro-*.mp3`, `tools/tts/dialogue-scripts.md`. The dev-seed "nodecheck" card now
+      shows pronunciation + grammar checkmarks (no gold node to tick). Docs: CLAUDE.md/AGENTS.md
+      Home + Story bullets, architecture.md, data-model.md, style-guide prose.
 
 ## Grammar notes
 

@@ -247,14 +247,14 @@
 
 		<div class="card">
 			<span class="tests">SR-01 dialogues · streak</span>
-			<h2>4 · A conversation in the path (redesigned player)</h2>
+			<h2>4 · The story player (opened directly — no path node today)</h2>
 			<p>
-				Foundations is done, so the <b>"Meeting Pyaro"</b> conversation is unlocked in the path — a <b>gold node</b> after
-				Introductions. Tap it to play the dialogue. The <b>redesigned story player</b>: every speaker on the left (head + bubble),
-				<b>romanized Nepali only</b> — <b>tap any underlined word or phrase</b> to pop its English; narrator lines run full-width with
-				no bubble. Bubbles reveal one at a time, then answer the comprehension questions. You studied <b>yesterday</b> but not yet
-				today, so finishing the conversation <b>extends your streak</b> — the complete screen shows <b>“5 day streak!”</b> and the home
-				counter ticks up.
+				Opens the <b>"Meeting Pyaro"</b> story straight into the player via <b>/?dialogue=greet-pyaro</b> — the gold story nodes are
+				<b>off the path for now</b> (T65) while the stories are reworked, and this link is how to review them. The <b>story player</b>:
+				every speaker on the left (head + bubble), <b>romanized Nepali only</b> — <b>tap any underlined word or phrase</b> to pop its
+				English; narrator lines run full-width with no bubble. Bubbles reveal one at a time, then answer the comprehension questions.
+				You studied <b>yesterday</b> but not yet today, so finishing the conversation <b>extends your streak</b> — the complete screen
+				shows <b>“5 day streak!”</b> and the home counter ticks up.
 			</p>
 			<button onclick="seed('dialogue')">Seed &amp; open</button>
 		</div>
@@ -580,8 +580,8 @@
 			<span class="tests">SR-01 · personas</span>
 			<h2>Funnier conversations (personas + new dialogue)</h2>
 			<p>
-				The whole course is settled, so <b>every gold conversation node</b> is unlocked — tap any in the path. Each opens with a
-				<b>one-line character intro</b> (e.g. <i>Gyani — a wise elder elephant, always somewhere to be</i>) and ends with
+				The whole course is settled and the <b>"Meeting Pyaro"</b> story opens directly (no story node on the path today — T65). It
+				opens with a <b>one-line character intro</b> (e.g. <i>Gyani — a wise elder elephant, always somewhere to be</i>) and ends with
 				<b>character-flavored comprehension questions</b>.
 			</p>
 			<button onclick="seed('dialoguefun')">Seed &amp; open</button>
@@ -629,10 +629,11 @@
 
 		<div class="card">
 			<span class="tests">nodes</span>
-			<h2>Completed conversation + pronunciation nodes</h2>
+			<h2>Completed pronunciation + grammar nodes</h2>
 			<p>
-				Opens home with the first <b>conversation</b> (gold) and <b>pronunciation</b> (lavender) nodes completed — each shows a
-				<b>checkmark</b> in its own colour instead of the chat / Devanagari icon.
+				Opens home with the first <b>pronunciation</b> (lavender) and <b>grammar-note</b> (teal) nodes completed — each shows a
+				<b>checkmark</b> in its own colour instead of the Devanagari / text mark. (The gold conversation node is off the path for now —
+				T65.)
 			</p>
 			<button onclick="seed('nodecheck')">Seed &amp; open</button>
 		</div>
@@ -773,6 +774,7 @@
 					return (location.href = '/');
 				}
 				let state;
+				let target = '/'; // T65: the dialogue cards open the player directly — no story node on the path
 				if (which === 'learning') {
 					// SR-05 learning steps: Basics mastered, Numbers current with words at mixed stages —
 					// one recalled once (interval 2, not graduated) returns as a word-bank recall.
@@ -936,6 +938,7 @@
 					for (const u of COURSE)
 						if (done.includes(u.id)) for (const it of u.items) items[it.id] = mastered({ lastSeen: day(0) });
 					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 30 });
+					target = '/?dialogue=greet-pyaro';
 				} else if (which === 'speak') {
 					// Basics + basics-replies mastered -> Numbers current -> new-word lesson (has the speak step).
 					const items = {};
@@ -960,10 +963,16 @@
 					}
 					state = wrap(items, { streak: 6, itemsTotal: 300 });
 				} else if (which === 'nodecheck') {
-					// Completed conversation (gold) + pronunciation (lavender) nodes both show a checkmark.
+					// Completed pronunciation (lavender) + grammar (teal) nodes both show a checkmark; the
+					// greet-pyaro tick is kept in state too, for when the gold node returns (T65).
 					const items = {};
 					masterThrough(items, 'introductions');
-					state = wrap(items, { itemsTotal: 90, dialoguesDone: { 'greet-pyaro': true }, soundsDone: { aspiration: true } });
+					state = wrap(items, {
+						itemsTotal: 90,
+						dialoguesDone: { 'greet-pyaro': true },
+						soundsDone: { aspiration: true },
+						grammarDone: { 'counting-words': true },
+					});
 				} else if (which === 'autoscroll') {
 					// Deep into the course (units 0–14 mastered, unit 15 current) so the in-progress lesson
 					// sits far down the path — on load, home should auto-scroll to center it in view.
@@ -1015,10 +1024,11 @@
 					masterBefore(items, 'verbs-present');
 					state = wrap(items, { streak: 7, itemsTotal: 260 });
 				} else if (which === 'dialoguefun') {
-					// Whole course mastered, so every conversation node (gold) is unlocked.
+					// Whole course mastered; the story opens directly (no story node on the path, T65).
 					const items = {};
 					for (const u of COURSE) for (const it of u.items) items[it.id] = mastered({ interval: 20, lastSeen: day(0) });
 					state = wrap(items, { streak: 9, lastActivityDay: day(1), itemsTotal: 476 });
+					target = '/?dialogue=greet-pyaro';
 				} else if (which === 'directions') {
 					// Everything before Navigation mastered -> Navigation is the current unit.
 					const items = {};
@@ -1031,7 +1041,7 @@
 					state = wrap(items, { streak: 7, itemsTotal: 300 });
 				}
 				localStorage.setItem('sano.state.v1', JSON.stringify(state));
-				location.href = '/';
+				location.href = target;
 			}
 		</script>
 	</body>
