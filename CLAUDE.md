@@ -108,8 +108,9 @@ head chip above the prompt and a play-time **fallback to the default clip** when
 isn't on disk (`synth-app.mjs --units [ids] --new` renders per unit; only the 6 dialogue-voiced
 companions render — the other 4 stay Sano until their voices are designed). Per-word Devanagari comes from
 `tools/tts/words.json` (built by `tools/tts/build-words.mjs` from every canonical + frame sentence
-across all units — any word that can appear as a word-bank tile, incl. single-word items). After adding or
-re-spelling content, regenerate the affected clips — `build-words.mjs` → `synth-app.mjs --words
+across all units — any word that can appear as a word-bank tile, incl. single-word items — plus every
+verb-card table cell in `js/grammar.js`, T66). After adding or re-spelling content, or editing a verb card,
+regenerate the affected clips — `build-words.mjs` → `synth-app.mjs --words
 --new` (`--new` renders only clips missing on disk, so it won't re-spend credits or churn git) — then
 bump `AUDIO_VERSION` in `js/audio.js` to bust caches; also re-run `tools/build-glosses.mjs` (the
 tap-gloss lexicon `js/glosses.js` — it fails loudly on any new un-glossed word) and then

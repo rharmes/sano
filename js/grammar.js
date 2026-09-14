@@ -1133,7 +1133,7 @@ const GRAMMAR_TOPICS = [
 			{ label: 'I don’t come', dev: 'आउँदिनँ' },
 		],
 		points: [
-			'jaanu is the one common verb whose past changes stem: gae, gayo, jaanubhayo — jaa- becomes ga-. aaunu keeps its stem: aae, aayo.',
+			'jaanu is the main action verb whose past changes stem: gae, gayo, jaanubhayo — jaa- becomes ga- (hunu → bhayo is the other). aaunu keeps its stem: aae, aayo.',
 			'Both take a destination with no “to”: ma ghar jaanchhu, ma bajaar gae. The place sits where an object would.',
 		],
 		examples: [

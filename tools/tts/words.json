@@ -275,7 +275,7 @@
 	"aaunchhau": {
 		"roman": "aaunchhau",
 		"dev": "आउँछौं",
-		"source": "aligned",
+		"source": "card",
 		"phrases": [
 			"grammar:card-jaanu"
 		]
@@ -318,7 +318,7 @@
 	"aaundina": {
 		"roman": "aaundina",
 		"dev": "आउँदिनँ",
-		"source": "aligned",
+		"source": "card",
 		"phrases": [
 			"grammar:card-jaanu"
 		]
@@ -3533,7 +3533,7 @@
 	"garchha": {
 		"roman": "garchha",
 		"dev": "गर्छ",
-		"source": "aligned",
+		"source": "card",
 		"phrases": [
 			"grammar:card-garnu"
 		]
@@ -3541,7 +3541,7 @@
 	"garchhau": {
 		"roman": "garchhau",
 		"dev": "गर्छौं",
-		"source": "aligned",
+		"source": "card",
 		"phrases": [
 			"grammar:card-garnu"
 		]
@@ -3578,7 +3578,7 @@
 	"gardina": {
 		"roman": "gardina",
 		"dev": "गर्दिनँ",
-		"source": "aligned",
+		"source": "card",
 		"phrases": [
 			"grammar:card-garnu"
 		]
@@ -4498,7 +4498,7 @@
 	"hunu": {
 		"roman": "hunu",
 		"dev": "हुनु",
-		"source": "aligned",
+		"source": "card",
 		"phrases": [
 			"grammar:card-hunu"
 		]
@@ -4676,7 +4676,7 @@
 	"jaandai": {
 		"roman": "jaandai",
 		"dev": "जाँदै",
-		"source": "aligned",
+		"source": "card",
 		"phrases": [
 			"grammar:card-jaanu"
 		]
@@ -4684,7 +4684,7 @@
 	"jaandina": {
 		"roman": "jaandina",
 		"dev": "जाँदिनँ",
-		"source": "aligned",
+		"source": "card",
 		"phrases": [
 			"grammar:card-jaanu"
 		]

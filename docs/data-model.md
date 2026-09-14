@@ -144,9 +144,10 @@ and `DIALOGUES` is hand-built from it (adding the Nepali + clip routing), synced
 // kind:     absent = a grammar note (teal); 'verb' = a verb card — a clay path node whose glyph is the
 //           verb's dictionary form, no `contrast`, and a conjugation `table` above the legend
 // table:    [{ label, dev, word? } | { heading }]  one row per form: the situation ('I did'), the form's
-//           Devanagari ('मैले गरेँ', romanized on screen), and the ONE word the row voices — `word`, or
-//           the last word of `dev` — through audio/words/<slug>.mp3 (the word-bank tile clips;
-//           tools/tts/build-words.mjs adds every cell to that inventory, so the clip is on disk).
+//           Devanagari ('मैले गरेँ', romanized on screen), and the ONE word the row voices — `word`,
+//           required when `dev` has several words, else `dev` itself — through audio/words/<slug>.mp3
+//           (the word-bank tile clips; tools/tts/build-words.mjs adds every cell to that inventory
+//           under the pseudo-id `grammar:<card>`, so the clip is on disk; cards don't vote on spelling).
 //           A `heading` row splits a two-verb card. Cells' `dev` are AI-drafted like everything else.
 // glyph:    short text mark for the teal path node ('SOV', '-लाई', 'छैन' …)
 // legend:   [{ role, label }]  the roles this note uses, in order, with this note's wording for each

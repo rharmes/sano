@@ -1612,24 +1612,16 @@ table#vocab tbody td:nth-child(3) {
 .path-node.grammar.complete:hover {
 	filter: brightness(1.12);
 }
-/* A verb card in the path (T66) — its own colour, with the verb's dictionary form (Devanagari)
-   for its icon. Same chrome as the grammar note otherwise. */
+/* A verb card in the path (T66): a `.grammar.verb` node, so every grammar rule above applies
+   and only the paint and the icon change — the verb colour, and the verb's dictionary form
+   (Devanagari) at a size that fits four letters, without the tracking tuned for Latin marks. */
 .path-node.verb.unlocked,
 .path-node.verb.complete {
 	background: var(--verb-color);
 }
 .path-node.verb.unlocked .icon {
 	font-size: 1.9rem;
-	font-weight: 700;
-	line-height: 1;
-}
-.path-node.verb.unlocked .icon,
-.path-node.verb.complete .icon {
-	color: var(--button-primary-color);
-}
-.path-node.verb.unlocked:hover,
-.path-node.verb.complete:hover {
-	filter: brightness(1.12);
+	letter-spacing: normal;
 }
 .path-ring {
 	position: absolute;
@@ -3056,6 +3048,8 @@ table#vocab tbody td:nth-child(3) {
 	font-size: 1.8rem;
 	font-weight: 700;
 	line-height: 1.25;
+	height: auto; /* barebones gives every button a fixed 38px + a bottom margin; size to content, like .btn-primary */
+	margin: 0;
 	cursor: pointer;
 	color: var(--verb-color);
 	background: color-mix(in srgb, var(--verb-color) 14%, var(--background-color-softer));

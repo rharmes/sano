@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { liftGlobals, ROOT } from '../lift.mjs';
+import { liftGlobals, liftFns, ROOT } from '../lift.mjs';
 
 const { GRAMMAR_TOPICS, GRAMMAR_ROLES } = liftGlobals('js/grammar.js', ['GRAMMAR_TOPICS', 'GRAMMAR_ROLES']);
 const { COURSE } = liftGlobals('js/data.js', ['COURSE']);
@@ -29,14 +29,12 @@ function sentence(clip) {
 // Every sentence a note colours: its examples plus any contrast row that carries its own parts.
 const sentences = (t) => t.examples.concat((t.contrast || []).filter((r) => r.parts));
 const isCard = (t) => t.kind === 'verb';
-// Mirror of grammarTable() in js/sano.js: the one word a table cell voices, and its clip slug.
-const cellWord = (r) => r.word || r.dev.trim().split(/\s+/).pop();
-const slugOf = (word) =>
-	SanoRomanize.romanize(word)
-		.toLowerCase()
-		.replace(/[^a-z0-9\s]/g, '')
-		.trim()
-		.replace(/\s+/g, '-');
+// Mirror of grammarTable() in js/sano.js: the one word a table cell voices (`word`, else `dev`),
+// and its clip slug — playTileWord verbatim, on the app's own `normalize`, so the slug asserted
+// here is the file the tap requests.
+const { normalize } = liftFns('js/sano.js', ['normalize']);
+const cellWord = (r) => r.word || r.dev;
+const slugOf = (word) => normalize(SanoRomanize.romanize(word)).replace(/\s+/g, '-');
 
 test('GRAMMAR_TOPICS: shape, `after` is a real unit, ids unique', () => {
 	for (const t of GRAMMAR_TOPICS) {
@@ -46,7 +44,10 @@ test('GRAMMAR_TOPICS: shape, `after` is a real unit, ids unique', () => {
 		assert.ok(Array.isArray(t.examples) && t.examples.length, `${t.id}: no examples`);
 		assert.ok(t.kind === undefined || isCard(t), `${t.id}: unknown kind '${t.kind}'`);
 		if (isCard(t)) assert.ok(!t.contrast, `${t.id}: a verb card has a table, not contrast rows`);
-		else assert.ok(Array.isArray(t.contrast) && t.contrast.length >= 2, `${t.id}: needs at least two contrast rows`);
+		else {
+			assert.ok(!t.table, `${t.id}: only a verb card (kind: 'verb') may carry a table`);
+			assert.ok(Array.isArray(t.contrast) && t.contrast.length >= 2, `${t.id}: needs at least two contrast rows`);
+		}
 		for (const r of t.contrast || []) {
 			assert.ok(r.label, `${t.id}: contrast row without a label`);
 			if (r.chips) for (const c of r.chips) assert.ok(roles.has(c.role) && c.en, `${t.id}: bad contrast chip ${JSON.stringify(c)}`);
@@ -101,7 +102,9 @@ test('GRAMMAR_TOPICS: every example clip is on disk in the default voice', () =>
 
 // Verb cards (T66): every table cell names a real Devanagari form, and the one word it voices
 // is a tile-word — in tools/tts/words.json (build-words.mjs adds the cells to the inventory)
-// with its clip on disk — so a tap on the form is never a silent no-op.
+// with its clip on disk — so a tap on the form is never a silent no-op. Membership only: the
+// spelling words.json carries is the course sentences' majority vote (cards don't vote), so a
+// card cell is held to naming the same word, not to winning the spelling.
 test('verb cards: every table cell is a form whose word clip is in words.json and on disk', () => {
 	const words = JSON.parse(readFileSync(join(ROOT, 'tools', 'tts', 'words.json'), 'utf8'));
 	const cards = GRAMMAR_TOPICS.filter(isCard);
@@ -114,13 +117,13 @@ test('verb cards: every table cell is a form whose word clip is in words.json an
 				continue;
 			}
 			assert.ok(r.label && r.dev, `${t.id}: table row needs label + dev: ${JSON.stringify(r)}`);
+			assert.ok(r.word || !/\s/.test(r.dev.trim()), `${t.id}: '${r.dev}' has several words — say which one the row voices (word:)`);
 			const word = cellWord(r);
 			assert.ok(/^[\u0900-\u097F]+$/.test(word.replace(/[?!]/g, '')), `${t.id}: '${word}' is not a single Devanagari word`);
 			if (r.word)
 				assert.ok(r.dev.replace(/[?!]/g, '').split(/\s+/).includes(r.word), `${t.id}: word '${r.word}' is not a word of '${r.dev}'`);
 			const slug = slugOf(word);
 			assert.ok(words[slug], `${t.id}: '${word}' (${slug}) is not in tools/tts/words.json — run build-words.mjs`);
-			assert.equal(words[slug].dev, word.replace(/[?!]/g, ''), `${t.id}: words.json spells ${slug} differently`);
 			assert.ok(
 				existsSync(join(ROOT, 'audio', 'words', slug + '.mp3')),
 				`${t.id}: audio/words/${slug}.mp3 is missing — synth-app.mjs --words --new`,

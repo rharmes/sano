@@ -1968,8 +1968,8 @@ function startGrammar(topic) {
 // A verb card's conjugation table (T66): one row per form — the situation on the left, the
 // form on the right as a button that plays the form's own word clip (audio/words/, the same
 // clips the word-bank tiles use; the data test keeps every cell's clip on disk). A row with
-// `heading` splits a two-verb card. The voiced word is the cell's `word`, or the last word of
-// its `dev` (so 'म गर्छु' plays garchhu).
+// `heading` splits a two-verb card. The voiced word is the cell's `word` — required whenever
+// `dev` has more than one word ('म गर्छु' names word 'गर्छु') — else `dev` itself.
 function grammarTable(rows) {
 	const table = document.getElementById('grammar-table');
 	table.textContent = '';
@@ -1990,8 +1990,7 @@ function grammarTable(rows) {
 		const form = document.createElement('button');
 		form.type = 'button';
 		form.className = 'grammar-form';
-		const word = row.word || row.dev.trim().split(/\s+/).pop();
-		form.setAttribute('aria-label', 'Play ' + SanoRomanize.romanize(word));
+		const word = row.word || row.dev;
 		form.appendChild(document.createTextNode(SanoRomanize.romanize(row.dev).toLowerCase()));
 		const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 		const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
