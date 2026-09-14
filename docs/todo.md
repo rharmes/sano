@@ -185,6 +185,18 @@ Findings, rulings, measurements and what was deliberately left undone: `docs/tod
 
 ## Testing
 
+- [ ] **T67 · `tools/ci-status.sh`: verify CI by head SHA from the repo** `waiting-on:none` `area:tooling` — Ross
+      (2026-09-14): the by-SHA CI check the workflow requires (step 7: match on `headSha`, never the
+      newest run) has lived in an ad-hoc scratchpad script, which misfired twice while CI was green —
+      its `gh run list --branch` filter was hard-coded to a branch from an earlier session, so it saw
+      no runs and timed out. Put it in the repo: `tools/ci-status.sh [sha]` (default `HEAD`) lists
+      every run whose `headSha` matches with **no branch filter**, waits until all are `completed`
+      (configurable timeout), prints name / conclusion / URL, and exits 0 only when every run
+      succeeded — 1 for a failure, 2 for a timeout or no run ever appearing (so "nothing matched" can
+      never read as green). Document it in workflow step 7 of `CLAUDE.md` + `AGENTS.md` (both twins,
+      same commit) and in `docs/architecture.md`'s tools table; not deployed (`deploy.sh` allowlist
+      already excludes `tools/`).
+
 - [x] **T56 · Fix the flaky `no horizontal overflow across mobile widths` e2e** — one in-page
       measurement per width and resize-in-place instead of re-navigating: 14.5 s → ~1 s.
 - [x] **T17 · Fix the flaky WebKit match-lesson e2e** — force-click each pair and verify both tiles
