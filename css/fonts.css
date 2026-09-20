@@ -133,3 +133,47 @@
 		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
 		U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
+/* T68: the ten Devanagari digits in their NEPALI forms (the everyday 5 and 8 differ from the
+   Hindi-style shapes every system font draws). A digits-only cut of Noto Sans Devanagari with the
+   Nepali alternates baked in (tools/build-numeral-font.py; OFL, fonts/OFL-NotoSansDevanagari.txt),
+   declared under the app's OWN family names for U+0966–096F only — so every numeral on every
+   screen picks it up with no markup, and no other character is touched. Other Devanagari (the
+   sound-drill letters, path-node glyphs) still falls back to the system font. Each file is cut
+   from a Noto weight one step LIGHTER than its slot (300 ← Light, 400 ← Regular, 700 ← Medium):
+   Noto's strokes run heavier than Lato's, and Noto Bold beside Lato Bold read as too thick.
+   `font-display: block`, unlike the text faces' `swap`: the fallback here is not a plainer font
+   but the WRONG SHAPE — the system's Hindi-style 5 and 8, the very forms this replaces — so a
+   brief blank (the files are ~3 KB) beats flashing the glyph the lesson teaches against. */
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 300;
+	font-display: block;
+	src: url(../fonts/nepali-numerals-300.woff2) format('woff2');
+	unicode-range: U+0966-096F;
+}
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url(../fonts/nepali-numerals-400.woff2) format('woff2');
+	unicode-range: U+0966-096F;
+}
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 700;
+	font-display: block;
+	src: url(../fonts/nepali-numerals-700.woff2) format('woff2');
+	unicode-range: U+0966-096F;
+}
+@font-face {
+	font-family: 'Neuton';
+	font-style: normal;
+	font-weight: 700;
+	font-display: block;
+	src: url(../fonts/nepali-numerals-700.woff2) format('woff2');
+	unicode-range: U+0966-096F;
+}

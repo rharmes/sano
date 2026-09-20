@@ -12,7 +12,14 @@ const P = SanoRomanize.pronounce;
 // Depth alternate frames (T28) are romanized at load exactly like an item's own `dev`, so
 // fold each into the coverage sweep as a pseudo-item (`<id>-fN`) — an unmapped glyph or a
 // vanishing word in a rotating sentence must fail the same nets.
-const items = COURSE.flatMap((u) => u.items).flatMap((it) => [it, ...(it.frames || []).map((f, i) => ({ id: `${it.id}-f${i + 1}`, dev: f.dev }))]);
+// Numeral items (T68: `dev` is Devanagari digits only) are not words and are MEANT to pass
+// through the romanizer untouched — the glyph is what the lesson shows — so they sit outside
+// these nets and get their own check at the bottom.
+const isNumeral = (it) => /^[०-९]+$/.test(it.dev || '');
+const numerals = COURSE.flatMap((u) => u.items).filter(isNumeral);
+const items = COURSE.flatMap((u) => u.items)
+	.filter((it) => !isNumeral(it))
+	.flatMap((it) => [it, ...(it.frames || []).map((f, i) => ({ id: `${it.id}-f${i + 1}`, dev: f.dev }))]);
 const isDev = (ch) => /[ऀ-ॿ]/.test(ch);
 
 test('coverage: every Devanagari codepoint in the corpus is a known table key', () => {
@@ -111,4 +118,9 @@ test('coverage: pron is pure and idempotent across the corpus', () => {
 		assert.equal(P(it.dev), P(it.dev), `${it.id}: not deterministic`);
 		assert.equal(P(P(it.dev)), P(it.dev), `${it.id}: not idempotent`);
 	}
+});
+
+test('coverage: numeral items pass through the romanizer unchanged', () => {
+	assert.ok(numerals.length, 'no numeral items found');
+	for (const it of numerals) assert.equal(R(it.dev), it.dev, `${it.id}: romanize changed the glyph`);
 });

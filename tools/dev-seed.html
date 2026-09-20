@@ -296,6 +296,25 @@
 			<button onclick="seed('sounds')">Seed &amp; open</button>
 		</div>
 		<div class="card">
+			<span class="tests">T68 Nepali numerals · note + two units</span>
+			<h2>7c · Nepali numerals (०–९), then reading bigger numbers</h2>
+			<p>
+				Everything through <b>Bigger Numbers</b> is done, so the teal <b>०–९</b> node — <b>Nepali numerals</b> — is unlocked just after
+				it: a one-page note with a place-value contrast (1500 over १५००), a chart of the ten glyphs whose words play on tap (zero has no
+				clip, so it is plain text), the look-alikes to watch, and four course sentences. Right after it the <b>Numerals 0–9</b> unit is
+				current; <b>Reading Bigger Numbers</b> follows. Start a lesson: a glyph prompt is <b>silent</b> and shows no romanization (the
+				clip would read the answer out) — the word speaks only in the answer reveal and the say-it-aloud step — and the recall drill is
+				<b>Type the number</b>.
+			</p>
+			<p>
+				<b>Reviews</b> seeds both units as met and due instead: the digits come back as <b>Type the number</b>; the bigger numbers as
+				recognition both ways, <b>Select what you hear</b> answered in glyphs (only for numbers the course can say), and glyph-to-number
+				match grids whose glyph tiles stay silent.
+			</p>
+			<button onclick="seed('numerals')">Seed &amp; open</button>
+			<button onclick="seed('numerals-review')">Reviews</button>
+		</div>
+		<div class="card">
 			<span class="tests">T64 grammar notes · streak</span>
 			<h2>7b · A grammar note on the path (word order)</h2>
 			<p>
@@ -994,6 +1013,25 @@
 					const items = {};
 					masterThrough(items, 'pronouns');
 					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 60 });
+				} else if (which === 'numerals') {
+					// T68: everything through Bigger Numbers mastered -> the numerals note (after it) is
+					// unlocked and the Numerals 0–9 unit is current, all ten glyphs new.
+					const items = {};
+					masterThrough(items, 'numbers-big');
+					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 40 });
+				} else if (which === 'numerals-review') {
+					// T68: both numeral units met. The digits are at recall strength and overdue (-> "type
+					// the number"); the bigger numbers are still learning and due (-> recognition either way,
+					// the listening drill that answers in glyphs, and glyph-to-number match grids).
+					const items = {};
+					masterThrough(items, 'numerals-reading');
+					for (const u of COURSE) {
+						if (u.id === 'numerals') for (const it of u.items) items[it.id] = mastered({ interval: 6, lastSeen: day(14) });
+						if (u.id === 'numerals-reading')
+							for (const it of u.items)
+								items[it.id] = rec({ level: 1, interval: 1, graduated: false, lastSeen: day(5) });
+					}
+					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 80 });
 				} else if (which === 'grammar-all') {
 					// T64/T66: everything through Days & the Clock (the last anchor, the hunu verb card) mastered
 					// -> every grammar note and verb card open.

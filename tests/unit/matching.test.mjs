@@ -38,3 +38,13 @@ test('lenientEquals: typo tolerance scales with the expected length', () => {
 	// length >10 => tolerance 2.
 	assert.equal(lenientEquals('namaskaarmaa', 'namaskaarma', true), true);
 });
+
+// T68: a numeral's Nepali side is nothing BUT Devanagari digits, so normalize must keep them —
+// stripped, every glyph would grade equal to every other (both '').
+test('normalize keeps Devanagari digits, so one numeral never grades as another', () => {
+	assert.equal(normalize('१५००'), '१५००');
+	assert.equal(lenientEquals('१', '२', false), false);
+	assert.equal(lenientEquals('२५', '२५', false), true);
+	assert.equal(lenientEquals('25', '25', false), true);
+	assert.equal(lenientEquals('26', '25', false), false);
+});

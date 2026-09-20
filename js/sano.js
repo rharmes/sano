@@ -1093,6 +1093,21 @@ function uniquePairItems(items) {
 	return out;
 }
 
+// The listening grid's tiles are CLIPS, so it needs a second dedupe (T68): a numeral borrows
+// the clip of the word that says it (numeral-1 plays 'ek-one'), and the two collide on neither
+// romanization nor English — uniquePairItems keeps both — yet their audio tiles would be the
+// same sound, and pairing it with the "wrong" one of two right answers grades as a miss on
+// both. Keep the first item per clip. Pure: `clipOf` is itemClip in the app.
+function uniqueClipItems(items, clipOf) {
+	const seen = new Set();
+	return items.filter((item) => {
+		const clip = clipOf(item);
+		if (seen.has(clip)) return false;
+		seen.add(clip);
+		return true;
+	});
+}
+
 // --- SR-05 depth: alternate frames (pure) ---
 // "Depth, not breadth" (T28): an item may carry extra example sentences in `frames`
 // ([{dev,en}], with np/pron derived at load like the item's own). Reviews rotate through
@@ -1102,8 +1117,28 @@ function uniquePairItems(items) {
 // audio id = item.id); each extra frame gets audio id `<id>-f1`, `<id>-f2`, … A frame is a
 // plain display/grade unit: { dev, np, pron, en, emoji, audioId }. Only the canonical frame
 // carries the item's emoji — an alternate sentence's meaning may not match it.
+// T68 numerals — inside this block because itemFrames (below) needs them and the unit tests
+// lift the block whole.
+// A NUMERAL item is one whose `dev` is Devanagari digits only ("१", "२५"): its Nepali side is
+// the glyph itself and its English side the Arabic number. Two things follow, both because
+// the learner already knows the spoken words (the numbers units come first):
+//   - the clip gives the glyph away. "ek" played over a १ prompt answers the question, so a
+//     numeral is SILENT wherever the glyph is what's being asked — prompts and tappable
+//     tiles — and speaks only after the answer (the feedback reveal), in the say-it-aloud
+//     step, and where the audio IS the prompt (listening drills, which answer in glyphs).
+//   - it has no clip of its own. `says` names the course item that speaks it (numeral-1 →
+//     'ek-one') and its clip is borrowed, companion voices included; with no `says` (zero,
+//     and numbers the course doesn't teach aloud) the numeral is silent everywhere.
+function isNumeral(item) {
+	return /^[०-९]+$/.test(item.dev || '');
+}
+// The clip id an item plays: its own id, or for a numeral the borrowed one (null = silent).
+function itemClip(item) {
+	return isNumeral(item) ? item.says || null : item.id;
+}
+
 function itemFrames(item) {
-	const base = { dev: item.dev, np: item.np, pron: item.pron, en: item.en, emoji: item.emoji, audioId: item.id };
+	const base = { dev: item.dev, np: item.np, pron: item.pron, en: item.en, emoji: item.emoji, audioId: itemClip(item), numeral: isNumeral(item) };
 	if (!item.frames || !item.frames.length) return [base];
 	return [base].concat(
 		item.frames.map((f, i) => ({ dev: f.dev, np: f.np, pron: f.pron, en: f.en, emoji: undefined, audioId: item.id + '-f' + (i + 1) })),
@@ -1210,6 +1245,13 @@ function buildExercises(newItems, reviewItems) {
 	for (const item of newItems) {
 		exercises.push({ item: item, type: 'choice', dir: 'np-en' });
 		exercises.push({ item: item, type: 'choice', dir: 'en-np' });
+		if (isNumeral(item)) {
+			// T68: a numeral's recall is typing the number it shows — a one-glyph word bank would
+			// be no retrieval at all. It speaks only if the course teaches its word (`says`).
+			exercises.push({ item: item, type: 'type', newRecall: true });
+			if (item.says) exercises.push({ item: item, type: 'speak', unscored: true });
+			continue;
+		}
 		// In-session recall (SR-05 learning step): a gentle tap-based word bank so a new word is
 		// RETRIEVED, not just recognized, within its first lesson. `newRecall` lets the ordering
 		// pass below keep it after a recognition drill — a new word's schedule is graded once per
@@ -1230,8 +1272,17 @@ function buildExercises(newItems, reviewItems) {
 	// Listening match (audio -> romanization): bundle single-word recall-strength reviews into a
 	// tap-the-sound round, the ear-only sibling of the recognition match above. Single-word only
 	// keeps the romanization tiles short and leaves multi-word phrases for word bank.
-	const listenable = uniquePairItems(
-		reviewItems.filter((item) => item.np.trim().split(/\s+/).length === 1 && isRecallStrength(itemRecord(item.id)) && !matchItems.includes(item)),
+	const listenable = uniqueClipItems(
+		uniquePairItems(
+			reviewItems.filter(
+				(item) =>
+					item.np.trim().split(/\s+/).length === 1 &&
+					isRecallStrength(itemRecord(item.id)) &&
+					!matchItems.includes(item) &&
+					itemClip(item),
+			),
+		),
+		itemClip,
 	);
 	const listenMatchItems = canBundle && listenable.length >= 4 ? shuffleArray(listenable.slice()).slice(0, 5) : [];
 
@@ -1247,7 +1298,16 @@ function buildExercises(newItems, reviewItems) {
 		// phrase to assemble, not a word to type. pickFrame is deterministic, so the later ex.frame
 		// pass resolves to this same frame.
 		const multiWord = pickFrame(item).np.split(/\s+/).length >= 2;
-		if (isRecallStrength(record)) {
+		if (isNumeral(item)) {
+			// T68: read the glyph and type the number once it's at recall strength (typing digits
+			// is easy, so it doesn't wait for graduation like free-typing a word does); before
+			// that, recognition either way round — or, for a numeral the course can say, hear the
+			// word and pick its glyph.
+			if (isRecallStrength(record)) exercises.push({ item: item, type: 'type', companion: companion });
+			else if (item.says && Math.random() < LISTEN_PROBABILITY)
+				exercises.push({ item: item, type: 'choice', dir: 'np-en', listen: true, companion: companion });
+			else exercises.push({ item: item, type: 'choice', dir: Math.random() < 0.5 ? 'np-en' : 'en-np', companion: companion });
+		} else if (isRecallStrength(record)) {
 			// Free typing is the hardest recall — reserve it for a GRADUATED word shown as a single
 			// word. A still-learning word (or one shown as a multi-word frame) gets a gentle tap-based
 			// word bank instead (works for single words too), where its recalls accrue toward graduation.
@@ -1324,7 +1384,8 @@ function itemAccuracy(item) {
 }
 
 function promptText(item) {
-	return item.emoji ? item.emoji + ' ' + item.en : item.en;
+	// A numeral's English side is the bare number (T68) — its 🔢 is a dictionary/match marker.
+	return item.emoji && !isNumeral(item) ? item.emoji + ' ' + item.en : item.en;
 }
 
 function renderExercise() {
@@ -1450,10 +1511,23 @@ function setListenPrompt(label, audioId, voiceId) {
 function renderChoice(ex) {
 	const f = ex.frame;
 	if (ex.listen) setListenPrompt('Select what you hear', f.audioId, exVoice(ex));
+	// A numeral prompt (T68) is the bare glyph: no clip and no pronunciation line, both of which
+	// would read the answer out. Its listening drill answers in GLYPHS — hear "saat", pick ७.
+	else if (ex.dir === 'np-en' && f.numeral) setPrompt('Select the number', f.np, '', undefined, undefined, false);
 	else if (ex.dir === 'np-en') setPrompt('Select the correct meaning', f.np, f.pron, f.audioId, exVoice(ex), true);
-	else setPrompt('Select the Nepali', promptText(f), '', undefined, undefined, false, f.audioId);
+	else
+		setPrompt(
+			f.numeral ? 'Select the Nepali numeral' : 'Select the Nepali',
+			promptText(f),
+			'',
+			undefined,
+			undefined,
+			false,
+			f.numeral ? undefined : f.audioId,
+		);
 
-	const choiceText = ex.dir === 'np-en' ? (item) => item.en : (item) => item.np;
+	const showEnglish = ex.dir === 'np-en' && !(ex.listen && f.numeral);
+	const choiceText = showEnglish ? (item) => item.en : (item) => item.np;
 	const choices = shuffleArray([ex.item].concat(getDistractors(ex.item, choiceText)));
 
 	const choiceEls = document.getElementById('exercise-choices').getElementsByTagName('button');
@@ -1463,7 +1537,7 @@ function renderChoice(ex) {
 		const correct = choice.id === ex.item.id;
 		// The correct choice must show THIS exercise's frame text (the prompt shows the frame,
 		// not the item's canonical sentence); distractors keep their own canonical text.
-		choiceEl.textContent = correct ? (ex.dir === 'np-en' ? f.en : f.np) : choiceText(choice);
+		choiceEl.textContent = correct ? (showEnglish ? f.en : f.np) : choiceText(choice);
 		choiceEl.dataset.status = correct ? 'correct' : 'incorrect';
 		choiceEl.className = '';
 		index++;
@@ -1620,9 +1694,14 @@ function wordbankDistractors(item, dir) {
 
 function renderType(ex) {
 	const f = ex.frame;
-	if (ex.listen) setListenPrompt('Type what you hear', f.audioId, exVoice(ex));
+	// A numeral (T68) runs the other way: the glyph is the prompt (silent — see isNumeral) and
+	// the answer is the number, typed on the numeric keypad.
+	if (f.numeral) setPrompt('Type the number', f.np, '', undefined, undefined, false);
+	else if (ex.listen) setListenPrompt('Type what you hear', f.audioId, exVoice(ex));
 	else setPrompt('Type the Nepali', promptText(f), '', undefined, undefined, false, f.audioId);
 	const input = document.getElementById('type-answer');
+	input.inputMode = f.numeral ? 'numeric' : 'text';
+	input.placeholder = f.numeral ? 'Type the number…' : 'Type the Nepali…';
 	input.value = '';
 	document.getElementById('exercise-check').disabled = true;
 	input.focus();
@@ -1917,7 +1996,8 @@ function startGrammar(topic) {
 	const isCard = topic.kind === 'verb';
 	showScreen('grammar');
 	document.getElementById('screen-grammar').classList.toggle('verb', isCard);
-	document.getElementById('grammar-eyebrow').textContent = isCard ? 'Verb card' : 'Grammar note';
+	document.getElementById('screen-grammar').classList.toggle('numerals', topic.kind === 'numerals');
+	document.getElementById('grammar-eyebrow').textContent = isCard ? 'Verb card' : topic.kind === 'numerals' ? 'Reading note' : 'Grammar note';
 	document.getElementById('grammar-title').textContent = topic.title;
 	document.getElementById('grammar-intro').textContent = topic.intro;
 	document.getElementById('grammar-tip').textContent = topic.tip;
@@ -1989,6 +2069,8 @@ function startGrammar(topic) {
 // clips the word-bank tiles use; the data test keeps every cell's clip on disk). A row with
 // `heading` splits a two-verb card. The voiced word is the cell's `word` — required whenever
 // `dev` has more than one word ('म गर्छु' names word 'गर्छु') — else `dev` itself.
+// The numerals note (T68) reuses it: its rows lead with a `glyph`, and its zero row carries a
+// `plain` word instead of `dev` — no clip exists, so it renders as text rather than a button.
 function grammarTable(rows) {
 	const table = document.getElementById('grammar-table');
 	table.textContent = '';
@@ -2005,7 +2087,24 @@ function grammarTable(rows) {
 		tr.className = 'grammar-table-row';
 		const label = document.createElement('span');
 		label.className = 'label';
-		label.textContent = row.label;
+		// The numerals note (T68) leads each row with the glyph it teaches, drawn large.
+		if (row.glyph) {
+			const glyph = document.createElement('span');
+			glyph.className = 'glyph';
+			glyph.textContent = row.glyph;
+			label.appendChild(glyph);
+		}
+		label.appendChild(document.createTextNode(row.label));
+		// A `plain` cell is a word with no clip (the numerals note's zero): text, not a button.
+		if (!row.dev) {
+			if (!row.plain) continue; // the data test keeps this from shipping; never blank the note over it
+			const plain = document.createElement('span');
+			plain.className = 'grammar-form plain';
+			plain.textContent = SanoRomanize.romanize(row.plain).toLowerCase();
+			tr.append(label, plain);
+			table.appendChild(tr);
+			continue;
+		}
 		const form = document.createElement('button');
 		form.type = 'button';
 		form.className = 'grammar-form';
@@ -2029,7 +2128,11 @@ function finishGrammar() {
 	if (!topic) return;
 	grammarTopic = null;
 	const n = topic.examples.length;
-	const forms = topic.table ? topic.table.filter((r) => r.dev).length + ' forms · ' : '';
+	const forms = !topic.table
+		? ''
+		: topic.kind === 'numerals'
+			? topic.table.length + ' numerals · '
+			: topic.table.filter((r) => r.dev).length + ' forms · ';
 	finishStop('grammarDone', topic.id, 'Got it!', topic.title + ' — ' + forms + n + ' example ' + (n === 1 ? 'sentence' : 'sentences'));
 }
 
@@ -2148,7 +2251,7 @@ function listenTile(item, n) {
 	tile.setAttribute('aria-label', 'Play audio clip ' + (n + 1));
 	tile.addEventListener('click', () => {
 		selectMatchTile(tile, 'left');
-		afterPaint(() => SanoAudio.play(item.id));
+		afterPaint(() => SanoAudio.play(itemClip(item)));
 	});
 	return tile;
 }
@@ -2185,7 +2288,8 @@ function matchTile(item, side, text) {
 		// matched) so the sound reinforces the pairing; the clip starts after the
 		// selection paints (T61).
 		selectMatchTile(tile, side);
-		if (side === 'left') afterPaint(() => SanoAudio.play(item.id));
+		// A numeral tile stays silent (T68): its clip would name the number it pairs with.
+		if (side === 'left' && !isNumeral(item)) afterPaint(() => SanoAudio.play(item.id));
 	});
 	return tile;
 }
@@ -2324,6 +2428,9 @@ function checkExercise() {
 	let correct;
 	if (ex.type === 'wordbank' && ex.dir === 'np-en') {
 		correct = acceptedEnglish(ex).some((answer) => lenientEquals(given, answer, false));
+	} else if (ex.type === 'type' && ex.frame.numeral) {
+		// T68: a numeral is answered with its number, exactly — a "typo" in 25 is another number.
+		correct = lenientEquals(given, ex.frame.en, false);
 	} else {
 		// Parenthetical asides are dropped from the tiles, so they're not required to match.
 		let expected = ex.type === 'wordbank' ? stripParens(ex.frame.np) : ex.frame.np;
@@ -2363,7 +2470,9 @@ function applyAnswer(ex, correct) {
 	// multiple choice only on a miss.
 	const showAnswer = !correct || ex.type === 'wordbank' || ex.type === 'type' || ex.listen;
 	const f = ex.frame;
-	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? f.np + ' = ' + promptText(f) : '', f.audioId, exVoice(ex));
+	// A numeral's reveal adds the word it's read as (T68) — this is where its clip may speak.
+	const reveal = f.np + ' = ' + promptText(f) + (f.numeral && f.pron ? ' · ' + f.pron : '');
+	showFeedback(correct, correct ? 'Correct!' : 'Not quite.', showAnswer ? reveal : '', f.audioId, exVoice(ex));
 
 	saveState();
 	refreshHeader();
@@ -2382,10 +2491,15 @@ function showFeedback(correct, title, answerText, audioId, voiceId) {
 	if (answerText && audioId) answerEl.appendChild(SanoAudio.button(audioId, { className: 'audio-inline', voiceId: voiceId }));
 }
 
+// Devanagari digits survive (T68): a numeral's Nepali side is nothing else, so stripping them
+// would make every glyph equal to every other ('' === ''). Nothing grades glyph against glyph
+// today — a numeral's recall is typed as a number — so this is a guard for the day one does
+// (tests/unit/matching.test.mjs holds it). No spoken word contains a digit, so every word's
+// clip slug is unchanged (the build scripts' mirrors of this function still strip them).
 function normalize(s) {
 	return s
 		.toLowerCase()
-		.replace(/[^a-z0-9\s]/g, '')
+		.replace(/[^a-z0-9०-९\s]/g, '')
 		.replace(/\s+/g, ' ')
 		.trim();
 }
@@ -2637,7 +2751,8 @@ function renderTables() {
 				const cell = document.createElement(i === 0 ? 'th' : 'td');
 				cell.textContent = text;
 				// First cell is the Nepali word — give every dictionary row a play button.
-				if (i === 0) cell.appendChild(SanoAudio.button(item.id, { className: 'audio-inline' }));
+				// (A numeral plays the clip it borrows, T68; one with none gets no button.)
+				if (i === 0 && itemClip(item)) cell.appendChild(SanoAudio.button(itemClip(item), { className: 'audio-inline' }));
 				row.appendChild(cell);
 			});
 			tbody.appendChild(row);

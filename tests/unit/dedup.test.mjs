@@ -39,3 +39,24 @@ test('a collision-free bundle is returned intact', () => {
 	];
 	assert.equal(uniquePairItems(items).length, 2);
 });
+
+// T68: the listening grid dedupes by CLIP as well — a numeral borrows the clip of the word that
+// says it, and the two share neither romanization nor English, so uniquePairItems keeps both.
+test('uniqueClipItems: a numeral and the word whose clip it borrows never share a listening grid', () => {
+	const { uniqueClipItems } = liftFns('js/sano.js', ['uniqueClipItems']);
+	const clipOf = (item) => item.says || item.id;
+	const items = [
+		{ id: 'ek-one', np: 'Ek', en: 'One' },
+		{ id: 'numeral-1', np: '१', en: '1', says: 'ek-one' }, // same clip as ek-one -> dropped
+		{ id: 'numeral-2', np: '२', en: '2', says: 'dui-two' }, // first on its clip -> kept
+		{ id: 'dui-two', np: 'Dui', en: 'Two' }, // same clip as numeral-2 -> dropped
+	];
+	assert.deepEqual(
+		uniquePairItems(items).map((i) => i.id),
+		['ek-one', 'numeral-1', 'numeral-2', 'dui-two'], // the text dedupe alone lets all four through
+	);
+	assert.deepEqual(
+		uniqueClipItems(items, clipOf).map((i) => i.id),
+		['ek-one', 'numeral-2'],
+	);
+});

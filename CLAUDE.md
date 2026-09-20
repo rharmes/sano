@@ -84,6 +84,19 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   deliberate — it's keyed **per prompt**, not per word (an English word's Nepali depends on its
   sentence), and it **reveals the graded answer**, so it's an always-available Duolingo-style hint
   that is **silent** (the clip would read the answer out) and **doesn't affect grading** (Ross).
+- **Numeral items** (T68: the `numerals` and `numerals-reading` units, after Bigger Numbers, behind
+  a teal `kind: 'numerals'` note) are the one place an item's Nepali side is a **glyph**, not a
+  romanized word: `dev` is Devanagari digits only (`isNumeral`, js/sano.js), `en` is the number.
+  The learner already knows the spoken words, so **the clip would give the glyph away** — a numeral
+  is silent and un-romanized wherever the glyph is the question (prompts, match tiles), and speaks
+  only in the answer reveal, the say-it-aloud step and listening drills (which answer in glyphs).
+  It renders **no audio of its own**: `says` names the course item whose clip it borrows, and one
+  without `says` (zero, 25 …) is silent. Recall is **Type the number**, never a word bank. Every
+  word-oriented tool skips numerals (romanization coverage, dictionary, `synth-app.mjs`). The digits
+  are drawn in their **Nepali forms** (the everyday 5 and 8 differ from the Hindi-style shapes every
+  system font draws — native-speaker reviewed): `fonts/nepali-numerals-*.woff2`, a digits-only cut of
+  Noto Sans Devanagari with the Nepali alternates baked in (`tools/build-numeral-font.py`), declared
+  in `css/fonts.css` under the app's own families for U+0966–096F only, so no markup is involved.
 - **Story dialogues** (SR-01, `DIALOGUES` in `js/dialogues.js`) play in a Duolingo-Stories player —
   **romanized-only**, every word tappable for its English (`js/gloss.js`); only `greet-pyaro` is live,
   and **no story is on the path** (T65: `onPath: false` until the rework lands — review one via
@@ -212,6 +225,9 @@ routing: `tools/tts/README.md`.
   inline). `boot()` also stubs `Math.random` with a seeded PRNG — the lesson builder makes real
   random draws (exercise direction, listen rolls, which reviews bundle into a match grid), so every
   e2e run must draw the identical lesson or type-specific assertions flake (T39).
+  `openScreen()` waits for the page to stop scrolling and centres its target before tapping — the
+  load-time "centre the current unit" scroll is smooth (`barebones.css`), and a forced click fired
+  mid-scroll, or at a control Playwright scrolled under the fixed header, misses.
   `prefers-reduced-motion` is driven with `page.emulateMedia`, not the config option.
 - **Backend tests:** the `tests/api` guard specs run against `php -S` with **no** `sano-config.php`,
   so they assert only pre-DB guards. Full integration (`tests/api/integration.spec.mjs`) needs MySQL
@@ -237,7 +253,7 @@ routing: `tools/tts/README.md`.
   art. `style-guide.html`, `animations.html`, `characters.html` share a day/night pill (`?theme=`);
   `icons.html` and `dialogue.html` are further artifacts.
 - **`design/devanagari.html`** is a localhost-only review tool for the AI-drafted `dev` strings: all
-  959 items grouped by unit (English, romanization, ▶, an editable Devanagari box, and a flag-only
+  979 items grouped by unit (English, romanization, ▶, an editable Devanagari box, and a flag-only
   column surfacing any `tools/dict/coverage-report.md` disagreement for that row). It POSTs only
   changed rows to `design/devanagari-save.php`, which merges them into the **gitignored**
   `design/devanagari-review.json` — it does **not** touch `js/data.js`. Serve with `php -S`.

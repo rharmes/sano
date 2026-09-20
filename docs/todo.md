@@ -85,6 +85,9 @@ what's in use.
 - [x] **T66 · Verb notes on the path — common verbs and how they change** — seven situation notes (right now,
       have eaten, the -ne form, the past, bhayo, please, can/want/must) and four clay **verb cards** (garnu,
       jaanu·aaunu, khaanu, hunu) whose conjugation tables play a word clip per form (2026-09-14).
+- [x] **T68 · Nepali numerals: a note, then lessons to read them** — a teal *Nepali numerals* note after Bigger
+      Numbers, then two units (`numerals` ०–९, `numerals-reading` १०–१५००) whose Nepali side is the glyph: silent
+      prompts, a borrowed clip in the reveal, and *Type the number* as the recall drill (2026-09-20).
 
 ## Content review
 

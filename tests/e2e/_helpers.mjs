@@ -11,7 +11,34 @@ export { seed };
 // outcome and re-click rather than trust a single tap.
 export async function openScreen(page, locator, screenSel) {
 	const screen = page.locator(screenSel);
+	// Let the page come to rest first. css/barebones.css sets `scroll-behavior: smooth`, so the
+	// app's load-time "centre the current unit" scroll (renderPath → recenter, and again once the
+	// web fonts settle) ANIMATES for ~250ms after boot() returns; a forced click is positional, so
+	// one fired mid-scroll lands beside its target. Rest = scrollY unchanged for 150ms. (Forcing
+	// `scroll-behavior: auto` instead is not an option: WebKit then refuses forced clicks with
+	// "Element is outside of the viewport".)
+	await page.evaluate(
+		() =>
+			new Promise((resolve) => {
+				let last = window.scrollY;
+				let since = performance.now();
+				const tick = () => {
+					if (window.scrollY !== last) {
+						last = window.scrollY;
+						since = performance.now();
+					}
+					if (performance.now() - since >= 150) resolve();
+					else requestAnimationFrame(tick);
+				};
+				tick();
+			}),
+	);
 	for (let i = 0; i < 4; i++) {
+		// Centre the control first. The app scrolls to the current unit on load, which can leave a
+		// control (the daily-lesson button) ABOVE the viewport; Playwright then scrolls it just into
+		// view at the top edge — under the fixed header — and a forced click, which skips the
+		// hit-test, taps the header instead. Centred, nothing overlaps it.
+		await locator.evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' })).catch(() => {});
 		await locator.click({ force: true }).catch(() => {});
 		try {
 			await expect(screen).toBeVisible({ timeout: 3000 });

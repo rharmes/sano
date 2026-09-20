@@ -93,6 +93,19 @@ An item (`kind: 'vocab'`) — carries an `emoji`, no `usage`:
 { id, dev, en, emoji } // np + pron derived at load (see the note above)
 ```
 
+A **numeral** item (T68 — units `numerals`, `numerals-reading`) is a vocab item whose `dev` is
+Devanagari digits only; that, not a flag, is what makes it one (`isNumeral`):
+
+```js
+{ id: 'numeral-7', dev: '७', en: '7', emoji: '🔢', says: 'saat-seven' }
+// np:   the glyph itself — the romanizer passes digits through
+// pron: the romanized word of the `says` item ('saat'), or '' — set at load in js/romanize.js
+// says: optional — the course item whose clip this numeral borrows (every voice folder included).
+//       It must name a real, non-numeral item. Absent (zero; 25, 47 … which the course never
+//       says aloud) = silent everywhere, and no say-it-aloud step.
+// A numeral never gets a clip, a word-bank tile, a gloss or a dictionary entry of its own.
+```
+
 Two verb units (`verbs-present`, `verbs-past`) and five intermediate units
 (`modals-can-want-must`, `comparing-things`, `place-position`, `jobs-work`,
 `duration-frequency`) extend the path by topic.
@@ -142,6 +155,9 @@ and `DIALOGUES` is hand-built from it (adding the Nepali + clip routing), synced
 ```js
 { id, after, glyph, title, sub, intro, legend, contrast, points, examples, tip }
 { id, kind: 'verb', after, glyph, title, sub, intro, legend, table, points, examples, tip }   // a verb card (T66)
+{ id, kind: 'numerals', …, contrast, table, … }   // the numerals note (T68): BOTH a contrast and a table, whose
+//           rows are { glyph, label, dev } (the word plays, like a card cell) or { glyph, label, plain }
+//           (a word with no clip — zero — shown as text); `label` must be the digit the glyph stands for
 // after:    one note per anchor unit (the path takes the first match; the data test enforces it)
 // kind:     absent = a grammar note (teal); 'verb' = a verb card — a clay path node whose glyph is the
 //           verb's dictionary form, no `contrast`, and a conjugation `table` above the legend
