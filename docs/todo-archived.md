@@ -236,7 +236,20 @@ other and its record says so — the box means *resolved*, not *shipped*.
     Playwright to the top edge, under the fixed header. `openScreen()` now waits for scrollY to rest
     and centres its target first (100/100 on WebKit, retries off). Forcing `scroll-behavior: auto`
     was tried and rejected — WebKit then refuses forced clicks as "outside of the viewport".
-  - Tests: `tests/e2e/numerals.spec.mjs` (11), numeral cases in `tests/unit/frames` + `matching`,
+  - **Antagonist review (PR #13, Opus 5): one blocking defect, fixed.** A numeral borrows the clip of
+    the word that says it, and the pair collides on neither romanization nor English, so
+    `uniquePairItems` let both into one listening grid — two tiles, one sound, and a guaranteed miss
+    (reproduced by the reviewer in 18.5% of built lessons with all four number units overdue). The
+    listening grid now also dedupes by clip (`uniqueClipItems`). The review also showed three
+    `itemClip` call sites could be reverted with the suite still green; the dictionary test now opens
+    the real screen, a listening grid with a numeral is exercised, and 300 built lessons are checked
+    for a shared clip — all three mutation-verified. Also from the review: `font-display: block` on
+    the digit faces (the fallback is the *wrong shape*, not a plainer font), the glyph rule scoped to
+    the numerals screen, a malformed chart row skipped rather than blanking the note, the Noto
+    version (2.007) recorded in the build script, and the course counts corrected to 104 units / 979
+    items. Left in the thread as nits: the four un-linked mirrors of `normalize` (inert — no spoken
+    word has a digit).
+  - Tests: `tests/e2e/numerals.spec.mjs` (13), numeral cases in `tests/unit/frames` + `matching`,
     `tests/data/course` (en equals the glyphs digit for digit; `says` is a spoken item with clips on
     disk; numeral units hold only numerals) and `grammar` (the chart covers ०–९, labels are the digits).
     Dev-seed card **7c** (`numerals`, `numerals-review`).

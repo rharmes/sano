@@ -182,13 +182,78 @@ test('a match grid: glyph tiles stay silent, word tiles still speak', async ({ p
 });
 
 test('the dictionary lists a numeral with the word it is read as, and plays the borrowed clip', async ({ page }) => {
+	// Both numeral units met, so the dictionary screen itself lists them.
+	const state = seed.numeralsReady();
+	for (const id of ['numeral-7', 'numeral-0']) state.items[id] = seed.rec({ level: 1, interval: 1 });
+	await boot(page, state);
+	const clips = trackClips(page);
+	await openScreen(page, page.locator('#nav-dictionary'), '#screen-dictionary');
+
+	const seven = page.locator('#vocab tr', { has: page.locator('th', { hasText: /^७$/ }) });
+	await expect(seven.locator('td').first()).toHaveText('saat'); // read as…
+	await expect(seven.locator('td').last()).toHaveText('7');
+	await seven.locator('.audio-inline').dispatchEvent('click');
+	await expect.poll(() => clips).toContain('default/saat-seven'); // …and it plays the clip it borrows, not 'numeral-7'
+	expect(clips.filter((c) => c.includes('numeral-'))).toEqual([]);
+
+	// Zero has no clip to borrow: a row, but no button that could only 404.
+	const zero = page.locator('#vocab tr', { has: page.locator('th', { hasText: /^०$/ }) });
+	await expect(zero.locator('td').last()).toHaveText('0');
+	await expect(zero.locator('.audio-inline')).toHaveCount(0);
+});
+
+test('a listening grid: the numeral tile plays its borrowed clip and pairs with its glyph', async ({ page }) => {
 	await boot(page, seed.numeralsReady());
-	const row = await page.evaluate(() => {
-		const item = COURSE.flatMap((u) => u.items).find((it) => it.id === 'numeral-7');
-		const zero = COURSE.flatMap((u) => u.items).find((it) => it.id === 'numeral-0');
-		return { np: item.np, pron: item.pron, clip: itemClip(item), zeroPron: zero.pron, zeroClip: itemClip(zero) };
+	const clips = trackClips(page);
+	await page.evaluate(() => {
+		const all = COURSE.flatMap((u) => u.items);
+		startLesson([{ type: 'listenMatch', items: ['numeral-3', 'saat-seven'].map((id) => all.find((it) => it.id === id)) }]);
 	});
-	expect(row).toEqual({ np: '७', pron: 'saat', clip: 'saat-seven', zeroPron: '', zeroClip: null });
+	// Tile order is shuffled per column, so pick each side by class, not position.
+	const sound = page.locator('#exercise-listen-match .listen-tile[data-id="numeral-3"]');
+	const glyph = page.locator('#exercise-listen-match .match-tile:not(.listen-tile)[data-id="numeral-3"]');
+	await sound.dispatchEvent('click');
+	await expect.poll(() => clips).toContain('default/tin-three');
+	await expect(glyph).toHaveText('३');
+	await glyph.dispatchEvent('click');
+	await expect(glyph).toHaveClass(/matched/);
+});
+
+// The review-found defect: a numeral borrows the clip of the word that says it, the two share
+// neither romanization nor English, and both can be due at once — so a listening grid could
+// hold two tiles with the SAME sound, one of whose pairings must grade as a miss.
+test('no built lesson puts a numeral and the word whose clip it borrows in one listening grid', async ({ page }) => {
+	const state = seed.numeralsReady();
+	const due = { recalls: 2, graduated: true, ease: 2.6, interval: 6, lastSeen: seed.day(20) };
+	await boot(page, state);
+	const result = await page.evaluate((due) => {
+		// Everything through Reading Bigger Numbers graduated; the four number units overdue at recall strength.
+		for (const u of COURSE) {
+			for (const it of u.items)
+				state.items[it.id] = Object.assign(
+					{ seen: 4, correct: 4, intro: true },
+					due,
+					/^num/.test(u.id) ? {} : { interval: 40, lastSeen: dayString(new Date()) },
+				);
+			if (u.id === 'numerals-reading') break;
+		}
+		let grids = 0;
+		const collisions = [];
+		for (let i = 0; i < 300; i++) {
+			const plan = dailyPlan();
+			for (const ex of buildExercises(plan.newItems, plan.reviewItems)) {
+				if (ex.type !== 'listenMatch') continue;
+				grids++;
+				const played = ex.items.map(itemClip);
+				if (new Set(played).size !== played.length) collisions.push(ex.items.map((it) => it.id).join('+'));
+			}
+		}
+		const mixed = COURSE.flatMap((u) => u.items).filter((it) => it.says).length;
+		return { grids, collisions, mixed };
+	}, due);
+	expect(result.mixed).toBeGreaterThan(0);
+	expect(result.grids).toBeGreaterThan(50); // the state really does produce listening grids…
+	expect(result.collisions).toEqual([]); // …and none of them plays one clip from two tiles
 });
 
 // The Nepali digit forms (the everyday 5 and 8) come from a digits-only font declared under the

@@ -11,7 +11,9 @@ Every numeral on every screen then gets the Nepali forms with no markup, and not
 (Reviewed against a native speaker's reference, Ross 2026-09-20.)
 
 Source: Noto Sans Devanagari (SIL OFL 1.1, no Reserved Font Name — see
-fonts/OFL-NotoSansDevanagari.txt), https://github.com/notofonts/devanagari. Not committed. Each
+fonts/OFL-NotoSansDevanagari.txt), https://github.com/notofonts/devanagari — the shipped files were
+cut from **Version 2.007** (the hinted TTFs; name ID 5 says so). Not committed, so a rebuild from a
+later release can change the outlines: check the version, and compare a render, before committing. Each
 argument is `<css weight>=<source ttf>`: the CSS weight is the Lato/Neuton slot the file fills, and
 the source is deliberately a step LIGHTER than the slot — Noto's strokes run heavier than Lato's,
 so Noto Bold beside Lato Bold read as too thick (Ross, 2026-09-20). As shipped:

@@ -1093,6 +1093,21 @@ function uniquePairItems(items) {
 	return out;
 }
 
+// The listening grid's tiles are CLIPS, so it needs a second dedupe (T68): a numeral borrows
+// the clip of the word that says it (numeral-1 plays 'ek-one'), and the two collide on neither
+// romanization nor English — uniquePairItems keeps both — yet their audio tiles would be the
+// same sound, and pairing it with the "wrong" one of two right answers grades as a miss on
+// both. Keep the first item per clip. Pure: `clipOf` is itemClip in the app.
+function uniqueClipItems(items, clipOf) {
+	const seen = new Set();
+	return items.filter((item) => {
+		const clip = clipOf(item);
+		if (seen.has(clip)) return false;
+		seen.add(clip);
+		return true;
+	});
+}
+
 // --- SR-05 depth: alternate frames (pure) ---
 // "Depth, not breadth" (T28): an item may carry extra example sentences in `frames`
 // ([{dev,en}], with np/pron derived at load like the item's own). Reviews rotate through
@@ -1257,14 +1272,17 @@ function buildExercises(newItems, reviewItems) {
 	// Listening match (audio -> romanization): bundle single-word recall-strength reviews into a
 	// tap-the-sound round, the ear-only sibling of the recognition match above. Single-word only
 	// keeps the romanization tiles short and leaves multi-word phrases for word bank.
-	const listenable = uniquePairItems(
-		reviewItems.filter(
-			(item) =>
-				item.np.trim().split(/\s+/).length === 1 &&
-				isRecallStrength(itemRecord(item.id)) &&
-				!matchItems.includes(item) &&
-				itemClip(item),
+	const listenable = uniqueClipItems(
+		uniquePairItems(
+			reviewItems.filter(
+				(item) =>
+					item.np.trim().split(/\s+/).length === 1 &&
+					isRecallStrength(itemRecord(item.id)) &&
+					!matchItems.includes(item) &&
+					itemClip(item),
+			),
 		),
+		itemClip,
 	);
 	const listenMatchItems = canBundle && listenable.length >= 4 ? shuffleArray(listenable.slice()).slice(0, 5) : [];
 
@@ -2079,6 +2097,7 @@ function grammarTable(rows) {
 		label.appendChild(document.createTextNode(row.label));
 		// A `plain` cell is a word with no clip (the numerals note's zero): text, not a button.
 		if (!row.dev) {
+			if (!row.plain) continue; // the data test keeps this from shipping; never blank the note over it
 			const plain = document.createElement('span');
 			plain.className = 'grammar-form plain';
 			plain.textContent = SanoRomanize.romanize(row.plain).toLowerCase();

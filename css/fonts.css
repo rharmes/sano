@@ -141,12 +141,15 @@
    screen picks it up with no markup, and no other character is touched. Other Devanagari (the
    sound-drill letters, path-node glyphs) still falls back to the system font. Each file is cut
    from a Noto weight one step LIGHTER than its slot (300 ← Light, 400 ← Regular, 700 ← Medium):
-   Noto's strokes run heavier than Lato's, and Noto Bold beside Lato Bold read as too thick. */
+   Noto's strokes run heavier than Lato's, and Noto Bold beside Lato Bold read as too thick.
+   `font-display: block`, unlike the text faces' `swap`: the fallback here is not a plainer font
+   but the WRONG SHAPE — the system's Hindi-style 5 and 8, the very forms this replaces — so a
+   brief blank (the files are ~3 KB) beats flashing the glyph the lesson teaches against. */
 @font-face {
 	font-family: 'Lato';
 	font-style: normal;
 	font-weight: 300;
-	font-display: swap;
+	font-display: block;
 	src: url(../fonts/nepali-numerals-300.woff2) format('woff2');
 	unicode-range: U+0966-096F;
 }
@@ -154,7 +157,7 @@
 	font-family: 'Lato';
 	font-style: normal;
 	font-weight: 400;
-	font-display: swap;
+	font-display: block;
 	src: url(../fonts/nepali-numerals-400.woff2) format('woff2');
 	unicode-range: U+0966-096F;
 }
@@ -162,7 +165,7 @@
 	font-family: 'Lato';
 	font-style: normal;
 	font-weight: 700;
-	font-display: swap;
+	font-display: block;
 	src: url(../fonts/nepali-numerals-700.woff2) format('woff2');
 	unicode-range: U+0966-096F;
 }
@@ -170,7 +173,7 @@
 	font-family: 'Neuton';
 	font-style: normal;
 	font-weight: 700;
-	font-display: swap;
+	font-display: block;
 	src: url(../fonts/nepali-numerals-700.woff2) format('woff2');
 	unicode-range: U+0966-096F;
 }
