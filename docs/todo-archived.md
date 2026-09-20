@@ -176,6 +176,51 @@ other and its record says so — the box means *resolved*, not *shipped*.
     calls before drafting. All prose, table labels, the 8 new Devanagari forms and the 7 fills are
     AI drafts under Ross's review. Not done: a `--verb-color` on the lesson-complete screen; the
     "one grammar stop per anchor" rule stayed (no anchor needed two).
+- [x] **T68 · Nepali numerals: a note, then lessons to read them** — Ross (2026-09-20): "Create a set of
+      lessons to learn Nepali numerals. Start with a node that describes the numerals (like the recent
+      grammar ones), and then have lessons to learn the numerals. Place this after the one in the path
+      where we learn how to speak the Nepali numbers aloud." Delivered 2026-09-20.
+  - **Placement.** After **Bigger Numbers**, not after Numbers 1–10: the second unit reads १०, २०, ५०, १००
+    and १०००, whose words that unit teaches, and the anchor after `numbers` already holds the
+    counting-words note (one note per anchor). Path order: Numbers 1–10 → counting-words note → Bigger
+    Numbers → **numerals note** → **Numerals 0–9** → **Reading Bigger Numbers** → Pronouns. *Ross's to
+    overrule* — moving it is a two-line change (the note's `after`, the units' position in `COURSE`).
+  - **The note** (`kind: 'numerals'`, js/grammar.js; eyebrow "Reading note"): the one note with both a
+    contrast (1 5 0 0 over its glyphs — place value is the same) and a table — ten rows led by a large
+    glyph, the nine taught words as buttons on their existing word clips, zero (`shunya`, from the
+    ground-truth dictionary) as plain text since the course has no clip for it. Examples are four real
+    number sentences with the glyph in the literal gloss. All prose AI-drafted, Ross's to correct —
+    including the look-alikes claim (1 like a 9, 4 like an 8, 7 like a 6).
+  - **Two units, 20 items**, `kind: 'vocab'`: `numerals` (१–९, then ०) and `numerals-reading` (१० २० २५ ४७
+    ५० ६९ १०० ३८० १००० १५०० — every digit appears; five are numbers the course can say). An item is a
+    numeral because its `dev` is Devanagari digits only (`isNumeral`) — no flag. `en` is the number.
+  - **The leak, and the rule.** The learner already knows *ek, dui, tin*, so the clip over a glyph prompt
+    answers it. A numeral is therefore silent and shows no romanization wherever the glyph is the
+    question (choice prompt, typed prompt, match tiles) and speaks only in the answer reveal
+    ("glyph = 7 · saat" + button), the say-it-aloud step, and listening drills — whose answers are
+    glyphs (hear *saat*, pick the glyph). Mutation-checked: with the guards removed the two silence e2e
+    tests fail.
+  - **No new audio, no API spend.** `says` names the course item whose clip the numeral borrows
+    (`itemClip`), companion folders included (both units are Thulo's). Without `says` — zero and the five
+    numbers the course never says — the item is silent and gets no speaking step. `synth-app.mjs`,
+    the dictionary builder, and the romanization-coverage nets all skip numerals explicitly;
+    `build-words` / `build-glosses` / `build-en-glosses` needed nothing (their slug strips the digits) and
+    regenerate byte-identical apart from the note's table cells joining `words.json`.
+  - **Recall is typing the number** ("Type the number", numeric keypad, exact match) — for new items in
+    place of the word bank (a one-tile bank is no retrieval) and for reviews as soon as the item is at
+    recall strength, without waiting for graduation (typing digits is not the "hardest recall" that
+    rule protects). `normalize` now keeps Devanagari digits: nothing grades glyph against glyph today,
+    but stripped they would all be equal, so the unit test holds the guard.
+  - **Deliberately not done:** a clip for zero or for 25/47/69/380/1500 (needs ElevenLabs permission and,
+    for the compounds, words the course doesn't teach — a follow-up if Ross wants them spoken); Bikram
+    Sambat dates, phone-number or price-tag formats; any change to the existing numbers units.
+  - **For existing learners:** units unlock in order, so anyone already past Bigger Numbers finds
+    *Numerals 0–9* as their current unit and the later ones locked until its ten glyphs graduate —
+    the same thing every mid-path insertion has done.
+  - Tests: `tests/e2e/numerals.spec.mjs` (10), numeral cases in `tests/unit/frames` + `matching`,
+    `tests/data/course` (en equals the glyphs digit for digit; `says` is a spoken item with clips on
+    disk; numeral units hold only numerals) and `grammar` (the chart covers ०–९, labels are the digits).
+    Dev-seed card **7c** (`numerals`, `numerals-review`).
 
 ## Companion characters
 

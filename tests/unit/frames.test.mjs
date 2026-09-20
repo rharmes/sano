@@ -8,11 +8,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { liftBlock } from '../lift.mjs';
 
-const { itemFrames, frameWordKey, knownWordSet, eligibleFrames, rotateFrame, FRAME_MAX_NEW_WORDS } = liftBlock(
+const { itemFrames, isNumeral, frameWordKey, knownWordSet, eligibleFrames, rotateFrame, FRAME_MAX_NEW_WORDS } = liftBlock(
 	'js/sano.js',
 	'// --- SR-05 depth: alternate frames (pure) ---',
 	'// --- end SR-05 depth ---',
-	['itemFrames', 'frameWordKey', 'knownWordSet', 'eligibleFrames', 'rotateFrame', 'FRAME_MAX_NEW_WORDS'],
+	['itemFrames', 'isNumeral', 'frameWordKey', 'knownWordSet', 'eligibleFrames', 'rotateFrame', 'FRAME_MAX_NEW_WORDS'],
 );
 
 // np/pron are derived at load (js/romanize.js); here we set them by hand like the app would.
@@ -36,7 +36,18 @@ const learning = { intro: true, seen: 2, graduated: false };
 test('itemFrames: no frames → the canonical frame only (audio id = item id)', () => {
 	const f = itemFrames(plain);
 	assert.equal(f.length, 1);
-	assert.deepEqual(f[0], { dev: 'क', np: 'ka', pron: 'kuh', en: 'A', emoji: '🅰️', audioId: 'w1' });
+	assert.deepEqual(f[0], { dev: 'क', np: 'ka', pron: 'kuh', en: 'A', emoji: '🅰️', audioId: 'w1', numeral: false });
+});
+
+// T68: a numeral item (dev = Devanagari digits only) has no clip of its own — it borrows the
+// clip of the item its `says` names, and with no `says` it is silent (audioId null).
+test('itemFrames: a numeral borrows the clip its `says` names, or is silent', () => {
+	const said = itemFrames({ id: 'numeral-1', dev: '१', np: '१', pron: 'ek', en: '1', emoji: '🔢', says: 'ek-one' })[0];
+	assert.equal(said.numeral, true);
+	assert.equal(said.audioId, 'ek-one');
+	const silent = itemFrames({ id: 'numeral-25', dev: '२५', np: '२५', pron: '', en: '25', emoji: '🔢' })[0];
+	assert.equal(silent.numeral, true);
+	assert.equal(silent.audioId, null);
 });
 
 test('itemFrames: canonical + extras with -fN audio ids; emoji only on the canonical', () => {
@@ -137,4 +148,13 @@ test('rotateFrame: index 0 on the very first exposure, then one per review, wrap
 
 test('the new-word budget is the agreed "one or two new words"', () => {
 	assert.equal(FRAME_MAX_NEW_WORDS, 2);
+});
+
+test('isNumeral: Devanagari digits only — not a word, not a phrase with a number in it', () => {
+	assert.equal(isNumeral({ dev: '७' }), true);
+	assert.equal(isNumeral({ dev: '१५००' }), true);
+	assert.equal(isNumeral({ dev: 'सात' }), false);
+	assert.equal(isNumeral({ dev: '२५ रुपैयाँ' }), false);
+	assert.equal(isNumeral({ dev: '25' }), false);
+	assert.equal(isNumeral({}), false);
 });

@@ -46,7 +46,9 @@ const only = args.only ? String(args.only) : null;
 if (!apiKey) fail('Set ELEVENLABS_API_KEY in the environment.');
 
 const COURSE = Function(readFileSync(join(ROOT, 'js', 'data.js'), 'utf8') + '; return COURSE;')();
-const items = COURSE.flatMap((u) => u.items).filter((it) => it.dev);
+// Numeral items (T68: `dev` is Devanagari digits only) have no clip of their own — each borrows
+// the clip of the item named by its `says` — so they are never rendered.
+const items = COURSE.flatMap((u) => u.items).filter((it) => it.dev && !/^[०-९]+$/.test(it.dev));
 // Expand each item into its clips: the item's own `dev` (audio id = item.id) plus any
 // depth alternate frames (T28), whose ids are `<id>-f1`, `<id>-f2`, … — matching the
 // app's itemFrames() naming. With --new these render only when missing, so adding frames
@@ -111,7 +113,7 @@ if (args.sample) {
 			continue;
 		}
 		for (const it of u.items) {
-			if (!it.dev) continue;
+			if (!items.includes(it)) continue; // no dev, or a numeral (see `items` above)
 			const unitClips = [
 				{ id: it.id, dev: it.dev },
 				...(it.frames || []).map((f, i) => ({ id: it.id + '-f' + (i + 1), dev: f.dev })).filter((c) => c.dev),

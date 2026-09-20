@@ -389,6 +389,162 @@ const COURSE = [
 			},
 		],
 	},
+	// T68: the Nepali NUMERALS. A numeral item's `dev` is Devanagari digits only, so its Nepali
+	// side is the glyph itself (the romanizer passes digits through) and its English side is the
+	// Arabic number. `says` names the course item that speaks it — the numeral borrows that
+	// item's clip rather than rendering its own, and plays it only where hearing the word can't
+	// give the glyph away (isNumeral, js/sano.js). A numeral with no `says` (zero, and the
+	// numbers the course doesn't teach aloud) is silent.
+	{
+		id: 'numerals',
+		title: 'Numerals 0–9',
+		kind: 'vocab',
+		goal: 'Read the ten Nepali digits',
+		items: [
+			{
+				id: 'numeral-1',
+				dev: '१',
+				emoji: '🔢',
+				en: '1',
+				says: 'ek-one',
+			},
+			{
+				id: 'numeral-2',
+				dev: '२',
+				emoji: '🔢',
+				en: '2',
+				says: 'dui-two',
+			},
+			{
+				id: 'numeral-3',
+				dev: '३',
+				emoji: '🔢',
+				en: '3',
+				says: 'tin-three',
+			},
+			{
+				id: 'numeral-4',
+				dev: '४',
+				emoji: '🔢',
+				en: '4',
+				says: 'chaar-four',
+			},
+			{
+				id: 'numeral-5',
+				dev: '५',
+				emoji: '🔢',
+				en: '5',
+				says: 'paanch-five',
+			},
+			{
+				id: 'numeral-6',
+				dev: '६',
+				emoji: '🔢',
+				en: '6',
+				says: 'chha-six',
+			},
+			{
+				id: 'numeral-7',
+				dev: '७',
+				emoji: '🔢',
+				en: '7',
+				says: 'saat-seven',
+			},
+			{
+				id: 'numeral-8',
+				dev: '८',
+				emoji: '🔢',
+				en: '8',
+				says: 'aath-eight',
+			},
+			{
+				id: 'numeral-9',
+				dev: '९',
+				emoji: '🔢',
+				en: '9',
+				says: 'nau-nine',
+			},
+			{
+				id: 'numeral-0',
+				dev: '०',
+				emoji: '🔢',
+				en: '0',
+			},
+		],
+	},
+	{
+		id: 'numerals-reading',
+		title: 'Reading Bigger Numbers',
+		kind: 'vocab',
+		goal: 'Read prices and other bigger numbers',
+		items: [
+			{
+				id: 'numeral-10',
+				dev: '१०',
+				emoji: '🔢',
+				en: '10',
+				says: 'das-ten',
+			},
+			{
+				id: 'numeral-20',
+				dev: '२०',
+				emoji: '🔢',
+				en: '20',
+				says: 'bis-twenty',
+			},
+			{
+				id: 'numeral-25',
+				dev: '२५',
+				emoji: '🔢',
+				en: '25',
+			},
+			{
+				id: 'numeral-47',
+				dev: '४७',
+				emoji: '🔢',
+				en: '47',
+			},
+			{
+				id: 'numeral-50',
+				dev: '५०',
+				emoji: '🔢',
+				en: '50',
+				says: 'pachaas-fifty',
+			},
+			{
+				id: 'numeral-69',
+				dev: '६९',
+				emoji: '🔢',
+				en: '69',
+			},
+			{
+				id: 'numeral-100',
+				dev: '१००',
+				emoji: '🔢',
+				en: '100',
+				says: 'saya-hundred',
+			},
+			{
+				id: 'numeral-380',
+				dev: '३८०',
+				emoji: '🔢',
+				en: '380',
+			},
+			{
+				id: 'numeral-1000',
+				dev: '१०००',
+				emoji: '🔢',
+				en: '1000',
+				says: 'hajaar-thousand',
+			},
+			{
+				id: 'numeral-1500',
+				dev: '१५००',
+				emoji: '🔢',
+				en: '1500',
+			},
+		],
+	},
 	{
 		id: 'pronouns',
 		title: 'Pronouns & Possessives',
@@ -8148,6 +8304,8 @@ const UNIT_VOICES = {
 	'basics-replies': 'thulo',
 	numbers: 'thulo',
 	'numbers-big': 'thulo',
+	numerals: 'thulo',
+	'numerals-reading': 'thulo',
 	pronouns: 'thulo',
 	// Pyaro (red panda, "dear") — family and meeting people.
 	'family-people': 'pyaro',

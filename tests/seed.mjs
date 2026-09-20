@@ -100,6 +100,22 @@ export function allNotesReady(extra) {
 	);
 }
 
+// Everything through Bigger Numbers mastered, so the numerals note (T68) — the teal node after
+// that unit — is unlocked and the Numerals 0–9 unit is current with all ten glyphs still new;
+// studied yesterday, not yet today (dev-seed 'numerals').
+export function numeralsReady(extra) {
+	const items = {};
+	for (const u of COURSE) {
+		for (const it of u.items) items[it.id] = mastered({ lastSeen: day(0) });
+		if (u.id === 'numbers-big') break;
+	}
+	return Object.assign(
+		{ version: 3, name: 'Aastha', onboarded: true, streak: 4, streakFreezes: 1, lastActivityDay: day(1), itemsToday: 0, itemsTotal: 40 },
+		{ items },
+		extra,
+	);
+}
+
 // First 8 Basics words introduced (still learning, not mastered), for the dictionary (dev-seed 'dict').
 export function dictReady(extra) {
 	const items = {};

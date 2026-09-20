@@ -29,6 +29,8 @@ function sentence(clip) {
 // Every sentence a note colours: its examples plus any contrast row that carries its own parts.
 const sentences = (t) => t.examples.concat((t.contrast || []).filter((r) => r.parts));
 const isCard = (t) => t.kind === 'verb';
+// The numerals note (T68): the one note with a contrast AND a table, whose rows lead with a glyph.
+const isNumerals = (t) => t.kind === 'numerals';
 // Mirror of grammarTable() in js/sano.js: the one word a table cell voices (`word`, else `dev`),
 // and its clip slug — playTileWord verbatim, on the app's own `normalize`, so the slug asserted
 // here is the file the tap requests.
@@ -42,10 +44,10 @@ test('GRAMMAR_TOPICS: shape, `after` is a real unit, ids unique', () => {
 		assert.ok(unitIds.has(t.after), `${t.id}: after '${t.after}' is not a unit id`);
 		assert.ok(Array.isArray(t.points) && t.points.length, `${t.id}: no points`);
 		assert.ok(Array.isArray(t.examples) && t.examples.length, `${t.id}: no examples`);
-		assert.ok(t.kind === undefined || isCard(t), `${t.id}: unknown kind '${t.kind}'`);
+		assert.ok(t.kind === undefined || isCard(t) || isNumerals(t), `${t.id}: unknown kind '${t.kind}'`);
 		if (isCard(t)) assert.ok(!t.contrast, `${t.id}: a verb card has a table, not contrast rows`);
 		else {
-			assert.ok(!t.table, `${t.id}: only a verb card (kind: 'verb') may carry a table`);
+			assert.ok(!t.table || isNumerals(t), `${t.id}: only a verb card or the numerals note may carry a table`);
 			assert.ok(Array.isArray(t.contrast) && t.contrast.length >= 2, `${t.id}: needs at least two contrast rows`);
 		}
 		for (const r of t.contrast || []) {
@@ -129,5 +131,26 @@ test('verb cards: every table cell is a form whose word clip is in words.json an
 				`${t.id}: audio/words/${slug}.mp3 is missing — synth-app.mjs --words --new`,
 			);
 		}
+	}
+});
+
+// The numerals note (T68): ten rows, one per digit, each leading with its glyph. A `dev` cell
+// voices a word the course teaches (held to the same clip check as a verb-card cell); a `plain`
+// cell is a word with no clip, shown as text. The labels must be the digits the glyphs stand
+// for — the one fact here that is arithmetic, not wording.
+test('numerals note: ten glyph rows, each labelled with its digit, voiced cells on disk', () => {
+	const words = JSON.parse(readFileSync(join(ROOT, 'tools', 'tts', 'words.json'), 'utf8'));
+	const notes = GRAMMAR_TOPICS.filter(isNumerals);
+	assert.equal(notes.length, 1, 'expected exactly one numerals note');
+	const [t] = notes;
+	assert.deepEqual(t.table.map((r) => r.glyph).sort(), [...'०१२३४५६७८९'], `${t.id}: the table must cover ०–९ once each`);
+	for (const r of t.table) {
+		assert.equal(r.label, String('०१२३४५६७८९'.indexOf(r.glyph)), `${t.id}: ${r.glyph} is labelled '${r.label}'`);
+		assert.ok(!!r.dev !== !!r.plain, `${t.id}: row ${r.glyph} needs exactly one of dev / plain`);
+		assert.ok(/^[\u0900-\u097F]+$/.test(r.dev || r.plain), `${t.id}: row ${r.glyph} is not a single Devanagari word`);
+		if (!r.dev) continue;
+		const slug = slugOf(r.dev);
+		assert.ok(words[slug], `${t.id}: '${r.dev}' (${slug}) is not in tools/tts/words.json`);
+		assert.ok(existsSync(join(ROOT, 'audio', 'words', slug + '.mp3')), `${t.id}: audio/words/${slug}.mp3 is missing`);
 	}
 });

@@ -73,3 +73,32 @@ test('COURSE: depth alternate frames are well-formed and their clip ids stay uni
 		});
 	}
 });
+
+// Numeral items (T68): `dev` is Devanagari digits only. The one fact in them that is arithmetic
+// rather than wording is that `en` is the same number, digit for digit — and the clip a numeral
+// borrows (`says`) must be a real spoken item whose clip is on disk, or the reveal and the
+// listening drill go silent.
+test('COURSE: numeral items — en is the number the glyphs spell, `says` names a spoken item with a clip', async () => {
+	const { existsSync } = await import('node:fs');
+	const { join } = await import('node:path');
+	const { ROOT } = await import('../lift.mjs');
+	const { UNIT_VOICES } = liftGlobals('js/data.js', ['UNIT_VOICES']);
+	const isNumeral = (it) => /^[०-९]+$/.test(it.dev);
+	const numerals = allItems.filter(isNumeral);
+	assert.ok(numerals.length >= 10, 'expected the numeral units');
+	assert.deepEqual([...new Set(numerals.filter((it) => it.dev.length === 1).map((it) => it.dev))].sort(), [...'०१२३४५६७८९'], 'every digit ०–९ is taught');
+	for (const it of numerals) {
+		const number = [...it.dev].map((ch) => '०१२३४५६७८९'.indexOf(ch)).join('');
+		assert.equal(it.en, number, `${it.id}: ${it.dev} is ${number}, not '${it.en}'`);
+		assert.equal(it.id, 'numeral-' + number, `${it.id}: id should name its number`);
+		assert.equal(it.frames, undefined, `${it.id}: a numeral has no alternate frames`);
+		if (it.says === undefined) continue;
+		const sayer = allItems.find((s) => s.id === it.says);
+		assert.ok(sayer && !isNumeral(sayer), `${it.id}: says '${it.says}' is not a spoken course item`);
+		const unit = COURSE.find((u) => u.items.includes(it));
+		for (const voice of ['default', UNIT_VOICES[unit.id]])
+			assert.ok(existsSync(join(ROOT, 'audio', voice, it.says + '.mp3')), `${it.id}: audio/${voice}/${it.says}.mp3 is missing`);
+	}
+	// A numeral unit holds nothing else: mixed in with words, its distractors would be words.
+	for (const u of COURSE) if (u.items.some(isNumeral)) assert.ok(u.items.every(isNumeral), `${u.id}: mixes numerals and words`);
+});

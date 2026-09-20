@@ -51,7 +51,7 @@ test('dictionary: every COURSE content word is represented (the load-bearing inv
 	const missing = [];
 	for (const u of COURSE)
 		for (const it of u.items) {
-			if (!it.dev) continue;
+			if (!it.dev || /^[०-९]+$/.test(it.dev)) continue; // a numeral (T68) is a glyph, not a word
 			for (const w of tokenize(it.dev)) if (!byKey.has(w.key)) missing.push(`${w.display} (${it.id})`);
 		}
 	assert.deepEqual([...new Set(missing)], [], `COURSE words absent from dictionary: ${[...new Set(missing)].slice(0, 20).join(', ')}`);

@@ -85,12 +85,9 @@ what's in use.
 - [x] **T66 · Verb notes on the path — common verbs and how they change** — seven situation notes (right now,
       have eaten, the -ne form, the past, bhayo, please, can/want/must) and four clay **verb cards** (garnu,
       jaanu·aaunu, khaanu, hunu) whose conjugation tables play a word clip per form (2026-09-14).
-- [ ] **T68 · Nepali numerals: a note, then lessons to read them** `waiting-on:none` `area:app` — Ross (2026-09-20): teach the
-      Devanagari numerals (०–९). Start with a node that describes them, like the T64 grammar notes, then
-      lessons that drill them, placed on the path after the units that teach the numbers aloud
-      (`numbers`, `numbers-big`). The app is romanized everywhere else, so a numeral item is the first
-      whose Nepali side is a glyph: its clip must not give the answer away, and grading must tell one
-      glyph from another.
+- [x] **T68 · Nepali numerals: a note, then lessons to read them** — a teal *Nepali numerals* note after Bigger
+      Numbers, then two units (`numerals` ०–९, `numerals-reading` १०–१५००) whose Nepali side is the glyph: silent
+      prompts, a borrowed clip in the reveal, and *Type the number* as the recall drill (2026-09-20).
 
 ## Content review
 

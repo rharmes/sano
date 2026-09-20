@@ -364,6 +364,13 @@ if (typeof COURSE !== 'undefined' && Array.isArray(COURSE)) {
 				item.np = SanoRomanize.romanize(item.dev);
 				item.pron = SanoRomanize.pronounce(item.dev);
 			}
+			// A numeral (T68: `dev` is digits only, so `np` is the glyph itself) has no respelling of
+			// its own — its `pron` is the romanized word of the item that speaks it (`says`), or
+			// nothing. Those items sit earlier in the course, so their `np` is already derived.
+			if (item && /^[०-९]+$/.test(item.dev || '')) {
+				const sayer = item.says && COURSE.flatMap((u) => u.items).find((it) => it.id === item.says);
+				item.pron = sayer && sayer.np ? sayer.np.toLowerCase() : '';
+			}
 			// Depth (T28): derive np/pron for each alternate frame the same way, so a rotating
 			// review sentence renders and grades exactly like the item's own `dev`.
 			if (item && item.frames) {

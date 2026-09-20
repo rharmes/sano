@@ -93,6 +93,97 @@ const GRAMMAR_TOPICS = [
 		],
 		tip: 'When you order or ask for a number of anything, reach for -wataa: duiwataa chiyaa, tinawataa momo. It is rarely wrong for things.',
 	},
+	// T68: the numerals note (`kind: 'numerals'`) — the one note with BOTH a contrast (place value
+	// works as in English) and a table. Its rows carry a `glyph`, drawn large ahead of the label;
+	// a `dev` cell plays that word's clip like a verb card's, and the zero row's `plain` word is
+	// shown without a button (the course doesn't teach it, so there is no clip). The two units
+	// that drill the glyphs follow it on the path (`numerals`, `numerals-reading`, js/data.js).
+	{
+		id: 'numerals',
+		kind: 'numerals',
+		after: 'numbers-big', // path anchor: this node sits just after this unit
+		glyph: '०–९', // short mark for the path node
+		title: 'Nepali numerals',
+		sub: '० to ९ · same system, new shapes',
+		intro: 'Nepali writes numbers with its own ten digits. You can already say them — ek, dui, tin — and this is what they look like on a price tag, a banknote or the front of a bus. Tap a word to hear it.',
+		legend: [
+			{ role: 'mark', label: 'the number' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		contrast: [
+			{
+				label: 'English',
+				chips: [
+					{ en: '1', role: 'mark' },
+					{ en: '5', role: 'mark' },
+					{ en: '0', role: 'mark' },
+					{ en: '0', role: 'mark' },
+				],
+			},
+			{
+				label: 'Nepali',
+				chips: [
+					{ en: '१', role: 'mark' },
+					{ en: '५', role: 'mark' },
+					{ en: '०', role: 'mark' },
+					{ en: '०', role: 'mark' },
+				],
+			},
+		],
+		table: [
+			{ glyph: '०', label: '0', plain: 'शून्य' },
+			{ glyph: '१', label: '1', dev: 'एक' },
+			{ glyph: '२', label: '2', dev: 'दुई' },
+			{ glyph: '३', label: '3', dev: 'तीन' },
+			{ glyph: '४', label: '4', dev: 'चार' },
+			{ glyph: '५', label: '5', dev: 'पाँच' },
+			{ glyph: '६', label: '6', dev: 'छ' },
+			{ glyph: '७', label: '7', dev: 'सात' },
+			{ glyph: '८', label: '8', dev: 'आठ' },
+			{ glyph: '९', label: '9', dev: 'नौ' },
+		],
+		points: [
+			'The system is the one you know: ten digits, place value, read left to right. १० is 10, २५ is 25, १५०० is 1500.',
+			'Three are false friends: १ (1) looks like a 9, ४ (4) like an 8, and ७ (7) like a 6. ०, २ and ३ sit close to the digits you know.',
+			'You will meet them on price tags, banknotes, number plates, calendars and phone numbers — often side by side with 1 2 3.',
+		],
+		examples: [
+			{
+				clip: 'paanch-five-f2',
+				parts: [
+					{ dev: 'पाँच', en: 'five · ५', role: 'mark' },
+					{ dev: 'रुपैयाँ', en: 'rupees', role: 'what' },
+					{ dev: 'मात्र', en: 'only', role: 'what' },
+				],
+			},
+			{
+				clip: 'bis-twenty-f2',
+				parts: [
+					{ dev: 'बीस', en: 'twenty · २०', role: 'mark' },
+					{ dev: 'रुपैयाँ', en: 'rupees', role: 'what' },
+					{ dev: 'भयो', en: 'came to', role: 'verb' },
+				],
+			},
+			{
+				clip: 'hajaar-thousand-f1',
+				parts: [
+					{ dev: 'एक', en: 'one', role: 'mark' },
+					{ dev: 'हजार', en: 'thousand · १०००', role: 'mark' },
+					{ dev: 'रुपैयाँ', en: 'rupees', role: 'what' },
+				],
+			},
+			{
+				clip: 'tin-three-f1',
+				parts: [
+					{ dev: 'तीन', en: 'three · ३', role: 'mark' },
+					{ dev: 'बजे', en: 'o’clock', role: 'what' },
+					{ dev: 'आउनुस्', en: 'please come', role: 'verb' },
+				],
+			},
+		],
+		tip: 'Read every price tag and number plate you pass. A week of that and the shapes stop needing translation.',
+	},
 	{
 		id: 'word-order',
 		after: 'pronouns', // path anchor: this node sits just after this unit

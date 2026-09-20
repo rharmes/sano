@@ -3064,6 +3064,32 @@ table#vocab tbody td:nth-child(3) {
 .grammar-form:active {
 	filter: brightness(0.92);
 }
+/* The numerals note (T68): each row leads with its glyph, large, and the forms take the
+   grammar teal (the clay is the verb cards'). A `plain` cell is a word with no clip. */
+.grammar-table-row .label .glyph {
+	display: inline-block;
+	min-width: 1.4em;
+	margin-right: 1.2rem;
+	font-size: 3rem;
+	font-weight: 700;
+	line-height: 1;
+	vertical-align: middle;
+	color: var(--text-color-normal);
+}
+#screen-grammar.numerals .grammar-form {
+	color: var(--grammar-color);
+	background: color-mix(in srgb, var(--grammar-color) 14%, var(--background-color-softer));
+	border-color: color-mix(in srgb, var(--grammar-color) 45%, var(--background-color-softer));
+}
+#screen-grammar.numerals .grammar-form.plain {
+	cursor: default;
+	background: none;
+	border-color: transparent;
+}
+#screen-grammar.numerals .grammar-table-row .label {
+	font-size: 1.8rem;
+	font-weight: 700;
+}
 /* Compact phones: the whole point is the ORDER, so keep each sentence on one line — smaller
    chips, and the contrast row's language label moves above its chips to free the width. */
 @media (max-width: 520px) {

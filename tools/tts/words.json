@@ -249,7 +249,8 @@
 		"dev": "आठ",
 		"source": "aligned",
 		"phrases": [
-			"aath-eight"
+			"aath-eight",
+			"grammar:numerals"
 		]
 	},
 	"aaun": {
@@ -2086,7 +2087,8 @@
 		"dev": "चार",
 		"source": "aligned",
 		"phrases": [
-			"chaar-four"
+			"chaar-four",
+			"grammar:numerals"
 		]
 	},
 	"chaarja": {
@@ -2305,6 +2307,7 @@
 			"glass-glass-cup",
 			"golbheda-tomato",
 			"grammar:card-hunu",
+			"grammar:numerals",
 			"haat-hand-arm",
 			"hajuraamaa-grandmother",
 			"hamro-our-ours",
@@ -3220,6 +3223,7 @@
 		"source": "aligned",
 		"phrases": [
 			"dui-two",
+			"grammar:numerals",
 			"hajaar-thousand"
 		]
 	},
@@ -3309,6 +3313,7 @@
 			"fn-karod-crore",
 			"fn-laakh-lakh",
 			"food2-chaamal-rice",
+			"grammar:numerals",
 			"hajaar-thousand",
 			"lassi-yogurt-drink",
 			"matra-only-just",
@@ -7370,6 +7375,7 @@
 		"dev": "नौ",
 		"source": "aligned",
 		"phrases": [
+			"grammar:numerals",
 			"nau-nine"
 		]
 	},
@@ -7606,6 +7612,7 @@
 		"source": "aligned",
 		"phrases": [
 			"aphis-office",
+			"grammar:numerals",
 			"minet-minute",
 			"paanch-five",
 			"samma-until-up-to"
@@ -8981,6 +8988,7 @@
 		"dev": "सात",
 		"source": "aligned",
 		"phrases": [
+			"grammar:numerals",
 			"saat-seven"
 		]
 	},
@@ -10292,6 +10300,7 @@
 		"phrases": [
 			"adv-lagataar-continuously",
 			"fn-saadhe-andahalf",
+			"grammar:numerals",
 			"tin-three"
 		]
 	},

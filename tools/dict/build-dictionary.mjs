@@ -438,6 +438,9 @@ function pickStages(a) {
 function loadCourse() {
 	const COURSE = Function(readFileSync(join(ROOT, 'js', 'data.js'), 'utf8') + '; return COURSE;')();
 	const SanoRomanize = Function(readFileSync(join(ROOT, 'js', 'romanize.js'), 'utf8') + '; return SanoRomanize;')();
+	// Numeral items (T68: `dev` is Devanagari digits only) are glyphs, not words — the dictionary
+	// has nothing to lemmatize or gloss there, so they never enter the pipeline.
+	for (const u of COURSE) u.items = u.items.filter((it) => !/^[०-९]+$/.test(it.dev || ''));
 	return { COURSE, romanize: (d) => SanoRomanize.romanize(d) };
 }
 function leipzigWordsName() {

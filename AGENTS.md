@@ -84,6 +84,15 @@ workflow. **Keep it current:** when architecture/tooling changes significantly, 
   deliberate — it's keyed **per prompt**, not per word (an English word's Nepali depends on its
   sentence), and it **reveals the graded answer**, so it's an always-available Duolingo-style hint
   that is **silent** (the clip would read the answer out) and **doesn't affect grading** (Ross).
+- **Numeral items** (T68: the `numerals` and `numerals-reading` units, after Bigger Numbers, behind
+  a teal `kind: 'numerals'` note) are the one place an item's Nepali side is a **glyph**, not a
+  romanized word: `dev` is Devanagari digits only (`isNumeral`, js/sano.js), `en` is the number.
+  The learner already knows the spoken words, so **the clip would give the glyph away** — a numeral
+  is silent and un-romanized wherever the glyph is the question (prompts, match tiles), and speaks
+  only in the answer reveal, the say-it-aloud step and listening drills (which answer in glyphs).
+  It renders **no audio of its own**: `says` names the course item whose clip it borrows, and one
+  without `says` (zero, 25 …) is silent. Recall is **Type the number**, never a word bank. Every
+  word-oriented tool skips numerals (romanization coverage, dictionary, `synth-app.mjs`).
 - **Story dialogues** (SR-01, `DIALOGUES` in `js/dialogues.js`) play in a Duolingo-Stories player —
   **romanized-only**, every word tappable for its English (`js/gloss.js`); only `greet-pyaro` is live,
   and **no story is on the path** (T65: `onPath: false` until the rework lands — review one via

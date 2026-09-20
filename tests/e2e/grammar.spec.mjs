@@ -69,6 +69,11 @@ test('every note on the path opens and renders its contrast rows, legend and exa
 			await expect(page.locator('#grammar-table .grammar-form')).toHaveCount(topic.table.filter((r) => r.dev).length);
 			const headings = topic.table.filter((r) => r.heading).map((r) => r.heading);
 			await expect(page.locator('#grammar-table .grammar-table-heading')).toHaveText(headings); // a two-verb card keeps its split
+		} else if (topic.kind === 'numerals') {
+			// The numerals note (T68): a contrast AND a glyph chart — covered in numerals.spec.mjs.
+			await expect(page.locator('#grammar-eyebrow')).toHaveText('Reading note');
+			await expect(page.locator('#grammar-contrast .grammar-words')).toHaveCount(topic.contrast.length);
+			await expect(page.locator('#grammar-table .grammar-table-row')).toHaveCount(topic.table.length);
 		} else {
 			await expect(page.locator('#grammar-eyebrow')).toHaveText('Grammar note');
 			await expect(page.locator('#grammar-table')).toBeHidden();
