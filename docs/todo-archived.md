@@ -211,13 +211,30 @@ other and its record says so — the box means *resolved*, not *shipped*.
     recall strength, without waiting for graduation (typing digits is not the "hardest recall" that
     rule protects). `normalize` now keeps Devanagari digits: nothing grades glyph against glyph today,
     but stripped they would all be equal, so the unit test holds the guard.
+  - **Nepali digit forms.** Ross's native speaker flagged that 5 and 8 are written differently in
+    everyday Nepali. They are the same code points drawn differently: no Apple system font has the
+    Nepali forms (tested in WebKit, tagged `ne` or not), while Noto Sans Devanagari carries them as
+    `locl`/NEP alternates — Ross picked it from a side-by-side against the speaker's reference chart
+    (Noto Serif also changes 9, Mukta switches backwards, Tiro Hindi changes 1 and 9). Rather than tag
+    every numeral `lang="ne"`, `tools/build-numeral-font.py` bakes the two alternates into the cmap and
+    cuts the font to the ten digits (~2.9 KB per weight, OFL text alongside); `css/fonts.css` declares
+    it under `Lato` 300/400/700 and `Neuton` 700 for U+0966–096F only. So every numeral anywhere —
+    lessons, note, path-node glyphs, dictionary — gets the Nepali forms, and no other character moves.
+    The 9 was left as Noto Sans draws it (the speaker named only 5 and 8).
   - **Deliberately not done:** a clip for zero or for 25/47/69/380/1500 (needs ElevenLabs permission and,
     for the compounds, words the course doesn't teach — a follow-up if Ross wants them spoken); Bikram
     Sambat dates, phone-number or price-tag formats; any change to the existing numbers units.
   - **For existing learners:** units unlock in order, so anyone already past Bigger Numbers finds
     *Numerals 0–9* as their current unit and the later ones locked until its ten glyphs graduate —
     the same thing every mid-path insertion has done.
-  - Tests: `tests/e2e/numerals.spec.mjs` (10), numeral cases in `tests/unit/frames` + `matching`,
+  - **A pre-existing e2e race, fixed at the root.** The web font shifted load timing enough to expose
+    it: `openScreen()`'s forced tap on the daily-lesson button missed in a third of WebKit runs even
+    before T68. Cause: the load-time recentre scroll is *smooth* (`barebones.css`), so the page was
+    still moving ~250ms after `boot()`, and a control left above the viewport got scrolled by
+    Playwright to the top edge, under the fixed header. `openScreen()` now waits for scrollY to rest
+    and centres its target first (100/100 on WebKit, retries off). Forcing `scroll-behavior: auto`
+    was tried and rejected — WebKit then refuses forced clicks as "outside of the viewport".
+  - Tests: `tests/e2e/numerals.spec.mjs` (11), numeral cases in `tests/unit/frames` + `matching`,
     `tests/data/course` (en equals the glyphs digit for digit; `says` is a spoken item with clips on
     disk; numeral units hold only numerals) and `grammar` (the chart covers ०–९, labels are the digits).
     Dev-seed card **7c** (`numerals`, `numerals-review`).

@@ -190,3 +190,25 @@ test('the dictionary lists a numeral with the word it is read as, and plays the 
 	});
 	expect(row).toEqual({ np: '७', pron: 'saat', clip: 'saat-seven', zeroPron: '', zeroClip: null });
 });
+
+// The Nepali digit forms (the everyday 5 and 8) come from a digits-only font declared under the
+// app's own families for U+0966–096F. A unicode-range face is fetched only when a character in
+// its range is actually drawn with that family — so "loaded" is proof the glyph on screen uses it.
+test('numerals are drawn with the Nepali-forms font, and only once a numeral is on screen', async ({ page }) => {
+	// Early in the course: every node that would show a numeral glyph is still locked (a lock icon),
+	// so nothing on the home screen draws one.
+	await boot(page, seed.dictReady());
+	const numeralFaces = () =>
+		page.evaluate(async () => {
+			await document.fonts.ready;
+			return [...document.fonts]
+				.filter((f) => /U\+966-96F/i.test(f.unicodeRange))
+				.map((f) => f.family.replace(/["']/g, '') + ' ' + f.weight + ' ' + f.status);
+		});
+	await startExercises(page, [{ id: 'saat-seven', ex: { type: 'choice', dir: 'en-np' } }]);
+	expect((await numeralFaces()).filter((f) => f.endsWith(' loaded'))).toEqual([]); // no numeral drawn anywhere yet → not fetched
+
+	await startExercises(page, [{ id: 'numeral-5', ex: { type: 'choice', dir: 'np-en' } }]);
+	await expect(page.locator('#exercise-word')).toHaveText('५');
+	await expect.poll(async () => (await numeralFaces()).filter((f) => f.endsWith(' loaded')).length).toBeGreaterThan(0);
+});
