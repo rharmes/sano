@@ -139,13 +139,15 @@
    Nepali alternates baked in (tools/build-numeral-font.py; OFL, fonts/OFL-NotoSansDevanagari.txt),
    declared under the app's OWN family names for U+0966–096F only — so every numeral on every
    screen picks it up with no markup, and no other character is touched. Other Devanagari (the
-   sound-drill letters, path-node glyphs) still falls back to the system font. */
+   sound-drill letters, path-node glyphs) still falls back to the system font. Each file is cut
+   from a Noto weight one step LIGHTER than its slot (300 ← Light, 400 ← Regular, 700 ← Medium):
+   Noto's strokes run heavier than Lato's, and Noto Bold beside Lato Bold read as too thick. */
 @font-face {
 	font-family: 'Lato';
 	font-style: normal;
 	font-weight: 300;
 	font-display: swap;
-	src: url(../fonts/nepali-numerals-400.woff2) format('woff2');
+	src: url(../fonts/nepali-numerals-300.woff2) format('woff2');
 	unicode-range: U+0966-096F;
 }
 @font-face {

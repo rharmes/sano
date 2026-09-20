@@ -221,6 +221,8 @@ other and its record says so — the box means *resolved*, not *shipped*.
     it under `Lato` 300/400/700 and `Neuton` 700 for U+0966–096F only. So every numeral anywhere —
     lessons, note, path-node glyphs, dictionary — gets the Nepali forms, and no other character moves.
     The 9 was left as Noto Sans draws it (the speaker named only 5 and 8).
+    Weights: Ross found Noto Bold too thick beside Lato, so each CSS slot takes a lighter Noto cut —
+    300 ← Light, 400 ← Regular, 700 ← Medium (SemiBold was compared and still read heavy).
   - **Deliberately not done:** a clip for zero or for 25/47/69/380/1500 (needs ElevenLabs permission and,
     for the compounds, words the course doesn't teach — a follow-up if Ross wants them spoken); Bikram
     Sambat dates, phone-number or price-tag formats; any change to the existing numbers units.

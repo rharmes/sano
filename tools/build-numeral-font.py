@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build fonts/nepali-numerals-{400,700}.woff2 — the ten Devanagari digits, in their NEPALI forms (T68).
+"""Build fonts/nepali-numerals-{300,400,700}.woff2 — the ten Devanagari digits, in their NEPALI forms (T68).
 
 The Devanagari digits have one code point each but regional shapes: the everyday Nepali 5 and 8
 differ from the Hindi-style forms most fonts (every Apple system font included) draw. Noto Sans
@@ -10,12 +10,15 @@ and css/fonts.css declares the result under the app's own family names for that 
 Every numeral on every screen then gets the Nepali forms with no markup, and nothing else changes.
 (Reviewed against a native speaker's reference, Ross 2026-09-20.)
 
-Source: Noto Sans Devanagari Regular + Bold (SIL OFL 1.1, no Reserved Font Name — see
-fonts/OFL-NotoSansDevanagari.txt), https://github.com/notofonts/devanagari. Not committed; pass
-the two TTFs:
+Source: Noto Sans Devanagari (SIL OFL 1.1, no Reserved Font Name — see
+fonts/OFL-NotoSansDevanagari.txt), https://github.com/notofonts/devanagari. Not committed. Each
+argument is `<css weight>=<source ttf>`: the CSS weight is the Lato/Neuton slot the file fills, and
+the source is deliberately a step LIGHTER than the slot — Noto's strokes run heavier than Lato's,
+so Noto Bold beside Lato Bold read as too thick (Ross, 2026-09-20). As shipped:
 
     python3 -m venv venv && venv/bin/pip install fonttools brotli
-    venv/bin/python tools/build-numeral-font.py NotoSansDevanagari-Regular.ttf NotoSansDevanagari-Bold.ttf
+    venv/bin/python tools/build-numeral-font.py 300=NotoSansDevanagari-Light.ttf \
+        400=NotoSansDevanagari-Regular.ttf 700=NotoSansDevanagari-Medium.ttf
 
 Re-run only to change the source font; the outputs are committed.
 """
@@ -80,7 +83,8 @@ def build(src, weight):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
+    pairs = [arg.split('=', 1) for arg in sys.argv[1:]]
+    if not pairs or any(len(pair) != 2 or not pair[0].isdigit() for pair in pairs):
         sys.exit(__doc__)
-    build(sys.argv[1], 400)
-    build(sys.argv[2], 700)
+    for weight, src in pairs:
+        build(src, int(weight))
