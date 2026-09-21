@@ -8,8 +8,8 @@ Ross tests on an iPhone running iOS 26.
 The global `~/.codex/AGENTS.md` defaults apply in full — including **branch → PR → Ross merges by
 hand** (workflow steps 6–8) — with one exception stated here: tasks live in **`docs/todo.md`** with
 `T##` ids, not GitHub Issues, so a PR closes nothing automatically and the ticked box ships **inside**
-the PR. There is no `docs/pr-review.md` here: **no PR gauntlet, no `pr-antagonist`, no model law** —
-Ross is the reviewer.
+the PR. **There is a PR gauntlet (T70, `docs/pr-review.md`):** every PR gets a `pr-antagonist` review
+under the global reviewer model law — but its APPROVE never merges; a merge here deploys, so Ross merges.
 
 **`CLAUDE.md` (Claude Code) and `AGENTS.md` (Codex CLI) are the same instructions stated twice**,
 differing only in harness mechanics — the global file's path and Claude Code's `@` imports. A change
@@ -204,9 +204,12 @@ routing: `tools/tts/README.md`.
    `docs/todo.md` and archive its record (**Task list**, below) **in the branch** — nothing here
    auto-closes on merge.
 7. **Ask before opening the PR.** One PR per complete feature or change, body citing the `T##`.
-   Then wait: confirm CI is green **on the PR head SHA** (`gh run list --commit` is unreliable — match
-   on `headSha`, never take the newest run), and let **Ross merge**. Never self-merge; a red or
-   unresolvable run is not ready to review.
+   Opening it **starts the gauntlet** (`docs/pr-review.md`): self-review the diff first, then spawn
+   the repo's `pr-antagonist` (pinned model + effort passed explicitly, its self-reported model
+   verified), fix REQUEST CHANGES in-round and re-review until APPROVE. Confirm CI is green **on the
+   PR head SHA** (`gh run list --commit` is unreliable — match on `headSha`, never take the newest
+   run), report the verdict, and let **Ross merge**. Never self-merge; a red or unresolvable run, or
+   a void review round, is not ready for Ross.
 8. Once merged: `git switch main && git pull`, delete the branch local **and** remote, then **deploy** —
    the merge is the go-ahead, no separate ask. `tools/deploy.sh` (`-n` first for a dry run), then the
    live cache check. A docs-only merge ships nothing (`deploy.sh` allowlists, and `docs/` isn't on it) —
