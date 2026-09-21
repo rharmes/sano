@@ -89,6 +89,31 @@ what's in use.
       Numbers, then two units (`numerals` ०–९, `numerals-reading` १०–१५००) whose Nepali side is the glyph: silent
       prompts, a borrowed clip in the reveal, and *Type the number* as the recall drill (2026-09-20).
 
+- [ ] **T69 · More grammar notes where the course introduces a concept** `waiting-on:ross` `area:content` — the
+      17 T64/T66/T68 notes stop at the verb cards; the second half of the path and several early
+      units introduce patterns the learner is left to infer (asked 2026-09-21). Each note goes
+      **right after the unit that first uses the pattern**, one note per anchor
+      (`tests/data/grammar.test.mjs`), built from real course sentences like the rest. The
+      recommended set, in path order, awaiting Ross's picks:
+      - **Core** — `ko` *-ko: whose it is* after `introductions` (mero / tapaaiko / usako are
+        noun + -ko; ko laagi); `laagnu` *laagchha: it strikes you* after `weather` (ghaam laagyo,
+        khusi laagyo, bhok laagyo, man laagchha, bis minet laagchha); `bhandaa` *than* after
+        `comparing-things`; `thiyo` *was* after `time` (hijo raati jaado thiyo — completes chha /
+        bhayo / thiyo); `if-bhane` *yadi … bhane* after `fn-conjunctions` (+ kinabhane, natra);
+        `pairs` *jahaa … tyahaa: j- asks, t- answers* after `linking-words`.
+      - **Secondary** — `place-words` *maathi, muni, agaadi* after `place-position`; `aghi-pachhi`
+        *before and after* after `duration-frequency` (+ kahile pani needs a negative);
+        `ordinals` *pahilo, dosro, tesro* after `adj-order-sequence`; `or` *ki or athawaa, and
+        pani* after `connectors`; `-ai` *the emphasis ending* after `adv-linking`; `clock`
+        *baje: telling the time* after `time-week` — **needs the `card-hunu` verb card moved to
+        `jobs-work`** (its ma shikshak hu pattern), since that anchor is taken.
+      - **Considered, not recommended** — `-le` (the everyday rule outside the past is variable;
+        needs a native speaker first), commands at three levels (the *Please: -nus* note already
+        covers the bare forms), adjective agreement (the course has no feminine forms to point at),
+        laakh / karod grouping (a bullet for the numerals note, not a note).
+      - `thiyo` and `if-bhane` have only 2–3 course sentences each; a full four-example note wants
+        one or two new frames, which means new clips (ElevenLabs — ask first) or shorter notes.
+
 ## Content review
 
 - [ ] **T3 · Review the dictionary's recommendations** `waiting-on:ross` `area:content` (`tools/dict/`; flag-only, never
