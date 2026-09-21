@@ -87,8 +87,8 @@ export function grammarReady(extra) {
 
 // Everything through Linking Words mastered — the last grammar-note anchor (the j- / ty- pairs
 // note, T69) — so every note and verb card on the path is unlocked at once (dev-seed
-// 'grammar-all', and the e2e sweep over all notes, which fails on its node count if a later
-// anchor is ever added without moving this).
+// 'grammar-all', and the e2e sweep over all notes — a note anchored later than this renders
+// locked, so the sweep fails on its `unlocked` check until this moves).
 export function allNotesReady(extra) {
 	const items = {};
 	for (const u of COURSE) {

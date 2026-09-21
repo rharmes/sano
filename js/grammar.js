@@ -1266,7 +1266,7 @@ const GRAMMAR_TOPICS = [
 		],
 		points: [
 			'Weather just happens, so there is no person: ghaam laagyo (it’s sunny), baadal laagyo (it’s cloudy), hussu laagyo (it’s foggy).',
-			'Feelings happen to someone, so they start with malaai or tapaailaai: malaai jaado laagyo (I feel cold), malaai dar laagyo (I got scared), tapaailaai bhetdaa khusi laagyo (nice to meet you).',
+			'Feelings happen to someone, and that someone takes -laai: malaai jaado laagyo (I feel cold), malaai dar laagyo (I got scared), usalaai lajjaa laagyo (he was embarrassed). When it is obviously you, the malaai is often dropped: tapaailaai bhetdaa khusi laagyo is “on meeting you, happiness struck (me)”.',
 			'laagyo is the past — it has struck, so you feel it now. laagchha is the general version: saanpadekhi dar laagchha (I’m scared of snakes), malaai jaan man laagchha (I feel like going), bis minet laagchha (it takes twenty minutes). The negative is laagdaina.',
 		],
 		examples: [

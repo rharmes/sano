@@ -257,14 +257,17 @@ other and its record says so — the box means *resolved*, not *shipped*.
       grammar lessons throughout, especially when new concepts are introduced. Give me a recommended list."
       I surveyed all 104 units against the 21 existing notes and recommended twelve; Ross picked the **core
       six** and left placement to me. Delivered (`js/grammar.js`, ordinary teal notes — no new `kind`, no
-      engine change), each anchored after the unit that first leans on the pattern:
-      - `ko` *-ko: whose it is* → after `introductions` (tapaaiko naam ke ho). 96 course sentences carry -ko
+      engine change), each anchored after the unit where its pattern takes over (or the first free anchor):
+      - `ko` *-ko: whose it is* → after `introductions` (tapaaiko naam ke ho) — the first **free** anchor:
+        `pronouns`, where tapaaiko / usako are items, already holds the word-order note. 96 course sentences carry -ko
         and no note covered it; mero / haamro / timro are named as the fused forms; -ko laagi = "for".
       - `thiyo` *thiyo: it was* → after `time` (its frame hijo raati jaado thiyo is the first appearance, and
         the learner already has the past and bhayo notes). Closes the chha / bhayo / thiyo triangle. The
         course has only **two** thiyo sentences, so the note runs three examples (the third is khaanaa
         tayaar bhayo, for the contrast) rather than four — no new frames, so no new clips.
-      - `laagnu` *laagyo: it strikes you* → after `weather` (ghaam / baadal / hussu laagyo). One verb for
+      - `laagnu` *laagyo: it strikes you* → after `weather` (ghaam / baadal / hussu laagyo) — not its first
+        appearance (bis minet laagchha, khusi laagyo and man laagchha come earlier) but the first unit where
+        it is the pattern; the feelings examples are drawn from later units. One verb for
         weather, feelings (malaai bhok laagyo), wanting (man laagchha) and time taken (bis minet laagchha).
       - `bhandaa` *than* → after `comparing-things`; sabai bhandaa as the superlative.
       - `if-bhane` *yadi … bhane: if* → after `fn-conjunctions` (a four-item unit, so the note carries the
@@ -276,7 +279,8 @@ other and its record says so — the box means *resolved*, not *shipped*.
       (thie / thiyau / hunuhunthyo / thiena) are AI drafts for Ross and the native speaker. The last
       anchor moved from `time-week` to `linking-words`, so `allNotesReady` (tests/seed.mjs) and dev-seed's
       **All notes** now master through Linking Words; the e2e sweep opens all 27 notes in both browsers and
-      fails on its node count if a later anchor is added without moving the seed.
+      fails on its `unlocked` check if a later anchor is added without moving the seed (a locked note still
+      renders, so the node count alone would not catch it — the PR #15 review proved this by mutation).
       **Recommended but not picked** (not filed — Ross calls it): position words after `place-position`;
       aghi / pachhi after `duration-frequency`; ordinals after `adj-order-sequence`; ki / athawaa / pani
       after `connectors`; the -ai emphasis ending after `adv-linking`; telling the time after `time-week`
