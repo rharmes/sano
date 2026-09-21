@@ -198,6 +198,8 @@ routing: `tools/tts/README.md`.
 5. Serve `php -S 127.0.0.1:8000` from the repo root (executes `/api`; needs the dev
    `sano-config.php`) and **ask Ross to review at http://127.0.0.1:8000/ before committing.**
    (`python3 -m http.server 8000` works for frontend-only checks, exercising the offline path.)
+   One exception: a fix for a `pr-antagonist` REQUEST CHANGES is pushed first and reported after
+   (`docs/pr-review.md` step 4).
 6. After approval, commit to a **task branch** — `t54-security-hardening`: the `T##` lowercased plus a
    short slug (no id prefix for an unticketed fix). Never work on `main`, never in a worktree
    (see **Repo facts**). Push as you go, so the work is never only on this Mac. Tick the task's box in

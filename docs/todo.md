@@ -197,19 +197,10 @@ Findings, rulings, measurements and what was deliberately left undone: `docs/tod
 
 ## Testing
 
-- [ ] **T71 · Review nits from PRs #13 and #16, in one sweep** `waiting-on:none` `area:testing` — Ross
-      (2026-09-21): *"File them all as one task, then start work on it."* The non-blocking notes two
-      approving antagonist reviews left behind, each one a change to a test's grip or to documentation truth:
-      - **PR #13 (T68):** the dictionary e2e test seeds two records and states a gating rule that don't
-        exist (the dictionary is ungated); the `itemClip(item)` term of the `listenable` filter
-        (js/sano.js) is pinned by no test; `docs/data-model.md` and `tools/build-en-glosses.mjs` still
-        say "251 of 959" single-word items; `docs/architecture.md`'s helper list lacks `uniqueClipItems`.
-      - **PR #16 (T70):** `docs/pr-review.md`'s Effort bullet says the frontmatter pin carries the
-        effort, false on the fallback path; `reviewer-pair.test.mjs`'s keys-only pin check falls back to
-        a whole-file scan if `developer_instructions` is renamed; the step-4 carve-out from workflow
-        step 5 is declared only in a doc that isn't auto-loaded; T70's archive record omits two nits
-        it took; two over-long lines in `pr-review.md`.
-
+- [x] **T71 · Review nits from PRs #13 and #16, in one sweep** — the listening-grid test now really
+      pins the `itemClip` filter term (it never offered a clip-less numeral before), the dictionary
+      test lost its dead setup, a guard on the reviewer-pair pin check, and five doc-truth fixes
+      incl. a one-clause carve-out in workflow step 5 of both twins (2026-09-21).
 - [ ] **T67 · `tools/ci-status.sh`: verify CI by head SHA from the repo** `waiting-on:none` `area:tooling` — Ross
       (2026-09-14): the by-SHA CI check the workflow requires (step 7: match on `headSha`, never the
       newest run) has lived in an ad-hoc scratchpad script, which misfired twice while CI was green —

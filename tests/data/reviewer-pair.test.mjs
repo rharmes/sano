@@ -72,7 +72,9 @@ test('reviewer pair: each definition pins its harness’s reviewer model at xhig
 	assert.match(front, /^model: opus$/m, 'pr-antagonist.md must pin model: opus');
 	assert.match(front, /^effort: xhigh$/m, 'pr-antagonist.md must pin effort: xhigh');
 	// The toml's keys only — everything above the brief, so a line inside it can't satisfy the pin.
-	const keys = CODEX.slice(0, CODEX.indexOf("\ndeveloper_instructions = '''"));
+	const at = CODEX.indexOf("\ndeveloper_instructions = '''");
+	assert.ok(at > 0, 'pr-antagonist.toml: no developer_instructions key to read the pins above'); // -1 would slice the whole file back in
+	const keys = CODEX.slice(0, at);
 	assert.match(keys, /^model = "gpt-5\.6-sol"$/m, 'pr-antagonist.toml must pin model = "gpt-5.6-sol"');
 	assert.match(keys, /^model_reasoning_effort = "xhigh"$/m, 'pr-antagonist.toml must pin model_reasoning_effort = "xhigh"');
 });

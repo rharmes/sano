@@ -99,7 +99,10 @@ other and its record says so — the box means *resolved*, not *shipped*.
         three false statements — the toml header overclaiming the parity test's reach, and PR #13
         missing from the history here and in `pr-review.md` — plus two gaps now written into the
         procedure: a session older than the agent definition can't resolve `subagent_type`, and
-        in-round fixes are a stated carve-out from the localhost-review-before-commit step.
+        in-round fixes are a stated carve-out from the localhost-review-before-commit step. Two nits
+        rode in the same commit: the Claude `description` stopped demanding an `effort` argument the
+        Agent call may not take, and the parity test's Codex pin check was narrowed to the toml's keys.
+        Round 2 approved with five notes, swept up by T71.
       - **Not done:** no GitHub Action or hook that spawns the reviewer (it is an agent step, as in the
         other repos); no dev-seed scenario (nothing user-facing); nothing ships (`deploy.sh`
         allowlists). The four unfiled PR #13 nits were not folded in — different area.
@@ -952,6 +955,36 @@ kind of thing from a missing header. Ten of the original fifteen are done.
       vanishes from the text, and the test fails.
 
 ## Testing
+
+- [x] **T71 · Review nits from PRs #13 and #16, in one sweep** (2026-09-21). Ross: *"File them all as
+      one task, then start work on it."* — the non-blocking notes two approving antagonist reviews left.
+      - **The one with teeth — the `itemClip(item)` term of the `listenable` filter (js/sano.js).** The
+        PR #13 reviewer suggested a one-line pin in the 300-lesson loop ("every tile has a clip"). That
+        line was added and then **failed its own mutation check**: with the term deleted the test stayed
+        green. Cause: `dueItems()` sorts most-overdue first with ties in course order and `fillReviews`
+        takes the first ~18, so under that test's state the six clip-less numerals (0, 25, 47, 69, 380,
+        1500) were **never offered for review at all** — all 300 draws pick the same items. The test now
+        has a second phase that back-dates those six (same interval — shortening it would drop them
+        below recall strength and re-vacate the check through a different filter term), asserts they
+        really were offered (`offered > 0`), and asserts none became a listening tile. Mutation: term
+        deleted → 49 silent `numeral-0` tiles, test fails; restored → green. No app code changed.
+      - **Dictionary e2e test:** the two seeded records and the "both units met, so the dictionary lists
+        them" comment described a gate that doesn't exist (`renderTables` walks all of COURSE). Setup is
+        now a bare `boot`, and the comment says the true thing.
+      - **`reviewer-pair.test.mjs`:** `assert.ok(at > 0)` before slicing the toml's keys — a renamed
+        `developer_instructions` made `indexOf` −1 and `slice(0, -1)` quietly scanned the whole file again.
+      - **Doc truth:** "251 of 959" single-word items → **271 of 979** (recounted from `js/data.js`) in
+        `docs/data-model.md` and `tools/build-en-glosses.mjs`; `uniqueClipItems` added to
+        `docs/architecture.md`'s helper list; `docs/pr-review.md`'s Effort bullet no longer credits a
+        frontmatter pin on the fallback path, where none applies; T70's archive record names the two
+        nits it took; two over-long lines re-wrapped.
+      - **Decided for Ross, flagged at delivery:** the PR #16 reviewer asked whether the step-4 carve-out
+        (review fixes are pushed before any localhost review) belongs in the always-loaded instructions,
+        since `docs/pr-review.md` isn't auto-loaded. Taken as filed: one sentence at the end of workflow
+        step 5 in `CLAUDE.md` and `AGENTS.md`. Remove it from both if the rule should live only in the doc.
+      - **Not done:** PR #13's *round-1* nits and the three T68 content questions (the "1 looks like a 9"
+        line, "tap a word to hear it" over a silent zero row, skip-ahead graduating all 20 numerals) are
+        Ross's content calls, not review nits — still open with him, unfiled.
 
 - [x] **T56 · Fix the flaky `no horizontal overflow across mobile widths` e2e** — the 9-width
       viewport sweep (`tests/e2e/home.spec.mjs:27`) failed all three attempts on the T40 commit's CI

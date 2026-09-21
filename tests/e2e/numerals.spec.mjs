@@ -182,10 +182,9 @@ test('a match grid: glyph tiles stay silent, word tiles still speak', async ({ p
 });
 
 test('the dictionary lists a numeral with the word it is read as, and plays the borrowed clip', async ({ page }) => {
-	// Both numeral units met, so the dictionary screen itself lists them.
-	const state = seed.numeralsReady();
-	for (const id of ['numeral-7', 'numeral-0']) state.items[id] = seed.rec({ level: 1, interval: 1 });
-	await boot(page, state);
+	// The dictionary is ungated — renderTables walks every unit of COURSE, met or not — which is why
+	// the numeral rows are there at all; no progress has to be seeded for them.
+	await boot(page, seed.numeralsReady());
 	const clips = trackClips(page);
 	await openScreen(page, page.locator('#nav-dictionary'), '#screen-dictionary');
 
@@ -222,7 +221,7 @@ test('a listening grid: the numeral tile plays its borrowed clip and pairs with 
 // The review-found defect: a numeral borrows the clip of the word that says it, the two share
 // neither romanization nor English, and both can be due at once — so a listening grid could
 // hold two tiles with the SAME sound, one of whose pairings must grade as a miss.
-test('no built lesson puts a numeral and the word whose clip it borrows in one listening grid', async ({ page }) => {
+test('no built lesson puts a numeral and the word whose clip it borrows — or a tile with no clip — in one listening grid', async ({ page }) => {
 	const state = seed.numeralsReady();
 	const due = { recalls: 2, graduated: true, ease: 2.6, interval: 6, lastSeen: seed.day(20) };
 	await boot(page, state);
@@ -239,6 +238,8 @@ test('no built lesson puts a numeral and the word whose clip it borrows in one l
 		}
 		let grids = 0;
 		const collisions = [];
+		const silent = [];
+		let offered = 0;
 		for (let i = 0; i < 300; i++) {
 			const plan = dailyPlan();
 			for (const ex of buildExercises(plan.newItems, plan.reviewItems)) {
@@ -248,12 +249,26 @@ test('no built lesson puts a numeral and the word whose clip it borrows in one l
 				if (new Set(played).size !== played.length) collisions.push(ex.items.map((it) => it.id).join('+'));
 			}
 		}
+		// A numeral with no `says` (zero, 25 …) has no clip: as a listening tile it is a pairing nobody
+		// can answer, and the by-clip dedupe alone would still let ONE through (they share `null`).
+		// Due reviews are taken most-overdue first, ties in course order, so the state above never
+		// offers one; make them the most overdue and draw again.
+		const longAgo = dayString(new Date(Date.now() - 60 * 864e5)); // same interval — they must stay recall-strength
+		for (const it of COURSE.flatMap((u) => u.items)) if (isNumeral(it) && !itemClip(it)) state.items[it.id].lastSeen = longAgo;
+		for (let i = 0; i < 100; i++) {
+			const plan = dailyPlan();
+			offered += plan.reviewItems.filter((it) => !itemClip(it)).length;
+			for (const ex of buildExercises(plan.newItems, plan.reviewItems))
+				if (ex.type === 'listenMatch') for (const it of ex.items) if (!itemClip(it)) silent.push(it.id);
+		}
 		const mixed = COURSE.flatMap((u) => u.items).filter((it) => it.says).length;
-		return { grids, collisions, mixed };
+		return { grids, collisions, silent, offered, mixed };
 	}, due);
 	expect(result.mixed).toBeGreaterThan(0);
 	expect(result.grids).toBeGreaterThan(50); // the state really does produce listening grids…
 	expect(result.collisions).toEqual([]); // …and none of them plays one clip from two tiles
+	expect(result.offered).toBeGreaterThan(0); // the clip-less numerals really were up for review…
+	expect(result.silent).toEqual([]); // …and none became a listening tile with nothing to play
 });
 
 // The Nepali digit forms (the everyday 5 and 8) come from a digits-only font declared under the

@@ -27,14 +27,17 @@ file's `description` and header comment differ by design and are kept true by ha
    - **Model law (fail-closed, both halves required):** the reviewer always runs on **Opus — the
      newest, via the `opus` alias — at `xhigh`**, regardless of which model authored the work;
      same-model review is fine. Never rely on the definition's `model:` default: pass
-     `model: "opus"` and `effort: "xhigh"` explicitly on every Agent call (effort: next bullet), AND require the reviewer
-     to state the model its own harness metadata reports, in its return and in the review header.
+     `model: "opus"` and `effort: "xhigh"` explicitly on every Agent call (effort: next bullet),
+     AND require the reviewer to state the model its own harness metadata reports, in its return
+     and in the review header.
      Before acting on any verdict, verify that self-report is an Opus; a round whose model can't be
      confirmed is **void** — respawn with the model forced, don't trust it. An older Opus than
      expected (alias lag) still satisfies the pin; note it to Ross.
    - **Effort:** if the harness's Agent call takes no `effort` parameter, say so to Ross in the
-     round's report rather than papering over it; the frontmatter pin and the brief's "ultrathink"
-     are then what carries it.
+     round's report rather than papering over it. What carries the effort then depends on the
+     path: a resolved `pr-antagonist` type has the frontmatter pin plus the brief's "ultrathink"; on
+     the general-purpose fallback no frontmatter applies, so the spawn prompt's demand ("xhigh —
+     ultrathink") and the brief's are all there is.
    - **One checkout.** sano uses no worktrees, so the reviewer works in the author's checkout, on
      the PR head. It never commits, pushes or switches branches, reverts any mutation it makes, and
      leaves `git status` clean. **Don't edit files while a round is running** — the reviewer would be
@@ -45,11 +48,11 @@ file's `description` and header comment differ by design and are kept true by ha
      the outcome**; don't expect a green "Approved" state.
 4. **On REQUEST CHANGES:** report the actionable items to Ross **and start fixing immediately** —
    don't wait for a go-ahead (this is the carve-out from workflow step 5's localhost review before
-   committing: a review fix is pushed first and reported; if it changes what a learner sees, serve
+   committing, and step 5 of both instruction twins names it: a review fix is pushed first and reported; if it changes what a learner sees, serve
    it and tell Ross what to look at in the same report). Push the fixes to the same branch, reply
    on the PR with what changed, then send the SAME reviewer agent a re-review request (SendMessage
-   keeps its context): "fixes pushed — re-review round N". If the reviewer can no longer be reached, spawn a fresh one under
-   the same model law and say so. Loop until APPROVE. If the antagonist demands something that
+   keeps its context): "fixes pushed — re-review round N". If the reviewer can no longer be
+   reached, spawn a fresh one under the same model law and say so. Loop until APPROVE. If the antagonist demands something that
    contradicts Ross's own rulings or seems wrong, don't silently obey — surface the conflict and
    let Ross arbitrate.
 5. **On APPROVE:** confirm CI is green **on the PR head SHA**, then report to Ross with a

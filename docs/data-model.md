@@ -74,7 +74,7 @@ frame's `audioId` (`item.id`, or `<id>-fN`), i.e. what `ex.frame` already carrie
 
 Keyed **per prompt**, not per word — the one structural difference from `WORD_GLOSSES`, and the
 reason a reversed lookup won't do: a Nepali word means roughly the same thing wherever it appears,
-but an English one doesn't ("have" is छ in one frame and खान्छु in another), and only 251 of 959
+but an English one doesn't ("have" is छ in one frame and खान्छु in another), and only 271 of 979
 items are single-word, so there is no English-word → Nepali-word table to invert. The generator
 therefore aligns each frame's own English against its own Nepali *through* `WORD_GLOSSES`, which
 makes the context unambiguous. Neighbouring words sharing a hint merge into one span, because a
