@@ -325,11 +325,13 @@
 				<b>extends your streak</b>.
 			</p>
 			<p>
-				<b>All notes</b> masters everything through Days &amp; the Clock instead, so every grammar node on the path is open at once: the
-				nine T64 notes (counting words, word order, timi/tapaai, ho vs chha, postpositions, -laai, questions, verb endings, saying no),
-				the seven <b>T66 verb situations</b> (right now, have eaten, the -ne form, the past, bhayo, please, can/want/must) and the four
+				<b>All notes</b> masters everything through Linking Words instead, so every grammar node on the path is open at once: the nine
+				T64 notes (counting words, word order, timi/tapaai, ho vs chha, postpositions, -laai, questions, verb endings, saying no), the
+				seven <b>T66 verb situations</b> (right now, have eaten, the -ne form, the past, bhayo, please, can/want/must) and the four
 				<b>verb cards</b> — garnu, jaanu·aaunu, khaanu, hunu — in their own colour, each a conjugation table whose every form plays its
-				word clip, plus four example sentences.
+				word clip, plus four example sentences. The six <b>T69 notes</b> sit further along, each right after the unit that introduces
+				its pattern: -ko (after Introductions), thiyo (Time of Day), laagyo (Weather), bhandaa (Comparing Things), yadi … bhane (If,
+				When &amp; Because) and the j- / ty- pairs (Linking Words).
 			</p>
 			<button onclick="seed('grammar')">Seed &amp; open</button>
 			<button onclick="seed('grammar-all')">All notes</button>
@@ -1033,11 +1035,11 @@
 					}
 					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 80 });
 				} else if (which === 'grammar-all') {
-					// T64/T66: everything through Days & the Clock (the last anchor, the hunu verb card) mastered
-					// -> every grammar note and verb card open.
+					// T64/T66/T69: everything through Linking Words (the last anchor, the j- / ty- pairs note)
+					// mastered -> every grammar note and verb card open.
 					const items = {};
-					masterThrough(items, 'time-week');
-					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 360 });
+					masterThrough(items, 'linking-words');
+					state = wrap(items, { streak: 4, lastActivityDay: day(1), itemsTotal: 900 });
 				} else if (which === 'wordbank') {
 					// Whole course mastered, then a few multi-word phrases pushed past due -> word-bank drills.
 					const items = {};

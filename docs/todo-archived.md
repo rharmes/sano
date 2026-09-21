@@ -253,6 +253,37 @@ other and its record says so — the box means *resolved*, not *shipped*.
     `tests/data/course` (en equals the glyphs digit for digit; `says` is a spoken item with clips on
     disk; numeral units hold only numerals) and `grammar` (the chart covers ०–९, labels are the digits).
     Dev-seed card **7c** (`numerals`, `numerals-review`).
+- [x] **T69 · More grammar notes where the course introduces a concept** — Ross (2026-09-21): "Add more
+      grammar lessons throughout, especially when new concepts are introduced. Give me a recommended list."
+      I surveyed all 104 units against the 21 existing notes and recommended twelve; Ross picked the **core
+      six** and left placement to me. Delivered (`js/grammar.js`, ordinary teal notes — no new `kind`, no
+      engine change), each anchored after the unit that first leans on the pattern:
+      - `ko` *-ko: whose it is* → after `introductions` (tapaaiko naam ke ho). 96 course sentences carry -ko
+        and no note covered it; mero / haamro / timro are named as the fused forms; -ko laagi = "for".
+      - `thiyo` *thiyo: it was* → after `time` (its frame hijo raati jaado thiyo is the first appearance, and
+        the learner already has the past and bhayo notes). Closes the chha / bhayo / thiyo triangle. The
+        course has only **two** thiyo sentences, so the note runs three examples (the third is khaanaa
+        tayaar bhayo, for the contrast) rather than four — no new frames, so no new clips.
+      - `laagnu` *laagyo: it strikes you* → after `weather` (ghaam / baadal / hussu laagyo). One verb for
+        weather, feelings (malaai bhok laagyo), wanting (man laagchha) and time taken (bis minet laagchha).
+      - `bhandaa` *than* → after `comparing-things`; sabai bhandaa as the superlative.
+      - `if-bhane` *yadi … bhane: if* → after `fn-conjunctions` (a four-item unit, so the note carries the
+        concept); kinabhane / natra / jab as the relatives that open their clause instead.
+      - `pairs` *jahaa … tyahaa: matched pairs* → after `linking-words`; the j- / ty- words mirrored against
+        the k- question words.
+      Every example is an existing course sentence with its default clip on disk (the T64 invariant), so
+      **no audio was rendered and no API key used**. The prose, glosses and the person-forms of thiyo
+      (thie / thiyau / hunuhunthyo / thiena) are AI drafts for Ross and the native speaker. The last
+      anchor moved from `time-week` to `linking-words`, so `allNotesReady` (tests/seed.mjs) and dev-seed's
+      **All notes** now master through Linking Words; the e2e sweep opens all 27 notes in both browsers and
+      fails on its node count if a later anchor is added without moving the seed.
+      **Recommended but not picked** (not filed — Ross calls it): position words after `place-position`;
+      aghi / pachhi after `duration-frequency`; ordinals after `adj-order-sequence`; ki / athawaa / pani
+      after `connectors`; the -ai emphasis ending after `adv-linking`; telling the time after `time-week`
+      (needs `card-hunu` moved to `jobs-work`, since that anchor is taken). **Considered and rejected:**
+      -le (the rule outside the past is variable — native speaker first), commands at three levels (the
+      -nus note covers it), adjective agreement (no feminine forms in the course), laakh / karod grouping
+      (a bullet for the numerals note at most).
 
 ## Companion characters
 

@@ -85,17 +85,18 @@ export function grammarReady(extra) {
 	);
 }
 
-// Everything through Days & the Clock mastered — the last grammar-note anchor (the hunu verb
-// card, T66) — so every note and verb card on the path is unlocked at once (dev-seed
-// 'grammar-all', and the e2e sweep over all notes).
+// Everything through Linking Words mastered — the last grammar-note anchor (the j- / ty- pairs
+// note, T69) — so every note and verb card on the path is unlocked at once (dev-seed
+// 'grammar-all', and the e2e sweep over all notes, which fails on its node count if a later
+// anchor is ever added without moving this).
 export function allNotesReady(extra) {
 	const items = {};
 	for (const u of COURSE) {
 		for (const it of u.items) items[it.id] = mastered({ lastSeen: day(0) });
-		if (u.id === 'time-week') break;
+		if (u.id === 'linking-words') break;
 	}
 	return Object.assign(
-		{ version: 3, name: 'Aastha', onboarded: true, streak: 4, streakFreezes: 1, lastActivityDay: day(1), itemsToday: 0, itemsTotal: 360, items },
+		{ version: 3, name: 'Aastha', onboarded: true, streak: 4, streakFreezes: 1, lastActivityDay: day(1), itemsToday: 0, itemsTotal: 900, items },
 		extra,
 	);
 }
