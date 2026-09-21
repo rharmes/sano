@@ -66,8 +66,8 @@ other and its record says so — the box means *resolved*, not *shipped*.
 
 - [x] **T70 · A defined `pr-antagonist` process** (2026-09-21). Ross, after PR #15's ad-hoc review:
       *"let's set up a defined pr-antagonist process here, based on my other repos."* Until now the
-      instruction files said sano had **no** gauntlet and Ross was the reviewer; the PR #15 round was
-      briefed from goodparts' definition by hand.
+      instruction files said sano had **no** gauntlet and Ross was the reviewer; the PR #13 and #15
+      rounds were briefed from goodparts' definition by hand.
       - **What was read:** the gauntlets in goodparts, bones, nightdesk, night-codex, nightdesk.dev,
         tabulated and harm.es. They share one shape — a repo-defined reviewer, pinned model at xhigh
         with a fail-closed self-report, ONE GitHub review (event always `COMMENT`, same-account PRs
@@ -91,9 +91,15 @@ other and its record says so — the box means *resolved*, not *shipped*.
         merge. Here a merge is the go-ahead for a production deploy, so the gauntlet ends in a report
         and the merge stays with Ross. Decided by the agent as the conservative default and flagged to
         Ross at delivery; flipping it is a two-paragraph edit (pr-review.md step 5 + workflow step 7).
-      - **Learned from PR #15 and written down:** an approval must describe what merges (a post-APPROVE
-        commit is fine only if it touches nothing but what the review named — otherwise re-review); and
-        if the Agent call takes no `effort` parameter, the report says so.
+      - **Learned from the two ad-hoc rounds and written down:** from PR #15, an approval must describe
+        what merges (a post-APPROVE commit is fine only if it touches nothing but what the review named
+        — otherwise re-review); from PR #13 (the earlier, two-round review), if the Agent call takes no
+        `effort` parameter, the report says so.
+      - **PR #16's own review** (the first under this process; REQUEST CHANGES → fixed in-round) caught
+        three false statements — the toml header overclaiming the parity test's reach, and PR #13
+        missing from the history here and in `pr-review.md` — plus two gaps now written into the
+        procedure: a session older than the agent definition can't resolve `subagent_type`, and
+        in-round fixes are a stated carve-out from the localhost-review-before-commit step.
       - **Not done:** no GitHub Action or hook that spawns the reviewer (it is an agent step, as in the
         other repos); no dev-seed scenario (nothing user-facing); nothing ships (`deploy.sh`
         allowlists). The four unfiled PR #13 nits were not folded in — different area.

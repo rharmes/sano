@@ -1,6 +1,6 @@
 ---
 name: pr-antagonist
-description: Antagonistic PR reviewer for sano (T70). Reviews a pull request adversarially and posts real review comments on GitHub via gh. Spawned as part of the PR gauntlet (docs/pr-review.md) on Opus — the newest Opus, via the `opus` alias — at xhigh effort regardless of which model authored the code (global model law). The caller MUST pass `model` and `effort` explicitly on the Agent call; the lines below are only a default. Give it the PR number and a one-line summary of what the PR claims to do.
+description: Antagonistic PR reviewer for sano (T70). Reviews a pull request adversarially and posts real review comments on GitHub via gh. Spawned as part of the PR gauntlet (docs/pr-review.md) on Opus — the newest Opus, via the `opus` alias — at xhigh effort regardless of which model authored the code (global model law). The caller MUST pass `model` explicitly on the Agent call — and `effort` wherever the call takes one; the lines below are only a default. Give it the PR number and a one-line summary of what the PR claims to do.
 model: opus
 effort: xhigh
 tools: Bash, Read, Grep, Glob

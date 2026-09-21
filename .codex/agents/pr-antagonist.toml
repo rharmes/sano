@@ -1,6 +1,8 @@
 # The Codex CLI counterpart of .claude/agents/pr-antagonist.md (T70) — the same reviewer,
-# stated for Codex's mechanisms, and changed with it in the same commit:
-# tests/data/reviewer-pair.test.mjs fails on any difference outside its substitution table.
+# stated for Codex's mechanisms, and changed with it in the same commit.
+# tests/data/reviewer-pair.test.mjs holds the BRIEF (developer_instructions) to the Claude
+# brief, line for line under its substitution table, and checks the model + effort pins below.
+# This comment and `description` are outside it — they differ by design; keep them true by hand.
 # The model and effort pinned here are the global model law's Codex form
 # (~/.codex/AGENTS.md): GPT-5.6-Sol at xhigh regardless of author — the same shape as the
 # Claude definition's Opus pin. The spawn must set the same pair AND fork_turns = "none" —

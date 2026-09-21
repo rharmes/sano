@@ -71,6 +71,8 @@ test('reviewer pair: each definition pins its harness’s reviewer model at xhig
 	const { front } = claudeBody();
 	assert.match(front, /^model: opus$/m, 'pr-antagonist.md must pin model: opus');
 	assert.match(front, /^effort: xhigh$/m, 'pr-antagonist.md must pin effort: xhigh');
-	assert.match(CODEX, /^model = "gpt-5\.6-sol"$/m, 'pr-antagonist.toml must pin model = "gpt-5.6-sol"');
-	assert.match(CODEX, /^model_reasoning_effort = "xhigh"$/m, 'pr-antagonist.toml must pin model_reasoning_effort = "xhigh"');
+	// The toml's keys only — everything above the brief, so a line inside it can't satisfy the pin.
+	const keys = CODEX.slice(0, CODEX.indexOf("\ndeveloper_instructions = '''"));
+	assert.match(keys, /^model = "gpt-5\.6-sol"$/m, 'pr-antagonist.toml must pin model = "gpt-5.6-sol"');
+	assert.match(keys, /^model_reasoning_effort = "xhigh"$/m, 'pr-antagonist.toml must pin model_reasoning_effort = "xhigh"');
 });

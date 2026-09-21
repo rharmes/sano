@@ -6,7 +6,8 @@ fitted to this one). This file's existence is what makes sano "a repo with a PR 
 sense of the global instruction file, so its **reviewer model law applies here**. This doc is the
 operating procedure; the reviewer itself is `.claude/agents/pr-antagonist.md` (Claude Code) /
 `.codex/agents/pr-antagonist.toml` (Codex CLI) — a mirrored pair that change together in the same
-commit; `tests/data/reviewer-pair.test.mjs` fails when they drift.
+commit; `tests/data/reviewer-pair.test.mjs` fails when their briefs or their model pins drift (each
+file's `description` and header comment differ by design and are kept true by hand).
 
 ## The flow
 
@@ -19,11 +20,14 @@ commit; `tests/data/reviewer-pair.test.mjs` fails when they drift.
    the `T##`), state its URL — never `open` it — then immediately spawn the antagonist. CI and the
    review run side by side.
 3. **Antagonist review.** Spawn the `pr-antagonist` agent (Agent tool,
-   `subagent_type: "pr-antagonist"`) with the PR number and a one-line claim summary.
+   `subagent_type: "pr-antagonist"`) with the PR number and a one-line claim summary. Agent types
+   load at session start, so a session older than the definition (or than an edit to it) won't
+   resolve the type: spawn a general-purpose agent under the same model law, told to read the
+   brief from the file and follow it — and say so in the round's report.
    - **Model law (fail-closed, both halves required):** the reviewer always runs on **Opus — the
      newest, via the `opus` alias — at `xhigh`**, regardless of which model authored the work;
      same-model review is fine. Never rely on the definition's `model:` default: pass
-     `model: "opus"` and `effort: "xhigh"` explicitly on every Agent call, AND require the reviewer
+     `model: "opus"` and `effort: "xhigh"` explicitly on every Agent call (effort: next bullet), AND require the reviewer
      to state the model its own harness metadata reports, in its return and in the review header.
      Before acting on any verdict, verify that self-report is an Opus; a round whose model can't be
      confirmed is **void** — respawn with the model forced, don't trust it. An older Opus than
@@ -40,9 +44,11 @@ commit; `tests/data/reviewer-pair.test.mjs` fails when they drift.
      reviewer share one GitHub account, so the event is always `COMMENT` — the **verdict line is
      the outcome**; don't expect a green "Approved" state.
 4. **On REQUEST CHANGES:** report the actionable items to Ross **and start fixing immediately** —
-   don't wait for a go-ahead. Push the fixes to the same branch, reply on the PR with what changed,
-   then send the SAME reviewer agent a re-review request (SendMessage keeps its context): "fixes
-   pushed — re-review round N". If the reviewer can no longer be reached, spawn a fresh one under
+   don't wait for a go-ahead (this is the carve-out from workflow step 5's localhost review before
+   committing: a review fix is pushed first and reported; if it changes what a learner sees, serve
+   it and tell Ross what to look at in the same report). Push the fixes to the same branch, reply
+   on the PR with what changed, then send the SAME reviewer agent a re-review request (SendMessage
+   keeps its context): "fixes pushed — re-review round N". If the reviewer can no longer be reached, spawn a fresh one under
    the same model law and say so. Loop until APPROVE. If the antagonist demands something that
    contradicts Ross's own rulings or seems wrong, don't silently obey — surface the conflict and
    let Ross arbitrate.
@@ -92,9 +98,13 @@ The flow is the same; only the mechanisms differ (`AGENTS.md` is the Codex count
 
 ## History
 
-PR #15 (T69) was the dry run, before any of this was defined: an ad-hoc Opus reviewer briefed from
-another repo's definition approved it with eight findings — one proven by mutation (a seed comment
+Two PRs ran an ad-hoc Opus reviewer, briefed by hand from another repo's definition, before any of
+this was defined. **PR #13 (T68)** went two rounds — REQUEST CHANGES, fixes pushed, APPROVE — and is
+the round that exercised the fix-and-re-review loop (step 4); both of its review headers reported
+that the harness surfaces no reasoning-effort field, which is where step 3's "say so" rule comes
+from. **PR #15 (T69)** was approved with eight findings — one proven by mutation (a seed comment
 that named the wrong safety net), one prose-versus-colouring contradiction in a grammar note, and
-four questions about the Nepali. Two things from that round are now rules above: the approval
-predated the follow-up commit (step 5), and the language questions went to Ross rather than into
-the verdict (step 6).
+four questions about the Nepali — and gave two more rules: its approval predated the follow-up
+commit (step 5), and the language questions went to Ross rather than into the verdict (step 6).
+**PR #16 (T70)**, the PR that added this file, was the first reviewed under it — from a session
+older than the agent definition, which is the fallback step 3 now describes.
