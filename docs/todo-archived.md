@@ -64,6 +64,40 @@ other and its record says so — the box means *resolved*, not *shipped*.
         content, and a symlink can't say *read* where the original says *load with `@`*. Not shipped
         (`deploy.sh` allowlists; neither file is on it). No dev-seed scenario: nothing user-facing.
 
+- [x] **T70 · A defined `pr-antagonist` process** (2026-09-21). Ross, after PR #15's ad-hoc review:
+      *"let's set up a defined pr-antagonist process here, based on my other repos."* Until now the
+      instruction files said sano had **no** gauntlet and Ross was the reviewer; the PR #15 round was
+      briefed from goodparts' definition by hand.
+      - **What was read:** the gauntlets in goodparts, bones, nightdesk, night-codex, nightdesk.dev,
+        tabulated and harm.es. They share one shape — a repo-defined reviewer, pinned model at xhigh
+        with a fail-closed self-report, ONE GitHub review (event always `COMMENT`, same-account PRs
+        can't approve) ending in a `VERDICT:` line, fix-in-round and re-review with the same agent.
+      - **What shipped:** `docs/pr-review.md` (the procedure — its existence is what switches on the
+        global reviewer model law), `.claude/agents/pr-antagonist.md` and its Codex twin
+        `.codex/agents/pr-antagonist.toml` (GPT-5.6-Sol, `fork_turns = "none"` at spawn), and
+        `tests/data/reviewer-pair.test.mjs`: the Codex brief must equal the Claude brief under a
+        seven-row substitution table, line for line, and each file must pin its model at xhigh. The
+        other repos hold that mirror by discipline; here it is a test, like T62's.
+      - **The brief is sano's, not a copy:** its hunt list is this repo's laws (no runtime external
+        requests, AI-drafted strings never silently corrected, one `login.php` failure response,
+        `PUSH_HOSTS` in two places, generated files never hand-edited, audio + `AUDIO_VERSION`, both
+        theme blocks, deploy allowlist + migrations, dev-seed scenario, the two mirrors, todo + archive).
+        Three ground rules the other repos don't need: the reviewer **shares the author's checkout**
+        (no worktrees here) so it must verify the head SHA, revert its mutations and leave the tree
+        clean; it may **never deploy or use an API key**; and it is **not the native speaker** — a
+        doubt about the Nepali is a `question:` for Ross, never a blocking defect. Reviews are written
+        in romanized Nepali.
+      - **The one departure — Ross still merges.** Elsewhere an APPROVE is standing authorization to
+        merge. Here a merge is the go-ahead for a production deploy, so the gauntlet ends in a report
+        and the merge stays with Ross. Decided by the agent as the conservative default and flagged to
+        Ross at delivery; flipping it is a two-paragraph edit (pr-review.md step 5 + workflow step 7).
+      - **Learned from PR #15 and written down:** an approval must describe what merges (a post-APPROVE
+        commit is fine only if it touches nothing but what the review named — otherwise re-review); and
+        if the Agent call takes no `effort` parameter, the report says so.
+      - **Not done:** no GitHub Action or hook that spawns the reviewer (it is an agent step, as in the
+        other repos); no dev-seed scenario (nothing user-facing); nothing ships (`deploy.sh`
+        allowlists). The four unfiled PR #13 nits were not folded in — different area.
+
 ## Dialogues & audio
 
 - [x] **T2 · Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` lag the text
