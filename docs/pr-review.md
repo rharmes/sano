@@ -48,13 +48,13 @@ file's `description` and header comment differ by design and are kept true by ha
      the outcome**; don't expect a green "Approved" state.
 4. **On REQUEST CHANGES:** report the actionable items to Ross **and start fixing immediately** —
    don't wait for a go-ahead (this is the carve-out from workflow step 5's localhost review before
-   committing, and step 5 of both instruction twins names it: a review fix is pushed first and reported; if it changes what a learner sees, serve
-   it and tell Ross what to look at in the same report). Push the fixes to the same branch, reply
-   on the PR with what changed, then send the SAME reviewer agent a re-review request (SendMessage
-   keeps its context): "fixes pushed — re-review round N". If the reviewer can no longer be
-   reached, spawn a fresh one under the same model law and say so. Loop until APPROVE. If the antagonist demands something that
-   contradicts Ross's own rulings or seems wrong, don't silently obey — surface the conflict and
-   let Ross arbitrate.
+   committing, and step 5 of both instruction twins names it: a review fix is pushed first and
+   reported; if it changes what a learner sees, serve it and tell Ross what to look at in the same
+   report). Push the fixes to the same branch, reply on the PR with what changed, then send the SAME
+   reviewer agent a re-review request (SendMessage keeps its context): "fixes pushed — re-review
+   round N". If the reviewer can no longer be reached, spawn a fresh one under the same model law
+   and say so. Loop until APPROVE. If the antagonist demands something that contradicts Ross's own
+   rulings or seems wrong, don't silently obey — surface the conflict and let Ross arbitrate.
 5. **On APPROVE:** confirm CI is green **on the PR head SHA**, then report to Ross with a
    `result:` line — the verdict, the head SHA it sits on, and every non-blocking note. **Ross
    merges.** This is the one place sano departs from his other repos, where an APPROVE is standing
