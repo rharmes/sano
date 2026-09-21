@@ -367,6 +367,74 @@ const GRAMMAR_TOPICS = [
 		tip: 'A quick test: if you could swap “is” for “equals”, it is ho. If you could swap it for “is located” or “is feeling”, it is chha.',
 	},
 	{
+		id: 'ko',
+		after: 'introductions', // path anchor: this node sits just after this unit (T69)
+		glyph: '-को',
+		title: '-ko: whose it is',
+		sub: 'owner + -ko, then the thing owned',
+		intro: 'English adds ’s or says “of”. Nepali hangs -ko on the owner: aamaako maayaa (a mother’s love), Nepaalako pahaad (Nepal’s hills). The owner always comes first and the thing owned follows straight after.',
+		legend: [
+			{ role: 'mark', label: 'owner + -ko' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		contrast: [
+			{
+				label: 'English',
+				chips: [
+					{ en: 'Nepal’s', role: 'mark' },
+					{ en: 'hills', role: 'what' },
+					{ en: 'are', role: 'verb' },
+					{ en: 'green', role: 'what' },
+				],
+			},
+			{ label: 'Nepali', clip: 'hariyo-green-f2' },
+		],
+		points: [
+			'-ko goes on the owner, and the owner comes first: hajuraaamaako khaanaa (grandmother’s cooking), usako naam (his name), tapaaiko ghar (your house).',
+			'Three everyday owners have fused forms, which you already know: ma → mero, haami → haamro, timi → timro. Everyone else simply takes -ko: tapaaiko, usako, uhaanko.',
+			'It also covers “of”: kukhuraako maasu (chicken meat), aanpako jus (mango juice), aajako kaaryakram (today’s programme). And -ko laagi means “for”: khaanaako laagi dhanyabaad.',
+		],
+		examples: [
+			{
+				clip: 'tapai-ko-naam-ke-ho-what-is-your-name-formal',
+				parts: [
+					{ dev: 'तपाईंको', en: 'your', role: 'mark' },
+					{ dev: 'नाम', en: 'name', role: 'what' },
+					{ dev: 'के', en: 'what', role: 'what' },
+					{ dev: 'हो?', en: 'is?', role: 'verb' },
+				],
+			},
+			{
+				clip: 'hajuraamaa-grandmother-f1',
+				parts: [
+					{ dev: 'हजुरआमाको', en: 'grandmother’s', role: 'mark' },
+					{ dev: 'खाना', en: 'food', role: 'what' },
+					{ dev: 'मिठो', en: 'delicious', role: 'what' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+				],
+			},
+			{
+				clip: 'hariyo-green-f2',
+				parts: [
+					{ dev: 'नेपालको', en: 'Nepal’s', role: 'mark' },
+					{ dev: 'पहाड', en: 'hills', role: 'what' },
+					{ dev: 'हरियो', en: 'green', role: 'what' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+				],
+			},
+			{
+				clip: 'khanako-lagi-dhanyabaad-thank-you-for-the-food',
+				parts: [
+					{ dev: 'खानाको', en: 'of the food', role: 'mark' },
+					{ dev: 'लागि', en: 'for the sake', role: 'mark' },
+					{ dev: 'धन्यवाद', en: 'thanks', role: 'what' },
+				],
+			},
+		],
+		tip: 'Say the owner, add -ko, then name the thing — the reverse of English “the X of Y”.',
+	},
+	{
 		id: 'postpositions',
 		after: 'introductions-origins', // path anchor: this node sits just after this unit
 		glyph: '-मा', // short mark for the path node
@@ -1114,6 +1182,336 @@ const GRAMMAR_TOPICS = [
 			},
 		],
 		tip: 'The short “to” form (jaan, garna, khaan) pairs with sakchhu and man laagchha; the full -nu form (jaanu, garnu) pairs with parchha. Hear both enough and the pairing sticks.',
+	},
+	{
+		id: 'thiyo',
+		after: 'time', // path anchor: this node sits just after this unit (T69)
+		glyph: 'थियो',
+		title: 'thiyo: it was',
+		sub: 'chha is now · thiyo was then',
+		intro: 'chha says how something is; thiyo says how it was. Swap one for the other and the sentence moves into the past: jaado chha (it’s cold) → jaado thiyo (it was cold). Nothing else in the sentence changes.',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+			{ role: 'mark', label: 'was' },
+		],
+		contrast: [
+			{
+				label: 'Now → chha',
+				clip: 'jado-cha-it-s-cold',
+				parts: [
+					{ dev: 'जाडो', en: 'cold', role: 'what' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+				],
+			},
+			{ label: 'Then → thiyo', clip: 'hijo-yesterday-f2' },
+		],
+		points: [
+			'thiyo is the form for u / yo and for things. “I was” is thie (ma gharamaa thie — I was at home), haami and timi take thiyau, uniharu take thie, and tapaai / uhaa take the respectful hunuhunthyo.',
+			'The negative is thiena: khaanaa piro thiena (the food wasn’t spicy).',
+			'thiyo or bhayo? thiyo describes how things were — a state. bhayo says something happened or changed: khaanaa mitho thiyo (the food was delicious), but khaanaa tayaar bhayo (the food became ready).',
+		],
+		examples: [
+			{
+				clip: 'hijo-yesterday-f2',
+				parts: [
+					{ dev: 'हिजो', en: 'yesterday', role: 'what' },
+					{ dev: 'राति', en: 'at night', role: 'what' },
+					{ dev: 'जाडो', en: 'cold', role: 'what' },
+					{ dev: 'थियो', en: 'was', role: 'mark' },
+				],
+			},
+			{
+				clip: 'khana-mitho-thiyo-food-was-delicious',
+				parts: [
+					{ dev: 'खाना', en: 'food', role: 'who' },
+					{ dev: 'मीठो', en: 'delicious', role: 'what' },
+					{ dev: 'थियो', en: 'was', role: 'mark' },
+				],
+			},
+			{
+				clip: 'khana-tayar-bhayo-the-food-is-ready',
+				parts: [
+					{ dev: 'खाना', en: 'food', role: 'who' },
+					{ dev: 'तयार', en: 'ready', role: 'what' },
+					{ dev: 'भयो', en: 'became', role: 'verb' },
+				],
+			},
+		],
+		tip: 'Telling someone about yesterday, a trip or a meal? Describe it exactly as you would today, and end with thiyo.',
+	},
+	{
+		id: 'laagnu',
+		after: 'weather', // path anchor: this node sits just after this unit (T69)
+		glyph: 'लाग्यो',
+		title: 'laagyo: it strikes you',
+		sub: 'weather · feelings · wanting · time',
+		intro: 'Nepali does not say “I am hungry” or “it is sunny”. Hunger, cold, fear and sunshine are things that strike: malaai bhok laagyo is “to-me hunger struck”, ghaam laagyo is “sun struck”. One verb, laagnu, carries all of them — and the person it happens to takes -laai.',
+		legend: [
+			{ role: 'mark', label: 'to whom' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		contrast: [
+			{
+				label: 'English',
+				chips: [
+					{ en: 'I', role: 'mark' },
+					{ en: 'am', role: 'verb' },
+					{ en: 'hungry', role: 'what' },
+				],
+			},
+			{ label: 'Nepali', clip: 'feel-bhok-hunger' },
+		],
+		points: [
+			'Weather just happens, so there is no person: ghaam laagyo (it’s sunny), baadal laagyo (it’s cloudy), hussu laagyo (it’s foggy).',
+			'Feelings happen to someone, and that someone takes -laai: malaai jaado laagyo (I feel cold), malaai dar laagyo (I got scared), usalaai lajjaa laagyo (he was embarrassed). When it is obviously you, the malaai is often dropped: tapaailaai bhetdaa khusi laagyo is “on meeting you, happiness struck (me)”.',
+			'laagyo is the past — it has struck, so you feel it now. laagchha is the general version: saanpadekhi dar laagchha (I’m scared of snakes), malaai jaan man laagchha (I feel like going), bis minet laagchha (it takes twenty minutes). The negative is laagdaina.',
+		],
+		examples: [
+			{
+				clip: 'ghaam-laagyo-it-s-sunny',
+				parts: [
+					{ dev: 'घाम', en: 'sun', role: 'what' },
+					{ dev: 'लाग्यो', en: 'struck', role: 'verb' },
+				],
+			},
+			{
+				clip: 'feel-bhok-hunger',
+				parts: [
+					{ dev: 'मलाई', en: 'to me', role: 'mark' },
+					{ dev: 'भोक', en: 'hunger', role: 'what' },
+					{ dev: 'लाग्यो', en: 'struck', role: 'verb' },
+				],
+			},
+			{
+				clip: 'tapai-lai-bhetda-khushi-lagyo-nice-to-meet-you',
+				parts: [
+					{ dev: 'तपाईंलाई', en: 'you', role: 'what' },
+					{ dev: 'भेट्दा', en: 'on meeting', role: 'what' },
+					{ dev: 'खुसी', en: 'happiness', role: 'what' },
+					{ dev: 'लाग्यो', en: 'struck', role: 'verb' },
+				],
+			},
+			{
+				clip: 'bis-twenty-f1',
+				parts: [
+					{ dev: 'बीस', en: 'twenty', role: 'what' },
+					{ dev: 'मिनेट', en: 'minutes', role: 'what' },
+					{ dev: 'लाग्छ', en: 'it takes', role: 'verb' },
+				],
+			},
+		],
+		tip: 'When English says “I am” plus a feeling, try malaai + the feeling + laagyo first.',
+	},
+	{
+		id: 'bhandaa',
+		after: 'comparing-things', // path anchor: this node sits just after this unit (T69)
+		glyph: 'भन्दा',
+		title: 'bhandaa: than',
+		sub: 'no “-er”, no “more” — just bhandaa',
+		intro: 'English changes the adjective: big → bigger. Nepali leaves it alone and puts bhandaa (“than”) after the thing you are comparing against: yo tyo bhandaa thulo chha — “this, that than, big is”.',
+		legend: [
+			{ role: 'who', label: 'who' },
+			{ role: 'mark', label: 'than what' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		contrast: [
+			{
+				label: 'English',
+				chips: [
+					{ en: 'this', role: 'who' },
+					{ en: 'is', role: 'verb' },
+					{ en: 'bigger', role: 'what' },
+					{ en: 'than', role: 'mark' },
+					{ en: 'that', role: 'mark' },
+				],
+			},
+			{ label: 'Nepali', clip: 'yo-tyo-bhanda-thulo-bigger' },
+		],
+		points: [
+			'The order is: the thing · what it beats + bhandaa · the quality · chha. chiyaa kaphi bhandaa sasto chha — “tea, coffee than, cheap is”.',
+			'The adjective never changes. thulo is both “big” and “bigger”; bhandaa does all the work.',
+			'sabai bhandaa — “than all” — makes the “-est”: sabai bhandaa raamro (the best), sabai bhandaa thulo (the biggest). You will also see it written as one word, sabaibhandaa.',
+		],
+		examples: [
+			{
+				clip: 'yo-tyo-bhanda-thulo-bigger',
+				parts: [
+					{ dev: 'यो', en: 'this', role: 'who' },
+					{ dev: 'त्यो', en: 'that', role: 'mark' },
+					{ dev: 'भन्दा', en: 'than', role: 'mark' },
+					{ dev: 'ठूलो', en: 'big', role: 'what' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+				],
+			},
+			{
+				clip: 'bhanda-than-f1',
+				parts: [
+					{ dev: 'चिया', en: 'tea', role: 'who' },
+					{ dev: 'कफी', en: 'coffee', role: 'mark' },
+					{ dev: 'भन्दा', en: 'than', role: 'mark' },
+					{ dev: 'सस्तो', en: 'cheap', role: 'what' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+				],
+			},
+			{
+				clip: 'bhanda-than-f2',
+				parts: [
+					{ dev: 'हिजो', en: 'yesterday', role: 'mark' },
+					{ dev: 'भन्दा', en: 'than', role: 'mark' },
+					{ dev: 'आज', en: 'today', role: 'who' },
+					{ dev: 'गर्मी', en: 'hot', role: 'what' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+				],
+			},
+			{
+				clip: 'sabai-bhanda-ramro-the-best',
+				parts: [
+					{ dev: 'सबै', en: 'all', role: 'mark' },
+					{ dev: 'भन्दा', en: 'than', role: 'mark' },
+					{ dev: 'राम्रो', en: 'good', role: 'what' },
+				],
+			},
+		],
+		tip: 'Build it backwards from English: say what you are comparing against, add bhandaa, then the plain adjective.',
+	},
+	{
+		id: 'if-bhane',
+		after: 'fn-conjunctions', // path anchor: this node sits just after this unit (T69)
+		glyph: 'भने',
+		title: 'yadi … bhane: if',
+		sub: 'the “if” closes its clause',
+		intro: 'English opens with “if”. Nepali closes with it: the condition comes first and bhane ends it — sambhaw chha bhane, “possible is, if”. yadi at the front is an optional extra flag; everyday speech often drops it and keeps only bhane.',
+		legend: [
+			{ role: 'mark', label: 'joining word' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		contrast: [
+			{
+				label: 'English',
+				chips: [
+					{ en: 'if', role: 'mark' },
+					{ en: 'it’s', role: 'verb' },
+					{ en: 'possible', role: 'what' },
+				],
+			},
+			{ label: 'Nepali', clip: 'fn-yadi-if' },
+		],
+		points: [
+			'bhane is the part you cannot leave out. The condition is an ordinary sentence with bhane added: samay chha bhane … (if there’s time …).',
+			'The result follows the condition, verb last as always: samay chha bhane ma aaunchhu — if there’s time, I’ll come.',
+			'Its relatives each open their clause instead: kinabhane (“because”) opens the reason, natra (“otherwise”) opens the consequence, and jab (“when”) opens a time clause.',
+		],
+		examples: [
+			{
+				clip: 'fn-yadi-if',
+				parts: [
+					{ dev: 'यदि', en: 'if', role: 'mark' },
+					{ dev: 'सम्भव', en: 'possible', role: 'what' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+					{ dev: 'भने', en: 'if (closing)', role: 'mark' },
+				],
+			},
+			{
+				clip: 'fn-kinabhane-because',
+				parts: [
+					{ dev: 'किनभने', en: 'because', role: 'mark' },
+					{ dev: 'गाह्रो', en: 'hard', role: 'what' },
+					{ dev: 'छ', en: 'is', role: 'verb' },
+				],
+			},
+			{
+				clip: 'fn-natra-otherwise',
+				parts: [
+					{ dev: 'नत्र', en: 'otherwise', role: 'mark' },
+					{ dev: 'गाह्रो', en: 'hard', role: 'what' },
+					{ dev: 'हुन्छ', en: 'will be', role: 'verb' },
+				],
+			},
+			{
+				clip: 'fn-jaba-when',
+				parts: [
+					{ dev: 'जब', en: 'when', role: 'mark' },
+					{ dev: 'समय', en: 'time', role: 'what' },
+					{ dev: 'हुन्छ', en: 'there is', role: 'verb' },
+				],
+			},
+		],
+		tip: 'Say the condition as a plain statement, then add bhane. That alone is a correct “if”.',
+	},
+	{
+		id: 'pairs',
+		after: 'linking-words', // path anchor: this node sits just after this unit (T69)
+		glyph: 'जहाँ',
+		title: 'jahaa … tyahaa: matched pairs',
+		sub: 'a j- word opens, a ty- word answers',
+		intro: 'For “wherever”, “the way that” and “as long as”, Nepali uses two words that rhyme: a j- word opens the first half and its ty- twin answers in the second. jahaa man laagchha, tyahaa jaanus — “where you feel like, there go”.',
+		legend: [
+			{ role: 'mark', label: 'j- / ty- pair' },
+			{ role: 'who', label: 'who' },
+			{ role: 'what', label: 'what' },
+			{ role: 'verb', label: 'does' },
+		],
+		contrast: [
+			{
+				label: 'English',
+				chips: [
+					{ en: 'go', role: 'verb' },
+					{ en: 'wherever', role: 'mark' },
+					{ en: 'you like', role: 'what' },
+				],
+			},
+			{ label: 'Nepali', clip: 'link-jahaan' },
+		],
+		points: [
+			'The pairs mirror the question words you know: kahaa (where?) → jahaa … tyahaa (where … there); kasari (how?) → jasari … tyasari (the way … that way); kati (how much?) → jati … tyati (as much … that much).',
+			'The j- half comes first and ends in its own verb; the ty- half follows with the main verb last: jasari ma garchhu, tyasari garnus.',
+			'In short sentences the ty- twin is often left unsaid: jab samay hunchha (when there’s time), jabasamma paani parchha, ma baschhu (as long as it rains, I’ll stay), jati sakchha (as much as possible).',
+		],
+		examples: [
+			{
+				clip: 'link-jahaan',
+				parts: [
+					{ dev: 'जहाँ', en: 'where', role: 'mark' },
+					{ dev: 'मन', en: 'mind', role: 'what' },
+					{ dev: 'लाग्छ,', en: 'strikes', role: 'verb' },
+					{ dev: 'त्यहाँ', en: 'there', role: 'mark' },
+					{ dev: 'जानुस्', en: 'please go', role: 'verb' },
+				],
+			},
+			{
+				clip: 'link-jasari',
+				parts: [
+					{ dev: 'जसरी', en: 'the way', role: 'mark' },
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'गर्छु,', en: 'do', role: 'verb' },
+					{ dev: 'त्यसरी', en: 'that way', role: 'mark' },
+					{ dev: 'गर्नुस्', en: 'please do', role: 'verb' },
+				],
+			},
+			{
+				clip: 'link-jabasamma',
+				parts: [
+					{ dev: 'जबसम्म', en: 'as long as', role: 'mark' },
+					{ dev: 'पानी', en: 'rain', role: 'what' },
+					{ dev: 'पर्छ,', en: 'falls', role: 'verb' },
+					{ dev: 'म', en: 'I', role: 'who' },
+					{ dev: 'बस्छु', en: 'stay', role: 'verb' },
+				],
+			},
+			{
+				clip: 'adv-jati-asmuchas',
+				parts: [
+					{ dev: 'जति', en: 'as much as', role: 'mark' },
+					{ dev: 'सक्छ', en: 'is possible', role: 'verb' },
+				],
+			},
+		],
+		tip: 'Hear a word starting with j-? Expect its ty- twin — spoken or not — to finish the thought.',
 	},
 	{
 		id: 'card-garnu',

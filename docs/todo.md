@@ -89,6 +89,11 @@ what's in use.
       Numbers, then two units (`numerals` ०–९, `numerals-reading` १०–१५००) whose Nepali side is the glyph: silent
       prompts, a borrowed clip in the reveal, and *Type the number* as the recall drill (2026-09-20).
 
+- [x] **T69 · More grammar notes where the course introduces a concept** — six teal notes, each right after the
+      unit that first leans on its pattern: *-ko* (Introductions), *thiyo* (Time of Day), *laagyo* (Weather),
+      *bhandaa* (Comparing Things), *yadi … bhane* (If, When & Because), the *j- / ty-* pairs (Linking Words);
+      all built from existing course sentences, no new audio (2026-09-21).
+
 ## Content review
 
 - [ ] **T3 · Review the dictionary's recommendations** `waiting-on:ross` `area:content` (`tools/dict/`; flag-only, never
