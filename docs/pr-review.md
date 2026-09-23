@@ -1,113 +1,98 @@
-# The PR gauntlet (T70)
+# The PR gauntlet — this repo
 
-Every PR is adversarially reviewed by a **second agent** before Ross merges it, and the review
-lives ON the pull request as real comments (Ross, 2026-09-21 — the pattern his other repos run,
-fitted to this one). This file's existence is what makes sano "a repo with a PR gauntlet" in the
-sense of the global instruction file, so its **reviewer model law applies here**. This doc is the
-operating procedure; the reviewer itself is `.claude/agents/pr-antagonist.md` (Claude Code) /
-`.codex/agents/pr-antagonist.toml` (Codex CLI) — a mirrored pair that change together in the same
-commit; `tests/data/reviewer-pair.test.mjs` fails when their briefs or their model pins drift (each
-file's `description` and header comment differ by design and are kept true by hand).
+Every PR here goes through the shared gauntlet in `~/.claude/pr-review.md`, reviewed by the shared
+`pr-antagonist` definition in `~/.claude/agents/` (both from Ross's setup repo, since 2026-09-23,
+setup #74). The process is the same in every repo, so this doc holds none of it: it is the
+reviewer's brief for sano and nothing else.
 
-## The flow
+## Reviewer brief
 
-1. **Build.** Work the task on its branch as usual (CLAUDE.md workflow steps 1–6): format, stamp,
-   `tools/test.sh`, dev-seed scenario, localhost review with Ross, commit and push as you go.
-2. **Self-review, then "Open the PR."** Only Ross triggers the PR. Before opening it, re-read the
-   full diff for the author blind spots reviews keep catching: **assertions that cannot fail**
-   (would this still pass with the fix reverted? — mutate and see) and **comments or docs
-   invalidated by nearby edits** in the same change. Open the PR (body: what / tests / docs, citing
-   the `T##`), state its URL — never `open` it — then immediately spawn the antagonist. CI and the
-   review run side by side.
-3. **Antagonist review.** Spawn the `pr-antagonist` agent (Agent tool,
-   `subagent_type: "pr-antagonist"`) with the PR number and a one-line claim summary. Agent types
-   load at session start, so a session older than the definition (or than an edit to it) won't
-   resolve the type: spawn a general-purpose agent under the same model law, told to read the
-   brief from the file and follow it — and say so in the round's report.
-   - **Model law (fail-closed, both halves required):** the reviewer always runs on **Opus — the
-     newest, via the `opus` alias — at `xhigh`**, regardless of which model authored the work;
-     same-model review is fine. Never rely on the definition's `model:` default: pass
-     `model: "opus"` and `effort: "xhigh"` explicitly on every Agent call (effort: next bullet),
-     AND require the reviewer to state the model its own harness metadata reports, in its return
-     and in the review header.
-     Before acting on any verdict, verify that self-report is an Opus; a round whose model can't be
-     confirmed is **void** — respawn with the model forced, don't trust it. An older Opus than
-     expected (alias lag) still satisfies the pin; note it to Ross.
-   - **Effort:** if the harness's Agent call takes no `effort` parameter, say so to Ross in the
-     round's report rather than papering over it. What carries the effort then depends on the
-     path: a resolved `pr-antagonist` type has the frontmatter pin plus the brief's "ultrathink"; on
-     the general-purpose fallback no frontmatter applies, so the spawn prompt's demand ("xhigh —
-     ultrathink") and the brief's are all there is.
-   - **One checkout.** sano uses no worktrees, so the reviewer works in the author's checkout, on
-     the PR head. It never commits, pushes or switches branches, reverts any mutation it makes, and
-     leaves `git status` clean. **Don't edit files while a round is running** — the reviewer would be
-     reading a tree that isn't the PR.
-   - The agent posts one GitHub review: inline comments on the diff lines plus a summary body
-     naming the head SHA and ending `VERDICT: APPROVE` or `VERDICT: REQUEST CHANGES`. Author and
-     reviewer share one GitHub account, so the event is always `COMMENT` — the **verdict line is
-     the outcome**; don't expect a green "Approved" state.
-4. **On REQUEST CHANGES:** report the actionable items to Ross **and start fixing immediately** —
-   don't wait for a go-ahead (this is the carve-out from workflow step 5's localhost review before
-   committing, and step 5 of both instruction twins names it: a review fix is pushed first and
-   reported; if it changes what a learner sees, serve it and tell Ross what to look at in the same
-   report). Push the fixes to the same branch, reply on the PR with what changed, then send the SAME
-   reviewer agent a re-review request (SendMessage keeps its context): "fixes pushed — re-review
-   round N". If the reviewer can no longer be reached, spawn a fresh one under the same model law
-   and say so. Loop until APPROVE. If the antagonist demands something that contradicts Ross's own
-   rulings or seems wrong, don't silently obey — surface the conflict and let Ross arbitrate.
-5. **On APPROVE:** confirm CI is green **on the PR head SHA**, then report to Ross with a
-   `result:` line — the verdict, the head SHA it sits on, and every non-blocking note. **Ross
-   merges.** This is the one place sano departs from his other repos, where an APPROVE is standing
-   authorization to merge: here a merge is the go-ahead for a **production deploy** (workflow
-   step 8), so that call stays with Ross.
-   - **The approval must describe what merges.** Fixing a nit after an APPROVE is fine without
-     another round only when the follow-up touches nothing but what the review named (a comment, a
-     doc line, a prose bullet). Say in the report that the approval predates that commit and what
-     it changed. Anything that changes behaviour or a test goes back for a re-review round.
-6. **Nits and questions** follow the global filing bar: a non-blocking nit from an approving review
-   becomes a `T##` only when it changes behaviour or documentation truth, and a filed nit rides
-   along in the next PR touching the same area — no dedicated PR. Pure phrasing dies in the thread.
-   **Questions about the Nepali itself** are never the reviewer's to rule on; relay them to Ross,
-   who takes them to the native speaker.
+**What this repo is.** sano is Ross's Nepali study app at namastesano.com: plain HTML/CSS/JS with
+no build step, plus a small PHP/MySQL sync API in `api/`. Ross tests on an iPhone
+running iOS 26. Three facts make review here different:
 
-## What the reviewer may not do
+- **A merge is a production deploy.** After Ross merges, the author runs `tools/deploy.sh`
+  (`CLAUDE.md` workflow step 8) with no further ask. What merges reaches learners.
+- **Most of the Nepali is AI-drafted and under review.** Every `dev`, dialogue `gloss`, unit
+  `goal` and onboarding `L` string is Ross's draft, and a native speaker rules on the language.
+  You are not the native speaker.
+- **Learner state lives on the device.** `sano.state.v1` in localStorage is the working copy and
+  syncs to the server. A change that strands a saved blob loses someone's progress.
 
-The brief says it; it's repeated here because it's the part that protects the live site and Ross's
-money. The reviewer never deploys or touches the server, never uses an API key (`with-key`,
-`apikey`, `synth-app.mjs`, `build-dictionary.mjs`), never merges, and never edits the PR. A finding
-that would need one of those is reported as a question.
+Read `CLAUDE.md` first; `docs/architecture.md` and `docs/data-model.md` carry the detail it
+points to. `js/data.js` and `js/grammar.js` are large: read the touched entries whole and their
+consumers in `js/sano.js`, not the entire file.
 
-## Standing permissions
+**What to hunt, in order of severity** (before the shared definition's generic list):
 
-Spawning `pr-antagonist` at PR time (and its re-review rounds) is standing authorization from Ross
-— it does not violate the instruction files' "no subagents unless Ross explicitly asks" rule, which
-otherwise remains in force. **Merging is not** standing authorization (step 5).
+- **Correctness in the learning engine.** The mastery gate (a unit unlocks only when every item
+  has graduated), frames rotating in only after graduation, state schema compatibility (schema
+  v3), sync revision handling, and the numeral rules (a numeral is silent and un-romanized
+  wherever its glyph is the question). Also JS regexes that assume `\b` works on Devanagari, and
+  clip ids that don't resolve to a file on disk.
+- **The repo's laws.** They are load-bearing, not style:
+  - **No external requests at runtime.** Any new off-origin `<link>`, `<script>`, `<img>`,
+    `@import`, `url()` or `fetch()` is blocking. Grep the diff; don't take the author's word.
+  - **AI-drafted strings are Ross's drafts.** A diff that changes a `dev`, a gloss, a `goal` or
+    an onboarding `L` string without the PR body flagging it as Ross's own edit is a silent
+    correction.
+  - **Never store a raw IP**, and `sano-config.php` stays outside the docroot.
+  - **`login.php` has exactly one failure response**: status, body, argon2id cost and rate-limit
+    budget. The API guard order runs stateless checks before auth and `db()`; mutating requests
+    need the CSRF header; `PUSH_HOSTS` changes land in both `api/lib.php` and
+    `tools/send-reminders.php`; push click targets go through `safeTarget()`.
+  - **iOS recording playback stays on the Web Audio API**, never `new Audio(url)`.
+  - **Generated files are never hand-edited**: `js/glosses.js`, `js/en-glosses.js`,
+    `js/characters.js`, `design/anim-characters.js`, `tools/tts/words.json`, and the `?v=`
+    stamps. A diff to one without its generator's input changing is a defect.
+  - **Audio**: new or re-spelled content needs its clips on disk and an `AUDIO_VERSION` bump;
+    nothing renders audio at runtime.
+  - **Theme tokens change in both blocks** (light and dark) of `css/sano.css`; shared-style
+    changes are mirrored into `design/style-guide.html`; `prefers-reduced-motion` is respected.
+  - **Deploy and schema**: a new public file must be on `tools/deploy.sh`'s allowlist; a new
+    column that `login.php` or `state.php` SELECTs needs an idempotent `tools/migrate-*.php`,
+    never a re-applied `schema.sql`.
+  - **Every new user-facing feature has a one-click scenario in `tools/dev-seed.html`.**
+  - **`CLAUDE.md` and `AGENTS.md` change together** in the same commit and say the same thing;
+    `tests/data/agents-md.test.mjs` holds them to it.
+  - **Task list**: the PR ticks its `T##` in `docs/todo.md` and archives the full record in
+    `docs/todo-archived.md` in the same change. Nothing here closes on merge.
+- **Tests that depend on chance.** The lesson builder makes real random draws, and `boot()`
+  stubs `Math.random` with a seeded PRNG (T39). An e2e assertion that depends on an unseeded
+  draw, a fixed timeout, a retry used as a fix, or a click fired mid-scroll is a defect.
+- **Docs currency, sano's usual misses**: counts in the docs (items, frames, glossed words), a
+  new helper missing from `docs/architecture.md`, and a shape `docs/data-model.md` no longer
+  describes.
 
-## Running the gauntlet from Codex CLI
+**Checks before asking for a PR** (the flow's step 1): `tools/format.sh`, then
+`node tools/stamp-version.mjs`, then `tools/test.sh`, which runs every tier.
 
-The flow is the same; only the mechanisms differ (`AGENTS.md` is the Codex counterpart of
-`CLAUDE.md`). The reviewer is the `pr-antagonist` role in `.codex/agents/pr-antagonist.toml`.
+**How to verify.** You may run `tools/test.sh` with `--static`, `--unit` or `--data`, a single
+e2e spec with `npx playwright test <file>`, and `tools/format.sh --check`. `tools/format.sh`
+without `--check` and `tools/stamp-version.mjs` rewrite files: if you run one to show a stale
+stamp or unformatted file, restore what it changed. The `--api` tier needs no database locally;
+the integration spec skips without `SANO_TEST_DB`.
 
-- **Spawn:** `spawn_agent` with the role, setting `model = "gpt-5.6-sol"`,
-  `reasoning_effort = "xhigh"`, **and** `fork_turns = "none"`. A full-history fork (`fork_turns`
-  omitted) inherits the author's model and refuses overrides, so leaving it out silently runs the
-  reviewer on the author's model — the fail-open the model law exists to prevent. The role file
-  pins the same pair, but the spawn is what guarantees them.
-- **Model law, Codex form:** GPT-5.6-Sol at xhigh regardless of author (`~/.codex/AGENTS.md`). The
-  void rule is unchanged: the reviewer states the model its session actually resolved to in the
-  review header, and a round that can't be confirmed as GPT-5.6-Sol is respawned, not trusted.
-- **Re-review:** send the SAME reviewer its next round with `followup_task`, so its context
-  carries over.
+**Off limits.** `tools/deploy.sh`, the `sano-deploy` SSH alias, and anything on the server,
+including the live database, `tools/migrate-*.php`, `tools/make-user.php`,
+`tools/send-reminders.php` and `tools/ingest-traffic.php`. The paid renderers are off limits too:
+`tools/tts/synth-app.mjs` (ElevenLabs) and `tools/dict/build-dictionary.mjs` (Anthropic). A
+finding that needs any of them is a question for Ross.
 
-## History
+**How findings are written here.**
 
-Two PRs ran an ad-hoc Opus reviewer, briefed by hand from another repo's definition, before any of
-this was defined. **PR #13 (T68)** went two rounds — REQUEST CHANGES, fixes pushed, APPROVE — and is
-the round that exercised the fix-and-re-review loop (step 4); both of its review headers reported
-that the harness surfaces no reasoning-effort field, which is where step 3's "say so" rule comes
-from. **PR #15 (T69)** was approved with eight findings — one proven by mutation (a seed comment
-that named the wrong safety net), one prose-versus-colouring contradiction in a grammar note, and
-four questions about the Nepali — and gave two more rules: its approval predated the follow-up
-commit (step 5), and the language questions went to Ross rather than into the verdict (step 6).
-**PR #16 (T70)**, the PR that added this file, was the first reviewed under it — from a session
-older than the agent definition, which is the fallback step 3 now describes.
+- **Write Nepali in romanized form** in the review. Ross reads it in a client that mangles
+  Devanagari.
+- **A doubt about the Nepali itself** (a `dev` string, a gloss, a grammar claim) is a
+  **question:** for Ross, who takes it to the native speaker. It is never a defect and never a
+  reason to REQUEST CHANGES. What is yours: a note or doc whose prose contradicts its own
+  examples, its own colouring, or the course data it cites.
+
+**Blocking here**, beyond the shared list: a break in any law above, a correctness defect in the
+learning engine, and a change that strands saved state.
+
+**After a merge**, the author tells Ross what the merge ships. `tools/deploy.sh` allowlists public
+files, so a merge touching only `docs/`, `tools/`, `tests/` or `design/` ships nothing, and the
+deploy is skipped. Otherwise the report gives the deploy's result and the live cache check
+(`CLAUDE.md` workflow step 8). A merge that needs a `tools/migrate-*.php` run says so first,
+because the migration has to land before the code.

@@ -8,8 +8,8 @@ Ross tests on an iPhone running iOS 26.
 The global `~/.codex/AGENTS.md` defaults apply in full — including **branch → PR → Ross merges by
 hand** (workflow steps 6–8) — with one exception stated here: tasks live in **`docs/todo.md`** with
 `T##` ids, not GitHub Issues, so a PR closes nothing automatically and the ticked box ships **inside**
-the PR. **There is a PR gauntlet (T70, `docs/pr-review.md`):** every PR gets a `pr-antagonist` review
-under the global reviewer model law — but its APPROVE never merges; a merge here deploys, so Ross merges.
+the PR. **Every PR goes through the shared gauntlet** in `~/.claude/pr-review.md` — the same in every
+repo and not restated here; this repo keeps only its reviewer brief, `docs/pr-review.md` (T72).
 
 **`CLAUDE.md` (Claude Code) and `AGENTS.md` (Codex CLI) are the same instructions stated twice**,
 differing only in harness mechanics — the global file's path and Claude Code's `@` imports. A change
@@ -198,24 +198,33 @@ routing: `tools/tts/README.md`.
 5. Serve `php -S 127.0.0.1:8000` from the repo root (executes `/api`; needs the dev
    `sano-config.php`) and **ask Ross to review at http://127.0.0.1:8000/ before committing.**
    (`python3 -m http.server 8000` works for frontend-only checks, exercising the offline path.)
-   One exception: a fix for a `pr-antagonist` REQUEST CHANGES is pushed first and reported after
-   (`docs/pr-review.md` step 4).
+   One exception: a fix for a review's REQUEST CHANGES doesn't wait for this review — the shared
+   procedure has it fixed and pushed at once. If it changes what a learner sees, serve it and say
+   what to look at in the same report.
 6. After approval, commit to a **task branch** — `t54-security-hardening`: the `T##` lowercased plus a
    short slug (no id prefix for an unticketed fix). Never work on `main`, never in a worktree
    (see **Repo facts**). Push as you go, so the work is never only on this Mac. Tick the task's box in
    `docs/todo.md` and archive its record (**Task list**, below) **in the branch** — nothing here
    auto-closes on merge.
 7. **Ask before opening the PR.** One PR per complete feature or change, body citing the `T##`.
-   Opening it **starts the gauntlet** (`docs/pr-review.md`): self-review the diff first, then spawn
-   the repo's `pr-antagonist` (pinned model + effort passed explicitly, its self-reported model
-   verified), fix REQUEST CHANGES in-round and re-review until APPROVE. Confirm CI is green **on the
-   PR head SHA** (`gh run list --commit` is unreliable — match on `headSha`, never take the newest
-   run), report the verdict, and let **Ross merge**. Never self-merge; a red or unresolvable run, or
-   a void review round, is not ready for Ross.
+   Opening it starts the shared gauntlet (`~/.claude/pr-review.md`). Before reporting an approve,
+   confirm CI is green **on the PR head SHA** (`gh run list --commit` is unreliable — match on
+   `headSha`, never take the newest run); a red or unresolvable run is not ready for Ross. **Ross
+   merges by hand**, unless he says "merge" in the conversation.
 8. Once merged: `git switch main && git pull`, delete the branch local **and** remote, then **deploy** —
    the merge is the go-ahead, no separate ask. `tools/deploy.sh` (`-n` first for a dry run), then the
    live cache check. A docs-only merge ships nothing (`deploy.sh` allowlists, and `docs/` isn't on it) —
    say so and skip it rather than running a no-op deploy.
+
+Superseded by the shared gauntlet (Ross's ruling 2026-09-23, setup #74; T72):
+
+- ~~A repo-defined reviewer, `.claude/agents/pr-antagonist.md`, pinned to Opus at `xhigh` and held
+  to its Codex twin by `tests/data/reviewer-pair.test.mjs` (T70)~~ — superseded 2026-09-23: the
+  shared reviewer in `~/.claude/agents/` is the only one, and a project copy would shadow it.
+- ~~`docs/pr-review.md` as sano's own gauntlet procedure~~ — superseded 2026-09-23: it is only the
+  reviewer brief.
+- ~~Ross merging as sano's departure, because elsewhere an APPROVE merged~~ — superseded
+  2026-09-23: Ross merges by hand in every repo.
 
 ## Testing notes (the non-obvious bits)
 

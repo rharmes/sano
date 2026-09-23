@@ -68,6 +68,11 @@ other and its record says so — the box means *resolved*, not *shipped*.
       *"let's set up a defined pr-antagonist process here, based on my other repos."* Until now the
       instruction files said sano had **no** gauntlet and Ross was the reviewer; the PR #13 and #15
       rounds were briefed from goodparts' definition by hand.
+      - **Superseded 2026-09-23 by T72** (Ross's ruling, setup #74): every repo now runs one shared
+        procedure (`~/.claude/pr-review.md`) and one shared reviewer (`~/.claude/agents/`), with no
+        per-repo departures. ~~The project reviewer, its Opus-at-xhigh pin, the reviewer-pair test,
+        `docs/pr-review.md` as a procedure, and Ross merging as a sano departure~~ are retired;
+        `docs/pr-review.md` is now only the reviewer brief. The Codex twin stays for setup #75.
       - **What was read:** the gauntlets in goodparts, bones, nightdesk, night-codex, nightdesk.dev,
         tabulated and harm.es. They share one shape — a repo-defined reviewer, pinned model at xhigh
         with a fail-closed self-report, ONE GitHub review (event always `COMMENT`, same-account PRs
@@ -106,6 +111,33 @@ other and its record says so — the box means *resolved*, not *shipped*.
       - **Not done:** no GitHub Action or hook that spawns the reviewer (it is an agent step, as in the
         other repos); no dev-seed scenario (nothing user-facing); nothing ships (`deploy.sh`
         allowlists). The four unfiled PR #13 nits were not folded in — different area.
+
+- [x] **T72 · Move onto the shared PR gauntlet** (2026-09-23). Part of setup #74. Ross's ruling: one
+      `pr-antagonist` reviewer and one procedure, identical in every repo, with no per-repo departures.
+      The procedure is `~/.claude/pr-review.md` and the reviewer `~/.claude/agents/pr-antagonist.md`,
+      both linked from Ross's setup repo.
+      - **What changed:** `docs/pr-review.md` became a Reviewer brief and nothing procedural. It
+        carries over only what is sano's: the three facts that make review here different (a merge
+        deploys, the Nepali is AI-drafted, learner state lives on the device), the hunt list of this
+        repo's laws, what the reviewer may run, what is off limits, romanized Nepali in reviews, and
+        Nepali doubts as questions for Ross. The model law, effort, verdict mechanics, re-review loop,
+        standing permissions, Codex spawn rules and the T70 history are gone: the shared procedure or
+        the global Codex file states each of them.
+      - **Deleted:** `.claude/agents/pr-antagonist.md`, because a project-level definition shadows the
+        user-level one of the same name. `tests/data/reviewer-pair.test.mjs` went with it: the pair it
+        held together no longer exists. `.gitignore` never listed `.claude/agents/`, so a stray copy
+        already shows in `git status` and nothing there changed.
+      - **Instruction twins:** the intro and workflow step 7 point at `~/.claude/pr-review.md` instead
+        of restating the gauntlet. Step 5's carve-out now defers to the shared procedure, which has a
+        REQUEST CHANGES fixed and pushed at once. T70's rulings are struck through, dated, under the
+        workflow. The CI-by-head-SHA check stays in step 7: it is sano's, and the shared procedure
+        doesn't cover CI.
+      - **Verified:** `claude -p --model haiku --max-turns 1`, run in this checkout on 2026-09-23 after
+        the deletion, quoted the `pr-antagonist` description as "Antagonistic PR reviewer, shared by
+        every repo on this Mac. Reviews a".
+      - **Not done:** `.codex/agents/pr-antagonist.toml` is untouched, for setup #75. Its header
+        comment still names the deleted Claude file and the deleted test. No dev-seed scenario, since
+        nothing is user-facing. Nothing ships, because `deploy.sh` allowlists and nothing here is on it.
 
 ## Dialogues & audio
 

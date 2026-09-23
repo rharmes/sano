@@ -63,18 +63,14 @@ what's in use.
 - [x] **T62 · `AGENTS.md`, a Codex-CLI twin of `CLAUDE.md`** — the same instructions under three
       harness substitutions, the same-commit rule stated in both, and `tests/data/agents-md.test.mjs`
       failing on any other difference (2026-09-03).
-- [x] **T70 · A defined `pr-antagonist` process** — `docs/pr-review.md` (the gauntlet: pinned Opus
+- [x] **T70 · A defined `pr-antagonist` process** — ~~`docs/pr-review.md` (the gauntlet: pinned Opus
       at xhigh, one GitHub review ending in a VERDICT line, fix-and-re-review rounds — and **Ross still
       merges**, because a merge here deploys), the reviewer as a mirrored Claude/Codex pair, and
-      `tests/data/reviewer-pair.test.mjs` holding the pair together (2026-09-21).
-- [ ] **T72 · Move onto the shared PR gauntlet (setup #74)** `waiting-on:none` `area:tooling` — Ross,
-      2026-09-23: one `pr-antagonist` reviewer and one procedure, identical in every repo, with no
-      per-repo departures. `docs/pr-review.md` becomes a Reviewer brief pointing at
-      `~/.claude/pr-review.md`; the project `.claude/agents/pr-antagonist.md` is deleted (it shadows
-      the shared `~/.claude/agents/` one); `CLAUDE.md`, `AGENTS.md` and `docs/` stop restating the
-      procedure and retire T70's rulings with dated strike-throughs. `.codex/agents/pr-antagonist.toml`
-      stays for setup #75. The PR says it is part of setup #74; after it merges, tick sano's box in
-      setup #74's rollout checklist.
+      `tests/data/reviewer-pair.test.mjs` holding the pair together~~ (2026-09-21) — superseded
+      2026-09-23 by T72's shared gauntlet.
+- [x] **T72 · Move onto the shared PR gauntlet (setup #74)** — `docs/pr-review.md` is now only the
+      reviewer brief for the shared `~/.claude/pr-review.md`; the project reviewer and the
+      reviewer-pair test are gone, and the instruction twins point at the shared files (2026-09-23).
 
 ## Dialogues & audio
 
