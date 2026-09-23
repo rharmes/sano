@@ -10,6 +10,8 @@ hand** (workflow steps 6–8) — with one exception stated here: tasks live in 
 `T##` ids, not GitHub Issues, so a PR closes nothing automatically and the ticked box ships **inside**
 the PR. **Every PR goes through the shared gauntlet** in `~/.claude/pr-review.md` — the same in every
 repo and not restated here; this repo keeps only its reviewer brief, `docs/pr-review.md` (T72).
+The reviewer is shared too, in both harnesses: Claude Code's in `~/.claude/agents/`, and Codex CLI's
+role in `~/.codex/agents/`, whose model, effort and spawn rule `~/.codex/AGENTS.md` states (T74).
 
 **`CLAUDE.md` (Claude Code) and `AGENTS.md` (Codex CLI) are the same instructions stated twice**,
 differing only in harness mechanics — the global file's path and Claude Code's `@` imports. A change
@@ -217,7 +219,7 @@ routing: `tools/tts/README.md`.
    `tests/`, `tools/`, `design/` and the instruction files are all off it) — say so and skip it
    rather than running a no-op deploy.
 
-Superseded by the shared gauntlet (Ross's ruling 2026-09-23, setup #74; T72):
+Superseded by the shared gauntlet (Ross's rulings 2026-09-23, setup #74 and #75; T72, T74):
 
 - ~~A repo-defined reviewer, `.claude/agents/pr-antagonist.md`, pinned to Opus at `xhigh` and held
   to its Codex twin by `tests/data/reviewer-pair.test.mjs` (T70)~~ — superseded 2026-09-23: the
@@ -226,6 +228,10 @@ Superseded by the shared gauntlet (Ross's ruling 2026-09-23, setup #74; T72):
   reviewer brief.
 - ~~Ross merging as sano's departure, because elsewhere an APPROVE merged~~ — superseded
   2026-09-23: Ross merges by hand in every repo.
+- ~~A repo-defined Codex reviewer role, `.codex/agents/pr-antagonist.toml`, pinned to GPT-5.6-Sol at
+  `xhigh` and spawned with `fork_turns = "none"` (T70)~~ — superseded 2026-09-23 (setup #75): the
+  shared role in `~/.codex/agents/` is the only one, a project copy would shadow it, and its model,
+  effort and spawn rule live in `~/.codex/AGENTS.md`.
 
 ## Testing notes (the non-obvious bits)
 

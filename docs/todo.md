@@ -74,6 +74,9 @@ what's in use.
 - [x] **T73 · Two doc-truth nits from PR #18's review** — the reviewer brief now lets the reviewer run
       the `--api` tier, and it, `CLAUDE.md` step 8 and `README.md` state what ships as `deploy.sh`'s
       rsync list (2026-09-23).
+- [x] **T74 · Retire sano's own Codex reviewer role (setup #75)** — `.codex/agents/` is gone; the
+      shared role in `~/.codex/agents/` reviews under Codex CLI, and the twins and the brief point at
+      `~/.codex/AGENTS.md` for its model, effort and spawn rule (2026-09-23).
 
 ## Dialogues & audio
 
