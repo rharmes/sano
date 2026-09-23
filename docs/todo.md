@@ -63,10 +63,14 @@ what's in use.
 - [x] **T62 · `AGENTS.md`, a Codex-CLI twin of `CLAUDE.md`** — the same instructions under three
       harness substitutions, the same-commit rule stated in both, and `tests/data/agents-md.test.mjs`
       failing on any other difference (2026-09-03).
-- [x] **T70 · A defined `pr-antagonist` process** — `docs/pr-review.md` (the gauntlet: pinned Opus
+- [x] **T70 · A defined `pr-antagonist` process** — ~~`docs/pr-review.md` (the gauntlet: pinned Opus
       at xhigh, one GitHub review ending in a VERDICT line, fix-and-re-review rounds — and **Ross still
       merges**, because a merge here deploys), the reviewer as a mirrored Claude/Codex pair, and
-      `tests/data/reviewer-pair.test.mjs` holding the pair together (2026-09-21).
+      `tests/data/reviewer-pair.test.mjs` holding the pair together~~ (2026-09-21) — superseded
+      2026-09-23 by T72's shared gauntlet.
+- [x] **T72 · Move onto the shared PR gauntlet (setup #74)** — `docs/pr-review.md` is now only the
+      reviewer brief for the shared `~/.claude/pr-review.md`; the project reviewer and the
+      reviewer-pair test are gone, and the instruction twins point at the shared files (2026-09-23).
 
 ## Dialogues & audio
 
@@ -197,6 +201,10 @@ Findings, rulings, measurements and what was deliberately left undone: `docs/tod
 
 ## Testing
 
+- [x] **T71 · Review nits from PRs #13 and #16, in one sweep** — the listening-grid test now really
+      pins the `itemClip` filter term (it never offered a clip-less numeral before), the dictionary
+      test lost its dead setup, a guard on the reviewer-pair pin check, and five doc-truth fixes
+      incl. a one-clause carve-out in workflow step 5 of both twins (2026-09-21).
 - [ ] **T67 · `tools/ci-status.sh`: verify CI by head SHA from the repo** `waiting-on:none` `area:tooling` — Ross
       (2026-09-14): the by-SHA CI check the workflow requires (step 7: match on `headSha`, never the
       newest run) has lived in an ad-hoc scratchpad script, which misfired twice while CI was green —

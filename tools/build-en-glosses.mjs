@@ -7,7 +7,7 @@
 // T37 could key its lookup on the word alone: a romanized Nepali word means roughly the
 // same thing wherever it appears, so one slug → one gloss covers the course. The English
 // side can't work that way. "have" is छ in "I have a room" and खान्छु in "have a meal",
-// and only 251 of 959 items are single-word, so there is no English word → Nepali word
+// and only 271 of 979 items are single-word, so there is no English word → Nepali word
 // table to reverse. The alignment has to be per PROMPT.
 //
 // So this aligns each frame's OWN English against its OWN Nepali, which makes the context
