@@ -67,6 +67,14 @@ what's in use.
       at xhigh, one GitHub review ending in a VERDICT line, fix-and-re-review rounds — and **Ross still
       merges**, because a merge here deploys), the reviewer as a mirrored Claude/Codex pair, and
       `tests/data/reviewer-pair.test.mjs` holding the pair together (2026-09-21).
+- [ ] **T72 · Move onto the shared PR gauntlet (setup #74)** `waiting-on:none` `area:tooling` — Ross,
+      2026-09-23: one `pr-antagonist` reviewer and one procedure, identical in every repo, with no
+      per-repo departures. `docs/pr-review.md` becomes a Reviewer brief pointing at
+      `~/.claude/pr-review.md`; the project `.claude/agents/pr-antagonist.md` is deleted (it shadows
+      the shared `~/.claude/agents/` one); `CLAUDE.md`, `AGENTS.md` and `docs/` stop restating the
+      procedure and retire T70's rulings with dated strike-throughs. `.codex/agents/pr-antagonist.toml`
+      stays for setup #75. The PR says it is part of setup #74; after it merges, tick sano's box in
+      setup #74's rollout checklist.
 
 ## Dialogues & audio
 
