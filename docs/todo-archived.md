@@ -156,6 +156,22 @@ other and its record says so — the box means *resolved*, not *shipped*.
         copy in `~/sano-tools/` stays stale until it is re-copied with `scp`.
       - **Not done:** nit 1 (phrasing in step 5) died in the thread under the filing bar. The reviewer's
         question about two rules no shared file carries belongs to setup #74 and #75. Nothing ships.
+- [x] **T74 · Retire sano's own Codex reviewer role (setup #75)** (2026-09-23). Ross: *"Retire this
+      repo's own Codex reviewer role (setup #75). The shared role at ~/.codex/agents/pr-antagonist.toml
+      … now serves every repo, and a repo's own .codex/agents/pr-antagonist.toml overrides it."*
+      - **Deleted:** `.codex/agents/pr-antagonist.toml`, T70's Codex twin of the reviewer T72 retired.
+        It pinned GPT-5.6-Sol at `xhigh` and still named the deleted Claude definition and pair test in
+        its header. With it gone, `.codex/` is empty and no longer exists.
+      - **Pointers, not restatements:** the twins' intro now says the reviewer is shared in both
+        harnesses and that `~/.codex/AGENTS.md` states the Codex role's model, effort and spawn rule
+        (GPT-6-Sol at `high`, `agent_type = "pr-antagonist"`, `fork_turns = "none"`, as of this
+        change). Neither twin nor `docs/` restates them. `docs/pr-review.md`'s opening pointer names
+        the Codex role the same way. The superseded list in both twins gains a dated, struck-through
+        entry for the repo-defined Codex role.
+      - **Tests:** none checked the role file or the old spawn rule. `tests/data/reviewer-pair.test.mjs`
+        did, and T72 deleted it.
+      - **Leftovers:** `git grep -n -i -E 'gpt-5\.6-sol|codex/agents/pr-antagonist'` hits only the
+        struck-through twin entries and this archive's history. Nothing ships.
 
 ## Dialogues & audio
 

@@ -2,8 +2,9 @@
 
 Every PR here goes through the shared gauntlet in `~/.claude/pr-review.md`, reviewed by the shared
 `pr-antagonist` definition in `~/.claude/agents/` (both from Ross's setup repo, since 2026-09-23,
-setup #74). The process is the same in every repo, so this doc holds none of it: it is the
-reviewer's brief for sano and nothing else.
+setup #74). Under Codex CLI the reviewer is the shared role in `~/.codex/agents/`, spawned as
+`~/.codex/AGENTS.md` states (setup #75). The process is the same in every repo, so this doc holds
+none of it: it is the reviewer's brief for sano and nothing else.
 
 ## Reviewer brief
 

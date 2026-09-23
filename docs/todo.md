@@ -74,13 +74,9 @@ what's in use.
 - [x] **T73 · Two doc-truth nits from PR #18's review** — the reviewer brief now lets the reviewer run
       the `--api` tier, and it, `CLAUDE.md` step 8 and `README.md` state what ships as `deploy.sh`'s
       rsync list (2026-09-23).
-- [ ] **T74 · Retire sano's own Codex reviewer role (setup #75)** `waiting-on:none` `area:tooling` — Ross, 2026-09-23:
-      *"Retire this repo's own Codex reviewer role (setup #75)."* The shared role in
-      `~/.codex/agents/pr-antagonist.toml` now serves every repo, and a repo's own
-      `.codex/agents/pr-antagonist.toml` shadows it. Delete sano's copy (and `.codex/agents/`), point
-      the instruction twins and `docs/` at `~/.codex/AGENTS.md` for the Codex reviewer's model, effort
-      and spawn rule instead of restating them, and retire the superseded ruling with a dated
-      strike-through.
+- [x] **T74 · Retire sano's own Codex reviewer role (setup #75)** — `.codex/agents/` is gone; the
+      shared role in `~/.codex/agents/` reviews under Codex CLI, and the twins and the brief point at
+      `~/.codex/AGENTS.md` for its model, effort and spawn rule (2026-09-23).
 
 ## Dialogues & audio
 
