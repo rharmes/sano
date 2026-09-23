@@ -213,8 +213,9 @@ routing: `tools/tts/README.md`.
    merges by hand**, unless he says "merge" in the conversation.
 8. Once merged: `git switch main && git pull`, delete the branch local **and** remote, then **deploy** —
    the merge is the go-ahead, no separate ask. `tools/deploy.sh` (`-n` first for a dry run), then the
-   live cache check. A docs-only merge ships nothing (`deploy.sh` allowlists, and `docs/` isn't on it) —
-   say so and skip it rather than running a no-op deploy.
+   live cache check. A merge touching nothing on `deploy.sh`'s rsync list ships nothing (`docs/`,
+   `tests/`, `tools/`, `design/` and the instruction files are all off it) — say so and skip it
+   rather than running a no-op deploy.
 
 Superseded by the shared gauntlet (Ross's ruling 2026-09-23, setup #74; T72):
 

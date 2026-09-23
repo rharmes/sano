@@ -67,11 +67,12 @@ consumers in `js/sano.js`, not the entire file.
 **Checks before asking for a PR** (the flow's step 1): `tools/format.sh`, then
 `node tools/stamp-version.mjs`, then `tools/test.sh`, which runs every tier.
 
-**How to verify.** You may run `tools/test.sh` with `--static`, `--unit` or `--data`, a single
-e2e spec with `npx playwright test <file>`, and `tools/format.sh --check`. `tools/format.sh`
+**How to verify.** You may run `tools/test.sh` with `--static`, `--unit`, `--data` or `--api`, a
+single e2e spec with `npx playwright test <file>`, and `tools/format.sh --check`. The `--api` tier
+is safe to run: its guard specs hit a local `php -S` with no `sano-config.php`, so they never
+reach a database, and the integration spec skips without `SANO_TEST_DB`. `tools/format.sh`
 without `--check` and `tools/stamp-version.mjs` rewrite files: if you run one to show a stale
-stamp or unformatted file, restore what it changed. The `--api` tier needs no database locally;
-the integration spec skips without `SANO_TEST_DB`.
+stamp or unformatted file, restore what it changed.
 
 **Off limits.** `tools/deploy.sh`, the `sano-deploy` SSH alias, and anything on the server,
 including the live database, `tools/migrate-*.php`, `tools/make-user.php`,
@@ -91,8 +92,11 @@ finding that needs any of them is a question for Ross.
 **Blocking here**, beyond the shared list: a break in any law above, a correctness defect in the
 learning engine, and a change that strands saved state.
 
-**After a merge**, the author tells Ross what the merge ships. `tools/deploy.sh` allowlists public
-files, so a merge touching only `docs/`, `tools/`, `tests/` or `design/` ships nothing, and the
-deploy is skipped. Otherwise the report gives the deploy's result and the live cache check
+**After a merge**, the author tells Ross what the merge ships. `tools/deploy.sh` sends only the
+paths on its rsync list (`index.html`, `.htaccess`, the icons, `manifest.json`, `sw.js`, `css/`,
+`js/`, `fonts/`, `audio/`, `api/`, `admin/`). A merge that touches none of them ships nothing,
+and the deploy is skipped. Otherwise the report gives the deploy's result and the live cache check
 (`CLAUDE.md` workflow step 8). A merge that needs a `tools/migrate-*.php` run says so first,
-because the migration has to land before the code.
+because the migration has to land before the code. A merge that changes
+`tools/send-reminders.php` or `tools/ingest-traffic.php` says so too: `deploy.sh` doesn't carry
+them, and the cron copy in `~/sano-tools/` stays stale until it is re-copied with `scp`.
