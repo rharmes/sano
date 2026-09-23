@@ -139,6 +139,18 @@ other and its record says so — the box means *resolved*, not *shipped*.
         comment still names the deleted Claude file and the deleted test. No dev-seed scenario, since
         nothing is user-facing. Nothing ships, because `deploy.sh` allowlists and nothing here is on it.
 
+- [x] **T73 · Two doc-truth nits from PR #18's review** (2026-09-23). Ross: *"File nits 2 and 3 as one
+      task."* Both came from the round that approved T72, and both were in `docs/pr-review.md`.
+      - **The `--api` tier:** How to verify described it without saying the reviewer may run it. It is
+        now on the allowed list, with the reason it is safe: its guard specs hit a local `php -S` with no
+        `sano-config.php`, and the integration spec skips without `SANO_TEST_DB`.
+      - **What ships:** After a merge named four directories that don't ship, which left out every
+        other path off the rsync list, such as the instruction files. It now names the list itself.
+        `CLAUDE.md` step 8 said "a docs-only merge ships nothing" and had the same gap, so both twins
+        now say the same thing.
+      - **Not done:** nit 1 (phrasing in step 5) died in the thread under the filing bar. The reviewer's
+        question about two rules no shared file carries belongs to setup #74 and #75. Nothing ships.
+
 ## Dialogues & audio
 
 - [x] **T2 · Re-render the reconciled greet-pyaro audio** — `greet-pyaro-01/-07/-10` lag the text

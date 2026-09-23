@@ -71,11 +71,9 @@ what's in use.
 - [x] **T72 · Move onto the shared PR gauntlet (setup #74)** — `docs/pr-review.md` is now only the
       reviewer brief for the shared `~/.claude/pr-review.md`; the project reviewer and the
       reviewer-pair test are gone, and the instruction twins point at the shared files (2026-09-23).
-- [ ] **T73 · Two doc-truth nits from PR #18's review** `waiting-on:none` `area:tooling` — Ross, 2026-09-23:
-      *"File nits 2 and 3 as one task."* (1) `docs/pr-review.md`'s How to verify describes the `--api`
-      tier without saying whether the reviewer may run it. (2) Its After a merge paragraph says a merge
-      touching only `docs/`, `tools/`, `tests/` or `design/` ships nothing, which leaves out every other
-      path off `deploy.sh`'s rsync list (`CLAUDE.md`, `AGENTS.md`, `.claude/`); state the rule as the list.
+- [x] **T73 · Two doc-truth nits from PR #18's review** — the reviewer brief now lets the reviewer run
+      the `--api` tier, and it and `CLAUDE.md` step 8 state what ships as `deploy.sh`'s rsync list
+      (2026-09-23).
 
 ## Dialogues & audio
 
