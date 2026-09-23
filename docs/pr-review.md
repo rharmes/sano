@@ -97,4 +97,6 @@ paths on its rsync list (`index.html`, `.htaccess`, the icons, `manifest.json`, 
 `js/`, `fonts/`, `audio/`, `api/`, `admin/`). A merge that touches none of them ships nothing,
 and the deploy is skipped. Otherwise the report gives the deploy's result and the live cache check
 (`CLAUDE.md` workflow step 8). A merge that needs a `tools/migrate-*.php` run says so first,
-because the migration has to land before the code.
+because the migration has to land before the code. A merge that changes
+`tools/send-reminders.php` or `tools/ingest-traffic.php` says so too: `deploy.sh` doesn't carry
+them, and the cron copy in `~/sano-tools/` stays stale until it is re-copied with `scp`.

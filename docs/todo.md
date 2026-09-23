@@ -72,8 +72,8 @@ what's in use.
       reviewer brief for the shared `~/.claude/pr-review.md`; the project reviewer and the
       reviewer-pair test are gone, and the instruction twins point at the shared files (2026-09-23).
 - [x] **T73 · Two doc-truth nits from PR #18's review** — the reviewer brief now lets the reviewer run
-      the `--api` tier, and it and `CLAUDE.md` step 8 state what ships as `deploy.sh`'s rsync list
-      (2026-09-23).
+      the `--api` tier, and it, `CLAUDE.md` step 8 and `README.md` state what ships as `deploy.sh`'s
+      rsync list (2026-09-23).
 
 ## Dialogues & audio
 

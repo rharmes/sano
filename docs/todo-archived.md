@@ -147,7 +147,13 @@ other and its record says so — the box means *resolved*, not *shipped*.
       - **What ships:** After a merge named four directories that don't ship, which left out every
         other path off the rsync list, such as the instruction files. It now names the list itself.
         `CLAUDE.md` step 8 said "a docs-only merge ships nothing" and had the same gap, so both twins
-        now say the same thing.
+        now say the same thing. `README.md`'s `deploy.sh` bullet was the fourth statement of the list:
+        it lacked `audio` and `admin`, and it said "no `--delete`", though `deploy.sh` has passed
+        `--delete-after` since T54. It now gives the full list and says the pruning stays inside the
+        listed paths, as `deploy.sh`'s own comment does.
+      - **Cron copies:** the brief's After a merge also asks the author to say when a merge changes
+        `tools/send-reminders.php` or `tools/ingest-traffic.php`. `deploy.sh` doesn't carry them, so the
+        copy in `~/sano-tools/` stays stale until it is re-copied with `scp`.
       - **Not done:** nit 1 (phrasing in step 5) died in the thread under the filing bar. The reviewer's
         question about two rules no shared file carries belongs to setup #74 and #75. Nothing ships.
 
