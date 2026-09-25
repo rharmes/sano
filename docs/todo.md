@@ -83,6 +83,13 @@ what's in use.
       the Codex reviewer's model, effort and spawn rule, and the file is in `docs/`. The reviewer's
       wording: "Neither twin nor any live doc restates them; this record's parenthetical is a dated
       snapshot." A filed nit, so it rides along with the next PR that touches the archive.
+- [ ] **T76 · Drop sano's overrides of the open-and-merge default (setup #79)** `waiting-on:none` `area:tooling` —
+      Ross, 2026-09-25: *"Remove this repo's overrides of the global open-and-merge default (setup
+      #81, #83, tracked in setup #79)."* The global default opens the PR without asking, runs the
+      gauntlet and merges on approve once CI passes; a merge still doesn't authorize a deploy. Retire
+      with a dated strike-through every line in `CLAUDE.md`, `AGENTS.md` and `docs/pr-review.md` that
+      asks Ross before opening the PR, has him review before committing, leaves the merge to him, or
+      treats a merge as the go-ahead to deploy. Keep the checks those steps bundled.
 
 ## Dialogues & audio
 
