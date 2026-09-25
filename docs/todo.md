@@ -77,19 +77,11 @@ what's in use.
 - [x] **T74 · Retire sano's own Codex reviewer role (setup #75)** — `.codex/agents/` is gone; the
       shared role in `~/.codex/agents/` reviews under Codex CLI, and the twins and the brief point at
       `~/.codex/AGENTS.md` for its model, effort and spawn rule (2026-09-23).
-- [ ] **T75 · A self-contradicting line in T74's archive record** `waiting-on:none` `area:tooling` — Ross, 2026-09-23:
-      *"File the nit as a task."* From PR #20's approving review: `docs/todo-archived.md`'s T74 record
-      says "Neither twin nor `docs/` restates them", but its own parenthetical just before restates
-      the Codex reviewer's model, effort and spawn rule, and the file is in `docs/`. The reviewer's
-      wording: "Neither twin nor any live doc restates them; this record's parenthetical is a dated
-      snapshot." A filed nit, so it rides along with the next PR that touches the archive.
-- [ ] **T76 · Drop sano's overrides of the open-and-merge default (setup #79)** `waiting-on:none` `area:tooling` —
-      Ross, 2026-09-25: *"Remove this repo's overrides of the global open-and-merge default (setup
-      #81, #83, tracked in setup #79)."* The global default opens the PR without asking, runs the
-      gauntlet and merges on approve once CI passes; a merge still doesn't authorize a deploy. Retire
-      with a dated strike-through every line in `CLAUDE.md`, `AGENTS.md` and `docs/pr-review.md` that
-      asks Ross before opening the PR, has him review before committing, leaves the merge to him, or
-      treats a merge as the go-ahead to deploy. Keep the checks those steps bundled.
+- [x] **T75 · A self-contradicting line in T74's archive record** — the record now calls its
+      parenthetical a dated snapshot, in the reviewer's wording; rode along with T76 (2026-09-25).
+- [x] **T76 · Drop sano's overrides of the open-and-merge default (setup #79)** — PRs open, review and
+      merge on approve without asking; the twins' struck-through entries retire the old rule, the
+      checks stay, and a deploy waits for Ross's go (2026-09-25).
 
 ## Dialogues & audio
 
