@@ -14,7 +14,7 @@ running iOS 26. Three facts make review here different:
 
 - **Your approve is the last read before production.** An approve merges once CI passes, with no
   one else reading the diff (the global default, since 2026-09-25, setup #81), and Ross's next go on
-  `tools/deploy.sh` (`CLAUDE.md` workflow step 8) ships all of `main` to learners.
+  `tools/deploy.sh` (`CLAUDE.md` workflow step 8) ships everything merged since the last deploy to learners.
 - **Most of the Nepali is AI-drafted and under review.** Every `dev`, dialogue `gloss`, unit
   `goal` and onboarding `L` string is Ross's draft, and a native speaker rules on the language.
   You are not the native speaker.

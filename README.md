@@ -202,8 +202,8 @@ The PHP dev server needs a dev `sano-config.php` one level above the repo (point
 3. **`npm run format`** — Prettier-format every file in place.
 4. **`npm run stamp`** — rewrite the `?v=` content-hash stamps in index.html so changed css/js bust their browser cache.
 5. **`npm test`** — the gate: static checks (format, **stale-stamp check**, `php -l`, `node --check`) + unit + data + API guards + the Chromium/WebKit e2e suite (`tools/test.sh`; add a tier flag to scope it). CI re-runs all of it, plus DB integration, on every push.
-6. **Commit** to `main`.
-7. **`npm run deploy`** — pure ship: rsync the committed tree to the server (`npm run deploy:preview` dry-runs first; it refuses a dirty tree). No stamping happens here — steps 4–5 guarantee the committed stamps are already current.
+6. **Commit** to a task branch and push, then open the PR: the gauntlet reviews it and merges on approve once CI is green (`CLAUDE.md` workflow steps 6–8).
+7. **`npm run deploy`**, only on Ross's go and from the merged `main`, because a merge doesn't authorize a deploy. It is a pure ship: it rsyncs the committed tree to the server (`npm run deploy:preview` dry-runs first, and it refuses a dirty tree). No stamping happens here, because steps 4–5 guarantee the committed stamps are already current.
 
 ## Regenerating audio
 
