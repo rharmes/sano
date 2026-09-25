@@ -12,8 +12,9 @@ none of it: it is the reviewer's brief for sano and nothing else.
 no build step, plus a small PHP/MySQL sync API in `api/`. Ross tests on an iPhone
 running iOS 26. Three facts make review here different:
 
-- **A merge is a production deploy.** After Ross merges, the author runs `tools/deploy.sh`
-  (`CLAUDE.md` workflow step 8) with no further ask. What merges reaches learners.
+- **Your approve is the last read before production.** An approve merges once CI passes, with no
+  one else reading the diff (the global default, since 2026-09-25, setup #81), and Ross's next go on
+  `tools/deploy.sh` (`CLAUDE.md` workflow step 8) ships everything merged since the last deploy to learners.
 - **Most of the Nepali is AI-drafted and under review.** Every `dev`, dialogue `gloss`, unit
   `goal` and onboarding `L` string is Ross's draft, and a native speaker rules on the language.
   You are not the native speaker.
@@ -65,7 +66,7 @@ consumers in `js/sano.js`, not the entire file.
   new helper missing from `docs/architecture.md`, and a shape `docs/data-model.md` no longer
   describes.
 
-**Checks before asking for a PR** (the flow's step 1): `tools/format.sh`, then
+**Checks before opening a PR** (the flow's step 1): `tools/format.sh`, then
 `node tools/stamp-version.mjs`, then `tools/test.sh`, which runs every tier.
 
 **How to verify.** You may run `tools/test.sh` with `--static`, `--unit`, `--data` or `--api`, a
@@ -93,11 +94,15 @@ finding that needs any of them is a question for Ross.
 **Blocking here**, beyond the shared list: a break in any law above, a correctness defect in the
 learning engine, and a change that strands saved state.
 
+**Merge holds.** A failing CI check holds the merge for Ross. sano has no machine hold beyond that:
+no guardrail labels a PR `needs-ross`.
+
 **After a merge**, the author tells Ross what the merge ships. `tools/deploy.sh` sends only the
 paths on its rsync list (`index.html`, `.htaccess`, the icons, `manifest.json`, `sw.js`, `css/`,
 `js/`, `fonts/`, `audio/`, `api/`, `admin/`). A merge that touches none of them ships nothing,
-and the deploy is skipped. Otherwise the report gives the deploy's result and the live cache check
-(`CLAUDE.md` workflow step 8). A merge that needs a `tools/migrate-*.php` run says so first,
-because the migration has to land before the code. A merge that changes
-`tools/send-reminders.php` or `tools/ingest-traffic.php` says so too: `deploy.sh` doesn't carry
-them, and the cron copy in `~/sano-tools/` stays stale until it is re-copied with `scp`.
+and there is nothing to deploy. Otherwise the deploy waits for Ross's go — a merge doesn't
+authorize one — and after it runs, the report gives its result and the live cache check (`CLAUDE.md`
+workflow step 8). A merge that needs a `tools/migrate-*.php` run says so first, because the
+migration has to land before the code. A merge that changes `tools/send-reminders.php` or
+`tools/ingest-traffic.php` says so too: `deploy.sh` doesn't carry them, and the cron copy in
+`~/sano-tools/` stays stale until it is re-copied with `scp`.

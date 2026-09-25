@@ -165,13 +165,42 @@ other and its record says so — the box means *resolved*, not *shipped*.
       - **Pointers, not restatements:** the twins' intro now says the reviewer is shared in both
         harnesses and that `~/.codex/AGENTS.md` states the Codex role's model, effort and spawn rule
         (GPT-6-Sol at `high`, `agent_type = "pr-antagonist"`, `fork_turns = "none"`, as of this
-        change). Neither twin nor `docs/` restates them. `docs/pr-review.md`'s opening pointer names
+        change). Neither twin nor any live doc restates them; this record's parenthetical is a dated
+        snapshot. `docs/pr-review.md`'s opening pointer names
         the Codex role the same way. The superseded list in both twins gains a dated, struck-through
         entry for the repo-defined Codex role.
       - **Tests:** none checked the role file or the old spawn rule. `tests/data/reviewer-pair.test.mjs`
         did, and T72 deleted it.
       - **Leftovers:** `git grep -n -i -E 'gpt-5\.6-sol|codex/agents/pr-antagonist'` hits only the
         struck-through twin entries and this archive's history. Nothing ships.
+- [x] **T75 · A self-contradicting line in T74's archive record** (2026-09-25). Ross, 2026-09-23:
+      *"File the nit as a task."* PR #20's approving review caught T74's record saying "Neither twin
+      nor `docs/` restates them" just after its own parenthetical restated the Codex reviewer's model,
+      effort and spawn rule, in a file under `docs/`. The line now reads as the reviewer worded it:
+      "Neither twin nor any live doc restates them; this record's parenthetical is a dated snapshot."
+      Filed as a nit, so it rode along with T76, the next PR to touch this archive. Nothing ships.
+- [x] **T76 · Drop sano's overrides of the open-and-merge default (setup #79)** (2026-09-25). Ross:
+      *"Remove this repo's overrides of the global open-and-merge default (setup #81, #83, tracked in
+      setup #79)."* The global default opens the PR without asking, runs the gauntlet and merges on
+      approve once CI passes, unless Ross asks in the conversation to preview first. A repo may
+      override it, and Ross wants sano not to.
+      - **Retired**, in both twins with dated, struck-through entries in the superseded list: the
+        intro's "branch → PR → Ross merges by hand"; workflow step 5's localhost review by Ross before
+        any commit, and step 6's "after approval"; step 7's ask before opening the PR and Ross merging
+        by hand; step 8's merge as the go-ahead to deploy. The superseded list's own live clause "Ross
+        merges by hand in every repo" (T72) is struck too, since it restated the retired rule.
+      - **Kept:** every check those steps bundled. Step 5 still serves the change on
+        `php -S 127.0.0.1:8000` and checks it, and a learner-visible change is captured with
+        `tools/screenshot.sh` and described in the PR body. CI green on the head SHA still gates the
+        merge, and a red run holds it for Ross.
+      - **Deploys wait for Ross's go.** A merge doesn't authorize one (the global default). Step 8,
+        the brief's "After a merge" and `README.md`'s `deploy.sh` line now say so. The brief's first
+        fact changed from "a merge is a production deploy" to "your approve is the last read before
+        production".
+      - **Merge holds:** sano has no `needs-ross` guardrail (CI is `ci.yml` alone), so the brief now
+        names a failing check as the only hold.
+      - **Tests:** none checked the retired wording. `tests/data/agents-md.test.mjs` holds the twins
+        together, and `AGENTS.md` is 29,781 bytes against its 32 KiB budget. Nothing ships.
 
 ## Dialogues & audio
 

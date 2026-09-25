@@ -5,8 +5,8 @@ frontend, **no build step** (`index.html`, `css/`, `js/`, `fonts/`, `tools/`) pl
 PHP/MySQL sync API in `api/`. Deployed to namastesano.com (Apache) via `tools/deploy.sh`;
 Ross tests on an iPhone running iOS 26.
 
-The global `~/.codex/AGENTS.md` defaults apply in full — including **branch → PR → Ross merges by
-hand** (workflow steps 6–8) — with one exception stated here: tasks live in **`docs/todo.md`** with
+The global `~/.codex/AGENTS.md` defaults apply in full — including **open, review and merge without
+asking** (workflow steps 5–8; T76) — with one exception stated here: tasks live in **`docs/todo.md`** with
 `T##` ids, not GitHub Issues, so a PR closes nothing automatically and the ticked box ships **inside**
 the PR. **Every PR goes through the shared gauntlet** in `~/.claude/pr-review.md` — the same in every
 repo and not restated here; this repo keeps only its reviewer brief, `docs/pr-review.md` (T72).
@@ -198,28 +198,29 @@ routing: `tools/tts/README.md`.
    features are gated behind progress, so a fresh localhost won't show them. Pure bug
    fixes / refactors with nothing to demo can skip it.
 5. Serve `php -S 127.0.0.1:8000` from the repo root (executes `/api`; needs the dev
-   `sano-config.php`) and **ask Ross to review at http://127.0.0.1:8000/ before committing.**
-   (`python3 -m http.server 8000` works for frontend-only checks, exercising the offline path.)
-   One exception: a fix for a review's REQUEST CHANGES doesn't wait for this review — the shared
-   procedure has it fixed and pushed at once. If it changes what a learner sees, serve it and say
-   what to look at in the same report.
-6. After approval, commit to a **task branch** — `t54-security-hardening`: the `T##` lowercased plus a
+   `sano-config.php`) and check the change at http://127.0.0.1:8000/ yourself — it is also where
+   Ross looks when he asks to preview a change first. (`python3 -m http.server 8000` works for
+   frontend-only checks, exercising the offline path.) If it changes what a learner sees, capture it
+   with `tools/screenshot.sh` and say in the PR body what to look at.
+6. Commit to a **task branch** — `t54-security-hardening`: the `T##` lowercased plus a
    short slug (no id prefix for an unticketed fix). Never work on `main`, never in a worktree
    (see **Repo facts**). Push as you go, so the work is never only on this Mac. Tick the task's box in
    `docs/todo.md` and archive its record (**Task list**, below) **in the branch** — nothing here
    auto-closes on merge.
-7. **Ask before opening the PR.** One PR per complete feature or change, body citing the `T##`.
-   Opening it starts the shared gauntlet (`~/.claude/pr-review.md`). Before reporting an approve,
-   confirm CI is green **on the PR head SHA** (`gh run list --commit` is unreliable — match on
-   `headSha`, never take the newest run); a red or unresolvable run is not ready for Ross. **Ross
-   merges by hand**, unless he says "merge" in the conversation.
-8. Once merged: `git switch main && git pull`, delete the branch local **and** remote, then **deploy** —
-   the merge is the go-ahead, no separate ask. `tools/deploy.sh` (`-n` first for a dry run), then the
-   live cache check. A merge touching nothing on `deploy.sh`'s rsync list ships nothing (`docs/`,
-   `tests/`, `tools/`, `design/` and the instruction files are all off it) — say so and skip it
-   rather than running a no-op deploy.
+7. **Open the PR without asking** once steps 1–5 pass, unless Ross has asked in the conversation to
+   preview the work first. One PR per complete feature or change, body citing the `T##` and what the
+   checks showed. Opening it starts the shared gauntlet (`~/.claude/pr-review.md`), which merges on
+   approve. Before merging, confirm CI is green **on the PR head SHA** (`gh run list --commit` is
+   unreliable — match on `headSha`, never take the newest run); a red or unresolvable run holds the
+   merge for Ross.
+8. Once merged: `git switch main && git pull`, delete the branch local **and** remote, and report what
+   the merge ships. **The deploy waits for Ross's go** — a merge doesn't authorize one. On his go:
+   `tools/deploy.sh` (`-n` first for a dry run), then the live cache check. A merge touching nothing on
+   `deploy.sh`'s rsync list ships nothing (`docs/`, `tests/`, `tools/`, `design/` and the instruction
+   files are all off it) — say so; there is nothing to deploy.
 
-Superseded by the shared gauntlet (Ross's rulings 2026-09-23, setup #74 and #75; T72, T74):
+Superseded by the shared gauntlet (Ross's rulings 2026-09-23 and 2026-09-25, setup #74, #75, #81 and
+#83; T72, T74, T76):
 
 - ~~A repo-defined reviewer, `.claude/agents/pr-antagonist.md`, pinned to Opus at `xhigh` and held
   to its Codex twin by `tests/data/reviewer-pair.test.mjs` (T70)~~ — superseded 2026-09-23: the
@@ -227,11 +228,19 @@ Superseded by the shared gauntlet (Ross's rulings 2026-09-23, setup #74 and #75;
 - ~~`docs/pr-review.md` as sano's own gauntlet procedure~~ — superseded 2026-09-23: it is only the
   reviewer brief.
 - ~~Ross merging as sano's departure, because elsewhere an APPROVE merged~~ — superseded
-  2026-09-23: Ross merges by hand in every repo.
+  2026-09-23: ~~Ross merges by hand in every repo~~ — itself superseded 2026-09-25 (setup #81, #83):
+  the global default applies.
 - ~~A repo-defined Codex reviewer role, `.codex/agents/pr-antagonist.toml`, pinned to GPT-5.6-Sol at
   `xhigh` and spawned with `fork_turns = "none"` (T70)~~ — superseded 2026-09-23 (setup #75): the
   shared role in `~/.codex/agents/` is the only one, a project copy would shadow it, and its model,
   effort and spawn rule live in `~/.codex/AGENTS.md`.
+- ~~Ross reviewing every change at http://127.0.0.1:8000/ before it is committed~~ — superseded
+  2026-09-25 (setup #81, #83): the global default applies. Serving and checking the change stays a
+  step-5 check, and Ross previews only when he asks to.
+- ~~Asking before opening the PR, and Ross merging by hand unless he said "merge"~~ — superseded
+  2026-09-25 (setup #81, #83): the global default applies.
+- ~~A merge as the go-ahead to deploy, with no separate ask~~ — superseded 2026-09-25 (setup #81,
+  #83): the global default applies, and a deploy waits for Ross's go.
 
 ## Testing notes (the non-obvious bits)
 

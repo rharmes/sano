@@ -77,6 +77,11 @@ what's in use.
 - [x] **T74 · Retire sano's own Codex reviewer role (setup #75)** — `.codex/agents/` is gone; the
       shared role in `~/.codex/agents/` reviews under Codex CLI, and the twins and the brief point at
       `~/.codex/AGENTS.md` for its model, effort and spawn rule (2026-09-23).
+- [x] **T75 · A self-contradicting line in T74's archive record** — the record now calls its
+      parenthetical a dated snapshot, in the reviewer's wording; rode along with T76 (2026-09-25).
+- [x] **T76 · Drop sano's overrides of the open-and-merge default (setup #79)** — PRs open, review and
+      merge on approve without asking; the twins' struck-through entries retire the old rule, the
+      checks stay, and a deploy waits for Ross's go (2026-09-25).
 
 ## Dialogues & audio
 
